@@ -1,5 +1,6 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
-{\fonttbl}
-{\colortbl;\red255\green255\blue255;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
-}
+This project is made to control DMX ligting systems from computer.
+It's designet to use with Enttec DMX usb pro as input and Arduino with DMX shield as output,
+but of course you can use any devices you want to.
+There is also iPad input allowed in this program.
+Original I made this program for only myself, so for the begin it would be really difficult
+to use and change settings in it.
