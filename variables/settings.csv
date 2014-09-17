@@ -1,0 +1,8 @@
+variable_name,toiminto,value
+sendOscToAnotherPc,Lähetetäänkö kanavien arvot toiselle tietokoneelle?,true
+sendOscToIpad,Lähetetäänkö kanavien arvot iPadille?,true
+sendMemoryToIpad,Lähetetäänkö memorien arvot iPadille?,true
+useCOM,Käytetäänkö Arduino ja Enttecciä?,false
+use3D,Näytetäänkö 3D?,true
+showOutputAsNumbers,Näytetäänkö numerodata?,true
+loadAllDataInSetup,Avataanko viimeksi muokattu näkymä automaattisesti?,true
