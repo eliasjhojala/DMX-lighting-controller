@@ -74,7 +74,7 @@ void drawMainWindow() {
               //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
               if(isHover(0, 0, fixSize[0], fixSize[1]) && fixSize[2] == 1 && mouseClicked) {
                
-                if(mouseButton == RIGHT) { toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = fixtureIdOriginal[i]; }
+                if(mouseButton == RIGHT) { toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; }
                 else if(mouseReleased) {
                   oldMouseX1 = int(mouseRotated.x);
                   oldMouseY1 = int(mouseRotated.y);

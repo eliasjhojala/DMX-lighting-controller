@@ -545,11 +545,11 @@ public class ControlFrame extends PApplet {
     
     if(theEvent.getController().getName() == "fixtIdUp"){
       change_fixture_id(changeColorFixtureId);
-      cp5.controller("fixtIdLabel").setStringValue(str(fixtureIdPlaceInArray[changeColorFixtureId]));
+      cp5.controller("fixtIdLabel").setStringValue(str(fixtureIdNow[changeColorFixtureId]));
     }
     if(theEvent.getController().getName() == "fixtIdDown"){
       change_fixture_id_down(changeColorFixtureId);
-      cp5.controller("fixtIdLabel").setStringValue(str(fixtureIdPlaceInArray[changeColorFixtureId]));
+      cp5.controller("fixtIdLabel").setStringValue(str(fixtureIdNow[changeColorFixtureId]));
     }
     
     
@@ -770,18 +770,18 @@ public class ControlFrame extends PApplet {
       //Check for fixture color change initiation
       if (toChangeFixtureColor){
         fixtureColorChangeHasHappened = true;
-        cp5.controller("colorRed").setValue(red[changeColorFixtureId]);
-        cp5.controller("colorGreen").setValue(green[changeColorFixtureId]);
-        cp5.controller("colorBlue").setValue(blue[changeColorFixtureId]);
-        cp5.controller("fixtRotation").setValue(rotTaka[changeColorFixtureId]);
-        cp5.controller("fixtRotationX").setValue(rotX[changeColorFixtureId]);
-        cp5.controller("fixtZ").setValue(fixZ[changeColorFixtureId]);
-        cp5.controller("fixtChan").setValue(channel[changeColorFixtureId]);
-        cp5.controller("fixtParam").setValue(fixParam[changeColorFixtureId]);
-        cp5.controller("ansaParent").setValue(ansaParent[changeColorFixtureId]);
-        lb.setIndex(fixtureType1[changeColorFixtureId] - 1);
+        cp5.controller("colorRed").setValue(red[fixtureIdNow[changeColorFixtureId]]);
+        cp5.controller("colorGreen").setValue(green[fixtureIdNow[changeColorFixtureId]]);
+        cp5.controller("colorBlue").setValue(blue[fixtureIdNow[changeColorFixtureId]]);
+        cp5.controller("fixtRotation").setValue(rotTaka[fixtureIdNow[changeColorFixtureId]]);
+        cp5.controller("fixtRotationX").setValue(rotX[fixtureIdNow[changeColorFixtureId]]);
+        cp5.controller("fixtZ").setValue(fixZ[fixtureIdNow[changeColorFixtureId]]);
+        cp5.controller("fixtChan").setValue(channel[fixtureIdNow[changeColorFixtureId]]);
+        cp5.controller("fixtParam").setValue(fixParam[fixtureIdNow[changeColorFixtureId]]);
+        cp5.controller("ansaParent").setValue(ansaParent[fixtureIdNow[changeColorFixtureId]]);
+        lb.setIndex(fixtureType1[fixtureIdNow[changeColorFixtureId]] - 1);
         //Make the color tab visible and activate it
-        cp5.tab("fixtSettings").setVisible(true).setLabel("Fixture ID: " + str(changeColorFixtureId + 1));
+        cp5.tab("fixtSettings").setVisible(true).setLabel("Fixture ID: " + str(fixtureIdNow[changeColorFixtureId] + 1));
         cp5.window(this).activateTab("fixtSettings");
         
         toChangeFixtureColor = false;
@@ -792,16 +792,16 @@ public class ControlFrame extends PApplet {
       
       //Set RGB values for selected fixture
       if (fixtureColorChangeHasHappened && cp5.tab("fixtSettings").isActive()) {
-        red[changeColorFixtureId] = int(cp5.controller("colorRed").getValue());
-        green[changeColorFixtureId] = int(cp5.controller("colorGreen").getValue());
-        blue[changeColorFixtureId] = int(cp5.controller("colorBlue").getValue());
-        rotTaka[changeColorFixtureId] = int(cp5.controller("fixtRotation").getValue());
-        rotX[changeColorFixtureId] = int(cp5.controller("fixtRotationX").getValue());
-        fixZ[changeColorFixtureId] = int(cp5.controller("fixtZ").getValue());
-        channel[changeColorFixtureId] = int(cp5.controller("fixtChan").getValue());
-        fixParam[changeColorFixtureId] = int(cp5.controller("fixtParam").getValue());
-        ansaParent[changeColorFixtureId] = int(cp5.controller("ansaParent").getValue());
-        fixtureType1[changeColorFixtureId] = int(lb.getValue());
+        red[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("colorRed").getValue());
+        green[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("colorGreen").getValue());
+        blue[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("colorBlue").getValue());
+        rotTaka[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtRotation").getValue());
+        rotX[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtRotationX").getValue());
+        fixZ[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtZ").getValue());
+        channel[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtChan").getValue());
+        fixParam[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtParam").getValue());
+        ansaParent[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("ansaParent").getValue());
+        fixtureType1[fixtureIdNow[changeColorFixtureId]] = int(lb.getValue());
       }
       
       //Set ansa Z values according to NBoxes

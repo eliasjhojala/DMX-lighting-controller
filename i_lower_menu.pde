@@ -100,6 +100,6 @@ void checkFixtureBoxRightClick(int id) {
    if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT) { //Check if mouse is on the title box anf clicked
     toChangeFixtureColor = true; //Tells controlP5 to open fixtureSettings window
     toRotateFixture = true; //Tells controlP5 to open fixtureSettings window
-    changeColorFixtureId = fixtureIdOriginal[id]; //Tells controlP5 which fixture to edit
+    changeColorFixtureId = id; //Tells controlP5 which fixture to edit
   }
 }
