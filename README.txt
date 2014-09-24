@@ -5,8 +5,6 @@ There is also iPad input allowed in this program.
 Original I made this program for only myself, so for the begin it would be really difficult
 to use and change settings in it.
 
-Also the most of the comments in the software is in finnish, so it would
-make it also more difficult to use.
 
 Here is the main hieracrhy of the software:
 
@@ -16,7 +14,10 @@ main tab:
 
 draw tab:
   - void draw()
-  
+
+main_view tab:
+  - drawing fixtures
+
 DMX_input tab:
   - reading input from Enttec Dmx Usb Pro
   - putting all inputs to dim variable
