@@ -54,13 +54,13 @@ void memoryy(int numero, int dimmi) {
   
   fill(255, 255, 255);
   stroke(255, 255, 0); //Yellow borders
-  rect(0, -5, 60, 15);
-  fill(0, 255, 0);
-  rect(-60, -5, 60, 15);
-  fill(0, 0, 0);
-  text(str(numero)+":"+nimi, -47, 7);
-  fill(0, 0, 255);
-  rect(0, -5, (map(dimmi, 0, 255, 0, 60))*(1), 15);
-  fill(0, 0, 0);
-  text(str(dimmi), 0, 7);
+  rect(0, -5, 60, 15); //White rect under slider bar
+  fill(0, 255, 0); //Green color for title box
+  rect(-60, -5, 60, 15); //Title box
+  fill(0, 0, 0); //Black title text
+  text(str(numero)+":"+nimi, -47, 7); //Title text (emory number and type text)
+  fill(0, 0, 255); //Blue color for slider bar
+  rect(0, -5, (map(dimmi, 0, 255, 0, 60))*(1), 15); //Slider bar
+  fill(0, 0, 0); //Black color for text
+  text(str(dimmi), 0, 7); //Value text
 }
