@@ -51,8 +51,9 @@ void memoryy(int numero, int dimmi) {
   if(memoryType[numero] == 4) { nimi = "mstr"; }
   if(memoryType[numero] == 5) { nimi = "fade"; }
   if(memoryType[numero] == 6) { nimi = "wave"; }
+  
   fill(255, 255, 255);
-  stroke(255, 255, 0);
+  stroke(255, 255, 0); //Yellow borders
   rect(0, -5, 60, 15);
   fill(0, 255, 0);
   rect(-60, -5, 60, 15);
