@@ -416,22 +416,7 @@ public class ControlFrame extends PApplet {
     .moveTo("fixtSettings")
     ;
     
-    
-   cp5.addButton("fixtIdUp")
-    .setLabel("+")
-    .setPosition(320, 280)
-    .setSize(20, 10)
-    .moveTo("fixtSettings")
-    ;
-    
-    cp5.addButton("fixtIdDown")
-    .setLabel("-")
-    .setPosition(320, 300)
-    .setSize(20, 10)
-    .moveTo("fixtSettings")
-    ;
-    
-    
+
     //Fixture Parameter
     cp5.addNumberbox("fixtParam")
     .setLabel("Parameter")
@@ -540,19 +525,6 @@ public class ControlFrame extends PApplet {
       }
       deleteAll = true;
     }
-    
-    
-    
-    if(theEvent.getController().getName() == "fixtIdUp"){
-      change_fixture_id(changeColorFixtureId);
-      cp5.controller("fixtIdLabel").setStringValue(str(fixtureIdNow[changeColorFixtureId]));
-    }
-    if(theEvent.getController().getName() == "fixtIdDown"){
-      change_fixture_id_down(changeColorFixtureId);
-      cp5.controller("fixtIdLabel").setStringValue(str(fixtureIdNow[changeColorFixtureId]));
-    }
-    
-    
     
     //Preset button pressed?
     if(theEvent.getController().getName().startsWith("preset")) {

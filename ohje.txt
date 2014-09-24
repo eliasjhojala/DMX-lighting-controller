@@ -1,0 +1,85 @@
+Sisällys:
+
+1. Johdanto
+    1.1. Lisälaitteiden käyttöönotto
+	1.1.1. Enttec
+	1.1.2. Arduino 
+2. Peruskäyttö
+3. Presetit
+4. Chaset
+5. Tekninen tuki
+
+
+1. Johdanto
+
+Tämä DMX Control ohjelma on tarkoitettu ohjaamaan monipuolisesti Olarin koulun ja lukion 
+valolaitteistoa. Ohjelmaa kehitetään koko ajan ja kehitysideoita ovat tervetulleita. 
+Ohjelmaa pystyy käyttämään windows ja linux käyttöjärjestelmillä ilman mitään 
+lisälaitteita, mutta yhdistääkseen ohjelman DMX-ketjuun tarvitaan Enttecin valmistama 
+Dmx Usb pro ja sen ajurit. Jos haluat liittää ohjelmaan myös DMX inputin, tarvitset
+Arduino Unon ja siihen sopivan DMX shieldin. 
+
+1.1. Lisälaitteiden käyttöönotto
+	1.1.1. 	Enttecin käyttöönottoa varten sinun on muutettava asetuksista 
+		Enttec DMX USB Pro:n COM-portin järjestysnumero. Tämän jälkeen
+		DMX inputin pitäisi olla toimintakunnossa
+	1.1.2. 	Arduinon käyttöönottoa varten sinun on ladattava DMX to Serial
+		ohjelma arduinoon ja kytkettävä DMX shieldi siihen kiinni. 
+		Tämän jälkeen kytke arduino kiinni tietokoneeseen ja muuta asetuksista
+		Arduinon COM-portin järjestysnumero. Nyt arduinon pitäisi olla 
+		käyttökunnossa.
+
+
+2. Peruskäyttö
+
+Ohjelmaan on valmiiksi asetettu 24 yksikanavaista valoa, joita voit ohjata
+DMX valo-ohjaimella, iPadilla tai itse ohjelmasta.
+DMX-ohjaimella ohjaaminen tapahtuu kuten normaalistikin valopöydän käyttäminen.
+Ohjelmasta valojen käyttö tapahtuu Toggle ja Go -napeista, sekä niiden vieressä 
+olevasta faderista.
+
+
+3. Presetit
+
+Presetit ja muut memoryt ovat ohjelmassa oikeassa laidassa näkyvässä palkissa. 
+Presetin saat päälle iPad-ohjelman violetista ja punaisesta osiosta, 
+sekä valopöydästä vaihtamalla asetuksista DMX inputin ryhmään neljä.
+Presetin luominen:
+3.1. Laita haluamasi valot päälle
+3.2. Klikkaa yläpalkista ”Make preset from active fixtures”
+3.3. Valitse nuolinäppäimillä haluamasi memorypaikka. 1-3 on varattu valmiiksi
+     asetetuille komennoile. (ylös +1; alas -1; oikealle +10; vasemmalle -10)
+3.4. Paina välilyöntiä valittuasi haluamasi memorypaikan
+3.5. Sammuta presettiin tallentamasi valot
+3.6. Presetti on valmis, voit laittaa sen päälle iPadin violetista tai punaisesta 
+     osioista.
+
+4. Chaset
+
+Chaseja ohjelmassa on viittä erilaista. Kolme niistä pohjautuu ääniohjukseen,
+yksi on manuaalinen ja yksi automaattinen.
+
+Chasen luominen:
+4.1. Laita haluamasi presetit päälle
+4.2. Klikkaa yläpalkista ”Make SoundToLight from active presets”
+4.3. Valitse nuolinäppäimillä haluamasi memorypaikka. 1-3 on varattu valmiiksi
+     asetetuille komennoile. (ylös +1; alas -1; oikealle +10; vasemmalle -10)
+4.4. Paina välilyöntiäsi valittuasi haluamasi memorypaikan
+4.5. Sammuta chaseen tallentamasi presetit
+4.6. Chase on valmis, voit laittaa sen päälle iPadin violetista tai punaisesta
+     osiosta
+
+Erilaiset chaset:
+Chaseja on viittä erilaista: 
+	1. Beat detect juoksu
+	2. Sound to light equalisator
+	3. Manual juoksu
+	4. Auto juoksu
+	5. Beat detect wave
+Voit valita chasen tyypin klikkaamalla ylävalikosta chaseMode 
+Ohjeita chasejen käyttöön
+1, 3 ja 4: voit muuttaa crossfadea memorysta 2: fade
+5: voit muuttaa aallon pituutta memorysta 3: wave
+
+5. Tekninen tuki palvelee osoitteessa elias.jh.ojala@gmail.com
+   Jos sinulla on kysymyksiä ota rohkeasti yhteyttä
