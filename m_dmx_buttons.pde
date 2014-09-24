@@ -1,4 +1,4 @@
-boolean[] dmxButtonReleased = new int[512];
+boolean[] dmxButtonReleased = new boolean[512];
 boolean dmxButtonPressed(int id, int val) {
   boolean toReturn = false;
   if(val == 255) {

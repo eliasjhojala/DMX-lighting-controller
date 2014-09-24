@@ -12,7 +12,7 @@ void alavalikko() {
     translate(0, height-100); //alavalikko is located to bottom of the window
     //Upper row
     pushMatrix();
-      for(int i = 0; i <= channels/2; i++) {
+      for(int i = 0; i < channels/2; i++) {
         translate(65, 0); //moves box to its place
         createFixtureBox(i); //Create fixture boxes including buttons and their functions
       }

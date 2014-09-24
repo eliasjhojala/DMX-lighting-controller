@@ -24,6 +24,12 @@ void keyPressed() {
       else { enttecDMXplace = enttecDMXplace + 1; upper = true; }
   } 
   
+  if(keyCode == RIGHT) {
+   change_fixture_id(changeColorFixtureId);
+  }
+  if(keyCode == RIGHT) {
+   change_fixture_id_down(changeColorFixtureId);
+  }
 }
 
 

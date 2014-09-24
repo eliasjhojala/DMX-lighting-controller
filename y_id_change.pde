@@ -31,5 +31,4 @@ void change_fixture_id_down(int originalFixtureId) {
   fixtureIdNow[fixtureIdPlaceInArray[originalFixtureId]-1] = fixtureIdNowTemp[fixtureIdPlaceInArray[originalFixtureId]];
 
   fixtureIdPlaceInArray[originalFixtureId]--; 
-  
 }
