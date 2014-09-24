@@ -65,11 +65,11 @@ secondApplet s;
 
 boolean biitti = false;
 
-int pageRotation = 0; //Sivun käännön määrittelevä muuttuja
+int pageRotation = 0; //How much is page rotated (0-360)
 
 int memoryMenu = 0; //Memorymenun kohta (mistä numerosta alkaa)
 
-int numberOfMemories = 100; //Memorien määrä
+int numberOfMemories = 100; //How much are there memories used in software
 
 
 
