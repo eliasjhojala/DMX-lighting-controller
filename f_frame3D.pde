@@ -3,18 +3,28 @@
  This part of the program has mainly been made by Roope Salmi, rpsalmi@gmail.com
  */
 
+boolean rotateZopposite = true;
+
 boolean use3D = false;
 
 int userOneFrameRate = 30;
 int userTwoFrameRate = 30;
+
+int centerX;
+int centerY;
 
 String assetPath;
 int[] rotX = { 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135, 135 };
 int[] fixZ = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 //0 = None, 1 = ansa 0, 2 = ansa 1
-int[] ansaParent = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-int[] ansaZ = { 0, 0 };
+int[] ansaParent = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+int numberOfAnsas = 6;
+int[] ansaZ = new int[numberOfAnsas];
+int[] ansaX = new int[numberOfAnsas];
+int[] ansaY = new int[numberOfAnsas];
+int[] ansaType = new int[numberOfAnsas];
+
 
 int[] fixParam = { 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45 };
 
@@ -124,27 +134,30 @@ void draw() {
               lights();
               
               //Camera
-              camera(camX, camY, camZ, width/2.0, height/2.0 + 1500, -1000, 0, 0, -1);
+              camera(camX, camY, camZ, width/2.0+centerX, height/2.0 + 1500+centerY, -1000, 0, 0, -1);
               
               
               
               //Draw floor
               pushMatrix();
-              translate(width/2, height/2, -1000);
-              noStroke();
-              rotateX(radians(90));
-              fill(50);
-              scale(400, 400, 400);
-              shape(base);
-              
+                translate(width/2, height/2+4000, -1000);
+                noStroke();
+                rotateX(radians(90));
+                fill(50);
+                scale(400, 400, 400);
+                shape(base);
               popMatrix();
               
+              
               //Draw ansas
-              for(int i = 0; i < y.length; i++) {
-                pushMatrix();
-                translate(0, y[i] * 5, ansaZ[i] + 82);
-                box(10000, 10, 10);
-                popMatrix();
+              int[] ij = { ansaY.length, ansaX.length, ansaZ.length };
+              for(int i = 0; i < min(ij); i++) {
+                if(ansaType[i] == 1) {
+                  pushMatrix();
+                  translate(0, ansaY[i] * 5, ansaZ[i] + 82);
+                  box(10000, 10, 10);
+                  popMatrix();
+                }
               }
               
               //Draw stage (lava)
@@ -201,8 +214,10 @@ void draw() {
 
 void drawLight(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, int coneR, int coneG, int coneB, int conedim, int coneZOffset, int parentAnsa, PShape lightModel) {
       //If light is parented to an ansa, offset Z height by ansas height
-      if (parentAnsa > 0) {
-        posZ += ansaZ[parentAnsa - 1];
+      if (parentAnsa != 0) {
+        posZ += ansaZ[parentAnsa];
+        posX += ansaX[parentAnsa];
+        posY += ansaY[parentAnsa];
       }
       //Draw p64 holder
       pushMatrix();
@@ -243,9 +258,12 @@ void drawLight(int posX, int posY, int posZ, int rotZ, int rotX, int scale, floa
 
 void drawFlood(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, int coneR, int coneG, int coneB, int conedim, int coneZOffset, int parentAnsa, PShape lightModel, int LightParam) {
       //If light is parented to an ansa, offset Z height by ansas height
-      if (parentAnsa > 0) {
-        posZ += ansaZ[parentAnsa - 1];
+      if (parentAnsa != 0) {
+        posZ += ansaZ[parentAnsa];
+        posX += ansaX[parentAnsa];
+        posY += ansaY[parentAnsa];
       }
+      posY -= 20;
       //Draw p64 holder
       pushMatrix();
       translate(posX * 5 - 1000, posY * 5, posZ);
@@ -305,8 +323,10 @@ void drawFlood(int posX, int posY, int posZ, int rotZ, int rotX, int scale, floa
 
 void drawStrobo(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, int coneR, int coneG, int coneB, int conedim, int coneZOffset, int parentAnsa, PShape lightModel, boolean stroboIsOn) {
       //If light is parented to an ansa, offset Z height by ansas height
-      if (parentAnsa > 0) {
-        posZ += ansaZ[parentAnsa - 1];
+      if (parentAnsa != 0) {
+        posZ += ansaZ[parentAnsa];
+        posX += ansaX[parentAnsa];
+        posY += ansaY[parentAnsa];
       }
       
       //Draw light itself
@@ -343,23 +363,33 @@ void drawStrobo(int posX, int posY, int posZ, int rotZ, int rotX, int scale, flo
 
 void mouseDragged()
 {
+    if(mouseButton == RIGHT) {
+      centerX += (mouseX - pmouseX) * 5;
+      centerY += (mouseY - pmouseY) * 10;
+      
+      translate(width/2.0+centerX, height/2.0 + 1500+centerY, 0); 
+      fill(255, 255, 0);
+      box(50);
+      translate((width/2.0+centerX)*(-1), (height/2.0 + 1500+centerY)*(-1), 0); 
+    }
     
-    camX += (mouseX - pmouseX) * 5;
-    camY += (mouseY - pmouseY) * 10;
+    else {
+      camX += (mouseX - pmouseX) * 5;
+      camY += (mouseY - pmouseY) * 10;
+    }
 }
  
 void mousePressed() {
-  loop();
-  frameRate(60);
+  if(use3D) {
+    loop();
+    frameRate(60);
+  }
 }
  
 void keyPressed()
 {
-  if (keyCode == UP) {
-    camZ += 100;
-  } else if (keyCode == DOWN) {
-    camZ -= 100;
-  }
+  if (keyCode == UP) { camZ += 100; } 
+  else if (keyCode == DOWN) { camZ -= 100; }
 }
 
 

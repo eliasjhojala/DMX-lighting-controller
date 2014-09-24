@@ -1,6 +1,10 @@
 //Tässä välilehdessä piirretään sivuvalikko, jossa näkyy memorit ja niiden arvot, sekä tyypit
 
 void sivuValikko() {
+  if(mouseX > width-120 && mouseX < width && mouseY > 30) {
+    mouseLocked = true; //Lukitsee hiiren, jottei se vaikuta muihin alueisiin
+    mouseLocker = "sivuValikko"; //Kertoo hiiren olevan lukittu alueelle sivuValikko
+  }
    if(mousePressed == true) {
     if(mouseX > width-120 && mouseX < width && mouseY > 30) {
       mouseLocked = true; //Lukitsee hiiren, jottei se vaikuta muihin alueisiin
@@ -18,8 +22,6 @@ void sivuValikko() {
         memoryValue[round((mouseY-30)/15)+memoryMenu] = 0;
         }
       }
-      print((mouseY-30)/15);
-      println(str(mouseX-width+60));
     }
     else {
       mouseLocked = false;
@@ -27,17 +29,19 @@ void sivuValikko() {
     }
   }
   
-  translate(width-60, 30);
+  
+  //Drawing
+  pushMatrix();
+  translate(width-60, 40);
   for(int i = 1; i <= height/15-5; i++) {
     if(memoryMenu < numberOfMemories+40) {
-    translate(0, 15);
-    memoryy(i+memoryMenu, memoryValue[i+memoryMenu]);
+      translate(0, 15);
+      memoryy(i+memoryMenu, memoryValue[i+memoryMenu]);
+    }
   }
-  }
-  for(int i = 0; i < 40; i++) {
-    translate(0, -15);
-  }
-  translate((width-100)*(-1), 0);
+  popMatrix();
+  
+  
  
 }
 void memoryy(int numero, int dimmi) {

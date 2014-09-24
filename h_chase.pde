@@ -3,26 +3,11 @@
 ENSIN LASKETAAN AKTIIVISET MEMORYT JA SEN JÄLKEEN JOKA ISKULLA FOR LOOPPI
 */
 
-boolean bigBeat = false;
 
 void detectBeat() {
-      beat.detect(in.mix); //minim-kirjaston beatintunnistuskomentoihin tarvittava komento
-      millisNow[10] = millis();
-      if (((beat.isKick() && beat.isSnare()) || (beat.isKick() && beat.isHat()) || (beat.isHat() && beat.isSnare()))) {
-        if(beat.isKick() && beat.isSnare() && beat.isHat()) {
-          bigBeat = true;
-           millisOld[11] = millis();
-        }
-        biitti = true;
-        millisOld[10] = millis();
-      }
-      else {
-        if(millisNow[10] - millisOld[10] > 50) {
-          biitti = false;
-          bigBeat = false;
-          millisOld[10] = millis();
-        }
-      }
+      beat.detect(in.mix); //beat detect command of minim library
+      if (beat.isKick()) { biitti = true; } //if beat is detected set biitti to true
+      else { biitti = false; } //if not set biitti to false
 }
 
 void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funktion aloitus
@@ -133,8 +118,7 @@ void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funkti
     }
   }
 }
-    
-    }
+}
 
 void stepChange(int memoryNumber, int value, boolean useFade, boolean changeSteppiii) {
 
@@ -156,12 +140,8 @@ void stepChange(int memoryNumber, int value, boolean useFade, boolean changeStep
         steppi[memoryNumber] = 1; steppi1[memoryNumber] = soundToLightSteps[memoryNumber];
       }
     }
-  preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], round(map(chaseBright2[memoryNumber], 0, 255, 0, value)));
-  preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], round(map(255 - chaseBright2[memoryNumber], 0, 255, 0, value)));
-  //memoryValue[soundToLightPresets[memoryNumber][steppi[memoryNumber]]] = chaseBright2[memoryNumber];
-  //memoryValue[soundToLightPresets[memoryNumber][steppi1[memoryNumber]]] = 255 - chaseBright2[memoryNumber];
-  
-  
+    preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], round(map(chaseBright2[memoryNumber], 0, 255, 0, value)));
+    preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], round(map(255 - chaseBright2[memoryNumber], 0, 255, 0, value)));
   }
   else {
     if(changeSteppiii == true) {
@@ -175,8 +155,6 @@ void stepChange(int memoryNumber, int value, boolean useFade, boolean changeStep
     }
     preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], round(map(255, 0, 255, 0, value)));
     preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], 0);
-  //  memoryValue[soundToLightPresets[memoryNumber][steppi[memoryNumber]]] = 255;
-  //  memoryValue[soundToLightPresets[memoryNumber][steppi1[memoryNumber]]] = 0;
   }
 }
 
@@ -184,52 +162,29 @@ void stepChange(int memoryNumber, int value, boolean useFade, boolean changeStep
 
 void stepChangeRev(int memoryNumber, int value, boolean useFade, boolean changeStep) {
 
-if(useFade == true) {
-  if(changeStep == true) {
-
-    chaseBright1[memoryNumber]--;
-    chaseBright2[memoryNumber] = 255 - chaseBright1[memoryNumber];
-    
-    if(chaseBright1[memoryNumber] < 1) {
-      chaseBright1[memoryNumber] = chaseFade;
-      steppi[memoryNumber]--;
-      steppi1[memoryNumber] = steppi[memoryNumber] + 1;
-      chaseStepChangingRev[memoryNumber] = false;
+  if(useFade == true) {
+    if(changeStep == true) {
+  
+      chaseBright1[memoryNumber]--;
+      chaseBright2[memoryNumber] = 255 - chaseBright1[memoryNumber];
       
+      if(chaseBright1[memoryNumber] < 1) {
+        chaseBright1[memoryNumber] = chaseFade;
+        steppi[memoryNumber]--;
+        steppi1[memoryNumber] = steppi[memoryNumber] + 1;
+        chaseStepChangingRev[memoryNumber] = false;
+        
+      }
+      
+      chaseBright2[memoryNumber] = round(map(chaseBright1[memoryNumber], 0, chaseFade, 0, 255));
+      
+      if(steppi[memoryNumber] < 1) {
+        steppi[memoryNumber] = soundToLightSteps[memoryNumber]; steppi1[memoryNumber] = 1;
+      }
     }
-    
-    chaseBright2[memoryNumber] = round(map(chaseBright1[memoryNumber], 0, chaseFade, 0, 255));
-    
-    if(steppi[memoryNumber] < 1) {
-      steppi[memoryNumber] = soundToLightSteps[memoryNumber]; steppi1[memoryNumber] = 1;
-    }
-    print("chaseBright1: ");
-    print(chaseBright1[memoryNumber]);
-    print("               chaseBright2: ");
-    print(chaseBright2[memoryNumber]);
-    println(); println();
-  }
     preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], round(map(chaseBright2[memoryNumber], 0, 255, 0, value)));
     preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], round(map(255 - chaseBright2[memoryNumber], 0, 255, 0, value)));
-//memoryValue[soundToLightPresets[memoryNumber][steppi[memoryNumber]]] = chaseBright2[memoryNumber];
-//memoryValue[soundToLightPresets[memoryNumber][steppi1[memoryNumber]]] = 255 - chaseBright2[memoryNumber];
-
-
-}
-else {
-//  if(changeStep == true) {
-//    steppi[memoryNumber]++;
-//    steppi1[memoryNumber] = steppi[memoryNumber] - 1;
-//    if(steppi[memoryNumber] > soundToLightSteps[memoryNumber]) {
-//      steppi[memoryNumber] = 1;
-//      steppi1[memoryNumber] = soundToLightSteps[memoryNumber];
-//    }
-//  }
-//  preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], round(map(255, 0, 255, 0, value)));
-//  preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], 0);
-////  memoryValue[soundToLightPresets[memoryNumber][steppi[memoryNumber]]] = 255;
-////  memoryValue[soundToLightPresets[memoryNumber][steppi1[memoryNumber]]] = 0;
-}
+  }
 }
 
 
@@ -257,16 +212,12 @@ void freqSoundToLight(int memoryNumber, int value) {
     }
     
     millisOld[1] = millisNow[1];
-      }
+  }
 }
  
-void stop()
-{
-  // always close Minim audio classes when you are finished with them
-  //song.close();
+void stop() {
+  //stop minim audio
   in.close();
-  // alway s stop Minim before exiting
   minim.stop();
- 
   super.stop();
 } 

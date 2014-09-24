@@ -5,10 +5,14 @@ NetAddress myRemoteLocation1;
 
 OscP5 oscP52;
 NetAddress myRemoteLocation2;
+
+
+
+
 boolean loadAllDataInSetup = true;
 
-int leveys;
-int korkeus;
+public int leveys;
+public int korkeus;
 void setuppi() {
   leveys = displayWidth;
   korkeus = displayHeight;
@@ -25,15 +29,15 @@ void setuppi() {
   }
 
 
-  // start oscP5, telling it to listen for incoming messages at port 5001 */
-  oscP51 = new OscP5(this,5001);
- 
-  // set the remote location to be the localhost on port 5001
-  myRemoteLocation1 = new NetAddress("192.168.0.11",5001);
 
-
- oscP52 = new OscP5(this,5001);
-  // set the remote location to be the localhost on port 5001
-  myRemoteLocation2 = new NetAddress("192.168.0.17",5000);
+  oscP51 = new OscP5(this, 5001);
+  oscP52 = new OscP5(this, 5000);
+  myRemoteLocation1 = new NetAddress("192.168.0.17",5001);
+  myRemoteLocation2 = new NetAddress("192.168.0.11",5000);
+  
+  
+  if(dataLoaded) {
+    ansaWidth = max(xTaka)+80;
+  }
 
 }

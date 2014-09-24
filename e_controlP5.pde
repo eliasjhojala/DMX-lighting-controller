@@ -1,5 +1,6 @@
-//Tässä välilehdessä on koko control-ikkuna
-//This file is based on:
+//CONTROL WINDOW CODE//---->
+
+   //This file is based on:
    /**
    * ControlP5 Controlframe
    * with controlP5 2.0 all java.awt dependencies have been removed
@@ -19,6 +20,7 @@
  /*
  This part of the program has mainly been made by Roope Salmi, rpsalmi@gmail.com
  */
+ 
 boolean wave = false;
 
 ControlFrame addControlFrame(String theName, int theWidth, int theHeight) {
@@ -94,7 +96,6 @@ public class ControlFrame extends PApplet {
      .moveTo("default")
      ;
      checkedPresets ++;
-     println(checkedPresets);
     }
   }
   
@@ -107,7 +108,17 @@ public class ControlFrame extends PApplet {
     //  /params
   
   int createdAnsaZBoxes = 0;
+  int createdAnsaXBoxes = 0;
+  int createdAnsaYBoxes = 0;
+  int createdAnsaTypeBoxes = 0;
+  
+  ///////////////////////////////////////////////////////////
   public void setup() {
+    
+    if(!dataLoaded) {
+      loadSetupData();
+      loadAllData();
+    }
     
     //startof: Setup
     //set window size according to parameters
@@ -291,6 +302,45 @@ public class ControlFrame extends PApplet {
       ;
     }
     
+    for (int i = 0; i < ansaX.length; i++) {
+      createdAnsaXBoxes ++;
+      cp5.addNumberbox("ansaX" + str(i))
+      .setLabel("Ansa " + str(i) + " X")
+      .setPosition(20 + i * 105, 220)
+      .setSize(100, 14)
+      .setDecimalPrecision(0)
+      .setRange(-10000, 10000)
+      .setValue(ansaX[i])
+      .moveTo("settings")
+      ;
+    }
+    
+    for (int i = 0; i < ansaY.length; i++) {
+      createdAnsaYBoxes ++;
+      cp5.addNumberbox("ansaY" + str(i))
+      .setLabel("Ansa " + str(i) + " Y")
+      .setPosition(20 + i * 105, 260)
+      .setSize(100, 14)
+      .setDecimalPrecision(0)
+      .setRange(-10000, 10000)
+      .setValue(ansaY[i])
+      .moveTo("settings")
+      ;
+    }
+    
+    for (int i = 0; i < ansaType.length; i++) {
+      createdAnsaTypeBoxes ++;
+      cp5.addNumberbox("ansaType" + str(i))
+      .setLabel("Ansa " + str(i) + " visibility")
+      .setPosition(20 + i * 105, 300)
+      .setSize(100, 14)
+      .setDecimalPrecision(0)
+      .setRange(0, 1)
+      .setValue(ansaType[i])
+      .moveTo("settings")
+      ;
+    }
+    
     
     //Tab: Fixture color (Fixture settings, I should change that)
      cp5.tab("fixtSettings").setLabel("Fixture Settings").setVisible(false);
@@ -376,10 +426,11 @@ public class ControlFrame extends PApplet {
     
     cp5.addButton("fixtIdDown")
     .setLabel("-")
-    .setPosition(320, 320)
+    .setPosition(320, 300)
     .setSize(20, 10)
     .moveTo("fixtSettings")
     ;
+    
     
     //Fixture Parameter
     cp5.addNumberbox("fixtParam")
@@ -388,6 +439,17 @@ public class ControlFrame extends PApplet {
     .setSize(100, 14)
     .setDecimalPrecision(0)
     .setRange(-10000, 10000)
+    .setValue(0)
+    .moveTo("fixtSettings")
+    ;
+    
+    //Fixture Parameter
+    cp5.addNumberbox("ansaParent")
+    .setLabel("ansaParent")
+    .setPosition(20, 430)
+    .setSize(100, 14)
+    .setDecimalPrecision(0)
+    .setRange(0, numberOfAnsas-1)
     .setValue(0)
     .moveTo("fixtSettings")
     ;
@@ -437,6 +499,8 @@ public class ControlFrame extends PApplet {
 
   }
   DropdownList lb;
+  
+  //////////////////////////////////////////////////////////////////////////////
   
   //The controlEvent void triggers also when the elements are created, so we have to make sure it doesn't execute the trigger at the first catch of a specific element. (asvPre and adelPre should not be fired at program launch)
   boolean deleteAll = false;
@@ -515,6 +579,8 @@ public class ControlFrame extends PApplet {
     //endof: Event catcher
   }
    
+   ///////////////////////////////////////////////////////////////////////////////////////////////
+   
   //Load preset; params: id = Preset id
   void loadPreset(int id) {
     
@@ -530,6 +596,8 @@ public class ControlFrame extends PApplet {
     started = false;
     targetStep = 0;
   }
+  
+  
   
   //Note to self: This void gets triggered 25 times a second. (Unless computer can't keep up with 25 FPS) The animation will happen in 10 frames
   int targetStep = 0;
@@ -615,6 +683,9 @@ public class ControlFrame extends PApplet {
     //lowpriorityTODO: Add automatic reload if file changed
   }
   
+  
+  ////////////////////////////////////////////////////////////////////////////////////////
+  
   int waveStep = 2;
   int waveCurrentStep = 1;
   int waveLength = 3;
@@ -672,7 +743,7 @@ public class ControlFrame extends PApplet {
     
   }
   
-  
+  //////////////////////////////////////////////////////////////////////////
   
   //Just so that it wont start changing values unless the color change has been triggered atleast once.
   boolean fixtureColorChangeHasHappened = false;
@@ -707,6 +778,7 @@ public class ControlFrame extends PApplet {
         cp5.controller("fixtZ").setValue(fixZ[changeColorFixtureId]);
         cp5.controller("fixtChan").setValue(channel[changeColorFixtureId]);
         cp5.controller("fixtParam").setValue(fixParam[changeColorFixtureId]);
+        cp5.controller("ansaParent").setValue(ansaParent[changeColorFixtureId]);
         lb.setIndex(fixtureType1[changeColorFixtureId] - 1);
         //Make the color tab visible and activate it
         cp5.tab("fixtSettings").setVisible(true).setLabel("Fixture ID: " + str(changeColorFixtureId + 1));
@@ -728,13 +800,26 @@ public class ControlFrame extends PApplet {
         fixZ[changeColorFixtureId] = int(cp5.controller("fixtZ").getValue());
         channel[changeColorFixtureId] = int(cp5.controller("fixtChan").getValue());
         fixParam[changeColorFixtureId] = int(cp5.controller("fixtParam").getValue());
+        ansaParent[changeColorFixtureId] = int(cp5.controller("ansaParent").getValue());
         fixtureType1[changeColorFixtureId] = int(lb.getValue());
       }
       
       //Set ansa Z values according to NBoxes
-      for (int i = 0; i < createdAnsaZBoxes; i++) {
-        ansaZ[i] = int(cp5.controller("ansaZ" + str(i)).getValue());
+      if(dataLoaded == true) {
+        for (int i = 0; i < createdAnsaZBoxes; i++) {
+          ansaZ[i] = int(cp5.controller("ansaZ" + str(i)).getValue());
+        }
+        for (int i = 0; i < createdAnsaXBoxes; i++) {
+          ansaX[i] = int(cp5.controller("ansaX" + str(i)).getValue());
+        }
+        for (int i = 0; i < createdAnsaYBoxes; i++) {
+          ansaY[i] = int(cp5.controller("ansaY" + str(i)).getValue());
+        }
+        for (int i = 0; i < createdAnsaTypeBoxes; i++) {
+          ansaType[i] = int(cp5.controller("ansaType" + str(i)).getValue());
+        }
       }
+      
       
       //Update view rotation according to knob
       pageRotation = int(cp5.controller("viewRotKnob").getValue());
@@ -762,6 +847,8 @@ public class ControlFrame extends PApplet {
 
   }
   
+  ///////////////////////////////////////////////////////////////////////////////////
+  
   String typedPreset = "";
   boolean typingPreset = false;
   //How long before typing is cleared out (in s)
@@ -778,6 +865,13 @@ public class ControlFrame extends PApplet {
         typingPreset = false;
         presetTypingCurrent = 0;
       }
+      
+    //C for cancel; Cancel typing
+    } else if(key == 'c'){
+      //Escape typing
+      typedPreset = "";
+      typingPreset = false;
+      presetTypingCurrent = 0;
     } else {
       //See if key can be converted to an int
       boolean error = false;
@@ -794,6 +888,7 @@ public class ControlFrame extends PApplet {
     
   }
   
+  ///////////////////////////////////////////////////////////////////////////////////////
   //Frame info -- Not important
   private ControlFrame() {
   }

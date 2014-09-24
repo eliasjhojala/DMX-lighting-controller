@@ -14,7 +14,6 @@ void change_fixture_id(int originalFixtureId) {
   fixtureIdNow[fixtureIdPlaceInArray[originalFixtureId]+1] = fixtureIdNowTemp[fixtureIdPlaceInArray[originalFixtureId]];
 
   fixtureIdPlaceInArray[originalFixtureId]++; 
-  
 }
 void change_fixture_id_down(int originalFixtureId) {
   //Nollataan väliaikaismuuttujat

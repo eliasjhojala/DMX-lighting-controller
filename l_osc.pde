@@ -1,5 +1,9 @@
 //Tässä välilehdessä luetaan iPadilta touchOSC-ohjelman inputti
 
+int multixy1_value;
+int multixy1_value_old;
+int multixy1_value_offset;
+
 boolean fullOn; //Muuttuja, joka kertoo onko fullOn päällä
 int[] valueOfDimBeforeFullOn = new int[channels]; //Muuttuja johon kirjoitetaan kanavien arvot ennen kun ne laitetaan täysille
 boolean blackOutButtonWasReleased;
@@ -12,7 +16,7 @@ void oscEvent(OscMessage theOscMessage) {
 
   int digitalValue = int(val); //muutetaan float intiksi
 
-
+  
   for(int i = 1; i <= touchOSCchannels; i++) { //Käydään kaikki touchOSCin kanavat (faderit) läpi
     String nimi = "/1/fader" + str(i);
     String nimi1 = "/1/push" + str(i);
@@ -36,6 +40,13 @@ void oscEvent(OscMessage theOscMessage) {
   }
   
   
+  
+  
+     /*
+       Blackout toimintaperiaate:
+       laitetaan grandMaster nollaan
+     */
+  
    if(addr.equals("/blackout")) { //Jos blackout nappia painetaan
        if(digitalValue == 1) {
          if(blackOut == true) { //Jos blackout on päällä otetaan se pois päältä, eli palautetaan kanaville entiset arvot
@@ -56,6 +67,15 @@ void oscEvent(OscMessage theOscMessage) {
        }
      }
      
+     if(addr.equals("/strobenow")) {
+       if(digitalValue == 1) {
+         memory(soloMemory, 255);
+       }
+       else {
+         memory(soloMemory, 0);
+       }
+     }
+     
      
      if(addr.equals("/nextstep")) {
        if(digitalValue == 1) {
@@ -73,13 +93,31 @@ void oscEvent(OscMessage theOscMessage) {
          revStepPressed = false;
        }
      }
-     /*
-       Blackout toimintaperiaate:
-       laitetaan grandMaster nollaan
-     */
-    
      
      
+     
+     if(addr.equals("/chaseModeUp")) {
+       if(digitalValue == 1) {
+           chaseMode++;
+          if(chaseMode > 5) {
+            chaseMode = 1;
+          }
+          sendDataToIpad("/chaseMode", chaseMode);
+       }
+     }
+     
+     if(addr.equals("/chaseModeDown")) {
+       if(digitalValue == 1) {
+           chaseMode--;
+          if(chaseMode < 1) {
+            chaseMode = 5;
+          }
+          sendDataToIpad("/chaseMode", chaseMode);
+       }
+     }
+     
+     
+   
      /*
        Fullon toimintaperiaate:
        fullon on toiminto, joka laittaa kaikkien kanavien arvot täysille.
@@ -90,6 +128,8 @@ void oscEvent(OscMessage theOscMessage) {
        go-tyyppisesti, eli sitä painettaessa fullOn menee päälle ja kun
        se päästetään irti fullOn sammuu.
      */
+     
+    
      
      if(addr.equals("/fullon")) {
        if(digitalValue == 0) {
@@ -149,5 +189,4 @@ void oscEvent(OscMessage theOscMessage) {
      }
    }
   }
-
 }

@@ -1,38 +1,29 @@
 //Tässä välilehdessä piirretään ylävalikko, ja käsitellään sen nappuloiden komentoja 
 
 void ylavalikko() {
-  if(move == false && mouseY < height - 200 && mouseY > 100 && (mouseLocked == false || mouseLocker == "main")) { //Tarkistetaan mm. ettei hiiri ole lukittuna jollekin muulle alueelle
-    if(mouseClicked == true) {
-      x_siirto = x_siirto - (oldMouseX - mouseX);
-      y_siirto = y_siirto - (oldMouseY - mouseY);
-      oldMouseX = mouseX;
-      oldMouseY = mouseY;
+  if(move == false && mouseY < height - 200 && mouseY > 50 && mouseX < width-120 && (!mouseLocked || mouseLocker == "main")) { //Tarkistetaan mm. ettei hiiri ole lukittuna jollekin muulle alueelle
+    mouseLocked = true;
+    mouseLocker = "main";
+    if(mouseClicked) {    
+      movePage();
     }
   }
-  if(move == true) {
-    zoom = 100;
-    x_siirto = 0;
-    y_siirto = 0;
-    
-  }
-  else {
+  if(!move) {
     oldMouseX = mouseX;
     oldMouseY = mouseY;
   }
   stroke(255, 255, 255); 
-  if(mouseX > 0 && mouseX < width/4 && mouseY < 50 && mouseClicked == true) {
+  if(mouseX > 0 && mouseX < width/4 && mouseY < 50 && mouseClicked && mouseReleased && (!mouseLocked || mouseLocker == "ylavalikko")) {
     fill(0, 0, 255);
     if(move == true) {
       move = false;
       delay(100);
     }
     else {
-      zoom = 100;
-      x_siirto = 0;
-      y_siirto = 0;
       move = true;
       delay(100);
     }
+    mouseReleased = false;
   }
   else {
     fill(255, 0, 0);
@@ -48,7 +39,7 @@ void ylavalikko() {
     text("Next: Move and edit fixtures", 30, 35);
   }
   
-  if(mouseX > width/4 && mouseX < width/4*2 && mouseY < 50 && mouseClicked == true) {
+  if(mouseX > width/4 && mouseX < width/4*2 && mouseY < 50 && mouseClicked && mouseReleased && (!mouseLocked || mouseLocker == "ylavalikko")) {
     if(mouseReleased == true) {
       mouseReleased = false;
       fill(0, 0, 255);
@@ -68,7 +59,7 @@ void ylavalikko() {
   rect(width/4*1, 0, width/4, 50);
   fill(255, 255, 255);
   text("Make preset from active fixtures", width/4+30, 30);
-  if(mouseX > width/4*2 && mouseX < width/4*3 && mouseY < 50 && mouseClicked == true) {
+  if(mouseX > width/4*2 && mouseX < width/4*3 && mouseY < 50 && mouseClicked && mouseReleased && (!mouseLocked || mouseLocker == "ylavalikko")) {
     fill(0, 0, 255);
     for(int i = 0; i < numberOfMemories; i++) {
       if(memoryType[i] != 0) {
@@ -83,7 +74,7 @@ void ylavalikko() {
   rect(width/4*2, 0, width/4, 50);
   fill(255, 255, 255);
   text("Make SoundToLight from active presets", width/4*2+30, 30);
-  if(mouseX > width/4*3 && mouseX < width/4*4 && mouseY < 50 && mouseClicked == true && mouseReleased == true) {
+  if(mouseX > width/4*3 && mouseX < width/4*4 && mouseY < 50 && mouseClicked && mouseReleased && (!mouseLocked || mouseLocker == "ylavalikko")) {
     fill(0, 0, 255);
     chaseMode++;
     if(chaseMode > 5) {

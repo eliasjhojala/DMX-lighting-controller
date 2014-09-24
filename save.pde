@@ -28,6 +28,32 @@ void saveAllData() {
     TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixZ"); 
     newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixZ[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
   }
+  
+  for(int i = 0; i < ansaZ.length; i++) {
+    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "ansaZ"); 
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(ansaZ[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
+  }
+  
+  for(int i = 0; i < ansaX.length; i++) {
+    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "ansaX"); 
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(ansaX[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
+  }
+  
+  for(int i = 0; i < ansaY.length; i++) {
+    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "ansaY"); 
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(ansaY[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
+  }
+
+
+  for(int i = 0; i < ansaParent.length; i++) {
+    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "ansaParent"); 
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(ansaParent[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
+  }
+  
+  for(int i = 0; i < ansaType.length; i++) {
+    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "ansaType"); 
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(ansaType[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
+  }
 
   
   for(int i = 0; i <  memoryType.length; i++) {
@@ -77,6 +103,26 @@ void saveAllData() {
     TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "channel"); 
     newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(channel[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
   }
+  
+  for(int i = 0; i <  fixtureIdNow.length; i++) {
+    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixtureIdNow"); 
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixtureIdNow[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
+  }
+  
+  for(int i = 0; i <  fixtureIdOriginal.length; i++) {
+    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixtureIdOriginal"); 
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixtureIdOriginal[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
+  }
+  
+  for(int i = 0; i <  fixtureIdPlaceInArray.length; i++) {
+    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixtureIdPlaceInArray"); 
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixtureIdPlaceInArray[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
+  }
+  
+  
+  
+  
+  
   
   
   for(int i = 0; i <  chaseModeByMemoryNumber.length; i++) {
@@ -166,13 +212,31 @@ void saveAllData() {
   newRow.setString("1D", "-");               
   newRow.setString("2D", "-");
   
+  newRow = table.addRow();
+  
+  newRow.setInt("id", table.lastRowIndex());  
+  newRow.setString("variable_name", "centerX"); 
+  newRow.setString("variable_dimensions", "0"); 
+  newRow.setString("value", str(centerX));   
+  newRow.setString("1D", "-");               
+  newRow.setString("2D", "-");
+  
+  newRow = table.addRow();
+  
+  newRow.setInt("id", table.lastRowIndex());  
+  newRow.setString("variable_name", "centerY"); 
+  newRow.setString("variable_dimensions", "0"); 
+  newRow.setString("value", str(centerY));   
+  newRow.setString("1D", "-");               
+  newRow.setString("2D", "-");
+  
   //Asetetaan oikeat tallennuspolut käyttäjän mukaan
 
   if(userId == 1) { //Jos Elias käyttää
-    saveTable(table, "/Users/elias/Dropbox/DMX controller/main/variables/pikkusten_disko.csv"); //Eliaksen polku
+    saveTable(table, "/Users/elias/Dropbox/DMX controller/main_modular/variables/pikkusten_disko.csv"); //Eliaksen polku
   }
   else { //Jos Roope käyttää
-    saveTable(table, "E:\\Dropbox\\DMX controller\\main\\variables\\pikkusten_disko.csv"); //Roopen polku
+    saveTable(table, "E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv"); //Roopen polku
   }
 }
 
