@@ -104,6 +104,16 @@
 
 void movingHeadOptionsCheck(String address, int value, int value2) {
 
+  if(address.equals("/6/MH_posMirror")) {
+    mhx50_posMirror = boolean(value);
+  }
+  if(address.equals("/6/MH_posDuplicate")) {
+    mhx50_posDuplicate = boolean(value);
+  }
+  if(address.equals("/6/MH_duplicate")) {
+    mhx50_duplicate = boolean(value);
+  }
+  
   for(int id = 0; id <= 1; id++) {
   
   //CH 1: Pan
