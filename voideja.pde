@@ -93,8 +93,6 @@ void drawFixture(int i) {
     lampHeight = siz[1];
     showFixture = siz[2] == 1;
   }
-  if(fixtureType1[i] == 14) { showFixture = false; movingHeadPan = dim[i]; rotTaka[i] = round(map(dim[channel[i]], 0, 255, -90, 90)); }
-  if(fixtureType1[i] == 15) { showFixture = false; rotX[i-2] = round(map(dim[channel[i]], 0, 255, 180, 0)); }
   
   if(showFixture == true) {
     int x1 = 0; int y1 = 0;

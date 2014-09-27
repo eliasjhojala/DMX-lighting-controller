@@ -12,10 +12,18 @@ String addr = "";
 void oscEvent(OscMessage theOscMessage) {
   
   addr = theOscMessage.addrPattern(); //Luetaan touchOSCin elementin osoite
+  
+  
   float val = theOscMessage.get(0).floatValue(); //Luetaan touchOSCin elementin arvo
 
   int digitalValue = int(val); //muutetaan float intiksi
-
+  int digitalValue2 = 0;
+  if(addr.equals("/7/xy1") || addr.equals("/7/xy2") || addr.equals("/8/xy1") || addr.equals("/8/xy2")) {
+    digitalValue2 = int(theOscMessage.get(1).floatValue());
+  }
+  
+  
+   movingHeadOptionsCheck(addr, digitalValue, digitalValue2);
   
   for(int i = 1; i <= touchOSCchannels; i++) { //Käydään kaikki touchOSCin kanavat (faderit) läpi
     String nimi = "/1/fader" + str(i);
@@ -39,7 +47,7 @@ void oscEvent(OscMessage theOscMessage) {
   
   }
   
-  
+
   
   
      /*
@@ -172,30 +180,32 @@ void oscEvent(OscMessage theOscMessage) {
     */
     
     
-   if(addr.equals("/4/fader25")) {
-      movingHeadDim = digitalValue;
-       for(int iii = 0; iii < channels; iii++) {
-     if(fixtureType1[iii] == 13) {
-       dim[iii+1] = digitalValue;
-     }
-   }
-   }
+//   if(addr.equals("/4/fader25")) {
+//      movingHeadDim = digitalValue;
+//       for(int iii = 0; iii < channels; iii++) {
+//     if(fixtureType1[iii] == 13) {
+//       dim[iii+1] = digitalValue;
+//     }
+//   }
+//   }
+//  
+//   
+//  if(addr.equals("/4/xy1")){
+//   movingHeadTilt = int(theOscMessage.get(0).floatValue());
+//   movingHeadPan = int(theOscMessage.get(1).floatValue());
+//   for(int iii = 0; iii < channels; iii++) {
+//     if(fixtureType1[iii] == 14) {
+//       dim[iii+1] = int(theOscMessage.get(1).floatValue());
+//       rotTaka[iii] = int(theOscMessage.get(1).floatValue());
+//     }
+//     if(fixtureType1[iii] == 15) {
+//       dim[iii+1] = int(theOscMessage.get(0).floatValue());
+//       rotX[iii] = int(theOscMessage.get(0).floatValue());
+//     }
+//   }
+//  }
   
-   
-  if(addr.equals("/4/xy1")){
-   movingHeadTilt = int(theOscMessage.get(0).floatValue());
-   movingHeadPan = int(theOscMessage.get(1).floatValue());
-   for(int iii = 0; iii < channels; iii++) {
-     if(fixtureType1[iii] == 14) {
-       dim[iii+1] = int(theOscMessage.get(1).floatValue());
-       rotTaka[iii] = int(theOscMessage.get(1).floatValue());
-     }
-     if(fixtureType1[iii] == 15) {
-       dim[iii+1] = int(theOscMessage.get(0).floatValue());
-       rotX[iii] = int(theOscMessage.get(0).floatValue());
-     }
-   }
-  }
+  
   
   
 }

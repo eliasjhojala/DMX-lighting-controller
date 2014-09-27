@@ -173,7 +173,7 @@ void draw() {
               //Draw lights
               for (int i = 0; i < ansaTaka; i++) {
                 //If light is of type par64 OR moving head dim
-                if(fixtureType1[i] == 1 || fixtureType1[i] == 13){
+                if(fixtureType1[i] == 1 || fixtureType1[i] == 13 ||  fixtureType1[i] == 16 ||  fixtureType1[i] == 17){
                   drawLight(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, par64ConeDiameter, red[i], green[i], blue[i], dim[channel[i]], -60, ansaParent[i], par64Model);
                 } else 
                 //If light is of type p. fresu ("small" F.A.L. fresnel)

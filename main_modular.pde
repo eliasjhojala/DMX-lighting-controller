@@ -1,3 +1,41 @@
+int[][] mhx50_createFinalChannelValues = new int[2][14];
+
+boolean mhx50_posDuplicate = false;
+boolean mhx50_posMirror = true;
+boolean mhx50_duplicate = true;
+
+
+int[] mhx50_panValue = { 0, 0 };
+int[] mhx50_tiltValue = { 0, 0 };
+int[] mhx50_panFineValue = { 0, 0 };
+int[] mhx50_tiltFineValue = { 0, 0 };
+int[] mhx50_responseSpeedValue = { 0, 0 };
+int[] mhx50_dimmerValue = { 0, 0 };
+int[] mhx50_shutterValue = { 0, 0 };
+
+int[] mhx50_color = { 0, 0 };
+int[] mhx50_colorNumber = { 0, 0 };
+
+
+int[][] mhx50_RGB_color_Values = { { 255, 255, 255 }, { 255, 255, 0 }, { 255, 100, 255 }, { 0, 100, 0 }, { 255, 0, 255 }, { 0, 0, 255 }, { 0, 255, 0 }, { 255, 30, 0 }, { 0, 0, 100 } };
+int[] mhx50_color_values = { 5, 12, 19, 26, 33, 40, 47, 54, 62 }; //white, yellow, lightpink, green, darkpink, lightblue, lightgreen, red, dark blue
+String[] mhx50_color_names = { "white", "yellow", "lightpink", "green", "darkpink", "lightblue", "lightgreen", "red", "blue" };
+
+int[] mhx50_gobo_values = { 6, 14, 22, 30, 38, 46, 54, 62 };
+int[] mhx50_goboNumber = { 0, 0 };
+int[] mhx50_goboValue = { 0, 0 };
+
+int[] mhx50_goboRotationValue = { 0, 0 };
+
+int[] mhx50_focusValue = { 0, 0 };
+int[] mhx50_prismValue = { 0, 0 };
+
+int[] mhx50_autoProgram_values = { 6, 22, 6, 38, 6, 54, 6, 70, 6, 86, 6, 102, 6, 118, 6, 134, 6, 150, 6, 166, 6, 182, 6, 198, 6, 214, 6, 230, 6, 247, 6, 254 };
+int[] mhx50_autoProgramNumber = { 0, 0 };
+int[] mhx50_autoProgramValue = { 0, 0 };
+
+int[] mhx50_resetValue = { 0, 0 };
+
 
 int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
@@ -52,7 +90,6 @@ void setFixtureChannelsAtSoftwareBegin() {
 
 
 
-
 import javax.swing.JFrame; //Käytetään frame-kirjastoa, jonka avulla voidaan luoda monta ikkunaa
 
 PFrame f1 = new PFrame();; //Luodaan uusi ikkuna
@@ -60,6 +97,8 @@ secondApplet1 s1;
 
 PFrame1 f = new PFrame1();; //Luodaan toinenkin uusi ikkuna
 secondApplet s;
+
+
 
 
 

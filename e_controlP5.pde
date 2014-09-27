@@ -466,9 +466,8 @@ public class ControlFrame extends PApplet {
     lb.addItem("Strobe Freq.", 10);
     lb.addItem("Fog", 11);
     lb.addItem("Pinspot", 12);
-    lb.addItem("Moving Head Dim", 13);
-    lb.addItem("Moving Head Pan", 14);
-    lb.addItem("Moving Head Tilt", 15);
+    lb.addItem("1. MH-X50", 16);
+    lb.addItem("2. MH-X50", 17);
     
     
     //Create and define the tooltip

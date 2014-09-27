@@ -29,6 +29,20 @@ void drawMainWindow() {
       }
       
       for(int i = 0; i < ansaTaka; i++) {
+        if(fixtureType1[i] == 16) {
+          rotTaka[i] = mhx50_createFinalChannelValues[0][0];
+          rotX[i] = mhx50_createFinalChannelValues[0][1];
+          red[i] = mhx50_RGB_color_Values[mhx50_colorNumber[0]][0];
+          green[i] = mhx50_RGB_color_Values[mhx50_colorNumber[0]][1];
+          blue[i] = mhx50_RGB_color_Values[mhx50_colorNumber[0]][2];
+        }
+        if(fixtureType1[i] == 17) {
+          rotTaka[i] = mhx50_createFinalChannelValues[1][0];
+          rotX[i] = mhx50_createFinalChannelValues[1][1];
+          red[i] = mhx50_RGB_color_Values[mhx50_colorNumber[1]][0];
+          green[i] = mhx50_RGB_color_Values[mhx50_colorNumber[1]][1];
+          blue[i] = mhx50_RGB_color_Values[mhx50_colorNumber[1]][2];
+        }
         pushMatrix();
             if(move && (!mouseLocked || mouseLocker == "main")) {
                 if(!mouseClicked) {

@@ -17,4 +17,6 @@ void draw() {
   alavalikko(); //bottom menu
   sivuValikko(); //right menu
   
+  
 }
+

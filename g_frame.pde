@@ -56,10 +56,18 @@ public class secondApplet extends PApplet {
       }
   }
   }
-  if(addr != null) {
+  if(addr != null) { 
   text(addr, 800, 100);
   }
+
+
+for(int id = 0; id <= 1; id++) {
+  for(int i = 0; i < mhx50_createFinalChannelValues[id].length; i++) {
+    text(mhx50_createFinalChannelValues[id][i], 800+id*200, 200+15*i);
   }
+}
+
+}
   
   /*
    * TODO: something like on Close set f to null, this is important if you need to 
