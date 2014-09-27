@@ -1,9 +1,12 @@
 int[][] mhx50_createFinalChannelValues = new int[2][14];
+int[][][] mhx50_createFinalPresetValues = new int[16][2][14];
 
 boolean mhx50_posDuplicate = false;
 boolean mhx50_posMirror = true;
 boolean mhx50_duplicate = true;
 
+boolean savePreset = false;
+boolean changeValues = true;
 
 int[] mhx50_panValue = { 0, 0 };
 int[] mhx50_tiltValue = { 0, 0 };
@@ -15,6 +18,7 @@ int[] mhx50_shutterValue = { 0, 0 };
 
 int[] mhx50_color = { 0, 0 };
 int[] mhx50_colorNumber = { 0, 0 };
+
 
 
 int[][] mhx50_RGB_color_Values = { { 255, 255, 255 }, { 255, 255, 0 }, { 255, 100, 255 }, { 0, 100, 0 }, { 255, 0, 255 }, { 0, 0, 255 }, { 0, 255, 0 }, { 255, 30, 0 }, { 0, 0, 100 } };
@@ -35,6 +39,32 @@ int[] mhx50_autoProgramNumber = { 0, 0 };
 int[] mhx50_autoProgramValue = { 0, 0 };
 
 int[] mhx50_resetValue = { 0, 0 };
+
+
+
+
+int[]  mhx50_panValueOld = { 0, 0 };
+int[]  mhx50_tiltValueOld = { 0, 0 };
+int[]  mhx50_panFineValueOld = { 0, 0 };
+int[]  mhx50_tiltFineValueOld = { 0, 0 };
+int[]  mhx50_responseSpeedValueOld = { 0, 0 };
+int[]  mhx50_colorOld = { 0, 0 };
+int[]  mhx50_shutterValueOld = { 0, 0 };
+int[]  mhx50_dimmerValueOld = { 0, 0 };
+int[]  mhx50_goboValueOld = { 0, 0 };
+int[]  mhx50_goboRotationValueOld = { 0, 0 };
+int[]  mhx50_resetValueOld = { 0, 0 };
+int[]  mhx50_autoProgramValueOld = { 0, 0 };
+int[]  mhx50_prismValueOld = { 0, 0 };
+int[]  mhx50_focusValueOld = { 0, 0 };
+
+
+
+
+
+
+
+
 
 
 int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?

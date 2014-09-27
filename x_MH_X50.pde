@@ -114,6 +114,27 @@ void movingHeadOptionsCheck(String address, int value, int value2) {
     mhx50_duplicate = boolean(value);
   }
   
+  if(address.equals("/7/savePreset1") || address.equals("/7/savePreset2")) {
+    savePreset = true;
+  }
+  
+  for(int ij = 1; ij <= 2; ij++) {
+  for(int i = 0; i < 15; i++) {
+    if(address.equals("/7/preset" + str(i) + "_" + str(ij)) && value == 1) {
+      if(savePreset) {
+        savePreset(i, ij-1);
+      }
+      else {
+        changeValues = false;
+        showPreset(i, ij-1);
+        
+      }
+      
+    }
+  }
+  }
+  
+  
   for(int id = 0; id <= 1; id++) {
   
   //CH 1: Pan
@@ -164,9 +185,7 @@ void movingHeadOptionsCheck(String address, int value, int value2) {
   //CH 14: Focus
   if(address.equals("/8/focus" + str(id+1))) { mhx50_focus(value, id); } //Change focus value
   
-  
-  
-  
+
   mhx50_finalChannelValuesCreate(id);
   
   }
@@ -198,10 +217,12 @@ void mhx50_dimmer(int value, int id) {
 }
 
 void mhx50_colorChange(String address, int id) {
+  if(changeValues) {
   for(int i = 0; i < mhx50_color_names.length; i++) {
     if(address != null) {
     if(address.equals("/8/" + mhx50_color_names[i] + str(id + 1))) {
       mhx50_color[id] = mhx50_color_values[i]; 
+      if(mhx50_colorOld[id] != mhx50_color[id]) {
       if(mhx50_duplicate == true) {
         if(id == 0) {
           mhx50_colorNumber[0] = i;
@@ -211,8 +232,11 @@ void mhx50_colorChange(String address, int id) {
       else {
         mhx50_colorNumber[id] = i; break;
       }
+      }
+      mhx50_colorOld[id] = mhx50_color[id];
     }
     }
+  }
   }
 }
 
@@ -296,50 +320,100 @@ void mhx50_strobe(int value, int id) {
 }
 
 void mhx50_finalChannelValuesCreate(int id) {
-  if(mhx50_posMirror == true) {
-    if(id == 0) {
-      mhx50_createFinalChannelValues[id][0] = mhx50_panValue[0];
-      mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[0];
-    }
-    else {
-      mhx50_createFinalChannelValues[id][0] = mhx50_panValue[0]*(-1);
-      mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[0];
-    }
-  }
-  else if(mhx50_posDuplicate == true) {
-    mhx50_createFinalChannelValues[id][0] = mhx50_panValue[0];
-    mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[0];
-  }
-  else {
-    mhx50_createFinalChannelValues[id][0] = mhx50_panValue[id];
-    mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[id];
-  }
+//  if(mhx50_posMirror == true) {
+//    if(id == 0) {
+//      if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[id][0] = mhx50_panValue[0]; }
+//      if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[0]; }
+//      
+//      mhx50_panValueOld[0] = mhx50_panValue[0];
+//      mhx50_tiltValueOld[0] = mhx50_tiltValue[0];
+//    }
+//    else {
+//      if(mhx50_panValueOld[0] != mhx50_panValue[0]*(-1)) { mhx50_createFinalChannelValues[id][0] = mhx50_panValue[0]*(-1); }
+//      if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])    { mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[0]; }
+//      
+//      mhx50_panValueOld[0] = mhx50_panValue[0]*(-1);
+//      mhx50_tiltValueOld[0] = mhx50_tiltValue[0];
+//    }
+//  }
+//  else if(mhx50_posDuplicate == true) {
+//    if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[id][0] = mhx50_panValue[0]; }
+//    if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[0]; }
+//    
+//    mhx50_panValueOld[0] = mhx50_panValue[0];
+//    mhx50_tiltValueOld[0] = mhx50_tiltValue[0];
+//  }
+//  else {
+    if(mhx50_panValueOld[id] != mhx50_panValue[id])    { mhx50_createFinalChannelValues[id][0] = mhx50_panValue[id]; }
+    if(mhx50_tiltValueOld[id] != mhx50_tiltValue[id])  { mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[id]; }
+    
+    mhx50_panValueOld[id] = mhx50_panValue[id];
+    mhx50_tiltValueOld[id] = mhx50_tiltValue[id];
+//  }
   if(mhx50_duplicate == true) {
-    mhx50_createFinalChannelValues[id][2] = mhx50_panFineValue[0];
-    mhx50_createFinalChannelValues[id][3] = mhx50_tiltFineValue[0];
-    mhx50_createFinalChannelValues[id][4] = mhx50_responseSpeedValue[0];
-    mhx50_createFinalChannelValues[id][5] = mhx50_color[0];
-    mhx50_createFinalChannelValues[id][6] = mhx50_shutterValue[0];
-    mhx50_createFinalChannelValues[id][7] = round(map(mhx50_dimmerValue[0], 0, 255, 0, grandMaster));
-    mhx50_createFinalChannelValues[id][8] = mhx50_goboValue[0];
-    mhx50_createFinalChannelValues[id][9] = mhx50_goboRotationValue[0];
-    mhx50_createFinalChannelValues[id][10] = mhx50_resetValue[0];
-    mhx50_createFinalChannelValues[id][11] = mhx50_autoProgramValue[0];
-    mhx50_createFinalChannelValues[id][12] = mhx50_prismValue[0];
-    mhx50_createFinalChannelValues[id][13] = mhx50_focusValue[0];
+    if(mhx50_panFineValueOld[0] != mhx50_panFineValue[0])                                   { mhx50_createFinalChannelValues[id][2] = mhx50_panFineValue[0]; }
+    if(mhx50_tiltFineValueOld[0] != mhx50_tiltFineValue[0])                                 { mhx50_createFinalChannelValues[id][3] = mhx50_tiltFineValue[0]; }
+    if(mhx50_responseSpeedValueOld[0] != mhx50_responseSpeedValue[0])                       { mhx50_createFinalChannelValues[id][4] = mhx50_responseSpeedValue[0]; }
+    if(mhx50_colorOld[0] != mhx50_color[0])                                                 { mhx50_createFinalChannelValues[id][5] = mhx50_color[0]; }
+    if(mhx50_shutterValueOld[0] != mhx50_shutterValue[0])                                   { mhx50_createFinalChannelValues[id][6] = mhx50_shutterValue[0]; }
+    if(mhx50_dimmerValueOld[0] != round(map(mhx50_dimmerValue[0], 0, 255, 0, grandMaster))) { mhx50_createFinalChannelValues[id][7] = round(map(mhx50_dimmerValue[0], 0, 255, 0, grandMaster)); }
+    if(mhx50_goboValueOld[0] != mhx50_goboValue[0])                                         { mhx50_createFinalChannelValues[id][8] = mhx50_goboValue[0]; }
+    if(mhx50_goboRotationValueOld[0] != mhx50_goboRotationValue[0])                         { mhx50_createFinalChannelValues[id][9] = mhx50_goboRotationValue[0]; }
+    if(mhx50_resetValueOld[0] != mhx50_resetValue[0])                                       { mhx50_createFinalChannelValues[id][10] = mhx50_resetValue[0]; }
+    if(mhx50_autoProgramValueOld[0] != mhx50_autoProgramValue[0])                           { mhx50_createFinalChannelValues[id][11] = mhx50_autoProgramValue[0]; }
+    if(mhx50_prismValueOld[0] != mhx50_prismValue[0])                                       { mhx50_createFinalChannelValues[id][12] = mhx50_prismValue[0]; }
+    if(mhx50_focusValueOld[0] != mhx50_focusValue[0])                                       { mhx50_createFinalChannelValues[id][13] = mhx50_focusValue[0]; }
+   
+   mhx50_panFineValueOld[0] = mhx50_panFineValue[0];
+   mhx50_tiltFineValueOld[0] = mhx50_tiltFineValue[0];
+   mhx50_responseSpeedValueOld[0] = mhx50_responseSpeedValue[0];
+   mhx50_colorOld[0] = mhx50_color[0];
+   mhx50_shutterValueOld[0] = mhx50_shutterValue[0];
+   mhx50_dimmerValueOld[0] = round(map(mhx50_dimmerValue[0], 0, 255, 0, grandMaster));
+   mhx50_goboValueOld[0] = mhx50_goboValue[0];
+   mhx50_goboRotationValueOld[0] = mhx50_goboRotationValue[0];
+   mhx50_resetValueOld[0] = mhx50_resetValue[0];
+   mhx50_autoProgramValueOld[0] = mhx50_autoProgramValue[0];
+   mhx50_prismValueOld[0] = mhx50_prismValue[0];
+   mhx50_focusValueOld[0] = mhx50_focusValue[0];
   }
   else {
-    mhx50_createFinalChannelValues[id][2] = mhx50_panFineValue[id];
-    mhx50_createFinalChannelValues[id][3] = mhx50_tiltFineValue[id];
-    mhx50_createFinalChannelValues[id][4] = mhx50_responseSpeedValue[id];
-    mhx50_createFinalChannelValues[id][5] = mhx50_color[id];
-    mhx50_createFinalChannelValues[id][6] = mhx50_shutterValue[id];
-    mhx50_createFinalChannelValues[id][7] = round(map(mhx50_dimmerValue[id], 0, 255, 0, grandMaster));
-    mhx50_createFinalChannelValues[id][8] = mhx50_goboValue[id];
-    mhx50_createFinalChannelValues[id][9] = mhx50_goboRotationValue[id];
-    mhx50_createFinalChannelValues[id][10] = mhx50_resetValue[id];
-    mhx50_createFinalChannelValues[id][11] = mhx50_autoProgramValue[id];
-    mhx50_createFinalChannelValues[id][12] = mhx50_prismValue[id];
-    mhx50_createFinalChannelValues[id][13] = mhx50_focusValue[id];
+    if(mhx50_panFineValueOld[id] != mhx50_panFineValue[id])                                   { mhx50_createFinalChannelValues[id][2] = mhx50_panFineValue[id]; }
+    if(mhx50_tiltFineValueOld[id] != mhx50_tiltFineValue[id])                                 { mhx50_createFinalChannelValues[id][3] = mhx50_tiltFineValue[id]; }
+    if(mhx50_responseSpeedValueOld[id] != mhx50_responseSpeedValue[id])                       { mhx50_createFinalChannelValues[id][4] = mhx50_responseSpeedValue[id]; }
+    if(mhx50_colorOld[id] != mhx50_color[id])                                                 { mhx50_createFinalChannelValues[id][5] = mhx50_color[id]; }
+    if(mhx50_shutterValueOld[id] != mhx50_shutterValue[id])                                   { mhx50_createFinalChannelValues[id][6] = mhx50_shutterValue[id]; }
+    if(mhx50_dimmerValueOld[id] != round(map(mhx50_dimmerValue[id], 0, 255, 0, grandMaster))) { mhx50_createFinalChannelValues[id][7] = round(map(mhx50_dimmerValue[id], 0, 255, 0, grandMaster)); }
+    if(mhx50_goboValueOld[id] != mhx50_goboValue[id])                                         { mhx50_createFinalChannelValues[id][8] = mhx50_goboValue[id]; }
+    if(mhx50_goboRotationValueOld[id] != mhx50_goboRotationValue[id])                         { mhx50_createFinalChannelValues[id][9] = mhx50_goboRotationValue[id]; }
+    if(mhx50_resetValueOld[id] != mhx50_resetValue[id])                                       { mhx50_createFinalChannelValues[id][10] = mhx50_resetValue[id]; }
+    if(mhx50_autoProgramValueOld[id] != mhx50_autoProgramValue[id])                           { mhx50_createFinalChannelValues[id][11] = mhx50_autoProgramValue[id]; }
+    if(mhx50_prismValueOld[id] != mhx50_prismValue[id])                                       { mhx50_createFinalChannelValues[id][12] = mhx50_prismValue[id]; }
+    if(mhx50_focusValueOld[id] != mhx50_focusValue[id])                                       { mhx50_createFinalChannelValues[id][13] = mhx50_focusValue[id]; }   
   }
+}
+
+void savePreset(int presetNumber, int id) {
+  for(int i = 0; i < 13; i++) {
+    mhx50_createFinalPresetValues[presetNumber][id][i] = mhx50_createFinalChannelValues[id][i];
+  }
+  savePreset = false;
+}
+
+void showPreset(int presetNumber, int id) {
+  for(int i = 0; i < 13; i++) {
+     mhx50_createFinalChannelValues[id][i] = mhx50_createFinalPresetValues[presetNumber][id][i];
+  }
+  checkColorNumber(id);
+}
+
+
+
+void checkColorNumber(int id) {
+  for(int i = 0; i < mhx50_color_values.length; i++) {
+    if(mhx50_color[id] == mhx50_color_values[i]) {
+      mhx50_colorNumber[id] = i; break;
+    }
+  }
+  
 }
