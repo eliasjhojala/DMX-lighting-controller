@@ -27,22 +27,6 @@ void loadAllData() {
     else if(!roopeAidilla) {
      table = loadTable("E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roopen polku
     } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roope äidillä -polku
-  
-  
-  //  for (TableRow row1 : table1.rows()) {
-  //    
-  //    int id = row1.getInt("id");
-  //    String variable_name = row1.getString("variable_name");
-  //    String value = row1.getString("value");
-  //    String D1 = row1.getString("1D");
-  //    if(variable_name == "xTaka") {
-  //      xTaka[int(D1)] = int(value);
-  //    }
-  //    if(variable_name == "yTaka") {
-  //      yTaka[int(D1)] = int(value);
-  //    }
-  //  }
-    
     
     for (TableRow row : table.findRows("xTaka", "variable_name")) { if(xTaka.length > (int(row.getString("1D")))) {xTaka[int(row.getString("1D"))] = int(row.getString("value")); } }
     for (TableRow row : table.findRows("yTaka", "variable_name")) { yTaka[int(row.getString("1D"))] = int(row.getString("value")); }

@@ -8,10 +8,10 @@ boolean fullOn; //Muuttuja, joka kertoo onko fullOn päällä
 int[] valueOfDimBeforeFullOn = new int[channels]; //Muuttuja johon kirjoitetaan kanavien arvot ennen kun ne laitetaan täysille
 boolean blackOutButtonWasReleased;
 int masterValueBeforeBlackout;
-
+String addr = "";
 void oscEvent(OscMessage theOscMessage) {
   
-  String addr = theOscMessage.addrPattern(); //Luetaan touchOSCin elementin osoite
+  addr = theOscMessage.addrPattern(); //Luetaan touchOSCin elementin osoite
   float val = theOscMessage.get(0).floatValue(); //Luetaan touchOSCin elementin arvo
 
   int digitalValue = int(val); //muutetaan float intiksi
@@ -92,6 +92,13 @@ void oscEvent(OscMessage theOscMessage) {
        else {
          revStepPressed = false;
        }
+     }
+     
+     
+     
+     
+     if(addr.equals("/6/waveLength")) {
+       cf.waveLength = digitalValue;
      }
      
      
@@ -189,4 +196,6 @@ void oscEvent(OscMessage theOscMessage) {
      }
    }
   }
+  
+  
 }

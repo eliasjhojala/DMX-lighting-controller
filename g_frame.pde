@@ -56,7 +56,11 @@ public class secondApplet extends PApplet {
       }
   }
   }
+  if(addr != null) {
+  text(addr, 800, 100);
   }
+  }
+  
   /*
    * TODO: something like on Close set f to null, this is important if you need to 
    * open more secondapplet when click on button, and none secondapplet is open.

@@ -1,14 +1,8 @@
-boolean[] dmxButtonReleased = new boolean[512];
 boolean dmxButtonPressed(int id, int val) {
-  boolean toReturn = false;
-  if(val == 255) {
-    if(dmxButtonReleased[id]) {
-      toReturn = true;
-      dmxButtonReleased[id] = false;
-    }
-  }
-  else {
-    dmxButtonReleased[id] = true;
-  }
-  return toReturn;
+  boolean buttonDown = val > 100;
+  
+  nextStepPressed = buttonDown && id == 1;
+  if(buttonDown && id == 2) { chaseMode++; if(chaseMode > 5) { chaseMode = 1; } }
+  wave = buttonDown && id == 3;
+  return buttonDown;
 }

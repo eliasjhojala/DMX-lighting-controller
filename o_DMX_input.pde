@@ -81,21 +81,12 @@ void channelsToDim() {
       dimInput[i+12] = round(map(allChannels[2][i], 0, 255, 0, fixtureMasterValue));
     }
     if(allChannelsOld[5][i] != allChannels[5][i]) {
-      if(useMemories == true) {
         memory(i+memoryMenu, round(map(allChannels[5][i], 0, 255, 0, memoryMasterValue)));
         memoryValue[i+memoryMenu] = round(map(allChannels[5][i], 0, 255, 0, memoryMasterValue));
-
-      }
     }
     if(allChannelsOld[3][i] != allChannels[3][i]) {
-      if(useMemories == true) {
         memory(i, round(map(allChannels[3][i], 0, 255, 0, memoryMasterValue)));
         memoryValue[i] = round(map(allChannels[3][i], 0, 255, 0, memoryMasterValue));
-
-      }
-      else {
-        dimInput[i+12+12] = allChannels[3][i];
-      }
     }
     
     if(allChannelsOld[4][i] != allChannels[4][i]) {
@@ -107,6 +98,11 @@ void channelsToDim() {
         dimInput[i+12+12] = allChannels[4][i];
       }
     }
+    if(enttecDMXchannels > 24) {
+      for(int iii = 1; iii < 12; iii++) {
+        dmxButtonPressed(iii, enttecDMXchannel[iii+24]);
+      }
+    }
   }
   for(int i = 1; i < 13; i++) {
     for(int ii = 1; ii < numberOfAllChannelsFirstDimensions; ii++) {
@@ -114,13 +110,7 @@ void channelsToDim() {
     }
   }
   
-  for(int i = 1; i < 13; i++) {
-      controlP5channelOld[i] = controlP5channel[i];
-  }
-  for(int i = 1; i < enttecDMXchannels; i++) {
-      enttecDMXchannelOld[i] = enttecDMXchannel[i];
-  }
-  for(int i = 1; i < touchOSCchannels; i++) {
-      touchOSCchannelOld[i] = touchOSCchannel[i];
-  }
+  for(int i = 1; i < 13; i++) { controlP5channelOld[i] = controlP5channel[i]; }
+  for(int i = 1; i < enttecDMXchannels; i++) { enttecDMXchannelOld[i] = enttecDMXchannel[i]; }
+  for(int i = 1; i < touchOSCchannels; i++) { touchOSCchannelOld[i] = touchOSCchannel[i]; }
 }

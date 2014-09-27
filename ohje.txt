@@ -7,6 +7,7 @@ Sisällys:
 2. Peruskäyttö
 3. Presetit
 4. Chaset
+6. Asetukset
 5. Tekninen tuki
 
 
@@ -80,6 +81,25 @@ Voit valita chasen tyypin klikkaamalla ylävalikosta chaseMode
 Ohjeita chasejen käyttöön
 1, 3 ja 4: voit muuttaa crossfadea memorysta 2: fade
 5: voit muuttaa aallon pituutta memorysta 3: wave
+
+
+6. Asetukset
+
+Ohjelmassa fixtuurien perusasetusten muuttaminen on suhteellisen helppoa kun
+tietää mitä tekee. Jos et yhtään tiedä mitä olet tekemässä, kysy ensin
+esim. Eliakselta tai Roopelta. 
+
+Fixtuurin asetusten muuttaminen
+	1. Klikkaa visualisaatiosta fixtuuria oikealla näppäimellä
+	2. Avaa controlP5 ikkuna (harmaa-sininen)
+	3. Säädä rgb-slidereistä fixtuurin väriä raahaamalla slidereitä
+	4. Valitse dropdown lististä fixtuurin tyyppi klikkaamalla nykyistä tyyppiä ja sen jälkeen listasta haluamaasi tyyppiä
+	5. Käännä fixtuuria rotation Z ja X nupeista ottamalla niistä kiinni ja liikuttamalla hiirtä oikealle tai vasemmalle
+	6. Säädä fixtuurin korkeutta 3D mallissa Zlocationilla ottamalla boksista kiinni ja vetämällä ylös tai alas
+	7. Säädä fixtuurin parametria (useinmiten valokeilaan vaikuttava arvo) ottamalla boksista kiinni ja vetämällä ylös tai alas
+	8. Vaihda fixtuurin kanavaa ottamalla boksista kiinni ja vetämällä ylös tai alas
+	9. Säädä ansaa, jonka mukaan fixtuuri liikkuu ottamalla ansaparent boksista kiinni ja vetämällä ylös tai alas
+
 
 5. Tekninen tuki palvelee osoitteessa elias.jh.ojala@gmail.com
    Jos sinulla on kysymyksiä ota rohkeasti yhteyttä
