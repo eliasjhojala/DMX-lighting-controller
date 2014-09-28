@@ -217,7 +217,6 @@ void mhx50_dimmer(int value, int id) {
 }
 
 void mhx50_colorChange(String address, int id) {
-  if(changeValues) {
   for(int i = 0; i < mhx50_color_names.length; i++) {
     if(address != null) {
     if(address.equals("/8/" + mhx50_color_names[i] + str(id + 1))) {
@@ -236,7 +235,6 @@ void mhx50_colorChange(String address, int id) {
       mhx50_colorOld[id] = mhx50_color[id];
     }
     }
-  }
   }
 }
 
@@ -411,7 +409,7 @@ void showPreset(int presetNumber, int id) {
 
 void checkColorNumber(int id) {
   for(int i = 0; i < mhx50_color_values.length; i++) {
-    if(mhx50_color[id] == mhx50_color_values[i]) {
+    if(mhx50_createFinalChannelValues[id][5] == mhx50_color_values[i]) {
       mhx50_colorNumber[id] = i; break;
     }
   }
