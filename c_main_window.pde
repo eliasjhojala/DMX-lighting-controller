@@ -33,7 +33,7 @@ void drawMainWindow() {
 
           
           if(rotTaka[i] < round(map(mhx50_createFinalChannelValues[0][0], 0, 255, 0, 540))) {
-            rotTaka[i] += 10,
+            rotTaka[i] += 10;
           }
           if(rotTaka[i] > round(map(mhx50_createFinalChannelValues[0][0], 0, 255, 0, 540))) {
             rotTaka[i] -= 10;
@@ -55,16 +55,16 @@ void drawMainWindow() {
         if(fixtureType1[i] == 17) {
           
           if(rotTaka[i] < round(map(mhx50_createFinalChannelValues[1][0], 0, 255, 0, 540))) {
-            rotTaka[i] += round((round(map(mhx50_createFinalChannelValues[1][0], 0, 255, 0, 540)) - rotTaka[i]) / 30);
+            rotTaka[i] += 10;
           }
           if(rotTaka[i] > round(map(mhx50_createFinalChannelValues[1][0], 0, 255, 0, 540))) {
-            rotTaka[i] -= round((rotTaka[i] - round(map(mhx50_createFinalChannelValues[1][0], 0, 255, 0, 540))) / 30);
+            rotTaka[i] -= 10;
           }
           if(rotX[i] < round(map(mhx50_createFinalChannelValues[1][1], 0, 255, 0, 270))) {
-            rotX[i] += round((round(map(mhx50_createFinalChannelValues[1][1], 0, 255, 0, 270)) - rotX[i]) / 30);
+            rotX[i] += 10;
           }
           if(rotX[i] > round(map(mhx50_createFinalChannelValues[1][1], 0, 255, 0, 270))) {
-            rotX[i] -= round((rotX[i] - round(map(mhx50_createFinalChannelValues[1][1], 0, 255, 0, 270))) / 30);
+            rotX[i] -= 10;
           }
 
 //          rotTaka[i] = round(map(mhx50_createFinalChannelValues[1][0], 0, 255, 0, 540));
