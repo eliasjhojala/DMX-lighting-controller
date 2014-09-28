@@ -4,7 +4,7 @@ boolean sendOscToAnotherPc = true;
 boolean sendOscToIpad = true;
 boolean sendMemoryToIpad = true;
 
-int[] oldChannelValToPc = new int[channels];
+int[] oldChannelValToPc = new int[300];
 int[] oldChannelValToIpad = new int[channels];
 int[] oldMemoryValToIpad = new int[numberOfMemories];
 int[] oldDataValToIpad = new int[100];

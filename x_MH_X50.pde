@@ -111,6 +111,14 @@ void mhx50_movingHeadLoop() { //This loops in every draw
       valueToDmx[40+id*20+i] = mhx50_createFinalChannelValues[id][i];
     }
   }
+  
+  
+  for(int i = 0; i < 14; i++) {
+    sendOscToAnotherPc(100+i, mhx50_createFinalChannelValues[0][i]);
+  }
+  for(int i = 0; i < 14; i++) {
+    sendOscToAnotherPc(115+i, mhx50_createFinalChannelValues[1][i]);
+  }
 }
 
 
