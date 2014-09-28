@@ -320,17 +320,11 @@ void mhx50_strobe(int value, int id) {
 void mhx50_finalChannelValuesCreate(int id) {
   if(mhx50_posMirror == true) {
     if(id == 0) {
-      if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[0][0] = mhx50_panValue[0]; }
-      if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[0][1] = mhx50_tiltValue[0]; }
+      if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[0][0] = mhx50_panValue[0]; mhx50_createFinalChannelValues[1][0] = mhx50_panValue[0]; }
+      if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[0][1] = mhx50_tiltValue[0]; mhx50_createFinalChannelValues[1][1] = mhx50_tiltValue[0]; }
       
       mhx50_panValueOld[0] = mhx50_panValue[0];
       mhx50_tiltValueOld[0] = mhx50_tiltValue[0];
-      
-      if(mhx50_panValueOld[1] != mhx50_panValue[0]*(-1)) { mhx50_createFinalChannelValues[1][0] = mhx50_panValue[0]*(-1); }
-      if(mhx50_tiltValueOld[1] != mhx50_tiltValue[0])    { mhx50_createFinalChannelValues[1][1] = mhx50_tiltValue[0]; }
-      
-      mhx50_panValueOld[1] = mhx50_panValue[0]*(-1);
-      mhx50_tiltValueOld[1] = mhx50_tiltValue[0];
     }
   }
   else if(mhx50_posDuplicate == true) {
