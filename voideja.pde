@@ -5,11 +5,11 @@ int ansaWidth;
 void arduinoSend() {
   
   for(int i = 0; i < channels; i++) {
-    if((dim[i] < (dimOld[i] - (dimOld[i] / 20))) || (dim[i] > (dimOld[i] + (dimOld[i] / 20))) || dim[i] == 255 || dim[i] == 0) {
+    if((valueToDmx[i] < (valueToDmxOld[i] - (valueToDmxOld[i] / 20))) || (dim[i] > (valueToDmxOld[i] + (valueToDmxOld[i] / 20))) || valueToDmx[i] == 255 || valueToDmx[i] == 0) {
       if(useCOM == true) {
-        setDmxChannel(i, dim[i]);
+        setDmxChannel(i, valueToDmx[i]);
       }
-      dimOld[i] = dim[i];
+      valueToDmxOld[i] = valueToDmx[i];
       
     }
     sendOscToAnotherPc(i, dim[i]);

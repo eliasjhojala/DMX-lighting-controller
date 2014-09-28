@@ -105,6 +105,13 @@ void mhx50_movingHeadLoop() {
   if(mhx50_plays2l) {
   mhx50_playS2l();
   }
+  
+  
+  for(int id = 0; id <= 1; id++) {
+    for(int i = 0; i < 14; i++) {
+      valueToDmx[40+id*20+i] = mhx50_createFinalChannelValues[id][i];
+    }
+  }
 }
 
 void movingHeadOptionsCheck(String address, int value, int value2) {
@@ -452,7 +459,7 @@ void checkColorNumber(int id) {
 
 void mhx50_playS2l() {
   millisNow[10] = millis();
-  if(biitti == true && millisNow[10] - millisOld[10] > 100) {
+  if(biitti == true && millisNow[10] - millisOld[10] > 200) {
     mhx50_s2l_step++;
     if(mhx50_s2l_step > mmhx50_s2l_numberOfPresets) {
       mhx50_s2l_step = 0;
