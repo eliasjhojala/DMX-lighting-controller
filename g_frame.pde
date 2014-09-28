@@ -17,27 +17,27 @@ public class secondApplet extends PApplet {
       text(i + ":" + dim[i], 10, i*15+25);
   }
     text("allChannels[1]", 105, 10);
-    for(int i = 0; i < channels; i++) {
+    for(int i = 0; i < 24; i++) {
       fill(255, 255, 255);
       text(i + ":" + allChannels[1][i], 110, i*15+25);
   }
     text("allChannels[2]", 205, 10);
-    for(int i = 0; i < channels; i++) {
+    for(int i = 0; i < 24; i++) {
       fill(255, 255, 255);
       text(i + ":" + allChannels[2][i], 210, i*15+25);
   }
     text("allChannels[3]", 305, 10);
-    for(int i = 0; i < channels; i++) {
+    for(int i = 0; i < 24; i++) {
       fill(255, 255, 255);
       text(i + ":" + allChannels[3][i], 310, i*15+25);
   }
   text("allChannels[4]", 405, 10);
-    for(int i = 0; i < channels; i++) {
+    for(int i = 0; i < 24; i++) {
       fill(255, 255, 255);
       text(i + ":" + allChannels[4][i], 410, i*15+25);
   }
   text("allChannels[5]", 505, 10);
-    for(int i = 0; i < channels; i++) {
+    for(int i = 0; i < 24; i++) {
       fill(255, 255, 255);
       text(i + ":" + allChannels[5][i], 510, i*15+25);
   }

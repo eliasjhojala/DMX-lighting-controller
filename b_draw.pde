@@ -16,6 +16,8 @@ void draw() {
   ylavalikko(); //top menu
   alavalikko(); //bottom menu
   sivuValikko(); //right menu
+  detectBeat();
+  mhx50_movingHeadLoop();
   
   
 }

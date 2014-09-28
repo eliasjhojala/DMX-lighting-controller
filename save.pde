@@ -170,6 +170,20 @@ void saveAllData() {
     }
   }
   
+  for(int a = 0; a < mhx50_createFinalPresetValues[0][0].length; a++) {
+    for(int i = 0; i <  mhx50_createFinalPresetValues.length; i++) {
+      TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "mhx50_createFinalPresetValues[1D][0][2D]"); 
+      newRow.setString("variable_dimensions", "2"); newRow.setString("value", str(mhx50_createFinalPresetValues[i][0][a]));   newRow.setString("1D", str(a));               newRow.setString("2D", str(i));
+    }
+  }
+  
+  for(int a = 0; a < mhx50_createFinalPresetValues[0][0].length; a++) {
+    for(int i = 0; i <  mhx50_createFinalPresetValues.length; i++) {
+      TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "mhx50_createFinalPresetValues[1D][1][2D]"); 
+      newRow.setString("variable_dimensions", "2"); newRow.setString("value", str(mhx50_createFinalPresetValues[i][1][a]));   newRow.setString("1D", str(a));               newRow.setString("2D", str(i));
+    }
+  }
+  
   
   
  

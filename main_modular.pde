@@ -1,6 +1,13 @@
 int[][] mhx50_createFinalChannelValues = new int[2][14];
 int[][][] mhx50_createFinalPresetValues = new int[16][2][14];
 
+int mhx50_s2l_step;
+int[] mhx50_s2l_presets = new int[16];
+int mmhx50_s2l_numberOfPresets = 0;
+boolean mhx50_saves2l;
+boolean mhx50_saves2lfirstTime;
+boolean mhx50_plays2l;
+
 boolean mhx50_posDuplicate = false;
 boolean mhx50_posMirror = true;
 boolean mhx50_duplicate = true;
@@ -92,7 +99,7 @@ boolean useSolo = true; //Käytetäänkö soloa - is solo in use at all
 //ID CHANGE
 //Create variables for changing fixture id
 
-int numberOfAllFixtures = 40;
+int numberOfAllFixtures = 81;
 int[] fixtureIdOriginal = new int[numberOfAllFixtures];
 int[] fixtureIdNow = new int[numberOfAllFixtures];
 int[] fixtureChannelOriginal = new int[numberOfAllFixtures];
@@ -248,7 +255,7 @@ boolean useMovingHead = false; //Käytetäänkö moving headia ohjelmassa
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-int outputChannels = 32;
+int outputChannels = 80;
 int channels = outputChannels;
 
 int enttecDMXchannels = 12; //DMX kanavien määrä
@@ -348,12 +355,12 @@ void setDmxChannel(int channel, int value) {
 
 
 // 1 = par64; 2 = pieni fresu; 3 = keskikokoinen fresu; 4 = iso fresu; 5 = floodi; 6 = linssi; 7 = haze; 8 = haze fan; 9 = strobe; 10 = strobe freq; 11 = fog; 12 = pinspot; 13 = moving head  dim; 14 = moving head pan; 15 = moving head tilt;
-int[] fixtureType1 = { 3, 4, 4, 1, 1, 1, 1, 4, 4, 3, 6, 6, 5, 5, 5, 5, 1, 1, 1, 7, 71, 8, 81, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+int[] fixtureType1 = { 3, 4, 4, 1, 1, 1, 1, 4, 4, 3, 6, 6, 5, 5, 5, 5, 1, 1, 1, 7, 71, 8, 81, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
 //visualisaation fixtuurien sijainnit
 //int[] xEtu = { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600 }; //etuansan fixtuurien sijainnit sivusuunnassa
-int[] xTaka = { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 620, 640, 680, 700, 720, 740 }; //taka-ansan fixtuurien sijainnit sivusuunnassa
-int[] yTaka = { 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300 }; //taka-ansan fixtuurien sijainnit korkeussuunnassa
+int[] xTaka = { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 620, 640, 680, 700, 720, 740, 740, 740, 740 }; //taka-ansan fixtuurien sijainnit sivusuunnassa
+int[] yTaka = { 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300 }; //taka-ansan fixtuurien sijainnit korkeussuunnassa
 //int[] yEtu = { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 }; //etuansan fixtuurien sijainnit sivusuunnassa
 
 //visualisaation fixtuurien värit
@@ -363,7 +370,7 @@ int[] blue = { 0, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255,
 
 int[] y = { 500, 200 };
 int[] rotTaka = { 20, 15, 10, 5, 0, 0, 0, 0, -5, -10, -15, -20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-int ansaTaka = 30;
+int ansaTaka = 32;
 int ansaEtu = 12;
 int[] dim = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
 int[] dimOld = new int[512];
@@ -377,7 +384,7 @@ int counter;
 boolean error = false;
 int[] check = { 126, 5, 14, 0, 0, 0 };
 
-int[] dmxChannel = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 14, 14, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40 }; //Fixtuurien todelliset DMX-kanavat
+int[] dmxChannel = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 14, 14, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83 }; //Fixtuurien todelliset DMX-kanavat
 int[] channel = new int[channels+2];
 
 int[] memoryData;

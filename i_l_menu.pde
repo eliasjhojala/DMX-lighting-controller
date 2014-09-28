@@ -12,7 +12,7 @@ void alavalikko() {
     translate(0, height-100); //alavalikko is located to bottom of the window
     //Upper row
     pushMatrix();
-      for(int i = 0; i < channels/2; i++) {
+      for(int i = 0; i < 15; i++) {
         translate(65, 0); //moves box to its place
         createFixtureBox(i); //Create fixture boxes including buttons and their functions
       }
@@ -20,7 +20,7 @@ void alavalikko() {
     //Lower row
     pushMatrix();
       translate(0, 65); 
-      for(int i = channels/2; i <= channels; i++) {
+      for(int i = 16; i <= 32; i++) {
         translate(65, 0); //moves box to its place
         createFixtureBox(i); //Create fixture boxes including buttons and their functions
       }
@@ -103,11 +103,11 @@ void checkFixtureBoxRightClick(int id) {
     changeColorFixtureId = id; //Tells controlP5 which fixture to edit
   }
   if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && mouseReleased && keyPressed && keyCode == RIGHT) { //Check if mouse is on the title box anf clicked
-    change_fixture_id(id); //Tells controlP5 which fixture to edit
+    change_fixture_id(fixtureIdNow[id]); //Tells controlP5 which fixture to edit
     mouseReleased = false;
   }
   if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && mouseReleased && keyPressed && keyCode == LEFT) { //Check if mouse is on the title box anf clicked
-    change_fixture_id(id); //Tells controlP5 which fixture to edit
+    change_fixture_id_down(fixtureIdNow[id]); //Tells controlP5 which fixture to edit
     mouseReleased = false;
   }
 }

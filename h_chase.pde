@@ -11,7 +11,6 @@ void detectBeat() {
 }
 
 void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funktion aloitus
-    detectBeat();
     if(chaseModeByMemoryNumber[memoryNumber] >= 0 && chaseModeByMemoryNumber[memoryNumber] <= 6) { //tarkistetaan chasemode (1 = beat detect, 2 = eq, 3 = manual chase, 4 = autochase, 5 = beat detect wave
      for(int i = 1; i < numberOfMemories; i++) { //Käydään läpi kaikki memoryt
        value = memoryValue[i]; //arvo on tällä hetkellä käsiteltävän memoryn arvo

@@ -101,6 +101,11 @@
 
 */
 
+void mhx50_movingHeadLoop() {
+  if(mhx50_plays2l) {
+  mhx50_playS2l();
+  }
+}
 
 void movingHeadOptionsCheck(String address, int value, int value2) {
 
@@ -114,6 +119,24 @@ void movingHeadOptionsCheck(String address, int value, int value2) {
     mhx50_duplicate = boolean(value);
   }
   
+  if(address.equals("/7/saves2l")) {
+    mhx50_saves2l = true;
+    mhx50_saves2lfirstTime = true;
+  }
+  if(address.equals("/7/ok")) {
+    mhx50_saves2l = false;
+  }
+  if(address.equals("/7/plays2l")) {
+    if(value == 1) {
+      if(mhx50_plays2l) {
+        mhx50_plays2l = false;
+      }
+      else {
+        mhx50_plays2l = true;
+      }
+    }
+  }
+  
   if(address.equals("/7/savePreset1") || address.equals("/7/savePreset2")) {
     savePreset = true;
   }
@@ -123,6 +146,14 @@ void movingHeadOptionsCheck(String address, int value, int value2) {
     if(address.equals("/7/preset" + str(i) + "_" + str(ij)) && value == 1) {
       if(savePreset) {
         savePreset(i, ij-1);
+      }
+      else if(mhx50_saves2l) {
+        mmhx50_s2l_numberOfPresets++;
+        if(mhx50_saves2lfirstTime) {
+          mmhx50_s2l_numberOfPresets = 0;
+          mhx50_saves2lfirstTime = false;
+        }
+        mhx50_s2l_presets[mmhx50_s2l_numberOfPresets] = i;
       }
       else {
         changeValues = false;
@@ -318,16 +349,16 @@ void mhx50_strobe(int value, int id) {
 }
 
 void mhx50_finalChannelValuesCreate(int id) {
-//  if(mhx50_posMirror == true) {
-//    if(id == 0) {
-//      if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[0][0] = mhx50_panValue[0]; mhx50_createFinalChannelValues[1][0] = mhx50_panValue[0]; }
-//      if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[0][1] = mhx50_tiltValue[0]; mhx50_createFinalChannelValues[1][1] = mhx50_tiltValue[0]; }
-//      
-//      mhx50_panValueOld[0] = mhx50_panValue[0];
-//      mhx50_tiltValueOld[0] = mhx50_tiltValue[0];
-//    }
-//  }
-//  else 
+  if(mhx50_posMirror == true) {
+    if(id == 0) {
+      if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[0][0] = round(map(mhx50_panValue[0], 0, 255, 255, 0)); mhx50_createFinalChannelValues[1][0] = round(255/2) - mhx50_panValue[0]; }
+      if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[0][1] = mhx50_tiltValue[0]; mhx50_createFinalChannelValues[1][1] = mhx50_tiltValue[0]; }
+      
+      mhx50_panValueOld[0] = mhx50_panValue[0];
+      mhx50_tiltValueOld[0] = mhx50_tiltValue[0];
+    }
+  }
+  else 
   if(mhx50_posDuplicate == true) {
     if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[0][0] = mhx50_panValue[0]; mhx50_createFinalChannelValues[1][0] = mhx50_panValue[0]; }
     if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[0][1] = mhx50_tiltValue[0]; mhx50_createFinalChannelValues[1][1] = mhx50_tiltValue[0]; }
@@ -398,9 +429,12 @@ void savePreset(int presetNumber, int id) {
 
 void showPreset(int presetNumber, int id) {
   for(int i = 0; i < 13; i++) {
-     mhx50_createFinalChannelValues[id][i] = mhx50_createFinalPresetValues[presetNumber][id][i];
+     mhx50_createFinalChannelValues[0][i] = mhx50_createFinalPresetValues[presetNumber][0][i];
+     mhx50_createFinalChannelValues[1][i] = mhx50_createFinalPresetValues[presetNumber][1][i];
   }
-  checkColorNumber(id);
+  
+  checkColorNumber(0);
+  checkColorNumber(1);
 }
 
 
@@ -412,4 +446,18 @@ void checkColorNumber(int id) {
     }
   }
   
+}
+
+
+
+void mhx50_playS2l() {
+  millisNow[10] = millis();
+  if(biitti == true && millisNow[10] - millisOld[10] > 100) {
+    mhx50_s2l_step++;
+    if(mhx50_s2l_step > mmhx50_s2l_numberOfPresets) {
+      mhx50_s2l_step = 0;
+    }
+    showPreset(mhx50_s2l_presets[mhx50_s2l_step], 0);
+    millisOld[10] = millisNow[10];
+  }
 }
