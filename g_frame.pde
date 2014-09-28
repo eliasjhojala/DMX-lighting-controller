@@ -14,7 +14,7 @@ public class secondApplet extends PApplet {
     text("DMX", 5, 10);
     for(int i = 0; i < channels; i++) {
       fill(255, 255, 255);
-      text(i + ":" + valueToDmx[i], 10, i*15+25);
+      text(i + ":" + dim[i], 10, i*15+25);
   }
     text("allChannels[1]", 105, 10);
     for(int i = 0; i < 24; i++) {

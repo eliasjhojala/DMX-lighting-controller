@@ -102,14 +102,12 @@ void checkFixtureBoxRightClick(int id) {
     toRotateFixture = true; //Tells controlP5 to open fixtureSettings window
     changeColorFixtureId = id; //Tells controlP5 which fixture to edit
   }
-  if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && keyPressed && keyCode == RIGHT && keyReleased) { //Check if mouse is on the title box anf clicked
+  if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && mouseReleased && keyPressed && keyCode == RIGHT) { //Check if mouse is on the title box anf clicked
     change_fixture_id(fixtureIdNow[id]); //Tells controlP5 which fixture to edit
     mouseReleased = false;
-    keyReleased = false;
   }
-  if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && keyPressed && keyCode == LEFT && keyReleased) { //Check if mouse is on the title box anf clicked
+  if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && mouseReleased && keyPressed && keyCode == LEFT) { //Check if mouse is on the title box anf clicked
     change_fixture_id_down(fixtureIdNow[id]); //Tells controlP5 which fixture to edit
     mouseReleased = false;
-    keyReleased = false;
   }
 }
