@@ -137,56 +137,56 @@ void movingHeadOptionsCheck(String address, int value, int value2) {
   
   for(int id = 0; id <= 1; id++) {
   
-  //CH 1: Pan
-  if(address.equals("/7/xy" + str(id+1)) || address.equals("/8/xy" + str(id+1))) { mhx50_pan(value2, id); }
-  //CH 2: Tilt
-  if(address.equals("/7/xy" + str(id+1)) || address.equals("/8/xy" + str(id+1))) { mhx50_tilt(value, id); }
-  //CH 3: Fine adjustment for rotation (pan)
-  mhx50_panFine(0, id);
-  //CH 4: Fine adjustment for inclination (tilt)
-  mhx50_tiltFine(0, id);
-  //CH 5: Response speed
-  mhx50_responseSpeed(0, id);
-  
-  //CH 6: Colour wheel
-  mhx50_colorChange(address, id);
-  if(address.equals("/8/rainbow" + str(id+1))) { rainbow(value, id); } //Color rainbow
-  
-  //CH 7: Shutter
-  if(address.equals("/8/blackOut" + str(id+1)) && value == 1) { mhx50_blackOut(id); }
-  if(address.equals("/8/openShutter" + str(id+1)) && value == 1) { mhx50_openShutter(id); }
-  if(address.equals("/8/strobe" + str(id+1))) { mhx50_strobe(value, id); }
-  
-  //CH 8: Mechanical dimmer
-  if(address.equals("/7/dimmer" + str(id+1)) || address.equals("/8/dimmer" + str(id+1))) { mhx50_dimmer(value, id); }
-  
-  //CH 9: Gobo wheel
-  if(address.equals("/8/noGobo" + str(id+1)) && value == 1) { mhx50_noGobo(id); } //Gobowheel open
-  if(address.equals("/8/goboUp" + str(id+1)) && value == 1) { mhx50_goboUp(id); } //Next gobo
-  if(address.equals("/8/goboDown" + str(id+1)) && value == 1) { mhx50_goboDown(id); } //Reverse gobo
-  if(address.equals("/8/goboRainbowUp" + str(id+1))) { mhx50_goboRainbowUp(value, id); } //Gobowheel positive rotation
-  if(address.equals("/8/goboRainbowDown" + str(id+1))) { mhx50_goboRainbowDown(value, id); } //Gobowheel negative rotation
-  
-  //CH 10: Gobo rotation
-  if(address.equals("/8/goboRotationUp" + str(id+1))) { mhx50_goboRotationUp(value, id); } //Gobo positive rotation
-  if(address.equals("/8/goboRotationDown" + str(id+1))) { mhx50_goboRotationDown(value, id); } //Gobo negative rotation
-  if(address.equals("/8/goboNoRotation" + str(id+1)) && value == 1) { mhx50_goboNoRotation(id); } //No gobo rotation
-  if(address.equals("/8/goboBouncing" + str(id+1)) && value == 1) { mhx50_goboBouncing(id); } //Gobo bouncing
-  
-  //CH 11: Special functions
-  if(address.equals("/8/reset" + str(id+1))) { mhx50_reset(value, id); }
-  
-  //CH 12: Built-in programmes
-  if(address.equals("/8/autoProgram" + str(id+1)) && value == 1) { mhx50_autoProgram(id); } //Next autoProgram
-  
-  //CH 13: Prism
-  if(address.equals("/8/prism" + str(id+1))) { mhx50_prism(value, id); } //Change prism value
-  
-  //CH 14: Focus
-  if(address.equals("/8/focus" + str(id+1))) { mhx50_focus(value, id); } //Change focus value
-  
-
-  mhx50_finalChannelValuesCreate(id);
+      //CH 1: Pan
+      if(address.equals("/7/xy" + str(id+1)) || address.equals("/8/xy" + str(id+1))) { mhx50_pan(value2, id); }
+      //CH 2: Tilt
+      if(address.equals("/7/xy" + str(id+1)) || address.equals("/8/xy" + str(id+1))) { mhx50_tilt(value, id); }
+      //CH 3: Fine adjustment for rotation (pan)
+      mhx50_panFine(0, id);
+      //CH 4: Fine adjustment for inclination (tilt)
+      mhx50_tiltFine(0, id);
+      //CH 5: Response speed
+      mhx50_responseSpeed(0, id);
+      
+      //CH 6: Colour wheel
+      mhx50_colorChange(address, id);
+      if(address.equals("/8/rainbow" + str(id+1))) { rainbow(value, id); } //Color rainbow
+      
+      //CH 7: Shutter
+      if(address.equals("/8/blackOut" + str(id+1)) && value == 1) { mhx50_blackOut(id); }
+      if(address.equals("/8/openShutter" + str(id+1)) && value == 1) { mhx50_openShutter(id); }
+      if(address.equals("/8/strobe" + str(id+1))) { mhx50_strobe(value, id); }
+      
+      //CH 8: Mechanical dimmer
+      if(address.equals("/7/dimmer" + str(id+1)) || address.equals("/8/dimmer" + str(id+1))) { mhx50_dimmer(value, id); }
+      
+      //CH 9: Gobo wheel
+      if(address.equals("/8/noGobo" + str(id+1)) && value == 1) { mhx50_noGobo(id); } //Gobowheel open
+      if(address.equals("/8/goboUp" + str(id+1)) && value == 1) { mhx50_goboUp(id); } //Next gobo
+      if(address.equals("/8/goboDown" + str(id+1)) && value == 1) { mhx50_goboDown(id); } //Reverse gobo
+      if(address.equals("/8/goboRainbowUp" + str(id+1))) { mhx50_goboRainbowUp(value, id); } //Gobowheel positive rotation
+      if(address.equals("/8/goboRainbowDown" + str(id+1))) { mhx50_goboRainbowDown(value, id); } //Gobowheel negative rotation
+      
+      //CH 10: Gobo rotation
+      if(address.equals("/8/goboRotationUp" + str(id+1))) { mhx50_goboRotationUp(value, id); } //Gobo positive rotation
+      if(address.equals("/8/goboRotationDown" + str(id+1))) { mhx50_goboRotationDown(value, id); } //Gobo negative rotation
+      if(address.equals("/8/goboNoRotation" + str(id+1)) && value == 1) { mhx50_goboNoRotation(id); } //No gobo rotation
+      if(address.equals("/8/goboBouncing" + str(id+1)) && value == 1) { mhx50_goboBouncing(id); } //Gobo bouncing
+      
+      //CH 11: Special functions
+      if(address.equals("/8/reset" + str(id+1))) { mhx50_reset(value, id); }
+      
+      //CH 12: Built-in programmes
+      if(address.equals("/8/autoProgram" + str(id+1)) && value == 1) { mhx50_autoProgram(id); } //Next autoProgram
+      
+      //CH 13: Prism
+      if(address.equals("/8/prism" + str(id+1))) { mhx50_prism(value, id); } //Change prism value
+      
+      //CH 14: Focus
+      if(address.equals("/8/focus" + str(id+1))) { mhx50_focus(value, id); } //Change focus value
+      
+    
+      mhx50_finalChannelValuesCreate(id);
   
   }
 }
@@ -318,49 +318,52 @@ void mhx50_strobe(int value, int id) {
 }
 
 void mhx50_finalChannelValuesCreate(int id) {
-//  if(mhx50_posMirror == true) {
-//    if(id == 0) {
-//      if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[id][0] = mhx50_panValue[0]; }
-//      if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[0]; }
-//      
-//      mhx50_panValueOld[0] = mhx50_panValue[0];
-//      mhx50_tiltValueOld[0] = mhx50_tiltValue[0];
-//    }
-//    else {
-//      if(mhx50_panValueOld[0] != mhx50_panValue[0]*(-1)) { mhx50_createFinalChannelValues[id][0] = mhx50_panValue[0]*(-1); }
-//      if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])    { mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[0]; }
-//      
-//      mhx50_panValueOld[0] = mhx50_panValue[0]*(-1);
-//      mhx50_tiltValueOld[0] = mhx50_tiltValue[0];
-//    }
-//  }
-//  else if(mhx50_posDuplicate == true) {
-//    if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[id][0] = mhx50_panValue[0]; }
-//    if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[0]; }
-//    
-//    mhx50_panValueOld[0] = mhx50_panValue[0];
-//    mhx50_tiltValueOld[0] = mhx50_tiltValue[0];
-//  }
-//  else {
+  if(mhx50_posMirror == true) {
+    if(id == 0) {
+      if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[0][0] = mhx50_panValue[0]; }
+      if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[0][1] = mhx50_tiltValue[0]; }
+      
+      mhx50_panValueOld[0] = mhx50_panValue[0];
+      mhx50_tiltValueOld[0] = mhx50_tiltValue[0];
+      
+      if(mhx50_panValueOld[1] != mhx50_panValue[0]*(-1)) { mhx50_createFinalChannelValues[1][0] = mhx50_panValue[0]*(-1); }
+      if(mhx50_tiltValueOld[1] != mhx50_tiltValue[0])    { mhx50_createFinalChannelValues[1][1] = mhx50_tiltValue[0]; }
+      
+      mhx50_panValueOld[1] = mhx50_panValue[0]*(-1);
+      mhx50_tiltValueOld[1] = mhx50_tiltValue[0];
+    }
+  }
+  else if(mhx50_posDuplicate == true) {
+    if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[0][0] = mhx50_panValue[0]; mhx50_createFinalChannelValues[1][0] = mhx50_panValue[0]; }
+    if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[0][1] = mhx50_tiltValue[0]; mhx50_createFinalChannelValues[1][1] = mhx50_tiltValue[0]; }
+    
+    mhx50_panValueOld[0] = mhx50_panValue[0];
+    mhx50_tiltValueOld[0] = mhx50_tiltValue[0];
+  }
+  else {
     if(mhx50_panValueOld[id] != mhx50_panValue[id])    { mhx50_createFinalChannelValues[id][0] = mhx50_panValue[id]; }
     if(mhx50_tiltValueOld[id] != mhx50_tiltValue[id])  { mhx50_createFinalChannelValues[id][1] = mhx50_tiltValue[id]; }
     
     mhx50_panValueOld[id] = mhx50_panValue[id];
     mhx50_tiltValueOld[id] = mhx50_tiltValue[id];
-//  }
+  }
+  
+  
+  
+  
   if(mhx50_duplicate == true) {
-    if(mhx50_panFineValueOld[0] != mhx50_panFineValue[0])                                   { mhx50_createFinalChannelValues[id][2] = mhx50_panFineValue[0]; }
-    if(mhx50_tiltFineValueOld[0] != mhx50_tiltFineValue[0])                                 { mhx50_createFinalChannelValues[id][3] = mhx50_tiltFineValue[0]; }
-    if(mhx50_responseSpeedValueOld[0] != mhx50_responseSpeedValue[0])                       { mhx50_createFinalChannelValues[id][4] = mhx50_responseSpeedValue[0]; }
-    if(mhx50_colorOld[0] != mhx50_color[0])                                                 { mhx50_createFinalChannelValues[id][5] = mhx50_color[0]; }
-    if(mhx50_shutterValueOld[0] != mhx50_shutterValue[0])                                   { mhx50_createFinalChannelValues[id][6] = mhx50_shutterValue[0]; }
-    if(mhx50_dimmerValueOld[0] != round(map(mhx50_dimmerValue[0], 0, 255, 0, grandMaster))) { mhx50_createFinalChannelValues[id][7] = round(map(mhx50_dimmerValue[0], 0, 255, 0, grandMaster)); }
-    if(mhx50_goboValueOld[0] != mhx50_goboValue[0])                                         { mhx50_createFinalChannelValues[id][8] = mhx50_goboValue[0]; }
-    if(mhx50_goboRotationValueOld[0] != mhx50_goboRotationValue[0])                         { mhx50_createFinalChannelValues[id][9] = mhx50_goboRotationValue[0]; }
-    if(mhx50_resetValueOld[0] != mhx50_resetValue[0])                                       { mhx50_createFinalChannelValues[id][10] = mhx50_resetValue[0]; }
-    if(mhx50_autoProgramValueOld[0] != mhx50_autoProgramValue[0])                           { mhx50_createFinalChannelValues[id][11] = mhx50_autoProgramValue[0]; }
-    if(mhx50_prismValueOld[0] != mhx50_prismValue[0])                                       { mhx50_createFinalChannelValues[id][12] = mhx50_prismValue[0]; }
-    if(mhx50_focusValueOld[0] != mhx50_focusValue[0])                                       { mhx50_createFinalChannelValues[id][13] = mhx50_focusValue[0]; }
+    if(mhx50_panFineValueOld[0] != mhx50_panFineValue[0])                                   { mhx50_createFinalChannelValues[0][2] = mhx50_panFineValue[0]; mhx50_createFinalChannelValues[1][2] = mhx50_panFineValue[0]; }
+    if(mhx50_tiltFineValueOld[0] != mhx50_tiltFineValue[0])                                 { mhx50_createFinalChannelValues[0][3] = mhx50_tiltFineValue[0]; mhx50_createFinalChannelValues[1][3] = mhx50_tiltFineValue[0]; }
+    if(mhx50_responseSpeedValueOld[0] != mhx50_responseSpeedValue[0])                       { mhx50_createFinalChannelValues[0][4] = mhx50_responseSpeedValue[0]; mhx50_createFinalChannelValues[1][4] = mhx50_responseSpeedValue[0]; }
+    if(mhx50_colorOld[0] != mhx50_color[0])                                                 { mhx50_createFinalChannelValues[0][5] = mhx50_color[0]; mhx50_createFinalChannelValues[1][5] = mhx50_color[0]; }
+    if(mhx50_shutterValueOld[0] != mhx50_shutterValue[0])                                   { mhx50_createFinalChannelValues[0][6] = mhx50_shutterValue[0]; mhx50_createFinalChannelValues[1][6] = mhx50_shutterValue[0]; }
+    if(mhx50_dimmerValueOld[0] != round(map(mhx50_dimmerValue[0], 0, 255, 0, grandMaster))) { mhx50_createFinalChannelValues[0][7] = round(map(mhx50_dimmerValue[0], 0, 255, 0, grandMaster)); mhx50_createFinalChannelValues[1][7] = round(map(mhx50_dimmerValue[0], 0, 255, 0, grandMaster)); }
+    if(mhx50_goboValueOld[0] != mhx50_goboValue[0])                                         { mhx50_createFinalChannelValues[0][8] = mhx50_goboValue[0]; mhx50_createFinalChannelValues[1][8] = mhx50_goboValue[0]; }
+    if(mhx50_goboRotationValueOld[0] != mhx50_goboRotationValue[0])                         { mhx50_createFinalChannelValues[0][9] = mhx50_goboRotationValue[0]; mhx50_createFinalChannelValues[1][9] = mhx50_goboRotationValue[0]; }
+    if(mhx50_resetValueOld[0] != mhx50_resetValue[0])                                       { mhx50_createFinalChannelValues[0][10] = mhx50_resetValue[0]; mhx50_createFinalChannelValues[1][10] = mhx50_resetValue[0]; }
+    if(mhx50_autoProgramValueOld[0] != mhx50_autoProgramValue[0])                           { mhx50_createFinalChannelValues[0][11] = mhx50_autoProgramValue[0]; mhx50_createFinalChannelValues[1][11] = mhx50_autoProgramValue[0]; }
+    if(mhx50_prismValueOld[0] != mhx50_prismValue[0])                                       { mhx50_createFinalChannelValues[0][12] = mhx50_prismValue[0]; mhx50_createFinalChannelValues[1][12] = mhx50_prismValue[0]; }
+    if(mhx50_focusValueOld[0] != mhx50_focusValue[0])                                       { mhx50_createFinalChannelValues[0][13] = mhx50_focusValue[0]; mhx50_createFinalChannelValues[1][13] = mhx50_focusValue[0]; }
    
    mhx50_panFineValueOld[0] = mhx50_panFineValue[0];
    mhx50_tiltFineValueOld[0] = mhx50_tiltFineValue[0];
