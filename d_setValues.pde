@@ -1,7 +1,9 @@
 void setDimAndMemoryValuesAtEveryDraw() {
   for(int i = 0; i < channels; i++) {
       dim[i] = round(map(dimInput[i], 0, 255, 0, grandMaster));
-      
+      if(i < 40) {
+        valueToDmx[i] = dim[i];
+      }
   }
   dim[31] = mhx50_createFinalChannelValues[0][7];
   dim[32] = mhx50_createFinalChannelValues[1][7];
