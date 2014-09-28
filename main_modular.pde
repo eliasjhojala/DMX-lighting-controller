@@ -1,3 +1,56 @@
+int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
+boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
+
+boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
+boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use
+boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
+
+int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200);)
+
+
+boolean nextStepPressed = false;
+boolean revStepPressed = false;
+int lastStepDirection;
+
+int[] valueOfDimBeforeBlackout = new int[1000];
+boolean blackOut = false;
+
+int soloMemory = 11; //Memorypaikka, joka on solo - solomemory's memoryplace
+boolean soloWasHere = false; //Oliko Solo äsken käytössä
+boolean useSolo = true; //Käytetäänkö soloa - is solo in use at all
+
+
+//ID CHANGE
+//Create variables for changing fixture id
+
+int numberOfAllFixtures = 81;
+int[] fixtureIdOriginal = new int[numberOfAllFixtures];
+int[] fixtureIdNow = new int[numberOfAllFixtures];
+int[] fixtureChannelOriginal = new int[numberOfAllFixtures];
+int[] fixtureChannelNow = new int[numberOfAllFixtures];
+
+int[] fixtureIdNowTemp = new int[numberOfAllFixtures];
+int[] fixtureIdNewTemp = new int[numberOfAllFixtures];
+int[] fixtureIdOldTemp = new int[numberOfAllFixtures];
+
+int[] fixtureIdPlaceInArray = new int[numberOfAllFixtures];
+
+//Asetetaan arvot fixturen ID:n muttamiseen tarkoitetuille muuttujille
+void setFixtureChannelsAtSoftwareBegin() {
+  for(int i = 0; i < numberOfAllFixtures; i++) {
+    fixtureIdOriginal[i] = i;
+    fixtureIdNow[i] = i;
+    fixtureChannelOriginal[i] = i;
+    fixtureChannelNow[i] = i + 1;
+    fixtureIdPlaceInArray[i] = i;
+  }
+}
+
+
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------------------------Moving head variables----------------------------------------------------------------------------------------------------------------------------------------------------------------
 int[][] mhx50_createFinalChannelValues = new int[2][14];
 int[][][] mhx50_createFinalPresetValues = new int[16][2][14];
 
@@ -67,60 +120,7 @@ int[]  mhx50_focusValueOld = { 0, 0 };
 
 
 
-
-
-
-
-
-
-
-int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
-boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
-
-boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
-boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use
-boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
-
-int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200);)
-
-
-boolean nextStepPressed = false;
-boolean revStepPressed = false;
-int lastStepDirection;
-
-int[] valueOfDimBeforeBlackout = new int[1000];
-boolean blackOut = false;
-
-int soloMemory = 11; //Memorypaikka, joka on solo - solomemory's memoryplace
-boolean soloWasHere = false; //Oliko Solo äsken käytössä
-boolean useSolo = true; //Käytetäänkö soloa - is solo in use at all
-
-
-//ID CHANGE
-//Create variables for changing fixture id
-
-int numberOfAllFixtures = 81;
-int[] fixtureIdOriginal = new int[numberOfAllFixtures];
-int[] fixtureIdNow = new int[numberOfAllFixtures];
-int[] fixtureChannelOriginal = new int[numberOfAllFixtures];
-int[] fixtureChannelNow = new int[numberOfAllFixtures];
-
-int[] fixtureIdNowTemp = new int[numberOfAllFixtures];
-int[] fixtureIdNewTemp = new int[numberOfAllFixtures];
-int[] fixtureIdOldTemp = new int[numberOfAllFixtures];
-
-int[] fixtureIdPlaceInArray = new int[numberOfAllFixtures];
-
-//Asetetaan arvot fixturen ID:n muttamiseen tarkoitetuille muuttujille
-void setFixtureChannelsAtSoftwareBegin() {
-  for(int i = 0; i < numberOfAllFixtures; i++) {
-    fixtureIdOriginal[i] = i;
-    fixtureIdNow[i] = i;
-    fixtureChannelOriginal[i] = i;
-    fixtureChannelNow[i] = i + 1;
-    fixtureIdPlaceInArray[i] = i;
-  }
-}
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 

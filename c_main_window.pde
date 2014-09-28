@@ -48,6 +48,14 @@ void drawMainWindow() {
 //          rotTaka[i] = round(map(mhx50_createFinalChannelValues[0][0], 0, 255, 0, 540));
 //          rotX[i] = round(map(mhx50_createFinalChannelValues[0][1], 0, 255, 0, 270));
           
+          
+//          if(red[i] < mhx50_RGB_color_Values[mhx50_colorNumber[0]][0]) { red[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[0]][0] - red[i]) / 10); }
+//          if(red[i] > mhx50_RGB_color_Values[mhx50_colorNumber[0]][0]) { red[i] -= round((red[i] - mhx50_RGB_color_Values[mhx50_colorNumber[0]][0]) / 10); }
+//          if(green[i] < mhx50_RGB_color_Values[mhx50_colorNumber[0]][1]) { green[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[0]][1] - green[i]) / 10); }
+//          if(green[i] > mhx50_RGB_color_Values[mhx50_colorNumber[0]][1]) { green[i] -= round((green[i] - mhx50_RGB_color_Values[mhx50_colorNumber[0]][1]) / 10); }
+//          if(blue[i] < mhx50_RGB_color_Values[mhx50_colorNumber[0]][2]) { blue[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[0]][2] - blue[i]) / 10); }
+//          if(blue[i] > mhx50_RGB_color_Values[mhx50_colorNumber[0]][2]) { blue[i] -= round((blue[i] - mhx50_RGB_color_Values[mhx50_colorNumber[0]][2]) / 10); }
+          
           red[i] = mhx50_RGB_color_Values[mhx50_colorNumber[0]][0];
           green[i] = mhx50_RGB_color_Values[mhx50_colorNumber[0]][1];
           blue[i] = mhx50_RGB_color_Values[mhx50_colorNumber[0]][2];
@@ -70,6 +78,12 @@ void drawMainWindow() {
 //          rotTaka[i] = round(map(mhx50_createFinalChannelValues[1][0], 0, 255, 0, 540));
 //          rotX[i] = round(map(mhx50_createFinalChannelValues[1][1], 0, 255, 0, 270));
           
+//          if(red[i] < mhx50_RGB_color_Values[mhx50_colorNumber[1]][0]) { red[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[1]][0] - red[i]) / 10); }
+//          if(red[i] > mhx50_RGB_color_Values[mhx50_colorNumber[1]][0]) { red[i] -= round((red[i] - mhx50_RGB_color_Values[mhx50_colorNumber[1]][0]) / 10); }
+//          if(green[i] < mhx50_RGB_color_Values[mhx50_colorNumber[1]][1]) { green[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[1]][1] - green[i]) / 10); }
+//          if(green[i] > mhx50_RGB_color_Values[mhx50_colorNumber[1]][1]) { green[i] -= round((green[i] - mhx50_RGB_color_Values[mhx50_colorNumber[1]][1]) / 10); }
+//          if(blue[i] < mhx50_RGB_color_Values[mhx50_colorNumber[1]][2]) { blue[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[1]][2] - blue[i]) / 10); }
+//          if(blue[i] > mhx50_RGB_color_Values[mhx50_colorNumber[1]][2]) { blue[i] -= round((blue[i] - mhx50_RGB_color_Values[mhx50_colorNumber[1]][2]) / 10); }
           
           red[i] = mhx50_RGB_color_Values[mhx50_colorNumber[1]][0];
           green[i] = mhx50_RGB_color_Values[mhx50_colorNumber[1]][1];

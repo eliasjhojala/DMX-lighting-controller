@@ -1,3 +1,4 @@
+//This tab controls mhx50 moving head
 /*CHANNELS
 
 1 0…255 Rotation (pan) (0° to max. value of the Pan range: 180°, 270° or 540°)
@@ -101,32 +102,19 @@
 
 */
 
-void mhx50_movingHeadLoop() {
-  if(mhx50_plays2l) {
-  mhx50_playS2l();
-  }
+void mhx50_movingHeadLoop() { //This loops in every draw
+  if(mhx50_plays2l) { mhx50_playS2l(); } //Make sound to light effect if it is on
 }
 
-void movingHeadOptionsCheck(String address, int value, int value2) {
+void movingHeadOptionsCheck(String address, int value, int value2) { //This void checks all the controllers from touchosc which affects to moving head
 
-  if(address.equals("/6/MH_posMirror")) {
-    mhx50_posMirror = boolean(value);
-  }
-  if(address.equals("/6/MH_posDuplicate")) {
-    mhx50_posDuplicate = boolean(value);
-  }
-  if(address.equals("/6/MH_duplicate")) {
-    mhx50_duplicate = boolean(value);
-  }
+  if(address.equals("/6/MH_posMirror")) { mhx50_posMirror = boolean(value); } //Set right value to posMirror boolean which means that pan data is mirrored and tilt duplicated
+  if(address.equals("/6/MH_posDuplicate")) { mhx50_posDuplicate = boolean(value); } //Set right value to posDuplivate boolean which means that position data is duplicated
+  if(address.equals("/6/MH_duplicate")) { mhx50_duplicate = boolean(value); } //Set right value to duplicate boolean which means that all data but position is duplicated
   
-  if(address.equals("/7/saves2l")) {
-    mhx50_saves2l = true;
-    mhx50_saves2lfirstTime = true;
-  }
-  if(address.equals("/7/ok")) {
-    mhx50_saves2l = false;
-  }
-  if(address.equals("/7/plays2l")) {
+  if(address.equals("/7/saves2l")) { mhx50_saves2l = true; mhx50_saves2lfirstTime = true; } //Check if saves2l button is pressed and tells the other program it by variables
+  if(address.equals("/7/ok")) { mhx50_saves2l = false; } //If ok is pressed then saving s2l is ready and not true anymore
+  if(address.equals("/7/plays2l")) { //check if plays2l is pressed
     if(value == 1) {
       if(mhx50_plays2l) {
         mhx50_plays2l = false;
@@ -137,59 +125,57 @@ void movingHeadOptionsCheck(String address, int value, int value2) {
     }
   }
   
-  if(address.equals("/7/savePreset1") || address.equals("/7/savePreset2")) {
-    savePreset = true;
-  }
+  if(address.equals("/7/savePreset1") || address.equals("/7/savePreset2")) { savePreset = true; } //Check if savePreset is pressed and tells it the other program by savePreset variable
   
-  for(int ij = 1; ij <= 2; ij++) {
-  for(int i = 0; i < 15; i++) {
-    if(address.equals("/7/preset" + str(i) + "_" + str(ij)) && value == 1) {
-      if(savePreset) {
-        savePreset(i, ij-1);
-      }
-      else if(mhx50_saves2l) {
-        mmhx50_s2l_numberOfPresets++;
-        if(mhx50_saves2lfirstTime) {
-          mmhx50_s2l_numberOfPresets = 0;
-          mhx50_saves2lfirstTime = false;
+  
+  //Check all the preset buttons
+  for(int ij = 1; ij <= 2; ij++) { //Goes through all the mhx50 fixtures
+    for(int i = 0; i < 15; i++) { //Goes through all the presetbuttons
+      if(address.equals("/7/preset" + str(i) + "_" + str(ij)) && value == 1) { //Check if button is pressed
+        if(savePreset) { //If savepresed is true then saves presed to presetplace which you clicked 
+          savePreset(i, ij-1);
         }
-        mhx50_s2l_presets[mmhx50_s2l_numberOfPresets] = i;
+        else if(mhx50_saves2l) { //If saves2l is true then adds the preset you clicked to s2l
+          mmhx50_s2l_numberOfPresets++;
+          if(mhx50_saves2lfirstTime) { //If you created new s2l then resets mmhx50_s2l_numberOfPresets variable
+            mmhx50_s2l_numberOfPresets = 0;
+            mhx50_saves2lfirstTime = false;
+          }
+          mhx50_s2l_presets[mmhx50_s2l_numberOfPresets] = i;
+        }
+        else { //Shows preset if you just clicked preset without savePreset or saves2l
+          changeValues = false;
+          showPreset(i, ij-1);     
+        }  
       }
-      else {
-        changeValues = false;
-        showPreset(i, ij-1);
-        
-      }
-      
     }
   }
-  }
   
   
-  for(int id = 0; id <= 1; id++) {
+  for(int id = 0; id <= 1; id++) { //Goes through all the mhx50 fixtures 
   
       //CH 1: Pan
-      if(address.equals("/7/xy" + str(id+1)) || address.equals("/8/xy" + str(id+1))) { mhx50_pan(value2, id); }
+      if(address.equals("/7/xy" + str(id+1)) || address.equals("/8/xy" + str(id+1))) { mhx50_pan(value2, id); } //Changes pan value
       //CH 2: Tilt
-      if(address.equals("/7/xy" + str(id+1)) || address.equals("/8/xy" + str(id+1))) { mhx50_tilt(value, id); }
+      if(address.equals("/7/xy" + str(id+1)) || address.equals("/8/xy" + str(id+1))) { mhx50_tilt(value, id); } //Changes tilt value
       //CH 3: Fine adjustment for rotation (pan)
-      mhx50_panFine(0, id);
+      mhx50_panFine(0, id); //Sets panFine value to zero
       //CH 4: Fine adjustment for inclination (tilt)
-      mhx50_tiltFine(0, id);
+      mhx50_tiltFine(0, id); //Sets tiltFine value to zero
       //CH 5: Response speed
-      mhx50_responseSpeed(0, id);
+      mhx50_responseSpeed(0, id); //Sets responseSpeed to zero which means the fastest possible
       
       //CH 6: Colour wheel
-      mhx50_colorChange(address, id);
+      mhx50_colorChange(address, id); //Check color buttons every round
       if(address.equals("/8/rainbow" + str(id+1))) { rainbow(value, id); } //Color rainbow
       
       //CH 7: Shutter
-      if(address.equals("/8/blackOut" + str(id+1)) && value == 1) { mhx50_blackOut(id); }
-      if(address.equals("/8/openShutter" + str(id+1)) && value == 1) { mhx50_openShutter(id); }
-      if(address.equals("/8/strobe" + str(id+1))) { mhx50_strobe(value, id); }
+      if(address.equals("/8/blackOut" + str(id+1)) && value == 1) { mhx50_blackOut(id); } //Check if blackout is presset
+      if(address.equals("/8/openShutter" + str(id+1)) && value == 1) { mhx50_openShutter(id); } //Check if open is pressed
+      if(address.equals("/8/strobe" + str(id+1))) { mhx50_strobe(value, id); } //Check if strobe slider is over zero
       
       //CH 8: Mechanical dimmer
-      if(address.equals("/7/dimmer" + str(id+1)) || address.equals("/8/dimmer" + str(id+1))) { mhx50_dimmer(value, id); }
+      if(address.equals("/7/dimmer" + str(id+1)) || address.equals("/8/dimmer" + str(id+1))) { mhx50_dimmer(value, id); } //Changes dimmer value
       
       //CH 9: Gobo wheel
       if(address.equals("/8/noGobo" + str(id+1)) && value == 1) { mhx50_noGobo(id); } //Gobowheel open
@@ -205,7 +191,7 @@ void movingHeadOptionsCheck(String address, int value, int value2) {
       if(address.equals("/8/goboBouncing" + str(id+1)) && value == 1) { mhx50_goboBouncing(id); } //Gobo bouncing
       
       //CH 11: Special functions
-      if(address.equals("/8/reset" + str(id+1))) { mhx50_reset(value, id); }
+      if(address.equals("/8/reset" + str(id+1))) { mhx50_reset(value, id); } //Check ig reset button is pressed and resets all the channels in moving head
       
       //CH 12: Built-in programmes
       if(address.equals("/8/autoProgram" + str(id+1)) && value == 1) { mhx50_autoProgram(id); } //Next autoProgram
@@ -217,50 +203,39 @@ void movingHeadOptionsCheck(String address, int value, int value2) {
       if(address.equals("/8/focus" + str(id+1))) { mhx50_focus(value, id); } //Change focus value
       
     
-      mhx50_finalChannelValuesCreate(id);
+      mhx50_finalChannelValuesCreate(id); //Create array where is located all the mhx50 channels
   
   }
 }
 
 
-void mhx50_pan(int value, int id) {
-  mhx50_panValue[id] = value;
-}
+void mhx50_pan(int value, int id) { mhx50_panValue[id] = value; } //Changes panValue
 
-void mhx50_tilt(int value, int id) {
-  mhx50_tiltValue[id] = value;
-}
+void mhx50_tilt(int value, int id) { mhx50_tiltValue[id] = value; } //Changes tiltValue
 
-void mhx50_panFine(int value, int id) {
-  mhx50_panFineValue[id] = value;
-}
+void mhx50_panFine(int value, int id) { mhx50_panFineValue[id] = value; } //Changes panFineValue which is for moving moving head smoothly
 
-void mhx50_tiltFine(int value, int id) {
-  mhx50_tiltFineValue[id] = value;
-}
+void mhx50_tiltFine(int value, int id) { mhx50_tiltFineValue[id] = value; } //Changes tiltFineValue which is for moving moving head smoothly
 
-void mhx50_responseSpeed(int value, int id) {
-  mhx50_responseSpeedValue[id] = value;
-}
+void mhx50_responseSpeed(int value, int id) { mhx50_responseSpeedValue[id] = value; } //Changes responseSpeed which affects to moving speed
 
-void mhx50_dimmer(int value, int id) {
-  mhx50_dimmerValue[id] = value;
-}
+void mhx50_dimmer(int value, int id) { mhx50_dimmerValue[id] = value; } //Changes dimmerValue which affects to moving head brightness
 
 void mhx50_colorChange(String address, int id) {
+  //This void goes through all the color buttons and gives right color values to mhx50
   for(int i = 0; i < mhx50_color_names.length; i++) {
     if(address != null) {
     if(address.equals("/8/" + mhx50_color_names[i] + str(id + 1))) {
-      mhx50_color[id] = mhx50_color_values[i]; 
+      mhx50_color[id] = mhx50_color_values[i]; //Gives right value to moving head color channel
       if(mhx50_colorOld[id] != mhx50_color[id]) {
       if(mhx50_duplicate == true) {
         if(id == 0) {
-          mhx50_colorNumber[0] = i;
-          mhx50_colorNumber[1] = i; break;
+          mhx50_colorNumber[0] = i; //This is to show right rgb values in visualisation
+          mhx50_colorNumber[1] = i; break; //This is to show right rgb values in visualisation
         }
       }
       else {
-        mhx50_colorNumber[id] = i; break;
+        mhx50_colorNumber[id] = i; break; //This is to show right rgb values in visualisation
       }
       }
       mhx50_colorOld[id] = mhx50_color[id];
@@ -270,21 +245,14 @@ void mhx50_colorChange(String address, int id) {
 }
 
 void rainbow(int value, int id) {
-  if(value < 0) {
-    mhx50_color[id] = round(map(value, 0, -100, 128, 191));
-  }
-  else if(value > 0) {
-    mhx50_color[id] = round(map(value, 0, 100, 192, 255));
-  }
-  else if(value == 0) {
-    mhx50_color[id] = 5;
-  }
+  if(value < -5) { mhx50_color[id] = round(map(value, 0, -100, 128, 191)); } //Rainbow to negative direction
+  else if(value > 5) { mhx50_color[id] = round(map(value, 0, 100, 192, 255)); } //Rainbow to positive direction
+  else  { mhx50_color[id] = 5; } //No rainbow
 }
 
-void mhx50_noGobo(int id) {
-  mhx50_goboValue[id] = 5;
-}
+void mhx50_noGobo(int id) { mhx50_goboValue[id] = 5; } //Gobowheel open
 void mhx50_goboUp(int id) {
+  //This void changes gobo to next and counts right value to gobowheel channel
   mhx50_goboNumber[id]++;
   if(mhx50_goboNumber[id] >= mhx50_gobo_values.length) {
     mhx50_goboNumber[id] = 0;
@@ -292,15 +260,14 @@ void mhx50_goboUp(int id) {
   mhx50_goboValue[id] = mhx50_gobo_values[mhx50_goboNumber[id]];
 }
 void mhx50_goboDown(int id) {
+  //This void changes gobo to previous and counts right value to gobowheel channel
   mhx50_goboNumber[id]--;
   if(mhx50_goboNumber[id] < 0) {
     mhx50_goboNumber[id] = mhx50_gobo_values.length - 1;
   }
   mhx50_goboValue[id] = mhx50_gobo_values[mhx50_goboNumber[id]];
 }
-void mhx50_goboRainbowUp(int value, int id) {
-  mhx50_goboValue[id] = round(map(value, 0, 100, 128, 191));
-}
+void mhx50_goboRainbowUp(int value, int id) { mhx50_goboValue[id] = round(map(value, 0, 100, 128, 191)); } //
 void mhx50_goboRainbowDown(int value, int id) {
   mhx50_goboValue[id] = round(map(value, 0, 100, 192, 255));
 }
