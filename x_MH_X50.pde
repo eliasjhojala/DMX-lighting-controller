@@ -226,11 +226,9 @@ void movingHeadOptionsCheck(String address, int value, int value2) { //This void
 
 
 void mhx50_pan(int value, int id) { mhx50_panValue[id] = value; } //Changes panValue
-
 void mhx50_tilt(int value, int id) { mhx50_tiltValue[id] = value; } //Changes tiltValue
 
 void mhx50_panFine(int value, int id) { mhx50_panFineValue[id] = value; } //Changes panFineValue which is for moving moving head smoothly
-
 void mhx50_tiltFine(int value, int id) { mhx50_tiltFineValue[id] = value; } //Changes tiltFineValue which is for moving moving head smoothly
 
 void mhx50_responseSpeed(int value, int id) { mhx50_responseSpeedValue[id] = value; } //Changes responseSpeed which affects to moving speed
@@ -283,55 +281,39 @@ void mhx50_goboDown(int id) {
   }
   mhx50_goboValue[id] = mhx50_gobo_values[mhx50_goboNumber[id]];
 }
-void mhx50_goboRainbowUp(int value, int id) { mhx50_goboValue[id] = round(map(value, 0, 100, 128, 191)); } //
-void mhx50_goboRainbowDown(int value, int id) {
-  mhx50_goboValue[id] = round(map(value, 0, 100, 192, 255));
-}
-void mhx50_goboRotationUp(int value, int id) {
-  mhx50_goboRotationValue[id] = round(map(value, 0, 100, 64, 147));
-}
-void mhx50_goboRotationDown(int value, int id) {
-  mhx50_goboRotationValue[id] = round(map(value, 0, 100, 148, 231));
-}
-void mhx50_goboNoRotation(int id) {
-  mhx50_goboRotationValue[id] = 20;
-}
-void mhx50_goboBouncing(int id) {
-  mhx50_goboRotationValue[id] = 245;
-}
+void mhx50_goboRainbowUp(int value, int id) { mhx50_goboValue[id] = round(map(value, 0, 100, 128, 191)); } //This void makes gobowheel rotate positive direction with various speed
+void mhx50_goboRainbowDown(int value, int id) { mhx50_goboValue[id] = round(map(value, 0, 100, 192, 255)); } //This void makes gobowheel rotate negative direction with various speed
+
+void mhx50_goboRotationUp(int value, int id) { mhx50_goboRotationValue[id] = round(map(value, 0, 100, 64, 147)); }  //This void makes gobo rotate positive direction with various speed
+void mhx50_goboRotationDown(int value, int id) { mhx50_goboRotationValue[id] = round(map(value, 0, 100, 148, 231)); } //This void makes gobo rotate negative direction with various speed
+void mhx50_goboNoRotation(int id) { mhx50_goboRotationValue[id] = 20; } //This void stops rotating gobo
+void mhx50_goboBouncing(int id) { mhx50_goboRotationValue[id] = 245; } //This void makes gobo bouncing
 void mhx50_autoProgram(int id) {
+  //This void counts autoprogram number and sets autoProgram channel to right value
   mhx50_autoProgramNumber[id]++;
   if(mhx50_autoProgramNumber[id] >= mhx50_autoProgram_values.length) {
     mhx50_goboNumber[id] = 0;
   }
   mhx50_autoProgramValue[id] = mhx50_autoProgram_values[mhx50_autoProgramNumber[id]];
 }
-void mhx50_prism(int value, int id) {
-  mhx50_prismValue[id] = value;
-}
-void mhx50_focus(int value, int id) {
-  mhx50_focusValue[id] = value;
-}
+void mhx50_prism(int value, int id) { mhx50_prismValue[id] = value; } //Changes prism value
+void mhx50_focus(int value, int id) { mhx50_focusValue[id] = value; } //Changes focus value
 
 void mhx50_reset(int value, int id) {
-  if(value == 0) {
-    mhx50_resetValue[id] = 0;
-  }
-  else {
-    mhx50_resetValue[id] = 154;
-  }
+  //This void sends reset singnal to moving head
+  if(value == 0) { mhx50_resetValue[id] = 0; }
+  else { mhx50_resetValue[id] = 154; }
 }
-void mhx50_blackOut(int id) {
-  mhx50_shutterValue[id] = 1;
-}
-void mhx50_openShutter(int id) {
-  mhx50_shutterValue[id] = 5;
-}
-void mhx50_strobe(int value, int id) {
-  mhx50_shutterValue[id] = round(map(value, 0, 100, 8, 215));
-}
+void mhx50_blackOut(int id) { mhx50_shutterValue[id] = 1; } //Blackout with shutter
+void mhx50_openShutter(int id) { mhx50_shutterValue[id] = 5; } //Open shutter
+void mhx50_strobe(int value, int id) { mhx50_shutterValue[id] = round(map(value, 0, 100, 8, 215)); } //Strobe with shutter
 
+
+
+
+//This void makes array to send to DMX
 void mhx50_finalChannelValuesCreate(int id) {
+  //--------------------------------------------------------------------------------------------------------------------------------Making right position values begins-------------------------------------------------------------------------------------------------------------------------------
   if(mhx50_posMirror == true) {
     if(id == 0) {
       if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[0][0] = round(map(mhx50_panValue[0], 0, 255, 255, 0)); mhx50_createFinalChannelValues[1][0] = round(255/2) - mhx50_panValue[0]; }
@@ -357,10 +339,11 @@ void mhx50_finalChannelValuesCreate(int id) {
     mhx50_tiltValueOld[id] = mhx50_tiltValue[id];
   }
   
+  //---------------------------------------------------------------------------------------------------------------------------------Making right position values ends---------------------------------------------------------------------------------------------------------------------------------
   
   
   
-  if(mhx50_duplicate == true) {
+  if(mhx50_duplicate == true) { //If duplicate is true then give same data to both moving heads
     if(mhx50_panFineValueOld[0] != mhx50_panFineValue[0])                                   { mhx50_createFinalChannelValues[0][2] = mhx50_panFineValue[0]; mhx50_createFinalChannelValues[1][2] = mhx50_panFineValue[0]; }
     if(mhx50_tiltFineValueOld[0] != mhx50_tiltFineValue[0])                                 { mhx50_createFinalChannelValues[0][3] = mhx50_tiltFineValue[0]; mhx50_createFinalChannelValues[1][3] = mhx50_tiltFineValue[0]; }
     if(mhx50_responseSpeedValueOld[0] != mhx50_responseSpeedValue[0])                       { mhx50_createFinalChannelValues[0][4] = mhx50_responseSpeedValue[0]; mhx50_createFinalChannelValues[1][4] = mhx50_responseSpeedValue[0]; }
@@ -387,7 +370,7 @@ void mhx50_finalChannelValuesCreate(int id) {
    mhx50_prismValueOld[0] = mhx50_prismValue[0];
    mhx50_focusValueOld[0] = mhx50_focusValue[0];
   }
-  else {
+  else { //If duplicate is not true then give the separate data to moving heads
     if(mhx50_panFineValueOld[id] != mhx50_panFineValue[id])                                   { mhx50_createFinalChannelValues[id][2] = mhx50_panFineValue[id]; }
     if(mhx50_tiltFineValueOld[id] != mhx50_tiltFineValue[id])                                 { mhx50_createFinalChannelValues[id][3] = mhx50_tiltFineValue[id]; }
     if(mhx50_responseSpeedValueOld[id] != mhx50_responseSpeedValue[id])                       { mhx50_createFinalChannelValues[id][4] = mhx50_responseSpeedValue[id]; }
@@ -403,6 +386,7 @@ void mhx50_finalChannelValuesCreate(int id) {
   }
 }
 
+//Saves current values to preset array
 void savePreset(int presetNumber, int id) {
   for(int i = 0; i < 13; i++) {
     mhx50_createFinalPresetValues[presetNumber][id][i] = mhx50_createFinalChannelValues[id][i];
@@ -410,20 +394,21 @@ void savePreset(int presetNumber, int id) {
   savePreset = false;
 }
 
+//Changes current values from preset array
 void showPreset(int presetNumber, int id) {
   for(int i = 0; i < 13; i++) {
-     mhx50_createFinalChannelValues[0][i] = mhx50_createFinalPresetValues[presetNumber][0][i];
-     mhx50_createFinalChannelValues[1][i] = mhx50_createFinalPresetValues[presetNumber][1][i];
+     mhx50_createFinalChannelValues[0][i] = mhx50_createFinalPresetValues[presetNumber][0][i]; //Give values to mh 0
+     mhx50_createFinalChannelValues[1][i] = mhx50_createFinalPresetValues[presetNumber][1][i]; //Give values to mh 1
   }
   
-  checkColorNumber(0);
-  checkColorNumber(1);
+  checkColorNumber(0); //Change colornumber of mh 0 for visualisation
+  checkColorNumber(1); //Change colornumber of mh 1 for visualisation
 }
 
 
-
+//Check color number for visualisation
 void checkColorNumber(int id) {
-  for(int i = 0; i < mhx50_color_values.length; i++) {
+  for(int i = 0; i < mhx50_color_values.length; i++) { //Goes through every possible value
     if(mhx50_createFinalChannelValues[id][5] == mhx50_color_values[i]) {
       mhx50_colorNumber[id] = i; break;
     }
@@ -432,15 +417,15 @@ void checkColorNumber(int id) {
 }
 
 
-
+//Sound to light changes preset to next by detecting beats
 void mhx50_playS2l() {
   millisNow[10] = millis();
-  if(biitti == true && millisNow[10] - millisOld[10] > 200) {
-    mhx50_s2l_step++;
-    if(mhx50_s2l_step > mmhx50_s2l_numberOfPresets) {
-      mhx50_s2l_step = 0;
+  if(biitti == true && millisNow[10] - millisOld[10] > 200) { //Check is there 200 millis passed from previous stepchange
+    mhx50_s2l_step++; //Changes step to next
+    if(mhx50_s2l_step > mmhx50_s2l_numberOfPresets) { //Check if step is too high
+      mhx50_s2l_step = 0; //Set step to zero if it's too high
     }
-    showPreset(mhx50_s2l_presets[mhx50_s2l_step], 0);
-    millisOld[10] = millisNow[10];
+    showPreset(mhx50_s2l_presets[mhx50_s2l_step], 0); //Shows right preset
+    millisOld[10] = millisNow[10]; //Saves current time
   }
 }

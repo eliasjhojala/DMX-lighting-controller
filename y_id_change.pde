@@ -1,13 +1,12 @@
 //Tässä välilehdessä muutetaan fixtuurien ID:tä. Voideja kutsutaan controlP5:stä
 
 void change_fixture_id(int originalFixtureId) {
-//  originalFixtureId = fixtureIdNow[originalFixtureId];
-  //Nollataan väliaikaismuuttujat
+  //Reset temporary variables
   fixtureIdNowTemp = new int[numberOfAllFixtures];
   fixtureIdNewTemp = new int[numberOfAllFixtures];
   fixtureIdOldTemp = new int[numberOfAllFixtures];
   
-  //Kirjoitetaan väliaikaismuuttujiin nykyiset tiedot
+  //Save current data to temporary variables
   for(int i = 0; i < numberOfAllFixtures; i++) {
     fixtureIdNowTemp[i] = fixtureIdNow[i];
   }
@@ -17,13 +16,12 @@ void change_fixture_id(int originalFixtureId) {
   fixtureIdPlaceInArray[originalFixtureId]++; 
 }
 void change_fixture_id_down(int originalFixtureId) {
-//  originalFixtureId = fixtureIdNow[originalFixtureId];
-  //Nollataan väliaikaismuuttujat
+  //Reset temporary variables
   fixtureIdNowTemp = new int[numberOfAllFixtures];
   fixtureIdNewTemp = new int[numberOfAllFixtures];
   fixtureIdOldTemp = new int[numberOfAllFixtures];
   
-  //Kirjoitetaan väliaikaismuuttujiin nykyiset tiedot
+  //Save current data to temporary variables
   for(int i = 0; i < numberOfAllFixtures; i++) {
     fixtureIdNowTemp[i] = fixtureIdNow[i];
   }

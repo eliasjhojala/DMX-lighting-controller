@@ -14,6 +14,8 @@ boolean loadAllDataInSetup = true;
 public int leveys;
 public int korkeus;
 void setuppi() {
+
+  
   leveys = displayWidth;
   korkeus = displayHeight;
   loadSetupData();
@@ -39,5 +41,4 @@ void setuppi() {
   if(dataLoaded) {
     ansaWidth = max(xTaka)+80;
   }
-
 }

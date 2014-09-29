@@ -3,6 +3,13 @@
  This part of the program has mainly been made by Roope Salmi, rpsalmi@gmail.com
  */
 
+int coneScale = 500;
+
+int[] tablex = { -495+400, 891+400, 2277+400, 3663+400, -1881+400 };
+int[] tabley = { 495, 495, 495, 495, 495 };
+int[] tablez = { -975, -975, -975, -975, -975 };
+int[] tablePositionsLength = new int[3];
+
 boolean rotateZopposite = true;
 
 boolean use3D = false;
@@ -55,6 +62,7 @@ PShape floodCover;
 PShape strobo;
 PShape base;
 PShape cone;
+PShape table;
 
 float par64ConeDiameter = 0.4;
 float pFresuConeDiameter = 0.7;
@@ -107,6 +115,7 @@ void setup() {
   strobo = loadShape(path + "strobo.obj");
   base = loadShape(path + "base.obj");
   cone = loadShape(path + "cone.obj");
+  table = loadShape(path + "table.obj");
   
   cone.disableStyle();
   base.disableStyle();
@@ -166,8 +175,25 @@ void draw() {
                 translate(lavaX * 5 - 1000, lavaY * 5, -990 + lavaH);
                 fill(70);
                 box(lavaSizX * 5, lavaSizY * 5, lavaH * 2);
+                shape(table);
                 popMatrix();
               }
+              
+              
+              //Draw tables
+              tablePositionsLength[0] = tablex.length;
+              tablePositionsLength[1] = tabley.length;
+              tablePositionsLength[2] = tablez.length;
+              
+              for(int i = 0; i < min(tablePositionsLength); i++) {
+                pushMatrix();
+                translate(tablex[i], tabley[i], tablez[i]);
+                scale(100, 100, 100);
+                rotateX(radians(90));
+                shape(table);
+                popMatrix();
+              }
+
               
               
               //Draw lights
@@ -247,7 +273,7 @@ void drawLight(int posX, int posY, int posZ, int rotZ, int rotX, int scale, floa
         rotateX(radians(rotX));
         //Cone offset
         translate(0, 0, coneZOffset);
-        scale(scale * 100 * coneDiam, scale * 100  * coneDiam, scale * 100);
+        scale(scale * coneScale * coneDiam, scale * coneScale  * coneDiam, scale * coneScale);
         //fill(255, 0, 0, 128);
         fill(coneR, coneG, coneB, conedim / 2);
         shape(cone);
@@ -313,7 +339,7 @@ void drawFlood(int posX, int posY, int posZ, int rotZ, int rotX, int scale, floa
         rotateX(radians(rotX));
         //Cone offset
         translate(0, 0, coneZOffset);
-        scale(scale * 100 * coneDiam * 2, scale * 100  * coneDiam * map(LightParam, 45, -42, 1, 0), scale * 100);
+        scale(scale * coneScale * coneDiam * 2, scale * coneScale  * coneDiam * map(LightParam, 45, -42, 1, 0), scale * coneScale);
         //fill(255, 0, 0, 128);
         fill(coneR, coneG, coneB, conedim / 2);
         shape(cone);
@@ -348,7 +374,7 @@ void drawStrobo(int posX, int posY, int posZ, int rotZ, int rotX, int scale, flo
         rotateX(radians(rotX));
         //Cone offset
         translate(0, 0, coneZOffset);
-        scale(scale * 100 * coneDiam * 2, scale * 100  * coneDiam, scale * 100);
+        scale(scale * coneScale * coneDiam * 2, scale * coneScale  * coneDiam, scale * coneScale);
         //fill(255, 0, 0, 128);
         fill(coneR, coneG, coneB, conedim / 2);
         shape(cone);

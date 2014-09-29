@@ -163,49 +163,4 @@ void oscEvent(OscMessage theOscMessage) {
       
      }
        }
-     
-    
-    /*
-      Moving head toimintaperiaate:
-      Moving headin ohjaamista varten on oma sivu touchOSCissa,
-      jossa on sekä xy-pädi että faderi, jolla säädetään kirkkautta.
-      Moving headin oikea kanava tarkistetaan käymällä läpi kaikki kanavat
-      ja katsomalla minkä kanavan fixtuurityyppi on moving head.
-      Sama tehdään siis dimmin, panin ja tiltin kanssa. Kun se ollaan
-      saatu selville oikealle dim-muuttujalle annetaan touchOSCista 
-      tullut arvo ja sen jälkeen se lähetetään DMX:ään aivan kuten muutkin
-      dim-arvot. Kuitenkin yksi ero on huomattava. Moving headin pan
-      ja tilt dim-muuttujat vaikuttavat sekä 2D- että 3D-visualisaatiossa
-      moving headina asentoon.
-    */
-    
-    
-//   if(addr.equals("/4/fader25")) {
-//      movingHeadDim = digitalValue;
-//       for(int iii = 0; iii < channels; iii++) {
-//     if(fixtureType1[iii] == 13) {
-//       dim[iii+1] = digitalValue;
-//     }
-//   }
-//   }
-//  
-//   
-//  if(addr.equals("/4/xy1")){
-//   movingHeadTilt = int(theOscMessage.get(0).floatValue());
-//   movingHeadPan = int(theOscMessage.get(1).floatValue());
-//   for(int iii = 0; iii < channels; iii++) {
-//     if(fixtureType1[iii] == 14) {
-//       dim[iii+1] = int(theOscMessage.get(1).floatValue());
-//       rotTaka[iii] = int(theOscMessage.get(1).floatValue());
-//     }
-//     if(fixtureType1[iii] == 15) {
-//       dim[iii+1] = int(theOscMessage.get(0).floatValue());
-//       rotX[iii] = int(theOscMessage.get(0).floatValue());
-//     }
-//   }
-//  }
-  
-  
-  
-  
 }
