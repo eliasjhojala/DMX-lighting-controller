@@ -14,6 +14,7 @@ void change_fixture_id(int originalFixtureId) {
   fixtureIdNow[fixtureIdPlaceInArray[originalFixtureId]+1] = fixtureIdNowTemp[fixtureIdPlaceInArray[originalFixtureId]];
 
   fixtureIdPlaceInArray[originalFixtureId]++; 
+  fixtureIdPlaceInArray[originalFixtureId+1]--; 
 }
 void change_fixture_id_down(int originalFixtureId) {
   //Reset temporary variables
@@ -28,5 +29,8 @@ void change_fixture_id_down(int originalFixtureId) {
   fixtureIdNow[fixtureIdPlaceInArray[originalFixtureId]] = fixtureIdNowTemp[fixtureIdPlaceInArray[originalFixtureId]-1];
   fixtureIdNow[fixtureIdPlaceInArray[originalFixtureId]-1] = fixtureIdNowTemp[fixtureIdPlaceInArray[originalFixtureId]];
 
-  fixtureIdPlaceInArray[originalFixtureId]--; 
+  fixtureIdPlaceInArray[originalFixtureId]--;
+  if(originalFixtureId-1 >= 0) {
+    fixtureIdPlaceInArray[originalFixtureId-1]++; 
+  }
 }

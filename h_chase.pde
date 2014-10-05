@@ -107,12 +107,14 @@ void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funkti
     
     else if((chaseModeByMemoryNumber[i] == 6 || (chaseModeByMemoryNumber[i] == 0 && chaseMode == 6)) && memoryValue[i] > 0 ) {
       if(biitti == true) { //Jos tulee biitti presetti laitetaan päälle
+     
             preset(soundToLightPresets[i][1], valueOfMemory[i]);
             preset(soundToLightPresets[i][2], valueOfMemory[i]);
       }
       else { //Jos ei ole biittiä presetti sammutetaan
-            preset(soundToLightPresets[i][1], 0);
-            preset(soundToLightPresets[i][2], 0);
+              preset(soundToLightPresets[i][1], 0);
+              preset(soundToLightPresets[i][2], 0);
+              millisOld[20] = millisNow[20];
         }
     }
   }
