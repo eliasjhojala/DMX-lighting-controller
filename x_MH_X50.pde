@@ -108,7 +108,7 @@ void mhx50_movingHeadLoop() { //This loops in every draw
 
   for(int id = 0; id <= 1; id++) {
     for(int i = 0; i < 14; i++) {
-      valueToDmx[40+id*20+i] = mhx50_createFinalChannelValues[id][i];
+      valueToDmx[60+id*20+i] = mhx50_createFinalChannelValues[id][i];
     }
   }
   

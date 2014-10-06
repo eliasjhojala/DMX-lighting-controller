@@ -41,9 +41,8 @@ void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funkti
     
     
     else if(chaseModeByMemoryNumber[i] == 3 || (chaseModeByMemoryNumber[i] == 0 && chaseMode == 3)) {
-      if((keyPressed == true && key == ' ' && keyReleased == true) || (chaseStepChanging[i] == true && chaseFade > 0) || nextStepPressed == true) {
-        
-        
+      if((keyPressed == true && key == ' ' && keyReleased == true) || (chaseStepChanging[i] == true && chaseFade > 0) || nextStepPressed == true || noteOn[48] == true) {
+      
         chaseStepChangingRev[i] = false;
         if(memoryValue[i] > 0) { //Tarkistetaan onko memory päällä
         if(chaseStepChanging[i] == false) { //Tarkisetaan eikö fade ole vielä alkanut
@@ -141,8 +140,8 @@ void stepChange(int memoryNumber, int value, boolean useFade, boolean changeStep
         steppi[memoryNumber] = 1; steppi1[memoryNumber] = soundToLightSteps[memoryNumber];
       }
     }
-    preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], round(map(chaseBright2[memoryNumber], 0, 255, 0, value)));
     preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], round(map(255 - chaseBright2[memoryNumber], 0, 255, 0, value)));
+    preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], round(map(chaseBright2[memoryNumber], 0, 255, 0, value)));
   }
   else {
     if(changeSteppiii == true) {

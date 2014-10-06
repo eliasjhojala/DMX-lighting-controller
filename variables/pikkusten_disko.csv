@@ -3655,7 +3655,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 3653,fixtureType1,1,6,27,-
 3654,fixtureType1,1,1,28,-
 3655,fixtureType1,1,6,29,-
-3656,fixtureType1,1,0,30,-
+3656,fixtureType1,1,16,30,-
 3657,fixtureType1,1,17,31,-
 3658,fixtureType1,1,9,32,-
 3659,fixtureType1,1,1,33,-
@@ -6146,9 +6146,9 @@ id,variable_name,variable_dimensions,value,1D,2D
 6144,memoryValue,1,0,40,-
 6145,memoryValue,1,0,41,-
 6146,memoryValue,1,0,42,-
-6147,memoryValue,1,135,43,-
+6147,memoryValue,1,145,43,-
 6148,memoryValue,1,0,44,-
-6149,memoryValue,1,0,45,-
+6149,memoryValue,1,46,45,-
 6150,memoryValue,1,0,46,-
 6151,memoryValue,1,0,47,-
 6152,memoryValue,1,0,48,-
@@ -6158,10 +6158,10 @@ id,variable_name,variable_dimensions,value,1D,2D
 6156,memoryValue,1,0,52,-
 6157,memoryValue,1,0,53,-
 6158,memoryValue,1,0,54,-
-6159,memoryValue,1,145,55,-
+6159,memoryValue,1,80,55,-
 6160,memoryValue,1,0,56,-
-6161,memoryValue,1,0,57,-
-6162,memoryValue,1,0,58,-
+6161,memoryValue,1,247,57,-
+6162,memoryValue,1,46,58,-
 6163,memoryValue,1,0,59,-
 6164,memoryValue,1,0,60,-
 6165,memoryValue,1,0,61,-
@@ -6171,7 +6171,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 6169,memoryValue,1,0,65,-
 6170,memoryValue,1,0,66,-
 6171,memoryValue,1,0,67,-
-6172,memoryValue,1,0,68,-
+6172,memoryValue,1,255,68,-
 6173,memoryValue,1,0,69,-
 6174,memoryValue,1,0,70,-
 6175,memoryValue,1,0,71,-

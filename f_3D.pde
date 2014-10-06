@@ -60,6 +60,9 @@ PShape linssi;
 PShape flood;
 PShape floodCover;
 PShape strobo;
+PShape mhMain;
+PShape mhHolder;
+PShape mhBase;
 PShape base;
 PShape cone;
 PShape table;
@@ -71,6 +74,7 @@ float iFresuConeDiameter = 0.8;
 float linssiConeDiameter = 0.8;
 float floodConeDiameter = 0.8;
 float stroboConeDiameter = 0.8;
+float mhxConeDiameter = 0.4;
 
 int lavaX = 460, lavaY = 250, lavaSizX = 1000, lavaSizY = 500, lavaH = 100;
 boolean lava = false;
@@ -113,6 +117,9 @@ void setup() {
   flood = loadShape(path + "flood.obj");
   floodCover = loadShape(path + "floodCover.obj");
   strobo = loadShape(path + "strobo.obj");
+  mhMain = loadShape(path + "mhMain.obj");
+  mhHolder = loadShape(path + "mhHolder.obj");
+  mhBase = loadShape(path + "mhBase.obj"); 
   base = loadShape(path + "base.obj");
   cone = loadShape(path + "cone.obj");
   table = loadShape(path + "table.obj");
@@ -199,7 +206,7 @@ void draw() {
               //Draw lights
               for (int i = 0; i < ansaTaka; i++) {
                 //If light is of type par64 OR moving head dim
-                if(fixtureType1[i] == 1 || fixtureType1[i] == 13 ||  fixtureType1[i] == 16 ||  fixtureType1[i] == 17){
+                if(fixtureType1[i] == 1 || fixtureType1[i] == 13){
                   drawLight(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, par64ConeDiameter, red[i], green[i], blue[i], dim[channel[i]], -60, ansaParent[i], par64Model);
                 } else 
                 //If light is of type p. fresu ("small" F.A.L. fresnel)
@@ -227,6 +234,10 @@ void draw() {
                   boolean stroboOnTemp = !stroboOn[i];
                   drawStrobo(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], int(valoScale * 1.2), stroboConeDiameter, red[i], green[i], blue[i], dim[channel[i]], 0, ansaParent[i], strobo, stroboOnTemp);
                   stroboOn[i] = stroboOnTemp;
+                }
+                //If light is of type Stairville MHX50 (moving head)
+                if(fixtureType1[i] == 16 || fixtureType1[i] == 17) {
+                  drawLight(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, mhxConeDiameter, red[i], green[i], blue[i], dim[channel[i]], -60, ansaParent[i], mhMain);
                 }
               }
               
@@ -375,6 +386,58 @@ void drawStrobo(int posX, int posY, int posZ, int rotZ, int rotX, int scale, flo
         //Cone offset
         translate(0, 0, coneZOffset);
         scale(scale * coneScale * coneDiam * 2, scale * coneScale  * coneDiam, scale * coneScale);
+        //fill(255, 0, 0, 128);
+        fill(coneR, coneG, coneB, conedim / 2);
+        shape(cone);
+        popMatrix();
+      }
+}
+
+void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, int coneR, int coneG, int coneB, int conedim, int coneZOffset, int parentAnsa, PShape lightModel) {
+      //If light is parented to an ansa, offset Z height by ansas height
+      if (parentAnsa != 0) {
+        posZ += ansaZ[parentAnsa];
+        posX += ansaX[parentAnsa];
+        posY += ansaY[parentAnsa];
+      }
+      
+      //Draw MHX base
+      pushMatrix();
+      translate(posX * 5 - 1000, posY * 5, posZ);
+      noStroke();
+      scale(scale);
+      shape(mhBase);
+      popMatrix();
+      
+      //Draw MHX holder
+      pushMatrix();
+      translate(posX * 5 - 1000, posY * 5, posZ);
+      rotateZ(radians(rotZ));
+      rotateX(radians(90));
+      noStroke();
+      scale(scale);
+      shape(mhHolder);
+      popMatrix();
+      
+      //Draw light itself
+      pushMatrix();
+      translate(posX * 5 - 1000, posY * 5, posZ);
+      rotateZ(radians(rotZ));
+      rotateX(radians(rotX));
+      noStroke();
+      scale(scale);
+      shape(lightModel);
+      popMatrix();
+      
+      //Draw light cone
+      if(conedim > 0) {
+        pushMatrix();
+        translate(posX * 5 - 1000, posY * 5, posZ);
+        rotateZ(radians(rotZ));
+        rotateX(radians(rotX));
+        //Cone offset
+        translate(0, 0, coneZOffset);
+        scale(scale * coneScale * coneDiam, scale * coneScale  * coneDiam, scale * coneScale);
         //fill(255, 0, 0, 128);
         fill(coneR, coneG, coneB, conedim / 2);
         shape(cone);

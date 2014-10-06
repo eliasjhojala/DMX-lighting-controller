@@ -53,7 +53,7 @@ void memory(int memoryNumber, int value) {
     if(blackOut == false) { grandMaster = value; } else { grandMaster = 0; }
   }
   if(memoryType[memoryNumber] == 5) {
-    chaseFade = value;
+    chaseFade = value-3;
   }
   oldMemoryValue[memoryNumber] = value;
 }
