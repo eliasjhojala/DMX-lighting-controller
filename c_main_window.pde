@@ -29,66 +29,7 @@ void drawMainWindow() {
       }
       
       for(int i = 0; i < ansaTaka; i++) {
-        if(fixtureType1[i] == 16) {
-
-          
-          if(rotTaka[i] < round(map(mhx50_createFinalChannelValues[0][0], 0, 255, 0, 540))) {
-            rotTaka[i] += 5;
-          }
-          if(rotTaka[i] > round(map(mhx50_createFinalChannelValues[0][0], 0, 255, 0, 540))) {
-            rotTaka[i] -= 5;
-          }
-          if(rotX[i] < round(map(mhx50_createFinalChannelValues[0][1], 0, 255, 45, 270+45))) {
-            rotX[i] += 5;
-          }
-          if(rotX[i] > round(map(mhx50_createFinalChannelValues[0][1], 0, 255, 45, 270+45))) {
-            rotX[i] -= 5;
-          }
-
-//          rotTaka[i] = round(map(mhx50_createFinalChannelValues[0][0], 0, 255, 0, 540));
-//          rotX[i] = round(map(mhx50_createFinalChannelValues[0][1], 0, 255, 0, 270));
-          
-          
-//          if(red[i] < mhx50_RGB_color_Values[mhx50_colorNumber[0]][0]) { red[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[0]][0] - red[i]) / 10); }
-//          if(red[i] > mhx50_RGB_color_Values[mhx50_colorNumber[0]][0]) { red[i] -= round((red[i] - mhx50_RGB_color_Values[mhx50_colorNumber[0]][0]) / 10); }
-//          if(green[i] < mhx50_RGB_color_Values[mhx50_colorNumber[0]][1]) { green[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[0]][1] - green[i]) / 10); }
-//          if(green[i] > mhx50_RGB_color_Values[mhx50_colorNumber[0]][1]) { green[i] -= round((green[i] - mhx50_RGB_color_Values[mhx50_colorNumber[0]][1]) / 10); }
-//          if(blue[i] < mhx50_RGB_color_Values[mhx50_colorNumber[0]][2]) { blue[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[0]][2] - blue[i]) / 10); }
-//          if(blue[i] > mhx50_RGB_color_Values[mhx50_colorNumber[0]][2]) { blue[i] -= round((blue[i] - mhx50_RGB_color_Values[mhx50_colorNumber[0]][2]) / 10); }
-          
-          red[i] = mhx50_RGB_color_Values[mhx50_colorNumber[0]][0];
-          green[i] = mhx50_RGB_color_Values[mhx50_colorNumber[0]][1];
-          blue[i] = mhx50_RGB_color_Values[mhx50_colorNumber[0]][2];
-        }
-        if(fixtureType1[i] == 17) {
-          
-          if(rotTaka[i] < round(map(mhx50_createFinalChannelValues[1][0], 0, 255, 0, 540))) {
-            rotTaka[i] += 5;
-          }
-          if(rotTaka[i] > round(map(mhx50_createFinalChannelValues[1][0], 0, 255, 0, 540))) {
-            rotTaka[i] -= 5;
-          }
-          if(rotX[i] < round(map(mhx50_createFinalChannelValues[1][1], 0, 255, 45, 270+45))) {
-            rotX[i] += 5;
-          }
-          if(rotX[i] > round(map(mhx50_createFinalChannelValues[1][1], 0, 255, 45, 270+45))) {
-            rotX[i] -= 5;
-          }
-
-//          rotTaka[i] = round(map(mhx50_createFinalChannelValues[1][0], 0, 255, 0, 540));
-//          rotX[i] = round(map(mhx50_createFinalChannelValues[1][1], 0, 255, 0, 270));
-          
-//          if(red[i] < mhx50_RGB_color_Values[mhx50_colorNumber[1]][0]) { red[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[1]][0] - red[i]) / 10); }
-//          if(red[i] > mhx50_RGB_color_Values[mhx50_colorNumber[1]][0]) { red[i] -= round((red[i] - mhx50_RGB_color_Values[mhx50_colorNumber[1]][0]) / 10); }
-//          if(green[i] < mhx50_RGB_color_Values[mhx50_colorNumber[1]][1]) { green[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[1]][1] - green[i]) / 10); }
-//          if(green[i] > mhx50_RGB_color_Values[mhx50_colorNumber[1]][1]) { green[i] -= round((green[i] - mhx50_RGB_color_Values[mhx50_colorNumber[1]][1]) / 10); }
-//          if(blue[i] < mhx50_RGB_color_Values[mhx50_colorNumber[1]][2]) { blue[i] += round((mhx50_RGB_color_Values[mhx50_colorNumber[1]][2] - blue[i]) / 10); }
-//          if(blue[i] > mhx50_RGB_color_Values[mhx50_colorNumber[1]][2]) { blue[i] -= round((blue[i] - mhx50_RGB_color_Values[mhx50_colorNumber[1]][2]) / 10); }
-          
-          red[i] = mhx50_RGB_color_Values[mhx50_colorNumber[1]][0];
-          green[i] = mhx50_RGB_color_Values[mhx50_colorNumber[1]][1];
-          blue[i] = mhx50_RGB_color_Values[mhx50_colorNumber[1]][2];
-        }
+        visualisationSettingsFromMovingHeadData(i); //Set right values to fixtures in visualisation
         pushMatrix();
             if(move && (!mouseLocked || mouseLocker == "main")) {
                 if(!mouseClicked) {
@@ -153,4 +94,30 @@ void drawMainWindow() {
         if(mouseReleased) { mouseLocked = false; }
       }
       popMatrix();
+}
+
+
+
+void visualisationSettingsFromMovingHeadData(int i) {
+  if(fixtureType1[i] == 16) {
+    slowRotationForMovingHead(0, i);
+    colorsToMovingHeadVisualisation(0, i);
+  }
+  if(fixtureType1[i] == 17) {
+    slowRotationForMovingHead(1, i);
+    colorsToMovingHeadVisualisation(0, i);
+  }
+}
+
+void slowRotationForMovingHead(int id, int i) {
+  if(rotTaka[i] < round(map(mhx50_createFinalChannelValues[id][0], 0, 255, 0, 540+180))) { rotTaka[i] += 5; }
+  if(rotTaka[i] > round(map(mhx50_createFinalChannelValues[id][0], 0, 255, 0, 540+180))) { rotTaka[i] -= 5; }
+  if(rotX[i] < round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] += 5; }
+  if(rotX[i] > round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] -= 5; }  
+}
+
+void colorsToMovingHeadVisualisation(int id, int i) {
+  red[i] = mhx50_RGB_color_Values[mhx50_colorNumber[id]][0];
+  green[i] = mhx50_RGB_color_Values[mhx50_colorNumber[id]][1];
+  blue[i] = mhx50_RGB_color_Values[mhx50_colorNumber[id]][2];
 }

@@ -15,21 +15,29 @@ void draw() {
   
   drawMainWindow(); //Draw fixtures (tab main_window)
   
-  ylavalikko(); //top menu
-  alavalikko(); //bottom menu
-  sivuValikko(); //right menu
+  if(!printMode) {
+    ylavalikko(); //top menu
+    alavalikko(); //bottom menu
+    sivuValikko(); //right menu
+  }
+
   detectBeat();
   mhx50_movingHeadLoop();
   
   
 }
+
+//This void detects if midi keyboard key is pressed
 void noteOn(int channel, int pitch, int velocity) {
   noteOn[pitch] = true;
   if(pitch < midiNotesWithoutBlacks.length) {
     dimInput[midiNotesWithoutBlacks[pitch]] = constrain(int(velocity*2.3), 0, 255);
   }
+  
 }
 
+
+//This void detects if midi keyboard key is released
 void noteOff(int channel, int pitch, int velocity) {
    noteOn[pitch] = false;
    if(pitch < midiNotesWithoutBlacks.length) {

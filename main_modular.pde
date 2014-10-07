@@ -1,6 +1,9 @@
 int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
+String loadPathNewVersion = "/Users/elias/Dropbox/DMX controller/main_modular/variables/"; //This path is used when Elias uses iMac
+String loadPathNewVersion1 = "/variables"; //This path is used when Elias uses laptop
+
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
 boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use
 boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
@@ -13,6 +16,8 @@ int arduinoIndex = 8; //Arduinon COM-portin järjestysnumero
 int arduinoIndex2 = 10;
 int enttecIndex = 1; // Enttecin USB DMX palikan COM-portin järjestysnumero
 
+String midiMachineNameElias = "KeyRig 49";
+String midiMachineName = "ROOPEKIRJOTIATÄHÄNMACHINESINIMI";
 
 boolean nextStepPressed = false;
 boolean revStepPressed = false;
@@ -53,9 +58,7 @@ void setFixtureChannelsAtSoftwareBegin() {
 }
 
 import themidibus.*; 
-
 MidiBus myBus; // The MidiBus
-
 boolean[] noteOn = new boolean[10000];
 
 
@@ -506,7 +509,7 @@ void setup() {
     setuppi();
     
     MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
-  myBus = new MidiBus(this, 1, "KeyRig 49"); // Create a new MidiBus with no input device - you will have to change the input here
+    myBus = new MidiBus(this, 1, midiMachineName); // Create a new MidiBus with no input device - you will have to change the input here
 }
 
 
