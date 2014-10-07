@@ -869,12 +869,17 @@ public class ControlFrame extends PApplet {
     w = 500;
     h = 500;
   }
+ 
 
   public ControlP5 control() {
     return cp5;
   }
-   
+  
+  
   ControlP5 cp5;
-  Object parent;  
+
+  Object parent;
+
+  
 }
 

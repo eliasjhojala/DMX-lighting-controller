@@ -316,7 +316,7 @@ void mhx50_finalChannelValuesCreate(int id) {
   //--------------------------------------------------------------------------------------------------------------------------------Making right position values begins-------------------------------------------------------------------------------------------------------------------------------
   if(mhx50_posMirror == true) {
     if(id == 0) {
-      if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[0][0] = round(map(mhx50_panValue[0], 0, 255, 255, 0)); mhx50_createFinalChannelValues[1][0] = mhx50_panValue[0]; }
+      if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[0][0] = round(map(mhx50_panValue[0], 0, 255, 255, 0)); mhx50_createFinalChannelValues[1][0] = round(255/2) - mhx50_panValue[0]; }
       if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[0][1] = mhx50_tiltValue[0]; mhx50_createFinalChannelValues[1][1] = mhx50_tiltValue[0]; }
       
       mhx50_panValueOld[0] = mhx50_panValue[0];

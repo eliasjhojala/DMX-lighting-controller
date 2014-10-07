@@ -22,7 +22,7 @@ void loadAllData() {
     loadSetupData();
     
     if(userId == 1) {
-     table = loadTable(loadPathNewVersion + "/pikkusten_disko.csv", "header"); //Eliaksen polku
+     table = loadTable("/Users/elias/Dropbox/DMX controller/main_modular/variables/pikkusten_disko.csv", "header"); //Eliaksen polku
     }
     else if(!roopeAidilla) {
      table = loadTable("E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roopen polku
