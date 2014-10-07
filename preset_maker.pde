@@ -74,3 +74,14 @@ void changeChaseModeByMemoryNumber(int memoryNumber) {
   }
   text("chaseModeByMemoryNumber:"+chaseModeByMemoryNumber[memoryNumber], width/2-200+20, height/2-200+50);
 }
+
+void changeGrandMasterValue(int value) {
+  memory(1, value);
+  valueOfMemory[1] = value;
+  memoryValue[1] = value;
+}
+void changeCrossFadeValue(int value) {
+  memory(2, value);
+  valueOfMemory[2] = value;
+  memoryValue[2] = value;
+}

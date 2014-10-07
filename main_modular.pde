@@ -16,8 +16,8 @@ int arduinoIndex = 8; //Arduinon COM-portin järjestysnumero
 int arduinoIndex2 = 10;
 int enttecIndex = 1; // Enttecin USB DMX palikan COM-portin järjestysnumero
 
-String midiMachineNameElias = "KeyRig 49";
-String midiMachineName = "ROOPEKIRJOTIATÄHÄNMACHINESINIMI";
+String midiMachineName = "KeyRig 49";
+String midiMachineNameRoope = "Maschine Mikro MK2 In";
 
 boolean nextStepPressed = false;
 boolean revStepPressed = false;
@@ -59,6 +59,7 @@ void setFixtureChannelsAtSoftwareBegin() {
 
 import themidibus.*; 
 MidiBus myBus; // The MidiBus
+import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
 boolean[] noteOn = new boolean[10000];
 
 
@@ -509,7 +510,7 @@ void setup() {
     setuppi();
     
     MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
-    myBus = new MidiBus(this, 1, midiMachineName); // Create a new MidiBus with no input device - you will have to change the input here
+    myBus = new MidiBus(this, midiMachineName, 1); // Create a new MidiBus with no input device - you will have to change the input here
 }
 
 
