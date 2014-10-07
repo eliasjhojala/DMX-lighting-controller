@@ -14,15 +14,18 @@ void draw() {
   arduinoSend(); //Send dim-values to arduino, which sends them to DMX-shield
   
   drawMainWindow(); //Draw fixtures (tab main_window)
-  
-  ylavalikko(); //top menu
-  alavalikko(); //bottom menu
-  sivuValikko(); //right menu
-  detectBeat();
-  mhx50_movingHeadLoop();
-  
-  
+
+  if(!printMode) {
+    ylavalikko(); //top menu
+    alavalikko(); //bottom menu
+    sivuValikko(); //right menu
+  }
+  detectBeat(); //This void detects beat
+  mhx50_movingHeadLoop(); //This loop is for controlling mhx50 moving head
+
 }
+
+//This void detects if midi keyboard key is pressed
 void noteOn(int channel, int pitch, int velocity) {
   noteOn[pitch] = true;
   if(pitch < midiNotesWithoutBlacks.length) {
@@ -30,6 +33,7 @@ void noteOn(int channel, int pitch, int velocity) {
   }
 }
 
+//This void detects if midi keyboard key is released
 void noteOff(int channel, int pitch, int velocity) {
    noteOn[pitch] = false;
    if(pitch < midiNotesWithoutBlacks.length) {

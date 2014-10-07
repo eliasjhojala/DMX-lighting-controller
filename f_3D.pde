@@ -223,7 +223,10 @@ void draw() {
                 } else
                 //If light is of type flood
                 if(fixtureType1[i] == 5) {
+                  pushMatrix();
+                  translate(0, 15, 0);
                   drawFlood(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, floodConeDiameter, red[i], green[i], blue[i], dim[channel[i]], 0, ansaParent[i], flood, fixParam[i]);
+                  popMatrix();
                 } else
                 //If light is of type linssi (linssi = lens)
                 if(fixtureType1[i] == 6) {
@@ -237,7 +240,10 @@ void draw() {
                 }
                 //If light is of type Stairville MHX50 (moving head)
                 if(fixtureType1[i] == 16 || fixtureType1[i] == 17) {
-                  drawLight(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, mhxConeDiameter, red[i], green[i], blue[i], dim[channel[i]], -60, ansaParent[i], mhMain);
+                  pushMatrix();
+                  translate(0, -50, 0);
+                  drawMHX(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, mhxConeDiameter, red[i], green[i], blue[i], dim[channel[i]], -30, ansaParent[i], mhMain);
+                  popMatrix();
                 }
               }
               
@@ -404,6 +410,7 @@ void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float 
       //Draw MHX base
       pushMatrix();
       translate(posX * 5 - 1000, posY * 5, posZ);
+      rotateX(radians(270));
       noStroke();
       scale(scale);
       shape(mhBase);
@@ -413,7 +420,7 @@ void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float 
       pushMatrix();
       translate(posX * 5 - 1000, posY * 5, posZ);
       rotateZ(radians(rotZ));
-      rotateX(radians(90));
+      rotateX(radians(270));
       noStroke();
       scale(scale);
       shape(mhHolder);
@@ -450,8 +457,7 @@ void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float 
 
  
 
-void mouseDragged()
-{
+void mouseDragged() {
     if(mouseButton == RIGHT) {
       centerX += (mouseX - pmouseX) * 5;
       centerY += (mouseY - pmouseY) * 10;
@@ -475,13 +481,10 @@ void mousePressed() {
   }
 }
  
-void keyPressed()
-{
+void keyPressed() {
   if (keyCode == UP) { camZ += 100; } 
   else if (keyCode == DOWN) { camZ -= 100; }
 }
-
-
 
 //End 3D visualizer window class
 }
