@@ -105,7 +105,7 @@ void visualisationSettingsFromMovingHeadData(int i) {
   }
   if(fixtureType1[i] == 17) {
     slowRotationForMovingHead(1, i);
-    colorsToMovingHeadVisualisation(0, i);
+    colorsToMovingHeadVisualisation(1, i);
   }
 }
 
