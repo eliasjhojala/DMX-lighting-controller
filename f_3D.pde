@@ -240,7 +240,6 @@ void draw() {
                 }
                 //If light is of type Stairville MHX50 (moving head)
                 if(fixtureType1[i] == 16 || fixtureType1[i] == 17) {
-                  drawLight(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, mhxConeDiameter, red[i], green[i], blue[i], dim[channel[i]], -60, ansaParent[i], mhMain);
                   pushMatrix();
                   translate(0, -50, 0);
                   drawMHX(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, mhxConeDiameter, red[i], green[i], blue[i], dim[channel[i]], -30, ansaParent[i], mhMain);

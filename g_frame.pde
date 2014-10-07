@@ -12,11 +12,11 @@ public class secondApplet extends PApplet {
     background(0, 0, 0);
     fill(255, 255, 255);
     text("DMX", 5, 10);
-   for(int i = 0; i < 40; i++) {
+    for(int i = 0; i < 40; i++) {
       fill(255, 255, 255);
       text(i + ":" + valueToDmx[i], 10, i*15+25);
   }
-  translate(100, 0);
+    translate(100, 0);
   fill(255, 255, 255);
   text("DMX", 5, 10);
   for(int i = 0; i < 40; i++) {
@@ -30,6 +30,9 @@ public class secondApplet extends PApplet {
       fill(255, 255, 255);
       text(i+40+40 + ":" + valueToDmx[i+40+40], 10, i*15+25);
   }
+  
+  
+  
     text("allChannels[1]", 105, 10);
     for(int i = 0; i < 24; i++) {
       fill(255, 255, 255);

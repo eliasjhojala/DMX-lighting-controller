@@ -116,6 +116,11 @@ void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funkti
               millisOld[20] = millisNow[20];
         }
     }
+    
+    else if((chaseModeByMemoryNumber[i] == 7 || (chaseModeByMemoryNumber[i] == 0 && chaseMode == 7)) && memoryValue[i] > 0 ) {
+      manualStepChange(memoryNumber);
+    }
+    
   }
 }
 }
@@ -213,6 +218,17 @@ void freqSoundToLight(int memoryNumber, int value) {
     
     millisOld[1] = millisNow[1];
   }
+}
+
+void manualStepChange(int memoryNumber) {
+  int crossFaderi = round(map(chaseFade*1.3+20, 0, 255, 0, soundToLightSteps[memoryNumber]));
+  if(crossFaderi > soundToLightSteps[memoryNumber]) {
+    preset(soundToLightPresets[memoryNumber][soundToLightSteps[memoryNumber]], 0);
+  }
+  else {
+    preset(soundToLightPresets[memoryNumber][constrain(crossFaderi, 0, soundToLightSteps[memoryNumber])], constrain(round(map(chaseFade*1.3+20, 0, 255/soundToLightSteps[memoryNumber], 0, 255)) - round(map(chaseFade*1.3+20, 0, 255, 0, soundToLightSteps[memoryNumber]))*255 + 130, 0, 255));
+  }
+  preset(soundToLightPresets[memoryNumber][constrain(crossFaderi-1, 0, soundToLightSteps[memoryNumber])], constrain(255 - (round(map(chaseFade*1.3+20, 0, 255/soundToLightSteps[memoryNumber], 0, 255)) -  round(map(chaseFade*1.3+20, 0, 255, 0, soundToLightSteps[memoryNumber]))*255 + 130), 0, 255));
 }
  
 void stop() {
