@@ -10,7 +10,7 @@ void initializeMaschine() {
   Maschine.sendControllerChange(10, 105, 0);
   Maschine.sendControllerChange(10, 106, 127);
   
-  //Set mute buttons light off
+  //Set mute button's light off
   Maschine.sendControllerChange(10, 119, 0);
 }
 
@@ -26,11 +26,16 @@ void maschineNote(int pitch, int velocity) {
         else revStepPressed = down;
       break;
   }
+  //Trigger moving head preset
+  if(pitch >= 14 && pitch <= 28) {
+    showPreset(pitch - 14, 0);
+  }
 }
 
 boolean maschineStepDirectionIsNext = true;
 
 void maschineControllerChange(int number, int value) {
+  
   println("Maschine CC NUMBER|" + number + "/VALUE|" + value);
   switch(number) {
     
@@ -52,10 +57,10 @@ void maschineControllerChange(int number, int value) {
     //toggle BlackOut
     case 119: 
       blackOut = !blackOut; 
+      
       //Turn the mute buttons light on according to current blackout status
-      int tempVal;
-      if(blackOut) tempVal = 127;
-      Maschine.sendControllerChange(10, 119, tempVal);
+      if(blackOut) Maschine.sendControllerChange(10, 119, 127); else Maschine.sendControllerChange(10, 119, 0);
+      
     break;
   }
   
