@@ -12,7 +12,11 @@ void initializeMaschine() {
   
   //Set mute button's light off
   Maschine.sendControllerChange(10, 119, 0);
+  
+  //Clear pad selection
+  selectMaschinePad(1, false);
 }
+
 
 void maschineNote(int pitch, int velocity) {
   println("Maschine noteOn PITCH|" + pitch + "/VEL|" + velocity);
@@ -29,6 +33,21 @@ void maschineNote(int pitch, int velocity) {
   //Trigger moving head preset
   if(pitch >= 14 && pitch <= 28) {
     showPreset(pitch - 14, 0);
+    selectMaschinePad(pitch - 13, true);
+  }
+}
+
+
+//Select a maschine pad and turn all the rest off
+//This only affects pads 2-16
+//The putOn parameter affects whether the selected pad will be lit on or not (to use for clearing)
+void selectMaschinePad(int padId, boolean putOn) {
+  //2nd pad is at 14
+  Maschine.sendNoteOn(10, padId + 13, 127);
+  
+  //Turn the rest off 
+  for (int i = 1; i <= 16; i++) {
+    if (i != padId || !putOn) Maschine.sendNoteOn(10, i + 13, 0);
   }
 }
 
