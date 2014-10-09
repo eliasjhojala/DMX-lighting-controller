@@ -46,7 +46,7 @@ void noteOn(int channel, int pitch, int velocity) {
     }
   } else {
     //Coming from Maschine
-    if (velocity != 0) maschineNoteOn(pitch, velocity); else maschineNoteOff(pitch, velocity);
+    maschineNote(pitch, velocity);
   }
 }
 
@@ -60,7 +60,7 @@ void noteOff(int channel, int pitch, int velocity) {
      }
    } else {
      //Coming from Maschine
-     maschineNoteOff(pitch, velocity);
+     maschineNote(pitch, velocity);
    }
 }
 
