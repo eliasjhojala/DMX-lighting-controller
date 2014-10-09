@@ -1,3 +1,5 @@
+//Test comment
+
 int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
