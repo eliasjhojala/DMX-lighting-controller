@@ -13,4 +13,14 @@ void maschineNoteOff(int pitch, int velocity) {
 
 void maschineControllerChange(int number, int value) {
   println("Maschine CC NUMBER|" + number + "/VALUE|" + value);
+  switch(number) {
+    
+    //Step back
+    case 105: revStepPressed = value == 127; break;
+    //Step forward
+    case 106: nextStepPressed = value == 127; break;
+    //BlackOut
+    case 119: blackOut = value == 127; break;
+  }
+  
 }
