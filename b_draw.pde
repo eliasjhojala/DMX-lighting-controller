@@ -38,45 +38,28 @@ fill(255, 255, 255);
 
 //This void detects if midi keyboard key is pressed
 void noteOn(int channel, int pitch, int velocity) {
-  
-  if (channel != 10 && !useMaschine) {
-    noteOn[pitch] = true;
-    if(pitch < midiNotesWithoutBlacks.length) {
-      dimInput[midiNotesWithoutBlacks[pitch]] = constrain(int(velocity*2.3), 0, 255);
-    }
-  } else {
-    //Coming from Maschine
-    maschineNote(pitch, velocity);
+  noteOn[pitch] = true;
+  if(pitch < midiNotesWithoutBlacks.length) {
+    dimInput[midiNotesWithoutBlacks[pitch]] = constrain(int(velocity*2.3), 0, 255);
   }
 }
 
 //This void detects if midi keyboard key is released
 void noteOff(int channel, int pitch, int velocity) {
-  
-   if (channel != 10 && !useMaschine) {
-     noteOn[pitch] = false;
-     if(pitch < midiNotesWithoutBlacks.length) {
-       dimInput[midiNotesWithoutBlacks[pitch]] = 0;
-     }
-   } else {
-     //Coming from Maschine
-     maschineNote(pitch, velocity);
+   noteOn[pitch] = false;
+   if(pitch < midiNotesWithoutBlacks.length) {
+     dimInput[midiNotesWithoutBlacks[pitch]] = 0;
    }
 }
 
 
 void controllerChange(ControlChange change) {
-  if (change.channel() != 10 && !useMaschine) {
-    int i = round(map(change.value(), 0, 127, 0, 255));
-    if(change.number() == 7) {
-      changeGrandMasterValue(i);
-    }
-    else if(change.number() == 1) {
-      changeCrossFadeValue(i);
-    }
-  } else {
-    //Coming from Maschine
-    maschineControllerChange(change.number(), change.value());
+  int i = round(map(change.value(), 0, 127, 0, 255));
+  if(change.number() == 7) {
+    changeGrandMasterValue(i);
+  }
+  else if(change.number() == 1) {
+    changeCrossFadeValue(i);
   }
 
 }

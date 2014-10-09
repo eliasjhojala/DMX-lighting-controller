@@ -1,12 +1,10 @@
-int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
-boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.
+int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
+boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
 boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use
 boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
 boolean useAnotherArduino = false;
-
-boolean useMaschine = true;
 
 int arduinoBaud = 9600; //Arduinon baudRate (serial.begin(115200);
 int arduinoBaud2 = 9600;
@@ -57,8 +55,6 @@ void setFixtureChannelsAtSoftwareBegin() {
 import themidibus.*; 
 import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
 MidiBus myBus; // The MidiBus
-
-MidiBus Maschine;
 
 boolean[] noteOn = new boolean[10000];
 
@@ -511,15 +507,6 @@ void setup() {
     
     MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
   myBus = new MidiBus(this, 1, "KeyRig 49"); // Create a new MidiBus with no input device - you will have to change the input here
-  
-  
-  if(useMaschine) {
-    //This is used to get data from the Maschine Mikro
-    Maschine = new MidiBus(this, "Maschine Mikro MK2 In", "Maschine Mikro MK2 Out");
-    initializeMaschine();
-  }
-  
-  
 }
 
 
