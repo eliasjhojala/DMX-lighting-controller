@@ -516,6 +516,7 @@ void setup() {
   if(useMaschine) {
     //This is used to get data from the Maschine Mikro
     Maschine = new MidiBus(this, "Maschine Mikro MK2 In", "Maschine Mikro MK2 Out");
+    initializeMaschine();
   }
   
   

@@ -39,7 +39,7 @@ fill(255, 255, 255);
 //This void detects if midi keyboard key is pressed
 void noteOn(int channel, int pitch, int velocity) {
   
-  if (channel != 10) {
+  if (channel != 10 && !useMaschine) {
     noteOn[pitch] = true;
     if(pitch < midiNotesWithoutBlacks.length) {
       dimInput[midiNotesWithoutBlacks[pitch]] = constrain(int(velocity*2.3), 0, 255);
@@ -53,7 +53,7 @@ void noteOn(int channel, int pitch, int velocity) {
 //This void detects if midi keyboard key is released
 void noteOff(int channel, int pitch, int velocity) {
   
-   if (channel != 10) {
+   if (channel != 10 && !useMaschine) {
      noteOn[pitch] = false;
      if(pitch < midiNotesWithoutBlacks.length) {
        dimInput[midiNotesWithoutBlacks[pitch]] = 0;
@@ -66,7 +66,7 @@ void noteOff(int channel, int pitch, int velocity) {
 
 
 void controllerChange(ControlChange change) {
-  if (change.channel() != 10) {
+  if (change.channel() != 10 && !useMaschine) {
     int i = round(map(change.value(), 0, 127, 0, 255));
     if(change.number() == 7) {
       changeGrandMasterValue(i);
