@@ -2,12 +2,11 @@
 /* IDEA JOLLA TÄMÄN SAA TOIMIMAAN:
 ENSIN LASKETAAN AKTIIVISET MEMORYT JA SEN JÄLKEEN JOKA ISKULLA FOR LOOPPI
 */
-
+boolean chasePause = false;
 
 void detectBeat() {
       beat.detect(in.mix); //beat detect command of minim library
-      if (beat.isKick()) { biitti = true; } //if beat is detected set biitti to true
-      else { biitti = false; } //if not set biitti to false
+      biitti = beat.isKick();
 }
 
 void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funktion aloitus
@@ -61,6 +60,7 @@ void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funkti
         stepChange(i, value, true, false); //stepChange(memoryn numero, memoryn arvo, onko crossFade käytössä, halutaanko steppiä vaihtaa)
       }
       if(revStepPressed == true || (chaseStepChangingRev[i] == true && chaseFade > 0)) {
+
         chaseStepChanging[i] = false;
        
         
@@ -75,7 +75,7 @@ void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funkti
           stepChangeRev(i, value, false, true); //stepChange(memoryn numero, memoryn arvo, onko crossFade käytössä, halutaanko steppiä vaihtaa)
         }
         }
-         lastStepDirection = 2;
+        lastStepDirection = 2;
       }
       else if(lastStepDirection == 2) {
           stepChangeRev(i, value, true, false); //stepChange(memoryn numero, memoryn arvo, onko crossFade käytössä, halutaanko steppiä vaihtaa)
@@ -126,30 +126,34 @@ void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funkti
 }
 
 void stepChange(int memoryNumber, int value, boolean useFade, boolean changeSteppiii) {
-
-  if(useFade == true) {
-    if(changeSteppiii == true) {
-      chaseBright1[memoryNumber]++;
+  //Brightness idea: brightnessin maksimiarvo on alunperin chaseFade, joka voi olla esim 10
+  //Brightness 2 arvo on mapattu brightnestin arvo niin että kun brightnestin arvo
+  //on sama kuin chaseFaden arvo niin brightness 2 arvo on 255
+  if(useFade == true) { //Check if fade is not zero
+    if(changeSteppiii == true && !chasePause) { //Check if step is changing to another
+      chaseBright1[memoryNumber]++; //Change brightness
       chaseBright2[memoryNumber] = 255 - chaseBright1[memoryNumber];
       
-      if(chaseBright1[memoryNumber] > chaseFade) {
-        chaseBright1[memoryNumber] = 0;
-        steppi[memoryNumber]++;
-        steppi1[memoryNumber] = steppi[memoryNumber] - 1;
-        chaseStepChanging[memoryNumber] = false;
+      if(chaseBright1[memoryNumber] > chaseFade) { //Check if actual brightness goes over the brightness we ant
+        chaseBright1[memoryNumber] = 0; //Puts brightness to zero
+        steppi[memoryNumber]++; //Changes step to next
+        steppi1[memoryNumber] = steppi[memoryNumber] - 1; //Changes steppi1 value
+        chaseStepChanging[memoryNumber] = false; //Step is not changing anymore
       }
       
-      chaseBright2[memoryNumber] = round(map(chaseBright1[memoryNumber], 0, chaseFade, 0, 255));
+      chaseBright2[memoryNumber] = round(map(chaseBright1[memoryNumber], 0, chaseFade, 0, 255)); //Maps chasebright to right value
       
       if(steppi[memoryNumber] > soundToLightSteps[memoryNumber]) {
         steppi[memoryNumber] = 1; steppi1[memoryNumber] = soundToLightSteps[memoryNumber];
       }
     }
-    preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], round(map(255 - chaseBright2[memoryNumber], 0, 255, 0, value)));
-    preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], round(map(chaseBright2[memoryNumber], 0, 255, 0, value)));
+    preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], round(map(255 - chaseBright2[memoryNumber], 0, 255, 0, value))); //Gives right value (inverted value) to previous step
+    preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], round(map(chaseBright2[memoryNumber], 0, 255, 0, value))); //Gives right value to current step
   }
+  
+  //Älä välitä tämän elsen sisällä olevasta koodista, se suoritetaan vain jos fade on nollassa
   else {
-    if(changeSteppiii == true) {
+    if(changeSteppiii == true && !chasePause) {
       steppi[memoryNumber]++;
       steppi1[memoryNumber] = steppi[memoryNumber] - 1;
       if(steppi[memoryNumber] > soundToLightSteps[memoryNumber]) {
@@ -168,27 +172,28 @@ void stepChange(int memoryNumber, int value, boolean useFade, boolean changeStep
 void stepChangeRev(int memoryNumber, int value, boolean useFade, boolean changeStep) {
 
   if(useFade == true) {
-    if(changeStep == true) {
-  
-      chaseBright1[memoryNumber]--;
+    if(changeStep == true && !chasePause) {
+      
+      chaseBright1[memoryNumber]++; //Change brightness
       chaseBright2[memoryNumber] = 255 - chaseBright1[memoryNumber];
       
-      if(chaseBright1[memoryNumber] < 1) {
-        chaseBright1[memoryNumber] = chaseFade;
+      if(chaseBright1[memoryNumber] > chaseFade) { //Check if actual brightness goes over the brightness we ant
+        chaseBright1[memoryNumber] = 0; //Puts brightness to zero
         steppi[memoryNumber]--;
         steppi1[memoryNumber] = steppi[memoryNumber] + 1;
         chaseStepChangingRev[memoryNumber] = false;
-        
+        lastStepDirection = 2;
       }
       
-      chaseBright2[memoryNumber] = round(map(chaseBright1[memoryNumber], 0, chaseFade, 0, 255));
+      chaseBright2[memoryNumber] = round(map(chaseBright1[memoryNumber], 0, chaseFade, 0, 255)); //Maps chasebright to right value
       
       if(steppi[memoryNumber] < 1) {
         steppi[memoryNumber] = soundToLightSteps[memoryNumber]; steppi1[memoryNumber] = 1;
       }
     }
-    preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], round(map(chaseBright2[memoryNumber], 0, 255, 0, value)));
-    preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], round(map(255 - chaseBright2[memoryNumber], 0, 255, 0, value)));
+    preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], 255 - round(map(255 - chaseBright2[memoryNumber], 0, 255, 0, value)));
+    preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], 255 - round(map(chaseBright2[memoryNumber], 0, 255, 0, value)));
+    
   }
 }
 
@@ -196,7 +201,7 @@ void stepChangeRev(int memoryNumber, int value, boolean useFade, boolean changeS
 
 
 void freqSoundToLight(int memoryNumber, int value) {
-  if(memoryValue[memoryNumber] != 0) {
+  if(memoryValue[memoryNumber] != 0 && !chasePause) {
   fft.forward(in.mix);
     
     millisNow[1] = millis();

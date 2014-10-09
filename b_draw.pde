@@ -8,6 +8,7 @@ int oldMouseY1;
 
 int grandMaster = 50;
 int oldGrandMaster = 40;
+
 void draw() {
   checkThemeMode();
   
@@ -23,9 +24,17 @@ void draw() {
   }
   detectBeat();
   mhx50_movingHeadLoop();
-  
-  
+
+fill(255, 255, 255);
+  if(lastStepDirection == 1) {
+    text("1", 500, 500);
+  }
+  else {
+    text("2", 500, 500);
+  }
 }
+
+//MIDI
 
 //This void detects if midi keyboard key is pressed
 void noteOn(int channel, int pitch, int velocity) {
