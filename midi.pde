@@ -53,10 +53,16 @@ void selectMaschinePad(int padId, boolean putOn) {
 
 boolean maschineStepDirectionIsNext = true;
 
+int maschineKnobVal = 0;
+
 void maschineControllerChange(int number, int value) {
   
   println("Maschine CC NUMBER|" + number + "/VALUE|" + value);
   switch(number) {
+    case 22:
+      //Knob rotated
+      maschineKnobRotated(value == 1);
+    break;
     
     //Step direction: back
     case 105: 
@@ -83,4 +89,19 @@ void maschineControllerChange(int number, int value) {
     break;
   }
   
+}
+
+void maschineKnobRotated(boolean positive) {
+  if(positive) {
+    if (maschineKnobVal < 31) maschineKnobVal++; else maschineKnobVal = 0;
+  } else {
+    if (maschineKnobVal >= 0) maschineKnobVal--; else maschineKnobVal = 30;
+  }
+  println(maschineKnobVal);
+  doByMaschineKnob();
+}
+
+void doByMaschineKnob() {
+  //Current task: rotate main window view
+  pageRotation = int(map(maschineKnobVal, 0, 30, 0, 360));
 }
