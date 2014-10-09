@@ -38,6 +38,7 @@ fill(255, 255, 255);
 
 //This void detects if midi keyboard key is pressed
 void noteOn(int channel, int pitch, int velocity) {
+  
   if (channel != 10) {
     noteOn[pitch] = true;
     if(pitch < midiNotesWithoutBlacks.length) {
@@ -45,12 +46,13 @@ void noteOn(int channel, int pitch, int velocity) {
     }
   } else {
     //Coming from Maschine
-    maschineNoteOn(pitch, velocity);
+    if (velocity != 0) maschineNoteOn(pitch, velocity); else maschineNoteOff(pitch, velocity);
   }
 }
 
 //This void detects if midi keyboard key is released
 void noteOff(int channel, int pitch, int velocity) {
+  
    if (channel != 10) {
      noteOn[pitch] = false;
      if(pitch < midiNotesWithoutBlacks.length) {
