@@ -10,6 +10,8 @@ int grandMaster = 50;
 int oldGrandMaster = 40;
 
 void draw() {
+  calcMaschineAutoTap();
+  
   checkThemeMode();
   
   setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values

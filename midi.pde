@@ -28,16 +28,19 @@ void maschineNote(int pitch, int velocity) {
   boolean down = velocity != 0;
   switch (pitch) {
     //Next step according to direction
-    case 12: 
-      if (maschineStepDirectionIsNext) nextStepPressed = down; 
-        else revStepPressed = down;
-      break;
+    case 12: triggerStepFromMaschine(down); break;
   }
   //Trigger moving head preset
   if(pitch >= 14 && pitch <= 28 && velocity != 0) {
     showPreset(pitch - 14, 0);
     selectMaschinePad(pitch - 13, true);
   }
+}
+
+
+void triggerStepFromMaschine(boolean onOrOff) {
+  if (maschineStepDirectionIsNext) nextStepPressed = onOrOff; 
+        else revStepPressed = onOrOff;
 }
 
 
@@ -95,6 +98,11 @@ void maschineControllerChange(int number, int value) {
       //Turn the play button light on according to current pause status
       if(!chasePause) Maschine.sendControllerChange(10, 108, 127); else Maschine.sendControllerChange(10, 108, 0);
     break;
+    
+    //register tempo tap (REC button)
+    case 109: registerTempoTapTap(); break;
+    //clear automatic temp tapping (ERASE button)
+    case 110: clearMaschineAutoTap(); break;
   }
   
 }
@@ -112,4 +120,67 @@ void maschineKnobRotated(boolean positive) {
 void doByMaschineKnob() {
   //Current task: rotate main window view
   pageRotation = int(map(maschineKnobVal, 0, 31, 0, 360));
+}
+
+
+//Tempo tap feature (MAT = Maschine Auto Tap)----------
+
+//How many times the rec button has been pressed (4 is needed to start MAT)
+int tempotapTapCount = 0;
+int[] tempotapTaps = new int[4];
+int tapStartMillis;
+
+boolean MATenable = false;
+int MATinterval;
+
+//This is triggered when the rec button is pressed
+void registerTempoTapTap() {
+  if (!MATenable) {
+    if (tempotapTapCount < 3) {
+      if (tempotapTapCount == 0) tapStartMillis = millis();
+      tempotapTaps[tempotapTapCount] = millis() - tapStartMillis;
+      
+      tempotapTapCount++;
+    } else {
+      //Tempo tap finished. Calculate interval and begin automatic "tapping"
+      tempotapTaps[3] = millis() - tapStartMillis;
+      
+      //calculate automatic tap interval
+      
+      //Calculate total sum of intervals between taps
+      int total = 0;
+      for (int i = 1; i <= 3; i++) {
+        total += tempotapTaps[i] - tempotapTaps[i - 1];
+      }
+      //Take average
+      MATinterval = int(total/3);
+      MATenable = true;
+    }
+  }
+}
+
+boolean MATstepTriggered = false;
+int MATlastStepMillis;
+void calcMaschineAutoTap() {
+  //Always turn off the booleans if they were put to true last time
+  if(MATstepTriggered) { MATstepTriggered = false; triggerStepFromMaschine(false); Maschine.sendControllerChange(10, 109, 0); }
+  if(MATenable) {
+    if(millis() > MATlastStepMillis + MATinterval) {
+      MATstepTriggered = true;
+      triggerStepFromMaschine(true);
+      Maschine.sendControllerChange(10, 109, 127);
+      MATlastStepMillis = millis();
+    }
+  }
+  
+}
+
+//Clean up MAT variables
+void clearMaschineAutoTap() {
+  tempotapTapCount = 0;
+  tempotapTaps = new int[4];
+  tapStartMillis = 0;
+  
+  MATenable = false;
+  MATinterval = 0;
 }
