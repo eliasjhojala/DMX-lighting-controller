@@ -10,7 +10,7 @@ int grandMaster = 50;
 int oldGrandMaster = 40;
 
 void draw() {
-  calcMaschineAutoTap();
+  if (useMaschine) calcMaschineAutoTap();
   
   checkThemeMode();
   
