@@ -243,3 +243,11 @@ void blackOut(boolean state) {
   }
   
 }
+
+void fullOnToggle() {
+  fullOn(!fullOn);
+}
+
+void blackOutToggle() {
+  blackOut(!blackOut);
+}

@@ -57,12 +57,7 @@ void oscEvent(OscMessage theOscMessage) {
   
    if(addr.equals("/blackout")) { //Jos blackout nappia painetaan
        if(digitalValue == 1) {
-         if(blackOut == true) { //Jos blackout on päällä otetaan se pois päältä, eli palautetaan kanaville entiset arvot
-            blackOut(false);
-         }
-         else { //Jos blackout ei ole päällä laitetaan se päälle eli laitetaan kanavat nolliin
-            blackOut(true); 
-         }
+         blackOutToggle();
        }
      }
      
