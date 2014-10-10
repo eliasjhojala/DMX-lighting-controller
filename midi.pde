@@ -41,6 +41,9 @@ void maschineNote(int pitch, int velocity) {
 void triggerStepFromMaschine(boolean onOrOff) {
   if (maschineStepDirectionIsNext) nextStepPressed = onOrOff; 
         else revStepPressed = onOrOff;
+        
+  //Toggle step direction, as nextRevAutoChange is true
+  if (nextRevAutoChange && !onOrOff) setMaschineStepDirection(!maschineStepDirectionIsNext);
 }
 
 
@@ -61,6 +64,24 @@ boolean maschineStepDirectionIsNext = true;
 
 int maschineKnobVal = 0;
 
+boolean nextRevAutoChange = false;
+
+void setMaschineStepDirection(boolean direction) {
+  if (direction) {
+    maschineStepDirectionIsNext = true;
+    Maschine.sendControllerChange(10, 105, 0);
+    Maschine.sendControllerChange(10, 106, 127);
+  } else {
+    maschineStepDirectionIsNext = false;
+    Maschine.sendControllerChange(10, 105, 127);
+    Maschine.sendControllerChange(10, 106, 0);
+  }
+  
+   
+}
+
+
+
 void maschineControllerChange(int number, int value) {
   
   println("Maschine CC NUMBER|" + number + "/VALUE|" + value);
@@ -75,17 +96,11 @@ void maschineControllerChange(int number, int value) {
     
     //Step direction: back
     case 105: 
-      maschineStepDirectionIsNext = false; 
-      nextStepPressed = false; 
-      Maschine.sendControllerChange(10, 105, 127);
-      Maschine.sendControllerChange(10, 106, 0);
+      setMaschineStepDirection(false);
     break;
     //Step direction: forward
     case 106: 
-      maschineStepDirectionIsNext = true; 
-      revStepPressed = false; 
-      Maschine.sendControllerChange(10, 105, 0);
-      Maschine.sendControllerChange(10, 106, 127);
+      setMaschineStepDirection(true);
     break;
     
     //toggle BlackOut
@@ -114,6 +129,14 @@ void maschineControllerChange(int number, int value) {
     case 109: registerTempoTapTap(); break;
     //clear automatic temp tapping (ERASE button)
     case 110: clearMaschineAutoTap(); break;
+    
+    //toggle nextRevAutoChange
+    case 117: 
+      nextRevAutoChange = !nextRevAutoChange;
+      //Turn the select button light on according to current nextRecAutoChange status
+      if(nextRevAutoChange) Maschine.sendControllerChange(10, 117, 127); else Maschine.sendControllerChange(10, 117, 0);
+    break;
+    
   }
   
 }
