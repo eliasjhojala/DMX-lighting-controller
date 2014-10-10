@@ -147,6 +147,8 @@ int MATinterval;
 //This is triggered when the rec button is pressed
 void registerTempoTapTap() {
   if (!MATenable) {
+    //Go to next step
+    MATstepTriggered = true; triggerStepFromMaschine(true);
     if (tempotapTapCount < 3) {
       if (tempotapTapCount == 0) tapStartMillis = millis();
       tempotapTaps[tempotapTapCount] = millis() - tapStartMillis;

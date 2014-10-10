@@ -10,7 +10,6 @@ int grandMaster = 50;
 int oldGrandMaster = 40;
 
 void draw() {
-  if (useMaschine) calcMaschineAutoTap();
   
   checkThemeMode();
   
@@ -26,6 +25,8 @@ void draw() {
   }
   detectBeat();
   mhx50_movingHeadLoop();
+  
+  if (useMaschine) calcMaschineAutoTap();
 
 fill(255, 255, 255);
   if(lastStepDirection == 1) {
