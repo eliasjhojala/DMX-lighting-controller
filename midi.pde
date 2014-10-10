@@ -31,7 +31,7 @@ void maschineNote(int pitch, int velocity) {
       break;
   }
   //Trigger moving head preset
-  if(pitch >= 14 && pitch <= 28) {
+  if(pitch >= 14 && pitch <= 28 && velocity != 0) {
     showPreset(pitch - 14, 0);
     selectMaschinePad(pitch - 13, true);
   }
@@ -47,7 +47,7 @@ void selectMaschinePad(int padId, boolean putOn) {
   
   //Turn the rest off 
   for (int i = 1; i <= 16; i++) {
-    if (i != padId || !putOn) Maschine.sendNoteOn(10, i + 13, 0);
+    if (i != padId || !putOn) Maschine.sendNoteOn(10, i + 13, 0); 
   }
 }
 
