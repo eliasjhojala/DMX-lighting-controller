@@ -58,19 +58,10 @@ void oscEvent(OscMessage theOscMessage) {
    if(addr.equals("/blackout")) { //Jos blackout nappia painetaan
        if(digitalValue == 1) {
          if(blackOut == true) { //Jos blackout on päällä otetaan se pois päältä, eli palautetaan kanaville entiset arvot
-            blackOut = false;
-            memory(1, masterValueBeforeBlackout);
-            valueOfMemory[1] = masterValueBeforeBlackout;
-            memoryValue[1] = masterValueBeforeBlackout;
+            blackOut(false);
          }
          else { //Jos blackout ei ole päällä laitetaan se päälle eli laitetaan kanavat nolliin
-           masterValueBeforeBlackout = grandMaster;
-           blackOut = true;
-           grandMaster = 0;
-           valueOfMemory[1] = 0;
-           memoryValue[1] = 0;
-           memory(1, 0);
-          
+            blackOut(true); 
          }
        }
      }
@@ -130,22 +121,8 @@ void oscEvent(OscMessage theOscMessage) {
           sendDataToIpad("/chaseMode", chaseMode);
        }
      }
-     
-     
-   
-     /*
-       Fullon toimintaperiaate:
-       fullon on toiminto, joka laittaa kaikkien kanavien arvot täysille.
-       Tämä tehdään myös pääloopissa (draw) niin pitkään kun fullOn = true,
-       jotta arvoja ei ylikirjoiteta. Ennen kuin kaikki arvot laitetaan täysille
-       kirjoitetaan niiden arvot muuttujaan (valueOfDimBeforeSolo[]), jotta
-       ne voidaan palauttaa fullOnin päätyttyä. Fullon-nappi toimii
-       go-tyyppisesti, eli sitä painettaessa fullOn menee päälle ja kun
-       se päästetään irti fullOn sammuu.
-     */
-     
-    
-     
+
+  
      if(addr.equals("/fullon")) {
        fullOn(boolean(digitalValue));
      }

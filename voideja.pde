@@ -194,6 +194,17 @@ boolean isClicked(int x1, int y1, int x2, int y2) {
 }
 
 
+ /*
+ Fullon toimintaperiaate:
+ fullon on toiminto, joka laittaa kaikkien kanavien arvot täysille.
+ Tämä tehdään myös pääloopissa (draw) niin pitkään kun fullOn = true,
+ jotta arvoja ei ylikirjoiteta. Ennen kuin kaikki arvot laitetaan täysille
+ kirjoitetaan niiden arvot muuttujaan (valueOfDimBeforeSolo[]), jotta
+ ne voidaan palauttaa fullOnin päätyttyä. Fullon-nappi toimii
+ go-tyyppisesti, eli sitä painettaessa fullOn menee päälle ja kun
+ se päästetään irti fullOn sammuu.
+ */
+
 void fullOn(boolean state) {
   if(fullOn && !state) {
     //Turn off full on
@@ -209,6 +220,26 @@ void fullOn(boolean state) {
        dimInput[ii] = 255;
     }
     fullOn = true;
+  }
+  
+}
+
+void blackOut(boolean state) {
+  if(!state) {
+    //Turn off blackout
+    blackOut = false;
+    memory(1, masterValueBeforeBlackout);
+    valueOfMemory[1] = masterValueBeforeBlackout;
+    memoryValue[1] = masterValueBeforeBlackout;
+  }
+  if(state) {
+    //Turn on blackout
+    masterValueBeforeBlackout = grandMaster;
+    blackOut = true;
+    grandMaster = 0;
+    valueOfMemory[1] = 0;
+    memoryValue[1] = 0;
+    memory(1, 0);
   }
   
 }
