@@ -263,6 +263,7 @@ void fallingEdgeChase(int memoryNumber, int value, boolean useFade, boolean chan
   //on sama kuin chaseFaden arvo niin brightness 2 arvo on 255
   if(useFade == true) { //Check if fade is not zero
     if(changeSteppiii == true && !chasePause) { //Check if step is changing to another
+      preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], constrain(round(map(255 - chaseBright2[memoryNumber], 0, 255, 0, value)), 0, 255)); //Gives right value (inverted value) to previous step
       chaseBright1[memoryNumber]++; //Change brightness
       chaseBright2[memoryNumber] = 255 - chaseBright1[memoryNumber];
       
@@ -277,7 +278,6 @@ void fallingEdgeChase(int memoryNumber, int value, boolean useFade, boolean chan
       if(steppi[memoryNumber] > soundToLightSteps[memoryNumber]) {
         steppi[memoryNumber] = 1;
       }
-      preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], constrain(round(map(255 - chaseBright2[memoryNumber], 0, 255, 0, value)), 0, 255)); //Gives right value (inverted value) to previous step
     }
     
   }
