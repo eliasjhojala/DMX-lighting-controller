@@ -15,6 +15,9 @@ void initializeMaschine() {
   
   //Clear pad selection
   selectMaschinePad(1, false);
+  
+  //Turn the play button light on according to current pause status
+  if(!chasePause) Maschine.sendControllerChange(10, 108, 127); else Maschine.sendControllerChange(10, 108, 0);
 }
 
 
@@ -82,10 +85,15 @@ void maschineControllerChange(int number, int value) {
     //toggle BlackOut
     case 119: 
       blackOut = !blackOut; 
-      
-      //Turn the mute buttons light on according to current blackout status
+      //Turn the mute button light on according to current blackout status
       if(blackOut) Maschine.sendControllerChange(10, 119, 127); else Maschine.sendControllerChange(10, 119, 0);
-      
+    break;
+    
+    //toggle chasePause
+    case 108: 
+      chasePause = !chasePause;
+      //Turn the play button light on according to current pause status
+      if(!chasePause) Maschine.sendControllerChange(10, 108, 127); else Maschine.sendControllerChange(10, 108, 0);
     break;
   }
   
