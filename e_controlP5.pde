@@ -719,8 +719,6 @@ public class ControlFrame extends PApplet {
   //Just so that it wont start changing values unless the color change has been triggered atleast once.
   boolean fixtureColorChangeHasHappened = false;
   
-  int pageRotationOld;
-  
   public void draw() {
     
     //startof: Draw
@@ -794,9 +792,8 @@ public class ControlFrame extends PApplet {
       }
       
       
-      //Update view rotation according to knob only if it has been changed
-      if(pageRotationOld != int(cp5.controller("viewRotKnob").getValue())) pageRotation = int(cp5.controller("viewRotKnob").getValue());
-      pageRotationOld = int(cp5.controller("viewRotKnob").getValue());
+      //Update view rotation according to knob
+      pageRotation = int(cp5.controller("viewRotKnob").getValue());
       
       
       //ACTUAL DRAWING HAPPENS HERE!!!
