@@ -147,20 +147,6 @@ void oscEvent(OscMessage theOscMessage) {
     
      
      if(addr.equals("/fullon")) {
-       if(digitalValue == 0) {
-          fullOn = false;
-         for(int ii = 0; ii < channels; ii++) {
-            dimInput[ii] = valueOfDimBeforeFullOn[ii];
-          }
-     
+       fullOn(boolean(digitalValue));
      }
-     else {
-       fullOn = true;
-      for(int ii = 0; ii < channels; ii++) {
-       valueOfDimBeforeFullOn[ii] = dim[ii];
-        dimInput[ii] = 255;
-      }
-      
-     }
-       }
 }

@@ -192,3 +192,23 @@ boolean isClicked(int x1, int y1, int x2, int y2) {
     return false;
   }
 }
+
+
+void fullOn(boolean state) {
+  if(fullOn && !state) {
+    //Turn off full on
+    for(int ii = 0; ii < channels; ii++) {
+       dimInput[ii] = valueOfDimBeforeFullOn[ii];
+    }
+    fullOn = false;
+  }
+  if(!fullOn && state) {
+    //Turn on full on
+    for(int ii = 0; ii < channels; ii++) {
+       valueOfDimBeforeFullOn[ii] = dim[ii];
+       dimInput[ii] = 255;
+    }
+    fullOn = true;
+  }
+  
+}
