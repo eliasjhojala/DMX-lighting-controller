@@ -76,10 +76,7 @@ void ylavalikko() {
   text("Make SoundToLight from active presets", width/4*2+30, 30);
   if(mouseX > width/4*3 && mouseX < width/4*4 && mouseY < 50 && mouseClicked && mouseReleased && (!mouseLocked || mouseLocker == "ylavalikko")) {
     fill(0, 0, 255);
-    chaseMode++;
-    if(chaseMode > 5) {
-      chaseMode = 1;
-    }
+    nextChaseMode();
     mouseReleased = false;
   }
   else {
@@ -224,5 +221,12 @@ void ylavalikko() {
     fill(255, 255, 255);
     text("Valintasi: ",  width/2-300+20, height/2-200+130);
     text(str(soundToLightNumero),  width/2-300+130, height/2-200+130);
+  }
+}
+
+void nextChaseMode() {
+  chaseMode++;
+  if(chaseMode > 5) {
+    chaseMode = 1;
   }
 }

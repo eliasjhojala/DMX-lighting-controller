@@ -70,6 +70,9 @@ void maschineControllerChange(int number, int value) {
       maschineKnobRotated(value == 1);
     break;
     
+    //CONTROL button, next chase mode
+    case 92: nextChaseMode(); break;
+    
     //Step direction: back
     case 105: 
       maschineStepDirectionIsNext = false; 
