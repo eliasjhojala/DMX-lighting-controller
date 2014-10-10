@@ -99,21 +99,13 @@ void oscEvent(OscMessage theOscMessage) {
      
      if(addr.equals("/chaseModeUp")) {
        if(digitalValue == 1) {
-           chaseMode++;
-          if(chaseMode > 5) {
-            chaseMode = 1;
-          }
-          sendDataToIpad("/chaseMode", chaseMode);
+           nextChaseMode();
        }
      }
      
      if(addr.equals("/chaseModeDown")) {
        if(digitalValue == 1) {
-           chaseMode--;
-          if(chaseMode < 1) {
-            chaseMode = 5;
-          }
-          sendDataToIpad("/chaseMode", chaseMode);
+          reverseChaseMode();
        }
      }
 

@@ -1,4 +1,4 @@
-int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
+int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
 boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
@@ -177,6 +177,7 @@ String[] buttonText = new String[100];
 
 boolean[] chaseStepChanging = new boolean[numberOfMemories];
 boolean[] chaseStepChangingRev = new boolean[numberOfMemories];
+boolean[] fallingEdgeChaseStepChangin = new boolean[numberOfMemories];
 
 int chaseSpeed = 500;
 int chaseFade = 255;

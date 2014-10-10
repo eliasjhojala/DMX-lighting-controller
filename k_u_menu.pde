@@ -226,7 +226,16 @@ void ylavalikko() {
 
 void nextChaseMode() {
   chaseMode++;
-  if(chaseMode > 5) {
+  if(chaseMode > 8) {
     chaseMode = 1;
   }
+  sendDataToIpad("/chaseMode", chaseMode);
+}
+
+void reverseChaseMode() {
+  chaseMode--;
+  if(chaseMode < 1) {
+    chaseMode = 8;
+  }
+  sendDataToIpad("/chaseMode", chaseMode);
 }
