@@ -105,14 +105,14 @@ void maschineControllerChange(int number, int value) {
     
     //toggle BlackOut
     case 119: 
-      blackOut = !blackOut; 
+      blackOutToggle();
       //Turn the mute button light on according to current blackout status
       if(blackOut) Maschine.sendControllerChange(10, 119, 127); else Maschine.sendControllerChange(10, 119, 0);
     break;
     
     //toggle fullOn
     case 112: 
-      fullOn = !fullOn; 
+      fullOnToggle();
       //Turn the mute button light on according to current blackout status
       if(fullOn) Maschine.sendControllerChange(10, 112, 127); else Maschine.sendControllerChange(10, 112, 0);
     break;
