@@ -2,7 +2,7 @@
 
 
 
-//Maschine Mikro MK2 Interfacing
+//Maschine Mikro MK2 Interfacing -------------------------------------------------------------------------------------------------------
 
 //This void is executed on program start
 void initializeMaschine() {
@@ -172,7 +172,12 @@ void registerTempoTapTap() {
 
 boolean MATstepTriggered = false;
 int MATlastStepMillis;
+//This function gets triggered every draw, so it can be used for other purposes as well.
 void calcMaschineAutoTap() {
+  //If there is a beat, put the GRID button light on.
+  if (biitti) Maschine.sendControllerChange(10, 107, 127); else Maschine.sendControllerChange(10, 107, 0);
+  
+  //------AutoTap calculations
   //Always turn off the booleans if they were put to true last time
   if(MATstepTriggered) { MATstepTriggered = false; triggerStepFromMaschine(false); Maschine.sendControllerChange(10, 109, 0); }
   if(MATenable) {
