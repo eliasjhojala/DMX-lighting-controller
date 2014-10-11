@@ -1,4 +1,4 @@
-int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
+int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
 boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
@@ -70,7 +70,7 @@ int[][] mhx50_createFinalChannelValues = new int[2][14];
 int[][][] mhx50_createFinalPresetValues = new int[16][2][14];
 
 int mhx50_s2l_step;
-int[] mhx50_s2l_presets = new int[500];
+int[] mhx50_s2l_presets = new int[16];
 int mmhx50_s2l_numberOfPresets = 0;
 boolean mhx50_saves2l;
 boolean mhx50_saves2lfirstTime;
