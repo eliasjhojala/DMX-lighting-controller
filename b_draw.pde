@@ -27,6 +27,10 @@ void draw() {
   mhx50_movingHeadLoop();
   
   if (useMaschine) calcMaschineAutoTap();
+  
+  if(millis() > 10000 && millis() < 15000) {
+    loadAllData();
+  }
 }
 
 
