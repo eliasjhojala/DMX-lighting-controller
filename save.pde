@@ -123,6 +123,11 @@ void saveAllData() {
   
   
   
+   for(int i = 0; i <  mhx50_s2l_presets.length; i++) {
+    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "mhx50_s2l_presets"); 
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(mhx50_s2l_presets[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
+  }
+  
   
   
   for(int i = 0; i <  chaseModeByMemoryNumber.length; i++) {
