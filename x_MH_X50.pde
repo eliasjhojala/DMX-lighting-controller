@@ -119,6 +119,12 @@ void mhx50_movingHeadLoop() { //This loops in every draw
   for(int i = 0; i < 14; i++) {
     sendOscToAnotherPc(115+i, mhx50_createFinalChannelValues[1][i]);
   }
+  
+  if(midiPositionButtonPressed) {
+    mhx50_finalChannelValuesCreate(0);
+    mhx50_finalChannelValuesCreate(1);
+  }
+  
 }
 
 
