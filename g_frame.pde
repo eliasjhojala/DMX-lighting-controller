@@ -31,6 +31,19 @@ public class secondApplet extends PApplet {
       text(i+40+40 + ":" + valueToDmx[i+40+40], 10, i*15+25);
   }
   
+ fill(255, 255, 255);
+  
+   text("touchOSCchannels", 105, 10);
+    for(int i = 0; i <= 24; i++) {
+      fill(255, 255, 255);
+      text(i + ":" + touchOSCchannel[i], 110, i*15+25);
+  }
+  
+  
+  
+    
+  translate(100, 0);
+  fill(255, 255, 255);
   
   
     text("allChannels[1]", 105, 10);

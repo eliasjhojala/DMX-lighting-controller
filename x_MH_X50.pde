@@ -146,7 +146,7 @@ void movingHeadOptionsCheck(String address, int value, int value2) { //This void
   
   //Check all the preset buttons
   for(int ij = 1; ij <= 2; ij++) { //Goes through all the mhx50 fixtures
-    for(int i = 0; i < 15; i++) { //Goes through all the presetbuttons
+    for(int i = 0; i <= 15; i++) { //Goes through all the presetbuttons
       if(address.equals("/7/preset" + str(i) + "_" + str(ij)) && value == 1) { //Check if button is pressed
         if(savePreset) { //If savepresed is true then saves presed to presetplace which you clicked 
           savePreset(i, ij-1);

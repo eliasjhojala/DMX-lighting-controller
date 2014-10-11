@@ -27,14 +27,6 @@ void draw() {
   mhx50_movingHeadLoop();
   
   if (useMaschine) calcMaschineAutoTap();
-
-fill(255, 255, 255);
-  if(lastStepDirection == 1) {
-    text("1", 500, 500);
-  }
-  else {
-    text("2", 500, 500);
-  }
 }
 
 

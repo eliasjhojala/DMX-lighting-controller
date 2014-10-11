@@ -25,7 +25,7 @@ void preset(int memoryNumber, int value) {
 
 void soundToLightFromPreset(int memoryNumber) {
   int a = 0;
-  for(int i = 0; i < numberOfMemories; i++) {
+  for(int i = 3; i < numberOfMemories; i++) {
     if(memoryValue[i] != 0) {
       a++;
       soundToLightPresets[memoryNumber][a] = i;

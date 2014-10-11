@@ -56,7 +56,7 @@ void channelsToDim() {
   for(int i = 1; i <= touchOSCchannels; i++) {
     if(touchOSCchannelOld[i] != touchOSCchannel[i]) {         
       for(int ii = 0; ii < numberOfAllChannelsFirstDimensions; ii++) {
-        if(i > ii*12 && i < (ii+1)*12) {
+        if(i > ii*12 && i <= (ii+1)*12) {
           allChannels[touchOSCplace + ii][i-ii*12] = touchOSCchannel[i];
         }     
       }
