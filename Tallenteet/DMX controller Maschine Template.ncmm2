@@ -1172,11 +1172,14 @@
           <reaction>ondown</reaction>
         </pad>
         <pad id="Pressure6" subtype="pressure">
-          <polyat>29</polyat>
+          <disabled/>
+          <note>36</note>
           <channel>0</channel>
           <min>0</min>
           <max>127</max>
           <default>0</default>
+          <note-on-pressure>200</note-on-pressure>
+          <note-off-pressure>100</note-off-pressure>
         </pad>
         <pad id="Pad7" subtype="trigger">
           <name>TILT-</name>
@@ -1189,11 +1192,14 @@
           <reaction>ondown</reaction>
         </pad>
         <pad id="Pressure7" subtype="pressure">
-          <polyat>30</polyat>
+          <disabled/>
+          <note>38</note>
           <channel>0</channel>
           <min>0</min>
           <max>127</max>
           <default>0</default>
+          <note-on-pressure>200</note-on-pressure>
+          <note-off-pressure>100</note-off-pressure>
         </pad>
         <pad id="Pad8" subtype="trigger">
           <name>unused</name>
@@ -1244,11 +1250,14 @@
           <reaction>ondown</reaction>
         </pad>
         <pad id="Pressure10" subtype="pressure">
-          <polyat>33</polyat>
+          <disabled/>
+          <note>40</note>
           <channel>0</channel>
           <min>0</min>
           <max>127</max>
           <default>0</default>
+          <note-on-pressure>200</note-on-pressure>
+          <note-off-pressure>100</note-off-pressure>
         </pad>
         <pad id="Pad11" subtype="trigger">
           <name>TILT+</name>
@@ -1261,11 +1270,14 @@
           <reaction>ondown</reaction>
         </pad>
         <pad id="Pressure11" subtype="pressure">
-          <polyat>34</polyat>
+          <disabled/>
+          <note>41</note>
           <channel>0</channel>
           <min>0</min>
           <max>127</max>
           <default>0</default>
+          <note-on-pressure>200</note-on-pressure>
+          <note-off-pressure>100</note-off-pressure>
         </pad>
         <pad id="Pad12" subtype="trigger">
           <name>unused</name>

@@ -20,6 +20,9 @@ void initializeMaschine() {
   if(!chasePause) Maschine.sendControllerChange(10, 108, 127); else Maschine.sendControllerChange(10, 108, 0);
 }
 
+//0: panDo, 1: tiltDo, 2: panUp, 3: tiltUp
+boolean[] maschineManualMHadjustButtons = new boolean[4];
+
 
 void maschineNote(int pitch, int velocity) {
   println("Maschine noteOn PITCH|" + pitch + "/VEL|" + velocity);
@@ -29,6 +32,12 @@ void maschineNote(int pitch, int velocity) {
   switch (pitch) {
     //Next step according to direction
     case 12: triggerStepFromMaschine(down); break;
+    
+    //These are tha pads for adjusting the moving heads manually
+    case 36: maschineManualMHadjustButtons[0] = down; break;
+    case 38: maschineManualMHadjustButtons[1] = down; break;
+    case 40: maschineManualMHadjustButtons[2] = down; break;
+    case 41: maschineManualMHadjustButtons[3] = down; break;
   }
   //Trigger moving head preset
   if(pitch >= 14 && pitch <= 28 && velocity != 0) {
@@ -201,6 +210,19 @@ int MATlastStepMillis;
 void calcMaschineAutoTap() {
   //If there is a beat, put the GRID button light on.
   if (biitti) Maschine.sendControllerChange(10, 107, 127); else Maschine.sendControllerChange(10, 107, 0);
+  
+  //Add to moving head values if associated pads are pressed down
+  if (maschineManualMHadjustButtons[0] && mhx50_panValue[0] != 0) { mhx50_panValue[0]--; midiPositionButtonPressed = true; }
+  if (maschineManualMHadjustButtons[0] && mhx50_panValue[1] != 0) { mhx50_panValue[1]--; midiPositionButtonPressed = true; }
+  
+  if (maschineManualMHadjustButtons[2] && mhx50_panValue[0] != 255) { mhx50_panValue[0]++; midiPositionButtonPressed = true; }
+  if (maschineManualMHadjustButtons[2] && mhx50_panValue[1] != 255) { mhx50_panValue[1]++; midiPositionButtonPressed = true; }
+  
+  if (maschineManualMHadjustButtons[1] && mhx50_tiltValue[0] != 0) { mhx50_tiltValue[0]--; midiPositionButtonPressed = true; }
+  if (maschineManualMHadjustButtons[1] && mhx50_tiltValue[1] != 0) { mhx50_tiltValue[1]--; midiPositionButtonPressed = true; }
+  
+  if (maschineManualMHadjustButtons[3] && mhx50_tiltValue[0] != 255) { mhx50_tiltValue[0]++; midiPositionButtonPressed = true; }
+  if (maschineManualMHadjustButtons[3] && mhx50_tiltValue[1] != 255) { mhx50_tiltValue[1]++; midiPositionButtonPressed = true; }
   
   //------AutoTap calculations
   //Always turn off the booleans if they were put to true last time
