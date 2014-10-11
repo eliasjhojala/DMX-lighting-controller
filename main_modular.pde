@@ -8,12 +8,14 @@ boolean useAnotherArduino = false;
 
 boolean useMaschine = true;
 
-int arduinoBaud = 9600; //Arduinon baudRate (serial.begin(115200);
+int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200);
 int arduinoBaud2 = 9600;
 
 int arduinoIndex = 8; //Arduinon COM-portin järjestysnumero
 int arduinoIndex2 = 10;
 int enttecIndex = 1; // Enttecin USB DMX palikan COM-portin järjestysnumero
+
+int touchOscInComing = 8000;
 
 
 boolean nextStepPressed = false;
@@ -506,7 +508,7 @@ void setup() {
     
     
     //---------------------------------------------------------Touchoscin setup-komennot------------------------------------------------------------
-      oscP5 = new OscP5(this, 8000); 
+      oscP5 = new OscP5(this, touchOscInComing); 
       frame.setResizable(true);
       Remote = new NetAddress(remoteIP,portOutgoing);
     //----------------------------------------------------------------------------------------------------------------------------------------------
@@ -522,8 +524,6 @@ void setup() {
     Maschine = new MidiBus(this, "Maschine Mikro MK2 In", "Maschine Mikro MK2 Out");
     initializeMaschine();
   }
-  
-  
 }
 
 

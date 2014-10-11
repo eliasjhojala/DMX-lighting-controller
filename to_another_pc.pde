@@ -23,7 +23,7 @@ void sendOscToAnotherPc(int ch, int val) {
 
 void sendOscToIpad(int ch, int val) {
   if(sendOscToIpad == true) {
-    if(val != oldChannelValToIpad[ch]) {
+    if((val < (oldChannelValToIpad[ch] - 10)) || (val > (oldChannelValToIpad[ch] + 10)) || (val == 0 && oldChannelValToIpad[ch] != 0) || (val == 255 && oldChannelValToIpad[ch] != 255)) {
       OscMessage myMessage2 = new OscMessage("/1/fader" + str(ch));
       myMessage2.add(val); // add an int to the osc message
       oscP52.send(myMessage2, myRemoteLocation2); 
@@ -34,7 +34,7 @@ void sendOscToIpad(int ch, int val) {
 
 void sendMemoryToIpad(int ch, int val) {
   if(sendMemoryToIpad == true) {
-    if(val != oldMemoryValToIpad[ch]) {
+    if((val < (oldMemoryValToIpad[ch] - 10)) || (val > (oldMemoryValToIpad[ch] + 10)) || (val == 0 && oldMemoryValToIpad[ch] != 0) || (val == 255 && oldMemoryValToIpad[ch] != 255)) {
       OscMessage myMessage2 = new OscMessage("/5/fader" + str(ch));
       myMessage2.add(val); // add an int to the osc message
       oscP52.send(myMessage2, myRemoteLocation2); 

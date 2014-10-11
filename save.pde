@@ -249,6 +249,18 @@ void saveAllData() {
   newRow.setString("1D", "-");               
   newRow.setString("2D", "-");
   
+  
+
+  
+  newRow = table.addRow();
+  
+  newRow.setInt("id", table.lastRowIndex());  
+  newRow.setString("variable_name", "mmhx50_s2l_numberOfPresets"); 
+  newRow.setString("variable_dimensions", "0"); 
+  newRow.setString("value", str(mmhx50_s2l_numberOfPresets));   
+  newRow.setString("1D", "-");               
+  newRow.setString("2D", "-");
+  
   //Asetetaan oikeat tallennuspolut käyttäjän mukaan
 
   if(userId == 1) { //Jos Elias käyttää
