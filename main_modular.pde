@@ -366,9 +366,9 @@ void setDmxChannel(int channel, int value) {
   if(useCOM == true) { //Tarkistetaan halutaanko dataa lähettää ulos ohjelmasta
     // Convert the parameters into a message of the form: 123c45w where 123 is the channel and 45 is the value
     // then send to the Arduino
-    arduinoPort.write( str(channel) + "c" + str(value) + "w" );
+    arduinoPort.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );
     if(useAnotherArduino) {
-      arduinoPort2.write( str(channel) + "c" + str(value) + "w" );
+      arduinoPort2.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );
     }
   }
 }
