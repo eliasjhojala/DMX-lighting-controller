@@ -225,17 +225,38 @@ void ylavalikko() {
 }
 
 void nextChaseMode() {
+  resetChaseVariables();
   chaseMode++;
   if(chaseMode > 8) {
     chaseMode = 1;
   }
   sendDataToIpad("/chaseMode", chaseMode);
+  resetChaseVariables();
 }
 
 void reverseChaseMode() {
+  resetChaseVariables();
   chaseMode--;
   if(chaseMode < 1) {
     chaseMode = 8;
   }
   sendDataToIpad("/chaseMode", chaseMode);
+  resetChaseVariables();
+}
+
+void resetChaseVariables() {
+  //This void resets all the chase variables, because otherwise chaseModes could make trouble to each others
+  chaseStepChanging = new boolean[numberOfMemories];
+  chaseStepChangingRev = new boolean[numberOfMemories];
+  fallingEdgeChaseStepChangin = new boolean[numberOfMemories];
+  
+  chaseStep1 = 1;
+  chaseStep2 = 1;
+  chaseBright1 = new int[numberOfMemories];
+  chaseBright2 = new int[numberOfMemories];
+  
+  
+  //These two variables are important to prevent trouble between chaseMode 8 and 3
+  steppi = new int[numberOfMemories];
+  steppi1 = new int[numberOfMemories];
 }
