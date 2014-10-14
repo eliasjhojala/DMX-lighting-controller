@@ -312,7 +312,7 @@
       </page>
     </pages>
     <groups>
-      <current_index>1</current_index>
+      <current_index>0</current_index>
       <group color="4286541312" name="Pad Page A">
         <pad id="Pad1" subtype="trigger">
           <name>Next Step</name>
