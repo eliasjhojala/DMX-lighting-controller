@@ -31,6 +31,8 @@ void draw() {
   if(millis() > 10000 && millis() < 15000) {
     loadAllData();
   }
+
+
 }
 
 

@@ -3,7 +3,7 @@ boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
 boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use
-boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
+boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
 boolean useAnotherArduino = false;
 
 boolean useMaschine = true;
@@ -11,9 +11,9 @@ boolean useMaschine = true;
 int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200);
 int arduinoBaud2 = 9600;
 
-int arduinoIndex = 8; //Arduinon COM-portin järjestysnumero
-int arduinoIndex2 = 10;
-int enttecIndex = 1; // Enttecin USB DMX palikan COM-portin järjestysnumero
+int arduinoIndex = 2; //Arduinon COM-portin järjestysnumero
+int arduinoIndex2 = 4;
+int enttecIndex = 8; // Enttecin USB DMX palikan COM-portin järjestysnumero
 
 int touchOscInComing = 8000;
 
@@ -485,10 +485,11 @@ void setup() {
       channel[i] = dmxChannel[i]; //asetetaan muuttujalle channel[] samat arvot kuin muuttujalla dmxChannel[]
     }
     
-    if(useCOM == true) {
+    
       if(useEnttec == true) {
       myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
       }
+      if(useCOM == true) {
       arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
       if(useAnotherArduino == true) {
         arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);

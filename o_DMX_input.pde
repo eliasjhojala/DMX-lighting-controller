@@ -1,14 +1,22 @@
 //Tässä välilehdessä luetaan dmx-inputti, sekä järjestetään myös muut inputit oikeaan järjestykseen mm. dimInput[]-muuttujaan
 
 int numberOfAllChannelsFirstDimensions = 5; // allChannels[numberOfAllChannelsFirstDimensions][];
+int lastValue = 0;
+int inBuffer = 0;
+boolean fixCrashedChannelOne = true;
 
 void dmxCheck() {
-  if(useCOM == true && useEnttec == true) {
+  if(useEnttec == true) {
        while (myPort.available() > 0) {
           if (cycleStart == true) {
             if (counter <= 6+enttecDMXchannels) {
-              int inBuffer = myPort.read();
+              lastValue = inBuffer;
+              inBuffer = myPort.read();
+              if(inBuffer == 126 && lastValue == 231) {
+                counter = 0;
+              }
               vals[counter] = inBuffer;
+              
               counter++;
             }
             else {
@@ -20,23 +28,32 @@ void dmxCheck() {
               if(vals[i] == check[i]) {
                 if(error == false) {
                   error = false;
-                }
+               }
               }
             }
-            if(error == false) {
+          //  if(error == false) {
               for(int i = 5; i < 6+enttecDMXchannels; i++) {
                 ch[i - 5] = vals[i];
+              
+                
               }
               counter = 0;
               cycleStart = true;    
-            }
+        //    }
            } 
+           
+                
       }
   }
 }
 void dmxToDim() {
   for(int i = 1; i < 13; i++) {
       enttecDMXchannel[i] = ch[i];
+      if(fixCrashedChannelOne) {
+        if(i == 1 && ch[i] < 30) {
+          enttecDMXchannel[i] = 0;
+        }
+      }
   }
   channelsToDim();
 }
@@ -111,6 +128,6 @@ void channelsToDim() {
   }
   
   for(int i = 1; i < 13; i++) { controlP5channelOld[i] = controlP5channel[i]; }
-  for(int i = 1; i < enttecDMXchannels; i++) { enttecDMXchannelOld[i] = enttecDMXchannel[i]; }
+  for(int i = 1; i <= enttecDMXchannels; i++) { enttecDMXchannelOld[i] = enttecDMXchannel[i]; }
   for(int i = 1; i < touchOSCchannels; i++) { touchOSCchannelOld[i] = touchOSCchannel[i]; }
 }

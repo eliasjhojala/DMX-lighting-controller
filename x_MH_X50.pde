@@ -106,9 +106,9 @@ void mhx50_movingHeadLoop() { //This loops in every draw
   if(mhx50_plays2l) { mhx50_playS2l(); } //Make sound to light effect if it is on
 
 
-  for(int id = 0; id <= 1; id++) {
+  for(int id = 0; id < 2; id++) {
     for(int i = 0; i < 14; i++) {
-      valueToDmx[60+id*20+i] = mhx50_createFinalChannelValues[id][i];
+      valueToDmx[40+(id*20)+i] = mhx50_createFinalChannelValues[id][i];
     }
   }
   
@@ -224,6 +224,17 @@ void movingHeadOptionsCheck(String address, int value, int value2) { //This void
       //CH 14: Focus
       if(address.equals("/8/focus" + str(id+1))) { mhx50_focus(value, id); } //Change focus value
       
+      
+      if(addr.equals("/8/tiltUp1") && value == 1) { mhx50_tiltValue[0]++; }
+      if(addr.equals("/8/tiltUp2") && value == 1) { mhx50_tiltValue[1]++; }
+      if(addr.equals("/8/panUp1") && value == 1) { mhx50_panValue[0]++; }
+      if(addr.equals("/8/panUp2") && value == 1) { mhx50_panValue[1]++; }
+      
+      if(addr.equals("/8/tiltDown1") && value == 1) { mhx50_tiltValue[0]--; }
+      if(addr.equals("/8/tiltDown2") && value == 1) { mhx50_tiltValue[1]--; }
+      if(addr.equals("/8/panDown1") && value == 1) { mhx50_panValue[0]--; }
+      if(addr.equals("/8/panDown2") && value == 1) { mhx50_panValue[1]--; }
+      
     
       mhx50_finalChannelValuesCreate(id); //Create array where is located all the mhx50 channels
   
@@ -323,7 +334,7 @@ void mhx50_finalChannelValuesCreate(int id) {
   if(mhx50_posMirror == true) {
     if(id == 0) {
       if(mhx50_panValueOld[0] != mhx50_panValue[0])    { mhx50_createFinalChannelValues[0][0] = round(map(mhx50_panValue[0], 0, 255, 255, 0)); mhx50_createFinalChannelValues[1][0] = mhx50_panValue[0]; }
-      if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[0][1] = mhx50_tiltValue[0]; mhx50_createFinalChannelValues[1][1] = mhx50_tiltValue[0]; }
+      if(mhx50_tiltValueOld[0] != mhx50_tiltValue[0])  { mhx50_createFinalChannelValues[0][1] = mhx50_tiltValue[0]; mhx50_createFinalChannelValues[1][1] = 255 - mhx50_tiltValue[0]; }
       
       mhx50_panValueOld[0] = mhx50_panValue[0];
       mhx50_tiltValueOld[0] = mhx50_tiltValue[0];

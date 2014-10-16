@@ -410,7 +410,7 @@ void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float 
       //Draw MHX base
       pushMatrix();
       translate(posX * 5 - 1000, posY * 5, posZ);
-      rotateX(radians(270));
+      rotateX(radians(270+180));
       noStroke();
       scale(scale);
       shape(mhBase);
@@ -420,7 +420,7 @@ void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float 
       pushMatrix();
       translate(posX * 5 - 1000, posY * 5, posZ);
       rotateZ(radians(rotZ));
-      rotateX(radians(270));
+      rotateX(radians(270+180));
       noStroke();
       scale(scale);
       shape(mhHolder);
@@ -430,7 +430,7 @@ void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float 
       pushMatrix();
       translate(posX * 5 - 1000, posY * 5, posZ);
       rotateZ(radians(rotZ));
-      rotateX(radians(rotX));
+      rotateX(radians(rotX+180));
       noStroke();
       scale(scale);
       shape(lightModel);
@@ -441,7 +441,7 @@ void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float 
         pushMatrix();
         translate(posX * 5 - 1000, posY * 5, posZ);
         rotateZ(radians(rotZ));
-        rotateX(radians(rotX));
+        rotateX(radians(rotX+180));
         //Cone offset
         translate(0, 0, coneZOffset);
         scale(scale * coneScale * coneDiam, scale * coneScale  * coneDiam, scale * coneScale);

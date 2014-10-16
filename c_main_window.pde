@@ -114,18 +114,18 @@ void slowRotationForMovingHead(int id, int i) {
 }
 
 void slowRotationForMovingHead1(int id, int i) {
-  if(rotTaka[i] < round(map(mhx50_createFinalChannelValues[id][0], 0, 255, 0, 540))) { rotTaka[i] += 5; }
-  if(rotTaka[i] > round(map(mhx50_createFinalChannelValues[id][0], 0, 255, 0, 540))) { rotTaka[i] -= 5; }
+  if(rotTaka[i] < round(map(mhx50_createFinalChannelValues[id][0], 255, 0, 0, 540))) { rotTaka[i] += 5; }
+  if(rotTaka[i] > round(map(mhx50_createFinalChannelValues[id][0], 255, 0, 0, 540))) { rotTaka[i] -= 5; }
   if(rotX[i] < round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] += 5; }
   if(rotX[i] > round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] -= 5; }  
 }
 
 
 void slowRotationForMovingHead2(int id, int i) {
-  if(rotTaka[i] < round(map(mhx50_createFinalChannelValues[id][0], 0, 255, 0, 540))) { rotTaka[i] += constrain(round((map(float(mhx50_createFinalChannelValues[id][0]), 0, 255, 0, 540) - float(rotTaka[i]))/20+0.6), 1, 10); }
-  if(rotTaka[i] > round(map(mhx50_createFinalChannelValues[id][0], 0, 255, 0, 540))) { rotTaka[i] -= constrain(round((float(rotTaka[i]) - map(float(mhx50_createFinalChannelValues[id][0]), 0, 255, 0, 540))/20+0.6), 1, 10); }
-  if(rotX[i] < round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] += constrain(round((map(float(mhx50_createFinalChannelValues[id][1]), 0, 255, 45, 270+45) - float(rotX[i]))/20+0.6), 1, 10); }
-  if(rotX[i] > round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] -= constrain(round((float(rotX[i]) - map(float(mhx50_createFinalChannelValues[id][1]), 0, 255, 45, 270+45))/20+0.6), 1, 10); }
+  if(rotTaka[i] < round(map(mhx50_createFinalChannelValues[id][0], 255, 0, 0, 540))) { rotTaka[i] += constrain(round((map(float(mhx50_createFinalChannelValues[id][0]), 255, 0, 0, 540) - float(rotTaka[i]))/40+0.6), 1, 8); }
+  if(rotTaka[i] > round(map(mhx50_createFinalChannelValues[id][0], 255, 0, 0, 540))) { rotTaka[i] -= constrain(round((float(rotTaka[i]) - map(float(mhx50_createFinalChannelValues[id][0]), 255, 0, 0, 540))/40+0.6), 1, 8); }
+  if(rotX[i] < round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] += constrain(round((map(float(mhx50_createFinalChannelValues[id][1]), 0, 255, 45, 270+45) - float(rotX[i]))/40+0.6), 1, 8); }
+  if(rotX[i] > round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] -= constrain(round((float(rotX[i]) - map(float(mhx50_createFinalChannelValues[id][1]), 0, 255, 45, 270+45))/40+0.6), 1, 8); }
 }
 
 void colorsToMovingHeadVisualisation(int id, int i) {
