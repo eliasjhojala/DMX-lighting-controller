@@ -49,6 +49,9 @@ void dmxCheck() {
 void dmxToDim() {
   for(int i = 1; i < 13; i++) {
       enttecDMXchannel[i] = ch[i];
+      if(enttecDMXchannel[i] < 5) {
+        enttecDMXchannel[i] = 0;
+      }
       if(fixCrashedChannelOne) {
         if(i == 1 && ch[i] < 30) {
           enttecDMXchannel[i] = 0;
