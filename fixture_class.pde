@@ -8,6 +8,7 @@ class fixture {
   int pan, tilt, panFine, tiltFine; //rotation values
   int x_location, y_location, z_location; //location in visualisation
   int rotationZ, rotationX;
+  int parameter;
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
   
@@ -23,19 +24,19 @@ class fixture {
   //Initialization----------------------------------------------------------------------------
   
   //Type in string
-  fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, String fixtType) {
+  fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int param, String fixtType) {
    fixtureType = fixtType;
-   initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, ch, parentA, getFixtureTypeId());
+   initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, ch, parentA, param, getFixtureTypeId());
   }
   
   //Type in int
-  fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int fixtTypeId) {
-    initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, ch, parentA, fixtTypeId);
+  fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int param, int fixtTypeId) {
+    initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, ch, parentA, param, fixtTypeId);
     fixtureType = getFixtureName(fixtTypeId);
   }
   
   
-  void initFixtureObj(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int fixtTypeId) {
+  void initFixtureObj(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int param, int fixtTypeId) {
    dimmer = dim;
    channelStart = ch;
    red = r;
@@ -45,6 +46,7 @@ class fixture {
    y_location = y;
    z_location = z;
    rotationZ = rZ; rotationX = rX;
+   parameter = param;
    parentAnsa = parentA;
    
    size = new fixtureSize(fixtTypeId);

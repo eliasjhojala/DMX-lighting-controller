@@ -109,6 +109,7 @@ void loadAllData() {
       rotX[i], 
       channel[i],
       ansaParent[i], 
+      fixParam[i],
       fixtureType1[i]);
     }
   
