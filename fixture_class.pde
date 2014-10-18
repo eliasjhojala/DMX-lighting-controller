@@ -16,9 +16,9 @@ class fixture {
   
   //Type in string
   fixture(int dim, int r, int g, int b, int x, int y, String fixtType) {
-   initFixtureObj(dim, r, g, b, x, y, getFixtureTypeId(fixtureType));
+   initFixtureObj(dim, r, g, b, x, y, getFixtureTypeId());
    fixtureType = fixtType;
-   fixtureTypeId = getFixtureTypeId(fixtureType);
+   fixtureTypeId = getFixtureTypeId();
   }
   
   //Type in int
@@ -51,14 +51,14 @@ class fixture {
   }
   
   
-  int getFixtureTypeId(String fixtType) {
+  int getFixtureTypeId() {
     int toReturn = 0;
-    if(fixtType == "par64") { toReturn = 1; }
-    if(fixtType == "p.fresu") { toReturn = 2; }
-    if(fixtType == "k.fresu") { toReturn = 3; }
-    if(fixtType == "i.fresu") { toReturn = 4; }
-    if(fixtType == "flood") { toReturn = 5; }
-    if(fixtType == "linssi") { toReturn = 6; }
+    if(fixtureType == "par64") { toReturn = 1; }
+    if(fixtureType == "p.fresu") { toReturn = 2; }
+    if(fixtureType == "k.fresu") { toReturn = 3; }
+    if(fixtureType == "i.fresu") { toReturn = 4; }
+    if(fixtureType == "flood") { toReturn = 5; }
+    if(fixtureType == "linssi") { toReturn = 6; }
     //Muita: hazer, strobe, fog, pinspot, moving head, ledstrip, led par
     return toReturn;
   }
