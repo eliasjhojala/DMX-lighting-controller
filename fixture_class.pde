@@ -63,6 +63,14 @@ class fixture {
     return toReturn;
   }
   
+  int[] getDMX() {
+    int[] dmxChannels = new int[30];
+    switch(fixtureTypeId) {
+      case 1: case 2: case 3: case 4: case 5: case 6: dmxChannels = new int[1]; dmxChannels[1] = dimmer; break;
+    }
+    return dmxChannels;
+  }
+  
 }
 
 
