@@ -33,11 +33,11 @@ void kalvo(color c) {
 
 //Gets dimensions of fixture #id
 //0 = width, 1 = height, 2 = (0 or 1) render fixture?
-int[] getFixtureSize(int id) {
+int[] getFixtureSizeByType(int type) {
   //Default to this
   int[] toReturn = {30, 40, 1};
   
-  switch(fixtureType1[id]) {
+  switch(type) {
     case 1: toReturn[0] = 30; toReturn[1] = 50; toReturn[2] = 1; break;
     case 2: toReturn[0] = 25; toReturn[1] = 30; toReturn[2] = 1; break;
     case 3: toReturn[0] = 35; toReturn[1] = 40; toReturn[2] = 1; break;
@@ -54,6 +54,10 @@ int[] getFixtureSize(int id) {
   }
   return toReturn;
   
+}
+
+int[] getFixtureSize(int id) {
+  return getFixtureSizeByType(fixtureType1[id]);
 }
 
 //Gets type description of fixture #id

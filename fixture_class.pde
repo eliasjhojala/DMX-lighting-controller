@@ -119,12 +119,11 @@ class fixture {
     //TODO: implement a function to get dim channel offset (in case dim isn't on the first channel)
     dimmer = dim[channelStart];
     
-    if (oldFixtureTypeId == fixtureTypeId) {
+    if (oldFixtureTypeId != fixtureTypeId) {
       oldFixtureTypeId = fixtureTypeId;
-      
       //Fixture type changed, recalculate certain variables
       size = new fixtureSize(fixtureTypeId);
-      fixtureType = getFixtureName(fixtTypeId);
+      fixtureType = getFixtureName(fixtureTypeId);
     }
   }
   
@@ -145,7 +144,7 @@ class fixtureSize {
   
   //Parameters through fixture type
   fixtureSize(int fixtureTypeId) {
-    int[] siz = getFixtureSize(fixtureTypeId);
+    int[] siz = getFixtureSizeByType(fixtureTypeId);
     w = siz[0]; h = siz[1];
     isDrawn = siz[2] == 1;
   }
