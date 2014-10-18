@@ -6,7 +6,6 @@ class fixture {
   int dimmer; //dimmer value
   int red, green, blue; //color values
   int pan, tilt, panFine, tiltFine; //rotation values
-  int rotX, rotZ; //rotvalues in visualisation
   int x_location, y_location, z_location; //location in visualisation
   int rotationZ, rotationX;
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
@@ -52,6 +51,8 @@ class fixture {
    fixtureTypeId = fixtTypeId;
   }
   
+  
+  //Moving head--------------------------------------------------------------------------------
   void visualisationSettingsFromMovingHeadData() {
     if(fixtureTypeId == 16 || fixtureTypeId == 17) {
       slowRotationForMovingHead();
@@ -59,10 +60,10 @@ class fixture {
   }
 
   void slowRotationForMovingHead() {
-    if(rotZ < round(map(pan, 0, 255, 0, 540))) { rotZ += constrain(round((map(float(pan), 0, 255, 0, 540) - float(rotZ))/20+0.6), 1, 10); }
-    if(rotZ > round(map(pan, 0, 255, 0, 540))) { rotZ -= constrain(round((float(rotZ) - map(float(pan), 0, 255, 0, 540))/20+0.6), 1, 10); }
-    if(rotX < round(map(tilt, 0, 255, 45, 270+45))) { rotX += constrain(round((map(float(tilt), 0, 255, 45, 270+45) - float(rotX))/20+0.6), 1, 10); }
-    if(rotX > round(map(tilt, 0, 255, 45, 270+45))) { rotX -= constrain(round((float(rotX) - map(float(tilt), 0, 255, 45, 270+45))/20+0.6), 1, 10); }
+    if(rotationZ < round(map(pan, 0, 255, 0, 540))) { rotationZ += constrain(round((map(float(pan), 0, 255, 0, 540) - float(rotationZ))/20+0.6), 1, 10); }
+    if(rotationZ > round(map(pan, 0, 255, 0, 540))) { rotationZ -= constrain(round((float(rotationZ) - map(float(pan), 0, 255, 0, 540))/20+0.6), 1, 10); }
+    if(rotationX < round(map(tilt, 0, 255, 45, 270+45))) { rotationX += constrain(round((map(float(tilt), 0, 255, 45, 270+45) - float(rotationX))/20+0.6), 1, 10); }
+    if(rotationX > round(map(tilt, 0, 255, 45, 270+45))) { rotationX -= constrain(round((float(rotationX) - map(float(tilt), 0, 255, 45, 270+45))/20+0.6), 1, 10); }
   }
 
 
