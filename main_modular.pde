@@ -17,6 +17,25 @@ int enttecIndex = 1; // Enttecin USB DMX palikan COM-portin järjestysnumero
 
 int touchOscInComing = 8000;
 
+boolean[][] allowChannel = new boolean[10][512];
+
+void setAllowedChannels() {
+  for(int i = 0; i < 512; i++) {
+    for(int ij = 0; ij < 10; ij++) {
+      allowChannel[ij][i] = true;
+    }
+  }
+  for(int i = 0; i < 15; i++) {
+    allowChannel[1][i] = false;
+  }
+  for(int i = 15; i < 40; i++) {
+    allowChannel[1][i] = true;
+  }
+  for(int i = 40; i < 512; i++) {
+    allowChannel[1][i] = false;
+  }
+}
+
 
 boolean nextStepPressed = false;
 boolean revStepPressed = false;
@@ -456,6 +475,7 @@ Serial myPort;  // The serial port
 
 
 void setup() {
+  setAllowedChannels();
   memoryIsZero = new boolean[channels];
   if(getPaths == true) { //Jos ladattavien ja tallennettavien tiedostojen polut halutaan tarkistaa tiedostosta
     String lines100[] = loadStrings("C:\\DMXcontrolsettings\\savePath.txt"); //Luetaan savePath.txt:stä tiedot muuttujaan lines100[]
