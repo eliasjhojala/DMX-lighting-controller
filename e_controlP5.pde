@@ -342,7 +342,7 @@ public class ControlFrame extends PApplet {
     }
     
     
-    //Tab: Fixture color (Fixture settings, I should change that)
+    //Tab: Fixture settings
      cp5.tab("fixtSettings").setLabel("Fixture Settings").setVisible(false);
      
      //RGB Sliders
@@ -428,13 +428,24 @@ public class ControlFrame extends PApplet {
     .moveTo("fixtSettings")
     ;
     
-    //Fixture Parameter
+    //Parent ansa
     cp5.addNumberbox("ansaParent")
     .setLabel("ansaParent")
     .setPosition(20, 430)
     .setSize(100, 14)
     .setDecimalPrecision(0)
     .setRange(0, numberOfAnsas-1)
+    .setValue(0)
+    .moveTo("fixtSettings")
+    ;
+    
+    //Fixture order number in lower menu
+    cp5.addNumberbox("orderNumber")
+    .setLabel("Order in lower menu")
+    .setPosition(300, 430)
+    .setSize(100, 14)
+    .setDecimalPrecision(0)
+    .setRange(0, 1000)
     .setValue(0)
     .moveTo("fixtSettings")
     ;
@@ -752,9 +763,10 @@ public class ControlFrame extends PApplet {
         cp5.controller("fixtChan").setValue(fixtures[changeColorFixtureId].channelStart);
         cp5.controller("fixtParam").setValue(fixParam[fixtureIdNow[changeColorFixtureId]]);
         cp5.controller("ansaParent").setValue(fixtures[changeColorFixtureId].parentAnsa);
+        cp5.controller("orderNumber").setValue(bottomMenuOrder[changeColorFixtureId]);
         lb.setIndex(fixtures[changeColorFixtureId].fixtureTypeId - 1);
         //Make the color tab visible and activate it
-        cp5.tab("fixtSettings").setVisible(true).setLabel("Fixture ID: " + str(fixtureIdNow[changeColorFixtureId] + 1));
+        cp5.tab("fixtSettings").setVisible(true).setLabel("Fixture ID: " + str(changeColorFixtureId));
         cp5.window(this).activateTab("fixtSettings");
         
         toChangeFixtureColor = false;
@@ -774,6 +786,7 @@ public class ControlFrame extends PApplet {
         fixtures[changeColorFixtureId].channelStart = int(cp5.controller("fixtChan").getValue());
         fixParam[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtParam").getValue());
         fixtures[changeColorFixtureId].parentAnsa = int(cp5.controller("ansaParent").getValue());
+        bottomMenuOrder[changeColorFixtureId] = int(cp5.controller("orderNumber").getValue());
         fixtures[changeColorFixtureId].fixtureTypeId = int(lb.getValue());
       }
       
