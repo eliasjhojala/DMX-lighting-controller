@@ -9,7 +9,7 @@ int oldMouseY2;
 
 void alavalikko() {
   //The boolean is set to true on a spot that has been checked. It should not be drawn again.
-  boolean[] drawn = new int[bottomMenuOrder.length];
+  boolean[] drawn = new boolean[bottomMenuOrder.length];
   
   pushMatrix(); 
     translate(0, height-170); //alavalikko is located to bottom of the window
