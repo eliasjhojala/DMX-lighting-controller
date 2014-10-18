@@ -6,6 +6,7 @@ class fixture {
   int dimmer; //dimmer value
   int red, green, blue; //color values
   int pan, tilt, panFine, tiltFine; //rotation values
+  int rotX, rotZ; //rotvalues in visualisation
   int x_location, y_location, z_location; //location in visualisation
   int rotationZ, rotationX;
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
@@ -51,6 +52,22 @@ class fixture {
    fixtureTypeId = fixtTypeId;
   }
   
+  void visualisationSettingsFromMovingHeadData() {
+    if(fixtureTypeId == 16 || fixtureTypeId == 17) {
+      slowRotationForMovingHead();
+    }
+  }
+
+  void slowRotationForMovingHead() {
+    if(rotZ < round(map(pan, 0, 255, 0, 540))) { rotZ += constrain(round((map(float(pan), 0, 255, 0, 540) - float(rotZ))/20+0.6), 1, 10); }
+    if(rotZ > round(map(pan, 0, 255, 0, 540))) { rotZ -= constrain(round((float(rotZ) - map(float(pan), 0, 255, 0, 540))/20+0.6), 1, 10); }
+    if(rotX < round(map(tilt, 0, 255, 45, 270+45))) { rotX += constrain(round((map(float(tilt), 0, 255, 45, 270+45) - float(rotX))/20+0.6), 1, 10); }
+    if(rotX > round(map(tilt, 0, 255, 45, 270+45))) { rotX -= constrain(round((float(rotX) - map(float(tilt), 0, 255, 45, 270+45))/20+0.6), 1, 10); }
+  }
+
+
+
+  
   //Query-------------------------------------------------------------------------------------
   
   //Returns raw fixture color in type color
@@ -77,7 +94,7 @@ class fixture {
   }
   
   int[] getDMX() {
-    int[] dmxChannels = new int[30];
+    int[] dmxChannels = new int[30];
       switch(fixtureTypeId) {
          /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: dmxChannels = new int[1]; dmxChannels[0] = dimmer; break; //dimmers
          /* MH-X50 14-channel mode */        case 16: dmxChannels = new int[14]; dmxChannel[0] = pan; dmxChannel[1] = tilt; dmxChannel[2] = panFine; dmxChannel[3] = tiltFine; dmxChannel[4] = responseSpeed; dmxChannel[5] = colorWheel; dmxChannel[6] = shutter; dmxChannel[7] = dimmer; dmxChannel[8] = goboWheel; dmxChannel[9] = goboRotation; dmxChannel[10] = specialFunctions; dmxChannel[11] = autoPrograms; dmxChannel[12] = prism; dmxChannel[13] = focus; break; //MH-X50
@@ -86,21 +103,20 @@ class fixture {
          /* simple rgb led par with dim */   case 19: dmxChannels = new int[4]; dmxChannel[0] = dimmer; dmxChannel[1] = red; dmxChannel[2] = green; dmxChannel[3] = blue; break; //Simple rgb led par with dim
          /* 2ch hazer */                     case 20: dmxChannels = new int[2]; dmxChannel[0] = haze; dmxChannel[1] = fan; break; //2ch hazer
          /* 1ch fog */                       case 21: dmxChannels = new int[1]; dmxChannel[0] = fog; break; //1ch fog
-        
       }
     return dmxChannels; 
+  }
+  
+  void draw() {
+    visualisationSettingsFromMovingHeadData();
   }
   
 }
 
 
 
-
-
-
-
-
 class fixtureSize {
+  
   int w, h;
   boolean isDrawn;
   
