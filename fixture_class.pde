@@ -6,7 +6,7 @@ class fixture {
   int dimmer; //dimmer value
   int red, green, blue; //color values
   int pan, tilt; //rotation values
-  int x_location, y_location; //location in visualisation
+  int x_location, y_location, z_location; //location in visualisation
   int gobo, prism, focus, shutter, strobe; //special values fot moving heads etc.
   
   String fixtureType;
@@ -15,26 +15,28 @@ class fixture {
   //Initialization----------------------------------------------------------------------------
   
   //Type in string
-  fixture(int dim, int r, int g, int b, int x, int y, String fixtType) {
-   initFixtureObj(dim, r, g, b, x, y, getFixtureTypeId(fixtureType));
+  fixture(int dim, int r, int g, int b, int x, int y, int z, int p, int t, String fixtType) {
+   initFixtureObj(dim, r, g, b, x, y, z, p, t, getFixtureTypeId(fixtType));
    fixtureType = fixtType;
-   fixtureTypeId = getFixtureTypeId(fixtureType);
   }
   
   //Type in int
-  fixture(int dim, int r, int g, int b, int x, int y, int fixtTypeId) {
-    initFixtureObj(dim, r, g, b, x, y, fixtTypeId);
+  fixture(int dim, int r, int g, int b, int x, int y, int z, int p, int t, int fixtTypeId) {
+    initFixtureObj(dim, r, g, b, x, y, z, p, t, fixtTypeId);
     fixtureType = getFixtureName(fixtTypeId);
   }
   
   
-  void initFixtureObj(int dim, int r, int g, int b, int x, int y, int fixtTypeId) {
+  void initFixtureObj(int dim, int r, int g, int b, int x, int y, int z, int p, int t, int fixtTypeId) {
    dimmer = dim;
    red = r;
    green = g;
    blue = b;
    x_location = x;
    y_location = y;
+   z_location = z;
+   pan = p; tilt = t;
+   
    fixtureTypeId = fixtTypeId;
   }
   
