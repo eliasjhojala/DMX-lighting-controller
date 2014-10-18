@@ -5,9 +5,9 @@ class fixture {
   //Variables---------------------------------------------------------------------------------
   int dimmer; //dimmer value
   int red, green, blue; //color values
-  int pan, tilt; //rotation values
+  int pan, tilt, panFine, tiltFine; //rotation values
   int x_location, y_location; //location in visualisation
-  int gobo, prism, focus, shutter, strobe; //special values for moving heads etc.
+  int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   
   String fixtureType;
   int fixtureTypeId;
@@ -82,9 +82,10 @@ class fixture {
   int[] getDMX() {
     int[] dmxChannels = new int[30];
     switch(fixtureTypeId) {
-      case 1: case 2: case 3: case 4: case 5: case 6: dmxChannels = new int[1]; dmxChannels[1] = dimmer; break;
+      case 1: case 2: case 3: case 4: case 5: case 6: dmxChannels = new int[1]; dmxChannels[0] = dimmer; break; //dimmers
+      case 16: dmxChannels = new int[14]; dmxChannel[0] = pan; dmxChannel[1] = tilt; dmxChannel[2] = panFine; dmxChannel[3] = tiltFine; dmxChannel[4] = responseSpeed; dmxChannel[5] = colorWheel; dmxChannel[6] = shutter; dmxChannel[7] = dimmer; dmxChannel[8] = goboWheel; dmxChannel[9] = goboRotation; dmxChannel[10] = specialFunctions; dmxChannel[11] = autoPrograms; dmxChannel[12] = prism; dmxChannel[13] = focus; //MH-X50
     }
-    return dmxChannels;
+    return dmxChannels; 
   }
   
 }
