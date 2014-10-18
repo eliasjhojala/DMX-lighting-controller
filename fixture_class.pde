@@ -12,6 +12,8 @@ class fixture {
   String fixtureType;
   int fixtureTypeId;
   
+  fixtureSize size;
+  
   int parentAnsa;
   
   //Initialization----------------------------------------------------------------------------
@@ -40,6 +42,8 @@ class fixture {
    pan = p; tilt = t;
    parentAnsa = parentA;
    
+   size = new fixtureSize(fixtTypeId);
+   
    fixtureTypeId = fixtTypeId;
   }
   
@@ -63,4 +67,27 @@ int getFixtureTypeId(String fixtType) {
   if(fixtType == "par64") { toReturn = 1; }
   if(fixtType == "linssi") { toReturn = 2; }
   return toReturn;
+}
+
+
+
+
+
+
+class fixtureSize {
+  int w, h;
+  boolean isDrawn;
+  
+  //Manual parameters
+  fixtureSize(int wdt, int hgt, boolean isDrwn) {
+    w = wdt; h = hgt;
+    isDrawn = isDrwn;
+  }
+  
+  //Parameters through fixture type
+  fixtureSize(int fixtureTypeId) {
+    int[] siz = getFixtureSize(fixtureTypeId);
+    w = siz[0]; h = siz[1];
+    isDrawn = siz[2] == 1;
+  }
 }
