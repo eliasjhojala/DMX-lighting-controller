@@ -28,10 +28,10 @@ void keyPressed() {
   } 
   
   if(keyCode == RIGHT) {
-   change_fixture_id(changeColorFixtureId);
+   bottomMenuOrder[changeColorFixtureId] = constrain(bottomMenuOrder[changeColorFixtureId] + 1, 0, 1000);
   }
-  if(keyCode == RIGHT) {
-   change_fixture_id_down(changeColorFixtureId);
+  if(keyCode == LEFT) {
+   bottomMenuOrder[changeColorFixtureId] = constrain(bottomMenuOrder[changeColorFixtureId] - 1, 0, 1000);
   }
 }
 

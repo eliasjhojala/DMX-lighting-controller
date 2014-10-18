@@ -761,7 +761,7 @@ public class ControlFrame extends PApplet {
         cp5.controller("fixtRotationX").setValue(fixtures[changeColorFixtureId].rotationX);
         cp5.controller("fixtZ").setValue(fixtures[changeColorFixtureId].z_location);
         cp5.controller("fixtChan").setValue(fixtures[changeColorFixtureId].channelStart);
-        cp5.controller("fixtParam").setValue(fixParam[fixtureIdNow[changeColorFixtureId]]);
+        cp5.controller("fixtParam").setValue(fixtures[changeColorFixtureId].parameter);
         cp5.controller("ansaParent").setValue(fixtures[changeColorFixtureId].parentAnsa);
         cp5.controller("orderNumber").setValue(bottomMenuOrder[changeColorFixtureId]);
         lb.setIndex(fixtures[changeColorFixtureId].fixtureTypeId - 1);
@@ -784,7 +784,7 @@ public class ControlFrame extends PApplet {
         fixtures[changeColorFixtureId].rotationX = int(cp5.controller("fixtRotationX").getValue());
         fixtures[changeColorFixtureId].z_location = int(cp5.controller("fixtZ").getValue());
         fixtures[changeColorFixtureId].channelStart = int(cp5.controller("fixtChan").getValue());
-        fixParam[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtParam").getValue());
+        fixtures[changeColorFixtureId].parameter = int(cp5.controller("fixtParam").getValue());
         fixtures[changeColorFixtureId].parentAnsa = int(cp5.controller("ansaParent").getValue());
         bottomMenuOrder[changeColorFixtureId] = int(cp5.controller("orderNumber").getValue());
         fixtures[changeColorFixtureId].fixtureTypeId = int(lb.getValue());

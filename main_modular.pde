@@ -53,25 +53,11 @@ boolean useSolo = true; //Käytetäänkö soloa - is solo in use at all
 //Create variables for changing fixture id
 
 int numberOfAllFixtures = 81;
-int[] fixtureIdOriginal = new int[numberOfAllFixtures];
-int[] fixtureIdNow = new int[numberOfAllFixtures];
-int[] fixtureChannelOriginal = new int[numberOfAllFixtures];
-int[] fixtureChannelNow = new int[numberOfAllFixtures];
-
-int[] fixtureIdNowTemp = new int[numberOfAllFixtures];
-int[] fixtureIdNewTemp = new int[numberOfAllFixtures];
-int[] fixtureIdOldTemp = new int[numberOfAllFixtures];
-
-int[] fixtureIdPlaceInArray = new int[numberOfAllFixtures];
 
 //Asetetaan arvot fixturen ID:n muttamiseen tarkoitetuille muuttujille
 void setFixtureChannelsAtSoftwareBegin() {
   for(int i = 0; i < numberOfAllFixtures; i++) {
-    fixtureIdOriginal[i] = i;
-    fixtureIdNow[i] = i;
-    fixtureChannelOriginal[i] = i;
-    fixtureChannelNow[i] = i + 1;
-    fixtureIdPlaceInArray[i] = i;
+    bottomMenuOrder[i] = i;
   }
 }
 

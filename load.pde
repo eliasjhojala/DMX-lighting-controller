@@ -68,9 +68,6 @@ void loadAllData() {
   
     
     for (TableRow row : table.findRows("channel", "variable_name"))              { channel[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("fixtureIdNow", "variable_name"))              { fixtureIdNow[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("fixtureIdOriginal", "variable_name"))              { fixtureIdOriginal[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("fixtureIdPlaceInArray", "variable_name"))              { fixtureIdPlaceInArray[int(row.getString("1D"))] = int(row.getString("value")); }
     
     for (TableRow row : table.findRows("chaseModeByMemoryNumber", "variable_name"))              { chaseModeByMemoryNumber[int(row.getString("1D"))] = int(row.getString("value")); }
     for (TableRow row : table.findRows("chaseMode", "variable_name"))              { chaseMode = int(row.getString("value")); }

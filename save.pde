@@ -104,21 +104,6 @@ void saveAllData() {
     newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(channel[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
   }
   
-  for(int i = 0; i <  fixtureIdNow.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixtureIdNow"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixtureIdNow[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  
-  for(int i = 0; i <  fixtureIdOriginal.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixtureIdOriginal"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixtureIdOriginal[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  
-  for(int i = 0; i <  fixtureIdPlaceInArray.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixtureIdPlaceInArray"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixtureIdPlaceInArray[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  
   
   
   

@@ -124,12 +124,12 @@ void checkFixtureBoxRightClick(int id) {
     changeColorFixtureId = id; //Tells controlP5 which fixture to edit
   }
   if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && keyPressed && keyCode == RIGHT && keyReleased) { //Check if mouse is on the title box anf clicked
-    change_fixture_id(id); //Tells controlP5 which fixture to edit
+    bottomMenuOrder[id] = constrain(bottomMenuOrder[id] + 1, 0, 1000);
     mouseReleased = false;
     keyReleased = false;
   }
   if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && keyPressed && keyCode == LEFT && keyReleased) { //Check if mouse is on the title box anf clicked
-    change_fixture_id_down(id); //Tells controlP5 which fixture to edit
+    bottomMenuOrder[id] = constrain(bottomMenuOrder[id] - 1, 0, 1000);
     mouseReleased = false;
     keyReleased = false;
   }
