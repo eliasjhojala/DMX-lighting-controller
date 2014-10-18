@@ -28,7 +28,7 @@ class fixture {
   }
   
   //Type in int
-  fixture(int dim, int r, int g, int b, int x, int y, int z, int p, int t, int parentA, int fixtTypeId) {
+  fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int p, int t, int parentA, int fixtTypeId) {
     initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, parentA, fixtTypeId);
     fixtureType = getFixtureName(fixtTypeId);
   }
