@@ -114,7 +114,6 @@ class fixture {
 
 
 
-
 class fixtureSize {
   int w, h;
   boolean isDrawn;
