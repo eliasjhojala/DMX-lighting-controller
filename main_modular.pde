@@ -1,4 +1,4 @@
-int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
+int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
@@ -387,9 +387,13 @@ void setDmxChannel(int channel, int value) {
   if(useCOM == true) { //Tarkistetaan halutaanko dataa lähettää ulos ohjelmasta
     // Convert the parameters into a message of the form: 123c45w where 123 is the channel and 45 is the value
     // then send to the Arduino
-    arduinoPort.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );
+    if(allowChannel[0][channel]) {
+      arduinoPort.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );
+    }
     if(useAnotherArduino) {
-      arduinoPort2.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );
+      if(allowChannel[1][channel]) {
+        arduinoPort2.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );
+      }
     }
   }
 }
