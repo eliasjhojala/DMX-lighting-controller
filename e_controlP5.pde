@@ -743,16 +743,16 @@ public class ControlFrame extends PApplet {
       //Check for fixture color change initiation
       if (toChangeFixtureColor){
         fixtureColorChangeHasHappened = true;
-        cp5.controller("colorRed").setValue(red[fixtureIdNow[changeColorFixtureId]]);
-        cp5.controller("colorGreen").setValue(green[fixtureIdNow[changeColorFixtureId]]);
-        cp5.controller("colorBlue").setValue(blue[fixtureIdNow[changeColorFixtureId]]);
-        cp5.controller("fixtRotation").setValue(rotTaka[fixtureIdNow[changeColorFixtureId]]);
-        cp5.controller("fixtRotationX").setValue(rotX[fixtureIdNow[changeColorFixtureId]]);
-        cp5.controller("fixtZ").setValue(fixZ[fixtureIdNow[changeColorFixtureId]]);
-        cp5.controller("fixtChan").setValue(channel[fixtureIdNow[changeColorFixtureId]]);
+        cp5.controller("colorRed").setValue(fixtures[changeColorFixtureId].red);
+        cp5.controller("colorGreen").setValue(fixtures[changeColorFixtureId].green);
+        cp5.controller("colorBlue").setValue(fixtures[changeColorFixtureId].blue);
+        cp5.controller("fixtRotation").setValue(fixtures[changeColorFixtureId].rotationZ);
+        cp5.controller("fixtRotationX").setValue(fixtures[changeColorFixtureId].rotationX);
+        cp5.controller("fixtZ").setValue(fixtures[changeColorFixtureId].z_location);
+        cp5.controller("fixtChan").setValue(fixtures[changeColorFixtureId].channelStart);
         cp5.controller("fixtParam").setValue(fixParam[fixtureIdNow[changeColorFixtureId]]);
-        cp5.controller("ansaParent").setValue(ansaParent[fixtureIdNow[changeColorFixtureId]]);
-        lb.setIndex(fixtureType1[fixtureIdNow[changeColorFixtureId]] - 1);
+        cp5.controller("ansaParent").setValue(fixtures[changeColorFixtureId].parentAnsa);
+        lb.setIndex(fixtures[changeColorFixtureId].fixtureTypeId - 1);
         //Make the color tab visible and activate it
         cp5.tab("fixtSettings").setVisible(true).setLabel("Fixture ID: " + str(fixtureIdNow[changeColorFixtureId] + 1));
         cp5.window(this).activateTab("fixtSettings");
@@ -765,16 +765,16 @@ public class ControlFrame extends PApplet {
       
       //Set RGB values for selected fixture
       if (fixtureColorChangeHasHappened && cp5.tab("fixtSettings").isActive()) {
-        red[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("colorRed").getValue());
-        green[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("colorGreen").getValue());
-        blue[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("colorBlue").getValue());
-        rotTaka[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtRotation").getValue());
-        rotX[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtRotationX").getValue());
-        fixZ[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtZ").getValue());
-        channel[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtChan").getValue());
+        fixtures[changeColorFixtureId].red = int(cp5.controller("colorRed").getValue());
+        fixtures[changeColorFixtureId].green = int(cp5.controller("colorGreen").getValue());
+        fixtures[changeColorFixtureId].blue = int(cp5.controller("colorBlue").getValue());
+        fixtures[changeColorFixtureId].rotationZ = int(cp5.controller("fixtRotation").getValue());
+        fixtures[changeColorFixtureId].rotationX = int(cp5.controller("fixtRotationX").getValue());
+        fixtures[changeColorFixtureId].z_location = int(cp5.controller("fixtZ").getValue());
+        fixtures[changeColorFixtureId].channelStart = int(cp5.controller("fixtChan").getValue());
         fixParam[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("fixtParam").getValue());
-        ansaParent[fixtureIdNow[changeColorFixtureId]] = int(cp5.controller("ansaParent").getValue());
-        fixtureType1[fixtureIdNow[changeColorFixtureId]] = int(lb.getValue());
+        fixtures[changeColorFixtureId].parentAnsa = int(cp5.controller("ansaParent").getValue());
+        fixtures[changeColorFixtureId].fixtureTypeId = int(lb.getValue());
       }
       
       //Set ansa Z values according to NBoxes
