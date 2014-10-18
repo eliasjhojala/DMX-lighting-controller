@@ -13,6 +13,7 @@ class fixture {
   
   String fixtureType;
   int fixtureTypeId;
+  int channelStart;
   
   fixtureSize size;
   
@@ -22,20 +23,21 @@ class fixture {
   //Initialization----------------------------------------------------------------------------
   
   //Type in string
-  fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int parentA, String fixtType) {
+  fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, String fixtType) {
    fixtureType = fixtType;
-   initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, parentA, getFixtureTypeId());
+   initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, ch, parentA, getFixtureTypeId());
   }
   
   //Type in int
-  fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int p, int t, int parentA, int fixtTypeId) {
-    initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, parentA, fixtTypeId);
+  fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int fixtTypeId) {
+    initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, ch, parentA, fixtTypeId);
     fixtureType = getFixtureName(fixtTypeId);
   }
   
   
-  void initFixtureObj(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int parentA, int fixtTypeId) {
+  void initFixtureObj(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int fixtTypeId) {
    dimmer = dim;
+   channelStart = ch;
    red = r;
    green = g;
    blue = b;
@@ -109,7 +111,9 @@ class fixture {
   }
   
   void draw() {
-    visualisationSettingsFromMovingHeadData();
+    if (fixtureTypeId == 16 || fixtureTypeId == 17) visualisationSettingsFromMovingHeadData();
+    //TODO: implement a function to get dim channel offset (in case dim isn't on the first channel)
+    dimmer = dim[channelStart];
   }
   
 }

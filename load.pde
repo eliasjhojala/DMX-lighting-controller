@@ -93,5 +93,23 @@ void loadAllData() {
     
     
     dataLoaded = true;
+    
+    
+    
+    //Temporary solution (IMPROVE LATER)
+    //Transfer data to fixture variables.
+    for (int i = 0; i < numberOfAllFixtures; i++) {
+      fixtures[i] = new fixture(0, red[i], 
+      green[i], 
+      blue[i], 
+      xTaka[i], 
+      yTaka[i], 
+      fixZ[i], 
+      rotTaka[i], 
+      rotX[i], 
+      channel[i],
+      ansaParent[i], 
+      fixtureType1[i]);
+    }
   
 }

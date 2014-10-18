@@ -1,4 +1,4 @@
-int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
+int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
@@ -399,15 +399,15 @@ void setDmxChannel(int channel, int value) {
 }
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+fixture[] fixtures = new fixture[numberOfAllFixtures];
 
 // 1 = par64; 2 = pieni fresu; 3 = keskikokoinen fresu; 4 = iso fresu; 5 = floodi; 6 = linssi; 7 = haze; 8 = haze fan; 9 = strobe; 10 = strobe freq; 11 = fog; 12 = pinspot; 13 = moving head  dim; 14 = moving head pan; 15 = moving head tilt;
 int[] fixtureType1 = { 3, 4, 4, 1, 1, 1, 1, 4, 4, 3, 6, 6, 5, 5, 5, 5, 1, 1, 1, 7, 71, 8, 81, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
 //visualisaation fixtuurien sijainnit
 //int[] xEtu = { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600 }; //etuansan fixtuurien sijainnit sivusuunnassa
-int[] xTaka = { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 620, 640, 680, 700, 720, 740, 740, 740, 740 }; //taka-ansan fixtuurien sijainnit sivusuunnassa
-int[] yTaka = { 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300 }; //taka-ansan fixtuurien sijainnit korkeussuunnassa
+int[] xTaka = new int[numberOfAllFixtures]; //taka-ansan fixtuurien sijainnit sivusuunnassa
+int[] yTaka = new int[numberOfAllFixtures]; //taka-ansan fixtuurien sijainnit korkeussuunnassa
 //int[] yEtu = { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 }; //etuansan fixtuurien sijainnit sivusuunnassa
 
 //visualisaation fixtuurien värit
