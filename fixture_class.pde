@@ -94,13 +94,6 @@ class fixture {
 
 
 
-int getFixtureTypeId(String fixtType) {
-  int toReturn = 0;
-  if(fixtType == "par64") { toReturn = 1; }
-  if(fixtType == "linssi") { toReturn = 2; }
-  return toReturn;
-}
-
 
 
 
