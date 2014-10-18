@@ -56,7 +56,7 @@ void createFixtureBox(int id) {
 }
 
 void drawFixtureRectangles(int id) {
-  String fixtuuriTyyppi = getFixtureName(id);
+  String fixtuuriTyyppi = fixtures[id].fixtureType;
   
   fill(255, 255, 255); //White color for fixtureBox
   stroke(255, 255, 0); //Yellow corners for fixtureBox
@@ -65,9 +65,10 @@ void drawFixtureRectangles(int id) {
   fill(0, 255, 0); //green color for title box
   rect(0, -40, 60, -15); //title box
   fill(0, 0, 0); //black color for title
-  text(str(channel[id])+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
+  text(str(id)+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
+  text("Ch " + str(fixtures[id].channelStart) , 2, -30); // Channel
   fill(0, 0, 255); //blue color for slider
-  rect(0, 0, 10, (map(dimInput[channel[id]], 0, 255, 0, 30))*(-1)); //Draw slider
+  rect(0, 0, 10, (map(dimInput[fixtures[id].channelStart], 0, 255, 0, 30))*(-1)); //Draw slider
   fill(255, 255, 255); //white color for Go button
   rect(10, 0, 49, -15); //Draw Go button
   fill(0, 0, 0); //black color for Go text
@@ -82,22 +83,22 @@ void drawFixtureRectangles(int id) {
 void checkFixtureBoxGo(int id) { //This void checks Go button
   if(isHover(10, 0, 49, -15)) { //Check if mouse is on go box
     if(mouseClicked) { //Check if mouse is clicked
-      dimInput[channel[id]] = 255; //Set dimInput value to max
+      dimInput[fixtures[id].channelStart] = 255; //Set dimInput value to max
     }
     if(mouseReleased) { //Check if mouse is released
       mouseReleased = false; //Set mouseReleased to false 
-      dimInput[channel[id]] = 0; //Set dimInput value to min
+      dimInput[fixtures[id].channelStart] = 0; //Set dimInput value to min
     }
   }
 }
 void checkFixtureBoxToggle(int id) { //This void checks Toggle button
   if(isHover(10, -15, 49, -15) && mouseClicked && mouseReleased) { //Check if mouse is on toggle box and clicked and released before it
     mouseReleased = false; //Mouse isn't released anymore
-    if(dimInput[channel[id]] == 255) { //Check if dimInput is 255
-      dimInput[channel[id]] = 0; //If dimInput is at 255 then set it to zero
+    if(dimInput[fixtures[id].channelStart] == 255) { //Check if dimInput is 255
+      dimInput[fixtures[id].channelStart] = 0; //If dimInput is at 255 then set it to zero
     }
     else {
-      dimInput[channel[id]] = 255; //If dimInput is not at max value then set it to max
+      dimInput[fixtures[id].channelStart] = 255; //If dimInput is not at max value then set it to max
     }
   }
 }

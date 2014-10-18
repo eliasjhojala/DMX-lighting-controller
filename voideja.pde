@@ -131,7 +131,7 @@ void drawFixture(int i) {
         text(fixtuuriTyyppi, x1, y1 + lampHeight + 15);
       }
     
-     text(fixtures[i].channelStart, x1, y1 - 15);
+     text(i + "/" + fixtures[i].channelStart, x1, y1 - 15);
     }
   }
 }
