@@ -29,7 +29,6 @@ void drawMainWindow() {
       }
       
       for(int i = 0; i < ansaTaka; i++) {
-        visualisationSettingsFromMovingHeadData(i); //Set right values to fixtures in visualisation
         pushMatrix();
             if(move && (!mouseLocked || mouseLocker == "main")) {
                 if(!mouseClicked) {
@@ -94,42 +93,4 @@ void drawMainWindow() {
         if(mouseReleased) { mouseLocked = false; }
       }
       popMatrix();
-}
-
-
-
-void visualisationSettingsFromMovingHeadData(int i) {
-  if(fixtureType1[i] == 16) {
-    slowRotationForMovingHead(0, i);
-    colorsToMovingHeadVisualisation(0, i);
-  }
-  if(fixtureType1[i] == 17) {
-    slowRotationForMovingHead(1, i);
-    colorsToMovingHeadVisualisation(1, i);
-  }
-}
-
-void slowRotationForMovingHead(int id, int i) {
-  slowRotationForMovingHead2(id, i);
-}
-
-void slowRotationForMovingHead1(int id, int i) {
-  if(rotTaka[i] < round(map(mhx50_createFinalChannelValues[id][0], 0, 255, 0, 540))) { rotTaka[i] += 5; }
-  if(rotTaka[i] > round(map(mhx50_createFinalChannelValues[id][0], 0, 255, 0, 540))) { rotTaka[i] -= 5; }
-  if(rotX[i] < round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] += 5; }
-  if(rotX[i] > round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] -= 5; }  
-}
-
-
-void slowRotationForMovingHead2(int id, int i) {
-  if(rotTaka[i] < round(map(mhx50_createFinalChannelValues[id][0], 0, 255, 0, 540))) { rotTaka[i] += constrain(round((map(float(mhx50_createFinalChannelValues[id][0]), 0, 255, 0, 540) - float(rotTaka[i]))/20+0.6), 1, 10); }
-  if(rotTaka[i] > round(map(mhx50_createFinalChannelValues[id][0], 0, 255, 0, 540))) { rotTaka[i] -= constrain(round((float(rotTaka[i]) - map(float(mhx50_createFinalChannelValues[id][0]), 0, 255, 0, 540))/20+0.6), 1, 10); }
-  if(rotX[i] < round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] += constrain(round((map(float(mhx50_createFinalChannelValues[id][1]), 0, 255, 45, 270+45) - float(rotX[i]))/20+0.6), 1, 10); }
-  if(rotX[i] > round(map(mhx50_createFinalChannelValues[id][1], 0, 255, 45, 270+45))) { rotX[i] -= constrain(round((float(rotX[i]) - map(float(mhx50_createFinalChannelValues[id][1]), 0, 255, 45, 270+45))/20+0.6), 1, 10); }
-}
-
-void colorsToMovingHeadVisualisation(int id, int i) {
-  red[i] = mhx50_RGB_color_Values[mhx50_colorNumber[id]][0];
-  green[i] = mhx50_RGB_color_Values[mhx50_colorNumber[id]][1];
-  blue[i] = mhx50_RGB_color_Values[mhx50_colorNumber[id]][2];
 }
