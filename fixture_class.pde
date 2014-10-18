@@ -50,17 +50,19 @@ class fixture {
     return color(map(red, 0, 255, 0, dimmer), map(green, 0, 255, 0, dimmer), map(blue, 0, 255, 0, dimmer));
   }
   
+  
+  int getFixtureTypeId(String fixtType) {
+    int toReturn = 0;
+    if(fixtType == "par64") { toReturn = 1; }
+    if(fixtType == "p.fresu") { toReturn = 2; }
+    if(fixtType == "k.fresu") { toReturn = 3; }
+    if(fixtType == "i.fresu") { toReturn = 4; }
+    if(fixtType == "flood") { toReturn = 5; }
+    if(fixtType == "linssi") { toReturn = 6; }
+    //Muita: hazer, strobe, fog, pinspot, moving head, ledstrip, led par
+    return toReturn;
+  }
+  
 }
 
 
-int getFixtureTypeId(String fixtType) {
-  int toReturn = 0;
-  if(fixtType == "par64") { toReturn = 1; }
-  if(fixtType == "p.fresu") { toReturn = 2; }
-  if(fixtType == "k.fresu") { toReturn = 3; }
-  if(fixtType == "i.fresu") { toReturn = 4; }
-  if(fixtType == "flood") { toReturn = 5; }
-  if(fixtType == "linssi") { toReturn = 6; }
-  //Muita: hazer, strobe, fog, pinspot, moving head, ledstrip, led par
-  return toReturn;
-}
