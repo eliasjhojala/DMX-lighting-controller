@@ -207,42 +207,42 @@ void draw() {
               for (int i = 0; i < ansaTaka; i++) {
                 //If light is of type par64 OR moving head dim
                 if(fixtureType1[i] == 1 || fixtureType1[i] == 13){
-                  drawLight(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, par64ConeDiameter, red[i], green[i], blue[i], dim[channel[i]], -60, ansaParent[i], par64Model);
+                  drawLight(fixtures[i].x_location, fixtures[i].y_location, fixtures[i].z_location, fixtures[i].rotationZ, fixtures[i].rotationX, valoScale, par64ConeDiameter, fixtures[i].getRawColor(), fixtures[i].dimmer, -60, ansaParent[i], par64Model);
                 } else 
                 //If light is of type p. fresu ("small" F.A.L. fresnel)
                 if(fixtureType1[i] == 2) {
-                  drawLight(xTaka[i], yTaka[i], fixZ[i] + 40, rotTaka[i], rotX[i], int(valoScale * 0.6), pFresuConeDiameter, red[i], green[i], blue[i], dim[channel[i]], 0, ansaParent[i], iFresu);
+                  drawLight(fixtures[i].x_location, fixtures[i].y_location, fixtures[i].z_location + 40, fixtures[i].rotationZ, fixtures[i].rotationX, int(valoScale * 0.6), pFresuConeDiameter, fixtures[i].getRawColor(), fixtures[i].dimmer, 0, ansaParent[i], iFresu);
                 } else 
                 //If light is of type k. fresu (F.A.L. fresnel)
                 if(fixtureType1[i] == 3) {
-                  drawLight(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, kFresuConeDiameter, red[i], green[i], blue[i], dim[channel[i]], 0, ansaParent[i], kFresu);
+                  drawLight(fixtures[i].x_location, fixtures[i].y_location, fixtures[i].z_location, fixtures[i].rotationZ, fixtures[i].rotationX, valoScale, kFresuConeDiameter, fixtures[i].getRawColor(), fixtures[i].dimmer, 0, ansaParent[i], kFresu);
                 } else 
                 //If light is of type i. fresu ("big" F.A.L. fresnel)
                 if(fixtureType1[i] == 4) {
-                  drawLight(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, iFresuConeDiameter, red[i], green[i], blue[i], dim[channel[i]], 0, ansaParent[i], iFresu);
+                  drawLight(fixtures[i].x_location, fixtures[i].y_location, fixtures[i].z_location, fixtures[i].rotationZ, fixtures[i].rotationX, valoScale, iFresuConeDiameter, fixtures[i].getRawColor(), fixtures[i].dimmer, 0, ansaParent[i], iFresu);
                 } else
                 //If light is of type flood
                 if(fixtureType1[i] == 5) {
                   pushMatrix();
                   translate(0, 15, 0);
-                  drawFlood(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, floodConeDiameter, red[i], green[i], blue[i], dim[channel[i]], 0, ansaParent[i], flood, fixParam[i]);
+                  drawFlood(fixtures[i].x_location, fixtures[i].y_location, fixtures[i].z_location, fixtures[i].rotationZ, fixtures[i].rotationX, valoScale, floodConeDiameter, fixtures[i].getRawColor(), fixtures[i].dimmer, 0, ansaParent[i], flood, fixParam[i]);
                   popMatrix();
                 } else
                 //If light is of type linssi (linssi = lens)
                 if(fixtureType1[i] == 6) {
-                  drawLight(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, linssiConeDiameter * map(fixParam[i], 45, -42, 2, 1), red[i], green[i], blue[i], dim[channel[i]], 120, ansaParent[i], linssi);
+                  drawLight(fixtures[i].x_location, fixtures[i].y_location, fixtures[i].z_location, fixtures[i].rotationZ, fixtures[i].rotationX, valoScale, linssiConeDiameter * map(fixParam[i], 45, -42, 2, 1), fixtures[i].getRawColor(), fixtures[i].dimmer, 120, ansaParent[i], linssi);
                 } else
                 //If light is of type strobo brightness
                 if(fixtureType1[i] == 9) {
                   boolean stroboOnTemp = !stroboOn[i];
-                  drawStrobo(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], int(valoScale * 1.2), stroboConeDiameter, red[i], green[i], blue[i], dim[channel[i]], 0, ansaParent[i], strobo, stroboOnTemp);
+                  drawStrobo(fixtures[i].x_location, fixtures[i].y_location, fixtures[i].z_location, fixtures[i].rotationZ, fixtures[i].rotationX, int(valoScale * 1.2), stroboConeDiameter, fixtures[i].getRawColor(), fixtures[i].dimmer, 0, ansaParent[i], strobo, stroboOnTemp);
                   stroboOn[i] = stroboOnTemp;
                 }
                 //If light is of type Stairville MHX50 (moving head)
                 if(fixtureType1[i] == 16 || fixtureType1[i] == 17) {
                   pushMatrix();
                   translate(0, -50, 0);
-                  drawMHX(xTaka[i], yTaka[i], fixZ[i], rotTaka[i], rotX[i], valoScale, mhxConeDiameter, red[i], green[i], blue[i], dim[channel[i]], -30, ansaParent[i], mhMain);
+                  drawMHX(fixtures[i].x_location, fixtures[i].y_location, fixtures[i].z_location, fixtures[i].rotationZ, fixtures[i].rotationX, valoScale, mhxConeDiameter, fixtures[i].getRawColor(), fixtures[i].dimmer, -30, ansaParent[i], mhMain);
                   popMatrix();
                 }
               }
@@ -255,7 +255,7 @@ void draw() {
 
 
 
-void drawLight(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, int coneR, int coneG, int coneB, int conedim, int coneZOffset, int parentAnsa, PShape lightModel) {
+void drawLight(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, color coneColor, int conedim, int coneZOffset, int parentAnsa, PShape lightModel) {
       //If light is parented to an ansa, offset Z height by ansas height
       if (parentAnsa != 0) {
         posZ += ansaZ[parentAnsa];
@@ -292,14 +292,14 @@ void drawLight(int posX, int posY, int posZ, int rotZ, int rotX, int scale, floa
         translate(0, 0, coneZOffset);
         scale(scale * coneScale * coneDiam, scale * coneScale  * coneDiam, scale * coneScale);
         //fill(255, 0, 0, 128);
-        fill(coneR, coneG, coneB, conedim / 2);
+        fill(coneColor, conedim / 2);
         shape(cone);
         popMatrix();
       }
 }
 
 
-void drawFlood(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, int coneR, int coneG, int coneB, int conedim, int coneZOffset, int parentAnsa, PShape lightModel, int LightParam) {
+void drawFlood(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, color coneColor, int conedim, int coneZOffset, int parentAnsa, PShape lightModel, int LightParam) {
       //If light is parented to an ansa, offset Z height by ansas height
       if (parentAnsa != 0) {
         posZ += ansaZ[parentAnsa];
@@ -358,13 +358,13 @@ void drawFlood(int posX, int posY, int posZ, int rotZ, int rotX, int scale, floa
         translate(0, 0, coneZOffset);
         scale(scale * coneScale * coneDiam * 2, scale * coneScale  * coneDiam * map(LightParam, 45, -42, 1, 0), scale * coneScale);
         //fill(255, 0, 0, 128);
-        fill(coneR, coneG, coneB, conedim / 2);
+        fill(coneColor, conedim / 2);
         shape(cone);
         popMatrix();
       }
 }
 
-void drawStrobo(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, int coneR, int coneG, int coneB, int conedim, int coneZOffset, int parentAnsa, PShape lightModel, boolean stroboIsOn) {
+void drawStrobo(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, color coneColor, int conedim, int coneZOffset, int parentAnsa, PShape lightModel, boolean stroboIsOn) {
       //If light is parented to an ansa, offset Z height by ansas height
       if (parentAnsa != 0) {
         posZ += ansaZ[parentAnsa];
@@ -393,13 +393,13 @@ void drawStrobo(int posX, int posY, int posZ, int rotZ, int rotX, int scale, flo
         translate(0, 0, coneZOffset);
         scale(scale * coneScale * coneDiam * 2, scale * coneScale  * coneDiam, scale * coneScale);
         //fill(255, 0, 0, 128);
-        fill(coneR, coneG, coneB, conedim / 2);
+        fill(coneColor, conedim / 2);
         shape(cone);
         popMatrix();
       }
 }
 
-void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, int coneR, int coneG, int coneB, int conedim, int coneZOffset, int parentAnsa, PShape lightModel) {
+void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, color coneColor, int conedim, int coneZOffset, int parentAnsa, PShape lightModel) {
       //If light is parented to an ansa, offset Z height by ansas height
       if (parentAnsa != 0) {
         posZ += ansaZ[parentAnsa];
@@ -446,7 +446,7 @@ void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float 
         translate(0, 0, coneZOffset);
         scale(scale * coneScale * coneDiam, scale * coneScale  * coneDiam, scale * coneScale);
         //fill(255, 0, 0, 128);
-        fill(coneR, coneG, coneB, conedim / 2);
+        fill(coneColor, conedim / 2);
         shape(cone);
         popMatrix();
       }
