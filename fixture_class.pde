@@ -112,10 +112,20 @@ class fixture {
     return dmxChannels; 
   }
   
+  
+  int oldFixtureTypeId;
   void draw() {
     if (fixtureTypeId == 16 || fixtureTypeId == 17) visualisationSettingsFromMovingHeadData();
     //TODO: implement a function to get dim channel offset (in case dim isn't on the first channel)
     dimmer = dim[channelStart];
+    
+    if (oldFixtureTypeId == fixtureTypeId) {
+      oldFixtureTypeId = fixtureTypeId;
+      
+      //Fixture type changed, recalculate certain variables
+      size = new fixtureSize(fixtureTypeId);
+      fixtureType = getFixtureName(fixtTypeId);
+    }
   }
   
 }
