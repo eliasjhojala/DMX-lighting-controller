@@ -7,7 +7,7 @@ class fixture {
   int red, green, blue; //color values
   int pan, tilt; //rotation values
   int x_location, y_location; //location in visualisation
-  int gobo, prism, focus, shutter, strobe; //special values fot moving heads etc.
+  int gobo, prism, focus, shutter, strobe; //special values for moving heads etc.
   
   String fixtureType;
   int fixtureTypeId;
