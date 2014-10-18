@@ -56,6 +56,11 @@ class fixture {
 int getFixtureTypeId(String fixtType) {
   int toReturn = 0;
   if(fixtType == "par64") { toReturn = 1; }
-  if(fixtType == "linssi") { toReturn = 2; }
+  if(fixtType == "p.fresu") { toReturn = 2; }
+  if(fixtType == "k.fresu") { toReturn = 3; }
+  if(fixtType == "i.fresu") { toReturn = 4; }
+  if(fixtType == "flood") { toReturn = 5; }
+  if(fixtType == "linssi") { toReturn = 6; }
+  //Muita: hazer, strobe, fog, pinspot, moving head, ledstrip, led par
   return toReturn;
 }
