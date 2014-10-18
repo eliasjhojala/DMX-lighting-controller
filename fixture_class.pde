@@ -12,22 +12,24 @@ class fixture {
   String fixtureType;
   int fixtureTypeId;
   
+  int parentAnsa;
+  
   //Initialization----------------------------------------------------------------------------
   
   //Type in string
-  fixture(int dim, int r, int g, int b, int x, int y, int z, int p, int t, String fixtType) {
-   initFixtureObj(dim, r, g, b, x, y, z, p, t, getFixtureTypeId(fixtType));
+  fixture(int dim, int r, int g, int b, int x, int y, int z, int p, int t, String fixtType, int parentA) {
+   initFixtureObj(dim, r, g, b, x, y, z, p, t, getFixtureTypeId(fixtType), parentA);
    fixtureType = fixtType;
   }
   
   //Type in int
-  fixture(int dim, int r, int g, int b, int x, int y, int z, int p, int t, int fixtTypeId) {
-    initFixtureObj(dim, r, g, b, x, y, z, p, t, fixtTypeId);
+  fixture(int dim, int r, int g, int b, int x, int y, int z, int p, int t, int fixtTypeId, int parentA) {
+    initFixtureObj(dim, r, g, b, x, y, z, p, t, fixtTypeId, parentA);
     fixtureType = getFixtureName(fixtTypeId);
   }
   
   
-  void initFixtureObj(int dim, int r, int g, int b, int x, int y, int z, int p, int t, int fixtTypeId) {
+  void initFixtureObj(int dim, int r, int g, int b, int x, int y, int z, int p, int t, int fixtTypeId, int parentA) {
    dimmer = dim;
    red = r;
    green = g;
@@ -36,6 +38,7 @@ class fixture {
    y_location = y;
    z_location = z;
    pan = p; tilt = t;
+   parentAnsa = parentA;
    
    fixtureTypeId = fixtTypeId;
   }
