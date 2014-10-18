@@ -2,13 +2,10 @@
 
 
 class fixture {
-  //Variables------------
   int dimmer, red, green, blue, x_location, y_location;
   String fixtureType;
   int fixtureTypeId;
   
-  
-  //Initialization-------
   //Type in string
   fixture(int dim, int r, int g, int b, int x, int y, String fixtType) {
    initFixtureObj(dim, r, g, b, x, y, getFixtureTypeId(fixtureType));
@@ -32,20 +29,6 @@ class fixture {
    y_location = y;
    fixtureTypeId = fixtTypeId;
   }
-  
-  //Query------------------
-  
-  color getRawColor() {
-    
-  }
-  
-  
-  color getColor_wDim() {
-    return color(map(red, 0, 255, 0, dimmer), map(green, 0, 255, 0, dimmer), map(blue, 0, 255, 0, dimmer));
-  }
-  
-  
-  
   
 }
 
