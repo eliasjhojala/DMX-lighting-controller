@@ -6,7 +6,7 @@ boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb
 boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
 boolean useAnotherArduino = false;
 
-boolean useMaschine = true;
+boolean useMaschine = false;
 
 int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200);
 int arduinoBaud2 = 9600;
