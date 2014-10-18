@@ -2,14 +2,17 @@
 
 
 class fixture {
+  //Variables---------------------------------------------------------------------------------
   int dimmer; //dimmer value
-  int red, green, blue; //colro values
+  int red, green, blue; //color values
   int pan, tilt; //rotation values
   int x_location, y_location; //location in visualisation
   int gobo, prism, focus, shutter, strobe; //special values fot moving heads etc.
   
   String fixtureType;
   int fixtureTypeId;
+  
+  //Initialization----------------------------------------------------------------------------
   
   //Type in string
   fixture(int dim, int r, int g, int b, int x, int y, String fixtType) {
@@ -33,6 +36,18 @@ class fixture {
    x_location = x;
    y_location = y;
    fixtureTypeId = fixtTypeId;
+  }
+  
+  //Query-------------------------------------------------------------------------------------
+  
+  //Returns raw fixture color in type color
+  color getRawColor() {
+    return color(red, green, blue);
+  }
+  
+  //Returns dimmed fixture color in type color
+  color getColor_wDim() {
+    return color(map(red, 0, 255, 0, dimmer), map(green, 0, 255, 0, dimmer), map(blue, 0, 255, 0, dimmer));
   }
   
 }
