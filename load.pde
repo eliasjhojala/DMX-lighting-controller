@@ -11,7 +11,7 @@ void loadSetupData() {
   for (TableRow row : table.findRows("sendOscToAnotherPc", "variable_name")) { sendOscToAnotherPc = boolean(row.getString("value")); }
   for (TableRow row : table.findRows("sendOscToIpad", "variable_name")) { sendOscToIpad = boolean(row.getString("value")); }
   for (TableRow row : table.findRows("sendMemoryToIpad", "variable_name")) { sendMemoryToIpad = boolean(row.getString("value")); }
-  for (TableRow row : table.findRows("useCOM", "variable_name")) { useCOM = boolean(row.getString("value")); }
+  //for (TableRow row : table.findRows("useCOM", "variable_name")) { useCOM = boolean(row.getString("value")); }
   for (TableRow row : table.findRows("showOutputAsNumbers", "variable_name")) { showOutputAsNumbers = boolean(row.getString("value")); }
   for (TableRow row : table.findRows("use3D", "variable_name")) { use3D = boolean(row.getString("value")); }
   for (TableRow row : table.findRows("loadAllDataInSetup", "variable_name")) { loadAllDataInSetup = boolean(row.getString("value")); }
