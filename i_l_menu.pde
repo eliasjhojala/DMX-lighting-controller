@@ -8,29 +8,41 @@ int oldMouseX2;
 int oldMouseY2;
 
 void alavalikko() {
+  //The boolean is set to true on a spot that has been checked. It should not be drawn again.
+  boolean[] drawn = new int[bottomMenuOrder.length];
+  
   pushMatrix(); 
     translate(0, height-170); //alavalikko is located to bottom of the window
     //Upper row
     pushMatrix();
       for(int i = 0; i < 20; i++) {
+        int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
+        drawn[tempIndex] = true;
+        
         translate(65, 0); //moves box to its place
-        createFixtureBox(i); //Create fixture boxes including buttons and their functions
+        createFixtureBox(tempIndex); //Create fixture boxes including buttons and their functions
       }
     popMatrix();
     //Lower row
     pushMatrix();
       translate(0, 65); 
       for(int i = 20; i <= 40; i++) {
+        int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
+        drawn[tempIndex] = true;
+        
         translate(65, 0); //moves box to its place
-        createFixtureBox(i); //Create fixture boxes including buttons and their functions
+        createFixtureBox(tempIndex); //Create fixture boxes including buttons and their functions
       }
     popMatrix(); 
     
     pushMatrix();
       translate(0, 65+65); 
       for(int i = 40; i <= 60; i++) {
+        int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
+        drawn[tempIndex] = true;
+        
         translate(65, 0); //moves box to its place
-        createFixtureBox(i); //Create fixture boxes including buttons and their functions
+        createFixtureBox(tempIndex); //Create fixture boxes including buttons and their functions
       }
     popMatrix(); 
   popMatrix();
@@ -44,7 +56,7 @@ void createFixtureBox(int id) {
 }
 
 void drawFixtureRectangles(int id) {
-  String fixtuuriTyyppi = getFixtureName(fixtureIdNow[id]);
+  String fixtuuriTyyppi = getFixtureName(id);
   
   fill(255, 255, 255); //White color for fixtureBox
   stroke(255, 255, 0); //Yellow corners for fixtureBox
@@ -53,9 +65,9 @@ void drawFixtureRectangles(int id) {
   fill(0, 255, 0); //green color for title box
   rect(0, -40, 60, -15); //title box
   fill(0, 0, 0); //black color for title
-  text(str(channel[fixtureIdNow[id]])+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
+  text(str(channel[id])+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
   fill(0, 0, 255); //blue color for slider
-  rect(0, 0, 10, (map(dimInput[channel[fixtureIdNow[id]]], 0, 255, 0, 30))*(-1)); //Draw slider
+  rect(0, 0, 10, (map(dimInput[channel[id]], 0, 255, 0, 30))*(-1)); //Draw slider
   fill(255, 255, 255); //white color for Go button
   rect(10, 0, 49, -15); //Draw Go button
   fill(0, 0, 0); //black color for Go text
@@ -70,22 +82,22 @@ void drawFixtureRectangles(int id) {
 void checkFixtureBoxGo(int id) { //This void checks Go button
   if(isHover(10, 0, 49, -15)) { //Check if mouse is on go box
     if(mouseClicked) { //Check if mouse is clicked
-      dimInput[channel[fixtureIdNow[id]]] = 255; //Set dimInput value to max
+      dimInput[channel[id]] = 255; //Set dimInput value to max
     }
     if(mouseReleased) { //Check if mouse is released
       mouseReleased = false; //Set mouseReleased to false 
-      dimInput[channel[fixtureIdNow[id]]] = 0; //Set dimInput value to min
+      dimInput[channel[id]] = 0; //Set dimInput value to min
     }
   }
 }
 void checkFixtureBoxToggle(int id) { //This void checks Toggle button
   if(isHover(10, -15, 49, -15) && mouseClicked && mouseReleased) { //Check if mouse is on toggle box and clicked and released before it
     mouseReleased = false; //Mouse isn't released anymore
-    if(dimInput[channel[fixtureIdNow[id]]] == 255) { //Check if dimInput is 255
-      dimInput[channel[fixtureIdNow[id]]] = 0; //If dimInput is at 255 then set it to zero
+    if(dimInput[channel[id]] == 255) { //Check if dimInput is 255
+      dimInput[channel[id]] = 0; //If dimInput is at 255 then set it to zero
     }
     else {
-      dimInput[channel[fixtureIdNow[id]]] = 255; //If dimInput is not at max value then set it to max
+      dimInput[channel[id]] = 255; //If dimInput is not at max value then set it to max
     }
   }
 }
@@ -97,8 +109,8 @@ void checkFixtureBoxSlider(int id) {
       mouseReleased = false;
     }
       
-      dimInput[channel[fixtureIdNow[id]]] += map(oldMouseY2 - mouseY, 0, 30, 0, 255); //Change dimInput value as much as you moved mouse
-      dimInput[channel[fixtureIdNow[id]]] = constrain(dimInput[channel[fixtureIdNow[id]]], 0, 255); //Make sure that dimInput value is between 0-255 
+      dimInput[channel[id]] += map(oldMouseY2 - mouseY, 0, 30, 0, 255); //Change dimInput value as much as you moved mouse
+      dimInput[channel[id]] = constrain(dimInput[channel[id]], 0, 255); //Make sure that dimInput value is between 0-255 
       oldMouseX2 = mouseX; //Set oldMouseX2 to current mouseX
       oldMouseY2 = mouseY; //Set oldMouseY2 to current mouseY
   }

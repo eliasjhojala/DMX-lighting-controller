@@ -1,5 +1,22 @@
 //Tässä välilehdessä on paljon lyhyitä voideja
 
+
+//Returns the index of the smalles value that ISN'T checked (input.lenght and checked.length MUST be equal!)
+//Returns -1 if none found
+int indexOfMinCheck(int[] input, boolean[] checked) {
+  int toReturn = -1;
+  int min = Integer.MAX_VALUE;
+  for(int i = 0; i < input.length; i++) {
+    if(input[i] < min && !checked[i]) {
+      toReturn = i;
+      min = input[i];
+    }
+  }
+  return toReturn;
+}
+
+
+
 int ansaWidth;
 
 void arduinoSend() {
