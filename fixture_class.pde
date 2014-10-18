@@ -21,9 +21,8 @@ class fixture {
   
   //Type in string
   fixture(int dim, int r, int g, int b, int x, int y, int z, int p, int t, int parentA, String fixtType) {
-   initFixtureObj(dim, r, g, b, x, y, z, p, t, parentA, getFixtureTypeId());
    fixtureType = fixtType;
-   fixtureTypeId = getFixtureTypeId();
+   initFixtureObj(dim, r, g, b, x, y, z, p, t, parentA, getFixtureTypeId());
   }
   
   //Type in int
