@@ -2,7 +2,12 @@
 
 
 class fixture {
-  int dimmer, red, green, blue, x_location, y_location;
+  int dimmer; //dimmer value
+  int red, green, blue; //colro values
+  int pan, tilt; //rotation values
+  int x_location, y_location; //location in visualisation
+  int gobo, prism, focus, shutter, strobe; //special values fot moving heads etc.
+  
   String fixtureType;
   int fixtureTypeId;
   
