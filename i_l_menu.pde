@@ -110,8 +110,8 @@ void checkFixtureBoxSlider(int id) {
       mouseReleased = false;
     }
       
-      dimInput[channel[id]] += map(oldMouseY2 - mouseY, 0, 30, 0, 255); //Change dimInput value as much as you moved mouse
-      dimInput[channel[id]] = constrain(dimInput[channel[id]], 0, 255); //Make sure that dimInput value is between 0-255 
+      dimInput[fixtures[id].channelStart] += map(oldMouseY2 - mouseY, 0, 30, 0, 255); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
+      dimInput[fixtures[id].channelStart] = constrain(dimInput[fixtures[id].channelStart], 0, 255); //Make sure that dimInput value is between 0-255 
       oldMouseX2 = mouseX; //Set oldMouseX2 to current mouseX
       oldMouseY2 = mouseY; //Set oldMouseY2 to current mouseY
   }
