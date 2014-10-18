@@ -26,8 +26,8 @@ void ansat() {
       }
     }
 }
-void kalvo(int r, int g, int b) {
-  fill(r, g, b);
+void kalvo(color c) {
+  fill(c);
 }
 
 
@@ -87,29 +87,30 @@ void drawFixture(int i) {
   int lampHeight = 40;
   String fixtuuriTyyppi = getFixtureName(i);
   
-  if(fixtureType1[i] >= 1 && fixtureType1[i] <= 13) {
-    int[] siz = getFixtureSize(i);
-    lampWidth = siz[0];
-    lampHeight = siz[1];
-    showFixture = siz[2] == 1;
+  int fixtureTypeId = fixtures[i].fixtureTypeId;
+  
+  if(fixtureTypeId >= 1 && fixtureTypeId <= 13) {
+    lampWidth = fixtures[i].size.w;
+    lampHeight = fixtures[i].size.h;
+    showFixture = fixtures[i].size.isDrawn;
   }
   
   if(showFixture == true) {
     int x1 = 0; int y1 = 0;
-    if(fixtureType1[i] == 13) { rectMode(CENTER); rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
+    if(fixtureTypeId == 13) { rectMode(CENTER); rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
     rect(x1, y1, lampWidth, lampHeight);
-    if(fixtureType1[i] == 13) { rectMode(CENTER); popMatrix(); rectMode(CORNER); }
+    if(fixtureTypeId == 13) { rectMode(CENTER); popMatrix(); rectMode(CORNER); }
     if(zoom > 50) {
       if(printMode == false) {
         fill(255, 255, 255);
-        text(dim[channel[i]], x1, y1 + lampHeight + 15);
+        text(fixtures[i].dimmer, x1, y1 + lampHeight + 15);
       }
       else {
         fill(0, 0, 0);
         text(fixtuuriTyyppi, x1, y1 + lampHeight + 15);
       }
     
-     text(channel[i], x1, y1 - 15);
+     text(fixtures[i].channelStart, x1, y1 - 15);
     }
   }
 }

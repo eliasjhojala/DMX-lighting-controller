@@ -34,8 +34,8 @@ void drawMainWindow() {
                 if(!mouseClicked) {
                   if(moveLamp == true) {
                    if(lampToMove < ansaTaka) {
-                    xTaka[lampToMove] = xTaka[lampToMove] + (int(mouseRotated.x) - oldMouseX1) * 100 / zoom - ansaX[ansaParent[lampToMove]];
-                    yTaka[lampToMove] = yTaka[lampToMove] + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom;
+                    fixtures[lampToMove].x_location = fixtures[lampToMove].x_location + (int(mouseRotated.x) - oldMouseX1) * 100 / zoom - ansaX[fixtures[lampToMove].parentAnsa];
+                    fixtures[lampToMove].y_location = fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom;
                     
                   }
             
@@ -47,18 +47,18 @@ void drawMainWindow() {
               if(moveLamp == true) {
                 mouseLocked = true;
                 mouseLocker = "main";
-                if(i == lampToMove) { translate(xTaka[lampToMove] + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom), yTaka[lampToMove] + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[ansaParent[lampToMove]]); }
-                else { translate(xTaka[i]+ansaX[ansaParent[i]], yTaka[i]+ansaY[ansaParent[i]]); }
+                if(i == lampToMove) { translate(fixtures[lampToMove].x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom), fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures[lampToMove].parentAnsa]); }
+                else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
               }
-              else { translate(xTaka[i]+ansaX[ansaParent[i]], yTaka[i]+ansaY[ansaParent[i]]); }
+              else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
             }
             
             
-            else { translate(xTaka[i]+ansaX[ansaParent[i]], yTaka[i]+ansaY[ansaParent[i]]); }
+            else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
 
 
-           if(fixtureType1[i] != 14) { rotate(radians(rotTaka[i])); }
-           kalvo(round(map(red[i], 0, 255, 0, dim[channel[i]])), round(map(green[i], 0, 255, 0, dim[channel[i]])), round(map(blue[i], 0, 255, 0, dim[channel[i]])));
+           if(fixtureType1[i] != 14) { rotate(radians(fixtures[i].rotationZ)); }
+           kalvo(fixtures[i].getColor_wDim());
             
             
             
@@ -68,11 +68,9 @@ void drawMainWindow() {
                 mouseLocker = "main";
               
               
-              //Get dimensions for the current fixture
-              int[] fixSize = getFixtureSize(i);
               
               //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
-              if(isHover(0, 0, fixSize[0], fixSize[1]) && fixSize[2] == 1 && mouseClicked) {
+              if(isHover(0, 0, fixtures[i].size.w, fixtures[i].size.h) && fixtures[i].size.isDrawn && mouseClicked) {
                
                 if(mouseButton == RIGHT) { toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; }
                 else if(mouseReleased) {
