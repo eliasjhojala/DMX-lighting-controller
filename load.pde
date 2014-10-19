@@ -28,20 +28,49 @@ void loadAllData() {
      table = loadTable("E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roopen polku
     } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roope äidillä -polku
     
-    for (TableRow row : table.findRows("xTaka", "variable_name")) { if(xTaka.length > (int(row.getString("1D")))) {xTaka[int(row.getString("1D"))] = int(row.getString("value")); } }
-    for (TableRow row : table.findRows("yTaka", "variable_name")) { yTaka[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("rotX", "variable_name")) { rotX[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("fixZ", "variable_name")) { fixZ[int(row.getString("1D"))] = int(row.getString("value")); }
+    //FIXTURES---------------------------------------------------------------------------------------------------------------------------
+    //Initialize fixtures using type
+    int fL = fixtures.length;
+    for (TableRow row : table.findRows("fixtureType1", "variable_name")) if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, int(row.getString("value")) ); }
+    
+    for (TableRow row : table.findRows("xTaka", "variable_name"))      if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))].x_location           = int(row.getString("value")); }
+        
+    for (TableRow row : table.findRows("yTaka", "variable_name"))      if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))].y_location           = int(row.getString("value")); }
+        
+    for (TableRow row : table.findRows("fixZ", "variable_name"))       if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))].z_location           = int(row.getString("value")); }
+        
+    for (TableRow row : table.findRows("rotTaka", "variable_name"))    if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))].rotationZ            = int(row.getString("value")); }
+        
+    for (TableRow row : table.findRows("rotX", "variable_name"))       if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))].rotationX            = int(row.getString("value")); }
+    
+    for (TableRow row : table.findRows("fixParam", "variable_name"))   if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))].parameter            = int(row.getString("value")); }
+    
+    for (TableRow row : table.findRows("red", "variable_name"))        if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))].red                  = int(row.getString("value")); }
+    for (TableRow row : table.findRows("green", "variable_name"))      if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))].green                = int(row.getString("value")); }
+    for (TableRow row : table.findRows("blue", "variable_name"))       if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))].blue                 = int(row.getString("value")); }
+    
+    for (TableRow row : table.findRows("channel", "variable_name"))    if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))].channelStart         = int(row.getString("value")); }
+    
+    for (TableRow row : table.findRows("ansaParent", "variable_name")) if(fL > int(row.getString("1D"))) 
+        { fixtures[int(row.getString("1D"))].parentAnsa           = int(row.getString("value")); }
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------
     
     for (TableRow row : table.findRows("memoryType", "variable_name")) { memoryType[int(row.getString("1D"))] = int(row.getString("value")); }
     for (TableRow row : table.findRows("soundToLightSteps", "variable_name")) { soundToLightSteps[int(row.getString("1D"))] = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("red", "variable_name")) { red[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("green", "variable_name")) { green[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("blue", "variable_name")) { blue[int(row.getString("1D"))] = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("rotTaka", "variable_name")) { rotTaka[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("fixtureType1", "variable_name")) { fixtureType1[int(row.getString("1D"))] = int(row.getString("value")); }
     
     int[] grouping = new int[4];
     for (TableRow row : table.findRows("grouping", "variable_name")) { grouping[int(row.getString("1D"))] = int(row.getString("value")); }
@@ -56,18 +85,13 @@ void loadAllData() {
     for (TableRow row : table.findRows("camZ", "variable_name"))              { camZ = int(row.getString("value")); }
     
     
-    for (TableRow row : table.findRows("rotX", "variable_name"))              { rotX[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("fixZ", "variable_name"))              { fixZ[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("fixParam", "variable_name"))              { fixParam[int(row.getString("1D"))] = int(row.getString("value")); }
+    
     
     for (TableRow row : table.findRows("ansaZ", "variable_name"))         { if((int(row.getString("1D")) < ansaZ.length)) { ansaZ[int(row.getString("1D"))] = int(row.getString("value")); } }
     for (TableRow row : table.findRows("ansaX", "variable_name"))         { if((int(row.getString("1D")) < ansaX.length)) { ansaX[int(row.getString("1D"))] = int(row.getString("value")); } }
     for (TableRow row : table.findRows("ansaY", "variable_name"))         { if((int(row.getString("1D")) < ansaY.length)) { ansaY[int(row.getString("1D"))] = int(row.getString("value")); } }
-    for (TableRow row : table.findRows("ansaParent", "variable_name"))    { if((int(row.getString("1D")) < ansaParent.length)) { ansaParent[int(row.getString("1D"))] = int(row.getString("value")); } }
     for (TableRow row : table.findRows("ansaType", "variable_name"))    { if((int(row.getString("1D")) < ansaType.length)) { ansaType[int(row.getString("1D"))] = int(row.getString("value")); } }
   
-    
-    for (TableRow row : table.findRows("channel", "variable_name"))              { channel[int(row.getString("1D"))] = int(row.getString("value")); }
     
     for (TableRow row : table.findRows("chaseModeByMemoryNumber", "variable_name"))              { chaseModeByMemoryNumber[int(row.getString("1D"))] = int(row.getString("value")); }
     for (TableRow row : table.findRows("chaseMode", "variable_name"))              { chaseMode = int(row.getString("value")); }
@@ -92,22 +116,5 @@ void loadAllData() {
     dataLoaded = true;
     
     
-    
-    //Temporary solution (IMPROVE LATER)
-    //Transfer data to fixture variables.
-    for (int i = 0; i < numberOfAllFixtures; i++) {
-      fixtures[i] = new fixture(0, red[i], 
-      green[i], 
-      blue[i], 
-      xTaka[i], 
-      yTaka[i], 
-      fixZ[i], 
-      rotTaka[i], 
-      rotX[i], 
-      channel[i],
-      ansaParent[i], 
-      fixParam[i],
-      fixtureType1[i]);
-    }
   
 }
