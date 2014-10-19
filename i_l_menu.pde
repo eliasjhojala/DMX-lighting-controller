@@ -185,6 +185,8 @@ void drawBottomMenuControlBox() {
     if (isHover(0, 0, 21, 20) && mousePressed) { mouseLocked = true; mouseLocker = "bottomMenuControlBox:close"; bottomMenuControlBoxOpen = false; }
     popMatrix();
     
+    drawBottomMenuChControllerSlider(50);
+    
     //Reset draw modifiers
     strokeWeight(1);
     stroke(255, 255, 255);
@@ -231,9 +233,27 @@ class bottomMenuChController {
 }
 
 
-
+//values go from 0 to 255
 void drawBottomMenuChControllerSlider(int value){
-  stroke(150) strokeWeight(1);
+  //Draw background
+  noStroke();
+  fill(50);
+  rect(0, 0, 10, 50);
+  //Draw active portion of slider
+  fill(0, 200, 0);
+  float activeY = map(value, 0, 255, 50, 0);
+  rect(0, activeY, 10, 50);
+  //Draw decorative "frame" around the slider
+  noFill();
+  stroke(0, 50); strokeWeight(2);
+  rect(0, 0, 10, 50);
+  //Draw value indication bar
+  stroke(0, 255, 0); strokeWeight(2);
+  line(-1, activeY, 11, activeY);
   
+  //Reset draw modifiers
+  strokeWeight(1);
+  stroke(255, 255, 255);
+  fill(0, 0, 0);
   
 }
