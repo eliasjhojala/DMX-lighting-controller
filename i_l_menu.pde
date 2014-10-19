@@ -66,6 +66,7 @@ void drawFixtureRectangles(int id) {
   stroke(0, 0, 0); //black corners for other rects
   fill(0, 255, 0); //green color for title box
   rect(0, -40, 60, -15); //title box
+  if (isHover(0, -40, 60, -15) && mousePressed) openBottomMenuControlBox(id); //Open control box
   fill(0, 0, 0); //black color for title
   text(str(id)+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
   text("Ch " + str(fixtures[id].channelStart) , 2, -30); // Channel
@@ -156,9 +157,16 @@ int bottomMenuControlBoxWidth = 20*65;
 String bottomMenuControlBoxSubstr = "bottomMenuControlBox";
 //---------------------------------------------------------|
 
-void openBottomMenu(int owner) {
+void openBottomMenuControlBox(int owner) {
+  bottomMenuControlBoxOpen = true;
+  currentBottomMenuControlBoxOwner = owner;
   switch(fixtures[owner].fixtureTypeId) {
     //Configure box according to fixtureType
+    case 1: case 2: case 3: case 4: case 5: case 6:
+      // all "dumb" fixtures (with only one channel: dim)
+      bottomMenuControlBoxControllers = new bottomMenuChController[1];
+      bottomMenuControlBoxControllers[0] = new bottomMenuChController(50, 50, 0, 0, "Dimmer");
+    break;
   }
 }
 
@@ -182,10 +190,11 @@ void drawBottomMenuControlBox() {
     stroke(255); strokeWeight(2);
     line(4, 4, 16, 16); line(4, 16, 16, 4);
     //hovering over the X button AND mouse is down --> close box
-    if (isHover(0, 0, 21, 20) && mousePressed) { mouseLocked = true; mouseLocker = "bottomMenuControlBox:close"; bottomMenuControlBoxOpen = false; }
+    if (isHover(0, 0, 21, 20) && mousePressed && !mouseLocker.equals("bottomMenuControlBox:close")) { mouseLocked = true; mouseLocker = "bottomMenuControlBox:close"; bottomMenuControlBoxOpen = false; }
     popMatrix();
     
-    drawBottomMenuChControllerSlider(50);
+    if (bottomMenuControlBoxControllers != null) for (bottomMenuChController controller : bottomMenuControlBoxControllers) controller.draw();
+    
     
     //Reset draw modifiers
     strokeWeight(1);
@@ -204,56 +213,88 @@ void drawBottomMenuControlBox() {
 
 class bottomMenuChController {
   int value;
+  int x, y;
   
   String displayText;
+  
+  int dragStartX;
+  int dragY;
   
   int assignedData; //Datatype assigned to this slider (0 = dimmer, COMPLETE THIS LIST)
   
   //Profiles: 0: all options, 1: compact, only slider, 2: compact, only toggle & go
   int profile = 0;
   
-  bottomMenuChController(int val, int assign, int prof, String text) {
-    value           =    val;
+  bottomMenuChController(int xIn, int yIn, int assign, int prof, String text) {
+    x               =    xIn;
+    y               =    yIn;
     assignedData    = assign;
     profile         =   prof;
     displayText     =   text;
   }
   
   void draw() {
+    pushMatrix();
+    translate(x, y);
     //Draw the element according to profile mode
     switch(profile) {
       case 0:
-        
+        slider();
+        translate(0, 120);
+        text(displayText, 0, 0);
         break;
       case 1:
         
         break;
     }
+    popMatrix();
+  }
+  
+  
+  void slider() {
+    //Draw slider
+    drawBottomMenuChControllerSlider(value);
+    //Check for drag
+    println("HOVER|" + isHover(0, 0, 20, 100) + mousePressed + mouseLocked + mouseLocker);
+    if (isHover(0, 0, 20, 100) && mousePressed) {
+      //Started dragging
+      mouseLocked = true;
+      mouseLocker = "bottomMenuControlBox:slider" + str(assignedData);
+      dragStartX = mouseX;
+    }
+    
+    if (mouseLocked && mouseLocker.equals("bottomMenuControlBox:slider" + str(assignedData))) {
+      value += map(dragY - mouseY, 0, 100 + dragStartX - mouseX, 0, 255);
+      value = constrain(value, 0, 255);
+    }
+    dragY = mouseY;
   }
 }
 
 
 //values go from 0 to 255
 void drawBottomMenuChControllerSlider(int value){
+  rectMode(CORNERS);
   //Draw background
   noStroke();
   fill(50);
-  rect(0, 0, 10, 50);
+  rect(0, 0, 20, 100);
   //Draw active portion of slider
   fill(0, 200, 0);
-  float activeY = map(value, 0, 255, 50, 0);
-  rect(0, activeY, 10, 50);
+  float activeY = map(value, 0, 255, 0, 100);
+  rect(0, 100 - activeY, 20, 100);
   //Draw decorative "frame" around the slider
   noFill();
   stroke(0, 50); strokeWeight(2);
-  rect(0, 0, 10, 50);
+  rect(0, 0, 20, 100);
   //Draw value indication bar
   stroke(0, 255, 0); strokeWeight(2);
-  line(-1, activeY, 11, activeY);
+  line(-1, 100 - activeY, 21, 100 - activeY);
   
   //Reset draw modifiers
   strokeWeight(1);
   stroke(255, 255, 255);
   fill(0, 0, 0);
+  rectMode(CORNER);
   
 }
