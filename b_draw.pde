@@ -30,10 +30,7 @@ void draw() {
   
   //Invoke every fixtures draw
   for (fixture temp : fixtures) temp.draw();
-  
-  if(millis() > 10000 && millis() < 15000) {
-    loadAllData();
-  }
+
 }
 
 
