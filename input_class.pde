@@ -177,6 +177,19 @@ class fixureInput {
         fixtures[sF].pan = pan;
         fixtures[sF].tilt = tilt;
         fixtures[sF].panFine = panFine;
+        fixtures[sF].tiltFine = tiltFine;
+        fixtures[sF].red = red;
+        fixtures[sF].green = green;
+        fixtures[sF].blue = blue;
+        fixtures[sF].goboWheel = goboWheel;
+        fixtures[sF].goboRotation = goboRotation;
+        fixtures[sF].colorWheel = colorWheel;
+        fixtures[sF].specialFunctions = specialFunctions;
+        fixtures[sF].autoPrograms = autoPrograms;
+        fixtures[sF].shutter = shutter;
+        fixtures[sF].prism = prism;
+        fixtures[sF].focus = focus;
+        fixtures[sF].responseSpeed = responseSpeed;
       }
     }
     
