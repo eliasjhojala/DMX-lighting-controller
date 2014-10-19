@@ -32,7 +32,7 @@ class fixture {
   //Type in int
   fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int param, int fixtTypeId) {
     initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, ch, parentA, param, fixtTypeId);
-    fixtureType = getFixtureName(fixtTypeId);
+    fixtureType = getFixtureNameByType(fixtTypeId);
   }
   
   
@@ -123,7 +123,7 @@ class fixture {
       oldFixtureTypeId = fixtureTypeId;
       //Fixture type changed, recalculate certain variables
       size = new fixtureSize(fixtureTypeId);
-      fixtureType = getFixtureName(fixtureTypeId);
+      fixtureType = getFixtureNameByType(fixtureTypeId);
     }
   }
   

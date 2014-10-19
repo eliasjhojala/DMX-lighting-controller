@@ -78,9 +78,9 @@ int[] getFixtureSize(int id) {
 }
 
 //Gets type description of fixture #id
-String getFixtureName(int id) {
+String getFixtureNameByType(int type) {
   String toReturn = "unknown";
-  switch(fixtureType1[id]) {
+  switch(type) {
     case 1: toReturn = "par64"; break;
     case 2: toReturn = "p.fresu"; break;
     case 3: toReturn = "k.fresu"; break;
@@ -98,6 +98,10 @@ String getFixtureName(int id) {
     case 15: toReturn = "MHtilt"; break;
   }
   return toReturn;
+}
+
+String getFixtureName(int id) {
+  return getFixtureNameByType(fixtureType1[id]);
 }
 
 
