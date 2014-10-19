@@ -147,7 +147,7 @@ bottomMenuChController[] bottomMenuControlBoxControllers;
 //---------------------------------------------------------|
 
 void openBottomMenu(int owner) {
-  switch(fixtures[i].fixtureTypeId) {
+  switch(fixtures[owner].fixtureTypeId) {
     //Cases for all different fixturetypes
   }
 }
@@ -184,6 +184,6 @@ class bottomMenuChController {
 
 
 
-void drawBottomMenuChControllerSlider{
+void drawBottomMenuChControllerSlider(){
   
 }
