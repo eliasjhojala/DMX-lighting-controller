@@ -16,6 +16,9 @@ void loadSetupData() {
   //for (TableRow row : table.findRows("use3D", "variable_name")) { use3D = boolean(row.getString("value")); }
   //for (TableRow row : table.findRows("loadAllDataInSetup", "variable_name")) { loadAllDataInSetup = boolean(row.getString("value")); }
   
+  
+  use3D = true;
+  showOutputAsNumbers = true;
 }
 
 void loadAllData() {
