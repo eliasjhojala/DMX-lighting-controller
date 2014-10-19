@@ -167,6 +167,9 @@ void openBottomMenuControlBox(int owner) {
       bottomMenuControlBoxControllers = new bottomMenuChController[1];
       bottomMenuControlBoxControllers[0] = new bottomMenuChController(50, 50, 0, 0, "Dimmer");
     break;
+    default:
+      bottomMenuControlBoxControllers = new bottomMenuChController[0];
+    break;
   }
 }
 
