@@ -1,8 +1,41 @@
 //Tässä välilehdessä tallennetaan tietoja csv-taulukkotiedostoon
 
 Table table;
+
+void saveVariable(int variable, String variableName) {
+    saveDataMainCommands(str(variable), variableName, "0", "-", "-");
+}
+void save1Darray(int[] array, String arrayName) {
+  for(int i = 0; i < array.length; i++) {
+    saveDataMainCommands(str(array[i]), arrayName, "1", str(i), "-");
+  }
+}
+void save1DarrayString(String[] array, String arrayName) {
+  for(int i = 0; i < array.length; i++) {
+    saveDataMainCommands(array[i], arrayName, "1", str(i), "-");
+  }
+}
+
+void save2Darray(int[][] array, String arrayName) {
+  for(int ij = 0; ij < array.length; ij++) {
+    for(int i = 0; i < array[0].length; i++) {
+      saveDataMainCommands(str(array[ij][i]), arrayName, "2", str(i), str(ij));
+    }
+  }
+}
+
+void saveDataMainCommands(String variable, String variableName, String dimensions, String D1, String D2) {
+  TableRow newRow = table.addRow();   
+  newRow.setInt("id", table.lastRowIndex());  
+  newRow.setString("variable_name", variableName);
+  newRow.setString("variable_dimensions", dimensions); 
+  newRow.setString("value", variable);   
+  newRow.setString("1D", D1);               
+  newRow.setString("2D", D2);
+}
+
 void saveAllData() {
-    table = new Table();
+  table = new Table();
   
   table.addColumn("id");
   table.addColumn("variable_name");
@@ -11,125 +44,64 @@ void saveAllData() {
   table.addColumn("1D");
   table.addColumn("2D");
 
-  
-  for(int i = 0; i < xTaka.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "xTaka");
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(xTaka[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  for(int i = 0; i < yTaka.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "yTaka"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(yTaka[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
-  }
-  for(int i = 0; i < rotX.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "rotX"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(rotX[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
-  }
-  for(int i = 0; i < fixZ.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixZ"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixZ[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
-  }
-  
-  for(int i = 0; i < ansaZ.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "ansaZ"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(ansaZ[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
-  }
-  
-  for(int i = 0; i < ansaX.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "ansaX"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(ansaX[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
-  }
-  
-  for(int i = 0; i < ansaY.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "ansaY"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(ansaY[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
-  }
 
 
-  for(int i = 0; i < ansaParent.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "ansaParent"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(ansaParent[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
-  }
+  int[] tempFixtureObjectArray = new int[fixtures.length];
+  String[] tempFixtureObjectArrayString = new String[fixtures.length];
   
-  for(int i = 0; i < ansaType.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "ansaType"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(ansaType[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
-  }
-
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].red; }
+  save1Darray(tempFixtureObjectArray, "fixtures.red");
   
-  for(int i = 0; i <  memoryType.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "memoryType"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(memoryType[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  for(int i = 0; i <  soundToLightSteps.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "soundToLightSteps"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(soundToLightSteps[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  for(int i = 0; i <  red.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "red"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(red[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  for(int i = 0; i <  green.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "green"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(green[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  for(int i = 0; i <  blue.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "blue"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(blue[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  for(int i = 0; i <  rotTaka.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "rotTaka"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(rotTaka[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  for(int i = 0; i <  rotX.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "rotX"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(rotX[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  for(int i = 0; i <  fixZ.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixZ"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixZ[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].green; }
+  save1Darray(tempFixtureObjectArray, "fixtures.green");
   
-  for(int i = 0; i <  fixParam.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixParam"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixParam[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].blue; }
+  save1Darray(tempFixtureObjectArray, "fixtures.blue");
   
-  for(int i = 0; i <  fixtureType1.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixtureType1"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixtureType1[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].x_location; }
+  save1Darray(tempFixtureObjectArray, "fixtures.x_location");
   
-  for(int i = 0; i <  channel.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "channel"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(channel[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].y_location; }
+  save1Darray(tempFixtureObjectArray, "fixtures.y_location");
+  
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].z_location; }
+  save1Darray(tempFixtureObjectArray, "fixtures.z_location");
+  
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].rotationX; }
+  save1Darray(tempFixtureObjectArray, "fixtures.rotationX");
+  
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].rotationZ; }
+  save1Darray(tempFixtureObjectArray, "fixtures.rotationZ");
+  
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].parameter; }
+  save1Darray(tempFixtureObjectArray, "fixtures.parameter");
+  
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArrayString[i] = fixtures[i].fixtureType; }
+  save1DarrayString(tempFixtureObjectArrayString, "fixtures.fixtureType");
+  
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].fixtureTypeId; }
+  save1Darray(tempFixtureObjectArray, "fixtures.fixtureTypeId");
+  
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].channelStart; }
+  save1Darray(tempFixtureObjectArray, "fixtures.channelStart");
+  
+  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].parentAnsa; }
+  save1Darray(tempFixtureObjectArray, "fixtures.parentAnsa");
   
   
+  save1Darray(ansaZ, "ansaZ");
+  save1Darray(ansaX, "ansaX");
+  save1Darray(ansaY, "ansaY");
+  save1Darray(ansaType, "ansaType");
+  save1Darray(memoryType, "memoryType");
+  save1Darray(soundToLightSteps, "soundToLightSteps");
+  save1Darray(ansaX, "ansaX");
+  save1Darray(mhx50_s2l_presets, "mhx50_s2l_presets"); 
+  save1Darray(chaseModeByMemoryNumber, "chaseModeByMemoryNumber"); 
+  save1Darray(valueOfMemory, "valueOfMemory"); 
+  save1Darray(memoryValue, "memoryValue"); 
   
   
-  
-   for(int i = 0; i <  mhx50_s2l_presets.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "mhx50_s2l_presets"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(mhx50_s2l_presets[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  
-  
-  
-  for(int i = 0; i <  chaseModeByMemoryNumber.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "chaseModeByMemoryNumber"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(chaseModeByMemoryNumber[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  
-  for(int i = 0; i <  valueOfMemory.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "valueOfMemory"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(valueOfMemory[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
- 
- for(int i = 0; i <  memoryValue.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "memoryValue"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(memoryValue[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
- 
   
   
   int[] grouping = new int[4];
@@ -137,28 +109,14 @@ void saveAllData() {
         grouping[1] = enttecDMXplace;
         grouping[2] = touchOSCplace;
         grouping[3] = int(useMovingHead);
-  for(int i = 0; i <  grouping.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "grouping"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(grouping[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  for(int a = 0; a < numberOfMemories; a++) {
-    for(int i = 0; i <  channels+5; i++) {
-      TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "memory"); 
-      newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(memory[a][i]));   newRow.setString("1D", str(a));               newRow.setString("2D", str(i));
-    }
-  }
-  for(int a = 0; a < numberOfMemories; a++) {
-    for(int i = 0; i <  channels*2; i++) {
-      TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "soundToLightPresets"); 
-      newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(soundToLightPresets[a][i]));   newRow.setString("1D", str(a));               newRow.setString("2D", str(i));
-    }
-  }
-  for(int a = 0; a < numberOfMemories; a++) {
-    for(int i = 0; i <  channels*2; i++) {
-      TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "preset"); 
-      newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(preset[a][i]));   newRow.setString("1D", str(a));               newRow.setString("2D", str(i));
-    }
-  }
+        
+  save1Darray(grouping, "grouping"); 
+  
+  
+  save2Darray(memory, "memory");
+  save2Darray(soundToLightPresets, "soundToLightPresets");
+  save2Darray(preset, "preset");
+
   
   for(int a = 0; a < mhx50_createFinalPresetValues[0][0].length; a++) {
     for(int i = 0; i <  mhx50_createFinalPresetValues.length; i++) {
@@ -176,76 +134,15 @@ void saveAllData() {
   
   
   
- 
-  
-  TableRow newRow = table.addRow();     
-  
-  newRow.setInt("id", table.lastRowIndex());  
-  newRow.setString("variable_name", "camX"); 
-  newRow.setString("variable_dimensions", "1"); 
-  newRow.setString("value", str(camX));   
-  newRow.setString("1D", "-");               
-  newRow.setString("2D", "-");
-  
-  newRow = table.addRow();
-  
-  newRow.setInt("id", table.lastRowIndex());  
-  newRow.setString("variable_name", "camY"); 
-  newRow.setString("variable_dimensions", "1"); 
-  newRow.setString("value", str(camY));   
-  newRow.setString("1D", "-");               
-  newRow.setString("2D", "-");
-  
-  newRow = table.addRow();
-  
-  newRow.setInt("id", table.lastRowIndex());  
-  newRow.setString("variable_name", "camZ"); 
-  newRow.setString("variable_dimensions", "1"); 
-  newRow.setString("value", str(camZ));   
-  newRow.setString("1D", "-");               
-  newRow.setString("2D", "-");
-  
-  
-  
-  newRow = table.addRow();
-  
-  newRow.setInt("id", table.lastRowIndex());  
-  newRow.setString("variable_name", "chaseMode"); 
-  newRow.setString("variable_dimensions", "0"); 
-  newRow.setString("value", str(chaseMode));   
-  newRow.setString("1D", "-");               
-  newRow.setString("2D", "-");
-  
-  newRow = table.addRow();
-  
-  newRow.setInt("id", table.lastRowIndex());  
-  newRow.setString("variable_name", "centerX"); 
-  newRow.setString("variable_dimensions", "0"); 
-  newRow.setString("value", str(centerX));   
-  newRow.setString("1D", "-");               
-  newRow.setString("2D", "-");
-  
-  newRow = table.addRow();
-  
-  newRow.setInt("id", table.lastRowIndex());  
-  newRow.setString("variable_name", "centerY"); 
-  newRow.setString("variable_dimensions", "0"); 
-  newRow.setString("value", str(centerY));   
-  newRow.setString("1D", "-");               
-  newRow.setString("2D", "-");
-  
+  saveVariable(int(camX), "camX");
+  saveVariable(int(camY), "camY");
+  saveVariable(int(camZ), "camZ");
+  saveVariable(int(centerX), "centerX");
+  saveVariable(int(centerY), "centerY");
+  saveVariable(chaseMode, "chaseMode");
+  saveVariable(mmhx50_s2l_numberOfPresets, "mmhx50_s2l_numberOfPresets");
   
 
-  
-  newRow = table.addRow();
-  
-  newRow.setInt("id", table.lastRowIndex());  
-  newRow.setString("variable_name", "mmhx50_s2l_numberOfPresets"); 
-  newRow.setString("variable_dimensions", "0"); 
-  newRow.setString("value", str(mmhx50_s2l_numberOfPresets));   
-  newRow.setString("1D", "-");               
-  newRow.setString("2D", "-");
-  
   //Asetetaan oikeat tallennuspolut käyttäjän mukaan
 
   if(userId == 1) { //Jos Elias käyttää

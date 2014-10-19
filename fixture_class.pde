@@ -7,7 +7,7 @@ class fixture {
   int red, green, blue; //color values
   int pan, tilt, panFine, tiltFine; //rotation values
   int x_location, y_location, z_location; //location in visualisation
-  int rotationZ, rotationX;
+  int rotationX, rotationZ;
   int parameter;
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
