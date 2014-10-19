@@ -12,21 +12,13 @@ void saveAllData() {
   table.addColumn("2D");
 
   
-  for(int i = 0; i < xTaka.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "xTaka");
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(xTaka[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
+  for(int i = 0; i < fixtures.length; i++) {
+    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());                newRow.setString("variable_name", "xTaka");
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixtures[i].x_location));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
   }
-  for(int i = 0; i < yTaka.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "yTaka"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(yTaka[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
-  }
-  for(int i = 0; i < rotX.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "rotX"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(rotX[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
-  }
-  for(int i = 0; i < fixZ.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "fixZ"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixZ[i]));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
+  for(int i = 0; i < fixtures.length; i++) {
+    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());                newRow.setString("variable_name", "yTaka"); 
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixtures[i].y_location));   newRow.setString("1D", str(i));              newRow.setString("2D", "-");
   }
   
   for(int i = 0; i < ansaZ.length; i++) {
@@ -64,17 +56,15 @@ void saveAllData() {
     TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "soundToLightSteps"); 
     newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(soundToLightSteps[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
   }
-  for(int i = 0; i <  red.length; i++) {
-    TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "red"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(red[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  for(int i = 0; i <  green.length; i++) {
+  for(int i = 0; i <  fixtures.length; i++) {
+    TableRow redRow = table.addRow();             redRow.setInt("id", table.lastRowIndex());  redRow.setString("variable_name", "red"); 
+    redRow.setString("variable_dimensions", "1"); redRow.setString("value", str(fixtures[i].red));   redRow.setString("1D", str(i));               redRow.setString("2D", "-");
+    
     TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "green"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(green[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
-  }
-  for(int i = 0; i <  blue.length; i++) {
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixtures[i].green));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
+    
     TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "blue"); 
-    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(blue[i]));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
+    newRow.setString("variable_dimensions", "1"); newRow.setString("value", str(fixtures[i].blue));   newRow.setString("1D", str(i));               newRow.setString("2D", "-");
   }
   for(int i = 0; i <  rotTaka.length; i++) {
     TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "rotTaka"); 
