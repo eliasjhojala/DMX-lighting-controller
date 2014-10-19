@@ -147,6 +147,7 @@ int currentBottomMenuControlBoxOwner;
 boolean bottomMenuControlBoxOpen = true;
 bottomMenuChController[] bottomMenuControlBoxControllers;
 int bottomMenuControlBoxHeight = 200;
+int bottomMenuControlBoxWidth = 20*65;
 //---------------------------------------------------------|
 
 void openBottomMenu(int owner) {
@@ -165,8 +166,16 @@ void drawBottomMenuControlBox() {
     fill(5, 100, 150);
     stroke(9, 157, 222);
     strokeWeight(5);
+    rect(0, 0, bottomMenuControlBoxWidth, bottomMenuControlBoxHeight);
     
-    rect(0, 0, 20*65, bottomMenuControlBoxHeight);
+    //Draw X button (for an option to close the box)
+    pushMatrix();
+    fill(255, 0, 0); noStroke();
+    translate(0, bottomMenuControlBoxHeight - 20);
+    rect(0, 0, 21, 20);
+    stroke(255); strokeWeight(2);
+    line(4, 4, 16, 16); line(4, 16, 16, 4);
+    popMatrix();
     
     //Reset draw modifiers
     strokeWeight(1);
