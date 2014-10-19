@@ -67,8 +67,8 @@ void loadAllData() {
     
     //--------------------------------------------------------------------------------------------------------------------------------------
     
-    for (TableRow row : table.findRows("memoryType", "variable_name")) { memoryType[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("soundToLightSteps", "variable_name")) { soundToLightSteps[int(row.getString("1D"))] = int(row.getString("value")); }
+    for (TableRow row : table.findRows("memoryType", "variable_name")) if(int(row.getString("1D")) < memoryType.length) { memoryType[int(row.getString("1D"))] = int(row.getString("value")); }
+    for (TableRow row : table.findRows("soundToLightSteps", "variable_name")) if(int(row.getString("1D")) < soundToLightSteps.length) { soundToLightSteps[int(row.getString("1D"))] = int(row.getString("value")); }
     
     
     
