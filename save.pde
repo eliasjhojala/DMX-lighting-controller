@@ -18,10 +18,7 @@ void save1DarrayString(String[] array, String arrayName) {
 
 void save2Darray(int[][] array, String arrayName) {
   for(int ij = 0; ij < array.length; ij++) {
-<<<<<<< HEAD
-=======
     println(ij); 
->>>>>>> origin/fixture-class-load&save
     for(int i = 0; i < array[0].length; i++) {
       saveDataMainCommands(str(array[ij][i]), arrayName, "2", str(i), str(ij));
     }
@@ -47,7 +44,6 @@ void saveAllData() {
   table.addColumn("value");
   table.addColumn("1D");
   table.addColumn("2D");
-<<<<<<< HEAD
 
 
 
@@ -93,7 +89,6 @@ void saveAllData() {
   for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].parentAnsa; }
   save1Darray(tempFixtureObjectArray, "fixtures.parentAnsa");
   
-=======
   
   for (int i = 0; i < fixtures.length; i++) {
     saveDataMainCommands(str(fixtures[i].red),           "red", "1", str(i), "-");
@@ -110,7 +105,6 @@ void saveAllData() {
     saveDataMainCommands(str(fixtures[i].channelStart),  "channel", "1", str(i), "-");
     saveDataMainCommands(str(fixtures[i].parentAnsa),    "ansaParent", "1", str(i), "-");
   }
->>>>>>> origin/fixture-class-load&save
   
   save1Darray(ansaZ, "ansaZ");
   save1Darray(ansaX, "ansaX");
@@ -136,10 +130,7 @@ void saveAllData() {
   save1Darray(valueOfMemory, "valueOfMemory"); 
   save1Darray(memoryValue, "memoryValue"); 
   
-<<<<<<< HEAD
-=======
   
->>>>>>> origin/fixture-class-load&save
   
   
   int[] grouping = new int[4];
