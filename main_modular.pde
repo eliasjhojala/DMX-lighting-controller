@@ -230,17 +230,17 @@ int presetNumero = 1;
 boolean makingPreset = false; //Tarkistaa ollaanko presettiä luomassa parhaillaan
 boolean useMemories = true; //Käytetäänkö presettejä ohjelmassa
 
-int[][] memory = new int[1000][512]; //Memory [numero][fixtuurin arvo]
-int[] memoryValue = new int[1000]; //Tämänhetkinen memoryn arvo
+int[][] memory = new int[numberOfMemories][512]; //Memory [numero][fixtuurin arvo]
+int[] memoryValue = new int[numberOfMemories]; //Tämänhetkinen memoryn arvo
 
-int[][] preset = new int[1000][512]; //Preset [numero][fixtuurin arvo]
-int[] presetValue = new int[1000]; //Tämänhetkinen presetin arvo
-int[] presetValueOld = new int[1000]; //Tämänhetkinen presetin arvo
+int[][] preset = new int[numberOfMemories][512]; //Preset [numero][fixtuurin arvo]
+int[] presetValue = new int[numberOfMemories]; //Tämänhetkinen presetin arvo
+int[] presetValueOld = new int[numberOfMemories]; //Tämänhetkinen presetin arvo
 
 int chaseMode; //1 = s2l, 2 = manual, 3 = auto
 
-int[] soundToLightSteps = new int[1000];
-int[][] soundToLightPresets = new int[1000][1000];
+int[] soundToLightSteps = new int[numberOfMemories];
+int[][] soundToLightPresets = new int[numberOfMemories][numberOfMemories];
 boolean makingSoundToLightFromPreset = false; //Ollaanko tällä hetkellä tekemässä sound to light presettiä
 boolean selectingSoundToLight = false; //Ollaanko tällä hetkellä valitsemassa sound to light modea (EI KÄYTÖSSÄ)
 int soundToLightNumero = 1; //Sound to lightin järjestysnumero (EI KÄYTÖSSÄ)

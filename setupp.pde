@@ -37,8 +37,5 @@ void setuppi() {
   myRemoteLocation1 = new NetAddress("192.168.0.17",5001);
   myRemoteLocation2 = new NetAddress("192.168.0.11",50000);
   
-  
-  if(dataLoaded) {
-    ansaWidth = max(xTaka)+80;
-  }
+  ansaWidth = int(width*0.6);
 }
