@@ -145,9 +145,15 @@ void checkFixtureBoxRightClick(int id) {
 //Variables------------------------------------------------|
 int currentBottomMenuControlBoxOwner;
 boolean bottomMenuControlBoxOpen = true;
+boolean bottomMenuControlBoxOpenOld = true;
 bottomMenuChController[] bottomMenuControlBoxControllers;
 int bottomMenuControlBoxHeight = 200;
 int bottomMenuControlBoxWidth = 20*65;
+//---------------------------------------------------------|
+
+
+//Constants------------------------------------------------|
+String bottomMenuControlBoxSubstr = "bottomMenuControlBox";
 //---------------------------------------------------------|
 
 void openBottomMenu(int owner) {
@@ -175,6 +181,8 @@ void drawBottomMenuControlBox() {
     rect(0, 0, 21, 20);
     stroke(255); strokeWeight(2);
     line(4, 4, 16, 16); line(4, 16, 16, 4);
+    //hovering over the X button AND mouse is down --> close box
+    if (isHover(0, 0, 21, 20) && mousePressed) { mouseLocked = true; mouseLocker = "bottomMenuControlBox:close"; bottomMenuControlBoxOpen = false; }
     popMatrix();
     
     //Reset draw modifiers
@@ -183,6 +191,13 @@ void drawBottomMenuControlBox() {
     fill(0, 0, 0);
     popMatrix();
   }
+  if (!bottomMenuControlBoxOpen && bottomMenuControlBoxOpenOld) {
+    //box was just closed
+    
+    //Make sure mouseLocked is false
+    if (mouseLocker.substring(bottomMenuControlBoxSubstr.length()).equals(bottomMenuControlBoxSubstr)) mouseLocked = false;
+  }
+  bottomMenuControlBoxOpenOld = bottomMenuControlBoxOpen;
 }
 
 class bottomMenuChController {
@@ -217,6 +232,8 @@ class bottomMenuChController {
 
 
 
-void drawBottomMenuChControllerSlider(){
+void drawBottomMenuChControllerSlider(int value){
+  stroke(150) strokeWeight(1);
+  
   
 }
