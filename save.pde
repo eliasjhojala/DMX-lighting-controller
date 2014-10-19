@@ -18,6 +18,7 @@ void save1DarrayString(String[] array, String arrayName) {
 
 void save2Darray(int[][] array, String arrayName) {
   for(int ij = 0; ij < array.length; ij++) {
+    println(ij); 
     for(int i = 0; i < array[0].length; i++) {
       saveDataMainCommands(str(array[ij][i]), arrayName, "2", str(i), str(ij));
     }
@@ -119,9 +120,9 @@ void saveAllData() {
 
   if(userId == 1) { //Jos Elias käyttää
     saveTable(table, "/Users/elias/Dropbox/DMX controller/main_modular/variables/pikkusten_disko.csv"); //Eliaksen polku
-  }
-  else { //Jos Roope käyttää
+  } else if(!roopeAidilla)
+
     saveTable(table, "E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv"); //Roopen polku
-  }
+  } else saveTable(table, "C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv");
 }
 
