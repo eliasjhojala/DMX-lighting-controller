@@ -46,6 +46,8 @@ void alavalikko() {
       }
     popMatrix(); 
   popMatrix();
+  
+  drawBottomMenuControlBox();
 }
 void createFixtureBox(int id) {
   drawFixtureRectangles(id); //draw fixtureboxes with buttons etc.
@@ -142,13 +144,35 @@ void checkFixtureBoxRightClick(int id) {
 
 //Variables------------------------------------------------|
 int currentBottomMenuControlBoxOwner;
-boolean bottomMenuControlBoxOpen;
+boolean bottomMenuControlBoxOpen = true;
 bottomMenuChController[] bottomMenuControlBoxControllers;
+int bottomMenuControlBoxHeight = 200;
 //---------------------------------------------------------|
 
 void openBottomMenu(int owner) {
   switch(fixtures[owner].fixtureTypeId) {
-    //Cases for all different fixturetypes
+    //Configure box according to fixtureType
+  }
+}
+
+void drawBottomMenuControlBox() {
+  if (bottomMenuControlBoxOpen) {
+    pushMatrix();
+    //Control box open ---> draw it
+    translate(65, height - 260 - bottomMenuControlBoxHeight);
+    
+    //Frame of the box
+    fill(5, 100, 150);
+    stroke(9, 157, 222);
+    strokeWeight(5);
+    
+    rect(0, 0, 20*65, bottomMenuControlBoxHeight);
+    
+    //Reset draw modifiers
+    strokeWeight(1);
+    stroke(255, 255, 255);
+    fill(0, 0, 0);
+    popMatrix();
   }
 }
 
@@ -157,16 +181,16 @@ class bottomMenuChController {
   
   String displayText;
   
-  int assignedChannel;
+  int assignedData; //Datatype assigned to this slider (0 = dimmer, COMPLETE THIS LIST)
   
   //Profiles: 0: all options, 1: compact, only slider, 2: compact, only toggle & go
   int profile = 0;
   
-  bottomMenuChController(int val, int chan, int prof, String text) {
-    value           =   val;
-    assignedChannel =  chan;
-    profile         =  prof;
-    displayText     =  text;
+  bottomMenuChController(int val, int assign, int prof, String text) {
+    value           =    val;
+    assignedData    = assign;
+    profile         =   prof;
+    displayText     =   text;
   }
   
   void draw() {
