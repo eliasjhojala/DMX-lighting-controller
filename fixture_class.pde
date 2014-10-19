@@ -11,6 +11,7 @@ class fixture {
   int parameter;
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
+  int frequency; //Strobe freq value
   
   String fixtureType;
   int fixtureTypeId;
@@ -108,6 +109,8 @@ class fixture {
          /* simple rgb led par with dim */   case 19: dmxChannels = new int[4]; dmxChannel[0] = dimmer; dmxChannel[1] = red; dmxChannel[2] = green; dmxChannel[3] = blue; break; //Simple rgb led par with dim
          /* 2ch hazer */                     case 20: dmxChannels = new int[2]; dmxChannel[0] = haze; dmxChannel[1] = fan; break; //2ch hazer
          /* 1ch fog */                       case 21: dmxChannels = new int[1]; dmxChannel[0] = fog; break; //1ch fog
+         /* 2ch strobe */                    case 22: dmxChannels = new int[2]; dmxChannel[0] = dimmer; dmxChannel[1] = frequency; break; //2ch strobe
+         /* 1ch relay */                     case 23: dmxChannels = new int[1]; if(dimmer > 100) { dmxChannel[0] = 255; } else { dmxChannel[0] = 0; } break; //1ch relay
       }
     return dmxChannels; 
   }
