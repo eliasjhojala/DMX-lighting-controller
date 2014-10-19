@@ -76,9 +76,12 @@ void loadAllData() {
     for (TableRow row : table.findRows("grouping", "variable_name")) { grouping[int(row.getString("1D"))] = int(row.getString("value")); }
     controlP5place = grouping[0]; enttecDMXplace = grouping[1]; touchOSCplace = grouping[2];
           
-    for (TableRow row : table.findRows("memory", "variable_name"))              { memory[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("soundToLightPresets", "variable_name")) { soundToLightPresets[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("preset", "variable_name"))              { preset[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
+    for (TableRow row : table.findRows("memory", "variable_name")) if(memory.length < int(row.getString("1D")) && memory[0].length < int(row.getString("2D")))
+            { memory[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
+    for (TableRow row : table.findRows("soundToLightPresets", "variable_name")) if(soundToLightPresets.length < int(row.getString("1D")) && soundToLightPresets[0].length < int(row.getString("2D"))) 
+            { soundToLightPresets[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
+    for (TableRow row : table.findRows("preset", "variable_name")) if(preset.length < int(row.getString("1D")) && preset[0].length < int(row.getString("2D")))
+            { preset[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
     
     for (TableRow row : table.findRows("camX", "variable_name"))              { camX = int(row.getString("value")); }
     for (TableRow row : table.findRows("camY", "variable_name"))              { camY = int(row.getString("value")); }
