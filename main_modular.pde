@@ -36,6 +36,8 @@ void setAllowedChannels() {
   }
 }
 
+fixtureInput fixtureInput1;
+
 
 boolean nextStepPressed = false;
 boolean revStepPressed = false;
