@@ -134,3 +134,56 @@ void checkFixtureBoxRightClick(int id) {
     keyReleased = false;
   }
 }
+
+
+
+
+//bottomMenuControlBox---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//Variables------------------------------------------------|
+int currentBottomMenuControlBoxOwner;
+boolean bottomMenuControlBoxOpen;
+bottomMenuChController[] bottomMenuControlBoxControllers;
+//---------------------------------------------------------|
+
+void openBottomMenu(int owner) {
+  switch(fixtures[i].fixtureTypeId) {
+    //Cases for all different fixturetypes
+  }
+}
+
+class bottomMenuChController {
+  int value;
+  
+  String displayText;
+  
+  int assignedChannel;
+  
+  //Profiles: 0: all options, 1: compact, only slider, 2: compact, only toggle & go
+  int profile = 0;
+  
+  bottomMenuChController(int val, int chan, int prof, String text) {
+    value           =   val;
+    assignedChannel =  chan;
+    profile         =  prof;
+    displayText     =  text;
+  }
+  
+  void draw() {
+    //Draw the element according to profile mode
+    switch(profile) {
+      case 0:
+        
+        break;
+      case 1:
+        
+        break;
+    }
+  }
+}
+
+
+
+void drawBottomMenuChControllerSlider{
+  
+}
