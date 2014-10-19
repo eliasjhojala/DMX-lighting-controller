@@ -145,8 +145,8 @@ void checkFixtureBoxRightClick(int id) {
 
 //Variables------------------------------------------------|
 int currentBottomMenuControlBoxOwner;
-boolean bottomMenuControlBoxOpen = true;
-boolean bottomMenuControlBoxOpenOld = true;
+boolean bottomMenuControlBoxOpen = false;
+boolean bottomMenuControlBoxOpenOld = false;
 bottomMenuChController[] bottomMenuControlBoxControllers;
 int bottomMenuControlBoxHeight = 200;
 int bottomMenuControlBoxWidth = 20*65;
