@@ -66,7 +66,7 @@ void drawFixtureRectangles(int id) {
   stroke(0, 0, 0); //black corners for other rects
   fill(0, 255, 0); //green color for title box
   rect(0, -40, 60, -15); //title box
-  if (isHover(0, -40, 60, -15) && mousePressed) openBottomMenuControlBox(id); //Open control box
+  if (isHover(0, -40, 60, -15) && mousePressed && mouseLocker.equals("main")) openBottomMenuControlBox(id); //Open control box
   fill(0, 0, 0); //black color for title
   text(str(id)+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
   text("Ch " + str(fixtures[id].channelStart) , 2, -30); // Channel
@@ -140,7 +140,7 @@ void checkFixtureBoxRightClick(int id) {
 
 
 
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //bottomMenuControlBox---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //Variables------------------------------------------------|
@@ -190,7 +190,7 @@ void drawBottomMenuControlBox() {
     stroke(255); strokeWeight(2);
     line(4, 4, 16, 16); line(4, 16, 16, 4);
     //hovering over the X button AND mouse is down --> close box
-    if (isHover(0, 0, 21, 20) && mousePressed && !mouseLocker.equals("bottomMenuControlBox:close")) { mouseLocked = true; mouseLocker = "bottomMenuControlBox:close"; bottomMenuControlBoxOpen = false; }
+    if (isHover(0, 0, 21, 20) && mousePressed && mouseLocker.equals("main")) { mouseLocked = true; mouseLocker = "bottomMenuControlBox:close"; bottomMenuControlBoxOpen = false; }
     popMatrix();
     
     if (bottomMenuControlBoxControllers != null) for (bottomMenuChController controller : bottomMenuControlBoxControllers) controller.draw();
@@ -255,19 +255,37 @@ class bottomMenuChController {
     //Draw slider
     drawBottomMenuChControllerSlider(value);
     //Check for drag
-    println("HOVER|" + isHover(0, 0, 20, 100) + mousePressed + mouseLocked + mouseLocker);
     if (isHover(0, 0, 20, 100) && mousePressed) {
       //Started dragging
       mouseLocked = true;
       mouseLocker = "bottomMenuControlBox:slider" + str(assignedData);
       dragStartX = mouseX;
     }
-    
+    boolean valueChanged = false;
     if (mouseLocked && mouseLocker.equals("bottomMenuControlBox:slider" + str(assignedData))) {
-      value += map(dragY - mouseY, 0, 100 + dragStartX - mouseX, 0, 255);
+      value += map(dragY - mouseY, 0, 100 + constrain((mouseX - dragStartX) * 10, 0, 414), 0, 255);
       value = constrain(value, 0, 255);
-    }
+      valueChanged = true;
+    } else getValueFromOwner();
     dragY = mouseY;
+    
+    if (valueChanged) setOwnerValue();
+  }
+  
+  void getValueFromOwner() {
+    switch(assignedData) {
+      case 0: //dimmer
+        value = fixtures[currentBottomMenuControlBoxOwner].dimmer;
+      break;
+    }
+  }
+  
+  void setOwnerValue() {
+    switch(assignedData) {
+      case 0: //dimmer
+        dimInput[fixtures[currentBottomMenuControlBoxOwner].channelStart] = value;
+      break;
+    }
   }
 }
 
