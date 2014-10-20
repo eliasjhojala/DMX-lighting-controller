@@ -14,9 +14,6 @@ void setDimAndMemoryValuesAtEveryDraw() {
         for(int ij = 0; ij < fixtures[i].getDMX().length; ij++) {
           valueToDmx[fixtures[i].channelStart+ij] = fixtures[i].getDMX()[ij];
         }
-   
-   //TODO: Now this for loop overwrites some data, but if there is dimInputOldcheck then no light is turned on
-    
   }
   
   memoryType[1] = 4; //Ensimmäisessä memorypaikassa on grandMaster - there is grandMaster in a first memory place
