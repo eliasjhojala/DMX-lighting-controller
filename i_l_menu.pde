@@ -150,6 +150,7 @@ boolean bottomMenuControlBoxOpenOld = false;
 bottomMenuChController[] bottomMenuControlBoxControllers;
 int bottomMenuControlBoxHeight = 200;
 int bottomMenuControlBoxWidth = 20*65;
+String bottomMenuControlBoxDisplayText;
 //---------------------------------------------------------|
 
 
@@ -166,6 +167,7 @@ void openBottomMenuControlBox(int owner) {
       // all "dumb" fixtures (with only one channel: dim)
       bottomMenuControlBoxControllers = new bottomMenuChController[1];
       bottomMenuControlBoxControllers[0] = new bottomMenuChController(50, 50, 0, 0, "Dimmer");
+      bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures[owner].fixtureType + ", Starting Channel: " fixtures[owner].channelStart;
     break;
     default:
       bottomMenuControlBoxControllers = new bottomMenuChController[0];
