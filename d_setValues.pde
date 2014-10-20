@@ -1,12 +1,16 @@
+int[] dimInputOld = new int[dimInput.length];
 void setDimAndMemoryValuesAtEveryDraw() {
-  for(int i = 0; i < channels; i++) {
-      dim[i] = round(map(dimInput[i], 0, 255, 0, grandMaster));
-      if(i < 40) {
-        valueToDmx[i] = dim[i];
-      }
+  for(int i = 0; i < fixtures.length; i++) {
+        fixtures[i].dimmer = int(map(dimInput[fixtures[i].channelStart], 0, 255, 0, grandMaster));
+        dim[fixtures[i].channelStart] = fixtures[i].dimmer;
+        dimInputOld[i] = dimInput[i];
+        for(int ij = 0; ij < fixtures[i].getDMX().length; ij++) {
+          valueToDmx[fixtures[i].channelStart+ij] = fixtures[i].getDMX()[ij];
+        }
+   
+   //TODO: Now this for loop overwrites some data, but if there is dimInputOldcheck then no light is turned on
+    
   }
-  dim[31] = mhx50_createFinalChannelValues[0][7];
-  dim[32] = mhx50_createFinalChannelValues[1][7];
   
   memoryType[1] = 4; //Ensimmäisessä memorypaikassa on grandMaster - there is grandMaster in a first memory place
   memoryType[2] = 5; //Toisessa memorypaikassa on fade - there is fade in second memory place

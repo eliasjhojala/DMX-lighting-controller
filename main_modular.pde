@@ -1,3 +1,10 @@
+//In d_setValues tab there is setDimAndMemoryValuesAtEveryDraw void where dmx values are setted and it really is buggy and dont work!!
+
+
+
+
+
+
 int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
@@ -36,7 +43,7 @@ void setAllowedChannels() {
   }
 }
 
-fixtureInput fixtureInput1;
+fixtureInput[] fixtureInputs = new fixtureInput[2];
 
 
 boolean nextStepPressed = false;

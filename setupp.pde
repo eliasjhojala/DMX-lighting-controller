@@ -38,4 +38,10 @@ void setuppi() {
   myRemoteLocation2 = new NetAddress("192.168.0.11",50000);
   
   ansaWidth = int(width*0.6);
+  
+  fixtureInputs = new fixtureInput[2];
+  
+  for(int i = 0; i < fixtureInputs.length; i++) {
+    fixtureInputs[i] = new fixtureInput(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  }
 }

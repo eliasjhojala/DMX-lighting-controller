@@ -125,6 +125,8 @@ class fixture {
       size = new fixtureSize(fixtureTypeId);
       fixtureType = getFixtureNameByType(fixtureTypeId);
     }
+    if(fixtureTypeId == 16 || fixtureTypeId == 17) {
+    }
   }
   
 }
