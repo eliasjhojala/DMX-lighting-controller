@@ -1,10 +1,10 @@
 void setDimAndMemoryValuesAtEveryDraw() {
   for(int i = 0; i < channels; i++) {
-      dim[i] = round(map(dimInput[i], 0, 255, 0, grandMaster));
-      if(i < 40) {
-        valueToDmx[fixtures[i].channelStart] = fixtures[i].dimmer;
-      }
+      fixtures[i].dimmer = dimInput[i];
+      dim[i] = fixtures[i].dimmer;
   }
+  dim[31] = mhx50_createFinalChannelValues[0][7];
+  dim[32] = mhx50_createFinalChannelValues[1][7];
   
   memoryType[1] = 4; //Ensimmäisessä memorypaikassa on grandMaster - there is grandMaster in a first memory place
   memoryType[2] = 5; //Toisessa memorypaikassa on fade - there is fade in second memory place
@@ -73,8 +73,6 @@ void setDimAndMemoryValuesAtEveryDraw() {
   }
   
   //----------------------------------------------------------------------------------------------------------------------------
-  
-  
   
   
   //---------------------------------------------------------blackOut and-------------------------------------------------------
