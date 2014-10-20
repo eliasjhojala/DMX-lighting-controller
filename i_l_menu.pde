@@ -167,10 +167,11 @@ void openBottomMenuControlBox(int owner) {
       // all "dumb" fixtures (with only one channel: dim)
       bottomMenuControlBoxControllers = new bottomMenuChController[1];
       bottomMenuControlBoxControllers[0] = new bottomMenuChController(50, 50, 0, 0, "Dimmer");
-      bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures[owner].fixtureType + ", Starting Channel: " fixtures[owner].channelStart;
+      bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures[owner].fixtureType + ", Starting Channel: " + fixtures[owner].channelStart;
     break;
     default:
       bottomMenuControlBoxControllers = new bottomMenuChController[0];
+      bottomMenuControlBoxDisplayText = new String;
     break;
   }
 }
@@ -200,6 +201,7 @@ void drawBottomMenuControlBox() {
     
     if (bottomMenuControlBoxControllers != null) for (bottomMenuChController controller : bottomMenuControlBoxControllers) controller.draw();
     
+    text(bottomMenuControlBoxDisplayText, 15, 20);
     
     //Reset draw modifiers
     strokeWeight(1);
@@ -245,8 +247,12 @@ class bottomMenuChController {
     switch(profile) {
       case 0:
         slider();
-        translate(0, 120);
+        translate(0, 115);
         text(displayText, 0, 0);
+        //This is for visuals
+        stroke(255, 100);
+        line(-6, 4, 50, 4);
+        line(-6, 4, -6, -119);
         break;
       case 1:
         
@@ -319,5 +325,9 @@ void drawBottomMenuChControllerSlider(int value){
   stroke(255, 255, 255);
   fill(0, 0, 0);
   rectMode(CORNER);
+  
+}
+
+void drawBottomMenuChControllerButton(String text, boolean down) {
   
 }
