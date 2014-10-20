@@ -1,7 +1,8 @@
-int selectedFixture = 30;
+
 
 
 class fixtureInput {
+  int selectedFixture;
   //Define all the variables
   int dimmer; //dimmer value
   int red, green, blue; //color values
@@ -33,7 +34,10 @@ class fixtureInput {
   fixtureInput(int d, int r, int g, int b, int p, int t, int pF, int tF, int rX, int rZ, int cW, int gW, int gR, int pr, int foc, int sh, int st, int re, int au, int sp, int ha, int fa, int fo) {
   }
 
-
+   void updateVariables() {
+      sF = selectedFixture; //This variable tells what is actual fixtureId
+      fT = fixtures[sF].fixtureTypeId; //This variable tells actual fixtureType
+   }
  
     
     //Functions to set right values to object variables
@@ -134,7 +138,7 @@ class fixtureInput {
     void createFinalValues() {
       int fogId = 20;
       int hazeId = 21;
-      dimInput[sF] = dimmer;
+        dimInput[sF+1] = dimmer;
       if(fT >= 1 && fT <= 6) { fixtures[sF].dimmer = dimmer; }
       if(fT == fogId) { fixtures[sF].fog = dimmer; }
       if(fT == hazeId) { fixtures[sF].haze = dimmer; fixtures[sF].fan = dimmer; }
@@ -168,54 +172,66 @@ class fixtureInput {
 //This void receives osc data from moving head page which is nowadays used as controller for everything but dimmer channels
  void receiveOSC(int value, int value2, String address) {
         
+            
+    
+    
+            for(int i = 0; i <= 1; i++) {
+              
+              
+            if(address.equals("/8/selectedFixtureDown" + str(i + 1)) && value == 1) { fixtureInputs[i].selectedFixture--; fixtureInputs[i].updateVariables(); sendDataToIpad("/8/selectedFixture" + str(i + 1), fixtureInputs[i].selectedFixture); }
+            if(address.equals("/8/selectedFixtureUp" + str(i + 1)) && value == 1) { fixtureInputs[i].selectedFixture++; fixtureInputs[i].updateVariables(); sendDataToIpad("/8/selectedFixture" + str(i + 1), fixtureInputs[i].selectedFixture); }
+              
+              
             //CH 1: Pan
-            if(address.equals("/7/xy" + str(1)) || address.equals("/8/xy" + str(1))) { fixtureInputs[0].pan(value2); } //Changes pan value
+            if(address.equals("/7/xy" + str(i + 1)) || address.equals("/8/xy" + str(i + 1))) { fixtureInputs[i].pan(value2); } //Changes pan value
             //CH 2: Tilt
-            if(address.equals("/7/xy" + str(1)) || address.equals("/8/xy" + str(1))) { fixtureInputs[0].tilt(value); } //Changes tilt value
+            if(address.equals("/7/xy" + str(i + 1)) || address.equals("/8/xy" + str(i + 1))) { fixtureInputs[i].tilt(value); } //Changes tilt value
             //CH 3: Fine adjustment for rotation (pan)
-            fixtureInputs[0].panFine(0); //Sets panFine value to zero
+            fixtureInputs[i].panFine(0); //Sets panFine value to zero
             //CH 4: Fine adjustment for inclination (tilt)
-            fixtureInputs[0].tiltFine(0); //Sets tiltFine value to zero
+            fixtureInputs[i].tiltFine(0); //Sets tiltFine value to zero
             //CH 5: Response speed
-            fixtureInputs[0].responseSpeed(0); //Sets responseSpeed to zero which means the fastest possible
+            fixtureInputs[i].responseSpeed(0); //Sets responseSpeed to zero which means the fastest possible
             
             //CH 6: Colour wheel
-            fixtureInputs[0].setColorValues(address); //Check color buttons every round
-            if(address.equals("/8/rainbow" + str(1))) { fixtureInputs[0].rainbow(value); } //Color rainbow
+            fixtureInputs[i].setColorValues(address); //Check color buttons every round
+            if(address.equals("/8/rainbow" + str(i + 1))) { fixtureInputs[i].rainbow(value); } //Color rainbow
             
             //CH 7: Shutter
-            if(address.equals("/8/blackOut" + str(1)) && value == 1) { fixtureInputs[0].blackOut(); } //Check if blackout is presset
-            if(address.equals("/8/openShutter" + str(1)) && value == 1) { fixtureInputs[0].openShutter(); } //Check if open is pressed
-            if(address.equals("/8/strobe" + str(1))) { fixtureInputs[0].strobe(value); } //Check if strobe slider is over zero
+            if(address.equals("/8/blackOut" + str(i + 1)) && value == 1) { fixtureInputs[i].blackOut(); } //Check if blackout is presset
+            if(address.equals("/8/openShutter" + str(i + 1)) && value == 1) { fixtureInputs[i].openShutter(); } //Check if open is pressed
+            if(address.equals("/8/strobe" + str(i + 1))) { fixtureInputs[i].strobe(value); } //Check if strobe slider is over zero
             
             //CH 8: Mechanical dimmer
-            if(address.equals("/7/dimmer" + str(1)) || address.equals("/8/dimmer" + str(1))) { fixtureInputs[0].dimmer(value); } //Changes dimmer value
+            if(address.equals("/7/dimmer" + str(i + 1)) || address.equals("/8/dimmer" + str(i + 1))) { fixtureInputs[i].dimmer(value); } //Changes dimmer value
             
             //CH 9: Gobo wheel
-            if(address.equals("/8/noGobo" + str(1)) && value == 1) { fixtureInputs[0].noGobo(); } //Gobowheel open
-            if(address.equals("/8/goboUp" + str(1)) && value == 1) { fixtureInputs[0].goboUp(); } //Next gobo
-            if(address.equals("/8/goboDown" + str(1)) && value == 1) { fixtureInputs[0].goboDown(); } //Reverse gobo
-            if(address.equals("/8/goboRainbowUp" + str(1))) { fixtureInputs[0].goboRainbowUp(value); } //Gobowheel positive rotation
-            if(address.equals("/8/goboRainbowDown" + str(1))) { fixtureInputs[0].goboRainbowDown(value); } //Gobowheel negative rotation
+            if(address.equals("/8/noGobo" + str(i + 1)) && value == 1) { fixtureInputs[i].noGobo(); } //Gobowheel open
+            if(address.equals("/8/goboUp" + str(i + 1)) && value == 1) { fixtureInputs[i].goboUp(); } //Next gobo
+            if(address.equals("/8/goboDown" + str(i + 1)) && value == 1) { fixtureInputs[i].goboDown(); } //Reverse gobo
+            if(address.equals("/8/goboRainbowUp" + str(i + 1))) { fixtureInputs[i].goboRainbowUp(value); } //Gobowheel positive rotation
+            if(address.equals("/8/goboRainbowDown" + str(i + 1))) { fixtureInputs[i].goboRainbowDown(value); } //Gobowheel negative rotation
             
             //CH 10: Gobo rotation
-            if(address.equals("/8/goboRotationUp" + str(1))) { fixtureInputs[0].goboRotationUp(value); } //Gobo positive rotation
-            if(address.equals("/8/goboRotationDown" + str(1))) { fixtureInputs[0].goboRotationDown(value); } //Gobo negative rotation
-            if(address.equals("/8/goboNoRotation" + str(1)) && value == 1) { fixtureInputs[0].goboNoRotation(); } //No gobo rotation
-            if(address.equals("/8/goboBouncing" + str(1)) && value == 1) { fixtureInputs[0].goboBouncing(); } //Gobo bouncing
+            if(address.equals("/8/goboRotationUp" + str(i + 1))) { fixtureInputs[i].goboRotationUp(value); } //Gobo positive rotation
+            if(address.equals("/8/goboRotationDown" + str(i + 1))) { fixtureInputs[i].goboRotationDown(value); } //Gobo negative rotation
+            if(address.equals("/8/goboNoRotation" + str(i + 1)) && value == 1) { fixtureInputs[i].goboNoRotation(); } //No gobo rotation
+            if(address.equals("/8/goboBouncing" + str(i + 1)) && value == 1) { fixtureInputs[i].goboBouncing(); } //Gobo bouncing
             
             //CH 11: Special functions
-            if(address.equals("/8/reset" + str(1))) { fixtureInputs[0].reset(value); } //Check ig reset button is pressed and resets all the channels in moving head
+            if(address.equals("/8/reset" + str(i + 1))) { fixtureInputs[i].reset(value); } //Check ig reset button is pressed and resets all the channels in moving head
             
             //CH 12: Built-in programmes
-            if(address.equals("/8/autoProgram" + str(1)) && value == 1) { fixtureInputs[0].autoProgram(); } //Next autoProgram
+            if(address.equals("/8/autoProgram" + str(i + 1)) && value == 1) { fixtureInputs[i].autoProgram(); } //Next autoProgram
             
             //CH 13: Prism
-            if(address.equals("/8/prism" + str(1))) { fixtureInputs[0].prism(value); } //Change prism value
+            if(address.equals("/8/prism" + str(i + 1))) { fixtureInputs[i].prism(value); } //Change prism value
             
             //CH 14: Focus
-            if(address.equals("/8/focus" + str(1))) { fixtureInputs[0].focus(value); } //Change focus value
+            if(address.equals("/8/focus" + str(i + 1))) { fixtureInputs[i].focus(value); } //Change focus value
             
-            fixtureInputs[0].createFinalValues();
+            fixtureInputs[i].createFinalValues();
+            
+            }
             
     }
