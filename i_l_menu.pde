@@ -284,17 +284,25 @@ class bottomMenuChController {
     if (valueChanged) setOwnerValue();
   }
   
-  boolean toggleStatus;
+  boolean toggleStatus, oldGo;
   //Draws & handles the two buttons
   void buttons() {
     pushMatrix();
-    translate(22, 70);
-    //Check for pressing of the buttons
-    //boolean goDown, toggleDown;
-    //if (isHover())
-    drawBottomMenuChControllerButton("Go", false);
+    translate(32, 70);
+    
+    //Check for pressing of the Go button
+    boolean goDown = isHover(0, 0, 48, 15) && mousePressed;
+    if (goDown) {
+      mouseLocked = true;
+      mouseLocker = "bottomMenuControlBox:go" + str(assignedData);
+      value = 255;
+      setOwnerValue();
+      oldGo = true;
+    }
+    if (!goDown && oldGo) { value = 0; setOwnerValue(); oldGo = false; }
+    drawBottomMenuChControllerButton("Go", goDown);
     popMatrix();
-  } 
+  }
   
   void getValueFromOwner() {
     switch(assignedData) {
@@ -347,13 +355,15 @@ void drawBottomMenuChControllerButton(String text, boolean down) {
   //Draw background of the button
   if(!down) fill(200); else fill(120);
   noStroke();
-  rect(0, 0, 40, 10);
+  rect(0, 0, 48, 15);
   //Draw the text of the button
-  text(text, 1, 9);
+  fill(0);
+  textSize(12);
+  text(text, 4, 12);
   //Draw decorative "frame" around the button
   noFill(); 
   if (!down) { stroke(0, 50); strokeWeight(2); } else { stroke(0, 80); strokeWeight(1); }
-  rect(0, 0, 40, 10);
+  rect(0, 0, 48, 15);
   
-  
+  textSize(12);
 }
