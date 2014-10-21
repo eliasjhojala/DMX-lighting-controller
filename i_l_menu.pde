@@ -171,8 +171,8 @@ void openBottomMenuControlBox(int owner) {
     break;
     default:
       bottomMenuControlBoxControllers = new bottomMenuChController[0];
-      bottomMenuControlBoxDisplayText = new String;
-    break;
+      bottomMenuControlBoxDisplayText = "";
+      break;
   }
 }
 
@@ -247,6 +247,7 @@ class bottomMenuChController {
     switch(profile) {
       case 0:
         slider();
+        buttons();
         translate(0, 115);
         text(displayText, 0, 0);
         //This is for visuals
@@ -283,6 +284,18 @@ class bottomMenuChController {
     if (valueChanged) setOwnerValue();
   }
   
+  boolean toggleStatus;
+  //Draws & handles the two buttons
+  void buttons() {
+    pushMatrix();
+    translate(22, 70);
+    //Check for pressing of the buttons
+    //boolean goDown, toggleDown;
+    //if (isHover())
+    drawBottomMenuChControllerButton("Go", false);
+    popMatrix();
+  } 
+  
   void getValueFromOwner() {
     switch(assignedData) {
       case 0: //dimmer
@@ -302,7 +315,7 @@ class bottomMenuChController {
 
 
 //values go from 0 to 255
-void drawBottomMenuChControllerSlider(int value){
+void drawBottomMenuChControllerSlider(int value) {
   rectMode(CORNERS);
   //Draw background
   noStroke();
@@ -328,6 +341,19 @@ void drawBottomMenuChControllerSlider(int value){
   
 }
 
+
 void drawBottomMenuChControllerButton(String text, boolean down) {
+  //rectMode = CORNER
+  //Draw background of the button
+  if(!down) fill(200); else fill(120);
+  noStroke();
+  rect(0, 0, 40, 10);
+  //Draw the text of the button
+  text(text, 1, 9);
+  //Draw decorative "frame" around the button
+  noFill(); 
+  if (!down) { stroke(0, 50); strokeWeight(2); } else { stroke(0, 80); strokeWeight(1); }
+  rect(0, 0, 40, 10);
+  
   
 }
