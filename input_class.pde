@@ -234,4 +234,7 @@ class fixtureInput {
             
             }
             
+//            
+//            if(address.equals("/8/saveFixtureMemory1") && value == 1) { saveFixtureMemory(); }
+//            if(address.equals("/8/loadFixtureMemory1") && value == 1) { loadFixtureMemory(); }
     }
