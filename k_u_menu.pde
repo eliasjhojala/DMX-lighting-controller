@@ -1,6 +1,11 @@
 //Tässä välilehdessä piirretään ylävalikko, ja käsitellään sen nappuloiden komentoja 
 
 void ylavalikko() {
+  //Experimental feature: Time display
+  fill(0);
+  rect(0, 50, 61, 17);
+  fill(255);
+  text(hour() + ":" + minute() + ":" + second(), 3, 64);
   if(move == false && mouseY < height - 200 && mouseY > 50 && mouseX < width-120 && (!mouseLocked || mouseLocker == "main")) { //Tarkistetaan mm. ettei hiiri ole lukittuna jollekin muulle alueelle
     mouseLocked = true;
     mouseLocker = "main";
