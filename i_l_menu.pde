@@ -187,13 +187,17 @@ void drawBottomMenuControlBox() {
     stroke(9, 157, 222);
     strokeWeight(5);
     rect(0, 0, bottomMenuControlBoxWidth, bottomMenuControlBoxHeight);
+    fill(0, 50);
+    textSize(120);
+    text("Fixture " + currentBottomMenuControlBoxOwner, 0, bottomMenuControlBoxHeight - 10);
+    textSize(12);
     
     //Draw X button (for an option to close the box)
     pushMatrix();
     fill(255, 0, 0); noStroke();
     translate(0, bottomMenuControlBoxHeight - 20);
     rect(0, 0, 21, 20);
-    stroke(255); strokeWeight(2);
+    stroke(200); strokeWeight(2);
     line(4, 4, 16, 16); line(4, 16, 16, 4);
     //hovering over the X button AND mouse is down --> close box
     if (isHover(0, 0, 21, 20) && mousePressed && mouseLocker.equals("main")) { mouseLocked = true; mouseLocker = "bottomMenuControlBox:close"; bottomMenuControlBoxOpen = false; }
@@ -252,7 +256,7 @@ class bottomMenuChController {
         text(displayText, 0, 0);
         //This is for visuals
         stroke(255, 100); strokeWeight(1);
-        line(-6, 4, 50, 4);
+        line(-5, 4, 50, 4);
         line(-6, 4, -6, -119);
         break;
       case 1:
