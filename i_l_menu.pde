@@ -251,7 +251,7 @@ class bottomMenuChController {
         translate(0, 115);
         text(displayText, 0, 0);
         //This is for visuals
-        stroke(255, 100);
+        stroke(255, 100); strokeWeight(1);
         line(-6, 4, 50, 4);
         line(-6, 4, -6, -119);
         break;
@@ -267,7 +267,7 @@ class bottomMenuChController {
     //Draw slider
     drawBottomMenuChControllerSlider(value);
     //Check for drag
-    if (isHover(0, 0, 20, 100) && mousePressed) {
+    if (isHover(0, 0, 20, 100) && mousePressed && mouseLocker.equals("main")) {
       //Started dragging
       mouseLocked = true;
       mouseLocker = "bottomMenuControlBox:slider" + str(assignedData);
@@ -284,25 +284,43 @@ class bottomMenuChController {
     if (valueChanged) setOwnerValue();
   }
   
-  boolean toggleStatus, oldGo;
+  boolean oldGo;
+  int valueBeforeGo;
   //Draws & handles the two buttons
   void buttons() {
     pushMatrix();
-    translate(32, 70);
+    translate(30, 65);
     
-    //Check for pressing of the Go button
+    //Go button
     boolean goDown = isHover(0, 0, 48, 15) && mousePressed;
-    if (goDown) {
+    boolean mouseLockerIsMain = mouseLocker.equals("main");
+    if (goDown && mouseLockerIsMain) {
       mouseLocked = true;
       mouseLocker = "bottomMenuControlBox:go" + str(assignedData);
+      if(value != 255) valueBeforeGo = value; else valueBeforeGo = 0;
+      
       value = 255;
       setOwnerValue();
       oldGo = true;
     }
-    if (!goDown && oldGo) { value = 0; setOwnerValue(); oldGo = false; }
-    drawBottomMenuChControllerButton("Go", goDown);
+    boolean mouseLockerIsGo = mouseLocker.equals("bottomMenuControlBox:go" + str(assignedData));
+    if (!mouseLockerIsGo && oldGo) { value = valueBeforeGo; setOwnerValue(); oldGo = false; }
+    drawBottomMenuChControllerButton("Go", mouseLockerIsGo);
+    
+    //Toggle button
+    translate(0, 20);
+    boolean tglDown = isHover(0, 0, 48, 15) && mousePressed;
+    if (tglDown && mouseLockerIsMain) {
+      mouseLocked = true;
+      mouseLocker = "bottomMenuControlBox:toggle" + str(assignedData);
+      if (value == 0) value = 255; else value = 0;
+      setOwnerValue();
+    }
+    drawBottomMenuChControllerButton("Toggle", mouseLocker.equals("bottomMenuControlBox:toggle" + str(assignedData)));
+    
     popMatrix();
   }
+  
   
   void getValueFromOwner() {
     switch(assignedData) {
