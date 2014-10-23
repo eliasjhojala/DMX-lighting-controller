@@ -44,4 +44,7 @@ void setuppi() {
   for(int i = 0; i < fixtureInputs.length; i++) {
     fixtureInputs[i] = new fixtureInput(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
+  
+
+  
 }

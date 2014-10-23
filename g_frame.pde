@@ -10,7 +10,7 @@ public class secondApplet extends PApplet {
   public void draw() {
     if(showOutputAsNumbers == true) {
     background(0, 0, 0);
-    fill(255, 255, 255);
+    fill(255, 255, 255);    
     text("DMX", 5, 10);
     for(int i = 0; i < 40; i++) {
       fill(255, 255, 255);

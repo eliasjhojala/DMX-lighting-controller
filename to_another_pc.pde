@@ -48,3 +48,9 @@ void sendDataToIpad(String ch, int val) {
     myMessage2.add(val); // add an int to the osc message
     oscP52.send(myMessage2, myRemoteLocation2); 
 }
+void sendDataToIpadAsString(String ch, String val) {
+    OscMessage myMessage2 = new OscMessage(ch);
+    myMessage2.add(val); // add an int to the osc message
+    oscP52.send(myMessage2, myRemoteLocation2); 
+}
+
