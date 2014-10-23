@@ -9,6 +9,13 @@ void makePreset(int memoryNumber) {
   memoryType[memoryNumber] = 1;
 }
 void preset(int memoryNumber, int value) {
+  presetNew(memoryNumber, value);
+}
+void presetNew(int memoryNumber, int value) {
+  loadFixtureMemory(memoryNumber, value);
+  memoryValue[memoryNumber] = value;
+}
+void presetOld(int memoryNumber, int value) {
   for(int i = 0; i < channels; i++) {
     int to = round(map(preset[memoryNumber][i], 0, 255, 0, value));
     if(memoryData[i] < to) {

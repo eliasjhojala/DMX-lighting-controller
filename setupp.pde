@@ -35,7 +35,16 @@ void setuppi() {
   oscP51 = new OscP5(this, 5000);
   oscP52 = new OscP5(this, 5001);
   myRemoteLocation1 = new NetAddress("192.168.0.17",5001);
-  myRemoteLocation2 = new NetAddress("192.168.0.11",50000);
+  myRemoteLocation2 = new NetAddress("192.168.0.13",50000);
   
   ansaWidth = int(width*0.6);
+  
+  fixtureInputs = new fixtureInput[2];
+  
+  for(int i = 0; i < fixtureInputs.length; i++) {
+    fixtureInputs[i] = new fixtureInput(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  }
+  
+
+  
 }

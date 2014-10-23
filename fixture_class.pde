@@ -116,6 +116,19 @@ class fixture {
   }
   
   
+  void receiveDMX(int[] dmxChannels) {
+    switch(fixtureTypeId) {
+         /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: dimmer = dmxChannels[0]; break; //dimmers
+         /* MH-X50 14-channel mode */        case 16: pan = dmxChannel[0]; tilt = dmxChannel[1]; panFine = dmxChannel[2]; tiltFine = dmxChannel[3]; responseSpeed = dmxChannel[4]; colorWheel = dmxChannel[5]; shutter = dmxChannel[6]; dimmer = dmxChannel[7]; goboWheel = dmxChannel[8]; goboRotation = dmxChannel[9]; specialFunctions = dmxChannel[10]; autoPrograms = dmxChannel[11]; prism = dmxChannel[12]; focus = dmxChannel[13]; break; //MH-X50
+         /* MH-X50 8-channel mode */         case 17: pan = dmxChannel[0]; tilt = dmxChannel[1]; colorWheel = dmxChannel[2]; shutter = dmxChannel[3]; goboWheel = dmxChannel[4]; goboRotation = dmxChannel[5]; prism = dmxChannel[6]; focus = dmxChannel[7]; break; //MH-X50 8-ch mode
+         /* simple rgb led par */            case 18: red = dmxChannel[0]; green = dmxChannel[1]; blue = dmxChannel[2]; break; //Simple rgb led par
+         /* simple rgb led par with dim */   case 19: dimmer = dmxChannel[0]; red = dmxChannel[1]; green = dmxChannel[2]; blue = dmxChannel[3]; break; //Simple rgb led par with dim
+         /* 2ch hazer */                     case 20: haze = dmxChannel[0]; fan = dmxChannel[1]; break; //2ch hazer
+         /* 1ch fog */                       case 21: fog = dmxChannel[0]; break; //1ch fog
+      }
+  }
+  
+  
   int oldFixtureTypeId;
   void draw() {
     if (fixtureTypeId == 16 || fixtureTypeId == 17) visualisationSettingsFromMovingHeadData();
@@ -127,6 +140,8 @@ class fixture {
       //Fixture type changed, recalculate certain variables
       size = new fixtureSize(fixtureTypeId);
       fixtureType = getFixtureNameByType(fixtureTypeId);
+    }
+    if(fixtureTypeId == 16 || fixtureTypeId == 17) {
     }
   }
   
