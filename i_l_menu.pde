@@ -143,22 +143,22 @@ void checkFixtureBoxRightClick(int id) {
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //bottomMenuControlBox---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//Variables------------------------------------------------|
-int currentBottomMenuControlBoxOwner;
-boolean bottomMenuControlBoxOpen = false;
-boolean bottomMenuControlBoxOpenOld = false;
-bottomMenuChController[] bottomMenuControlBoxControllers;
-int[] bottomMenuControlBoxDMXValues;
-boolean[] bottomMenuControlBoxDMXValueChanged;
-int bottomMenuControlBoxHeight = 200;
-int bottomMenuControlBoxWidth = 20*65;
-String bottomMenuControlBoxDisplayText;
-//---------------------------------------------------------|
+//Variables----------------------------------------------//|
+int currentBottomMenuControlBoxOwner;                    //|
+boolean bottomMenuControlBoxOpen = false;                //|
+boolean bottomMenuControlBoxOpenOld = false;             //|
+bottomMenuChController[] bottomMenuControlBoxControllers;//|
+int[] bottomMenuControlBoxDMXValues;                     //|
+boolean[] bottomMenuControlBoxDMXValueChanged;           //|
+int bottomMenuControlBoxHeight = 200;                    //|
+int bottomMenuControlBoxWidth = 20*65;                   //|
+String bottomMenuControlBoxDisplayText;                  //|
+//-------------------------------------------------------//|
 
 
-//Constants------------------------------------------------|
-String bottomMenuControlBoxSubstr = "bottomMenuControlBox";
-//---------------------------------------------------------|
+//Constants------------------------------------------------//|
+String bottomMenuControlBoxSubstr = "bottomMenuControlBox";//|
+//---------------------------------------------------------//|
 
 void openBottomMenuControlBox(int owner) {
   bottomMenuControlBoxOpen = true;
@@ -170,6 +170,8 @@ void openBottomMenuControlBox(int owner) {
       bottomMenuControlBoxControllers = new bottomMenuChController[1];
       bottomMenuControlBoxControllers[0] = new bottomMenuChController(50, 50, 0, 0, "Dimmer");
       bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures[owner].fixtureType + ", Starting Channel: " + fixtures[owner].channelStart;
+      bottomMenuControlBoxDMXValues = fixtures[owner].getDMX();
+      bottomMenuControlBoxDMXValueChanged = new boolean[bottomMenuControlBoxDMXValues.length];
     break;
     default:
       bottomMenuControlBoxControllers = new bottomMenuChController[0];
@@ -207,6 +209,23 @@ void drawBottomMenuControlBox() {
     
     if (bottomMenuControlBoxControllers != null) for (bottomMenuChController controller : bottomMenuControlBoxControllers) controller.draw();
     
+    //Update DMX values-----------------------------------------------------------------|
+    int[] tempDMX = fixtures[currentBottomMenuControlBoxOwner].getDMX();
+    int arrayIndex = 0;
+    //This value is true if any of the entries in the boolean array are true
+    boolean changd = false;
+    if (bottomMenuControlBoxDMXValueChanged != null && bottomMenuControlBoxDMXValues != null)
+    for (boolean changed : bottomMenuControlBoxDMXValueChanged) { if (changed) {
+      tempDMX[arrayIndex] = bottomMenuControlBoxDMXValues[arrayIndex];
+      changd = true;
+    } else bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
+      arrayIndex++;
+    }
+    bottomMenuControlBoxDMXValueChanged = new boolean[tempDMX.length];
+    
+    if (changd) fixtureInputs[0].receiveFromBottomMenu(tempDMX, currentBottomMenuControlBoxOwner);
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+    
     text(bottomMenuControlBoxDisplayText, 15, 20);
     
     //Reset draw modifiers
@@ -236,7 +255,7 @@ class bottomMenuChController {
   int dragStartX;
   int dragY;
   
-  int assignedData; //Datatype assigned to this slider (0 = dimmer, COMPLETE THIS LIST)
+  int assignedData; //Datatype assigned to this slider
   
   //Profiles: 0: all options, 1: compact, only slider, 2: compact, only toggle & go
   int profile = 0;
@@ -332,18 +351,13 @@ class bottomMenuChController {
   
   
   void getValueFromOwner() {
-    switch(assignedData) {
-      case 0: //dimmer
-        value = fixtures[currentBottomMenuControlBoxOwner].dimmer;
-      break;
-    }
+    if (bottomMenuControlBoxDMXValues != null) value = bottomMenuControlBoxDMXValues[assignedData];
   }
   
   void setOwnerValue() {
-    switch(assignedData) {
-      case 0: //dimmer
-        dimInput[fixtures[currentBottomMenuControlBoxOwner].channelStart] = value;
-      break;
+    if (bottomMenuControlBoxDMXValues != null) {
+      bottomMenuControlBoxDMXValues[assignedData] = value;
+      bottomMenuControlBoxDMXValueChanged[assignedData] = true;
     }
   }
 }

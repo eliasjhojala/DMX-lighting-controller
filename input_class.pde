@@ -45,12 +45,12 @@ class fixtureInput {
    }
  
    void receiveFromBottomMenu(int[] dmxChannels, int fixtId) {
-     setSelectedFixture(fixtId);
+     setSelectedFixture(0, fixtId);
      receiveDMX(dmxChannels);
    }
  
    void receiveDMX(int[] dmxChannels) {
-    switch(fixtureTypeId) {
+    switch(selectedFixture) {
          /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: dimmer = dmxChannels[0]; break; //dimmers
          /* MH-X50 14-channel mode */        case 16: pan = dmxChannel[0]; tilt = dmxChannel[1]; panFine = dmxChannel[2]; tiltFine = dmxChannel[3]; responseSpeed = dmxChannel[4]; colorWheel = dmxChannel[5]; shutter = dmxChannel[6]; dimmer = dmxChannel[7]; goboWheel = dmxChannel[8]; goboRotation = dmxChannel[9]; specialFunctions = dmxChannel[10]; autoPrograms = dmxChannel[11]; prism = dmxChannel[12]; focus = dmxChannel[13]; break; //MH-X50
          /* MH-X50 8-channel mode */         case 17: pan = dmxChannel[0]; tilt = dmxChannel[1]; colorWheel = dmxChannel[2]; shutter = dmxChannel[3]; goboWheel = dmxChannel[4]; goboRotation = dmxChannel[5]; prism = dmxChannel[6]; focus = dmxChannel[7]; break; //MH-X50 8-ch mode
@@ -190,12 +190,12 @@ class fixtureInput {
       return fT == 16 || fT == 17;
     }
     
-    void changeSelectedFixtureData(int i, int ij, boolean forward, int steps) {
-      setSelectedFixture(fixtureInputs[i].selectedFixture + int(map(int(forward), 0, 1, -1, 1))*steps); //If forward is  true then value is positive, else value is negative
+   void changeSelectedFixtureData(int i, int ij, boolean forward, int steps) {
+      setSelectedFixture(i, fixtureInputs[i].selectedFixture + int(map(int(forward), 0, 1, -1, 1))*steps); //If forward is  true then value is positive, else value is negative
       sendDataToIpad("/8/selectedFixture" + str(i + 1), fixtureInputs[i].sF); 
       sendDataToIpad("/saveOptions/selectedFixture", fixtureInputs[ij].sF); 
     }
-    void setSelectedFixture(int selF) {
+    void setSelectedFixture(int i, int selF) {
       fixtureInputs[i].selectedFixture = selF;
       fixtureInputs[i].updateVariables(); 
     }
