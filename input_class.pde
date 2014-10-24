@@ -44,6 +44,24 @@ class fixtureInput {
       fT = fixtures[sF].fixtureTypeId; //This variable tells actual fixtureType
    }
  
+   void receiveFromBottomMenu(int[] dmxChannels, int fixtId) {
+     setSelectedFixture(fixtId);
+     receiveDMX(dmxChannels);
+   }
+ 
+   void receiveDMX(int[] dmxChannels) {
+    switch(fixtureTypeId) {
+         /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: dimmer = dmxChannels[0]; break; //dimmers
+         /* MH-X50 14-channel mode */        case 16: pan = dmxChannel[0]; tilt = dmxChannel[1]; panFine = dmxChannel[2]; tiltFine = dmxChannel[3]; responseSpeed = dmxChannel[4]; colorWheel = dmxChannel[5]; shutter = dmxChannel[6]; dimmer = dmxChannel[7]; goboWheel = dmxChannel[8]; goboRotation = dmxChannel[9]; specialFunctions = dmxChannel[10]; autoPrograms = dmxChannel[11]; prism = dmxChannel[12]; focus = dmxChannel[13]; break; //MH-X50
+         /* MH-X50 8-channel mode */         case 17: pan = dmxChannel[0]; tilt = dmxChannel[1]; colorWheel = dmxChannel[2]; shutter = dmxChannel[3]; goboWheel = dmxChannel[4]; goboRotation = dmxChannel[5]; prism = dmxChannel[6]; focus = dmxChannel[7]; break; //MH-X50 8-ch mode
+         /* simple rgb led par */            case 18: red = dmxChannel[0]; green = dmxChannel[1]; blue = dmxChannel[2]; break; //Simple rgb led par
+         /* simple rgb led par with dim */   case 19: dimmer = dmxChannel[0]; red = dmxChannel[1]; green = dmxChannel[2]; blue = dmxChannel[3]; break; //Simple rgb led par with dim
+         /* 2ch hazer */                     case 20: haze = dmxChannel[0]; fan = dmxChannel[1]; break; //2ch hazer
+         /* 1ch fog */                       case 21: fog = dmxChannel[0]; break; //1ch fog
+      }
+      createFinalValues();
+  }
+ 
     
     //Functions to set right values to object variables
     
@@ -171,10 +189,20 @@ class fixtureInput {
     boolean ftIsMhX50() { //This function is only to check is the fixtureType moving head (17 or 16)
       return fT == 16 || fT == 17;
     }
-}
-
-
-//This void receives osc data from moving head page which is nowadays used as controller for everything but dimmer channels
+    
+    void changeSelectedFixtureData(int i, int ij, boolean forward, int steps) {
+      setSelectedFixture(fixtureInputs[i].selectedFixture + int(map(int(forward), 0, 1, -1, 1))*steps); //If forward is  true then value is positive, else value is negative
+      sendDataToIpad("/8/selectedFixture" + str(i + 1), fixtureInputs[i].sF); 
+      sendDataToIpad("/saveOptions/selectedFixture", fixtureInputs[ij].sF); 
+    }
+    void setSelectedFixture(int selF) {
+      fixtureInputs[i].selectedFixture = selF;
+      fixtureInputs[i].updateVariables(); 
+    }
+    
+    
+    
+    //This void receives osc data from moving head page which is nowadays used as controller for everything but dimmer channels
  void receiveOSC(int value, int value2, String address) {
 
             
@@ -196,15 +224,20 @@ class fixtureInput {
                       savePreset = false;
                     }  
                   }
-                  createFinalValuesPlease = false;
+                  createFinalValuesPlease = false; //That's because we don't want to change any dmx values now
                 }
               }
             }
             
             
+            //The next function checks all the saveSetting buttons. That is to check what values do you want to save and what not.
             if (value == 1) {
               for(int i = 0; i < saveOptionButtonVariables.length; i++) {
-                if(address.equals("/saveOptions/" + saveOptionButtonVariables[i] + "Button")) { saveOptionButtonVariableValues[i] = !saveOptionButtonVariableValues[i]; sendDataToIpad("/saveOptions/" + saveOptionButtonVariables[i] + "Led", int(saveOptionButtonVariableValues[i])); createFinalValuesPlease = false; }
+                if(address.equals("/saveOptions/" + saveOptionButtonVariables[i] + "Button")) { 
+                  saveOptionButtonVariableValues[i] = !saveOptionButtonVariableValues[i]; 
+                  sendDataToIpad("/saveOptions/" + saveOptionButtonVariables[i] + "Led", int(saveOptionButtonVariableValues[i])); 
+                  createFinalValuesPlease = false; //That's because we don't want to change any dmx values now
+                }
               }
             }
     
@@ -212,12 +245,23 @@ class fixtureInput {
             for(int i = 0; i <= 1; i++) {
               
               
-            if((address.equals("/8/selectedFixtureDown" + str(i + 1)) || (address.equals("/saveOptions/selectedFixtureDown")) && i == 0) && value == 1) { fixtureInputs[i].selectedFixture--; fixtureInputs[i].updateVariables(); sendDataToIpad("/8/selectedFixture" + str(i + 1), fixtureInputs[i].sF); sendDataToIpad("/saveOptions/selectedFixture", fixtureInputs[0].sF); }
-            if((address.equals("/8/selectedFixtureUp" + str(i + 1))  || (address.equals("/saveOptions/selectedFixtureUp")) && i == 0) && value == 1) { fixtureInputs[i].selectedFixture++; fixtureInputs[i].updateVariables(); sendDataToIpad("/8/selectedFixture" + str(i + 1), fixtureInputs[i].sF); sendDataToIpad("/saveOptions/selectedFixture", fixtureInputs[0].sF); }
-            if(address.equals("/saveOptions/selectedFixtureDownTen") && value == 1) { fixtureInputs[i].selectedFixture -= 10; fixtureInputs[0].updateVariables(); sendDataToIpad("/8/selectedFixture" + str(i + 1), fixtureInputs[i].sF); sendDataToIpad("/saveOptions/selectedFixture", fixtureInputs[0].sF); }
-            if(address.equals("/saveOptions/selectedFixtureUpTen") && value == 1) { fixtureInputs[i].selectedFixture += 10; fixtureInputs[0].updateVariables(); sendDataToIpad("/8/selectedFixture" + str(i + 1), fixtureInputs[i].sF); sendDataToIpad("/saveOptions/selectedFixture", fixtureInputs[0].sF); }
-            
+            //Checking selectedFixture change buttons   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            if((address.equals("/8/selectedFixtureDown" + str(i + 1)) || (address.equals("/saveOptions/selectedFixtureDown")) && i == 0) && value == 1) { 
+              changeSelectedFixtureData(i, 0, false, 1);
+            }
+            if((address.equals("/8/selectedFixtureUp" + str(i + 1))  || (address.equals("/saveOptions/selectedFixtureUp")) && i == 0) && value == 1) { 
+              changeSelectedFixtureData(i, 0, true, 1);
+            }
+            if(address.equals("/saveOptions/selectedFixtureDownTen") && value == 1) { 
+              changeSelectedFixtureData(i, 0, false, 10);
+            }
+            if(address.equals("/saveOptions/selectedFixtureUpTen") && value == 1) { 
+              changeSelectedFixtureData(i, 0, true, 10);
+            }
+            //Checking selectedFixture change buttons  ends --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
               
+              
+            //Checking sliders buttons etc. --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
               
             //CH 1: Pan
             if(address.equals("/7/xy" + str(i + 1)) || address.equals("/8/xy" + str(i + 1))) { fixtureInputs[i].pan(value2); } //Changes pan value
@@ -267,8 +311,9 @@ class fixtureInput {
             //CH 14: Focus
             if(address.equals("/8/focus" + str(i + 1))) { fixtureInputs[i].focus(value); } //Change focus value
             
+            //Checking sliders buttons etc. ends --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             
-            if(createFinalValuesPlease) {
+            if(createFinalValuesPlease) { //Check if pressed some button which needs finalValues creating
               fixtureInputs[i].createFinalValues();
             }
             
@@ -278,3 +323,5 @@ class fixtureInput {
             
          
     }
+}
+

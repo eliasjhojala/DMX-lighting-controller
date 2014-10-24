@@ -23,7 +23,7 @@ void oscEvent(OscMessage theOscMessage) {
   }
   
   
-  receiveOSC(digitalValue, digitalValue2, addr);
+  fixtureInputs[0].receiveOSC(digitalValue, digitalValue2, addr);
   
   for(int i = 1; i <= touchOSCchannels; i++) { //Käydään kaikki touchOSCin kanavat (faderit) läpi
     String nimi = "/1/fader" + str(i);
