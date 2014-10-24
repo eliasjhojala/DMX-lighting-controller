@@ -13,10 +13,7 @@ void setDimAndMemoryValuesAtEveryDraw() {
       }
         for(int ij = 0; ij < fixtures[i].getDMX().length; ij++) {
           valueToDmx[fixtures[i].channelStart+ij] = fixtures[i].getDMX()[ij];
-<<<<<<< HEAD
-=======
           if(fixtures[i].getDMX().length == 14) { println(fixtures[i].getDMX()[ij]); }
->>>>>>> origin/input-class
         }
   }
   
