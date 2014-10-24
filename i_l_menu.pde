@@ -148,6 +148,8 @@ int currentBottomMenuControlBoxOwner;
 boolean bottomMenuControlBoxOpen = false;
 boolean bottomMenuControlBoxOpenOld = false;
 bottomMenuChController[] bottomMenuControlBoxControllers;
+int[] bottomMenuControlBoxDMXValues;
+boolean[] bottomMenuControlBoxDMXValueChanged;
 int bottomMenuControlBoxHeight = 200;
 int bottomMenuControlBoxWidth = 20*65;
 String bottomMenuControlBoxDisplayText;
@@ -222,6 +224,9 @@ void drawBottomMenuControlBox() {
   bottomMenuControlBoxOpenOld = bottomMenuControlBoxOpen;
 }
 
+
+
+//Channel controller
 class bottomMenuChController {
   int value;
   int x, y;
@@ -343,6 +348,7 @@ class bottomMenuChController {
   }
 }
 
+//Interface drawing
 
 //values go from 0 to 255
 void drawBottomMenuChControllerSlider(int value) {
