@@ -58,7 +58,7 @@ void drawMainWindow() {
 
 
            if(fixtureType1[i] != 14) { rotate(radians(fixtures[i].rotationZ)); }
-           kalvo(fixtures[i].getColor_wDim());
+
             
             
             

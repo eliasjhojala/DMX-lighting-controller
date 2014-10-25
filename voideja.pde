@@ -107,6 +107,7 @@ String getFixtureName(int id) {
 
 
 void drawFixture(int i) {
+  kalvo(fixtures[i].getColor_wDim());
   boolean showFixture = true;
   int lampWidth = 30;
   int lampHeight = 40;

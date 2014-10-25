@@ -163,7 +163,7 @@ class fixtureInput {
     void createFinalValues() {
       int fogId = 20;
       int hazeId = 21;
-        dimInput[sF] = dimmer;
+       // dimInput[sF] = dimmer;
       if(fT >= 1 && fT <= 6) { fixtures[constrain(sF-1, 0, fixtures.length)].dimmer = dimmer; }
       if(fT == fogId) { fixtures[constrain(sF-1, 0, fixtures.length)].fog = dimmer; }
       if(fT == hazeId) { fixtures[sF].haze = dimmer; fixtures[sF].fan = dimmer; }
