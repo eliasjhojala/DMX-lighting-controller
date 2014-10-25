@@ -71,7 +71,7 @@ void drawFixtureRectangles(int id) {
   text(str(id)+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
   text("Ch " + str(fixtures[id].channelStart) , 2, -30); // Channel
   fill(0, 0, 255); //blue color for slider
-  rect(0, 0, 10, (map(dimInput[fixtures[id].channelStart], 0, 255, 0, 30))*(-1)); //Draw slider
+  rect(0, 0, 10, (map(fixtures[id].dimmer, 0, 255, 0, 30))*(-1)); //Draw slider
   fill(255, 255, 255); //white color for Go button
   rect(10, 0, 49, -15); //Draw Go button
   fill(0, 0, 0); //black color for Go text
