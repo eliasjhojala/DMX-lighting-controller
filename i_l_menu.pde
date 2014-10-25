@@ -172,6 +172,7 @@ void openBottomMenuControlBox(int owner) {
       bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures[owner].fixtureType + ", Starting Channel: " + fixtures[owner].channelStart;
       bottomMenuControlBoxDMXValues = fixtures[owner].getDMX();
       bottomMenuControlBoxDMXValueChanged = new boolean[bottomMenuControlBoxDMXValues.length];
+      
     break;
     default:
       bottomMenuControlBoxControllers = new bottomMenuChController[0];
@@ -215,7 +216,7 @@ void drawBottomMenuControlBox() {
     //This value is true if any of the entries in the boolean array are true
     boolean changd = false;
     if (bottomMenuControlBoxDMXValueChanged != null && bottomMenuControlBoxDMXValues != null)
-    for (boolean changed : bottomMenuControlBoxDMXValueChanged) { if (changed) {
+    for (boolean changed : bottomMenuControlBoxDMXValueChanged) { if (changed) { 
       tempDMX[arrayIndex] = bottomMenuControlBoxDMXValues[arrayIndex];
       changd = true;
     } else bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
