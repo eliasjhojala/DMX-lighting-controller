@@ -99,7 +99,7 @@ class fixture {
     return toReturn;
   }
   
-  int[] getDMX() {
+  public int[] getDMX() {
     int[] dmxChannels = new int[30];
       switch(fixtureTypeId) {
          /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: dmxChannels = new int[1]; dmxChannels[0] = dimmer; break; //dimmers
@@ -117,10 +117,13 @@ class fixture {
   
   
 
-  
+
   
   int oldFixtureTypeId;
   void draw() {
+    
+   
+    
     if (fixtureTypeId == 16 || fixtureTypeId == 17) visualisationSettingsFromMovingHeadData();
     //TODO: implement a function to get dim channel offset (in case dim isn't on the first channel)
     

@@ -168,23 +168,23 @@ class fixtureInput {
       if(fT == fogId) { fixtures[constrain(sF-1, 0, fixtures.length)].fog = dimmer; }
       if(fT == hazeId) { fixtures[sF].haze = dimmer; fixtures[sF].fan = dimmer; }
       if(ftIsMhX50()) {
-        fixtures[sF].dimmer = dimmer;
-        fixtures[sF].pan = pan;
-        fixtures[sF].tilt = tilt;
-        fixtures[sF].panFine = panFine;
-        fixtures[sF].tiltFine = tiltFine;
-        fixtures[sF].red = red;
-        fixtures[sF].green = green;
-        fixtures[sF].blue = blue;
-        fixtures[sF].goboWheel = goboWheel;
-        fixtures[sF].goboRotation = goboRotation;
-        fixtures[sF].colorWheel = colorWheel;
-        fixtures[sF].specialFunctions = specialFunctions;
-        fixtures[sF].autoPrograms = autoPrograms;
-        fixtures[sF].shutter = shutter;
-        fixtures[sF].prism = prism;
-        fixtures[sF].focus = focus;
-        fixtures[sF].responseSpeed = responseSpeed;
+        fixtures[constrain(sF-1, 0, fixtures.length)].dimmer = dimmer;
+        fixtures[constrain(sF-1, 0, fixtures.length)].pan = pan;
+        fixtures[constrain(sF-1, 0, fixtures.length)].tilt = tilt;
+        fixtures[constrain(sF-1, 0, fixtures.length)].panFine = panFine;
+        fixtures[constrain(sF-1, 0, fixtures.length)].tiltFine = tiltFine;
+        fixtures[constrain(sF-1, 0, fixtures.length)].red = red;
+        fixtures[constrain(sF-1, 0, fixtures.length)].green = green;
+        fixtures[constrain(sF-1, 0, fixtures.length)].blue = blue;
+        fixtures[constrain(sF-1, 0, fixtures.length)].goboWheel = goboWheel;
+        fixtures[constrain(sF-1, 0, fixtures.length)].goboRotation = goboRotation;
+        fixtures[constrain(sF-1, 0, fixtures.length)].colorWheel = colorWheel;
+        fixtures[constrain(sF-1, 0, fixtures.length)].specialFunctions = specialFunctions;
+        fixtures[constrain(sF-1, 0, fixtures.length)].autoPrograms = autoPrograms;
+        fixtures[constrain(sF-1, 0, fixtures.length)].shutter = shutter;
+        fixtures[constrain(sF-1, 0, fixtures.length)].prism = prism;
+        fixtures[constrain(sF-1, 0, fixtures.length)].focus = focus;
+        fixtures[constrain(sF-1, 0, fixtures.length)].responseSpeed = responseSpeed;
       }
     }
     
