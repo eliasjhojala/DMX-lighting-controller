@@ -163,23 +163,42 @@ String bottomMenuControlBoxSubstr = "bottomMenuControlBox";//|
 void openBottomMenuControlBox(int owner) {
   bottomMenuControlBoxOpen = true;
   currentBottomMenuControlBoxOwner = owner;
+  bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures[owner].fixtureType + ", Starting Channel: " + fixtures[owner].channelStart;
+  boolean successInit = false; //This boolean is set to true, if the fixtureType has a specific configuration applied for it.
   switch(fixtures[owner].fixtureTypeId) {
     //Configure box according to fixtureType
     case 1: case 2: case 3: case 4: case 5: case 6:
       // all "dumb" fixtures (with only one channel: dim)
       bottomMenuControlBoxControllers = new bottomMenuChController[1];
       bottomMenuControlBoxControllers[0] = new bottomMenuChController(50, 50, 0, 0, "Dimmer");
-      bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures[owner].fixtureType + ", Starting Channel: " + fixtures[owner].channelStart;
-      bottomMenuControlBoxDMXValues = fixtures[owner].getDMX();
-      bottomMenuControlBoxDMXValueChanged = new boolean[bottomMenuControlBoxDMXValues.length];
-      
+      successInit = true;
+    break;
+    //MH-X50 14&8 channel modes
+    case 16:
+      bottomMenuControlBoxControllers = new bottomMenuChController[14];
+      String[] chanNamesTp16 = {"Pan", "Tilt", "Fine Pan", "Fine Tilt", "Resp. Speed", "Color Wheel", "Shutter", "Dimmer", "Gobo", "Gobo Rotation", "S. Function", "Auto Program", "Prism", "Focus"};
+      for (int i = 0; i < chanNamesTp16.length; i++) {
+        bottomMenuControlBoxControllers[i] = new bottomMenuChController(30 + i*90, 50, i, 0, chanNamesTp16[i]);
+      }
+      successInit = true;
+    break;
+    case 17:
+      bottomMenuControlBoxControllers = new bottomMenuChController[8];
+      String[] chanNamesTp17 = {"Pan", "Tilt", "Color Wheel", "Shutter", "Gobo", "Gobo Rotation", "Prism", "Focus"};
+      for (int i = 0; i < chanNamesTp17.length; i++) {
+        bottomMenuControlBoxControllers[i] = new bottomMenuChController(50 + i*120, 50, i, 0, chanNamesTp17[i]);
+      }
+      successInit = true;
     break;
     default:
       bottomMenuControlBoxControllers = new bottomMenuChController[0];
-      bottomMenuControlBoxDisplayText = "";
       bottomMenuControlBoxDMXValues = new int[0];
       bottomMenuControlBoxDMXValueChanged = new boolean[0];
-      break;
+    break;
+  }
+  if (successInit) {
+    bottomMenuControlBoxDMXValues = fixtures[owner].getDMX();
+    bottomMenuControlBoxDMXValueChanged = new boolean[bottomMenuControlBoxDMXValues.length];
   }
 }
 
