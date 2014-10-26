@@ -177,12 +177,16 @@ void openBottomMenuControlBox(int owner) {
     default:
       bottomMenuControlBoxControllers = new bottomMenuChController[0];
       bottomMenuControlBoxDisplayText = "";
+      bottomMenuControlBoxDMXValues = new int[0];
+      bottomMenuControlBoxDMXValueChanged = new boolean[0];
       break;
   }
 }
 
 void drawBottomMenuControlBox() {
   if (bottomMenuControlBoxOpen) {
+    
+    
     pushMatrix();
     //Control box open ---> draw it
     translate(65, height - 260 - bottomMenuControlBoxHeight);
@@ -215,11 +219,13 @@ void drawBottomMenuControlBox() {
     int arrayIndex = 0;
     //This value is true if any of the entries in the boolean array are true
     boolean changd = false;
-    if (bottomMenuControlBoxDMXValueChanged != null && bottomMenuControlBoxDMXValues != null)
-    for (boolean changed : bottomMenuControlBoxDMXValueChanged) { if (changed) { 
-      tempDMX[arrayIndex] = bottomMenuControlBoxDMXValues[arrayIndex];
-      changd = true;
-    } else bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
+    //Error prevention
+    if (bottomMenuControlBoxDMXValueChanged != null && bottomMenuControlBoxDMXValues != null) if (bottomMenuControlBoxDMXValueChanged.length != 0 && bottomMenuControlBoxDMXValues.length != 0)
+    for (boolean changed : bottomMenuControlBoxDMXValueChanged) { 
+      if (changed) { 
+        tempDMX[arrayIndex] = bottomMenuControlBoxDMXValues[arrayIndex];
+        changd = true;
+      } else bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
       arrayIndex++;
     }
     bottomMenuControlBoxDMXValueChanged = new boolean[tempDMX.length];
