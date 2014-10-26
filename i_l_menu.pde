@@ -223,8 +223,7 @@ void drawBottomMenuControlBox() {
       arrayIndex++;
     }
     bottomMenuControlBoxDMXValueChanged = new boolean[tempDMX.length];
-    
-    if (changd) fixtureInputs[0].receiveFromBottomMenu(tempDMX, currentBottomMenuControlBoxOwner);
+    if (changd) fixtureInputs[0].receiveFromBottomMenu(tempDMX, currentBottomMenuControlBoxOwner+1);
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
     
     text(bottomMenuControlBoxDisplayText, 15, 20);
