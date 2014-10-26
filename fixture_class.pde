@@ -123,7 +123,7 @@ class fixture {
   void draw() {
     if (fixtureTypeId == 16 || fixtureTypeId == 17) visualisationSettingsFromMovingHeadData();
     //TODO: implement a function to get dim channel offset (in case dim isn't on the first channel)
-    dimmer = dim[channelStart];
+   // dimmer = dim[channelStart];
     
     if (oldFixtureTypeId != fixtureTypeId) {
       oldFixtureTypeId = fixtureTypeId;
