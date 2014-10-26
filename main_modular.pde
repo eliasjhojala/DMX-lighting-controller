@@ -5,6 +5,11 @@ boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 
 
+<<<<<<< HEAD
+=======
+int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
+boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
+>>>>>>> origin/input-class
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
 boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use

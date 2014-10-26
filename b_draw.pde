@@ -12,6 +12,8 @@ int oldGrandMaster = 40;
 
 
 void draw() {
+//  int[] testiArray = { (int)random(255) };  
+//  fixtureInputs[0].receiveFromBottomMenu(testiArray, 7);
   
   checkThemeMode();
   
