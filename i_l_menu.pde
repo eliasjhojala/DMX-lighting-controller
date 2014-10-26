@@ -328,7 +328,7 @@ class bottomMenuChController {
     }
     boolean valueChanged = false;
     if (mouseLocked && mouseLocker.equals("bottomMenuControlBox:slider" + str(assignedData))) {
-      value += map(dragY - mouseY, 0, 100 + constrain((mouseX - dragStartX) * 10, 0, 414), 0, 255);
+      value += map(dragY - mouseY, 0, 100 + constrain((mouseX - dragStartX) * 2, 0, 414), 0, 255);
       value = constrain(value, 0, 255);
       valueChanged = true;
     } else getValueFromOwner();
