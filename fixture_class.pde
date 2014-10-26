@@ -102,7 +102,7 @@ class fixture {
   int[] getDMX() {
     int[] dmxChannels = new int[30];
       switch(fixtureTypeId) {
-         /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: dmxChannels = new int[1]; dmxChannels[0] = dimmer; println(dimmer); break; //dimmers
+         /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: dmxChannels = new int[1]; dmxChannels[0] = dimmer; break; //dimmers
          /* MH-X50 14-channel mode */        case 16: dmxChannels = new int[14]; dmxChannel[0] = pan; dmxChannel[1] = tilt; dmxChannel[2] = panFine; dmxChannel[3] = tiltFine; dmxChannel[4] = responseSpeed; dmxChannel[5] = colorWheel; dmxChannel[6] = shutter; dmxChannel[7] = dimmer; dmxChannel[8] = goboWheel; dmxChannel[9] = goboRotation; dmxChannel[10] = specialFunctions; dmxChannel[11] = autoPrograms; dmxChannel[12] = prism; dmxChannel[13] = focus; break; //MH-X50
          /* MH-X50 8-channel mode */         case 17: dmxChannels = new int[8]; dmxChannel[0] = pan; dmxChannel[1] = tilt; dmxChannel[2] = colorWheel; dmxChannel[3] = shutter; dmxChannel[4] = goboWheel; dmxChannel[5] = goboRotation; dmxChannel[6] = prism; dmxChannel[7] = focus; break; //MH-X50 8-ch mode
          /* simple rgb led par */            case 18: dmxChannels = new int[3]; dmxChannel[0] = red; dmxChannel[1] = green; dmxChannel[2] = blue; break; //Simple rgb led par
