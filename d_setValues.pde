@@ -11,17 +11,12 @@ void setDimAndMemoryValuesAtEveryDraw() {
         dim[fixtures[i].channelStart] = fixtures[i].dimmer;
         dimFixturesOld[i] = fixtures[i].dimmer;
       }
-<<<<<<< HEAD
-        for(int ij = 0; ij < fixtures[i].getDMX().length; ij++) {
-          valueToDmx[fixtures[i].channelStart+ij] = fixtures[i].getDMX()[ij];
-          if(fixtures[i].getDMX().length == 14) {  }
-        }
-=======
+
       for(int ij = 0; ij < fixtures[i].getDMX().length; ij++) {
         valueToDmx[fixtures[i].channelStart+ij] = fixtures[i].getDMX()[ij];
         if(fixtures[i].getDMX().length == 14) { println(fixtures[i].getDMX()[ij]); }
       }
->>>>>>> origin/input-class
+
   }
   
   memoryType[1] = 4; //Ensimmäisessä memorypaikassa on grandMaster - there is grandMaster in a first memory place
