@@ -12,8 +12,11 @@ int oldGrandMaster = 40;
 
 
 void draw() {
-//  int[] testiArray = { (int)random(255) };  
-//  fixtureInputs[0].receiveFromBottomMenu(testiArray, 7);
+// int[] testiArray = new int[14];
+// for(int i = 0; i < 14; i++) {
+//   testiArray[i] = 255;
+// } 
+//  fixtureInputs[0].receiveFromBottomMenu(testiArray, 31);
 
   checkThemeMode();
   
