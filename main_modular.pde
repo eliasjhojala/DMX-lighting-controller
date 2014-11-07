@@ -1,9 +1,11 @@
-int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias, 2 = Roope - what pc are you using?
+
+int userId = 3; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
+
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
 boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use
-boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
+boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
 boolean useAnotherArduino = false;
 
 boolean useMaschine = false;
@@ -13,7 +15,7 @@ int arduinoBaud2 = 9600;
 
 int arduinoIndex = 8; //Arduinon COM-portin järjestysnumero
 int arduinoIndex2 = 10;
-int enttecIndex = 1; // Enttecin USB DMX palikan COM-portin järjestysnumero
+int enttecIndex = 0; // Enttecin USB DMX palikan COM-portin järjestysnumero
 
 int touchOscInComing = 8000;
 
@@ -35,6 +37,8 @@ void setAllowedChannels() {
     allowChannel[1][i] = false;
   }
 }
+
+fixtureInput[] fixtureInputs = new fixtureInput[2];
 
 
 boolean nextStepPressed = false;
@@ -283,7 +287,7 @@ boolean useMovingHead = false; //Käytetäänkö moving headia ohjelmassa
 int outputChannels = 80;
 int channels = outputChannels;
 
-int enttecDMXchannels = 12; //DMX kanavien määrä
+int enttecDMXchannels = 600; //DMX kanavien määrä
 int touchOSCchannels = 72; //touchOSC kanavien määrä
 int controlP5channels = 12; //tietokoneen faderien määrä
 
@@ -416,7 +420,7 @@ int[] dimInput = new int[512];
 int[] ch = new int[512];
 
 
-int[] vals = new int[31];
+int[] vals = new int[600];
 boolean cycleStart = false;
 int counter;
 boolean error = false;
@@ -498,10 +502,11 @@ void setup() {
       channel[i] = dmxChannel[i]; //asetetaan muuttujalle channel[] samat arvot kuin muuttujalla dmxChannel[]
     }
     
-    if(useCOM == true) {
+    
       if(useEnttec == true) {
       myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
       }
+      if(useCOM == true) {
       arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
       if(useAnotherArduino == true) {
         arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);

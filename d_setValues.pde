@@ -1,9 +1,22 @@
+int[] dimInputOld = new int[fixtures.length];
+int[] dimInputWithMasterOld = new int[fixtures.length];
+int[] dimFixturesOld = new int[fixtures.length];
 void setDimAndMemoryValuesAtEveryDraw() {
-  for(int i = 0; i < channels; i++) {
-      dim[i] = round(map(dimInput[i], 0, 255, 0, grandMaster));
-      if(i < 40) {
-        valueToDmx[fixtures[i].channelStart] = fixtures[i].dimmer;
+  for(int i = 0; i < fixtures.length; i++) {
+      if(dimInputWithMasterOld[i] != int(map(dimInput[fixtures[i].channelStart], 0, 255, 0, grandMaster))) {
+          fixtures[i].dimmer = int(map(dimInput[fixtures[i].channelStart], 0, 255, 0, grandMaster));
+          dimInputWithMasterOld[i] = int(map(dimInput[fixtures[i].channelStart], 0, 255, 0, grandMaster));
       }
+      if(dimFixturesOld[i] != fixtures[i].dimmer) {
+        dim[fixtures[i].channelStart] = fixtures[i].dimmer;
+        dimFixturesOld[i] = fixtures[i].dimmer;
+      }
+
+      for(int ij = 0; ij < fixtures[i].getDMX().length; ij++) {
+        valueToDmx[fixtures[i].channelStart+ij] = fixtures[i].getDMX()[ij];
+        if(fixtures[i].getDMX().length == 14) {  }
+      }
+
   }
   
   memoryType[1] = 4; //Ensimmäisessä memorypaikassa on grandMaster - there is grandMaster in a first memory place

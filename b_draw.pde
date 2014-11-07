@@ -9,8 +9,10 @@ int oldMouseY1;
 int grandMaster = 50;
 int oldGrandMaster = 40;
 
+
+
 void draw() {
-  
+
   checkThemeMode();
   
   setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
@@ -30,6 +32,7 @@ void draw() {
   
   //Invoke every fixtures draw
   for (fixture temp : fixtures) temp.draw();
+
 
 }
 
