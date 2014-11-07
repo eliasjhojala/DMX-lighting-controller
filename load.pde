@@ -4,9 +4,14 @@ void loadSetupData() {
   if(userId == 1) {
    table = loadTable("/Users/elias/Dropbox/DMX controller/main_for_two_pc/variables/settings.csv", "header"); //Eliaksen polku
   }
-  else if(!roopeAidilla){
-   table = loadTable("E:\\Dropbox\\DMX controller\\main_for_two_pc\\variables\\settings.csv", "header"); //Roopen polku
-  } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_for_two_pc\\variables\\settings.csv", "header"); // Roope äidillä -polku
+  else if(userId == 2) {
+    if(!roopeAidilla){
+     table = loadTable("E:\\Dropbox\\DMX controller\\main_for_two_pc\\variables\\settings.csv", "header"); //Roopen polku
+    } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_for_two_pc\\variables\\settings.csv", "header"); // Roope äidillä -polku
+  }
+  else if(userId == 3) {
+     table = loadTable("C:\\Users\\elias\\Documents\\GitHub\\DMX Controller\\main_modular\\variables\\settings.csv", "header");
+  }
   
   //for (TableRow row : table.findRows("sendOscToAnotherPc", "variable_name")) { sendOscToAnotherPc = boolean(row.getString("value")); }
   //for (TableRow row : table.findRows("sendOscToIpad", "variable_name")) { sendOscToIpad = boolean(row.getString("value")); }
@@ -17,7 +22,7 @@ void loadSetupData() {
   //for (TableRow row : table.findRows("loadAllDataInSetup", "variable_name")) { loadAllDataInSetup = boolean(row.getString("value")); }
   
   
-  use3D = true;
+  use3D = !(userId == 3);
   showOutputAsNumbers = true;
 }
 
@@ -27,9 +32,14 @@ void loadAllData() {
     if(userId == 1) {
      table = loadTable("/Users/elias/Dropbox/DMX controller/main_modular/variables/pikkusten_disko.csv", "header"); //Eliaksen polku
     }
-    else if(!roopeAidilla) {
-     table = loadTable("E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roopen polku
-    } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roope äidillä -polku
+    else if(userId == 2) {
+      if(!roopeAidilla) {
+       table = loadTable("E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roopen polku
+      } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roope äidillä -polku
+    }
+    else if(userId == 3) {
+      table = loadTable("C:\\Users\\elias\\Documents\\GitHub\\DMX Controller\\main_modular\\variables\\pikkusten_disko.csv", "header");
+    }
     
     //FIXTURES---------------------------------------------------------------------------------------------------------------------------
     //Initialize fixtures using type

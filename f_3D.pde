@@ -88,7 +88,7 @@ void setup() {
   if(userId == 1) { //Jos Elias käyttää
     assetPath = "/Users/elias/Dropbox/DMX controller/Roopen Kopiot/";
   }
-  else { //Jos Roope käyttää
+  else if(userId == 2) { //Jos Roope käyttää
     if(getPaths == true) {
       String lines100[] = loadStrings("C:\\DMXcontrolsettings\\assetPath.txt");
       assetPath = lines100[0];
