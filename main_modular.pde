@@ -1,11 +1,11 @@
 
-int userId = 3; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
+int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
 boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use
-boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
+boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
 boolean useAnotherArduino = false;
 
 boolean useMaschine = false;
