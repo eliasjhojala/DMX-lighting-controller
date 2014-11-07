@@ -3,13 +3,16 @@
 int numberOfAllChannelsFirstDimensions = 5; // allChannels[numberOfAllChannelsFirstDimensions][];
 
 void dmxCheck() {
-  if(useCOM == true && useEnttec == true) {
+  enttecDMXchannels = 512;
+  if(useEnttec == true) {
        while (myPort.available() > 0) {
           if (cycleStart == true) {
             if (counter <= 6+enttecDMXchannels) {
               int inBuffer = myPort.read();
-              vals[counter] = inBuffer;
-              counter++;
+              if(counter > 4) { if(vals[counter-5] == 126 && vals[counter-4] == 5 && vals[counter] == 0) { counter = 0; cycleStart = true; } }
+                vals[counter] = inBuffer;
+                counter++;
+              
             }
             else {
               cycleStart = false;
@@ -24,13 +27,14 @@ void dmxCheck() {
               }
             }
             if(error == false) {
-              for(int i = 5; i < 6+enttecDMXchannels; i++) {
-                ch[i - 5] = vals[i];
+              for(int i = 0; i < 6+enttecDMXchannels; i++) {
+                if(i < 30) { ch[i] = vals[i]; }
               }
               counter = 0;
               cycleStart = true;    
             }
            } 
+ 
       }
   }
 }

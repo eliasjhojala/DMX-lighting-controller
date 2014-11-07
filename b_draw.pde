@@ -12,8 +12,7 @@ int oldGrandMaster = 40;
 
 
 void draw() {
-//  int[] testiArray = { (int)random(255) };  
-//  fixtureInputs[0].receiveFromBottomMenu(testiArray, 7);
+
   
   checkThemeMode();
   
@@ -34,18 +33,7 @@ void draw() {
   
   //Invoke every fixtures draw
   for (fixture temp : fixtures) temp.draw();
-  
-  
-  
-//      This sends options to last page labels
-//    for(int ij = 0; ij < 100; ij++) {
-//      for(int i = 0; i < 23; i++) {
-//        sendDataToIpad("/9/label" + str(2027+i+ij*23) + "/position/y", i*30);
-//        sendDataToIpad("/9/label" + str(2027+i+ij*23) + "/position/x", ij*100);
-//        sendDataToIpad("/9/label" + str(2027+i+ij*23), i+ij*23);
-//        sendDataToIpadAsString("/9/label" + str(2027+i+ij*23) + "/color", "gray");
-//      }
-//    }
+
 
 }
 
