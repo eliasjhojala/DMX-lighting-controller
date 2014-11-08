@@ -1,18 +1,57 @@
 //Tässä välilehdessä piirretään ylävalikko, ja käsitellään sen nappuloiden komentoja 
 
 color topMenuTheme = color(222, 0, 0);
+color topMenuTheme2 = color(200, 0, 0);
 color topMenuAccent = color(150, 0, 0);
+
+PShape settingsIcon;
+
+void ylavalikkoSetup() {
+  settingsIcon = loadShape("settingsIcon.svg");
+  settingsIcon.disableStyle();
+}
 
 void ylavalikko() {
   pushStyle();
   
-  //Draw bubble
+  //Main bubble size
+  int bubS = 250;
+  if (inBoundsCircle(0, 0, bubS/2, mouseX, mouseY)) bubS += 10;
+  
+  //main bubble shadow
   noFill();
   stroke(0, 120); strokeWeight(6);
-  arc(0, 0, 250, 250, 0, HALF_PI);
+  arc(0, 0, bubS, bubS, 0, HALF_PI);
+  
+  //Settings button
+  
+  //Hover
+  boolean settingsHover = isHoverSimple(bubS/2, 0, 60, 60);
+  
+  noFill();
+  stroke(0, 120); strokeWeight(6);
+  arc(bubS/2, 0, 120, 120, 0, HALF_PI + QUARTER_PI);
+  fill(topMenuTheme2);
+  stroke(topMenuAccent); strokeWeight(2);
+  arc(bubS/2, 0, 120, 120, 0, HALF_PI + QUARTER_PI);
+  
+  
+  pushMatrix();
+  strokeWeight(10);
+  stroke(settingsHover ? 255 : 240);
+  fill(settingsHover ? 255 : 240);
+  translate(bubS/2 + 4, 4);
+  scale(0.08);
+  shape(settingsIcon);
+  popMatrix();
+  
+  
+  
+  
+  //Main bubble itself
   fill(topMenuTheme);
   stroke(topMenuAccent); strokeWeight(2);
-  arc(0, 0, 250, 250, 0, HALF_PI);
+  arc(0, 0, bubS, bubS, 0, HALF_PI);
   
   
   
@@ -22,7 +61,9 @@ void ylavalikko() {
   textSize(25);
   text(hour() + ":" + minute() + ":" + second(), 3, 28);
   textSize(12);
-  text("Loaded file: dsdjlsdl h klhklhdf hkjdhfsk  hksdhf ksdfhj khj ksdhjf kh kfh skdh khk  fhjksdfh skdfh ksdfh ks", 3, 28, 125, 125);
+  
+  
+  text("Loaded file: ", 3, 28, 125, 125);
   
   popStyle();
 }

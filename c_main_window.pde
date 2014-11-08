@@ -88,7 +88,7 @@ void drawMainWindow() {
               drawFixture(i);
             //
         popMatrix();
-        if(mouseReleased) { mouseLocked = false; }
+        if(!mousePressed) { mouseLocked = false; }
       }
       popMatrix();
 }

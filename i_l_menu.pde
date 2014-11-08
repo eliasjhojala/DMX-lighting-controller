@@ -66,7 +66,7 @@ void drawFixtureRectangles(int id) {
   stroke(0, 0, 0); //black corners for other rects
   fill(0, 255, 0); //green color for title box
   rect(0, -40, 60, -15); //title box
-  if (isHover(0, -40, 60, -15) && mousePressed && mouseLocker.equals("main")) openBottomMenuControlBox(id); //Open control box
+  if (isHover(0, -40, 60, -15) && mousePressed && !mouseLocked) openBottomMenuControlBox(id); //Open control box
   fill(0, 0, 0); //black color for title
   text(str(id)+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
   text("Ch " + str(fixtures[id].channelStart) , 2, -30); // Channel
@@ -228,7 +228,7 @@ void drawBottomMenuControlBox() {
     stroke(200); strokeWeight(2);
     line(4, 4, 16, 16); line(4, 16, 16, 4);
     //hovering over the X button AND mouse is down --> close box
-    if (isHover(0, 0, 21, 20) && mousePressed && mouseLocker.equals("main")) { mouseLocked = true; mouseLocker = "bottomMenuControlBox:close"; bottomMenuControlBoxOpen = false; }
+    if (isHover(0, 0, 21, 20) && mousePressed && !mouseLocked) { mouseLocked = true; mouseLocker = "bottomMenuControlBox:close"; bottomMenuControlBoxOpen = false; }
     popMatrix();
     
     if (bottomMenuControlBoxControllers != null) for (bottomMenuChController controller : bottomMenuControlBoxControllers) controller.draw();
@@ -320,7 +320,7 @@ class bottomMenuChController {
     //Draw slider
     drawBottomMenuChControllerSlider(value);
     //Check for drag
-    if (isHover(0, 0, 20, 100) && mousePressed && mouseLocker.equals("main")) {
+    if (isHover(0, 0, 20, 100) && mousePressed && !mouseLocked) {
       //Started dragging
       mouseLocked = true;
       mouseLocker = "bottomMenuControlBox:slider" + str(assignedData);
@@ -346,7 +346,7 @@ class bottomMenuChController {
     
     //Go button
     boolean goDown = isHover(0, 0, 48, 15) && mousePressed;
-    boolean mouseLockerIsMain = mouseLocker.equals("main");
+    boolean mouseLockerIsMain = !mouseLocked;
     if (goDown && mouseLockerIsMain) {
       mouseLocked = true;
       mouseLocker = "bottomMenuControlBox:go" + str(assignedData);
@@ -356,10 +356,10 @@ class bottomMenuChController {
       setOwnerValue();
       oldGo = true;
     }
-    boolean mouseLockerIsGo = mouseLocker.equals("bottomMenuControlBox:go" + str(assignedData));
+    boolean mouseLockerIsGo = mouseLocker.equals("bottomMenuControlBox:go" + str(assignedData)) && mouseLocked;
     if (!mouseLockerIsGo && oldGo) { value = valueBeforeGo; setOwnerValue(); oldGo = false; }
     drawBottomMenuChControllerButton("Go", mouseLockerIsGo);
-    
+    println(str(mouseLocked) + mouseLocker);
     //Toggle button
     translate(0, 20);
     boolean tglDown = isHover(0, 0, 48, 15) && mousePressed;
@@ -369,7 +369,7 @@ class bottomMenuChController {
       if (value == 0) value = 255; else value = 0;
       setOwnerValue();
     }
-    drawBottomMenuChControllerButton("Toggle", mouseLocker.equals("bottomMenuControlBox:toggle" + str(assignedData)));
+    drawBottomMenuChControllerButton("Toggle", mouseLocker.equals("bottomMenuControlBox:toggle" + str(assignedData)) && mouseLocked);
     
     popMatrix();
   }
