@@ -472,6 +472,8 @@ Serial myPort;  // The serial port
 
 
 void setup() {
+  //Initialize mouseLocker to prevent nullPointers
+  mouseLocker = "";
   setAllowedChannels();
   memoryIsZero = new boolean[channels];
   if(getPaths == true) { //Jos ladattavien ja tallennettavien tiedostojen polut halutaan tarkistaa tiedostosta
@@ -542,6 +544,7 @@ void setup() {
     Maschine = new MidiBus(this, "Maschine Mikro MK2 In", "Maschine Mikro MK2 Out");
     initializeMaschine();
   }
+  ylavalikkoSetup();
 }
 
 

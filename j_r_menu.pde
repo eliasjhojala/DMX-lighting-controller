@@ -25,7 +25,7 @@ void sivuValikko() {
       }
       else { //If mouse is clicked but not on the memorymenu unlocks mouse
         if(mouseLocker == "sivuValikko") {
-          mouseLocked = false; 
+          //mouseLocked = false; 
           mouseLocker = "";
         }
       }

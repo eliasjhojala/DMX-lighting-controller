@@ -278,3 +278,15 @@ void fullOnToggle() {
 void blackOutToggle() {
   blackOut(!blackOut);
 }
+
+
+
+boolean inBoundsCircle(int cPosX, int cPosY, int cRadius, int pointerX, int pointerY) {
+  //Don't check circle unless mouse is in the bounding box
+  if (inBds2D(pointerX, pointerY, cPosX-cRadius, cPosY-cRadius, cPosX+cRadius, cPosY+cRadius)) {
+    //Check circle bounding
+    PVector mouse = new PVector(pointerX, pointerY);
+    PVector circle = new PVector(cPosX, cPosY);
+    return cRadius > PVector.dist(mouse, circle);
+  } else return false;
+}
