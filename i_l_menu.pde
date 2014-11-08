@@ -359,7 +359,6 @@ class bottomMenuChController {
     boolean mouseLockerIsGo = mouseLocker.equals("bottomMenuControlBox:go" + str(assignedData)) && mouseLocked;
     if (!mouseLockerIsGo && oldGo) { value = valueBeforeGo; setOwnerValue(); oldGo = false; }
     drawBottomMenuChControllerButton("Go", mouseLockerIsGo);
-    println(str(mouseLocked) + mouseLocker);
     //Toggle button
     translate(0, 20);
     boolean tglDown = isHover(0, 0, 48, 15) && mousePressed;
