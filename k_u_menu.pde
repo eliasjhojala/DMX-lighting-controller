@@ -66,7 +66,7 @@ void ylavalikko() {
   text("Loaded file: ", 3, 28, 125, 125);
   
   popStyle();
-  if(move == false && inBdsMouse(0, 0, width - 120, height - 200) && (!mouseLocked || mouseLocker == "main")) {
+  if(move == false && inBdsMouse(0, 0, width - 120, height - 225) && !isHoverBottomMenu() && (!mouseLocked || mouseLocker == "main")) {
     if(mousePressed) {
       mouseLocked = true;
       mouseLocker = "main";
