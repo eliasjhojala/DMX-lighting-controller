@@ -66,6 +66,31 @@ void ylavalikko() {
   text("Loaded file: ", 3, 28, 125, 125);
   
   popStyle();
+  if(move == false && mouseY < height - 200 && mouseX < width-120 && (!mouseLocked || mouseLocker == "main")) {
+    if(mousePressed) {
+      mouseLocked = true;
+      mouseLocker = "main";
+      movePage();
+    }
+  }
+  if(!move) {
+    oldMouseX = mouseX;
+    oldMouseY = mouseY;
+  }
+  stroke(255, 255, 255);
+//  if(mouseX > 0 && mouseX < width/4 && mouseY < 50 && mouseClicked && mouseReleased && (!mouseLocked || mouseLocker == "ylavalikko")) {
+//    fill(0, 0, 255);
+//    if(move == true) {
+//      move = false;
+//      delay(100);
+//    }
+//    else {
+//      move = true;
+//      delay(100);
+//    }
+//    mouseReleased = false;
+//  }
+  
 }
 
 void nextChaseMode() {
