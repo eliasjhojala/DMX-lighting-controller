@@ -77,19 +77,6 @@ void ylavalikko() {
     oldMouseX = mouseX;
     oldMouseY = mouseY;
   }
-//  stroke(255, 255, 255);
-//  if(mouseX > 0 && mouseX < width/4 && mouseY < 50 && mouseClicked && mouseReleased && (!mouseLocked || mouseLocker == "ylavalikko")) {
-//    fill(0, 0, 255);
-//    if(move == true) {
-//      move = false;
-//      delay(100);
-//    }
-//    else {
-//      move = true;
-//      delay(100);
-//    }
-//    mouseReleased = false;
-//  }
   
 }
 
