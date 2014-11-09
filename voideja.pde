@@ -185,6 +185,10 @@ boolean isHoverSimple(int offsetX, int offsetY, int w, int h){
   return inBds2D(mouseX, mouseY, int(screenX(offsetX, offsetY)), int(screenY(offsetX, offsetY)), int(screenX(offsetX + w, offsetY + h)), int(screenY(offsetX + w, offsetY + h)));
 }
 
+//Automatically takes mouseX and mouseY as pointer
+boolean inBdsMouse(int x1, int y1, int x2, int y2) {
+  return inBds2D(mouseX, mouseY, x1, y1, x2, y2);
+}
 
 boolean inBds2D(int pointerX, int pointerY, int x1, int y1, int x2, int y2){
   return inBds1D(pointerX, x1, x2) && inBds1D(pointerY, y1, y2);

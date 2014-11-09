@@ -66,7 +66,7 @@ void ylavalikko() {
   text("Loaded file: ", 3, 28, 125, 125);
   
   popStyle();
-  if(move == false && mouseY < height - 200 && mouseX < width-120 && (!mouseLocked || mouseLocker == "main")) {
+  if(move == false && inBdsMouse(0, 0, width - 120, height - 200) && (!mouseLocked || mouseLocker == "main")) {
     if(mousePressed) {
       mouseLocked = true;
       mouseLocker = "main";
@@ -77,7 +77,7 @@ void ylavalikko() {
     oldMouseX = mouseX;
     oldMouseY = mouseY;
   }
-  stroke(255, 255, 255);
+//  stroke(255, 255, 255);
 //  if(mouseX > 0 && mouseX < width/4 && mouseY < 50 && mouseClicked && mouseReleased && (!mouseLocked || mouseLocker == "ylavalikko")) {
 //    fill(0, 0, 255);
 //    if(move == true) {
