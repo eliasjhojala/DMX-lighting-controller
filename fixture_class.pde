@@ -4,6 +4,8 @@
 class fixture {
   //Variables---------------------------------------------------------------------------------
   int dimmer; //dimmer value
+  int dimmerPresetTarget = 0; //Used for preset calculations
+  int lastDimmerPresetTarget = 0;
   int red, green, blue; //color values
   int pan, tilt, panFine, tiltFine; //rotation values
   int x_location, y_location, z_location; //location in visualisation
@@ -121,7 +123,10 @@ class fixture {
   
   int oldFixtureTypeId;
   void draw() {
-    
+    if (dimmerPresetTarget != -1 && dimmerPresetTarget != lastDimmerPresetTarget) {
+      dimmer = dimmerPresetTarget;
+      lastDimmerPresetTarget = dimmerPresetTarget;
+    } dimmerPresetTarget = -1;
    
     
     if (fixtureTypeId == 16 || fixtureTypeId == 17) visualisationSettingsFromMovingHeadData();
