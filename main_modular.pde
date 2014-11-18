@@ -1,6 +1,6 @@
 
 int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
-boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.
+boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
@@ -41,6 +41,7 @@ void setAllowedChannels() {
 fixtureInput[] fixtureInputs = new fixtureInput[2];
 
 
+
 boolean nextStepPressed = false;
 boolean revStepPressed = false;
 int lastStepDirection;
@@ -64,6 +65,8 @@ void setFixtureChannelsAtSoftwareBegin() {
     bottomMenuOrder[i] = i;
   }
 }
+
+
 
 import themidibus.*; 
 import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html

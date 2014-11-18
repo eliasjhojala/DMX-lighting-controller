@@ -111,6 +111,7 @@ void drawFixture(int i) {
   boolean showFixture = true;
   int lampWidth = 30;
   int lampHeight = 40;
+  
   String fixtuuriTyyppi = getFixtureName(i);
   
   int fixtureTypeId = fixtures[i].fixtureTypeId;
@@ -121,9 +122,15 @@ void drawFixture(int i) {
     showFixture = fixtures[i].size.isDrawn;
   }
   
+  boolean selected = fixtures[i].selected && showFixture;
+  
+  
   if(showFixture == true) {
     int x1 = 0; int y1 = 0;
+    fixtures[i].locationOnScreenX = int(screenX(x1, y1));
+    fixtures[i].locationOnScreenY = int(screenY(x1, y1));
     if(fixtureTypeId == 13) { rectMode(CENTER); rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
+    if(selected) stroke(180, 180, 255); else stroke(255);
     rect(x1, y1, lampWidth, lampHeight);
     if(fixtureTypeId == 13) { rectMode(CENTER); popMatrix(); rectMode(CORNER); }
     if(zoom > 50) {
@@ -211,14 +218,11 @@ boolean isHoverBottomMenu() {
 
 void movePage() {
   if(mouseReleased) {
-    oldMouseX = mouseX;
-    oldMouseY = mouseY;
+    
     mouseReleased = false;
   }
-  x_siirto = x_siirto - (oldMouseX - mouseX);
-  y_siirto = y_siirto - (oldMouseY - mouseY);
-  oldMouseX = mouseX;
-  oldMouseY = mouseY;
+  x_siirto = x_siirto - (pmouseX - mouseX);
+  y_siirto = y_siirto - (pmouseY - mouseY);
 }
 
 boolean isClicked(int x1, int y1, int x2, int y2) {
