@@ -1,11 +1,11 @@
 
 int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
-boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.
+boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
 boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use
-boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
+boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
 boolean useAnotherArduino = false;
 
 boolean useMaschine = false;
@@ -41,6 +41,7 @@ void setAllowedChannels() {
 fixtureInput[] fixtureInputs = new fixtureInput[2];
 
 
+
 boolean nextStepPressed = false;
 boolean revStepPressed = false;
 int lastStepDirection;
@@ -64,6 +65,8 @@ void setFixtureChannelsAtSoftwareBegin() {
     bottomMenuOrder[i] = i;
   }
 }
+
+
 
 import themidibus.*; 
 import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html

@@ -3,10 +3,13 @@
 
 class fixture {
   //Variables---------------------------------------------------------------------------------
+  boolean selected = false;
+  
   int dimmer; //dimmer value
   int red, green, blue; //color values
   int pan, tilt, panFine, tiltFine; //rotation values
   int x_location, y_location, z_location; //location in visualisation
+  int locationOnScreenX, locationOnScreenY;
   int rotationX, rotationZ;
   int parameter;
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.

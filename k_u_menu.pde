@@ -66,18 +66,65 @@ void ylavalikko() {
   text("Loaded file: ", 3, 28, 125, 125);
   
   popStyle();
-  if(move == false && inBdsMouse(0, 0, width - 120, height - 225) && !isHoverBottomMenu() && (!mouseLocked || mouseLocker == "main")) {
+  if(move == false && inBdsMouse(0, 0, width - 120, height - 225) && !isHoverBottomMenu()) {
     if(mousePressed) {
-      mouseLocked = true;
-      mouseLocker = "main";
-      movePage();
+      if (mouseButton == LEFT) {
+        if (!mouseLocked || mouseLocker == "main") {
+          mouseLocked = true;
+          mouseLocker = "main";
+          movePage();
+        }
+      } else if(mouseButton == RIGHT) {
+        //Box select
+        
+        doBoxSelect();
+      }
     }
   }
-  if(!move) {
-    oldMouseX = mouseX;
-    oldMouseY = mouseY;
+  if(!mousePressed && boxSelect) endBoxSelect();
+}
+
+int boxStartX, boxStartY;
+boolean boxSelect = false;
+void doBoxSelect() {
+  if (!mouseLocked) {
+    
+    mouseLocked = true;
+    mouseLocker = "boxSelect";
+    boxSelect = true;
+    boxStartX = mouseX;
+    boxStartY = mouseY; 
+  } else {
+    
+    pushStyle();
+    fill(50, 50, 150, 150);
+    stroke(0, 0, 150);
+    rectMode(CORNERS);
+    rect(mouseX, mouseY, boxStartX, boxStartY);
+    popStyle();
   }
+}
+void endBoxSelect() {
+  boxSelect = false;
   
+  //Get smallest corners of the box
+  int[] cornerX = { boxStartX, mouseX };
+  int x1 = min(cornerX);
+  int x2 = max(cornerX);
+  int[] cornerY = { boxStartY, mouseY };
+  int y1 = min(cornerY);
+  int y2 = max(cornerY);
+  
+  for (int i = 0; i < fixtures.length; i++) {
+    fixtures[i].selected = inBds2D(
+      fixtures[i].locationOnScreenX,
+      fixtures[i].locationOnScreenY,
+      x1, y1,
+      x2, y2
+    );
+    
+   
+  }
 }
 
 void nextChaseMode() {
