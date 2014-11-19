@@ -1,7 +1,9 @@
 int[] dimInputOld = new int[fixtures.length];
 int[] dimInputWithMasterOld = new int[fixtures.length];
 int[] dimFixturesOld = new int[fixtures.length];
+boolean dimCheckFinished = false;
 void setDimAndMemoryValuesAtEveryDraw() {
+  dimCheckFinished = false;
   for(int i = 0; i < fixtures.length; i++) {
       if(dimInputWithMasterOld[i] != int(map(dimInput[fixtures[i].channelStart], 0, 255, 0, grandMaster))) {
           fixtures[i].dimmer = int(map(dimInput[fixtures[i].channelStart], 0, 255, 0, grandMaster));
@@ -101,4 +103,5 @@ void setDimAndMemoryValuesAtEveryDraw() {
        dimInput[i] = 255; //Asetetaan kanavan arvoksi nolla - set all of the channels to zero
      }
   }
+  dimCheckFinished = false;
 }

@@ -42,7 +42,7 @@ void ylavalikko() {
   fill(settingsHover ? 255 : 240);
   translate(bubS/2 + 4, 4);
   scale(0.08);
-  shape(settingsIcon);
+  if (settingsIcon != null) shape(settingsIcon); // The asset might have not loaded yet
   popMatrix();
   
   
@@ -77,11 +77,12 @@ void ylavalikko() {
       } else if(mouseButton == RIGHT) {
         //Box select
         
+        
         doBoxSelect();
       }
     }
   }
-  if(!mousePressed && boxSelect) endBoxSelect();
+  if(!mousePressed && boxSelect) thread("endBoxSelect");
 }
 
 int boxStartX, boxStartY;
@@ -115,13 +116,16 @@ void endBoxSelect() {
   int y1 = min(cornerY);
   int y2 = max(cornerY);
   
+  boolean shiftDown = keyPressed && keyCode == SHIFT;
   for (int i = 0; i < fixtures.length; i++) {
-    fixtures[i].selected = inBds2D(
+    boolean inside = inBds2D(
       fixtures[i].locationOnScreenX,
       fixtures[i].locationOnScreenY,
       x1, y1,
       x2, y2
     );
+    
+    if(shiftDown) fixtures[i].selected = fixtures[i].selected || inside; else fixtures[i].selected = inside;
     
    
   }

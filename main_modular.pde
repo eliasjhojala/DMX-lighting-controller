@@ -465,6 +465,20 @@ boolean chaseFirstTime = true;
 boolean chase;
 boolean dmxSoundToLight = false;
 
+
+
+void initializeCOM() {
+  if(useEnttec == true) {
+    myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
+  }
+  if(useCOM == true) {
+    arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
+    if(useAnotherArduino == true) {
+      arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);
+    }
+  }
+}
+
 //----------------------------------------------------------------------------------------
 
 
@@ -477,7 +491,7 @@ Serial myPort;  // The serial port
 void setup() {
   //Initialize mouseLocker to prevent nullPointers
   mouseLocker = "";
-  setAllowedChannels();
+  thread("setAllowedChannels");
   memoryIsZero = new boolean[channels];
   if(getPaths == true) { //Jos ladattavien ja tallennettavien tiedostojen polut halutaan tarkistaa tiedostosta
     String lines100[] = loadStrings("C:\\DMXcontrolsettings\\savePath.txt"); //Luetaan savePath.txt:stä tiedot muuttujaan lines100[]
@@ -508,15 +522,7 @@ void setup() {
     }
     
     
-      if(useEnttec == true) {
-      myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
-      }
-      if(useCOM == true) {
-      arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
-      if(useAnotherArduino == true) {
-        arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);
-      }
-    }
+    thread("initializeCOM");  
     
     minim = new Minim(this);
 
@@ -536,7 +542,7 @@ void setup() {
       Remote = new NetAddress(remoteIP,portOutgoing);
     //----------------------------------------------------------------------------------------------------------------------------------------------
     
-    setuppi();
+    thread("setuppi");
     
     MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
   myBus = new MidiBus(this, 1, "KeyRig 49"); // Create a new MidiBus with no input device - you will have to change the input here
@@ -545,9 +551,9 @@ void setup() {
   if(useMaschine) {
     //This is used to get data from the Maschine Mikro
     Maschine = new MidiBus(this, "Maschine Mikro MK2 In", "Maschine Mikro MK2 Out");
-    initializeMaschine();
+    thread("initializeMaschine");
   }
-  ylavalikkoSetup();
+  thread("ylavalikkoSetup");
 }
 
 
