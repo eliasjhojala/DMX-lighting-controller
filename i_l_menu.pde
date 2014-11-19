@@ -232,21 +232,7 @@ void drawBottomMenuControlBox() {
     if (bottomMenuControlBoxControllers != null) for (bottomMenuChController controller : bottomMenuControlBoxControllers) controller.draw();
     
     //Update DMX values-----------------------------------------------------------------|
-    int[] tempDMX = fixtures[currentBottomMenuControlBoxOwner].getDMX();
-    int arrayIndex = 0;
-    //This value is true if any of the entries in the boolean array are true
-    boolean changd = false;
-    //Error prevention
-    if (bottomMenuControlBoxDMXValueChanged != null && bottomMenuControlBoxDMXValues != null) if (bottomMenuControlBoxDMXValueChanged.length != 0 && bottomMenuControlBoxDMXValues.length != 0)
-    for (boolean changed : bottomMenuControlBoxDMXValueChanged) { 
-      if (changed) { 
-        tempDMX[arrayIndex] = bottomMenuControlBoxDMXValues[arrayIndex];
-        changd = true;
-      } else bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
-      arrayIndex++;
-    }
-    bottomMenuControlBoxDMXValueChanged = new boolean[tempDMX.length];
-    if (changd) fixtureInputs[0].receiveFromBottomMenu(tempDMX, currentBottomMenuControlBoxOwner+1);
+    thread("bottomMenuDMXUpdate");
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
     
     text(bottomMenuControlBoxDisplayText, 15, 20);
@@ -266,6 +252,23 @@ void drawBottomMenuControlBox() {
   bottomMenuControlBoxOpenOld = bottomMenuControlBoxOpen;
 }
 
+void bottomMenuDMXUpdate() {
+  int[] tempDMX = fixtures[currentBottomMenuControlBoxOwner].getDMX();
+  int arrayIndex = 0;
+  //This value is true if any of the entries in the boolean array are true
+  boolean changd = false;
+  //Error prevention
+  if (bottomMenuControlBoxDMXValueChanged != null && bottomMenuControlBoxDMXValues != null) if (bottomMenuControlBoxDMXValueChanged.length != 0 && bottomMenuControlBoxDMXValues.length != 0)
+  for (boolean changed : bottomMenuControlBoxDMXValueChanged) { 
+    if (changed) { 
+      tempDMX[arrayIndex] = bottomMenuControlBoxDMXValues[arrayIndex];
+      changd = true;
+    } else bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
+    arrayIndex++;
+  }
+  bottomMenuControlBoxDMXValueChanged = new boolean[tempDMX.length];
+  if (changd) fixtureInputs[0].receiveFromBottomMenu(tempDMX, currentBottomMenuControlBoxOwner+1);
+}
 
 
 //Channel controller

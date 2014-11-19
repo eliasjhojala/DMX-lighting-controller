@@ -1,5 +1,9 @@
-
-
+boolean invokeFixturesDrawFinished = false;
+void invokeFixturesDraw() {
+  invokeFixturesDrawFinished = false;
+  for (fixture temp : fixtures) temp.draw();
+  invokeFixturesDrawFinished = true;
+}
 
 class fixture {
   //Variables---------------------------------------------------------------------------------
@@ -123,6 +127,7 @@ class fixture {
 
   
   int oldFixtureTypeId;
+  
   void draw() {
     
    

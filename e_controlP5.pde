@@ -123,7 +123,7 @@ public class ControlFrame extends PApplet {
     //startof: Setup
     //set window size according to parameters
     size(w, h);
-    //set window framerate (This will affect Wave and Preset transition times! Change cautiously.)
+    //set window framerate (This will affect Wave and Preset transition times!)
     frameRate(25);
     //load ControlP5 (The control element library) (It's great, by the way!)
     cp5 = new ControlP5(this);
