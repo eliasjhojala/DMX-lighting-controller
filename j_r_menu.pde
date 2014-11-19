@@ -1,6 +1,7 @@
 //Tässä välilehdessä piirretään sivuvalikko, jossa näkyy memorit ja niiden arvot, sekä tyypit
 
 void sivuValikko() {
+  
   if(mouseX > width-120 && mouseX < width && mouseY > 30) { //Check if mouse is on the memory menu
     mouseLocked = true; //Lukitsee hiiren, jottei se vaikuta muihin alueisiin
     mouseLocker = "sivuValikko"; //Kertoo hiiren olevan lukittu alueelle sivuValikko
@@ -34,18 +35,68 @@ void sivuValikko() {
   
   //Drawing
   pushMatrix();
-    translate(width-60, 40);
+    translate(width-60, 0);
     for(int i = 1; i <= height/15-5; i++) {
       if(memoryMenu < numberOfMemories+40) {
         translate(0, 15);
         memoryy(i+memoryMenu, memoryValue[i+memoryMenu]);
+        
       }
     }
   popMatrix();
   
+  //-
+  pushMatrix();
+  memoryController contr = new memoryController(200, "tst");
+  translate(width/2, height/2);
   
+  contr.update();
+  popMatrix();
+  //-
  
 }
+
+
+class memoryController {
+  String text;
+  int value;
+  int controlledMemoryId;
+  
+  
+  memoryController(int contrId) {
+    controlledMemoryId = contrId;
+    text = "";
+    value = 0;
+  }
+  
+  memoryController(int contrId, String dispText) {
+    controlledMemoryId = contrId;
+    text = dispText;
+    value = 0;
+  }
+  
+  
+  void update() {
+    //int digits = str(controlledMemoryId).length();
+    pushStyle();
+    
+    textSize(12);
+    textAlign(CENTER);
+    //Draw controller
+    strokeWeight(2);
+    stroke(80);
+    fill(240);
+    //Number indication box
+    rect(0, 0, 25, 20);
+    fill(20);
+    text(controlledMemoryId, 25/2, 15);
+    //Type indication box
+    fill(10, 240, 10);
+    rect(25, 0, 40, 20);
+    popStyle();
+  }
+}
+
 void memoryy(int numero, int dimmi) {
   String nimi = "";
   nimi = getMemoryTypeName(numero);
