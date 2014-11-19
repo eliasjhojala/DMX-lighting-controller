@@ -2,11 +2,11 @@
 int[] oldMemoryValue = new int[numberOfMemories]; //Muuttuja, johon tallennetaan memoryn edellinen arvo
 int[] oldPresetValue = new int[numberOfMemories]; //Muuttuja, johon tallennetaan memoryn edellinen arvo
 void makePreset(int memoryNumber) {
-  rect(width/2-100, height/2-100, 100, 100);
-  for(int i = 0; i < channels; i++) {
-      preset[memoryNumber][i] = dim[i];
+   for (int i = 0; i < fixtures.length; i++) {
+    whatToSave[0][memoryNumber] = true;
+    
   }
-  memoryType[memoryNumber] = 1;
+  saveFixtureMemory(memoryNumber);
 }
 void preset(int memoryNumber, int value) {
   presetNew(memoryNumber, value);

@@ -58,25 +58,25 @@ void setDimAndMemoryValuesAtEveryDraw() {
             if(valueOfMemory[i] != 0 || dim[i] != 0) {
               valueOfMemoryBeforeSolo[i] = valueOfMemory[i];
               valueOfChannelBeforeSolo[i] = dim[i];
-            }
+            } //EndIf: (valueOfMemory[i] != ...)
             memory(i, 0);
             dimInput[i] = 0; 
-          }
-        }
+          } //EndElse
+        } //EndIf: (soloWasHere)
         else {
           if(i == soloMemory && valueOfMemory[i] != 0) {
             memory(i, valueOfMemory[i]);
           }
-        }
+        }//EndElse
         
       }
-    }
+    } //EndIf: (useSolo == true)
     else {
       if(valueOfMemory[i] > 0) {
         memory(i, valueOfMemory[i]);
       }
-    }
-  }
+    } //EndElse: (useSolo == true)
+  } //EndFor: (i < numberOfMemories)
   
   
   

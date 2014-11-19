@@ -1,6 +1,6 @@
 fixture[][] repOfFixtures = new fixture[fixtures.length][numberOfMemories];
 void saveFixtureMemory(int fixtureMemoryId) {
-  for(int i = 0; i < fixtures.length; i++) {
+      for(int i = 0; i < fixtures.length; i++) {
       repOfFixtures[i][fixtureMemoryId] = new fixture(0,0,0,0,0,0,0,0,0,0,0,0,0);
   }
   for (int i = 0; i < fixtures.length; i++) {
@@ -11,11 +11,16 @@ void saveFixtureMemory(int fixtureMemoryId) {
   memoryType[fixtureMemoryId] = 1;
 }
 
+
 void loadFixtureMemory(int fixtureMemoryId, int value) {
+  
   for (int i = 0; i < fixtures.length; i++) {
     if(whatToSave[0][fixtureMemoryId]) {
-     fixtures[i].dimmer = int(map(repOfFixtures[i][fixtureMemoryId].dimmer, 0, 255, 0, value));
-     dimInput[i+1] = int(map(repOfFixtures[i][fixtureMemoryId].dimmer, 0, 255, 0, value));
+      int val = int(map(repOfFixtures[i][fixtureMemoryId].dimmer, 0, 255, 0, value));
+      println(val);
+      if(val > fixtures[i].dimmerPresetTarget) {
+        fixtures[i].dimmerPresetTarget = val;
+      }
     }
   }
 }
