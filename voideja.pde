@@ -19,8 +19,9 @@ int indexOfMinCheck(int[] input, boolean[] checked) {
 
 int ansaWidth;
 
+boolean arduinoFinished = false;
 void arduinoSend() {
-  
+  arduinoFinished = false;
   for(int i = 0; i < channels; i++) {
     if(valueToDmx[i] != valueToDmxOld[i]) {
       if(useCOM == true) {
@@ -32,6 +33,7 @@ void arduinoSend() {
     sendOscToAnotherPc(i, dim[i]);
     sendOscToIpad(i, dimInput[i]);
   }
+  arduinoFinished = true;
 }
 
 
@@ -130,7 +132,7 @@ void drawFixture(int i) {
     fixtures[i].locationOnScreenX = int(screenX(x1, y1));
     fixtures[i].locationOnScreenY = int(screenY(x1, y1));
     if(fixtureTypeId == 13) { rectMode(CENTER); rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
-    if(selected) stroke(180, 180, 255); else stroke(255);
+    if(selected) stroke(100, 100, 255); else stroke(255);
     rect(x1, y1, lampWidth, lampHeight);
     if(fixtureTypeId == 13) { rectMode(CENTER); popMatrix(); rectMode(CORNER); }
     if(zoom > 50) {
