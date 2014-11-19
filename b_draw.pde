@@ -25,13 +25,13 @@ void draw() {
     alavalikko(); //bottom menu
     sivuValikko(); //right menu
   }
-  detectBeat();
+  thread("detectBeat");
   mhx50_movingHeadLoop();
   
   if (useMaschine) calcMaschineAutoTap();
   
   //Invoke every fixtures draw
-  for (fixture temp : fixtures) temp.draw();
+  if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
 
 
 }

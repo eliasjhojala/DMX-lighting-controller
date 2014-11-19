@@ -1,5 +1,9 @@
-
-
+boolean invokeFixturesDrawFinished = false;
+void invokeFixturesDraw() {
+  invokeFixturesDrawFinished = false;
+  for (fixture temp : fixtures) temp.draw();
+  invokeFixturesDrawFinished = true;
+}
 
 class fixture {
   //Variables---------------------------------------------------------------------------------
@@ -125,6 +129,7 @@ class fixture {
 
   
   int oldFixtureTypeId;
+  
   void draw() {
     if (dimmerPresetTarget != -1 && dimmerPresetTarget != lastDimmerPresetTarget) {
       dimmer = dimmerPresetTarget;

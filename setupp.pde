@@ -20,9 +20,9 @@ void setuppi() {
   korkeus = displayHeight;
   loadSetupData();
   if(loadAllDataInSetup == true) {
-    loadAllData();
+    thread("loadAllData");
   }
-  setFixtureChannelsAtSoftwareBegin();
+  thread("setFixtureChannelsAtSoftwareBegin");
   if(userId == 1) { //Jos Elias käyttää
     getPaths = false; //Ei oteta polkuja tiedostosta
   }
