@@ -48,11 +48,11 @@ void sivuValikko() {
   //-
   pushMatrix();
   translate(width-168, 0);
-  for(int i = 1; i <= height/20-1; i++) {
-    if(memoryMenu < numberOfMemories+40) {
+  for(int i = 1; i <= height/20+1; i++) {
+    if(memoryMenu+i < numberOfMemories) {
       pushMatrix();
-        translate(0, 20*i);
-        drawMemoryController(i, getMemoryTypeName(i), true);
+        translate(0, 20*(i-1));
+        drawMemoryController(i+memoryMenu, getMemoryTypeName(i+memoryMenu), true);
       popMatrix();
     }
   }
@@ -70,6 +70,7 @@ void sivuValikko() {
 
 void drawMemoryController(int controlledMemoryId, String text, boolean inUse) {
   int value = memoryValue[controlledMemoryId];
+  
   pushStyle();
   
   textSize(12);
