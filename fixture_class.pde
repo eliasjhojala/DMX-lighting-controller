@@ -1,4 +1,4 @@
-boolean invokeFixturesDrawFinished = false;
+boolean invokeFixturesDrawFinished = true;
 void invokeFixturesDraw() {
   invokeFixturesDrawFinished = false;
   for (fixture temp : fixtures) temp.draw();
@@ -45,6 +45,8 @@ class fixture {
     fixtureType = getFixtureNameByType(fixtTypeId);
   }
   
+  //Empty fixture
+  fixture() {}
   
   void initFixtureObj(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int param, int fixtTypeId) {
    dimmer = dim;
@@ -131,6 +133,7 @@ class fixture {
   int oldFixtureTypeId;
   
   void draw() {
+    println("---");
     if (dimmerPresetTarget != -1 && dimmerPresetTarget != lastDimmerPresetTarget) {
       dimmer = dimmerPresetTarget;
       lastDimmerPresetTarget = dimmerPresetTarget;

@@ -93,6 +93,9 @@ class memoryController {
     //Type indication box
     fill(10, 240, 10);
     rect(25, 0, 40, 20);
+    //Controller box
+    fill(240);
+    rect(65, 0, 100, 20);
     popStyle();
   }
 }
