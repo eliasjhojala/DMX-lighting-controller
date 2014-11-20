@@ -133,7 +133,6 @@ class fixture {
   int oldFixtureTypeId;
   
   void draw() {
-    println("---");
     if (dimmerPresetTarget != -1 && dimmerPresetTarget != lastDimmerPresetTarget) {
       dimmer = dimmerPresetTarget;
       lastDimmerPresetTarget = dimmerPresetTarget;
