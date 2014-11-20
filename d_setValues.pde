@@ -1,7 +1,7 @@
 int[] dimInputOld = new int[fixtures.length];
 int[] dimInputWithMasterOld = new int[fixtures.length];
 int[] dimFixturesOld = new int[fixtures.length];
-boolean dimCheckFinished = false;
+boolean dimCheckFinished = true;
 void setDimAndMemoryValuesAtEveryDraw() {
   dimCheckFinished = false;
   for(int i = 0; i < fixtures.length; i++) {
