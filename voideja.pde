@@ -311,3 +311,26 @@ boolean inBoundsCircle(int cPosX, int cPosY, int cRadius, int pointerX, int poin
     return cRadius > PVector.dist(mouse, circle);
   } else return false;
 }
+
+
+
+void setValuesToSelected() {
+  int a = 0;
+  for(int i = 0; i < fixtures.length; i++) {
+    if(fixtures[i].selected) {
+      fixtures[i].dimmer = fixtureInputs[a].dimmer;
+      fixtures[i].pan = fixtureInputs[a].pan;
+      fixtures[i].tilt = fixtureInputs[a].tilt;
+      fixtures[i].panFine = fixtureInputs[a].panFine;
+      fixtures[i].tiltFine = fixtureInputs[a].tiltFine;
+      fixtures[i].colorWheel = fixtureInputs[a].colorWheel;
+//      fixtures[i].red = fixtureInputs[a].red;
+//      fixtures[i].green = fixtureInputs[a].green;
+//      fixtures[i].blue = fixtureInputs[a].blue;
+      fixtures[i].focus = fixtureInputs[a].focus;
+      fixtures[i].prism = fixtureInputs[a].prism;
+      fixtures[i].goboWheel = fixtureInputs[a].goboWheel;
+      fixtures[i].shutter = fixtureInputs[a].shutter;
+    }
+  }
+}
