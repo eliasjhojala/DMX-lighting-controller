@@ -77,7 +77,7 @@ void drawMemoryController(int controlledMemoryId, String text, boolean inUse) {
   textAlign(CENTER);
   //Draw controller
   strokeWeight(2);
-  stroke(80);
+  noStroke();
   fill(240);
   //Number indication box
   rect(0, 0, 25, 20);
@@ -91,7 +91,7 @@ void drawMemoryController(int controlledMemoryId, String text, boolean inUse) {
   text(text, 30, 15);
   
   //Controller box
-  fill(200);
+  fill(255, 200);
   noStroke();
   rect(65, 0, 100, 20);
   fill(50, 50, 240);
@@ -108,6 +108,7 @@ void drawMemoryController(int controlledMemoryId, String text, boolean inUse) {
   }
   noFill();
   stroke(80);
+  rect(0, 0, 65, 20);
   rect(65, 0, 100, 20);
   popStyle();
 }

@@ -5,7 +5,7 @@ void checkThemeMode() {
     stroke(0, 0, 0); //Jos tulostusmode on päällä kuvioiden reunat ovat mustia - if printmode is on then strokes are black
   }
   else { 
-    background(20); //Jos tulostusmode on pois päältä taustaväri on musta - if printmode is off then background is black
+    background(0); //Jos tulostusmode on pois päältä taustaväri on musta - if printmode is off then background is black
     stroke(255, 255, 255); //Jos tulostusmode on pois päältä kuvoiden reunat ovat valkoisia - if printmode is off then strokes are white
   }
 }
