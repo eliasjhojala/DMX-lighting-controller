@@ -7,13 +7,16 @@ boolean[] saveOptionButtonVariableValues = new boolean[saveOptionButtonVariables
 boolean[][] whatToSave = new boolean[saveOptionButtonVariables.length][numberOfMemories];
 
 class fixtureInput {
+  int fixtureType;
+  int channelStart;
+  int fixtureTypeId;
   int selectedFixture;
   //Define all the variables
   int dimmer; //dimmer value
   int red, green, blue; //color values
   int pan, tilt, panFine, tiltFine; //rotation values
   int rotationX, rotationZ;
-  int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
+  int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions, frequency; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
  
   int sF = selectedFixture; //This variable tells what is actual fixtureId
@@ -60,6 +63,22 @@ class fixtureInput {
          /* 1ch fog */                       case 21: fog = dmxChannels[0]; break; //1ch fog
       }
       createFinalValues();
+  }
+  
+    public int[] getDMX() {
+    int[] dmxChannels = new int[30];
+      switch(fixtureTypeId) {
+         /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: dmxChannels = new int[1]; dmxChannels[0] = dimmer; break; //dimmers
+         /* MH-X50 14-channel mode */        case 16: dmxChannels = new int[14]; dmxChannels[0] = pan; dmxChannels[1] = tilt; dmxChannels[2] = panFine; dmxChannels[3] = tiltFine; dmxChannels[4] = responseSpeed; dmxChannels[5] = colorWheel; dmxChannels[6] = shutter; dmxChannels[7] = dimmer; dmxChannels[8] = goboWheel; dmxChannels[9] = goboRotation; dmxChannels[10] = specialFunctions; dmxChannels[11] = autoPrograms; dmxChannels[12] = prism; dmxChannels[13] = focus; break; //MH-X50
+         /* MH-X50 8-channel mode */         case 17: dmxChannels = new int[8]; dmxChannels[0] = pan; dmxChannels[1] = tilt; dmxChannels[2] = colorWheel; dmxChannels[3] = shutter; dmxChannels[4] = goboWheel; dmxChannels[5] = goboRotation; dmxChannels[6] = prism; dmxChannels[7] = focus; break; //MH-X50 8-ch mode
+         /* simple rgb led par */            case 18: dmxChannels = new int[3]; dmxChannels[0] = red; dmxChannels[1] = green; dmxChannels[2] = blue; break; //Simple rgb led par
+         /* simple rgb led par with dim */   case 19: dmxChannels = new int[4]; dmxChannels[0] = dimmer; dmxChannels[1] = red; dmxChannels[2] = green; dmxChannels[3] = blue; break; //Simple rgb led par with dim
+         /* 2ch hazer */                     case 20: dmxChannels = new int[2]; dmxChannels[0] = haze; dmxChannels[1] = fan; break; //2ch hazer
+         /* 1ch fog */                       case 21: dmxChannels = new int[1]; dmxChannels[0] = fog; break; //1ch fog
+         /* 2ch strobe */                    case 22: dmxChannels = new int[2]; dmxChannels[0] = dimmer; dmxChannels[1] = frequency; break; //2ch strobe
+         /* 1ch relay */                     case 23: dmxChannels = new int[1]; if(dimmer > 100) { dmxChannels[0] = 255; } else { dmxChannels[0] = 0; } break; //1ch relay
+      }
+    return dmxChannels; 
   }
  
     
