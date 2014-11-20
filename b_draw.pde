@@ -15,7 +15,7 @@ void draw() {
 
   checkThemeMode();
   
-  if (dimCheckFinished) thread("setDimAndMemoryValuesAtEveryDraw"); //Set dim and memory values
+  setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
   if (arduinoFinished) thread("arduinoSend"); //Send dim-values to arduino, which sends them to DMX-shield
   
   drawMainWindow(); //Draw fixtures (tab main_window)
