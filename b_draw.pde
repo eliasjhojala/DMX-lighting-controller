@@ -12,6 +12,7 @@ int oldGrandMaster = 40;
 
 
 void draw() {
+  setValuesToSelected();
 
   checkThemeMode();
   
