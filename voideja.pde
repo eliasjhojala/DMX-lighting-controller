@@ -19,7 +19,7 @@ int indexOfMinCheck(int[] input, boolean[] checked) {
 
 int ansaWidth;
 
-boolean arduinoFinished = false;
+boolean arduinoFinished = true;
 void arduinoSend() {
   arduinoFinished = false;
   for(int i = 0; i < channels; i++) {
