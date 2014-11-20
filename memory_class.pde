@@ -1,7 +1,7 @@
 fixture[][] repOfFixtures = new fixture[fixtures.length][numberOfMemories];
 void saveFixtureMemory(int fixtureMemoryId) {
       for(int i = 0; i < fixtures.length; i++) {
-      repOfFixtures[i][fixtureMemoryId] = new fixture(0,0,0,0,0,0,0,0,0,0,0,0,0);
+      repOfFixtures[i][fixtureMemoryId] = new fixture();
   }
   for (int i = 0; i < fixtures.length; i++) {
     if(whatToSave[0][fixtureMemoryId]) {
@@ -10,6 +10,7 @@ void saveFixtureMemory(int fixtureMemoryId) {
   }
   memoryType[fixtureMemoryId] = 1;
 }
+
 
 
 void loadFixtureMemory(int fixtureMemoryId, int value) {
