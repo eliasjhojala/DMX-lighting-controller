@@ -491,9 +491,10 @@ Serial myPort;  // The serial port
 
 
 
-
+String actualSketchPath;
 
 void setup() {
+  actualSketchPath = sketchPath("");
   //Initialize mouseLocker to prevent nullPointers
   mouseLocker = "";
   thread("setAllowedChannels");
