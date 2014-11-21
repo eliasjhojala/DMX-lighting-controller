@@ -92,3 +92,11 @@ void changeCrossFadeValue(int value) {
   valueOfMemory[2] = value;
   memoryValue[2] = value;
 }
+
+boolean presetIsEmpty(int presetId) {
+  //todo
+  //  todo = todo todo todo
+  // doto todo doto
+  //todo
+  return false;
+}
