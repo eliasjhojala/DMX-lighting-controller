@@ -5,7 +5,7 @@ void invokeFixturesDraw() {
   invokeFixturesDrawFinished = true;
 }
 
-class fixture {
+static class fixture implements Serializable {
   //Variables---------------------------------------------------------------------------------
   boolean selected = false;
   
@@ -156,7 +156,7 @@ class fixture {
 
 
 
-class fixtureSize {
+static class fixtureSize implements Serializable {
   
   int w, h;
   boolean isDrawn;
