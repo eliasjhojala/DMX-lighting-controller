@@ -101,7 +101,7 @@ void setup() {
   
   //Asetetaan oikeat polut käyttäjän mukaan
   
-  
+  String path;
   if(userId == 1) { //Jos Elias käyttää
     path = assetPath + "Tallenteet/3D models/";
   }
