@@ -1,5 +1,5 @@
 
-int userId = 3; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
+int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
 boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 
@@ -486,7 +486,7 @@ void initializeCOM() {
 Serial myPort;  // The serial port
 
 
-
+String fileSeparator = java.io.File.separator;
 String actualSketchPath;
 
 void setup() {
