@@ -22,7 +22,7 @@ class fixtureInput {
   int haze, fan, fog; //Pyro values
  
   int sF = selectedFixture; //This variable tells what is actual fixtureId
-  int fT = fixtures[sF].fixtureTypeId; //This variable tells actual fixtureType
+  int fT; //This variable tells actual fixtureType
   
   //MHX50 personal settins
   int[][] mhx50_RGB_color_Values = { { 255, 255, 255 }, { 255, 255, 0 }, { 255, 100, 255 }, { 0, 100, 0 }, { 255, 0, 255 }, { 0, 0, 255 }, { 0, 255, 0 }, { 255, 30, 0 }, { 0, 0, 100 } };
