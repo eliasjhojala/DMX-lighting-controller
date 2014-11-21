@@ -89,7 +89,6 @@ class fixture {
   //Query-------------------------------------------------------------------------------------
   
   //Returns raw fixture color in type color
-  
   color getRawColor() {
     return color(red, green, blue);
   }
