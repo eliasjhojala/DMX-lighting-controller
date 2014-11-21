@@ -1,6 +1,6 @@
 //Tässä välilehdessä piirretään sivuvalikko, jossa näkyy memorit ja niiden arvot, sekä tyypit
 
-memoryCreationBox memoryCreator = new memoryCreationBox(false);
+memoryCreationBox memoryCreator = new memoryCreationBox(true);
 
 void sivuValikko() {
   
