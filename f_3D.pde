@@ -101,13 +101,13 @@ void setup() {
   
   //Asetetaan oikeat polut käyttäjän mukaan
   
-  String path = actualSketchPath + "Tallenteet" + fileSeparator + "3D models" + fileSeparator;
-  /*if(userId == 1) { //Jos Elias käyttää
+  String path = "";
+  if(userId == 1) { //Jos Elias käyttää
     path = assetPath + "Tallenteet/3D models/";
   }
   else { //Jos Roope käyttää
     path = assetPath + "3D models\\";
-  }*/
+  }
   
   par64Model = loadShape(path + "par64.obj");
   par64Holder = loadShape(path + "par64_holder.obj");
@@ -123,7 +123,6 @@ void setup() {
   base = loadShape(path + "base.obj");
   cone = loadShape(path + "cone.obj");
   table = loadShape(path + "table.obj");
-  table.disableStyle();
   
   cone.disableStyle();
   base.disableStyle();
@@ -145,7 +144,7 @@ int valoScale = 20;
 
 void draw() {
   
-  if(use3D == true && dataLoaded) {
+  if(use3D == true) {
  
               background(0);
               lights();
