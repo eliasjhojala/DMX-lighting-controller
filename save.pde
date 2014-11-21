@@ -178,7 +178,7 @@ void saveAllData() {
     saveTable(table, "/Users/elias/Dropbox/DMX controller/main_modular/variables/pikkusten_disko.csv"); //Eliaksen polku
   } else if(!roopeAidilla) {
 
-    saveTable(table, "E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv"); //Roopen polku
+    saveTable(table, sketchPath("variables") + fileSeparator + "pikkusten_disko.csv"); //Roopen polku
   } else saveTable(table, "C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv");
 }
 
