@@ -101,13 +101,13 @@ void setup() {
   
   //Asetetaan oikeat polut käyttäjän mukaan
   
-  String path = actualSketchPath + "Tallenteet" + fileSeparator + "3D models" + fileSeparator;
-  /*if(userId == 1) { //Jos Elias käyttää
+  
+  if(userId == 1) { //Jos Elias käyttää
     path = assetPath + "Tallenteet/3D models/";
   }
   else { //Jos Roope käyttää
     path = assetPath + "3D models\\";
-  }*/
+  }
   
   par64Model = loadShape(path + "par64.obj");
   par64Holder = loadShape(path + "par64_holder.obj");
