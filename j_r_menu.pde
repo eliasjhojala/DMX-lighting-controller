@@ -57,6 +57,7 @@ void sivuValikko() {
     }
   }
   
+  //contr.update();
   popMatrix();
   //-
  

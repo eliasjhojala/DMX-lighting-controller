@@ -34,7 +34,7 @@ void loadAllData() {
     }
     else if(userId == 2) {
       if(!roopeAidilla) {
-       table = loadTable(sketchPath("variables") + fileSeparator + "pikkusten_disko.csv", "header"); //Roopen polku
+       table = loadTable("E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roopen polku
       } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roope äidillä -polku
     }
     else if(userId == 3) {

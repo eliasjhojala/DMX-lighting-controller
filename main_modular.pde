@@ -1,5 +1,5 @@
 
-int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
+int userId = 3; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
 boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 
@@ -18,10 +18,6 @@ int arduinoIndex2 = 10;
 int enttecIndex = 0; // Enttecin USB DMX palikan COM-portin järjestysnumero
 
 int touchOscInComing = 8000;
-
-
-import java.io.*;
-String fileSeparator = java.io.File.separator;
 
 boolean[][] allowChannel = new boolean[10][512];
 
