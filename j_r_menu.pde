@@ -104,7 +104,7 @@ class memoryCreationBox {
       boolean cancelHover = isHoverSimple(30, 10, 50, 20);
       fill(cancelHover ? 220 : 180, 30, 30);
       //Close if Cancel is pressed
-      if(cancelHover && mousePressed) open = false;
+      if(cancelHover && mousePressed && !mouseLocker.equals("memoryCreationBox:move")) open = false;
       rect(30, 10, 50, 20, 0, 4, 4, 0);
       fill(230);
       textAlign(CENTER);
