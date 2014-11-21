@@ -5,11 +5,8 @@ void invokeFixturesDraw() {
   invokeFixturesDrawFinished = true;
 }
 
-<<<<<<< HEAD
-final class fixture implements Serializable {
-=======
+
 class fixture {
->>>>>>> parent of 2f69b88... Get fixture class ready for serialization
   //Variables---------------------------------------------------------------------------------
   boolean selected = false;
   
@@ -161,11 +158,9 @@ class fixture {
 
 
 
-<<<<<<< HEAD
-final class fixtureSize implements Serializable {
-=======
+
 class fixtureSize {
->>>>>>> parent of 2f69b88... Get fixture class ready for serialization
+
   
   int w, h;
   boolean isDrawn;
