@@ -1,49 +1,10 @@
 //Tässä välilehdessä piirretään sivuvalikko, jossa näkyy memorit ja niiden arvot, sekä tyypit
 
+memoryCreationBox memoryCreator = new memoryCreationBox(false);
+
 void sivuValikko() {
   
-  /*if(mouseX > width-120 && mouseX < width && mouseY > 30) { //Check if mouse is on the memory menu
-    mouseLocked = true; //Lukitsee hiiren, jottei se vaikuta muihin alueisiin
-    mouseLocker = "sivuValikko"; //Kertoo hiiren olevan lukittu alueelle sivuValikko
-  }
-   if(mousePressed == true) { //Check if mouse is pressed
-      if(mouseX > width-120 && mouseX < width && mouseY > 30) { //Check if mouse is on the memorymenu
-          mouseLocked = true; //Lock mouse
-          mouseLocker = "sivuValikko"; //Mouse is locked to area "sivuValikko"
-          if(round(map((mouseX-width+60), 1, 59, 0, 255)) >= 0) { //Check if mouse is located on memory sliders
-            memory(round((mouseY-35)/15)+memoryMenu, round(map((mouseX-width+60), 1, 59, 0, 255))); //Set right memory value according to the mouse location
-            memoryValue[round((mouseY-35)/15)+memoryMenu] = round(map((mouseX-width+60), 1, 59, 0, 255)); //Set right memory variable value according to the mouse location
-          }
-          else {
-            if(mouseButton == RIGHT) { //Check if you clicked right button on green area
-              changeChaseModeByMemoryNumber(round((mouseY-35)/15)+memoryMenu); //Open chaseMode window
-            }
-            else { 
-            memory(round((mouseY-25)/15)+memoryMenu, 0); //Set memory value to zero if you click on the green area 
-            memoryValue[round((mouseY-25)/15)+memoryMenu] = 0; //Set memory variable value to zero if you click on the green area 
-            }
-          }
-      }
-      else { //If mouse is clicked but not on the memorymenu unlocks mouse
-        if(mouseLocker == "sivuValikko") {
-          //mouseLocked = false; 
-          mouseLocker = "";
-        }
-      }
-  }
-  
-  
-  //Drawing
-  pushMatrix();
-    translate(width-60, 0);
-    for(int i = 1; i <= height/15-5; i++) {
-      if(memoryMenu < numberOfMemories+40) {
-        translate(0, 15);
-        memoryy(i+memoryMenu, memoryValue[i+memoryMenu]);
-        
-      }
-    }
-  popMatrix();*/
+  //The old code can be found in old versions
   
   //-
   pushMatrix();
@@ -52,20 +13,17 @@ void sivuValikko() {
     if(memoryMenu+i < numberOfMemories) {
       pushMatrix();
         translate(0, 20*(i-1));
-        drawMemoryController(i+memoryMenu, getMemoryTypeName(i+memoryMenu), true);
+        drawMemoryController(i+memoryMenu, getMemoryTypeName(i+memoryMenu), !presetIsEmpty(i+memoryMenu));
       popMatrix();
     }
   }
   
-  //contr.update();
   popMatrix();
   //-
+  
+  memoryCreator.draw();
  
 }
-
-
-
-
 
 
 void drawMemoryController(int controlledMemoryId, String text, boolean inUse) {
@@ -99,7 +57,7 @@ void drawMemoryController(int controlledMemoryId, String text, boolean inUse) {
   fill(0);
   text(value, 68, 16);
   
-  if (isHoverSimple(0, 0, 170, 20) && mousePressed) {
+  if (isHoverSimple(0, 0, 170, 20) && mousePressed && (!mouseLocked || mouseLocker.equals("presetControl"))) {
     mouseLocked = true;
     mouseLocker = "presetControl";
     value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
@@ -107,28 +65,59 @@ void drawMemoryController(int controlledMemoryId, String text, boolean inUse) {
     memoryValue[controlledMemoryId] = value;
   }
   noFill();
-  stroke(80);
+  stroke(100);
   rect(0, 0, 65, 20);
   rect(65, 0, 100, 20);
   popStyle();
 }
 
-void memoryy(int numero, int dimmi) {
-  String nimi = "";
-  nimi = getMemoryTypeName(numero);
+
+class memoryCreationBox {
+  memoryCreationBox(boolean o) {
+    open = o;
+    locY = 40;
+  }
   
-  fill(255, 255, 255);
-  stroke(255, 255, 0); //Yellow borders
-  rect(0, -5, 60, 15); //White rect under slider bar
-  fill(0, 255, 0); //Green color for title box
-  rect(-60, -5, 60, 15); //Title box
-  fill(0, 0, 0); //Black title text
-  text(str(numero)+":"+nimi, -47, 7); //Title text (emory number and type text)
-  fill(0, 0, 255); //Blue color for slider bar
-  rect(0, -5, (map(dimmi, 0, 255, 0, 60))*(1), 15); //Slider bar
-  fill(0, 0, 0); //Black color for text
-  text(str(dimmi), 0, 7); //Value text
+  boolean open;
+  int locY;
+  
+  void draw() {
+    if(open) {
+      pushMatrix();
+      pushStyle();
+      translate(width - (320 + 168), locY);
+      fill(255, 230);
+      stroke(150);
+      strokeWeight(3);
+      //Box itself
+      rect(0, 0, 300, 300, 20);
+      //Grabable location button
+      fill(180);
+      noStroke();
+      rect(10, 10, 20, 20, 20, 0, 0, 4);
+      if((mousePressed && isHoverSimple(10, 10, 20, 20)) || (mouseLocked && mouseLocker.equals("memoryCreationBox:move"))) {
+        mouseLocked = true;
+        mouseLocker = "memoryCreationBox:move";
+        locY = constrain(mouseY - pmouseY + locY, 40, height - 340);
+      }
+      //Cancel button
+      boolean cancelHover = isHoverSimple(30, 10, 50, 20);
+      fill(cancelHover ? 220 : 180, 30, 30);
+      //Close if Cancel is pressed
+      if(cancelHover && mousePressed) open = false;
+      rect(30, 10, 50, 20, 0, 4, 4, 0);
+      fill(230);
+      textAlign(CENTER);
+      text("Cancel", 55, 24);
+      popMatrix();
+      popStyle();
+    }
+  }
+  
 }
+
+
+
 String getMemoryTypeName(int numero) {
   String nimi = "";
   if(memoryType[numero] == 1) { nimi = "prst"; }
