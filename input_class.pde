@@ -1,3 +1,5 @@
+boolean setValuesToSelectedFixtures = true;
+
 
 boolean createFinalValuesPlease;
 boolean saveDimmerValue;
@@ -191,28 +193,54 @@ class fixtureInput {
       int fogId = 20;
       int hazeId = 21;
        // dimInput[sF] = dimmer;
-      if(fT >= 1 && fT <= 6) { fixtures[constrain(sF-1, 0, fixtures.length)].dimmer = dimmer; }
-      if(fT == fogId) { fixtures[constrain(sF-1, 0, fixtures.length)].fog = dimmer; }
-      if(fT == hazeId) { fixtures[sF].haze = dimmer; fixtures[sF].fan = dimmer; }
-      if(ftIsMhX50()) {
-        fixtures[constrain(sF-1, 0, fixtures.length)].dimmer = dimmer;
-        fixtures[constrain(sF-1, 0, fixtures.length)].pan = pan;
-        fixtures[constrain(sF-1, 0, fixtures.length)].tilt = tilt;
-        fixtures[constrain(sF-1, 0, fixtures.length)].panFine = panFine;
-        fixtures[constrain(sF-1, 0, fixtures.length)].tiltFine = tiltFine;
-        fixtures[constrain(sF-1, 0, fixtures.length)].red = red;
-        fixtures[constrain(sF-1, 0, fixtures.length)].green = green;
-        fixtures[constrain(sF-1, 0, fixtures.length)].blue = blue;
-        fixtures[constrain(sF-1, 0, fixtures.length)].goboWheel = goboWheel;
-        fixtures[constrain(sF-1, 0, fixtures.length)].goboRotation = goboRotation;
-        fixtures[constrain(sF-1, 0, fixtures.length)].colorWheel = colorWheel;
-        fixtures[constrain(sF-1, 0, fixtures.length)].specialFunctions = specialFunctions;
-        fixtures[constrain(sF-1, 0, fixtures.length)].autoPrograms = autoPrograms;
-        fixtures[constrain(sF-1, 0, fixtures.length)].shutter = shutter;
-        fixtures[constrain(sF-1, 0, fixtures.length)].prism = prism;
-        fixtures[constrain(sF-1, 0, fixtures.length)].focus = focus;
-        fixtures[constrain(sF-1, 0, fixtures.length)].responseSpeed = responseSpeed;
-      }
+       if(setValuesToSelectedFixtures) {
+           if(fT >= 1 && fT <= 6) { fixtureForSelected[0].dimmer = dimmer; }
+          if(fT == fogId) { fixtureForSelected[0].fog = dimmer; }
+          if(fT == hazeId) { fixtureForSelected[sF].haze = dimmer; fixtureForSelected[sF].fan = dimmer; }
+          if(ftIsMhX50()) {
+            fixtureForSelected[0].dimmer = dimmer;
+            fixtureForSelected[0].pan = pan;
+            fixtureForSelected[0].tilt = tilt;
+            fixtureForSelected[0].panFine = panFine;
+            fixtureForSelected[0].tiltFine = tiltFine;
+            fixtureForSelected[0].red = red;
+            fixtureForSelected[0].green = green;
+            fixtureForSelected[0].blue = blue;
+            fixtureForSelected[0].goboWheel = goboWheel;
+            fixtureForSelected[0].goboRotation = goboRotation;
+            fixtureForSelected[0].colorWheel = colorWheel;
+            fixtureForSelected[0].specialFunctions = specialFunctions;
+            fixtureForSelected[0].autoPrograms = autoPrograms;
+            fixtureForSelected[0].shutter = shutter;
+            fixtureForSelected[0].prism = prism;
+            fixtureForSelected[0].focus = focus;
+            fixtureForSelected[0].responseSpeed = responseSpeed;
+          }
+       }
+       else {
+          if(fT >= 1 && fT <= 6) { fixtures[constrain(sF-1, 0, fixtures.length)].dimmer = dimmer; }
+          if(fT == fogId) { fixtures[constrain(sF-1, 0, fixtures.length)].fog = dimmer; }
+          if(fT == hazeId) { fixtures[sF].haze = dimmer; fixtures[sF].fan = dimmer; }
+          if(ftIsMhX50()) {
+            fixtures[constrain(sF-1, 0, fixtures.length)].dimmer = dimmer;
+            fixtures[constrain(sF-1, 0, fixtures.length)].pan = pan;
+            fixtures[constrain(sF-1, 0, fixtures.length)].tilt = tilt;
+            fixtures[constrain(sF-1, 0, fixtures.length)].panFine = panFine;
+            fixtures[constrain(sF-1, 0, fixtures.length)].tiltFine = tiltFine;
+            fixtures[constrain(sF-1, 0, fixtures.length)].red = red;
+            fixtures[constrain(sF-1, 0, fixtures.length)].green = green;
+            fixtures[constrain(sF-1, 0, fixtures.length)].blue = blue;
+            fixtures[constrain(sF-1, 0, fixtures.length)].goboWheel = goboWheel;
+            fixtures[constrain(sF-1, 0, fixtures.length)].goboRotation = goboRotation;
+            fixtures[constrain(sF-1, 0, fixtures.length)].colorWheel = colorWheel;
+            fixtures[constrain(sF-1, 0, fixtures.length)].specialFunctions = specialFunctions;
+            fixtures[constrain(sF-1, 0, fixtures.length)].autoPrograms = autoPrograms;
+            fixtures[constrain(sF-1, 0, fixtures.length)].shutter = shutter;
+            fixtures[constrain(sF-1, 0, fixtures.length)].prism = prism;
+            fixtures[constrain(sF-1, 0, fixtures.length)].focus = focus;
+            fixtures[constrain(sF-1, 0, fixtures.length)].responseSpeed = responseSpeed;
+          }
+       }
     }
     
     boolean ftIsMhX50() { //This function is only to check is the fixtureType moving head (17 or 16)

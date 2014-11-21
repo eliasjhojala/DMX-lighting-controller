@@ -45,6 +45,8 @@ void setuppi() {
     fixtureInputs[i] = new fixtureInput(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
   
+    fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  
 
   
 }
