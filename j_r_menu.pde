@@ -6,6 +6,36 @@ void sivuValikko() {
   
   //The old code can be found in old versions
   
+  { // Memory creator open button
+    pushStyle();
+    //Open MemoryCreator bubblebutton
+    int bubS = 250;
+    boolean bubbleHover = isHover(width-168, 0, -bubS/2, bubS/2);
+    if (bubbleHover) bubS += 10;
+    
+    if (bubbleHover && mousePressed && mouseLocker.equals("main")) {
+      mouseLocker = "addMemory";
+      mouseLocked = true;
+      memoryCreator.initiatePassive();
+    }
+    
+    //bubble shadow
+    noFill();
+    stroke(0, 120); strokeWeight(6);
+    arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
+    
+    //bubble itself
+    fill(topMenuTheme);
+    stroke(topMenuAccent); strokeWeight(2);
+    arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
+    
+    //Text
+    fill(255);
+    textSize(15);
+    text("Add memory", width-150-bubS/2, 25);
+    popStyle();
+  }
+  
   //-
   pushMatrix();
   translate(width-168, 0);
@@ -13,7 +43,7 @@ void sivuValikko() {
     if(memoryMenu+i < numberOfMemories) {
       pushMatrix();
         translate(0, 20*(i-1));
-        drawMemoryController(i+memoryMenu, getMemoryTypeName(i+memoryMenu), !presetIsEmpty(i+memoryMenu));
+        drawMemoryController(i+memoryMenu, getMemoryTypeName(i+memoryMenu));
       popMatrix();
     }
   }
@@ -22,11 +52,12 @@ void sivuValikko() {
   //-
   
   memoryCreator.draw();
- 
+  
+  
 }
 
 
-void drawMemoryController(int controlledMemoryId, String text, boolean inUse) {
+void drawMemoryController(int controlledMemoryId, String text) {
   int value = memoryValue[controlledMemoryId];
   
   pushStyle();
@@ -94,6 +125,11 @@ class memoryCreationBox {
     open = true;
     locY = lY;
     selectedMemorySlot = slot;
+  }
+  
+  //Initiate with last configuration
+  void initiatePassive() {
+    open = true;
   }
   
   boolean open;
@@ -266,9 +302,10 @@ class memoryCreationBox {
         saveFixtureMemory(selectedMemorySlot);
       break;
       case 1: //s2l
-        
+        soundToLightFromPreset(selectedMemorySlot);
       break;
     }
+    open = false;
   }
   
   //Returns whether box is hovered on
