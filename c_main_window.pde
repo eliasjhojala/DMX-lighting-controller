@@ -93,7 +93,7 @@ void drawMainWindow() {
       popMatrix();
       
   //---------------View drag & box selection
-  if(move == false && inBdsMouse(0, 0, width - 165, height - 225) && !isHoverBottomMenu()) {
+  if(move == false && inBdsMouse(0, 0, width - 165, height - 225) && !isHoverBottomMenu() && !memoryCreator.isMouseOver()) {
     if(mousePressed) {
       if (mouseButton == LEFT) {
         if (!mouseLocked || mouseLocker == "main") {

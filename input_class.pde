@@ -6,7 +6,7 @@ boolean saveDimmerValue;
 
 String[] saveOptionButtonVariables = { "dimmer", "color", "gobo", "goboRotation", "shutter", "pan", "tilt" };
 boolean[] saveOptionButtonVariableValues = new boolean[saveOptionButtonVariables.length];
-boolean[][] whatToSave = new boolean[saveOptionButtonVariables.length][numberOfMemories];
+boolean[][] whatToSave = new boolean[numberOfMemories][saveOptionButtonVariables.length];
 
 class fixtureInput {
   int fixtureType;
@@ -273,7 +273,7 @@ class fixtureInput {
                 if(address.equals("/7/preset" + str(i) + "_" + str(ij))) { //Check if button is pressed
                   if(value == 1) {
                     if(savePreset) { //If savepresed is true then saves presed to presetplace which you clicked
-                      for(int ijk = 0; ijk < whatToSave.length; ijk++) { whatToSave[ijk][i] = saveOptionButtonVariableValues[ijk]; }
+                      for(int ijk = 0; ijk < whatToSave[0].length; ijk++) { whatToSave[i][ijk] = saveOptionButtonVariableValues[ijk]; }
                       saveFixtureMemory(i);
                       savePreset = false;
                     }
