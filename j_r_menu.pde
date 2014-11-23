@@ -262,8 +262,8 @@ class memoryCreationBox {
   void save() {
     switch(selectedMemoryMode) {
       case 0: //Preset
-        saveFixtureMemory(selectedMemorySlot);
         arrayCopy(selectedWhatToSave, whatToSave[selectedMemorySlot]);
+        saveFixtureMemory(selectedMemorySlot);
       break;
       case 1: //s2l
         
