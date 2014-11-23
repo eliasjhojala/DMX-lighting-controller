@@ -133,12 +133,17 @@ class memoryCreationBox {
         fill(230);
         textAlign(CENTER);
         text("Cancel", 55, 24);
-        //Submit button
+        //Save button
         boolean saveHover = isHover(290, 290, -50, -20);
         fill(50, saveHover ? 240 : 220, 60);
         rect(290, 290, -50, -20, 4, 4, 20, 4);
         fill(255);
         text("Save", 265, 285);
+        if(saveHover && mousePressed && !mouseLocked) {
+          mouseLocked = true;
+          mouseLocker = "memoryCreationBox:save";
+          save();
+        }
       }
       
       { //Preset creation options
@@ -252,6 +257,18 @@ class memoryCreationBox {
       }
     }
     popMatrix();
+  }
+  
+  void save() {
+    switch(selectedMemoryMode) {
+      case 0: //Preset
+        saveFixtureMemory(selectedMemorySlot);
+        arrayCopy(selectedWhatToSave, whatToSave[selectedMemorySlot]);
+      break;
+      case 1: //s2l
+        
+      break;
+    }
   }
   
   //Returns whether box is hovered on
