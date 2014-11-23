@@ -72,10 +72,22 @@ void drawMemoryController(int controlledMemoryId, String text, boolean inUse) {
 }
 
 
+String getMemoryTypeName(int numero) {
+  String nimi = "";
+  if(memoryType[numero] == 1) { nimi = "prst"; }
+  if(memoryType[numero] == 2) { nimi = "s2l"; }
+  if(memoryType[numero] == 4) { nimi = "mstr"; }
+  if(memoryType[numero] == 5) { nimi = "fade"; }
+  if(memoryType[numero] == 6) { nimi = "wave"; }
+  return nimi;
+}
+
+
 class memoryCreationBox {
   memoryCreationBox(boolean o) {
     open = o;
     locY = 40;
+    selectedWhatToSave = new boolean[saveOptionButtonVariables.length];
   }
   
   void initiate(int slot, int lY) {
@@ -88,7 +100,9 @@ class memoryCreationBox {
   int locY;
   
   int selectedMemoryMode = 0;
-  int selectedMemorySlot = 0;
+  int selectedMemorySlot = 1;
+  
+  boolean[] selectedWhatToSave;
   
   void draw() {
     if(open) {
@@ -105,7 +119,7 @@ class memoryCreationBox {
         fill(180);
         noStroke();
         rect(10, 10, 20, 20, 20, 0, 0, 4);
-        if((mousePressed && isHoverSimple(10, 10, 20, 20)) || (mouseLocked && mouseLocker.equals("memoryCreationBox:move"))) {
+        if((mousePressed && isHoverSimple(10, 10, 20, 20) && !mouseLocked) || (mouseLocked && mouseLocker.equals("memoryCreationBox:move"))) {
           mouseLocked = true;
           mouseLocker = "memoryCreationBox:move";
           locY = constrain(mouseY - pmouseY + locY, 40, height - 340);
@@ -114,17 +128,23 @@ class memoryCreationBox {
         boolean cancelHover = isHoverSimple(30, 10, 50, 20);
         fill(cancelHover ? 220 : 180, 30, 30);
         //Close if Cancel is pressed
-        if(cancelHover && mousePressed && !mouseLocker.equals("memoryCreationBox:move")) open = false;
+        if(cancelHover && mousePressed && !mouseLocked) open = false;
         rect(30, 10, 50, 20, 0, 4, 4, 0);
         fill(230);
         textAlign(CENTER);
         text("Cancel", 55, 24);
+        //Submit button
+        boolean saveHover = isHover(290, 290, -50, -20);
+        fill(50, saveHover ? 240 : 220, 60);
+        rect(290, 290, -50, -20, 4, 4, 20, 4);
+        fill(255);
+        text("Save", 265, 285);
       }
       
       { //Preset creation options
         drawModeSelection();
         drawSlotSelector();
-        
+        drawTypeSpecificOptions();
       }
       popMatrix();
       popStyle();
@@ -145,7 +165,7 @@ class memoryCreationBox {
       rect(82.5, 12.5, 16, 16, 2);
       fill(230);
       
-      if(boxIsHover && mousePressed && !(mouseLocked && mouseLocker.equals("memoryCreationBox:type")))
+      if(boxIsHover && mousePressed && !mouseLocked)
         { mouseLocked = true; mouseLocker = "memoryCreationBox:type"; addToSelectedMemoryMode(); }
       
       fill(0);
@@ -177,22 +197,66 @@ class memoryCreationBox {
       text("SLOT", 140, 16);
       
       //Selection indicator
-      float mappedSlot = map(selectedMemorySlot, 0, numberOfMemories-1, 0, 280);
+      float mappedSlot = map(selectedMemorySlot, 1, numberOfMemories-1, 0, 280);
       fill(0, 186, 240);
       stroke(0, 0, 200);
       triangle(mappedSlot, 2, mappedSlot+10, 22, mappedSlot-10, 22);
-      if(mousePressed && isHoverSimple(int(mappedSlot-10), 0, 20, 22)) {
+      if(mousePressed && isHoverSimple(int(mappedSlot-10), 0, 20, 22) && !mouseLocked) {
         mouseLocked = true;
         mouseLocker = "memoryCreationBox:slot";
       }
       if(mouseLocked && mouseLocker.equals("memoryCreationBox:slot")) {
-        selectedMemorySlot = constrain(int(map(mouseX - screenX(0, 0), 0, 280, 0, numberOfMemories)), 0, numberOfMemories-1);
+        selectedMemorySlot = constrain(int(map(mouseX - screenX(0, 0), 0, 280, 0, numberOfMemories)), 1, numberOfMemories-1);
       }
       
       fill(0);
       text(selectedMemorySlot, mappedSlot, 34);
     }
     popMatrix();
+  }
+  
+  void drawTypeSpecificOptions() {
+    pushMatrix();
+    {
+      switch(selectedMemoryMode) {
+        case 0:
+          //Draw whatToSave checkboxes
+          textAlign(LEFT);
+          text("What to save:", 10, 125);
+          translate(10, 132);
+          int rows = 5;
+          for(int i = 0; i < saveOptionButtonVariables.length; i++) {
+            pushMatrix();
+              translate(i / rows * 120, i % rows * 30);
+              boolean boxIsHover = isHoverSimple(0, 0, 120, 25);
+              fill(boxIsHover ? 210 : 200);
+              noStroke();
+              rect(0, 0, 25, 25, 4);
+              if(boxIsHover && mousePressed && !mouseLocked) {
+                mouseLocked = true;
+                mouseLocker = "memoryCreationBox:wts" + i;
+                selectedWhatToSave[i] = !selectedWhatToSave[i];
+              }
+              if(selectedWhatToSave[i]) {
+                fill(0, 186, 240);
+                rect(4, 4, 17, 17, 4);
+              }
+              fill(10);
+              text(saveOptionButtonVariables[i], 30, 16);
+            popMatrix();
+          }
+        break;
+        case 1:
+          
+        break;
+      }
+    }
+    popMatrix();
+  }
+  
+  //Returns whether box is hovered on
+  boolean isMouseOver() {
+    return isHoverSimple(width - (320 + 168), locY, 300, 300) && open;
   }
   
   void addToSelectedMemoryMode() {
@@ -203,12 +267,4 @@ class memoryCreationBox {
 
 
 
-String getMemoryTypeName(int numero) {
-  String nimi = "";
-  if(memoryType[numero] == 1) { nimi = "prst"; }
-  if(memoryType[numero] == 2) { nimi = "s2l"; }
-  if(memoryType[numero] == 4) { nimi = "mstr"; }
-  if(memoryType[numero] == 5) { nimi = "fade"; }
-  if(memoryType[numero] == 6) { nimi = "wave"; }
-  return nimi;
-}
+
