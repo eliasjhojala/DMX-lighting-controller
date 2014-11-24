@@ -10,6 +10,7 @@ void sivuValikko() {
     pushStyle();
     //Open MemoryCreator bubblebutton
     int bubS = 250;
+    int origBubS = bubS;
     boolean bubbleHover = isHover(width-168, 0, -bubS/2, bubS/2);
     if (bubbleHover) bubS += 10;
     
@@ -24,9 +25,28 @@ void sivuValikko() {
     stroke(0, 120); strokeWeight(6);
     arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
     
+    //chaseMode button(s)
+    boolean isHoverCM = isHoverSimple(width-268, bubS/2, 102, 40);
+    fill(isHoverCM ? topMenuTheme : topMenuTheme2);
+    stroke(topMenuAccent);  strokeWeight(2);
+    //Lower
+    //rect(width-268, bubS/2+40, 102, 40, 0, 0, 0, 20); - not in use for now
+    //Upper
+    rect(width-268, bubS/2-50, 102, 90);
+    fill(255);
+    text("Chase Mode: " + chaseMode, width-262, bubS/2+34);
+    
+    if(mousePressed && isHoverCM && !(mouseLocked && mouseLocker.equals("rearMenu:ChaseMode"))) {
+      mouseLocked = true;
+      mouseLocker = "rearMenu:ChaseMode";
+      if(mouseButton == LEFT) nextChaseMode(); else if(mouseButton == RIGHT) reverseChaseMode();
+    }
+    
+    
+    
     //bubble itself
     fill(topMenuTheme);
-    stroke(topMenuAccent); strokeWeight(2);
+    stroke(topMenuAccent);
     arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
     
     //Text
