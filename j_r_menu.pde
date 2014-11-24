@@ -32,7 +32,7 @@ void sivuValikko() {
     //Lower
     //rect(width-268, bubS/2+40, 102, 40, 0, 0, 0, 20); - not in use for now
     //Upper
-    rect(width-268, bubS/2-50, 102, 90);
+    rect(width-268, bubS/2-50, 102, 90, 0, 0, 0, 20);
     fill(255);
     text("Chase Mode: " + chaseMode, width-262, bubS/2+34);
     
