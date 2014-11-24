@@ -109,11 +109,13 @@ void drawMemoryController(int controlledMemoryId, String text) {
   text(value, 68, 16);
   
   if (isHoverSimple(0, 0, 170, 20) && mousePressed && (!mouseLocked || mouseLocker.equals("presetControl"))) {
-    mouseLocked = true;
-    mouseLocker = "presetControl";
-    value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
-    memory(controlledMemoryId, value);
-    memoryValue[controlledMemoryId] = value;
+    if(mouseButton == LEFT) {
+      mouseLocked = true;
+      mouseLocker = "presetControl";
+      value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
+      memory(controlledMemoryId, value);
+      memoryValue[controlledMemoryId] = value;
+    } else if(mouseButton == RIGHT) memoryCreator.initiateFromExsisting(controlledMemoryId);
   }
   noFill();
   stroke(100);
@@ -150,6 +152,29 @@ class memoryCreationBox {
   //Initiate with last configuration
   void initiatePassive() {
     open = true;
+  }
+  
+  //Initiate with configuration from an existing memory
+  void initiateFromExsisting(int memory) {
+    
+    
+    switch(memoryType[memory]) {
+      case 0:
+        selectedMemoryMode = 0;
+      break;
+      case 1:
+        selectedMemoryMode = 0;
+      break;
+      case 2:
+        selectedMemoryMode = 1;
+      break;
+      
+      default: return;
+    }
+    open = true;
+    selectedMemorySlot = memory;
+    selectedWhatToSave = whatToSave[memory];
+    
   }
   
   boolean open;
