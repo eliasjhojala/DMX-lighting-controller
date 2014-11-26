@@ -15,81 +15,77 @@ void drawMainWindow() {
    
    
    
-   
-       //TÄSSÄ PIIRRETÄÄN ANSAT - DRAW TRUSSES
-      ansat();
-      
-      //Just using the rotation of PVectors, it already exists, so why not use it?
-      PVector mouseRotated = new PVector(mouseX, mouseY);
-      mouseRotated.rotate(radians(-pageRotation));
-      
-      if(moveLamp) {
-        mouseLocked = true;
-        mouseLocker = "main:fixMove";
-      }
-      
-      for(int i = 0; i < ansaTaka; i++) {
-        pushMatrix();
-            if(!mouseLocked || mouseLocker == "main:fixMove") {
-                if(!mouseClicked) {
-                  if(moveLamp == true) {
-                   if(lampToMove < ansaTaka) {
-                    fixtures[lampToMove].x_location = fixtures[lampToMove].x_location + (int(mouseRotated.x) - oldMouseX1) * 100 / zoom - ansaX[fixtures[lampToMove].parentAnsa];
-                    fixtures[lampToMove].y_location = fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom;
-                    
-                  }
-            
-                  moveLamp = false;
-                  }
-                    
+   {//begin drawing all elements (fixtures & other non-HUD objects)
+     //TÄSSÄ PIIRRETÄÄN ANSAT - DRAW TRUSSES
+    ansat();
+    
+    //Just using the rotation of PVectors, it already exists, so why not use it?
+    PVector mouseRotated = new PVector(mouseX, mouseY);
+    mouseRotated.rotate(radians(-pageRotation));
+    
+    if(moveLamp) {
+      mouseLocked = true;
+      mouseLocker = "main:fixMove";
+    }
+    
+    for(int i = 0; i < ansaTaka; i++) {
+      pushMatrix();
+          if(!mouseLocked || mouseLocker == "main:fixMove") {
+              if(!mousePressed) {
+                if(moveLamp == true) {
+                 if(lampToMove < ansaTaka) {
+                  fixtures[lampToMove].x_location = fixtures[lampToMove].x_location + (int(mouseRotated.x) - oldMouseX1) * 100 / zoom - ansaX[fixtures[lampToMove].parentAnsa];
+                  fixtures[lampToMove].y_location = fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom;
+                  
                 }
-        
-              if(moveLamp == true) {
-                mouseLocked = true;
-                mouseLocker = "main:fixMove";
-                if(i == lampToMove) { translate(fixtures[lampToMove].x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom), fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures[lampToMove].parentAnsa]); }
-                else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
+          
+                moveLamp = false;
+                }
+                  
               }
+      
+            if(moveLamp == true) {
+              mouseLocked = true;
+              mouseLocker = "main:fixMove";
+              if(i == lampToMove) { translate(fixtures[lampToMove].x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom), fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures[lampToMove].parentAnsa]); }
               else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
             }
-            
-            
             else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
-
-
-           if(fixtureType1[i] != 14) { rotate(radians(fixtures[i].rotationZ)); }
-
-            
-            
-            
-            if(!mouseLocked || mouseLocker == "main:fixMove") {
-              if(mouseClicked) {
-                
+          }
+          
+          
+          else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
+  
+  
+         if(fixtureType1[i] != 14) { rotate(radians(fixtures[i].rotationZ)); }
+         
+          if(!mouseLocked || mouseLocker == "main:fixMove") {
+            if(mousePressed) {
               
-              
-              
-              //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
-              if(isHover(0, 0, fixtures[i].size.w, fixtures[i].size.h) && fixtures[i].size.isDrawn && mousePressed) {
-               
-                if(mouseButton == RIGHT) { toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; }
-                else if(mouseReleased) {
-                  oldMouseX1 = int(mouseRotated.x);
-                  oldMouseY1 = int(mouseRotated.y);
-                  lampToMove = i;
-                  moveLamp = true;
-                  mouseReleased = false;
-                }
+            //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
+            if(isHover(0, 0, fixtures[i].size.w, fixtures[i].size.h) && fixtures[i].size.isDrawn && mousePressed) {
+             
+              if(mouseButton == RIGHT) { toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; }
+              else if(mouseReleased) {
+                oldMouseX1 = int(mouseRotated.x);
+                oldMouseY1 = int(mouseRotated.y);
+                lampToMove = i;
+                moveLamp = true;
+                mouseReleased = false;
               }
             }
           }
-              
-              
-              drawFixture(i);
-            //
-        popMatrix();
-        if(!mousePressed) { mouseLocked = false; }
-      }
+        }
+            
+            
+            drawFixture(i);
+          //
       popMatrix();
+      if(!mousePressed) { mouseLocked = false; }
+    }
+    popMatrix();
+    
+  }//Endof: draw all elements
       
   //---------------View drag & box selection
   if(!moveLamp && inBdsMouse(0, 0, width - 165, height - 225) && !isHoverBottomMenu() && !memoryCreator.isMouseOver()) {
