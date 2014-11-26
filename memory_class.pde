@@ -28,6 +28,12 @@ void loadFixtureMemory(int fixtureMemoryId, int value) {
 
 
 
+void createMemoryObjects() {
+  memory memories = new memory[100];
+  soundDetect s2l = new soundDetect;
+}
+
+
 class memory { //Begin of memory class--------------------------------------------------------------------------------------------------------------------------------------
   //chase variables
   int value; //memorys value
