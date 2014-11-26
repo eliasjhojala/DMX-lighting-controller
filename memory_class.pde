@@ -29,9 +29,9 @@ void loadFixtureMemory(int fixtureMemoryId, int value) {
 
 
 void createMemoryObjects() {
-  memory memories = new memory[100];
+  soundDetect s2l = new soundDetect();
+  memory[] memories = new memory[100];
   for (memory temp : memories) temp = new memory();
-  soundDetect s2l = new soundDetect;
 }
 
 
@@ -64,7 +64,7 @@ class chase { //Begin of chase class--------------------------------------------
   }
   
   void beatToLight() {
-    if(soundDetect.beat(1) == true) {
+    if(s2l.beat(1) == true) {
       for(int i = 0; i < getPresets().length; i++) {
           memory(getPresets(i), 255);
       }
@@ -106,3 +106,5 @@ class soundDetect { //----------------------------------------------------------
     return toReturn;
   }
 } //en of soundDetect class-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
