@@ -34,18 +34,31 @@ class memory {
   
   memory() {
   }
-  class chase {
+  
+  
+  
+  class chase { //----------------------------------------------------------------------------------------------------------------------------------------------------------
     int inputMode, outputMode; //What is input and what will output look like
     chase() {
     }
     class soundDetect {
       soundDetect() {
       }
-      boolean beat() {
-        return beat.isKick();
+      boolean beat(int bT) {
+        beat.detect(in.mix); //beat detect command of minim library
+        boolean toReturn = true;
+        switch(bT) {
+          case 1: toReturn = beat.isKick(); break;
+          case 2: toReturn = beat.isSnare(); break;
+          case 3: toReturn = beat.isHat(); break;
+        }
+        return toReturn;
       }
       int freq(int i) {
+        int toReturn = 0;
+        //command to get  right freq from fft or something like it
+        return toReturn;
       }
     }
-  }
+  } //en of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
 }
