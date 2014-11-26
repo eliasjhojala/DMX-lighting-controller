@@ -25,3 +25,27 @@ void loadFixtureMemory(int fixtureMemoryId, int value) {
     }
   }
 }
+
+class memory {
+  //chase variables
+  int value; //memorys value
+  int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
+  
+  
+  memory() {
+  }
+  class chase {
+    int inputMode, outputMode; //What is input and what will output look like
+    chase() {
+    }
+    class soundDetect {
+      soundDetect() {
+      }
+      boolean beat() {
+        return beat.isKick();
+      }
+      int freq(int i) {
+      }
+    }
+  }
+}
