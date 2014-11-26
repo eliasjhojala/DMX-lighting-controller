@@ -34,10 +34,18 @@ class memory { //Begin of memory class------------------------------------------
   
   memory() {
   }
+
   
   class chase { //Begin of chase class--------------------------------------------------------------------------------------------------------------------------------------
     int inputMode, outputMode; //What is input and what will output look like
     chase() {
+    }
+    
+      
+    int[] getPresets() {
+       //here function which returns all the presets in this chase
+       int[] toReturn = new int[1];
+       return toReturn;
     }
     
     void beatToLight() {
