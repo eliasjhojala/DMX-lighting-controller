@@ -39,8 +39,10 @@ class memory { //Begin of memory class------------------------------------------
   int value; //memorys value
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
   
+  chase myChase;
   
   memory() {
+    myChase = new chase(this);
   }
 
   
@@ -52,7 +54,11 @@ class memory { //Begin of memory class------------------------------------------
 
 class chase { //Begin of chase class--------------------------------------------------------------------------------------------------------------------------------------
   int inputMode, outputMode; //What is input and what will output look like
-  chase() {
+  
+  memory parent;
+  //You need to supply a memory parent for this to work properly
+  chase(memory parent) {
+    this.parent = parent;
   }
   
     
