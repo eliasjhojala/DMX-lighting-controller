@@ -25,12 +25,12 @@ void drawMainWindow() {
       
       if(moveLamp) {
         mouseLocked = true;
-        mouseLocker = "main";
+        mouseLocker = "main:fixMove";
       }
       
       for(int i = 0; i < ansaTaka; i++) {
         pushMatrix();
-            if(move && (!mouseLocked || mouseLocker == "main")) {
+            if(!mouseLocked || mouseLocker == "main:fixMove") {
                 if(!mouseClicked) {
                   if(moveLamp == true) {
                    if(lampToMove < ansaTaka) {
@@ -46,7 +46,7 @@ void drawMainWindow() {
         
               if(moveLamp == true) {
                 mouseLocked = true;
-                mouseLocker = "main";
+                mouseLocker = "main:fixMove";
                 if(i == lampToMove) { translate(fixtures[lampToMove].x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom), fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures[lampToMove].parentAnsa]); }
                 else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
               }
@@ -62,15 +62,14 @@ void drawMainWindow() {
             
             
             
-            if(move && (!mouseLocked || mouseLocker == "main")) {
+            if(!mouseLocked || mouseLocker == "main:fixMove") {
               if(mouseClicked) {
-                mouseLocked = true;
-                mouseLocker = "main";
+                
               
               
               
               //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
-              if(isHover(0, 0, fixtures[i].size.w, fixtures[i].size.h) && fixtures[i].size.isDrawn && mouseClicked) {
+              if(isHover(0, 0, fixtures[i].size.w, fixtures[i].size.h) && fixtures[i].size.isDrawn && mousePressed) {
                
                 if(mouseButton == RIGHT) { toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; }
                 else if(mouseReleased) {
@@ -95,6 +94,7 @@ void drawMainWindow() {
   //---------------View drag & box selection
   if(!moveLamp && inBdsMouse(0, 0, width - 165, height - 225) && !isHoverBottomMenu() && !memoryCreator.isMouseOver()) {
     if(mousePressed) {
+      println("gothere");
       if (mouseButton == LEFT) {
         if (!mouseLocked || mouseLocker == "main") {
           mouseLocked = true;
