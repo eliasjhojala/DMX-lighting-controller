@@ -65,7 +65,11 @@ void drawMainWindow() {
             //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
             if(isHover(0, 0, fixtures[i].size.w, fixtures[i].size.h) && fixtures[i].size.isDrawn && mousePressed) {
              
-              if(mouseButton == RIGHT) { toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; }
+              if(mouseButton == RIGHT) {
+                toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; 
+                mouseLocked = true;
+                mouseLocker = "main:openToolBox";
+              }
               else if(mouseReleased) {
                 oldMouseX1 = int(mouseRotated.x);
                 oldMouseY1 = int(mouseRotated.y);
@@ -81,9 +85,11 @@ void drawMainWindow() {
             drawFixture(i);
           //
       popMatrix();
-      if(!mousePressed) { mouseLocked = false; }
+      
     }
     popMatrix();
+    
+    if(!mousePressed) { mouseLocked = false; }
     
   }//Endof: draw all elements
       
@@ -115,22 +121,23 @@ void drawMainWindow() {
 int boxStartX, boxStartY;
 boolean boxSelect = false;
 void doBoxSelect() {
-  if (!mouseLocked) {
-    
-    mouseLocked = true;
-    mouseLocker = "boxSelect";
-    boxSelect = true;
-    boxStartX = mouseX;
-    boxStartY = mouseY; 
-  } else {
-    
-    pushStyle();
-    fill(50, 50, 150, 150);
-    stroke(0, 0, 150);
-    rectMode(CORNERS);
-    rect(mouseX, mouseY, boxStartX, boxStartY);
-    popStyle();
-  }
+    if (!mouseLocked) {
+      
+      mouseLocked = true;
+      mouseLocker = "boxSelect";
+      boxSelect = true;
+      boxStartX = mouseX;
+      boxStartY = mouseY; 
+    } else if(mouseLocker.equals("boxSelect")) {
+      
+      pushStyle();
+      fill(50, 50, 150, 150);
+      stroke(0, 0, 150);
+      rectMode(CORNERS);
+      rect(mouseX, mouseY, boxStartX, boxStartY);
+      popStyle();
+    }
+  
 }
 void endBoxSelect() {
   boxSelect = false;

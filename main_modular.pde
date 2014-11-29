@@ -343,6 +343,9 @@ import ddf.minim.effects.*;
 import oscP5.*;
 import netP5.*;
 
+//import method class
+import java.lang.reflect.Method;
+
 OscP5 oscP5;
 
 NetAddress Remote;
