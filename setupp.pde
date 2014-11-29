@@ -42,7 +42,7 @@ void setuppi() {
   fixtureInputs = new fixtureInput[2];
   
   for(int i = 0; i < fixtureInputs.length; i++) {
-    fixtureInputs[i] = new fixtureInput(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    fixtureInputs[i] = new fixtureInput();
   }
   
     fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);

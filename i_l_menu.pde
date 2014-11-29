@@ -212,7 +212,7 @@ void drawBottomMenuControlBox() {
     fill(5, 100, 150);
     stroke(9, 157, 222);
     strokeWeight(5);
-    rect(0, 0, bottomMenuControlBoxWidth, bottomMenuControlBoxHeight);
+    rect(0, 0, bottomMenuControlBoxWidth, bottomMenuControlBoxHeight, 40, 40, 40, 0);
     fill(0, 50);
     textSize(120);
     text("Fixture " + currentBottomMenuControlBoxOwner, 0, bottomMenuControlBoxHeight - 10);
@@ -232,10 +232,10 @@ void drawBottomMenuControlBox() {
     if (bottomMenuControlBoxControllers != null) for (bottomMenuChController controller : bottomMenuControlBoxControllers) controller.draw();
     
     //Update DMX values-----------------------------------------------------------------|
-    thread("bottomMenuDMXUpdate");
+    bottomMenuDMXUpdate();
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
     
-    text(bottomMenuControlBoxDisplayText, 15, 20);
+    text(bottomMenuControlBoxDisplayText, 20, 30);
     
     //Reset draw modifiers
     strokeWeight(1);
@@ -266,6 +266,7 @@ void bottomMenuDMXUpdate() {
     } else bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
     arrayIndex++;
   }
+  println(changd);
   bottomMenuControlBoxDMXValueChanged = new boolean[tempDMX.length];
   if (changd) fixtureInputs[0].receiveFromBottomMenu(tempDMX, currentBottomMenuControlBoxOwner+1);
 }
