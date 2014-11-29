@@ -41,7 +41,7 @@ class fixtureInput {
   
 
   
-  fixtureInput(int d, int r, int g, int b, int p, int t, int pF, int tF, int rX, int rZ, int cW, int gW, int gR, int pr, int foc, int sh, int st, int re, int au, int sp, int ha, int fa, int fo) {
+  fixtureInput() {
   }
 
    void updateVariables() {
@@ -194,6 +194,7 @@ class fixtureInput {
       int hazeId = 21;
        // dimInput[sF] = dimmer;
        if(setValuesToSelectedFixtures) {
+         
            if(fT >= 1 && fT <= 6) { fixtureForSelected[0].dimmer = dimmer; }
           if(fT == fogId) { fixtureForSelected[0].fog = dimmer; }
           if(fT == hazeId) { fixtureForSelected[sF].haze = dimmer; fixtureForSelected[sF].fan = dimmer; }

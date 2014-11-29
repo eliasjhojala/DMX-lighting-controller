@@ -129,8 +129,8 @@ void drawFixture(int i) {
   
   if(showFixture == true) {
     int x1 = 0; int y1 = 0;
-    fixtures[i].locationOnScreenX = int(screenX(x1, y1));
-    fixtures[i].locationOnScreenY = int(screenY(x1, y1));
+    fixtures[i].locationOnScreenX = int(screenX(x1 + lampWidth/2, y1 + lampHeight/2));
+    fixtures[i].locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
     if(fixtureTypeId == 13) { rectMode(CENTER); rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
     if(selected) stroke(100, 100, 255); else stroke(255);
     rect(x1, y1, lampWidth, lampHeight);
