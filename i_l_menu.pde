@@ -145,6 +145,7 @@ void checkFixtureBoxRightClick(int id) {
 int currentBottomMenuControlBoxOwner;                    //|
 boolean bottomMenuControlBoxOpen = false;                //|
 boolean bottomMenuControlBoxOpenOld = false;             //|
+boolean bottomMenuAllFixtures = false;                   //|
 bottomMenuChController[] bottomMenuControlBoxControllers;//|
 int[] bottomMenuControlBoxDMXValues;                     //|
 boolean[] bottomMenuControlBoxDMXValueChanged;           //|
@@ -159,11 +160,15 @@ String bottomMenuControlBoxSubstr = "bottomMenuControlBox";//|
 //---------------------------------------------------------//|
 
 void openBottomMenuControlBoxForSelectedFs() {
+  openBottomMenuControlBox(contextMenu1.fixtureId);
+  bottomMenuControlBoxDisplayText = "Controlling all selected fixtures";
   
+  bottomMenuAllFixtures = true;
 }
 
 void openBottomMenuControlBox(int owner) {
   bottomMenuControlBoxOpen = true;
+  bottomMenuAllFixtures = false;
   currentBottomMenuControlBoxOwner = owner;
   bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures[owner].fixtureType + ", Starting Channel: " + fixtures[owner].channelStart;
   boolean successInit = false; //This boolean is set to true, if the fixtureType has a specific configuration applied for it.

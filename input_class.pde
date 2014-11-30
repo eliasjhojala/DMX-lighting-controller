@@ -193,7 +193,7 @@ class fixtureInput {
       int fogId = 20;
       int hazeId = 21;
        // dimInput[sF] = dimmer;
-       if(setValuesToSelectedFixtures) {
+       if(bottomMenuAllFixtures && bottomMenuControlBoxOpen) {
          
            if(fT >= 1 && fT <= 6) { fixtureForSelected[0].dimmer = dimmer; }
           if(fT == fogId) { fixtureForSelected[0].fog = dimmer; }
@@ -217,6 +217,7 @@ class fixtureInput {
             fixtureForSelected[0].focus = focus;
             fixtureForSelected[0].responseSpeed = responseSpeed;
           }
+          setValuesToSelected();
        }
        else {
           if(fT >= 1 && fT <= 6) { fixtures[constrain(sF-1, 0, fixtures.length)].dimmer = dimmer; }

@@ -52,7 +52,9 @@ class contextMenu {
     
   }
   
+  int fixtureId = 0;
   void initiateForFixture(int fId) {
+    fixtureId = fId;
     String[] acts = {"openBottomMenuControlBoxForSelectedFs"};
     String[] labs = {"Control all Selected"};
     initiate(acts, labs, mouseX, mouseY);
