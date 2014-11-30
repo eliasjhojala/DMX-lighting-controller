@@ -161,7 +161,7 @@ String bottomMenuControlBoxSubstr = "bottomMenuControlBox";//|
 
 void openBottomMenuControlBoxForSelectedFs() {
   openBottomMenuControlBox(contextMenu1.fixtureId);
-  bottomMenuControlBoxDisplayText = "Controlling all selected fixtures";
+  bottomMenuControlBoxDisplayText = "Controlling all selected fixtures, configuration from fixture " + contextMenu1.fixtureId;
   
   bottomMenuAllFixtures = true;
 }
