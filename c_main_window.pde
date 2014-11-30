@@ -69,6 +69,8 @@ void drawMainWindow() {
                 toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; 
                 mouseLocked = true;
                 mouseLocker = "main:openToolBox";
+                
+                contextMenu1.initiateForFixture(i);
               }
               else if(mouseReleased) {
                 oldMouseX1 = int(mouseRotated.x);
