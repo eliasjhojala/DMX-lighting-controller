@@ -315,22 +315,21 @@ boolean inBoundsCircle(int cPosX, int cPosY, int cRadius, int pointerX, int poin
 
 
 void setValuesToSelected() {
-  int a = 0;
-  for(int i = 0; i < fixtures.length; i++) {
-    if(fixtures[i].selected) {
-      fixtures[i].dimmer = fixtureForSelected[a].dimmer;
-      fixtures[i].pan = fixtureForSelected[a].pan;
-      fixtures[i].tilt = fixtureForSelected[a].tilt;
-      fixtures[i].panFine = fixtureForSelected[a].panFine;
-      fixtures[i].tiltFine = fixtureForSelected[a].tiltFine;
-      fixtures[i].colorWheel = fixtureForSelected[a].colorWheel;
-//      fixtures[i].red = fixtureForSelected[a].red;
-//      fixtures[i].green = fixtureForSelected[a].green;
-//      fixtures[i].blue = fixtureForSelected[a].blue;
-      fixtures[i].focus = fixtureForSelected[a].focus;
-      fixtures[i].prism = fixtureForSelected[a].prism;
-      fixtures[i].goboWheel = fixtureForSelected[a].goboWheel;
-      fixtures[i].shutter = fixtureForSelected[a].shutter;
+  if (bottomMenuAllFixtures && bottomMenuControlBoxOpen) {
+    int a = 0;
+    for(int i = 0; i < fixtures.length; i++) {
+      if(fixtures[i].selected) {
+        fixtures[i].dimmer = fixtureForSelected[a].dimmer;
+        fixtures[i].pan = fixtureForSelected[a].pan;
+        fixtures[i].tilt = fixtureForSelected[a].tilt;
+        fixtures[i].panFine = fixtureForSelected[a].panFine;
+        fixtures[i].tiltFine = fixtureForSelected[a].tiltFine;
+        fixtures[i].colorWheel = fixtureForSelected[a].colorWheel;
+        fixtures[i].focus = fixtureForSelected[a].focus;
+        fixtures[i].prism = fixtureForSelected[a].prism;
+        fixtures[i].goboWheel = fixtureForSelected[a].goboWheel;
+        fixtures[i].shutter = fixtureForSelected[a].shutter;
+      }
     }
   }
 }
