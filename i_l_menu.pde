@@ -158,6 +158,10 @@ String bottomMenuControlBoxDisplayText;                  //|
 String bottomMenuControlBoxSubstr = "bottomMenuControlBox";//|
 //---------------------------------------------------------//|
 
+void openBottomMenuControlBoxForSelectedFs() {
+  
+}
+
 void openBottomMenuControlBox(int owner) {
   bottomMenuControlBoxOpen = true;
   currentBottomMenuControlBoxOwner = owner;
