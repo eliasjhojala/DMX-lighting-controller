@@ -57,7 +57,7 @@ void drawMainWindow() {
           else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
   
   
-         if(fixtureType1[i] != 14) { rotate(radians(fixtures[i].rotationZ)); }
+         if(fixtures[i].fixtureTypeId != 14) { rotate(radians(fixtures[i].rotationZ)); }
          
           if(!mouseLocked || mouseLocker == "main:fixMove") {
             if(mousePressed) {
