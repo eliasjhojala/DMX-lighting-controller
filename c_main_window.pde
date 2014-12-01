@@ -98,7 +98,7 @@ void drawMainWindow() {
   //---------------View drag & box selection
   if(!moveLamp && inBdsMouse(0, 0, width - 165, height - 225) && !isHoverBottomMenu() && !memoryCreator.isMouseOver()) {
     if(mousePressed) {
-      println("gothere");
+      
       if (mouseButton == LEFT) {
         if (!mouseLocked || mouseLocker == "main") {
           mouseLocked = true;

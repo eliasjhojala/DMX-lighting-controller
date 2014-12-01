@@ -275,7 +275,6 @@ void bottomMenuDMXUpdate() {
     } else bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
     arrayIndex++;
   }
-  println(changd);
   bottomMenuControlBoxDMXValueChanged = new boolean[tempDMX.length];
   if (changd) fixtureInputs[0].receiveFromBottomMenu(tempDMX, currentBottomMenuControlBoxOwner+1);
 }
