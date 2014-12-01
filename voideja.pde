@@ -76,7 +76,7 @@ int[] getFixtureSizeByType(int type) {
 }
 
 int[] getFixtureSize(int id) {
-  return getFixtureSizeByType(fixtureType1[id]);
+  return getFixtureSizeByType(fixtures[id].fixtureTypeId);
 }
 
 //Gets type description of fixture #id
@@ -103,7 +103,7 @@ String getFixtureNameByType(int type) {
 }
 
 String getFixtureName(int id) {
-  return getFixtureNameByType(fixtureType1[id]);
+  return getFixtureNameByType(fixtures[id].fixtureTypeId);
 }
 
 
