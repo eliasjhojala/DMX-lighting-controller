@@ -55,8 +55,8 @@ class contextMenu {
   int fixtureId = 0;
   void initiateForFixture(int fId) {
     fixtureId = fId;
-    String[] acts = {"openBottomMenuControlBoxForSelectedFs"};
-    String[] labs = {"Control all Selected"};
+    String[] acts = {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs"};
+    String[] labs = {"Control this", "Control all Selected"};
     initiate(acts, labs, mouseX, mouseY);
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -/
@@ -79,6 +79,7 @@ class contextMenu {
             execute(i);
           } else if (!hovered && mousePressed && mouseButton == LEFT) open = false;
           fill(hovered ? 220 : 180);
+          stroke(170); strokeWeight(1);
           rect(2, 2, 196, 18, 2);
           fill(0);
           text(options[i].title, 5, 17);
