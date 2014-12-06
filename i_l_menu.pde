@@ -166,6 +166,10 @@ void openBottomMenuControlBoxForSelectedFs() {
   bottomMenuAllFixtures = true;
 }
 
+void openBottomMenuControlBoxFromContextMenu() {
+  openBottomMenuControlBox(contextMenu1.fixtureId);
+}
+
 void openBottomMenuControlBox(int owner) {
   bottomMenuControlBoxOpen = true;
   bottomMenuAllFixtures = false;
