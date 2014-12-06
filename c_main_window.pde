@@ -153,6 +153,8 @@ void endBoxSelect() {
   int y2 = max(cornerY);
   
   boolean shiftDown = keyPressed && keyCode == SHIFT;
+  boolean ctrlDown = keyPressed && keyCode == CONTROL;
+  
   for (int i = 0; i < fixtures.length; i++) {
     boolean inside = inBds2D(
       fixtures[i].locationOnScreenX,
@@ -161,7 +163,10 @@ void endBoxSelect() {
       x2, y2
     );
     
-    if(shiftDown) fixtures[i].selected = fixtures[i].selected || inside; else fixtures[i].selected = inside;
+    
+    if(shiftDown) fixtures[i].selected = fixtures[i].selected || inside; //additive select
+      else if(ctrlDown) fixtures[i].selected = inside ? false : fixtures[i].selected; //exclusive select
+        else fixtures[i].selected = inside;
     
    
   }
