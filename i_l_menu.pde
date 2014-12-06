@@ -162,7 +162,7 @@ String bottomMenuControlBoxSubstr = "bottomMenuControlBox";//|
 void openBottomMenuControlBoxForSelectedFs() {
   openBottomMenuControlBox(contextMenu1.fixtureId);
   bottomMenuControlBoxDisplayText = "Controlling all selected fixtures, configuration from fixture " + contextMenu1.fixtureId;
-  
+  fixtureForSelected[0].fixtureTypeId = fixtures[contextMenu1.fixtureId].fixtureTypeId;
   bottomMenuAllFixtures = true;
 }
 
@@ -276,7 +276,17 @@ void bottomMenuDMXUpdate() {
     arrayIndex++;
   }
   bottomMenuControlBoxDMXValueChanged = new boolean[tempDMX.length];
-  if (changd) fixtureInputs[0].receiveFromBottomMenu(tempDMX, currentBottomMenuControlBoxOwner+1);
+  if (changd) submitDMXFromBMCB(tempDMX);
+}
+
+void submitDMXFromBMCB(int[] input) {
+  
+  if(bottomMenuAllFixtures) {
+    fixtureForSelected[0].receiveDMX(input);
+    setValuesToSelected();
+  } else {
+    fixtures[currentBottomMenuControlBoxOwner].receiveDMX(input);
+  }
 }
 
 

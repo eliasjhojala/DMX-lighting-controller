@@ -315,6 +315,7 @@ boolean inBoundsCircle(int cPosX, int cPosY, int cRadius, int pointerX, int poin
 
 
 void setValuesToSelected() {
+  
   if (bottomMenuAllFixtures && bottomMenuControlBoxOpen) {
     int a = 0;
     for(int i = 0; i < fixtures.length; i++) {
