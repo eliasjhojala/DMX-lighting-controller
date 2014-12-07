@@ -86,11 +86,11 @@ void drawFixtureRectangles(int id) {
 void checkFixtureBoxGo(int id) { //This void checks Go button
   if(isHover(10, 0, 49, -15)) { //Check if mouse is on go box
     if(mouseClicked) { //Check if mouse is clicked
-      fixtures[id].dimmer = 255; //Set dimInput value to max
+      fixtures[id].setDimmer(255); //Set dimInput value to max
     }
     if(mouseReleased) { //Check if mouse is released
       mouseReleased = false; //Set mouseReleased to false 
-      fixtures[id].dimmer = 0; //Set dimInput value to min
+      fixtures[id].setDimmer(0); //Set dimInput value to min
     }
   }
 }
@@ -98,10 +98,10 @@ void checkFixtureBoxToggle(int id) { //This void checks Toggle button
   if(isHover(10, -15, 49, -15) && mouseClicked && mouseReleased) { //Check if mouse is on toggle box and clicked and released before it
     mouseReleased = false; //Mouse isn't released anymore
     if(fixtures[id].dimmer == 255) { //Check if dimInput is 255
-      fixtures[id].dimmer = 0; //If dimInput is at 255 then set it to zero
+      fixtures[id].setDimmer(0); //If dimInput is at 255 then set it to zero
     }
     else {
-      fixtures[id].dimmer = 255; //If dimInput is not at max value then set it to max
+      fixtures[id].setDimmer(255); //If dimInput is not at max value then set it to max
     }
   }
 }
@@ -112,8 +112,8 @@ void checkFixtureBoxSlider(int id) {
       mouseReleased = false;
     }
       
-      fixtures[id].dimmer += map(pmouseY - mouseY, 0, 30, 0, 255); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
-      fixtures[id].dimmer = constrain(fixtures[id].dimmer, 0, 255); //Make sure that dimInput value is between 0-255 
+      fixtures[id].setDimmer(fixtures[id].dimmer + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
+      fixtures[id].setDimmer(constrain(fixtures[id].dimmer, 0, 255)); //Make sure that dimInput value is between 0-255 
       
   }
 }

@@ -10,9 +10,11 @@ class fixture {
   //Variables---------------------------------------------------------------------------------
   boolean selected = false;
   
+  boolean DMXChanged = false;
+  
   int dimmer; //dimmer value
   int dimmerPresetTarget = 0; //Used for preset calculations
-  int lastDimmerPresetTarget = 0;
+  int lastDimmerPresetTarget = 0; // /\
   int red, green, blue; //color values
   int pan, tilt, panFine, tiltFine; //rotation values
   int x_location, y_location, z_location; //location in visualisation
@@ -22,6 +24,8 @@ class fixture {
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
   int frequency; //Strobe freq value
+  
+  void setDimmer(int val) {dimmer = val; DMXChanged = true;}
   
   String fixtureType;
   int fixtureTypeId;
@@ -128,6 +132,21 @@ class fixture {
     return dmxChannels; 
   }
   
+  int getDMXLength() {
+    switch(fixtureTypeId) {
+       /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: return 1; //dimmers
+       /* MH-X50 14-channel mode */        case 16: return 14; //MH-X50
+       /* MH-X50 8-channel mode */         case 17: return 8; //MH-X50 8-ch mode
+       /* simple rgb led par */            case 18: return 3; //Simple rgb led par
+       /* simple rgb led par with dim */   case 19: return 4; //Simple rgb led par with dim
+       /* 2ch hazer */                     case 20: return 2; //2ch hazer
+       /* 1ch fog */                       case 21: return 1; //1ch fog
+       /* 2ch strobe */                    case 22: return 2; //2ch strobe
+       /* 1ch relay */                     case 23: return 1; //1ch relay
+    }
+    return 0;
+  }
+  
   //Returns true if operation is succesful
   boolean receiveDMX(int[] dmxChannels) {
     try {
@@ -141,7 +160,7 @@ class fixture {
            /* 1ch fog */                       case 21: fog = dmxChannels[0]; break; //1ch fog
         }
       } catch(Exception e) { e.printStackTrace(); return false; }
-      
+      DMXChanged = true;
       return true;
       
   }
@@ -175,7 +194,7 @@ class fixture {
   
   void draw() {
     if (dimmerPresetTarget != -1 && dimmerPresetTarget != lastDimmerPresetTarget) {
-      dimmer = dimmerPresetTarget;
+      setDimmer(dimmerPresetTarget);
       lastDimmerPresetTarget = dimmerPresetTarget;
     } dimmerPresetTarget = -1;
    
