@@ -79,10 +79,10 @@ void channelsToDim() {
     
   for(int i = 1; i < 13; i++) {
     if(allChannelsOld[1][i] != allChannels[1][i]) {
-      dimInput[i] = round(map(allChannels[1][i], 0, 255, 0, fixtureMasterValue));
+      fixtures[i-1].dimmer = allChannels[1][i];
     }
     if(allChannelsOld[2][i] != allChannels[2][i]) {
-      dimInput[i+12] = round(map(allChannels[2][i], 0, 255, 0, fixtureMasterValue));
+      fixtures[i+12-1].dimmer = allChannels[2][i];
     }
     if(allChannelsOld[5][i] != allChannels[5][i]) {
         memory(i+memoryMenu, round(map(allChannels[5][i], 0, 255, 0, memoryMasterValue)));
@@ -96,10 +96,10 @@ void channelsToDim() {
     if(allChannelsOld[4][i] != allChannels[4][i]) {
       if(useMemories == true) {
         memory(i+12, round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue)));
-        memoryValue[i+12] = round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue));
+        memoryValue[i+12-1] = round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue));
       }
       else {
-        dimInput[i+12+12] = allChannels[4][i];
+        fixtures[i+12+12].dimmer = allChannels[4][i];
       }
     }
     if(enttecDMXchannels > 24) {
