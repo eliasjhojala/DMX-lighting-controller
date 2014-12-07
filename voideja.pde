@@ -23,15 +23,15 @@ boolean arduinoFinished = true;
 void arduinoSend() {
   arduinoFinished = false;
   for(int i = 0; i < channels; i++) {
-    if(valueToDmx[i] != valueToDmxOld[i]) {
+    if(DMX[i] != valueToDmxOld[i]) {
       if(useCOM == true) {
-        setDmxChannel(i, valueToDmx[i]);
+        setDmxChannel(i, DMX[i]);
       }
-      valueToDmxOld[i] = valueToDmx[i];
+      valueToDmxOld[i] = DMX[i];
       
     }
-    sendOscToAnotherPc(i, dim[i]);
-    sendOscToIpad(i, dimInput[i]);
+    sendOscToAnotherPc(i, fixtures[i].dimmer);
+    sendOscToIpad(i, fixtures[i].dimmer);
   }
   arduinoFinished = true;
 }
