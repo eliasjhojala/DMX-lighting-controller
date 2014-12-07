@@ -220,11 +220,11 @@ class fixtureInput {
           setValuesToSelected();
        }
        else {
-          if(fT >= 1 && fT <= 6) { fixtures[constrain(sF-1, 0, fixtures.length)].dimmer = dimmer; }
+          if(fT >= 1 && fT <= 6) { if(dimmer != fixtures[constrain(sF-1, 0, fixtures.length)].dimmer) fixtures[constrain(sF-1, 0, fixtures.length)].setDimmer(dimmer); }
           if(fT == fogId) { fixtures[constrain(sF-1, 0, fixtures.length)].fog = dimmer; }
           if(fT == hazeId) { fixtures[sF].haze = dimmer; fixtures[sF].fan = dimmer; }
           if(ftIsMhX50()) {
-            fixtures[constrain(sF-1, 0, fixtures.length)].dimmer = dimmer;
+            if(dimmer != fixtures[constrain(sF-1, 0, fixtures.length)].dimmer) fixtures[constrain(sF-1, 0, fixtures.length)].setDimmer(dimmer);
             fixtures[constrain(sF-1, 0, fixtures.length)].pan = pan;
             fixtures[constrain(sF-1, 0, fixtures.length)].tilt = tilt;
             fixtures[constrain(sF-1, 0, fixtures.length)].panFine = panFine;
