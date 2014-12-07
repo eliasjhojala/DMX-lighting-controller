@@ -2,24 +2,17 @@ int[] dimInputOld = new int[fixtures.length];
 int[] dimInputWithMasterOld = new int[fixtures.length];
 int[] dimFixturesOld = new int[fixtures.length];
 boolean dimCheckFinished = true;
+int[][] valueToDmxTemp = new int[fixtures.length][fixtures.length];
 void setDimAndMemoryValuesAtEveryDraw() {
   dimCheckFinished = false;
   for(int i = 0; i < fixtures.length; i++) {
-      /*if(dimInputWithMasterOld[i] != int(map(dimInput[fixtures[i].channelStart], 0, 255, 0, grandMaster))) {
-          fixtures[i].dimmer = int(map(dimInput[fixtures[i].channelStart], 0, 255, 0, grandMaster));
-          dimInputWithMasterOld[i] = int(map(dimInput[fixtures[i].channelStart], 0, 255, 0, grandMaster));
-      }
-      if(dimFixturesOld[i] != fixtures[i].dimmer) {
-        dim[fixtures[i].channelStart] = fixtures[i].dimmer;
-        dimFixturesOld[i] = fixtures[i].dimmer;
-      }*/
-      
       int[] dmxFromFixture = fixtures[i].getDMX();
-      for(int ij = 0; ij < dmxFromFixture.length; ij++) {
-        valueToDmx[fixtures[i].channelStart+ij] = dmxFromFixture[ij];
-        //if(fixtures[i].getDMX().length == 14) {  }
+      for(int ij = 0; ij < fixtures[i].getDMX().length; ij++) {
+        valueToDmxTemp[fixtures[i].channelStart+ij][i] = fixtures[i].getDMX()[ij];
       }
-
+  }
+  for(int i = 0; i < fixtures.length; i++) {
+    valueToDmx[i] = max(valueToDmxTemp[i]);
   }
   
   
