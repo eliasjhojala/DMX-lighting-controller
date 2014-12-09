@@ -33,7 +33,7 @@ void setDimAndMemoryValuesAtEveryDraw() {
       fix.DMXChanged = false;
     }
   }
-  if(DMXChangedOverall) {
+  if(/*DMXChangedOverall*/ true) {
     for(fixture fix : fixtures) {
        int[] toFixture = new int[fix.getDMXLength()];
        for (int i = 0; i < toFixture.length; i++) {
