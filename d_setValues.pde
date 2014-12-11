@@ -4,8 +4,9 @@ int[] dimFixturesOld = new int[fixtures.length];
 boolean dimCheckFinished = true;
 //int[][] valueToDmxTemp = new int[fixtures.length][fixtures.length];
 
-//__________________IMPORTANT VARIABLE
+//__________________IMPORTANT VARIABLE(s)
 int[] DMX = new int[512];
+int[] DMXforOutput = new int[512];
 //------------------ SO VERY IMPORTANT
 
 void setDimAndMemoryValuesAtEveryDraw() {
@@ -27,8 +28,10 @@ void setDimAndMemoryValuesAtEveryDraw() {
     if(fix.DMXChanged) {
       DMXChangedOverall = true;
       int[] dmxFromFixture = fix.getDMX();
+      int[] dmxFromFixtureFO = fix.getDMXforOutput();
       for(int ij = 0; ij < dmxFromFixture.length; ij++) {
         DMX[fix.channelStart + ij] = dmxFromFixture[ij];
+        DMXforOutput[fix.channelStart + ij] = dmxFromFixtureFO[ij];
       }
       fix.DMXChanged = false;
     }
@@ -112,6 +115,8 @@ void setDimAndMemoryValuesAtEveryDraw() {
           if (memoryData[i] == 0) {memoryIsZero[i] = true;} else {memoryIsZero[i] = false;}
         }
       }*/
+      
+      if(grandMaster != oldGrandMaster) { for(fixture fix : fixtures) fix.DMXChanged = true; oldGrandMaster = grandMaster; }
       
       //----------------------------------------------------------------------------------------------------------------------------
       
