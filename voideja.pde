@@ -23,11 +23,11 @@ boolean arduinoFinished = true;
 void arduinoSend() {
   arduinoFinished = false;
   for(int i = 0; i < channels; i++) {
-    if(DMX[i] != valueToDmxOld[i]) {
+    if(DMXforOutput[i] != valueToDmxOld[i]) {
       if(useCOM == true) {
-        setDmxChannel(i, DMX[i]);
+        setDmxChannel(i, DMXforOutput[i]);
       }
-      valueToDmxOld[i] = DMX[i];
+      valueToDmxOld[i] = DMXforOutput[i];
       
     }
     sendOscToAnotherPc(i, fixtures[i].dimmer);
@@ -138,7 +138,7 @@ void drawFixture(int i) {
     if(zoom > 50) {
       if(printMode == false) {
         fill(255, 255, 255);
-        text(fixtures[i].dimmer, x1, y1 + lampHeight + 15);
+        text(fixtures[i].getDimmerWithMaster(), x1, y1 + lampHeight + 15);
       }
       else {
         fill(0, 0, 0);

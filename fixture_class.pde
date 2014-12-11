@@ -100,7 +100,8 @@ class fixture {
   
   //Returns dimmed fixture color in type color
   color getColor_wDim() {
-    return color(map(red, 0, 255, 0, dimmer), map(green, 0, 255, 0, dimmer), map(blue, 0, 255, 0, dimmer));
+    int dwm = getDimmerWithMaster();
+    return color(map(red, 0, 255, 0, dwm), map(green, 0, 255, 0, dwm), map(blue, 0, 255, 0, dwm));
   }
   
   
@@ -130,6 +131,34 @@ class fixture {
        /* 1ch relay */                     case 23: dmxChannels = new int[1]; if(dimmer > 100) { dmxChannels[0] = 255; } else { dmxChannels[0] = 0; } break; //1ch relay
       }
     return dmxChannels; 
+  }
+  
+  int dimmerLast = 0;
+  int[] getDMXforOutput() {
+    
+    //We're going to temporarily modify the dimmer variable to suit our needs
+    int tempDimmer = dimmer;
+    if(abs(dimmer - dimmerLast) >= 5) {
+      dimmer = getDimmerWithMaster();
+      if(dimmer < 5) dimmer = 0;
+      if(dimmer > 250) dimmer = 255;
+      dimmerLast = dimmer;
+    } else if(isHalogen()) { dimmer = int(map(dimmerLast, 0, 255, 0, grandMaster)); }
+    
+    int[] dmxChannels = getDMX();
+    dimmer = tempDimmer;
+    return dmxChannels; 
+  }
+  
+  boolean isHalogen() {
+    switch(fixtureTypeId) {
+       case 1: case 2: case 3: case 4: case 5: case 6: return true;
+       default: return false;
+    }
+  }
+  
+  int getDimmerWithMaster() {
+    return int(map(dimmer, 0, 255, 0, grandMaster));
   }
   
   int getDMXLength() {
