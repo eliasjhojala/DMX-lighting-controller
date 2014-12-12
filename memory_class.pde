@@ -61,7 +61,7 @@ class chase { //Begin of chase class--------------------------------------------
      return toReturn;
   }
   
-  void beatToLight() {
+  void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
     if(s2l.beat(1) == true) {
       for(int i = 0; i < getPresets().length; i++) {
           memory(getPresets()[i], 255);
@@ -74,11 +74,15 @@ class chase { //Begin of chase class--------------------------------------------
     }
     
   }
+  
+  
   void beatToMoving() {
+    //This function goes through all the presets. When there is beat this goes to next preset
   }
-  void freqToLight() {
+  
+  void freqToLight() { //This function gives frequence values to chase presets
     for(int i = 0; i < getPresets().length; i++) {
-    //  memory(getPresets(i), soundDetect.freq(int(map(i, 0, getPresets().length, 0, soundDetect.getFreqMax())));
+      memory(getPresets()[i], s2l.freq(int(map(i, 0, getPresets().length, 0, s2l.getFreqMax()))));
     }
   }
 } //en of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -86,8 +90,19 @@ class chase { //Begin of chase class--------------------------------------------
 
 
 class soundDetect { //----------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+  
+  //init all the variables
+  float[] bands;
+  //end initing variables
+  
+  
   soundDetect() {
+    fft.forward( in.mix );
+    bands = new float[fft.specSize()];
   }
+  
+  
   boolean beat(int bT) {
     beat.detect(in.mix); //beat detect command of minim library
     boolean toReturn = true;
@@ -98,11 +113,25 @@ class soundDetect { //----------------------------------------------------------
     }
     return toReturn;
   }
+  
+  
   int freq(int i) {
     int toReturn = 0;
-    //command to get  right freq from fft or something like it
+    toReturn = round(fft.getBand(i));
     return toReturn;
+    //command to get  right freq from fft or something like it. 
+    //This functions should be done now.
   }
+  
+  
+  int getFreqMax() {
+    int toReturn = fft.specSize();
+    return toReturn;
+    //command which tells how many frequencies there is available. 
+    //This function should be done now.
+  }
+  
+  
 } //en of soundDetect class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
