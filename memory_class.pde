@@ -29,6 +29,7 @@ void loadFixtureMemory(int fixtureMemoryId, int value) {
   soundDetect s2l = new soundDetect();
   memory[] memories = new memory[100];
 void createMemoryObjects() {
+  s2l = new soundDetect();
   for (memory temp : memories) temp = new memory();
 }
 
