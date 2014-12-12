@@ -72,7 +72,7 @@ class chase { //Begin of chase class--------------------------------------------
   
   void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
     boolean next; //boolean which tells do we want to go to next step
-    next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && nextStep));
+    next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && nextStepPressed));
     if(next) {
       for(int i = 0; i < getPresets().length; i++) {
           memory(getPresets()[i], 255);

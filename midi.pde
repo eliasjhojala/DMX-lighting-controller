@@ -41,7 +41,7 @@ void maschineNote(int pitch, int velocity) {
   }
   //Trigger moving head preset
   if(pitch >= 14 && pitch <= 28 && velocity != 0) {
-    showPreset(pitch - 14, 0);
+
     selectMaschinePad(pitch - 13, true);
   }
 }

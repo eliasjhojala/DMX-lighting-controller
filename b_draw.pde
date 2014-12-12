@@ -27,7 +27,7 @@ void draw() {
     contextMenu1.draw();
   }
   thread("detectBeat");
-  mhx50_movingHeadLoop();
+
   
   if (useMaschine) calcMaschineAutoTap();
   

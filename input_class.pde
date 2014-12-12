@@ -382,6 +382,6 @@ class fixtureInput {
             
             
          
-    }
-}
-
+    } //end of receive osc void
+} //end of fixtureInput class
+ 
