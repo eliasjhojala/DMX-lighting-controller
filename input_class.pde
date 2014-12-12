@@ -1,13 +1,13 @@
 boolean setValuesToSelectedFixtures = true;
 
-
+ 
 boolean createFinalValuesPlease;
 boolean saveDimmerValue;
 
 String[] saveOptionButtonVariables = { "dimmer", "color", "gobo", "goboRotation", "shutter", "pan", "tilt" };
 boolean[] saveOptionButtonVariableValues = new boolean[saveOptionButtonVariables.length];
 boolean[][] whatToSave = new boolean[numberOfMemories][saveOptionButtonVariables.length];
-
+ 
 class fixtureInput {
   int fixtureType;
   int channelStart;
@@ -41,7 +41,7 @@ class fixtureInput {
   
 
   
-  fixtureInput(int d, int r, int g, int b, int p, int t, int pF, int tF, int rX, int rZ, int cW, int gW, int gR, int pr, int foc, int sh, int st, int re, int au, int sp, int ha, int fa, int fo) {
+  fixtureInput() {
   }
 
    void updateVariables() {
@@ -193,7 +193,8 @@ class fixtureInput {
       int fogId = 20;
       int hazeId = 21;
        // dimInput[sF] = dimmer;
-       if(setValuesToSelectedFixtures) {
+       if(bottomMenuAllFixtures && bottomMenuControlBoxOpen) {
+         
            if(fT >= 1 && fT <= 6) { fixtureForSelected[0].dimmer = dimmer; }
           if(fT == fogId) { fixtureForSelected[0].fog = dimmer; }
           if(fT == hazeId) { fixtureForSelected[sF].haze = dimmer; fixtureForSelected[sF].fan = dimmer; }
@@ -216,13 +217,14 @@ class fixtureInput {
             fixtureForSelected[0].focus = focus;
             fixtureForSelected[0].responseSpeed = responseSpeed;
           }
+          setValuesToSelected();
        }
        else {
-          if(fT >= 1 && fT <= 6) { fixtures[constrain(sF-1, 0, fixtures.length)].dimmer = dimmer; }
+          if(fT >= 1 && fT <= 6) { if(dimmer != fixtures[constrain(sF-1, 0, fixtures.length)].dimmer) fixtures[constrain(sF-1, 0, fixtures.length)].setDimmer(dimmer); }
           if(fT == fogId) { fixtures[constrain(sF-1, 0, fixtures.length)].fog = dimmer; }
           if(fT == hazeId) { fixtures[sF].haze = dimmer; fixtures[sF].fan = dimmer; }
           if(ftIsMhX50()) {
-            fixtures[constrain(sF-1, 0, fixtures.length)].dimmer = dimmer;
+            if(dimmer != fixtures[constrain(sF-1, 0, fixtures.length)].dimmer) fixtures[constrain(sF-1, 0, fixtures.length)].setDimmer(dimmer);
             fixtures[constrain(sF-1, 0, fixtures.length)].pan = pan;
             fixtures[constrain(sF-1, 0, fixtures.length)].tilt = tilt;
             fixtures[constrain(sF-1, 0, fixtures.length)].panFine = panFine;
@@ -380,6 +382,6 @@ class fixtureInput {
             
             
          
-    }
-}
-
+    } //end of receive osc void
+} //end of fixtureInput class
+ 

@@ -1,7 +1,7 @@
 //Tässä välilehdessä tallennetaan tietoja csv-taulukkotiedostoon
 
 Table table;
-
+ 
 void saveVariable(int variable, String variableName) {
     saveDataMainCommands(str(variable), variableName, "0", "-", "-");
 }

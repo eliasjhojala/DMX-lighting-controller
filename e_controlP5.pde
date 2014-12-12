@@ -1,5 +1,5 @@
 //CONTROL WINDOW CODE//---->
-
+ 
    //This file is based on:
    /**
    * ControlP5 Controlframe
@@ -477,8 +477,20 @@ public class ControlFrame extends PApplet {
     lb.addItem("Strobe Freq.", 10);
     lb.addItem("Fog", 11);
     lb.addItem("Pinspot", 12);
+    lb.addItem("---", 13);
+    lb.addItem("---", 14);
+    lb.addItem("---", 15);
     lb.addItem("1. MH-X50", 16);
     lb.addItem("2. MH-X50", 17);
+    
+    //Create A Delete All Presets Button
+     cp5.addButton("submitFixture")
+     .setLabel("Save")
+     .setValue(0)
+     .setPosition(this.w - 110, this.h - 60)
+     .setSize(100, 20)
+     .moveTo("fixtSettings")
+     ;
     
     
     //Create and define the tooltip
@@ -544,7 +556,22 @@ public class ControlFrame extends PApplet {
       loadPreset(presetId);
     }
     
-    
+    if(theEvent.getController().getName().equals("submitFixture")) {
+      //save fixture data
+      if (fixtureColorChangeHasHappened && cp5.tab("fixtSettings").isActive()) {
+        fixtures[changeColorFixtureId].red = int(cp5.controller("colorRed").getValue());
+        fixtures[changeColorFixtureId].green = int(cp5.controller("colorGreen").getValue());
+        fixtures[changeColorFixtureId].blue = int(cp5.controller("colorBlue").getValue());
+        fixtures[changeColorFixtureId].rotationZ = int(cp5.controller("fixtRotation").getValue());
+        fixtures[changeColorFixtureId].rotationX = int(cp5.controller("fixtRotationX").getValue());
+        fixtures[changeColorFixtureId].z_location = int(cp5.controller("fixtZ").getValue());
+        fixtures[changeColorFixtureId].channelStart = int(cp5.controller("fixtChan").getValue());
+        fixtures[changeColorFixtureId].parameter = int(cp5.controller("fixtParam").getValue());
+        fixtures[changeColorFixtureId].parentAnsa = int(cp5.controller("ansaParent").getValue());
+        bottomMenuOrder[changeColorFixtureId] = int(cp5.controller("orderNumber").getValue());
+        fixtures[changeColorFixtureId].fixtureTypeId = int(lb.getValue());
+      }
+    }
     
     
     //Update waveLength
@@ -776,19 +803,7 @@ public class ControlFrame extends PApplet {
       if(cp5.tab("fixtSettings").isActive() == false) {cp5.tab("fixtSettings").setVisible(false);}
       
       //Set RGB values for selected fixture
-      if (fixtureColorChangeHasHappened && cp5.tab("fixtSettings").isActive()) {
-        fixtures[changeColorFixtureId].red = int(cp5.controller("colorRed").getValue());
-        fixtures[changeColorFixtureId].green = int(cp5.controller("colorGreen").getValue());
-        fixtures[changeColorFixtureId].blue = int(cp5.controller("colorBlue").getValue());
-        fixtures[changeColorFixtureId].rotationZ = int(cp5.controller("fixtRotation").getValue());
-        fixtures[changeColorFixtureId].rotationX = int(cp5.controller("fixtRotationX").getValue());
-        fixtures[changeColorFixtureId].z_location = int(cp5.controller("fixtZ").getValue());
-        fixtures[changeColorFixtureId].channelStart = int(cp5.controller("fixtChan").getValue());
-        fixtures[changeColorFixtureId].parameter = int(cp5.controller("fixtParam").getValue());
-        fixtures[changeColorFixtureId].parentAnsa = int(cp5.controller("ansaParent").getValue());
-        bottomMenuOrder[changeColorFixtureId] = int(cp5.controller("orderNumber").getValue());
-        fixtures[changeColorFixtureId].fixtureTypeId = int(lb.getValue());
-      }
+      
       
       //Set ansa Z values according to NBoxes
       if(dataLoaded == true) {

@@ -1,6 +1,6 @@
 //Tässä välilehdessä on paljon lyhyitä voideja
 
-
+ 
 //Returns the index of the smalles value that ISN'T checked (input.lenght and checked.length MUST be equal!)
 //Returns -1 if none found
 int indexOfMinCheck(int[] input, boolean[] checked) {
@@ -23,15 +23,15 @@ boolean arduinoFinished = true;
 void arduinoSend() {
   arduinoFinished = false;
   for(int i = 0; i < channels; i++) {
-    if(valueToDmx[i] != valueToDmxOld[i]) {
+    if(DMXforOutput[i] != valueToDmxOld[i]) {
       if(useCOM == true) {
-        setDmxChannel(i, valueToDmx[i]);
+        setDmxChannel(i, DMXforOutput[i]);
       }
-      valueToDmxOld[i] = valueToDmx[i];
+      valueToDmxOld[i] = DMXforOutput[i];
       
     }
-    sendOscToAnotherPc(i, dim[i]);
-    sendOscToIpad(i, dimInput[i]);
+    sendOscToAnotherPc(i, fixtures[i].dimmer);
+    sendOscToIpad(i, fixtures[i].dimmer);
   }
   arduinoFinished = true;
 }
@@ -76,7 +76,7 @@ int[] getFixtureSizeByType(int type) {
 }
 
 int[] getFixtureSize(int id) {
-  return getFixtureSizeByType(fixtureType1[id]);
+  return getFixtureSizeByType(fixtures[id].fixtureTypeId);
 }
 
 //Gets type description of fixture #id
@@ -103,7 +103,7 @@ String getFixtureNameByType(int type) {
 }
 
 String getFixtureName(int id) {
-  return getFixtureNameByType(fixtureType1[id]);
+  return getFixtureNameByType(fixtures[id].fixtureTypeId);
 }
 
 
@@ -129,8 +129,8 @@ void drawFixture(int i) {
   
   if(showFixture == true) {
     int x1 = 0; int y1 = 0;
-    fixtures[i].locationOnScreenX = int(screenX(x1, y1));
-    fixtures[i].locationOnScreenY = int(screenY(x1, y1));
+    fixtures[i].locationOnScreenX = int(screenX(x1 + lampWidth/2, y1 + lampHeight/2));
+    fixtures[i].locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
     if(fixtureTypeId == 13) { rectMode(CENTER); rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
     if(selected) stroke(100, 100, 255); else stroke(255);
     rect(x1, y1, lampWidth, lampHeight);
@@ -138,7 +138,7 @@ void drawFixture(int i) {
     if(zoom > 50) {
       if(printMode == false) {
         fill(255, 255, 255);
-        text(fixtures[i].dimmer, x1, y1 + lampHeight + 15);
+        text(fixtures[i].getDimmerWithMaster(), x1, y1 + lampHeight + 15);
       }
       else {
         fill(0, 0, 0);
@@ -315,22 +315,22 @@ boolean inBoundsCircle(int cPosX, int cPosY, int cRadius, int pointerX, int poin
 
 
 void setValuesToSelected() {
-  int a = 0;
-  for(int i = 0; i < fixtures.length; i++) {
-    if(fixtures[i].selected) {
-      fixtures[i].dimmer = fixtureForSelected[a].dimmer;
-      fixtures[i].pan = fixtureForSelected[a].pan;
-      fixtures[i].tilt = fixtureForSelected[a].tilt;
-      fixtures[i].panFine = fixtureForSelected[a].panFine;
-      fixtures[i].tiltFine = fixtureForSelected[a].tiltFine;
-      fixtures[i].colorWheel = fixtureForSelected[a].colorWheel;
-//      fixtures[i].red = fixtureForSelected[a].red;
-//      fixtures[i].green = fixtureForSelected[a].green;
-//      fixtures[i].blue = fixtureForSelected[a].blue;
-      fixtures[i].focus = fixtureForSelected[a].focus;
-      fixtures[i].prism = fixtureForSelected[a].prism;
-      fixtures[i].goboWheel = fixtureForSelected[a].goboWheel;
-      fixtures[i].shutter = fixtureForSelected[a].shutter;
+  
+  if (bottomMenuAllFixtures && bottomMenuControlBoxOpen) {
+    int a = 0;
+    for(int i = 0; i < fixtures.length; i++) {
+      if(fixtures[i].selected) {
+        fixtures[i].setDimmer(fixtureForSelected[a].dimmer);
+        fixtures[i].pan = fixtureForSelected[a].pan;
+        fixtures[i].tilt = fixtureForSelected[a].tilt;
+        fixtures[i].panFine = fixtureForSelected[a].panFine;
+        fixtures[i].tiltFine = fixtureForSelected[a].tiltFine;
+        fixtures[i].colorWheel = fixtureForSelected[a].colorWheel;
+        fixtures[i].focus = fixtureForSelected[a].focus;
+        fixtures[i].prism = fixtureForSelected[a].prism;
+        fixtures[i].goboWheel = fixtureForSelected[a].goboWheel;
+        fixtures[i].shutter = fixtureForSelected[a].shutter;
+      }
     }
   }
 }

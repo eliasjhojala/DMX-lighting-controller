@@ -2,11 +2,11 @@
 //Alavalikko toimii nyt hyvin ja fixture(i) voidia voi käyttää missä vain ohjelmassa
 /*Jostain syystä id:n vaihtamisen kanssa on välillä pieniä ongelmia
 se pitäisi selvittää*/
-
+ 
 //Create variables for old mouse locations
 int oldMouseX2;
 int oldMouseY2;
-
+ 
 void alavalikko() {
   //The boolean is set to true on a spot that has been checked. It should not be drawn again.
   boolean[] drawn = new boolean[bottomMenuOrder.length];
@@ -84,37 +84,36 @@ void drawFixtureRectangles(int id) {
 }
 
 void checkFixtureBoxGo(int id) { //This void checks Go button
-  if(isHover(10, 0, 49, -15)) { //Check if mouse is on go box
-    if(mouseClicked) { //Check if mouse is clicked
-      fixtures[id].dimmer = 255; //Set dimInput value to max
-    }
-    if(mouseReleased) { //Check if mouse is released
-      mouseReleased = false; //Set mouseReleased to false 
-      fixtures[id].dimmer = 0; //Set dimInput value to min
-    }
-  }
+  if(isHover(10, 0, 49, -15) && mousePressed && !mouseLocked) { //Check if mouse is on go box
+      mouseLocked = true;
+      mouseLocker = "fbox" + id + ":go";
+      fixtures[id].setDimmer(255); //Set dimInput value to max
+    
+  } else
+  if(!mousePressed && mouseLocker.equals("fbox" + id + ":go")) { //Check if mouse is released
+    mouseLocker = ":";
+    fixtures[id].setDimmer(0); //Set dimInput value to min
+   }
 }
 void checkFixtureBoxToggle(int id) { //This void checks Toggle button
-  if(isHover(10, -15, 49, -15) && mouseClicked && mouseReleased) { //Check if mouse is on toggle box and clicked and released before it
-    mouseReleased = false; //Mouse isn't released anymore
+  if(isHover(10, -15, 49, -15) && mousePressed && !mouseLocked) { //Check if mouse is on toggle box and clicked and released before it
+    mouseLocked = true;
+    mouseLocker = "fbox" + id + ":toggle";
     if(fixtures[id].dimmer == 255) { //Check if dimInput is 255
-      fixtures[id].dimmer = 0; //If dimInput is at 255 then set it to zero
+      fixtures[id].setDimmer(0); //If dimInput is at 255 then set it to zero
     }
     else {
-      fixtures[id].dimmer = 255; //If dimInput is not at max value then set it to max
+      fixtures[id].setDimmer(255); //If dimInput is not at max value then set it to max
     }
   }
 }
 void checkFixtureBoxSlider(int id) {
-   if(isHover(0, 0, 10, -30) && mousePressed) { //Check if mouse is on the slider rect
-    if(mouseReleased) { //If you start dragging set oldMouse values current mouse values
-      
-      mouseReleased = false;
-    }
-      
-      fixtures[id].dimmer += map(pmouseY - mouseY, 0, 30, 0, 255); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
-      fixtures[id].dimmer = constrain(fixtures[id].dimmer, 0, 255); //Make sure that dimInput value is between 0-255 
-      
+   if(isHover(0, 0, 10, -30) && mousePressed && !mouseLocked) { //Check if mouse is on the slider rect
+      mouseLocked = true;
+      mouseLocker = "fbox" + id + ":slider";
+  } else if(mouseLocked && mouseLocker.equals("fbox" + id + ":slider")) {
+      fixtures[id].setDimmer(fixtures[id].dimmer + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
+      fixtures[id].setDimmer(constrain(fixtures[id].dimmer, 0, 255)); //Make sure that dimInput value is between 0-255 
   }
 }
 
@@ -145,6 +144,7 @@ void checkFixtureBoxRightClick(int id) {
 int currentBottomMenuControlBoxOwner;                    //|
 boolean bottomMenuControlBoxOpen = false;                //|
 boolean bottomMenuControlBoxOpenOld = false;             //|
+boolean bottomMenuAllFixtures = false;                   //|
 bottomMenuChController[] bottomMenuControlBoxControllers;//|
 int[] bottomMenuControlBoxDMXValues;                     //|
 boolean[] bottomMenuControlBoxDMXValueChanged;           //|
@@ -158,8 +158,20 @@ String bottomMenuControlBoxDisplayText;                  //|
 String bottomMenuControlBoxSubstr = "bottomMenuControlBox";//|
 //---------------------------------------------------------//|
 
+void openBottomMenuControlBoxForSelectedFs() {
+  openBottomMenuControlBox(contextMenu1.fixtureId);
+  bottomMenuControlBoxDisplayText = "Controlling all selected fixtures, configuration from fixture " + contextMenu1.fixtureId;
+  fixtureForSelected[0].fixtureTypeId = fixtures[contextMenu1.fixtureId].fixtureTypeId;
+  bottomMenuAllFixtures = true;
+}
+
+void openBottomMenuControlBoxFromContextMenu() {
+  openBottomMenuControlBox(contextMenu1.fixtureId);
+}
+
 void openBottomMenuControlBox(int owner) {
   bottomMenuControlBoxOpen = true;
+  bottomMenuAllFixtures = false;
   currentBottomMenuControlBoxOwner = owner;
   bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures[owner].fixtureType + ", Starting Channel: " + fixtures[owner].channelStart;
   boolean successInit = false; //This boolean is set to true, if the fixtureType has a specific configuration applied for it.
@@ -212,7 +224,7 @@ void drawBottomMenuControlBox() {
     fill(5, 100, 150);
     stroke(9, 157, 222);
     strokeWeight(5);
-    rect(0, 0, bottomMenuControlBoxWidth, bottomMenuControlBoxHeight);
+    rect(0, 0, bottomMenuControlBoxWidth, bottomMenuControlBoxHeight, 40, 40, 40, 0);
     fill(0, 50);
     textSize(120);
     text("Fixture " + currentBottomMenuControlBoxOwner, 0, bottomMenuControlBoxHeight - 10);
@@ -232,10 +244,10 @@ void drawBottomMenuControlBox() {
     if (bottomMenuControlBoxControllers != null) for (bottomMenuChController controller : bottomMenuControlBoxControllers) controller.draw();
     
     //Update DMX values-----------------------------------------------------------------|
-    thread("bottomMenuDMXUpdate");
+    bottomMenuDMXUpdate();
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
     
-    text(bottomMenuControlBoxDisplayText, 15, 20);
+    text(bottomMenuControlBoxDisplayText, 20, 30);
     
     //Reset draw modifiers
     strokeWeight(1);
@@ -267,7 +279,17 @@ void bottomMenuDMXUpdate() {
     arrayIndex++;
   }
   bottomMenuControlBoxDMXValueChanged = new boolean[tempDMX.length];
-  if (changd) fixtureInputs[0].receiveFromBottomMenu(tempDMX, currentBottomMenuControlBoxOwner+1);
+  if (changd) submitDMXFromBMCB(tempDMX);
+}
+
+void submitDMXFromBMCB(int[] input) {
+  
+  if(bottomMenuAllFixtures) {
+    fixtureForSelected[0].receiveDMX(input);
+    setValuesToSelected();
+  } else {
+    fixtures[currentBottomMenuControlBoxOwner].receiveDMX(input);
+  }
 }
 
 

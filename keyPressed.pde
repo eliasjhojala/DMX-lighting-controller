@@ -1,11 +1,11 @@
 //Tässä välilehdessä luetaan tietokoneen omia syöttölaitteita, eli näppäimistöä ja hiirtä
-
+ 
 void keyReleased() {
   keyReleased = true;
   if(key == 'r') { revStepPressed = false; }
 }
 void keyPressed() {
-  if(key == 'a') { setValuesToSelectedFixtures = !setValuesToSelectedFixtures; }
+  
   if(key==27) { key=0; } //Otetaan esc-näppäin pois käytöstä. on kumminkin huomioitava, että tämä toimii vain pääikkunassa
   if(key == 'm') {
     if(move == true) { move = false; moveLamp = false; delay(10); }

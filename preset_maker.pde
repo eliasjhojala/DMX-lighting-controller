@@ -4,7 +4,7 @@ int[] oldPresetValue = new int[numberOfMemories]; //Muuttuja, johon tallennetaan
 void makePreset(int memoryNumber) {
    for (int i = 0; i < fixtures.length; i++) {
     whatToSave[0][memoryNumber] = true;
-    
+     
   }
   saveFixtureMemory(memoryNumber);
 }
@@ -41,6 +41,7 @@ void soundToLightFromPreset(int memoryNumber) {
 soundToLightSteps[memoryNumber] = a;
 memoryType[memoryNumber] = 2;
 }
+
 void memory(int memoryNumber, int value) {
   if(value != oldMemoryValue[memoryNumber]) {
     sendMemoryToIpad(memoryNumber, value); //Läheteetään iPadille memorin arvo, jos se on muuttunut

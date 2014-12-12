@@ -2,7 +2,7 @@ fixture[][] repOfFixtures = new fixture[fixtures.length][numberOfMemories];
 void saveFixtureMemory(int fixtureMemoryId) {
       for(int i = 0; i < fixtures.length; i++) {
       repOfFixtures[i][fixtureMemoryId] = new fixture();
-  }
+  } 
   for (int i = 0; i < fixtures.length; i++) {
     if(whatToSave[fixtureMemoryId][0]) {
      repOfFixtures[i][fixtureMemoryId].dimmer = fixtures[i].dimmer;
@@ -18,7 +18,6 @@ void loadFixtureMemory(int fixtureMemoryId, int value) {
   for (int i = 0; i < fixtures.length; i++) {
     if(whatToSave[fixtureMemoryId][0]) {
       int val = int(map(repOfFixtures[i][fixtureMemoryId].dimmer, 0, 255, 0, value));
-      println(val);
       if(val > fixtures[i].dimmerPresetTarget) {
         fixtures[i].dimmerPresetTarget = val;
       }
@@ -27,9 +26,10 @@ void loadFixtureMemory(int fixtureMemoryId, int value) {
 }
 
 
-  soundDetect s2l = new soundDetect();
+  soundDetect s2l;
   memory[] memories = new memory[100];
 void createMemoryObjects() {
+  s2l = new soundDetect();
   for (memory temp : memories) temp = new memory();
 }
 
@@ -39,14 +39,20 @@ class memory { //Begin of memory class------------------------------------------
   int value; //memorys value
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
   
-  chase myChase;
   
   memory() {
-    myChase = new chase(this);
   }
 
   
-
+  String getText() {
+    String toReturn = "";
+    switch(type) {
+      case 1: toReturn = "prst"; break;
+      case 2: toReturn = "s2l"; break;
+      default: toReturn = "unkn"; break;
+    }
+    return toReturn;
+  }
   
   
 } //en of memory class-----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -54,11 +60,7 @@ class memory { //Begin of memory class------------------------------------------
 
 class chase { //Begin of chase class--------------------------------------------------------------------------------------------------------------------------------------
   int inputMode, outputMode; //What is input and what will output look like
-  
-  memory parent;
-  //You need to supply a memory parent for this to work properly
-  chase(memory parent) {
-    this.parent = parent;
+  chase() {
   }
   
     
@@ -68,8 +70,10 @@ class chase { //Begin of chase class--------------------------------------------
      return toReturn;
   }
   
-  void beatToLight() {
-    if(s2l.beat(1) == true) {
+  void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
+    boolean next; //boolean which tells do we want to go to next step
+    next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && nextStepPressed));
+    if(next) {
       for(int i = 0; i < getPresets().length; i++) {
           memory(getPresets()[i], 255);
       }
@@ -81,11 +85,16 @@ class chase { //Begin of chase class--------------------------------------------
     }
     
   }
+  
+  
   void beatToMoving() {
+    //This function goes through all the presets. When there is beat this goes to next preset
+    
   }
-  void freqToLight() {
+  
+  void freqToLight() { //This function gives frequence values to chase presets
     for(int i = 0; i < getPresets().length; i++) {
-    //  memory(getPresets(i), soundDetect.freq(int(map(i, 0, getPresets().length, 0, soundDetect.getFreqMax())));
+      memory(getPresets()[i], s2l.freq(int(map(i, 0, getPresets().length, 0, s2l.getFreqMax()))));
     }
   }
 } //en of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -93,8 +102,19 @@ class chase { //Begin of chase class--------------------------------------------
 
 
 class soundDetect { //----------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+  
+  //init all the variables
+  float[] bands;
+  //end initing variables
+  
+  
   soundDetect() {
+    fft.forward( in.mix );
+    bands = new float[fft.specSize()];
   }
+  
+  
   boolean beat(int bT) {
     beat.detect(in.mix); //beat detect command of minim library
     boolean toReturn = true;
@@ -105,11 +125,25 @@ class soundDetect { //----------------------------------------------------------
     }
     return toReturn;
   }
+  
+  
   int freq(int i) {
     int toReturn = 0;
-    //command to get  right freq from fft or something like it
+    toReturn = round(fft.getBand(i));
     return toReturn;
+    //command to get  right freq from fft or something like it. 
+    //This functions should be done now.
   }
+  
+  
+  int getFreqMax() {
+    int toReturn = fft.specSize();
+    return toReturn;
+    //command which tells how many frequencies there is available. 
+    //This function should be done now.
+  }
+  
+  
 } //en of soundDetect class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
