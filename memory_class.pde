@@ -26,7 +26,7 @@ void loadFixtureMemory(int fixtureMemoryId, int value) {
 }
 
 
-  soundDetect s2l = new soundDetect();
+  soundDetect s2l;
   memory[] memories = new memory[100];
 void createMemoryObjects() {
   s2l = new soundDetect();
@@ -44,7 +44,15 @@ class memory { //Begin of memory class------------------------------------------
   }
 
   
-
+  String getText() {
+    String toReturn = "";
+    switch(type) {
+      case 1: toReturn = "prst"; break;
+      case 2: toReturn = "s2l"; break;
+      default: toReturn = "unkn"; break;
+    }
+    return toReturn;
+  }
   
   
 } //en of memory class-----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -63,7 +71,9 @@ class chase { //Begin of chase class--------------------------------------------
   }
   
   void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
-    if(s2l.beat(1) == true) {
+    boolean next; //boolean which tells do we want to go to next step
+    next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && nextStep));
+    if(next) {
       for(int i = 0; i < getPresets().length; i++) {
           memory(getPresets()[i], 255);
       }
@@ -79,6 +89,7 @@ class chase { //Begin of chase class--------------------------------------------
   
   void beatToMoving() {
     //This function goes through all the presets. When there is beat this goes to next preset
+    
   }
   
   void freqToLight() { //This function gives frequence values to chase presets
