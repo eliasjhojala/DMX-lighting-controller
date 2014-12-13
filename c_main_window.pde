@@ -73,11 +73,16 @@ void drawMainWindow() {
                 contextMenu1.initiateForFixture(i);
               }
               else if(mouseReleased) {
-                oldMouseX1 = int(mouseRotated.x);
-                oldMouseY1 = int(mouseRotated.y);
-                lampToMove = i;
-                moveLamp = true;
-                mouseReleased = false;
+                if(!showMode) {
+                  oldMouseX1 = int(mouseRotated.x);
+                  oldMouseY1 = int(mouseRotated.y);
+                  lampToMove = i;
+                  moveLamp = true;
+                  mouseReleased = false;
+                }
+                else {
+                  fixtures[i].setDimmer(fixtures[i].dimmer == 255 ? 0 : 255);
+                }
               }
             }
           }
