@@ -71,7 +71,7 @@ void saveAllData() {
   for (int i = 0; i < fixtures.length; i++) {
     for(int ij = 0; ij < repOfFixtures[i].length; ij++) {
       if(whatToSave[ij][0]) {
-        saveDataMainCommands(str(repOfFixtures[i][ij].red),           "memoryDimmer", "2", str(i), "-");
+        saveDataMainCommands(str(repOfFixtures[i][ij].red),           "memoryDimmer", "2", str(i), str(ij));
       }
     }
   }
