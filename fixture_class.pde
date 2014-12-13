@@ -24,7 +24,6 @@ class fixture {
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
   int frequency; //Strobe freq value
-  boolean highlight;
   
   void setDimmer(int val) {dimmer = val; DMXChanged = true;}
   
