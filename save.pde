@@ -155,6 +155,8 @@ void saveAllData() {
   save1Darray(valueOfMemory, "valueOfMemory"); 
   save1Darray(memoryValue, "memoryValue"); 
   
+  save1Darray(bottomMenuOrder, "bottomMenuOrder");
+  
   
   
   

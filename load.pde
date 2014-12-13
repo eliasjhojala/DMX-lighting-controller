@@ -160,7 +160,7 @@ void loadAllData() {
     for (TableRow row : table.findRows("camY", "variable_name"))              { camY = int(row.getString("value")); }
     for (TableRow row : table.findRows("camZ", "variable_name"))              { camZ = int(row.getString("value")); }
     
-    
+    for (TableRow row : table.findRows("bottomMenuOrder", "variable_name")) if(int(row.getString("1D")) < bottomMenuOrder.length) bottomMenuOrder[int(row.getString("1D"))] = int(row.getString("value"));
     
     
     for (TableRow row : table.findRows("ansaZ", "variable_name"))         { if((int(row.getString("1D")) < ansaZ.length)) { ansaZ[int(row.getString("1D"))] = int(row.getString("value")); } }
