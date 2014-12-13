@@ -25,9 +25,18 @@ void save2Darray(int[][] array, String arrayName) {
   }
 }
 
+void save2DarrayBoolean(boolean[][] array, String arrayName) {
+  for(int ij = 0; ij < array.length; ij++) {
+    println(ij); 
+    for(int i = 0; i < array[0].length; i++) {
+      saveDataMainCommands(str(int(array[ij][i])), arrayName, "2", str(ij), str(i));
+    }
+  }
+}
+
 void saveDataMainCommands(String variable, String variableName, String dimensions, String D1, String D2) {
   TableRow newRow = table.addRow();   
-  newRow.setInt("id", table.lastRowIndex());  
+  newRow.setInt("id", table.lastRowIndex());
   newRow.setString("variable_name", variableName);
   newRow.setString("variable_dimensions", dimensions); 
   newRow.setString("value", variable);   
@@ -46,7 +55,7 @@ void saveAllData() {
   table.addColumn("2D");
 
 
-
+  /*
   int[] tempFixtureObjectArray = new int[fixtures.length];
   String[] tempFixtureObjectArrayString = new String[fixtures.length];
   
@@ -88,7 +97,7 @@ void saveAllData() {
   
   for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].parentAnsa; }
   save1Darray(tempFixtureObjectArray, "fixtures.parentAnsa");
-  
+  */
   
   for (int i = 0; i < fixtures.length; i++) {
     saveDataMainCommands(str(fixtures[i].red),           "red", "1", str(i), "-");
@@ -106,6 +115,22 @@ void saveAllData() {
     saveDataMainCommands(str(fixtures[i].parentAnsa),    "ansaParent", "1", str(i), "-");
   }
   
+  save2DarrayBoolean(whatToSave, "whatToSave");
+  for (int i = 0; i < repOfFixtures.length; i++) {
+    
+    for (int j = 1; j < repOfFixtures[i].length; j++) {
+       // whatToSave titles: { "dimmer", "colorWheel", "gobo", "goboRotation", "shutter", "pan", "tilt" }
+       //println(str(i) + ":" + str(j));
+        if(whatToSave[j][0]) saveDataMainCommands(str(repOfFixtures[i][j].dimmer), "repOF:" + saveOptionButtonVariables[0], "2", str(i), str(j));
+        if(whatToSave[j][1]) saveDataMainCommands(str(repOfFixtures[i][j].colorWheel), "repOF:" + saveOptionButtonVariables[1], "2", str(i), str(j));
+        if(whatToSave[j][2]) saveDataMainCommands(str(repOfFixtures[i][j].goboWheel), "repOF:" + saveOptionButtonVariables[2], "2", str(i), str(j));
+        if(whatToSave[j][3]) saveDataMainCommands(str(repOfFixtures[i][j].goboRotation), "repOF:" + saveOptionButtonVariables[3], "2", str(i), str(j));
+        if(whatToSave[j][4]) saveDataMainCommands(str(repOfFixtures[i][j].shutter), "repOF:" + saveOptionButtonVariables[4], "2", str(i), str(j));
+        if(whatToSave[j][5]) saveDataMainCommands(str(repOfFixtures[i][j].pan), "repOF:" + saveOptionButtonVariables[5], "2", str(i), str(j));
+        if(whatToSave[j][6]) saveDataMainCommands(str(repOfFixtures[i][j].tilt), "repOF:" + saveOptionButtonVariables[6], "2", str(i), str(j));
+    }
+  }
+  println("threr1");
   save1Darray(ansaZ, "ansaZ");
   save1Darray(ansaX, "ansaX");
   save1Darray(ansaY, "ansaY");
@@ -140,7 +165,6 @@ void saveAllData() {
         grouping[3] = int(useMovingHead);
         
   save1Darray(grouping, "grouping"); 
-  
   
   save2Darray(memory, "memory");
   save2Darray(soundToLightPresets, "soundToLightPresets");
