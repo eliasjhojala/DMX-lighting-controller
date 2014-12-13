@@ -130,6 +130,12 @@ void loadAllData() {
     for (TableRow row : table.findRows("mhx50_s2l_presets", "variable_name"))              { mhx50_s2l_presets[int(row.getString("1D"))] = int(row.getString("value")); }
     for (TableRow row : table.findRows("mmhx50_s2l_numberOfPresets", "variable_name"))              { mmhx50_s2l_numberOfPresets = int(row.getString("value")); }
     
+
+    
+      for (TableRow row : table.findRows("whatToSave", "variable_name"))              { whatToSave[int(row.getString("1D"))][int(row.getString("2D"))] = boolean(row.getString("value")); }
+      for (TableRow row : table.findRows("memoryDimmer", "variable_name"))              { if(whatToSave[int(row.getString("1D"))][1]) { repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))].dimmer = int(row.getString("value")); } }
+    
+    
     
     dataLoaded = true;
     

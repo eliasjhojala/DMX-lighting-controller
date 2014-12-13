@@ -25,6 +25,15 @@ void save2Darray(int[][] array, String arrayName) {
   }
 }
 
+void save2Darray(boolean[][] array, String arrayName) {
+  for(int ij = 0; ij < array.length; ij++) {
+    println(ij); 
+    for(int i = 0; i < array[0].length; i++) {
+      saveDataMainCommands(str(array[ij][i]), arrayName, "2", str(i), str(ij));
+    }
+  }
+}
+
 void saveDataMainCommands(String variable, String variableName, String dimensions, String D1, String D2) {
   TableRow newRow = table.addRow();   
   newRow.setInt("id", table.lastRowIndex());  
@@ -67,11 +76,11 @@ void saveAllData() {
   }
   
   
-  
+  save2Darray(whatToSave, "whatToSave");
   for (int i = 0; i < fixtures.length; i++) {
     for(int ij = 0; ij < repOfFixtures[i].length; ij++) {
       if(whatToSave[ij][0]) {
-        saveDataMainCommands(str(repOfFixtures[i][ij].red),           "memoryDimmer", "2", str(i), str(ij));
+        saveDataMainCommands(str(repOfFixtures[i][ij].dimmer),   "memoryDimmer", "2", str(i), str(ij));
       }
     }
   }
