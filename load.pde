@@ -132,7 +132,7 @@ void loadAllData() {
     
 
     
-      for (TableRow row : table.findRows("whatToSave", "variable_name"))              { whatToSave[int(row.getString("1D"))][int(row.getString("2D"))] = boolean(row.getString("value")); }
+      for (TableRow row : table.findRows("whatToSave", "variable_name"))              { whatToSave[int(row.getString("2D"))][int(row.getString("1D"))] = boolean(row.getString("value")); }
       for (TableRow row : table.findRows("memoryDimmer", "variable_name"))              { if(whatToSave[int(row.getString("1D"))][1]) { repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))].dimmer = int(row.getString("value")); } }
     
     

@@ -29,7 +29,7 @@ void save2Darray(boolean[][] array, String arrayName) {
   for(int ij = 0; ij < array.length; ij++) {
     println(ij); 
     for(int i = 0; i < array[0].length; i++) {
-      saveDataMainCommands(str(array[ij][i]), arrayName, "2", str(i), str(ij));
+      saveDataMainCommands(str(int(array[ij][i])), arrayName, "2", str(i), str(ij));
     }
   }
 }
