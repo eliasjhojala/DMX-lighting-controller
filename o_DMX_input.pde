@@ -9,16 +9,18 @@ void dmxCheck() {
           if (cycleStart == true) {
             if (counter <= 6+enttecDMXchannels) {
               int inBuffer = myPort.read();
-              if(counter > 4) { if(vals[counter-5] == 126 && vals[counter-4] == 5 && vals[counter] == 0) { counter = 0; cycleStart = true; } }
+              if(counter > 4) { if(vals[counter-5] == 126 && vals[counter-4] == 5 && vals[counter] == 0) { counter = 0; cycleStart = true; } } //This if checks that checkvalues are right
                 vals[counter] = inBuffer;
                 counter++;
-              
             }
             else {
               cycleStart = false;
             }
-          }
+          } //cycleStart end
+          
+          
           else {
+            //Here is better function to check all the check values, but for some reason it doesn't work
             for(int i = 0; i <= 5; i++) {
               if(vals[i] == check[i]) {
                 if(error == false) {
@@ -28,17 +30,18 @@ void dmxCheck() {
             }
             if(error == false) {
               for(int i = 0; i < 6+enttecDMXchannels; i++) {
-                if(i < 30) { ch[i] = vals[i]; }
+                if(i < 30) { ch[i] = vals[i]; } //if channel is not over 30 then value is placed in ch array
               }
-              counter = 0;
-              cycleStart = true;    
+              counter = 0; //Reset counter
+              cycleStart = true; //Now we can start new cycle
             }
-           } 
+           } //!cycleStart end
  
-      }
+      } //while (myPort.available() > 0) END
   }
 }
 void dmxToDim() {
+  //This function places all the values from ch array to enttecDMXchannel array
   for(int i = 1; i < 25; i++) {
       enttecDMXchannel[i] = ch[i];
   }
@@ -46,6 +49,8 @@ void dmxToDim() {
 }
 void channelsToDim() { 
   
+  
+  //Place data from different arrays to allChannels array if it is changed---------------------------------------------------------------------------------------
   
   for(int i = 1; i <= controlP5channels; i++) {
     if(controlP5channelOld[i] != controlP5channel[i]) {
@@ -69,7 +74,11 @@ void channelsToDim() {
       touchOSCchannelOld[i] = touchOSCchannel[i];
     }   
   }
+  
+  //End placing data to allChannels array------------------------------------------------------------------------------------------------------------------------
 
+
+  //Place data from allChannels array to DMX and memory arrays----------------------------------------------------------------------------------------------------------
     
   for(int i = 1; i < 13; i++) {
     if(allChannelsOld[1][i] != allChannels[1][i]) {
@@ -107,10 +116,14 @@ void channelsToDim() {
       allChannelsOld[4][i] = allChannels[4][i];
     }
     
+    //End placing data to DMX and memory arrays------------------------------------------------------------------------------------------------------------------------
+    
+    //DMX button check
     if(enttecDMXchannels > 24) {
       for(int iii = 1; iii < 12; iii++) {
         dmxButtonPressed(iii, enttecDMXchannel[iii+24]);
       }
     }
+    //End checking dmxbuttons
   }
 }
