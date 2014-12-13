@@ -47,47 +47,7 @@ void saveAllData() {
 
 
 
-  int[] tempFixtureObjectArray = new int[fixtures.length];
-  String[] tempFixtureObjectArrayString = new String[fixtures.length];
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].red; }
-  save1Darray(tempFixtureObjectArray, "fixtures.red");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].green; }
-  save1Darray(tempFixtureObjectArray, "fixtures.green");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].blue; }
-  save1Darray(tempFixtureObjectArray, "fixtures.blue");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].x_location; }
-  save1Darray(tempFixtureObjectArray, "fixtures.x_location");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].y_location; }
-  save1Darray(tempFixtureObjectArray, "fixtures.y_location");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].z_location; }
-  save1Darray(tempFixtureObjectArray, "fixtures.z_location");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].rotationX; }
-  save1Darray(tempFixtureObjectArray, "fixtures.rotationX");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].rotationZ; }
-  save1Darray(tempFixtureObjectArray, "fixtures.rotationZ");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].parameter; }
-  save1Darray(tempFixtureObjectArray, "fixtures.parameter");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArrayString[i] = fixtures[i].fixtureType; }
-  save1DarrayString(tempFixtureObjectArrayString, "fixtures.fixtureType");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].fixtureTypeId; }
-  save1Darray(tempFixtureObjectArray, "fixtures.fixtureTypeId");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].channelStart; }
-  save1Darray(tempFixtureObjectArray, "fixtures.channelStart");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].parentAnsa; }
-  save1Darray(tempFixtureObjectArray, "fixtures.parentAnsa");
+ 
   
   
   for (int i = 0; i < fixtures.length; i++) {
@@ -104,6 +64,16 @@ void saveAllData() {
     saveDataMainCommands(str(fixtures[i].fixtureTypeId), "fixtureType1", "1", str(i), "-");
     saveDataMainCommands(str(fixtures[i].channelStart),  "channel", "1", str(i), "-");
     saveDataMainCommands(str(fixtures[i].parentAnsa),    "ansaParent", "1", str(i), "-");
+  }
+  
+  
+  
+  for (int i = 0; i < fixtures.length; i++) {
+    for(int ij = 0; ij < repOfFixtures[i].length; ij++) {
+      if(whatToSave[ij][0]) {
+        saveDataMainCommands(str(repOfFixtures[i][ij].red),           "memoryDimmer", "2", str(i), "-");
+      }
+    }
   }
   
   save1Darray(ansaZ, "ansaZ");
