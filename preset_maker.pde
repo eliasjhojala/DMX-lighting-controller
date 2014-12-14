@@ -48,19 +48,19 @@ void memory(int memoryNumber, int value) {
   }
   valueOfMemory[memoryNumber] = value;
 //  memoryValue[memoryNumber] = value;
-  if(memoryType[memoryNumber] == 1) {
+  if(memoryType[memoryNumber] == 1) { // preset
     preset(memoryNumber, value);
   }
-  if(memoryType[memoryNumber] == 2) {
+  if(memoryType[memoryNumber] == 2) { // s2l
     beatDetectionDMX(memoryNumber, value);
   }
-  if(memoryType[memoryNumber] == 3) {
+  if(memoryType[memoryNumber] == 3) { // ?
     beatDetectionDMX(0, value);
   }
-  if(memoryType[memoryNumber] == 4) {
+  if(memoryType[memoryNumber] == 4) { // master
     if(blackOut == false) { grandMaster = value; } else { grandMaster = 0; }
   }
-  if(memoryType[memoryNumber] == 5) {
+  if(memoryType[memoryNumber] == 5) { // fade
     chaseFade = value-3;
   }
   oldMemoryValue[memoryNumber] = value;

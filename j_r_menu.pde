@@ -129,6 +129,7 @@ String getMemoryTypeName(int numero) {
   String nimi = "";
   if(memoryType[numero] == 1) { nimi = "prst"; }
   if(memoryType[numero] == 2) { nimi = "s2l"; }
+  if(memoryType[numero] == 3) { nimi = "myst"; }
   if(memoryType[numero] == 4) { nimi = "mstr"; }
   if(memoryType[numero] == 5) { nimi = "fade"; }
   if(memoryType[numero] == 6) { nimi = "wave"; }
