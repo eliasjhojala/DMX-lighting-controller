@@ -34,7 +34,7 @@ void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funkti
       else {
         stepChange(i, value, true, false); //stepChange(memoryn numero, memoryn arvo, onko crossFade käytössä, halutaanko steppiä vaihtaa)
       }
-    
+    }
     
     if(chaseModeByMemoryNumber[i] == 8 || (chaseModeByMemoryNumber[i] == 0 && chaseMode == 8)) {
       if(biitti == true || (fallingEdgeChaseStepChangin[i] == true && chaseFade > 0)) { //Tarkistetaan tuleeko biitti tai onko fade menossa
@@ -145,7 +145,6 @@ void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funkti
     
   }
     }
-     }
 }
 }
 
