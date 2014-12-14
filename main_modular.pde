@@ -1,3 +1,5 @@
+//HÄTÄTILANNE: DMX EI TOIMI!!!!!!
+
 
 int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
@@ -66,7 +68,6 @@ void setFixtureChannelsAtSoftwareBegin() {
 import themidibus.*; 
 import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
 MidiBus myBus; // The MidiBus
-
 MidiBus Maschine;
 
 boolean[] noteOn = new boolean[10000];
@@ -74,7 +75,7 @@ boolean[] noteOn = new boolean[10000];
 
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------Moving head variables----------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------Moving head variables---------------------------------------------------------
 int[][] mhx50_createFinalChannelValues = new int[2][14];
 int[][][] mhx50_createFinalPresetValues = new int[16][2][14];
 
@@ -105,7 +106,7 @@ boolean midiPositionButtonPressed;
 
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -265,14 +266,6 @@ int[][] allChannelsOld = new int[6][48];
 int controlP5place = 1; //tietokoneen faderien ohjaamat kanavat
 int enttecDMXplace = 1; //DMX ohjatut kanavat
 int touchOSCplace = 1; //touchOSC ohjatut kanavat
-
-
-
-int maxStepsInChase = outputChannels*2;
-int[][] chase1 = new int[5][maxStepsInChase];
-int[] chaseSteps = new int[maxStepsInChase];
-
-
 
 import java.awt.Frame;
 import java.awt.BorderLayout;

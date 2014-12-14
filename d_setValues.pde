@@ -12,17 +12,6 @@ int[] DMXforOutput = new int[512];
 void setDimAndMemoryValuesAtEveryDraw() {
   dimCheckFinished = false;
   
-  
-  /*for(int i = 0; i < fixtures.length; i++) {
-      int[] dmxFromFixture = fixtures[i].getDMX();
-      for(int ij = 0; ij < dmxFromFixture.length; ij++) {
-        valueToDmxTemp[fixtures[i].channelStart+ij][i] = dmxFromFixture[ij];
-      }
-  }
-  for(int i = 0; i < fixtures.length; i++) {
-    valueToDmx[i] = max(valueToDmxTemp[i]);
-  }*/
-  
   boolean DMXChangedOverall = false;
   for(fixture fix : fixtures) {
     if(fix.DMXChanged) {
@@ -107,27 +96,19 @@ void setDimAndMemoryValuesAtEveryDraw() {
         } //EndElse: (useSolo == true)
       } //EndFor: (i < numberOfMemories)
       
-      
-      
-      /*for (int i = 0; i < channels; i++) {
-        if (memoryData[i] != 0 || memoryIsZero[i] == false) {
-          dimInput[i] = memoryData[i];
-          if (memoryData[i] == 0) {memoryIsZero[i] = true;} else {memoryIsZero[i] = false;}
-        }
-      }*/
-      
+
       if(grandMaster != oldGrandMaster) { for(fixture fix : fixtures) fix.DMXChanged = true; oldGrandMaster = grandMaster; }
       
       //----------------------------------------------------------------------------------------------------------------------------
       
+  
       
-      
-      
-      //---------------------------------------------------------blackOut and-------------------------------------------------------
-      
-      if(blackOut == true)  { //Tarkistetaan onko blackout päällä - check if blackout is on
-         grandMaster = 0; //if blackout is on then grandMaster will be zero
-      }
+      //-------------------------------------blackOut---------------------------------------------//|
+                                                                                                  //|
+      if(blackOut == true)  { //Tarkistetaan onko blackout päällä - check if blackout is on       //|
+         grandMaster = 0; //if blackout is on then grandMaster will be zero                       //|
+      }                                                                                           //|
+      //------------------------------------------------------------------------------------------//|
   }
   dimCheckFinished = false;
 }

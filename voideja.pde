@@ -30,8 +30,7 @@ void arduinoSend() {
       valueToDmxOld[i] = DMXforOutput[i];
       
     }
-    sendOscToAnotherPc(i, fixtures[i].dimmer);
-    sendOscToIpad(i, fixtures[i].dimmer);
+    sendOscToIpad(i, DMXforOutput[i]);
   }
   arduinoFinished = true;
 }
