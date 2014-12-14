@@ -1,5 +1,5 @@
 
-int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
+int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 

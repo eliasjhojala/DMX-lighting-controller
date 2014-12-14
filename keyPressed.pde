@@ -8,8 +8,7 @@ void keyPressed() {
   
   if(key==27) { key=0; } //Otetaan esc-näppäin pois käytöstä. on kumminkin huomioitava, että tämä toimii vain pääikkunassa
   if(key == 'm') {
-    if(move == true) { move = false; moveLamp = false; delay(10); }
-    else { zoom = 100; x_siirto = 0; y_siirto = 0; move = true; delay(10); }
+    showMode = !showMode;
   }
   if(key == 'p') { chasePause = !chasePause; }
   if(key == 'r') { revStepPressed = true; }
