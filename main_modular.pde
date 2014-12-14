@@ -335,39 +335,44 @@ ControlFrame cf;
 int def;
 
 
-//sound to light kirjastot
-import ddf.minim.spi.*;
-import ddf.minim.signals.*;
-import ddf.minim.*;
-import ddf.minim.analysis.*;
-import ddf.minim.ugens.*;
-import ddf.minim.effects.*;
+//------------------------------OSC-------------------------//|
+//touchOSC kirjastot                                        //|
+import oscP5.*;                                             //|
+import netP5.*;                                             //|
+                                                            //|
+//import method class                                       //|
+import java.lang.reflect.Method;                            //|
+                                                            //|
+OscP5 oscP5;                                                //|
+                                                            //|
+NetAddress Remote;                                          //|
+int portOutgoing = 9000;                                    //|
+String remoteIP = "192.168.0.12"; //iPadin ip-osoite        //|
+//----------------------------OSC END-----------------------//|
 
-//touchOSC kirjastot
-import oscP5.*;
-import netP5.*;
 
-//import method class
-import java.lang.reflect.Method;
 
-OscP5 oscP5;
-
-NetAddress Remote;
-int portOutgoing = 9000; 
-String remoteIP = "192.168.0.12"; //iPadin ip-osoite
-
-//----------------------------------------------------------------------------sound to light asetuksia ---------------------------------------------------------------------------
-Minim minim;
-AudioPlayer song;
-AudioInput in;
-BeatDetect beat;
-
-FFT fft;
-
-int buffer_size = 1024;  // also sets FFT size (frequency resolution)
-float sample_rate = 44100;
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------s2l---------------------------------------//|
+                                                                                //|
+//sound to light kirjastot                                                      //|
+import ddf.minim.spi.*;                                                         //|
+import ddf.minim.signals.*;                                                     //|
+import ddf.minim.*;                                                             //|
+import ddf.minim.analysis.*;                                                    //|
+import ddf.minim.ugens.*;                                                       //|
+import ddf.minim.effects.*;                                                     //|
+                                                                                //|
+Minim minim;                                                                    //|
+AudioPlayer song;                                                               //|                             
+AudioInput in;                                                                  //|
+BeatDetect beat;                                                                //|
+                                                                                //|
+FFT fft;                                                                        //|
+                                                                                //|
+int buffer_size = 1024;  // also sets FFT size (frequency resolution)           //|
+float sample_rate = 44100;                                                      //|
+                                                                                //|
+//------------------------------------------------------------------------------//|
 
 
 
@@ -381,23 +386,23 @@ Serial arduinoPort;
 Serial arduinoPort2;
 
 
-//----------------Tämä lähettää kaiken datan ohjelmasta ulospäin lukuunottamatta iPadille kulkevaa dataa--------------------------------------------
-//----------------Tämän muuttamiseen ei pitäisi olla mitään syytä ellei Arduinossa olevaa ohjelmaa vaihdeta-----------------------------------------
-void setDmxChannel(int channel, int value) {
-  if(useCOM == true) { //Tarkistetaan halutaanko dataa lähettää ulos ohjelmasta
-    // Convert the parameters into a message of the form: 123c45w where 123 is the channel and 45 is the value
-    // then send to the Arduino
-    if(allowChannel[0][channel]) {
-      arduinoPort.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );
-    }
-    if(useAnotherArduino) {
-      if(allowChannel[1][channel]) {
-        arduinoPort2.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );
-      }
-    }
-  }
-}
-//--------------------------------------------------------------------------------------------------------------------------------------------------
+//----------------Tämä lähettää kaiken datan ohjelmasta ulospäin lukuunottamatta iPadille kulkevaa dataa----------------//|
+//----------------Tämän muuttamiseen ei pitäisi olla mitään syytä ellei Arduinossa olevaa ohjelmaa vaihdeta-------------//|
+void setDmxChannel(int channel, int value) {                                                                            //|
+  if(useCOM == true) { //Tarkistetaan halutaanko dataa lähettää ulos ohjelmasta                                         //|
+    // Convert the parameters into a message of the form: 123c45w where 123 is the channel and 45 is the value          //|
+    // then send to the Arduino                                                                                         //|
+    if(allowChannel[0][channel]) {                                                                                      //|
+      arduinoPort.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );                                    //|
+    }                                                                                                                   //|
+    if(useAnotherArduino) {                                                                                             //|
+      if(allowChannel[1][channel]) {                                                                                    //|
+        arduinoPort2.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );                                 //| 
+      }                                                                                                                 //|
+    }                                                                                                                   //|
+  }                                                                                                                     //|
+}                                                                                                                       //|
+//----------------------------------------------------------------------------------------------------------------------//|
 
 fixture[] fixtures = new fixture[numberOfAllFixtures];
 fixture[] fixtureForSelected = new fixture[1];
@@ -405,25 +410,8 @@ fixture[] fixtureForSelected = new fixture[1];
 //New system for organizing the boxes in the bottom menu. Array index = fixture id, data = fixture location
 int[] bottomMenuOrder = new int[numberOfAllFixtures];
 
-//Deprecated. Moved to fixture class
-// 1 = par64; 2 = pieni fresu; 3 = keskikokoinen fresu; 4 = iso fresu; 5 = floodi; 6 = linssi; 7 = haze; 8 = haze fan; 9 = strobe; 10 = strobe freq; 11 = fog; 12 = pinspot; 13 = moving head  dim; 14 = moving head pan; 15 = moving head tilt;
-//int[] fixtureType1 = { 3, 4, 4, 1, 1, 1, 1, 4, 4, 3, 6, 6, 5, 5, 5, 5, 1, 1, 1, 7, 71, 8, 81, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-
-//visualisaation fixtuurien sijainnit ----Deprecated. Moved to fixture class
-//int[] xEtu = { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600 }; //etuansan fixtuurien sijainnit sivusuunnassa
-//int[] xTaka = new int[numberOfAllFixtures]; //taka-ansan fixtuurien sijainnit sivusuunnassa
-//int[] yTaka = new int[numberOfAllFixtures]; //taka-ansan fixtuurien sijainnit korkeussuunnassa
-//int[] yEtu = { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 }; //etuansan fixtuurien sijainnit sivusuunnassa
-
-//visualisaation fixtuurien värit ----Deprecated. Moved to fixture class
-//int[] red = { 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255 }; 
-//int[] green = { 0, 0, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255 };
-//int[] blue = { 0, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 0, 0, 255, 0, 0,  255, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255  };
-
 int[] y = { 500, 200 };
-//int[] rotTaka = { 20, 15, 10, 5, 0, 0, 0, 0, -5, -10, -15, -20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 int ansaTaka = 32;
-int ansaEtu = 12;
 int[] valueToDmx = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
 int[] valueToDmxOld = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
 int[] dim = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
@@ -437,9 +425,6 @@ boolean cycleStart = false;
 int counter;
 boolean error = false;
 int[] check = { 126, 5, 14, 0, 0, 0 };
-
-//int[] dmxChannel = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 14, 14, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83 }; //Fixtuurien todelliset DMX-kanavat
-//int[] channel = new int[channels+2];
 
 int[] memoryData;
 boolean[] memoryIsZero;
