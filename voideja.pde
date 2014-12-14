@@ -199,16 +199,16 @@ boolean isClicked(int x1, int y1, int x2, int y2) {
 void fullOn(boolean state) {
   if(fullOn && !state) {
     //Turn off full on
-    for(int ii = 0; ii < channels; ii++) {
-       dimInput[ii] = valueOfDimBeforeFullOn[ii];
+    for(int ii = 0; ii < fixtures.length; ii++) {
+       fixtures[ii].setDimmer(valueOfDimBeforeFullOn[ii]);
     }
     fullOn = false;
   }
   if(!fullOn && state) {
     //Turn on full on
-    for(int ii = 0; ii < channels; ii++) {
-       valueOfDimBeforeFullOn[ii] = dim[ii];
-       dimInput[ii] = 255;
+    for(int ii = 0; ii < fixtures.length; ii++) {
+       valueOfDimBeforeFullOn[ii] = fixtures[ii].dimmer;
+       fixtures[ii].setDimmer(255);
     }
     fullOn = true;
   }

@@ -33,7 +33,7 @@ void drawMainWindow() {
           if(!mouseLocked || mouseLocker == "main:fixMove") {
               if(!mousePressed) {
                 if(moveLamp == true) {
-                 if(lampToMove < ansaTaka) {
+                 if(lampToMove < ansaTaka) { //WHY ON EARTH IS HERE USED VARIABLE ansaTaka !?!?!?
                   fixtures[lampToMove].x_location = fixtures[lampToMove].x_location + (int(mouseRotated.x) - oldMouseX1) * 100 / zoom - ansaX[fixtures[lampToMove].parentAnsa];
                   fixtures[lampToMove].y_location = fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom;
                   

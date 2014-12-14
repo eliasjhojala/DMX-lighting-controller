@@ -31,15 +31,6 @@ void setAllowedChannels() {
       allowChannel[ij][i] = true;
     }
   }
-  for(int i = 0; i < 15; i++) {
-    allowChannel[1][i] = false;
-  }
-  for(int i = 15; i < 40; i++) {
-    allowChannel[1][i] = true;
-  }
-  for(int i = 40; i < 512; i++) {
-    allowChannel[1][i] = false;
-  }
 }
 
 fixtureInput[] fixtureInputs = new fixtureInput[2];
