@@ -25,7 +25,13 @@ class fixture {
   int haze, fan, fog; //Pyro values
   int frequency; //Strobe freq value
   
-  void setDimmer(int val) {dimmer = val; DMXChanged = true;}
+  void setDimmer(int val) {
+    dimmer = val; 
+    if(fixtureTypeId == 20) { haze = dimmer; fan = dimmer; }
+    if(fixtureTypeId == 21) { fog = dimmer; }
+    DMXChanged = true;
+  }
+
   
   String fixtureType;
   int fixtureTypeId;
@@ -185,8 +191,8 @@ class fixture {
            /* MH-X50 8-channel mode */         case 17: pan = dmxChannels[0]; tilt = dmxChannels[1]; colorWheel = dmxChannels[2]; shutter = dmxChannels[3]; dimmer = shutter; goboWheel = dmxChannels[4]; goboRotation = dmxChannels[5]; prism = dmxChannels[6]; focus = dmxChannels[7]; setColorValuesFromDmxValue(colorWheel); break; //MH-X50 8-ch mode
            /* simple rgb led par */            case 18: red = dmxChannels[0]; green = dmxChannels[1]; blue = dmxChannels[2]; break; //Simple rgb led par
            /* simple rgb led par with dim */   case 19: dimmer = dmxChannels[0]; red = dmxChannels[1]; green = dmxChannels[2]; blue = dmxChannels[3]; break; //Simple rgb led par with dim
-           /* 2ch hazer */                     case 20: haze = dmxChannels[0]; fan = dmxChannels[1]; break; //2ch hazer
-           /* 1ch fog */                       case 21: fog = dmxChannels[0]; break; //1ch fog
+           /* 2ch hazer */                     case 20: haze = dmxChannels[0]; fan = dmxChannels[1]; dimmer = (haze + fan) / 2; break; //2ch hazer
+           /* 1ch fog */                       case 21: fog = dmxChannels[0]; dimmer = fog; break; //1ch fog
         }
       } catch(Exception e) { e.printStackTrace(); return false; }
       DMXChanged = true;

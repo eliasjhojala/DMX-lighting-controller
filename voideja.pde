@@ -109,7 +109,7 @@ String getFixtureNameByType(int type) {
     case 18: toReturn = "RGB.par"; break;
     case 19: toReturn = "RGBD.par"; break;
     case 20: toReturn = "hazer"; break;
-    case 20: toReturn = "fog"; break;
+    case 21: toReturn = "fog"; break;
   }
   return toReturn;
 }
