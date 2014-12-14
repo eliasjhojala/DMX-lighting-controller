@@ -465,25 +465,10 @@ public class ControlFrame extends PApplet {
     lb.captionLabel().style().marginLeft = 3;
     
     //Add dropdown items
-    lb.addItem("Par64", 1);
-    lb.addItem("Pieni Fresu", 2);
-    lb.addItem("Kesk. Fresu", 3);
-    lb.addItem("Iso Fresu", 4);
-    lb.addItem("Flood", 5);
-    lb.addItem("Linssi", 6);
-    lb.addItem("Haze", 7);
-    lb.addItem("Haze Fan", 8);
-    lb.addItem("Strobe", 9);
-    lb.addItem("Strobe Freq.", 10);
-    lb.addItem("Fog", 11);
-    lb.addItem("Pinspot", 12);
-    lb.addItem("---", 13);
-    lb.addItem("---", 14);
-    lb.addItem("---", 15);
-    lb.addItem("1. MH-X50", 16);
-    lb.addItem("2. MH-X50", 17);
-    lb.addItem("haze", 20);
-    lb.addItem("fog", 21);
+    for(int i = 1; i <= getNumberOfFixtureTypes(); i++) {
+      lb.addItem(getFixtureNameByType(i), i);
+    }
+
     
     //Create A Delete All Presets Button
      cp5.addButton("submitFixture")

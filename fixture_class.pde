@@ -111,16 +111,10 @@ class fixture {
   }
   
   
+ 
+  
   int getFixtureTypeId() {
-    int toReturn = 0;
-    if(fixtureType == "par64") { toReturn = 1; }
-    if(fixtureType == "p.fresu") { toReturn = 2; }
-    if(fixtureType == "k.fresu") { toReturn = 3; }
-    if(fixtureType == "i.fresu") { toReturn = 4; }
-    if(fixtureType == "flood") { toReturn = 5; }
-    if(fixtureType == "linssi") { toReturn = 6; }
-    //Muita: hazer, strobe, fog, pinspot, moving head, ledstrip, led par
-    return toReturn;
+    return getFixtureTypeId1(fixtureType);
   }
   
   int[] getDMX() {
