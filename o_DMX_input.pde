@@ -102,7 +102,7 @@ void channelsToDim() {
     if(allChannelsOld[4][i] != allChannels[4][i]) {
       if(useMemories == true) {
         memory(i+12, round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue)));
-        memoryValue[i+12-1] = round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue));
+        memoryValue[i+12] = round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue));
       }
       else {
         fixtures[i+12+12-1].setDimmer(allChannels[4][i]);

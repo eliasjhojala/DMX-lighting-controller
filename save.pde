@@ -3,11 +3,13 @@
 Table table;
 
 void saveVariable(int variable, String variableName) {
+  if(variable != 0) { //Don't save zero values
     saveDataMainCommands(str(variable), variableName, "0", "-", "-");
+  }
 }
 void save1Darray(int[] array, String arrayName) {
   for(int i = 0; i < array.length; i++) {
-    if(array[i] != 0) {
+    if(array[i] != 0) { //Don't save zero values
       saveDataMainCommands(str(array[i]), arrayName, "1", str(i), "-");
     }
   }
@@ -21,7 +23,7 @@ void save1DarrayString(String[] array, String arrayName) {
 void save2Darray(int[][] array, String arrayName) {
   for(int ij = 0; ij < array.length; ij++) {
     for(int i = 0; i < array[0].length; i++) {
-      if(array[ij][i] != 0) {
+      if(array[ij][i] != 0) { //Don't save zero values
         saveDataMainCommands(str(array[ij][i]), arrayName, "2", str(i), str(ij));
       }
     }
@@ -30,21 +32,24 @@ void save2Darray(int[][] array, String arrayName) {
 
 void save2DarrayBoolean(boolean[][] array, String arrayName) {
   for(int ij = 0; ij < array.length; ij++) {
-    println(ij); 
     for(int i = 0; i < array[0].length; i++) {
-      saveDataMainCommands(str(int(array[ij][i])), arrayName, "2", str(ij), str(i));
+      if(array[ij][i]) { //Don't save false values (0)
+        saveDataMainCommands(str(int(array[ij][i])), arrayName, "2", str(ij), str(i));
+      }
     }
   }
 }
 
 void saveDataMainCommands(String variable, String variableName, String dimensions, String D1, String D2) {
-  TableRow newRow = table.addRow();   
-  newRow.setInt("id", table.lastRowIndex());
-  newRow.setString("variable_name", variableName);
-  newRow.setString("variable_dimensions", dimensions); 
-  newRow.setString("value", variable);   
-  newRow.setString("1D", D1);               
-  newRow.setString("2D", D2);
+  if(!(variable.equals("0"))) { //Don't save zero values
+    TableRow newRow = table.addRow();   
+    newRow.setInt("id", table.lastRowIndex());
+    newRow.setString("variable_name", variableName);
+    newRow.setString("variable_dimensions", dimensions); 
+    newRow.setString("value", variable);   
+    newRow.setString("1D", D1);               
+    newRow.setString("2D", D2);
+  }
 }
 
 void saveAllData() {
@@ -105,11 +110,10 @@ void saveAllData() {
   
   
   
-  int[] grouping = new int[4];
+  int[] grouping = new int[3];
         grouping[0] = controlP5place;
         grouping[1] = enttecDMXplace;
         grouping[2] = touchOSCplace;
-        grouping[3] = int(useMovingHead);
         
   save1Darray(grouping, "grouping"); 
   
@@ -117,22 +121,7 @@ void saveAllData() {
   save2Darray(soundToLightPresets, "soundToLightPresets");
   save2Darray(preset, "preset");
 
-  
-  for(int a = 0; a < mhx50_createFinalPresetValues[0][0].length; a++) {
-    for(int i = 0; i <  mhx50_createFinalPresetValues.length; i++) {
-      TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "mhx50_createFinalPresetValues[1D][0][2D]"); 
-      newRow.setString("variable_dimensions", "2"); newRow.setString("value", str(mhx50_createFinalPresetValues[i][0][a]));   newRow.setString("1D", str(a));               newRow.setString("2D", str(i));
-    }
-  }
-  
-  for(int a = 0; a < mhx50_createFinalPresetValues[0][0].length; a++) {
-    for(int i = 0; i <  mhx50_createFinalPresetValues.length; i++) {
-      TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "mhx50_createFinalPresetValues[1D][1][2D]"); 
-      newRow.setString("variable_dimensions", "2"); newRow.setString("value", str(mhx50_createFinalPresetValues[i][1][a]));   newRow.setString("1D", str(a));               newRow.setString("2D", str(i));
-    }
-  }
-  
-  
+
   
   saveVariable(int(camX), "camX");
   saveVariable(int(camY), "camY");
@@ -158,11 +147,11 @@ void saveAllData() {
   else if(userId == 3) {
     saveTable(table, "C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\settings.csv");
   }
-  
   println(); println(); println(); 
   println("SAVE READY");
   long takedTime = millis() - saveDataBeginMillis;
  println("It taked " + str(takedTime) + " ms");
   println();
+  
 }
 

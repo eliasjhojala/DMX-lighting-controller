@@ -13,7 +13,7 @@ void keyPressed() {
   if(key == 'p') { chasePause = !chasePause; }
   if(key == 'r') { revStepPressed = true; }
   if(key == '1') { lampToMove = 1; }
-  if(key == 's') { thread("saveAllData"); }
+  if(key == 's') { saveAllData(); }
   if(key == 'l') { thread("loadAllData"); }
   if(key == 'c') {
     for(int i = 0; i < channels; i++) {

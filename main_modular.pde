@@ -1,12 +1,7 @@
-
-
 int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
-
- 
 boolean showMode = true; 
- 
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
 boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use
@@ -47,7 +42,7 @@ boolean blackOut = false;
 
 int soloMemory = 11; //Memorypaikka, joka on solo - solomemory's memoryplace
 boolean soloWasHere = false; //Oliko Solo äsken käytössä
-boolean useSolo = true; //Käytetäänkö soloa - is solo in use at all
+boolean useSolo = false; //Käytetäänkö soloa - is solo in use at all
 
 
 //ID CHANGE
@@ -237,7 +232,6 @@ boolean upper; //enttec dmx usb pro ch +12
 //--------------------------------------------------5.9.2014 nämä eivät ole käytössä-------------------------------------------------------------------------------------
 int movingHeadPan; //Moving headin pan arvo
 int movingHeadTilt; //Moving headin tilt arvo
-boolean useMovingHead = false; //Käytetäänkö moving headia ohjelmassa
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

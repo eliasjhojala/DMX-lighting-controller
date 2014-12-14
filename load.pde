@@ -12,15 +12,7 @@ void loadSetupData() {
   else if(userId == 3) {
      table = loadTable("C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\settings.csv", "header");
   }
-  
-  //for (TableRow row : table.findRows("sendOscToAnotherPc", "variable_name")) { sendOscToAnotherPc = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("sendOscToIpad", "variable_name")) { sendOscToIpad = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("sendMemoryToIpad", "variable_name")) { sendMemoryToIpad = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("useCOM", "variable_name")) { useCOM = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("showOutputAsNumbers", "variable_name")) { showOutputAsNumbers = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("use3D", "variable_name")) { use3D = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("loadAllDataInSetup", "variable_name")) { loadAllDataInSetup = boolean(row.getString("value")); }
-  
+
   
   use3D = !(userId == 3);
   showOutputAsNumbers = true;
@@ -28,6 +20,8 @@ void loadSetupData() {
 
 void loadAllData() {
     loadSetupData();
+   
+   
     
     if(userId == 1) {
      table = loadTable("/Users/elias/Dropbox/DMX controller/main_modular/variables/pikkusten_disko.csv", "header"); //Eliaksen polku
@@ -38,8 +32,14 @@ void loadAllData() {
       } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roope äidillä -polku
     }
     else if(userId == 3) {
-      table = loadTable("C:\\Users\\elias\\Documents\\GitHub\\DMX Controller\\main_modular\\variables\\pikkusten_disko.csv", "header");
+      table = loadTable("C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\pikkusten_disko.csv", "header");
     }
+    
+         for(int i = 0; i < repOfFixtures.length; i++) {
+        for(int ij = 0; ij < repOfFixtures[i].length; ij++) {
+          repOfFixtures[i][ij] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
+      }
     
     //FIXTURES---------------------------------------------------------------------------------------------------------------------------
     //Initialize fixtures using type
@@ -91,6 +91,9 @@ void loadAllData() {
     for (fixture[] fixs : repOfFixtures) for (fixture fix : fixs) fix = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[0], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
     {
+      
+      
+ 
       
       //fixture thisObj = repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))];
       if (repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] == null) repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -145,7 +148,7 @@ void loadAllData() {
     
     
     
-    int[] grouping = new int[4];
+    int[] grouping = new int[3];
     for (TableRow row : table.findRows("grouping", "variable_name")) { grouping[int(row.getString("1D"))] = int(row.getString("value")); }
     controlP5place = grouping[0]; enttecDMXplace = grouping[1]; touchOSCplace = grouping[2];
           
