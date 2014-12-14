@@ -33,13 +33,13 @@ void loadFixtureMemory(int fixtureMemoryId, int value) {
       }
     }
     if(whatToSave[fixtureMemoryId][7] && repOfFixtures[i][fixtureMemoryId] != null) {
-      fixtures[i].haze = repOfFixtures[i][fixtureMemoryId].haze; fixtures[i].DMXChanged = true;
+      fixtures[i].haze = int(map(repOfFixtures[i][fixtureMemoryId].haze, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
     }
     if(whatToSave[fixtureMemoryId][8] && repOfFixtures[i][fixtureMemoryId] != null) {
-      fixtures[i].fan = repOfFixtures[i][fixtureMemoryId].fan; fixtures[i].DMXChanged = true;
+      fixtures[i].fan = int(map(repOfFixtures[i][fixtureMemoryId].fan, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
     }
     if(whatToSave[fixtureMemoryId][9] && repOfFixtures[i][fixtureMemoryId] != null) {
-      fixtures[i].fog = repOfFixtures[i][fixtureMemoryId].fog; fixtures[i].DMXChanged = true;
+      fixtures[i].fog = int(map(repOfFixtures[i][fixtureMemoryId].fog, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
     }
   }
 }
