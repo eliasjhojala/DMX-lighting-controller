@@ -81,6 +81,15 @@ int[] getFixtureSize(int id) {
 
 //Gets type description of fixture #id
 String getFixtureNameByType(int type) {
+  
+  //* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6:  //dimmers
+  //* MH-X50 14-channel mode */        case 16:  //MH-X50
+  //* MH-X50 8-channel mode */         case 17:  //MH-X50 8-ch mode
+  //* simple rgb led par */            case 18:  //Simple rgb led par
+  //* simple rgb led par with dim */   case 19:  //Simple rgb led par with dim
+  //* 2ch hazer */                     case 20:  //2ch hazer
+  //* 1ch fog */                       case 21:  //1ch fog
+  
   String toReturn = "unknown";
   switch(type) {
     case 1: toReturn = "par64"; break;
@@ -89,15 +98,18 @@ String getFixtureNameByType(int type) {
     case 4: toReturn = "i.fresu"; break;
     case 5: toReturn = "flood"; break;
     case 6: toReturn = "linssi"; break;
-    case 7: toReturn = "haze"; break;
-    case 8: toReturn = "fan"; break;
+    case 7: toReturn = "lhaze"; break;
+    case 8: toReturn = "lfan"; break;
     case 9: toReturn = "strobe"; break;
     case 10: toReturn = "freq"; break;
-    case 11: toReturn = "fog"; break;
+    case 11: toReturn = "lfog"; break;
     case 12: toReturn = "pinspot"; break;
-    case 13: toReturn = "MHdim"; break;
-    case 14: toReturn = "MHpan"; break;
-    case 15: toReturn = "MHtilt"; break;
+    case 16: toReturn = "MX50.14ch"; break;
+    case 17: toReturn = "MX50.8ch"; break;
+    case 18: toReturn = "RGB.par"; break;
+    case 19: toReturn = "RGBD.par"; break;
+    case 20: toReturn = "hazer"; break;
+    case 20: toReturn = "fog"; break;
   }
   return toReturn;
 }

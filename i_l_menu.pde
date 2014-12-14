@@ -200,6 +200,22 @@ void openBottomMenuControlBox(int owner) {
       }
       successInit = true;
     break;
+    
+    case 20:
+      bottomMenuControlBoxControllers = new bottomMenuChController[2];
+      String[] chanNamesTp20 = {"Haze", "Fan"};
+      for (int i = 0; i < chanNamesTp20.length; i++) {
+        bottomMenuControlBoxControllers[i] = new bottomMenuChController(50 + i*120, 50, i, 0, chanNamesTp20[i]);
+      }
+      successInit = true;
+    break;
+    
+    case 21:
+      bottomMenuControlBoxControllers = new bottomMenuChController[1];
+      bottomMenuControlBoxControllers[0] = new bottomMenuChController(50, 50, 0, 0, "Fog");
+      successInit = true;
+    break;
+    
     default:
       bottomMenuControlBoxControllers = new bottomMenuChController[0];
       bottomMenuControlBoxDMXValues = new int[0];
@@ -259,7 +275,7 @@ void drawBottomMenuControlBox() {
     //box was just closed
     
     //Make sure mouseLocked is false
-    if (mouseLocker.substring(bottomMenuControlBoxSubstr.length()).equals(bottomMenuControlBoxSubstr)) mouseLocked = false;
+    //if (mouseLocker.substring(bottomMenuControlBoxSubstr.length()).equals(bottomMenuControlBoxSubstr)) mouseLocked = false;
   }
   bottomMenuControlBoxOpenOld = bottomMenuControlBoxOpen;
 }

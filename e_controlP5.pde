@@ -561,6 +561,7 @@ public class ControlFrame extends PApplet {
     if(theEvent.getController().getName().equals("submitFixture")) {
       //save fixture data
       if (fixtureColorChangeHasHappened && cp5.tab("fixtSettings").isActive()) {
+        bottomMenuControlBoxOpen = false;
         fixtures[changeColorFixtureId].red = int(cp5.controller("colorRed").getValue());
         fixtures[changeColorFixtureId].green = int(cp5.controller("colorGreen").getValue());
         fixtures[changeColorFixtureId].blue = int(cp5.controller("colorBlue").getValue());
