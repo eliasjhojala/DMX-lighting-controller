@@ -31,11 +31,13 @@ void presetOld(int memoryNumber, int value) {
 }
 
 void soundToLightFromPreset(int memoryNumber) {
+  soundToLightPresets[memoryNumber] = new int[soundToLightPresets[memoryNumber].length];
   int a = 0;
   for(int i = 3; i < numberOfMemories; i++) {
     if(memoryValue[i] != 0) {
       a++;
       soundToLightPresets[memoryNumber][a] = i;
+      println(i);
     }
 }
 soundToLightSteps[memoryNumber] = a;
@@ -54,9 +56,9 @@ void memory(int memoryNumber, int value) {
   if(memoryType[memoryNumber] == 2) {
     beatDetectionDMX(memoryNumber, value);
   }
-  if(memoryType[memoryNumber] == 3) {
-    beatDetectionDMX(0, value);
-  }
+//  if(memoryType[memoryNumber] == 3) {
+//    beatDetectionDMX(0, value);
+//  }
   if(memoryType[memoryNumber] == 4) {
     if(blackOut == false) { grandMaster = value; } else { grandMaster = 0; }
   }

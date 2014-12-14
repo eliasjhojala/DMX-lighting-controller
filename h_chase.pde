@@ -10,8 +10,12 @@ void detectBeat() {
 }
 
 void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funktion aloitus
+
     if(chaseModeByMemoryNumber[memoryNumber] >= 0 && chaseModeByMemoryNumber[memoryNumber] <= 6) { //tarkistetaan chasemode (1 = beat detect, 2 = eq, 3 = manual chase, 4 = autochase, 5 = beat detect wave
      for(int i = 1; i < numberOfMemories; i++) { //Käydään läpi kaikki memoryt
+       if(memoryValue[i] > 0 && memoryType[i] == 2) {
+       
+       
        value = memoryValue[i]; //arvo on tällä hetkellä käsiteltävän memoryn arvo
     if(chaseModeByMemoryNumber[i] == 1 || (chaseModeByMemoryNumber[i] == 0 && chaseMode == 1)) {
       if(biitti == true || (chaseStepChanging[i] == true && chaseFade > 0)) { //Tarkistetaan tuleeko biitti tai onko fade menossa
@@ -140,6 +144,7 @@ void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funkti
     }
     
   }
+    }
 }
 }
 
@@ -165,8 +170,10 @@ void stepChange(int memoryNumber, int value, boolean useFade, boolean changeStep
         steppi[memoryNumber] = 1; steppi1[memoryNumber] = soundToLightSteps[memoryNumber];
       }
     }
+    if(memoryValue[memoryNumber] != 0) {
     preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], round(map(255 - chaseBright2[memoryNumber], 0, 255, 0, value))); //Gives right value (inverted value) to previous step
     preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], round(map(chaseBright2[memoryNumber], 0, 255, 0, value))); //Gives right value to current step
+    }
   }
   
   //Älä välitä tämän elsen sisällä olevasta koodista, se suoritetaan vain jos fade on nollassa
