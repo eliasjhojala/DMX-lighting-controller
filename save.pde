@@ -3,9 +3,7 @@
 Table table;
 
 void saveVariable(int variable, String variableName) {
-  if(variable != 0) {
     saveDataMainCommands(str(variable), variableName, "0", "-", "-");
-  }
 }
 void save1Darray(int[] array, String arrayName) {
   for(int i = 0; i < array.length; i++) {
@@ -34,9 +32,7 @@ void save2DarrayBoolean(boolean[][] array, String arrayName) {
   for(int ij = 0; ij < array.length; ij++) {
     println(ij); 
     for(int i = 0; i < array[0].length; i++) {
-      if(array[ij][i] != false) {
-        saveDataMainCommands(str(int(array[ij][i])), arrayName, "2", str(ij), str(i));
-      }
+      saveDataMainCommands(str(int(array[ij][i])), arrayName, "2", str(ij), str(i));
     }
   }
 }
@@ -121,6 +117,21 @@ void saveAllData() {
   save2Darray(soundToLightPresets, "soundToLightPresets");
   save2Darray(preset, "preset");
 
+  
+  for(int a = 0; a < mhx50_createFinalPresetValues[0][0].length; a++) {
+    for(int i = 0; i <  mhx50_createFinalPresetValues.length; i++) {
+      TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "mhx50_createFinalPresetValues[1D][0][2D]"); 
+      newRow.setString("variable_dimensions", "2"); newRow.setString("value", str(mhx50_createFinalPresetValues[i][0][a]));   newRow.setString("1D", str(a));               newRow.setString("2D", str(i));
+    }
+  }
+  
+  for(int a = 0; a < mhx50_createFinalPresetValues[0][0].length; a++) {
+    for(int i = 0; i <  mhx50_createFinalPresetValues.length; i++) {
+      TableRow newRow = table.addRow();             newRow.setInt("id", table.lastRowIndex());  newRow.setString("variable_name", "mhx50_createFinalPresetValues[1D][1][2D]"); 
+      newRow.setString("variable_dimensions", "2"); newRow.setString("value", str(mhx50_createFinalPresetValues[i][1][a]));   newRow.setString("1D", str(a));               newRow.setString("2D", str(i));
+    }
+  }
+  
   
   
   saveVariable(int(camX), "camX");
