@@ -212,7 +212,7 @@ void calcMaschineAutoTap() {
   if (biitti) Maschine.sendControllerChange(10, 107, 127); else Maschine.sendControllerChange(10, 107, 0);
   
   //Add to moving head values if associated pads are pressed down
-  if (maschineManualMHadjustButtons[0] && mhx50_panValue[0] != 0) { mhx50_panValue[0]--; midiPositionButtonPressed = true; }
+  /*if (maschineManualMHadjustButtons[0] && mhx50_panValue[0] != 0) { mhx50_panValue[0]--; midiPositionButtonPressed = true; }
   if (maschineManualMHadjustButtons[0] && mhx50_panValue[1] != 0) { mhx50_panValue[1]--; midiPositionButtonPressed = true; }
   
   if (maschineManualMHadjustButtons[2] && mhx50_panValue[0] != 255) { mhx50_panValue[0]++; midiPositionButtonPressed = true; }
@@ -222,7 +222,7 @@ void calcMaschineAutoTap() {
   if (maschineManualMHadjustButtons[1] && mhx50_tiltValue[1] != 0) { mhx50_tiltValue[1]--; midiPositionButtonPressed = true; }
   
   if (maschineManualMHadjustButtons[3] && mhx50_tiltValue[0] != 255) { mhx50_tiltValue[0]++; midiPositionButtonPressed = true; }
-  if (maschineManualMHadjustButtons[3] && mhx50_tiltValue[1] != 255) { mhx50_tiltValue[1]++; midiPositionButtonPressed = true; }
+  if (maschineManualMHadjustButtons[3] && mhx50_tiltValue[1] != 255) { mhx50_tiltValue[1]++; midiPositionButtonPressed = true; }*/
   
   //------AutoTap calculations
   //Always turn off the booleans if they were put to true last time
