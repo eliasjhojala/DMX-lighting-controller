@@ -450,31 +450,13 @@ boolean moveLamp = false;
 boolean mouseClicked = false;
 int lampToMove;
 
-int[][] recVal = new int[1000000][12];
-
-boolean rec;
-boolean play;
-
-int countteri;
-
-long recStartMillis;
-
-int playStep;
-
 //--------------------------------------Chase muuttujat-----------------------------------
 int chaseStep1 = 1;
 int chaseStep2;
 int[] chaseBright1 = new int[numberOfMemories];
 int[] chaseBright2 = new int[numberOfMemories];
-int chaseLamp1;
-int chaseLamp2;
-
-boolean chaseFirstTime = true;
 
 boolean chase;
-boolean dmxSoundToLight = false;
-
-
 
 void initializeCOM() {
   if(useEnttec == true) {
