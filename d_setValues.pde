@@ -9,6 +9,8 @@ int[] DMX = new int[512];
 int[] DMXforOutput = new int[512];
 //------------------ SO VERY IMPORTANT
 
+
+
 void setDimAndMemoryValuesAtEveryDraw() {
   dimCheckFinished = false;
   
@@ -17,10 +19,8 @@ void setDimAndMemoryValuesAtEveryDraw() {
     if(fix.DMXChanged) {
       DMXChangedOverall = true;
       int[] dmxFromFixture = fix.getDMX();
-      int[] dmxFromFixtureFO = fix.getDMXforOutput();
       for(int ij = 0; ij < dmxFromFixture.length; ij++) {
         DMX[fix.channelStart + ij] = dmxFromFixture[ij];
-        DMXforOutput[fix.channelStart + ij] = dmxFromFixtureFO[ij];
       }
       fix.DMXChanged = false;
     }
@@ -33,8 +33,15 @@ void setDimAndMemoryValuesAtEveryDraw() {
        }
        fix.receiveDMX(toFixture);
        fix.DMXChanged = false;
+       
+       int[] dmxFromFixtureFO = fix.getDMXforOutput();
+       for(int ij = 0; ij < dmxFromFixtureFO.length; ij++) {
+         DMXforOutput[fix.channelStart + ij] = dmxFromFixtureFO[ij];
+       }
+       
     }
   }
+  
   
   
   { // Memory checks --->
