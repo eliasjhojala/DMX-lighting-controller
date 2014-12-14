@@ -3,9 +3,7 @@
 Table table;
 
 void saveVariable(int variable, String variableName) {
-  if(variable != 0) {
     saveDataMainCommands(str(variable), variableName, "0", "-", "-");
-  }
 }
 void save1Darray(int[] array, String arrayName) {
   for(int i = 0; i < array.length; i++) {
@@ -40,15 +38,13 @@ void save2DarrayBoolean(boolean[][] array, String arrayName) {
 }
 
 void saveDataMainCommands(String variable, String variableName, String dimensions, String D1, String D2) {
-  if(!(variable.equals("0"))) {
-    TableRow newRow = table.addRow();   
-    newRow.setInt("id", table.lastRowIndex());
-    newRow.setString("variable_name", variableName);
-    newRow.setString("variable_dimensions", dimensions); 
-    newRow.setString("value", variable);   
-    newRow.setString("1D", D1);               
-    newRow.setString("2D", D2);
-  }
+  TableRow newRow = table.addRow();   
+  newRow.setInt("id", table.lastRowIndex());
+  newRow.setString("variable_name", variableName);
+  newRow.setString("variable_dimensions", dimensions); 
+  newRow.setString("value", variable);   
+  newRow.setString("1D", D1);               
+  newRow.setString("2D", D2);
 }
 
 void saveAllData() {
