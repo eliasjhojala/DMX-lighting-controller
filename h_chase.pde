@@ -14,7 +14,7 @@ void beatDetectionDMX(int memoryNumber, int value) { //chase/soundtolight funkti
     if(chaseModeByMemoryNumber[memoryNumber] >= 0 && chaseModeByMemoryNumber[memoryNumber] <= 6) { //tarkistetaan chasemode (1 = beat detect, 2 = eq, 3 = manual chase, 4 = autochase, 5 = beat detect wave
      for(int i = 1; i < numberOfMemories; i++) { //Käydään läpi kaikki memoryt
        if(memoryValue[i] > 0 && memoryType[i] == 2) {
-       
+      
        
        value = memoryValue[i]; //arvo on tällä hetkellä käsiteltävän memoryn arvo
     if(chaseModeByMemoryNumber[i] == 1 || (chaseModeByMemoryNumber[i] == 0 && chaseMode == 1)) {
@@ -189,6 +189,7 @@ void stepChange(int memoryNumber, int value, boolean useFade, boolean changeStep
     }
     preset(soundToLightPresets[memoryNumber][steppi[memoryNumber]], round(map(255, 0, 255, 0, value)));
     preset(soundToLightPresets[memoryNumber][steppi1[memoryNumber]], 0);
+    
   }
 }
 
