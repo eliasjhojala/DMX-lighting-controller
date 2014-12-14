@@ -1,3 +1,5 @@
+//In this file should be all the functions related to fixture profiles located
+
 
 //Gets dimensions of fixture #id
 //0 = width, 1 = height, 2 = (0 or 1) render fixture?
@@ -19,6 +21,8 @@ int[] getFixtureSizeByType(int type) {
     case 11: toReturn[0] = 50; toReturn[1] = 70; toReturn[2] = 1; break;
     case 12: toReturn[0] = 5; toReturn[1] = 8; toReturn[2] = 1; break;
     case 13: toReturn[0] = 30; toReturn[1] = 50; toReturn[2] = 1; break;
+    case 20: toReturn[0] = 60; toReturn[1] = 70; toReturn[2] = 1; break; //Hazer
+    case 21: toReturn[0] = 60; toReturn[1] = 80; toReturn[2] = 1; break; //Fog
   }
   return toReturn;
   
@@ -27,6 +31,31 @@ int[] getFixtureSizeByType(int type) {
 int[] getFixtureSize(int id) {
   return getFixtureSizeByType(fixtures[id].fixtureTypeId);
 }
+
+
+String[] fixtureNames = { 
+  "par64", 
+  "p.fresu", 
+  "k.fresu", 
+  "i.fresu", 
+  "flood", 
+  "linssi", 
+  "lhaze", 
+  "lfan", 
+  "strobe", 
+  "freq", 
+  "lfog", 
+  "pinspot", 
+  "",
+  "",
+  "",
+  "MX50.14ch", 
+  "MX50.8ch",
+  "RGB.par",
+  "RGBD.par",
+  "hazer",
+  "fog"
+};
 
 //Gets type description of fixture #id
 String getFixtureNameByType(int type) {
@@ -40,26 +69,8 @@ String getFixtureNameByType(int type) {
   //* 1ch fog */                       case 21:  //1ch fog
   
   String toReturn = "-";
-  switch(type) {
-    case 1: toReturn = "par64"; break;
-    case 2: toReturn = "p.fresu"; break;
-    case 3: toReturn = "k.fresu"; break;
-    case 4: toReturn = "i.fresu"; break;
-    case 5: toReturn = "flood"; break;
-    case 6: toReturn = "linssi"; break;
-    case 7: toReturn = "lhaze"; break;
-    case 8: toReturn = "lfan"; break;
-    case 9: toReturn = "strobe"; break;
-    case 10: toReturn = "freq"; break;
-    case 11: toReturn = "lfog"; break;
-    case 12: toReturn = "pinspot"; break;
-    case 16: toReturn = "MX50.14ch"; break;
-    case 17: toReturn = "MX50.8ch"; break;
-    case 18: toReturn = "RGB.par"; break;
-    case 19: toReturn = "RGBD.par"; break;
-    case 20: toReturn = "hazer"; break;
-    case 21: toReturn = "fog"; break;
-  }
+
+  if(type-1 < fixtureNames.length && type-1 >= 0) { toReturn = fixtureNames[type-1]; }
   return toReturn;
 }
 
@@ -68,19 +79,11 @@ int getNumberOfFixtureTypes() {
 }
 
 
-
-
 int getFixtureTypeId1(String fixtureType) {
   int toReturn = 0;
-  if(fixtureType == "par64") { toReturn = 1; }
-  if(fixtureType == "p.fresu") { toReturn = 2; }
-  if(fixtureType == "k.fresu") { toReturn = 3; }
-  if(fixtureType == "i.fresu") { toReturn = 4; }
-  if(fixtureType == "flood") { toReturn = 5; }
-  if(fixtureType == "linssi") { toReturn = 6; }
-  if(fixtureType == "haze") { toReturn = 20; }
-  if(fixtureType == "fog") { toReturn = 21; }
-  //Muita: hazer, strobe, fog, pinspot, moving head, ledstrip, led par
+  for(int i = 0; i < fixtureNames.length; i++) {
+    if(fixtureType == fixtureNames[i]) { toReturn = i+1; break; }
+  }
   return toReturn;
 }
 
