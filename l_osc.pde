@@ -9,6 +9,7 @@ int[] valueOfDimBeforeFullOn = new int[channels]; //Muuttuja johon kirjoitetaan 
 boolean blackOutButtonWasReleased;
 int masterValueBeforeBlackout;
 String addr = "";
+int[] valueOfDimBeforeStrobe = new int[fixtures.length];
 void oscEvent(OscMessage theOscMessage) {
   
   addr = theOscMessage.addrPattern(); //Luetaan touchOSCin elementin osoite
@@ -63,10 +64,29 @@ void oscEvent(OscMessage theOscMessage) {
      
      if(addr.equals("/strobenow")) {
        if(digitalValue == 1) {
-         memory(soloMemory, 255);
+         for(int i = 0; i < fixtures.length; i++) {
+           valueOfDimBeforeStrobe[i] = fixtures[i].dimmer;
+           fixtures[i].setDimmer(0);
+         }
+         for(int i = 0; i < fixtures.length; i++) {
+           if(getFixtureNameByType(fixtures[i].fixtureTypeId) == "strobe") {
+             fixtures[i].setDimmer(255);
+             fixtures[i].frequency = 200;
+             fixtures[i].DMXChanged = true;
+           }
+         }
        }
        else {
-         memory(soloMemory, 0);
+         for(int i = 0; i < fixtures.length; i++) {
+           fixtures[i].setDimmer(valueOfDimBeforeStrobe[i]);
+         }
+         for(int i = 0; i < fixtures.length; i++) {
+           if(getFixtureNameByType(fixtures[i].fixtureTypeId) == "strobe") {
+             fixtures[i].setDimmer(0);
+             fixtures[i].frequency = 0;
+             fixtures[i].DMXChanged = true;
+           }
+         }
        }
      }
      
