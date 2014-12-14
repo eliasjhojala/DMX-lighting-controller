@@ -7,7 +7,9 @@ void saveVariable(int variable, String variableName) {
 }
 void save1Darray(int[] array, String arrayName) {
   for(int i = 0; i < array.length; i++) {
-    saveDataMainCommands(str(array[i]), arrayName, "1", str(i), "-");
+    if(array[i] != 0) {
+      saveDataMainCommands(str(array[i]), arrayName, "1", str(i), "-");
+    }
   }
 }
 void save1DarrayString(String[] array, String arrayName) {
@@ -20,7 +22,9 @@ void save2Darray(int[][] array, String arrayName) {
   for(int ij = 0; ij < array.length; ij++) {
     println(ij); 
     for(int i = 0; i < array[0].length; i++) {
-      saveDataMainCommands(str(array[ij][i]), arrayName, "2", str(i), str(ij));
+      if(array[ij][i] != 0) {
+        saveDataMainCommands(str(array[ij][i]), arrayName, "2", str(i), str(ij));
+      }
     }
   }
 }

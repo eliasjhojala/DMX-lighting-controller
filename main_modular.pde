@@ -4,7 +4,7 @@ boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
 
  
-boolean showMode = true; 
+boolean showMode = false; 
  
 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation

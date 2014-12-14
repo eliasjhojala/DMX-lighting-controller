@@ -482,6 +482,8 @@ public class ControlFrame extends PApplet {
     lb.addItem("---", 15);
     lb.addItem("1. MH-X50", 16);
     lb.addItem("2. MH-X50", 17);
+    lb.addItem("haze", 20);
+    lb.addItem("fog", 21);
     
     //Create A Delete All Presets Button
      cp5.addButton("submitFixture")

@@ -7,6 +7,15 @@ void saveFixtureMemory(int fixtureMemoryId) {
     if(whatToSave[fixtureMemoryId][0]) {
      repOfFixtures[i][fixtureMemoryId].dimmer = fixtures[i].dimmer;
     }
+    if(whatToSave[fixtureMemoryId][7]) {
+     repOfFixtures[i][fixtureMemoryId].haze = fixtures[i].haze;
+    }
+    if(whatToSave[fixtureMemoryId][8]) {
+     repOfFixtures[i][fixtureMemoryId].fan = fixtures[i].fan;
+    }
+    if(whatToSave[fixtureMemoryId][9]) {
+     repOfFixtures[i][fixtureMemoryId].fog = fixtures[i].fog;
+    }
   }
   memoryType[fixtureMemoryId] = 1;
 }
