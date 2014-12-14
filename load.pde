@@ -10,7 +10,7 @@ void loadSetupData() {
     } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_for_two_pc\\variables\\settings.csv", "header"); // Roope äidillä -polku
   }
   else if(userId == 3) {
-     table = loadTable("C:\\Users\\elias\\Documents\\GitHub\\DMX Controller\\main_modular\\variables\\settings.csv", "header");
+     table = loadTable("C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\settings.csv", "header");
   }
   
   //for (TableRow row : table.findRows("sendOscToAnotherPc", "variable_name")) { sendOscToAnotherPc = boolean(row.getString("value")); }
@@ -185,10 +185,6 @@ void loadAllData() {
     for (TableRow row : table.findRows("mhx50_createFinalPresetValues[1D][0][2D]", "variable_name"))         if((int(row.getString("2D")) < mhx50_createFinalPresetValues.length) && (int(row.getString("1D")) < mhx50_createFinalPresetValues[0][0].length)) {     { mhx50_createFinalPresetValues[int(row.getString("2D"))][0][int(row.getString("1D"))] = int(row.getString("value")); } }
     for (TableRow row : table.findRows("mhx50_createFinalPresetValues[1D][1][2D]", "variable_name"))         if((int(row.getString("2D")) < mhx50_createFinalPresetValues.length) && (int(row.getString("1D")) < mhx50_createFinalPresetValues[0][0].length)) {     { mhx50_createFinalPresetValues[int(row.getString("2D"))][1][int(row.getString("1D"))] = int(row.getString("value")); } }
 
-    
-    
-    for (TableRow row : table.findRows("mhx50_s2l_presets", "variable_name"))              { mhx50_s2l_presets[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("mmhx50_s2l_numberOfPresets", "variable_name"))              { mmhx50_s2l_numberOfPresets = int(row.getString("value")); }
     
     
     dataLoaded = true;

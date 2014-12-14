@@ -20,7 +20,6 @@ void save1DarrayString(String[] array, String arrayName) {
 
 void save2Darray(int[][] array, String arrayName) {
   for(int ij = 0; ij < array.length; ij++) {
-    println(ij); 
     for(int i = 0; i < array[0].length; i++) {
       if(array[ij][i] != 0) {
         saveDataMainCommands(str(array[ij][i]), arrayName, "2", str(i), str(ij));
@@ -49,6 +48,7 @@ void saveDataMainCommands(String variable, String variableName, String dimension
 }
 
 void saveAllData() {
+  long saveDataBeginMillis = millis();
   table = new Table();
   
   table.addColumn("id");
@@ -58,51 +58,6 @@ void saveAllData() {
   table.addColumn("1D");
   table.addColumn("2D");
 
-
-  /*
-  int[] tempFixtureObjectArray = new int[fixtures.length];
-  String[] tempFixtureObjectArrayString = new String[fixtures.length];
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].red; }
-  save1Darray(tempFixtureObjectArray, "fixtures.red");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].green; }
-  save1Darray(tempFixtureObjectArray, "fixtures.green");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].blue; }
-  save1Darray(tempFixtureObjectArray, "fixtures.blue");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].x_location; }
-  save1Darray(tempFixtureObjectArray, "fixtures.x_location");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].y_location; }
-  save1Darray(tempFixtureObjectArray, "fixtures.y_location");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].z_location; }
-  save1Darray(tempFixtureObjectArray, "fixtures.z_location");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].rotationX; }
-  save1Darray(tempFixtureObjectArray, "fixtures.rotationX");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].rotationZ; }
-  save1Darray(tempFixtureObjectArray, "fixtures.rotationZ");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].parameter; }
-  save1Darray(tempFixtureObjectArray, "fixtures.parameter");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArrayString[i] = fixtures[i].fixtureType; }
-  save1DarrayString(tempFixtureObjectArrayString, "fixtures.fixtureType");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].fixtureTypeId; }
-  save1Darray(tempFixtureObjectArray, "fixtures.fixtureTypeId");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].channelStart; }
-  save1Darray(tempFixtureObjectArray, "fixtures.channelStart");
-  
-  for (int i = 0; i < fixtures.length; i++) { tempFixtureObjectArray[i] = fixtures[i].parentAnsa; }
-  save1Darray(tempFixtureObjectArray, "fixtures.parentAnsa");
-  */
-  
   for (int i = 0; i < fixtures.length; i++) {
     saveDataMainCommands(str(fixtures[i].red),           "red", "1", str(i), "-");
     saveDataMainCommands(str(fixtures[i].green),         "green", "1", str(i), "-");
@@ -124,7 +79,6 @@ void saveAllData() {
     
     for (int j = 1; j < repOfFixtures[i].length; j++) {
        // whatToSave titles: { "dimmer", "colorWheel", "gobo", "goboRotation", "shutter", "pan", "tilt" }
-       //println(str(i) + ":" + str(j));
         if(whatToSave[j][0]) saveDataMainCommands(str(repOfFixtures[i][j].dimmer), "repOF:" + saveOptionButtonVariables[0], "2", str(i), str(j));
         if(whatToSave[j][1]) saveDataMainCommands(str(repOfFixtures[i][j].colorWheel), "repOF:" + saveOptionButtonVariables[1], "2", str(i), str(j));
         if(whatToSave[j][2]) saveDataMainCommands(str(repOfFixtures[i][j].goboWheel), "repOF:" + saveOptionButtonVariables[2], "2", str(i), str(j));
@@ -134,7 +88,7 @@ void saveAllData() {
         if(whatToSave[j][6]) saveDataMainCommands(str(repOfFixtures[i][j].tilt), "repOF:" + saveOptionButtonVariables[6], "2", str(i), str(j));
     }
   }
-  println("threr1");
+
   save1Darray(ansaZ, "ansaZ");
   save1Darray(ansaX, "ansaX");
   save1Darray(ansaY, "ansaY");
@@ -142,19 +96,6 @@ void saveAllData() {
   save1Darray(memoryType, "memoryType");
   save1Darray(soundToLightSteps, "soundToLightSteps");
   save1Darray(ansaX, "ansaX");
-  save1Darray(mhx50_s2l_presets, "mhx50_s2l_presets"); 
-  save1Darray(chaseModeByMemoryNumber, "chaseModeByMemoryNumber"); 
-  save1Darray(valueOfMemory, "valueOfMemory"); 
-  save1Darray(memoryValue, "memoryValue"); 
-  
-  save1Darray(ansaZ, "ansaZ");
-  save1Darray(ansaX, "ansaX");
-  save1Darray(ansaY, "ansaY");
-  save1Darray(ansaType, "ansaType");
-  save1Darray(memoryType, "memoryType");
-  save1Darray(soundToLightSteps, "soundToLightSteps");
-  save1Darray(ansaX, "ansaX");
-  save1Darray(mhx50_s2l_presets, "mhx50_s2l_presets"); 
   save1Darray(chaseModeByMemoryNumber, "chaseModeByMemoryNumber"); 
   save1Darray(valueOfMemory, "valueOfMemory"); 
   save1Darray(memoryValue, "memoryValue"); 
@@ -199,16 +140,29 @@ void saveAllData() {
   saveVariable(int(centerX), "centerX");
   saveVariable(int(centerY), "centerY");
   saveVariable(chaseMode, "chaseMode");
-  saveVariable(mmhx50_s2l_numberOfPresets, "mmhx50_s2l_numberOfPresets");
   
 
   //Asetetaan oikeat tallennuspolut käyttäjän mukaan
 
   if(userId == 1) { //Jos Elias käyttää
     saveTable(table, "/Users/elias/Dropbox/DMX controller/main_modular/variables/pikkusten_disko.csv"); //Eliaksen polku
-  } else if(!roopeAidilla) {
-
-    saveTable(table, "E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv"); //Roopen polku
-  } else saveTable(table, "C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv");
+  } 
+  else if(userId == 2) {
+    if(!roopeAidilla) {
+      saveTable(table, "E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv"); //Roopen polku
+    } 
+    else {
+      saveTable(table, "C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv");
+    }
+  }
+  else if(userId == 3) {
+    saveTable(table, "C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\settings.csv");
+  }
+  
+  println(); println(); println(); 
+  println("SAVE READY");
+  long takedTime = millis() - saveDataBeginMillis;
+ println("It taked " + str(takedTime) + " ms");
+  println();
 }
 
