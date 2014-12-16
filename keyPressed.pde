@@ -6,8 +6,7 @@ boolean shftDown = false;
 void keyReleased() {
   keyReleased = true;
   if(key == 'r') { revStepPressed = false; }
-  if(keyCode == CONTROL) { ctrlDown = false; }
-  if(keyCode == SHIFT) { shftDown = false; }
+
 }
 void keyPressed() {
   
@@ -27,11 +26,12 @@ void keyPressed() {
   }
   
   if(keyCode == 17) { ctrlDown = true; }
-  if(keyCode == 16) { shftDown = true; }
-  if(key == 'o') { fileDialogInput(); }
+  if(keyCode == 16) { shftDown = true; println("toimii"); }
+  if(key == 'o') { fileDialogInput(); ctrlDown = false; }
   if(key == 's') {
     if(shftDown) {
       fileDialogOutput();
+      shftDown = false; println("TOIMII");
     }
     else {
       saveAllData();
