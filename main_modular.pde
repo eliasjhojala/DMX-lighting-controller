@@ -1,23 +1,31 @@
-int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?
-boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.
 
-boolean showMode = true; 
+int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
+boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                               //|
+                                                                                                                                                                          //|
+boolean showMode = true;                                                                                                                                                  //|
+                                                                                                                                                                          //|
+boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
+boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                      //|
+boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                              //|
+boolean useAnotherArduino = false;                                                                                                                                        //|
+                                                                                                                                                                          //|
+boolean useMaschine = false;                                                                                                                                              //|
+                                                                                                                                                                          //|
+int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200);                                                                                                      //|
+int arduinoBaud2 = 9600;                                                                                                                                                  //|
+                                                                                                                                                                          //|
+int arduinoIndex = 8; //Arduinon COM-portin järjestysnumero                                                                                                               //|
+int arduinoIndex2 = 10;                                                                                                                                                   //|
+int enttecIndex = 0; // Enttecin USB DMX palikan COM-portin järjestysnumero                                                                                               //|
+                                                                                                                                                                          //|
+int touchOscInComing = 8000;                                                                                                                                              //|
+                                                                                                                                                                          //|
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------//|
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------//|
 
-boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation
-boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use
-boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use
-boolean useAnotherArduino = false;
 
-boolean useMaschine = false;
 
-int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200);
-int arduinoBaud2 = 9600;
 
-int arduinoIndex = 8; //Arduinon COM-portin järjestysnumero
-int arduinoIndex2 = 10;
-int enttecIndex = 0; // Enttecin USB DMX palikan COM-portin järjestysnumero
-
-int touchOscInComing = 8000;
 
 boolean[][] allowChannel = new boolean[10][512];
 
