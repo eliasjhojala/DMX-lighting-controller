@@ -7,6 +7,7 @@ void inputSelected(File selection) {
     saveCoreData(); 
   }
   inputIsSelected = true;
+  loadAllData();
 }
 void outputSelected(File selection) {    
   if (selection != null) {
@@ -17,7 +18,7 @@ void outputSelected(File selection) {
 }
 void fileDialogInput() {     
   inputIsSelected = false;  
-  selectInput("Select a file to process:", "inputSelected");      
+  selectInput("Select a csv file to load data:", "inputSelected");      
 }
 void fileDialogOutput() {                
   selectOutput("Select a file to write to:", "outputSelected");  

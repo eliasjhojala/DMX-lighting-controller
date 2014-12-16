@@ -135,12 +135,12 @@ void saveAllData() {
 
   //Asetetaan oikeat tallennuspolut käyttäjän mukaan
 
-      saveTable(table, savePath); //Roopen polku
+  saveTable(table, savePath); //Roopen polku
       
   println(); println(); println(); 
   println("SAVE READY");
   long takedTime = millis() - saveDataBeginMillis;
- println("It taked " + str(takedTime) + " ms");
+  println("It taked " + str(takedTime) + " ms");
   println();
   
 }
