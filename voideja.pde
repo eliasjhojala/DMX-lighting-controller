@@ -28,9 +28,8 @@ void arduinoSend() {
         setDmxChannel(i, DMXforOutput[i]);
       }
       valueToDmxOld[i] = DMXforOutput[i];
-      
     }
-    sendOscToIpad(i, DMXforOutput[i]);
+    sendOscToIpad(i, DMX[i]);
   }
   arduinoFinished = true;
 }

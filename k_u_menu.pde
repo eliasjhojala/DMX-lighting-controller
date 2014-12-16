@@ -11,6 +11,8 @@ void ylavalikkoSetup() {
   settingsIcon.disableStyle();
 }
 
+int avgFrameRate = 0;
+
 void ylavalikko() {
   pushStyle();
   
@@ -63,7 +65,8 @@ void ylavalikko() {
   textSize(12);
   
   
-  text("Loaded file: ", 3, 28, 125, 125);
+  text(avgFrameRate + " fps", 3, 28, 125, 125);
+  avgFrameRate = (avgFrameRate + int(frameRate)) / 2;
   
   popStyle();
   
