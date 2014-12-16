@@ -52,8 +52,8 @@ void setDimAndMemoryValuesAtEveryDraw() {
       
       
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-      dmxCheck(); //Read dmx input from enttec
-      dmxToDim(); //Set input to dimInput variable
+      if(dmxCheckFinished) thread("dmxCheck"); //Read dmx input from enttec
+      if(dmxToDimFinished) thread("dmxToDim"); //Set input to dimInput variable
       
       
       //-------------------------Set memories to their values. If solomemory is on all the others will be of-------------------------

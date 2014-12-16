@@ -235,31 +235,52 @@ int movingHeadTilt; //Moving headin tilt arvo
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-int outputChannels = 80;
-int channels = outputChannels;
-
-int enttecDMXchannels = 600; //DMX kanavien määrä
-int touchOSCchannels = 72; //touchOSC kanavien määrä
-int controlP5channels = 12; //tietokoneen faderien määrä
-
-int[] enttecDMXchannel = new int[enttecDMXchannels+1]; //DMX kanavan arvo
-int[] touchOSCchannel = new int[touchOSCchannels+1]; //touchOSC kanavan arvo
-int[] controlP5channel = new int[controlP5channels+1]; //tietokoneen faderien arvo
 
 
-//Vanhojen arvojen avulla tarkistetaan onko arvo muuttunut, 
-//jolloin arvoa ei tarvitse lähettää eteenpäin, ellei se ole muuttunut
-int[] enttecDMXchannelOld = new int[enttecDMXchannels+1]; //DMX kanavan vanha arvo
-int[] touchOSCchannelOld = new int[touchOSCchannels+1]; //touchOSC kanavan vanha arvo
-int[] controlP5channelOld = new int[controlP5channels+1]; //tietokoneen faderien vanha arvo
 
-int[][] allChannels = new int[6][48];
-int[][] allChannelsOld = new int[6][48];
 
-int controlP5place = 1; //tietokoneen faderien ohjaamat kanavat
-int enttecDMXplace = 1; //DMX ohjatut kanavat
-int touchOSCplace = 1; //touchOSC ohjatut kanavat
 
+
+//---------------------------------------------CHANNELS----------------------------------------------------//|||
+//---------------------------------------------------------------------------------------------------------//|||
+//---------------------------------------------------------------------------------------------------------//|||
+                                                                                                           //|||
+int outputChannels = 80;                                                                                   //|||
+int channels = outputChannels;                                                                             //|||
+                                                                                                           //|||
+int enttecDMXchannels = 600; //DMX kanavien määrä                                                          //|||
+int touchOSCchannels = 72; //touchOSC kanavien määrä                                                       //|||
+int controlP5channels = 12; //tietokoneen faderien määrä                                                   //|||
+                                                                                                           //|||
+int[] enttecDMXchannel = new int[enttecDMXchannels+1]; //DMX kanavan arvo                                  //|||
+int[] touchOSCchannel = new int[touchOSCchannels+1]; //touchOSC kanavan arvo                               //|||
+int[] controlP5channel = new int[controlP5channels+1]; //tietokoneen faderien arvo                         //|||
+                                                                                                           //|||
+                                                                                                           //|||
+//Vanhojen arvojen avulla tarkistetaan onko arvo muuttunut,                                                //|||
+//jolloin arvoa ei tarvitse lähettää eteenpäin, ellei se ole muuttunut                                     //|||
+int[] enttecDMXchannelOld = new int[enttecDMXchannels+1]; //DMX kanavan vanha arvo                         //|||
+int[] touchOSCchannelOld = new int[touchOSCchannels+1]; //touchOSC kanavan vanha arvo                      //|||
+int[] controlP5channelOld = new int[controlP5channels+1]; //tietokoneen faderien vanha arvo                //|||
+                                                                                                           //|||
+int[][] allChannels = new int[6][48];                                                                      //|||
+int[][] allChannelsOld = new int[6][48];                                                                   //|||
+                                                                                                           //|||
+int controlP5place = 1; //tietokoneen faderien ohjaamat kanavat                                            //|||
+int enttecDMXplace = 1; //DMX ohjatut kanavat                                                              //|||
+int touchOSCplace = 1; //touchOSC ohjatut kanavat                                                          //|||
+//---------------------------------------------------------------------------------------------------------//|||
+//---------------------------------------------------------------------------------------------------------//|||
+//---------------------------------------------------------------------------------------------------------//|||
+             
+             
+             
+             
+             
+             
+             
+                                                                                                           
+                                                                                                          
 import java.awt.Frame;
 import java.awt.BorderLayout;
 import controlP5.*;

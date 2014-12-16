@@ -1,8 +1,12 @@
 //Tässä välilehdessä luetaan dmx-inputti, sekä järjestetään myös muut inputit oikeaan järjestykseen mm. dimInput[]-muuttujaan
 
 int numberOfAllChannelsFirstDimensions = 5; // allChannels[numberOfAllChannelsFirstDimensions][];
+boolean dmxCheckFinished = false;
+boolean dmxToDimFinished = false;
+
 
 void dmxCheck() {
+  dmxCheckFinished = false;
   enttecDMXchannels = 512;
   if(useEnttec == true) {
        while (myPort.available() > 0) {
@@ -37,12 +41,15 @@ void dmxCheck() {
  
       }
   }
+  dmxCheckFinished = true;
 }
 void dmxToDim() {
+  dmxToDimFinished = false;
   for(int i = 1; i < 25; i++) {
       enttecDMXchannel[i] = ch[i];
   }
   channelsToDim();
+  dmxToDimFinished = true;
 }
 void channelsToDim() { 
   
