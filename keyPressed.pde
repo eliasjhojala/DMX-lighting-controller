@@ -42,16 +42,7 @@ void keyPressed() {
       if(upper == true) { enttecDMXplace = enttecDMXplace - 1; upper = false; }
       else { enttecDMXplace = enttecDMXplace + 1; upper = true; }
   } 
-  
-  if(keyCode == RIGHT) {
-   bottomMenuOrder[changeColorFixtureId] = constrain(bottomMenuOrder[changeColorFixtureId] + 1, 0, 1000);
-  }
-  if(keyCode == LEFT) {
-   bottomMenuOrder[changeColorFixtureId] = constrain(bottomMenuOrder[changeColorFixtureId] - 1, 0, 1000);
-  }
 }
-
-
 
 
 void mousePressed() {
