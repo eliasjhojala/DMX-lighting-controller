@@ -26,8 +26,8 @@ void keyPressed() {
     }
   }
   
-  if(key== CONTROL) { ctrlDown = true; }
-  if(keyCode == SHIFT) { shftDown = true; }
+  if(keyCode == 17) { ctrlDown = true; }
+  if(keyCode == 16) { shftDown = true; }
   if(key == 'o') { fileDialogInput(); }
   if(key == 's') {
     if(shftDown) {
