@@ -27,9 +27,9 @@ void loadAllData() {
   catch(Exception e) {
     if(inputIsSelected) {
       fileDialogInput();
+      programReadyToRun = false;
+      loadAllData();
     }
-    programReadyToRun = false;
-    loadAllData();
   }
 }
 void loadAllData1() {
