@@ -154,8 +154,8 @@ int changeColorFixtureId = 0;
 
 boolean getPaths = false;
 
-String loadPath = "mopodiskovalot2/";
-String savePath = "mopodiskovalot2/";
+String loadPath = "";
+String savePath = "";
 
 
 

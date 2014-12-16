@@ -21,6 +21,8 @@ void keyPressed() {
       valueOfDimBeforeFullOn[i] = 0;
     }
   }
+  
+  if(key == 'o') { fileDialogOutput(); }
 
   if(key == 'u') {
       if(upper == true) { enttecDMXplace = enttecDMXplace - 1; upper = false; }

@@ -131,6 +131,8 @@ void saveAllData() {
   saveVariable(chaseMode, "chaseMode");
   
 
+  
+
   //Asetetaan oikeat tallennuspolut käyttäjän mukaan
 
   if(userId == 1) { //Jos Elias käyttää
