@@ -97,16 +97,9 @@ String[] mhx50_color_names = { "white", "yellow", "lightpink", "green", "darkpin
 
 int[] mhx50_gobo_values = { 6, 14, 22, 30, 38, 46, 54, 62 };
 
-
-
-
 int[] mhx50_autoProgram_values = { 6, 22, 6, 38, 6, 54, 6, 70, 6, 86, 6, 102, 6, 118, 6, 134, 6, 150, 6, 166, 6, 182, 6, 198, 6, 214, 6, 230, 6, 247, 6, 254 };
 
-
-
 boolean midiPositionButtonPressed;
-
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -117,10 +110,10 @@ boolean midiPositionButtonPressed;
 
 import javax.swing.JFrame; //Käytetään frame-kirjastoa, jonka avulla voidaan luoda monta ikkunaa
 
-PFrame f1 = new PFrame();; //Luodaan uusi ikkuna
+PFrame f1 = new PFrame(); //Luodaan uusi ikkuna
 secondApplet1 s1;
 
-PFrame1 f = new PFrame1();; //Luodaan toinenkin uusi ikkuna
+PFrame1 f = new PFrame1(); //Luodaan toinenkin uusi ikkuna
 secondApplet s;
 
 
