@@ -18,10 +18,10 @@ void outputSelected(File selection) {
 }
 void fileDialogInput() {     
   inputIsSelected = false;  
-  selectInput("Select a csv file to load data:", "inputSelected");      
+  selectInput("Select a CSV File to Load Data From", "inputSelected");
 }
 void fileDialogOutput() {                
-  selectOutput("Select a file to write to:", "outputSelected");  
+  selectOutput("Save Configuration to CSV", "outputSelected");
 }
 
 void saveCoreDataMainFunction(String variableName, String variable) {
