@@ -116,11 +116,5 @@ void channelsToDim() {
       }
       allChannelsOld[4][i] = allChannels[4][i];
     }
-    
-    if(enttecDMXchannels > 24) {
-      for(int iii = 1; iii < 12; iii++) {
-        dmxButtonPressed(iii, enttecDMXchannel[iii+24]);
-      }
-    }
   }
 }
