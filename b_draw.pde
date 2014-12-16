@@ -12,6 +12,7 @@ int oldGrandMaster = 40;
 
 
 void draw() {
+  if(programReadyToRun) {
   checkThemeMode();
   
   setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
@@ -32,7 +33,7 @@ void draw() {
   
   //Invoke every fixtures draw
   if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
-
+  }
 
 }
 

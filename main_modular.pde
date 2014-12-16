@@ -1,4 +1,3 @@
-
 int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                               //|
                                                                                                                                                                           //|
@@ -423,6 +422,7 @@ String fileSeparator = java.io.File.separator;
 String actualSketchPath;
 
 void setup() {
+  loadCoreData();
   actualSketchPath = sketchPath("");
   //Initialize mouseLocker to prevent nullPointers
   mouseLocker = "";
