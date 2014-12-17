@@ -2,7 +2,7 @@
 boolean dataLoaded = false;
 boolean programReadyToRun = false;
 void loadSetupData() {
-  if(userId == 1) {
+  /*if(userId == 1) {
    table = loadTable("/Users/elias/Dropbox/DMX controller/main_for_two_pc/variables/settings.csv", "header"); //Eliaksen polku
   }
   else if(userId == 2) {
@@ -12,7 +12,7 @@ void loadSetupData() {
   }
   else if(userId == 3) {
      table = loadTable("C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\settings.csv", "header");
-  }
+  }*/
 
   
   use3D = !(userId == 3);
