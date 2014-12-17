@@ -116,6 +116,7 @@ class contextMenuOption {
   
 }
 
+Switch debugSw = new Switch();
 
 class Switch {
   
@@ -145,7 +146,30 @@ class Switch {
   
   int animationState;
   boolean animationStarted;
-  draw() {
+  void draw() {
+    int animState = 0;
+    pushStyle(); pushMatrix();
+    {
+      //-db\
+      translate(10, 50);
+      //-/
+      
+      //background
+      fill(80, 150);
+      noStroke();
+      rect(1.5, 1.5, 30, 10, 5);
+      fill(multiplyColor(bg, float(constrain(animState, 15, 25)) / 25));
+      rect(0, 0, 30, 10, 5);
+      
+      //Knob
+      fill(80, 120);
+      translate(animState - 3, -3);
+      ellipseMode(CORNER);
+      ellipse(1.5, 1.5, 16, 16);
+      fill(fg);
+      ellipse(0, 0, 16, 16);
+    }
+    popStyle(); popMatrix();
     
   }
 }

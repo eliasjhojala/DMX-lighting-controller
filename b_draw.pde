@@ -33,7 +33,7 @@ void draw() {
   //Invoke every fixtures draw
   if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
 
-
+  debugSw.draw();
 }
 
 

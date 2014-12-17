@@ -159,6 +159,15 @@ boolean isHoverBottomMenu() {
   return false;
 }
 
+color multiplyColor(color col, float mult) {
+  color toReturn = color(
+    red(col) * mult,
+    green(col) * mult,
+    blue(col) * mult
+  );
+  return toReturn;
+}
+
 void movePage() {
   if(mouseReleased) {
     
