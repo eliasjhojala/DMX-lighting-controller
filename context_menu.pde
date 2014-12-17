@@ -117,4 +117,38 @@ class contextMenuOption {
 }
 
 
+class Switch {
+  
+  boolean state;
+  color bg, fg;
+  
+  //Initailize with default settings
+  Switch() {
+    state = false;
+    bg = color(45, 138, 179);
+    fg = color(61, 190, 255);
+  }
+  
+  //Initialize with state
+  Switch(boolean state) {
+    this.state = state;
+    bg = color(45, 138, 179);
+    fg = color(61, 190, 255);
+  }
+  
+  //Initialize with custom colors
+  Switch(boolean state, color bg, color fg) {
+    this.state = state;
+    this.bg = bg;
+    this.fg = fg;
+  }
+  
+  int animationState;
+  boolean animationStarted;
+  draw() {
+    
+  }
+}
+
+
 
