@@ -2,6 +2,9 @@
 
 boolean ctrlDown = false;
 boolean shftDown = false;
+boolean rightPressed = false;
+boolean leftPressed = false;
+boolean enterPressed = false;
 
 void keyReleased() {
   keyReleased = true;
@@ -42,6 +45,9 @@ void keyPressed() {
       if(upper == true) { enttecDMXplace = enttecDMXplace - 1; upper = false; }
       else { enttecDMXplace = enttecDMXplace + 1; upper = true; }
   } 
+  if(keyCode == RIGHT) { rightPressed = true; }
+  if(keyCode == LEFT) { leftPressed = true; }
+  if(keyCode == ENTER) { enterPressed = true; }
 }
 
 

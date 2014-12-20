@@ -1,5 +1,7 @@
 //Tässä välilehdessä on paljon lyhyitä voideja
 
+boolean scrolledDown = false;
+boolean scrolledUp = false;
 
 //Returns the index of the smalles value that ISN'T checked (input.lenght and checked.length MUST be equal!)
 //Returns -1 if none found
@@ -102,6 +104,9 @@ void mouseWheel(MouseEvent event) {
     if(e < 0) { if(memoryMenu > 0) { memoryMenu--; } }
     else if(e > 0) { if(memoryMenu < numberOfMemories) { memoryMenu++; } }
   }
+  float e = event.getCount();
+  if(e < 0) { scrolledDown = true; }
+  if(e > 0) { scrolledUp = true; }
 }
 
 
