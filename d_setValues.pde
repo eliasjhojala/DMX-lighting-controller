@@ -9,7 +9,8 @@ int[] DMX = new int[512];
 int[] DMXforOutput = new int[512];
 //------------------ SO VERY IMPORTANT
 
-
+int dmxTriedTimes = 0;
+boolean dmxIsWorking = false;
 
 void setDimAndMemoryValuesAtEveryDraw() {
   dimCheckFinished = false;
@@ -52,8 +53,8 @@ void setDimAndMemoryValuesAtEveryDraw() {
       
       
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-      if(dmxCheckFinished) thread("dmxCheck"); //Read dmx input from enttec
-      if(dmxToDimFinished) thread("dmxToDim"); //Set input to dimInput variable
+      tryDmxCheck();
+      dmxToDim(); //Set input to dimInput variable
       
       
       //-------------------------Set memories to their values. If solomemory is on all the others will be of-------------------------
@@ -118,4 +119,23 @@ void setDimAndMemoryValuesAtEveryDraw() {
       //------------------------------------------------------------------------------------------//|
   }
   dimCheckFinished = false;
+}
+
+void tryDmxCheck() {
+  if(!dmxIsWorking) {
+      try {
+        dmxCheck(); //Read dmx input from enttec
+        dmxIsWorking = true;
+      }
+      catch(Exception e) {
+        if(dmxTriedTimes > 4) {
+          dmxTriedTimes++;
+          tryDmxCheck();
+          println("Error with DMX input");
+        }
+      }
+  }
+  else {
+    dmxCheck();
+  }
 }

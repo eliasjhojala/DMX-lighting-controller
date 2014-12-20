@@ -13,9 +13,9 @@ boolean useMaschine = false;                                                    
 int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200);                                                                                                      //|
 int arduinoBaud2 = 9600;                                                                                                                                                  //|
                                                                                                                                                                           //|
-int arduinoIndex = 8; //Arduinon COM-portin järjestysnumero                                                                                                               //|
+int arduinoIndex = 0; //Arduinon COM-portin järjestysnumero                                                                                                               //|
 int arduinoIndex2 = 10;                                                                                                                                                   //|
-int enttecIndex = 0; // Enttecin USB DMX palikan COM-portin järjestysnumero                                                                                               //|
+int enttecIndex = 1; // Enttecin USB DMX palikan COM-portin järjestysnumero                                                                                               //|
                                                                                                                                                                           //|
 int touchOscInComing = 8000;                                                                                                                                              //|
                                                                                                                                                                           //|
@@ -401,14 +401,24 @@ int[] chaseBright2 = new int[numberOfMemories];
 boolean chase;
 
 void initializeCOM() {
-  if(useEnttec == true) {
-    myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
-  }
-  if(useCOM == true) {
-    arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
-    if(useAnotherArduino == true) {
-      arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);
+  try {
+    if(useEnttec == true) {
+      myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
     }
+  }
+  catch(Exception e) {
+    useEnttec = false;
+  }
+  try {
+    if(useCOM == true) {
+      arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
+      if(useAnotherArduino == true) {
+        arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);
+      }
+    }
+  }
+  catch(Exception e) {
+    useCOM = false;
   }
 }
 
