@@ -144,10 +144,16 @@ class Switch {
     this.fg = fg;
   }
   
-  int animationState;
-  boolean animationStarted;
+  int animationState = 0;
   void draw() {
-    int animState = 0;
+    if(state && animationState < 25) {
+      animationState += 3;
+    } else
+    if(!state && animationState > 0) {
+      animationState -= 3;
+    }
+    int animState = animationState;
+    
     pushStyle(); pushMatrix();
     {
       //-db\
@@ -160,6 +166,11 @@ class Switch {
       rect(1.5, 1.5, 30, 10, 5);
       fill(multiplyColor(bg, float(constrain(animState, 15, 25)) / 25));
       rect(0, 0, 30, 10, 5);
+      if(mousePressed && isHoverSimple(-3, -3, 36, 16)) {
+        state = !state;
+        mouseLocked = true;
+        mouseLocker = "toggleSw";
+      }
       
       //Knob
       fill(80, 120);
