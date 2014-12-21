@@ -75,7 +75,7 @@ MidiBus Maschine;
 boolean[] noteOn = new boolean[10000];
 
 
-
+import java.util.concurrent.atomic.AtomicInteger;
 
 //--------------------------------------------------------------------------------------------------Moving head variables---------------------------------------------------------
 int[][] mhx50_createFinalChannelValues = new int[2][14];

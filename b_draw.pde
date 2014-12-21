@@ -12,6 +12,8 @@ int oldGrandMaster = 40;
 
 
 void draw() {
+  mouse.refresh();
+  
   checkThemeMode();
   
   setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
