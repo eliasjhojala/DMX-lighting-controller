@@ -98,15 +98,15 @@ for(int id = 0; id <= 1; id++) {
 }
 
 
-for(int i = 0; i < mhx50_color_values.length; i++) {
-    if(mhx50_color[0] == mhx50_color_values[i]) {
-      text("true" + i, 800, 800);
-    }
-    else {
-      text("false", 800, 850);
-    }
-  }
-
+//for(int i = 0; i < mhx50_color_values.length; i++) {
+//    if(mhx50_color[0] == mhx50_color_values[i]) {
+//      text("true" + i, 800, 800);
+//    }
+//    else {
+//      text("false", 800, 850);
+//    }
+//  }
+//
 }
   
   /*

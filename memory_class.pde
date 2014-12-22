@@ -22,9 +22,24 @@ void createMemoryObjects() {
 
 
 class memory { //Begin of memory class--------------------------------------------------------------------------------------------------------------------------------------
+  
+  //-----------CODER MANUAL----------------//|
+  // when you use memory, please use       //|
+  // command memories[i].setValue(value)   //|
+  // Never use value = ;                   //|
+  // You can also use loadPreset(value);   //|
+  // or setValue(value);                   //|
+  //---------------------------------------//|
+  
+  
   //chase variables
   int value; //memorys value
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
+  int inputModeDownLimit = 0;
+  int outputModeDownLimit = 0;
+  int inputModeUpLimit = 2;
+  int outputModeUpLimit = 2;
+  
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length];
   
   
@@ -146,12 +161,14 @@ class chase { //Begin of chase class--------------------------------------------
     next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && nextStepPressed));
     if(next) {
       for(int i = 0; i < getPresets().length; i++) {
-          memory(getPresets()[i], 255);
+          memories[getPresets()[i]].value = 255;
+          memories[getPresets()[i]].loadPreset();
       }
     }
     else {
       for(int i = 0; i < getPresets().length; i++) {
-         memory(getPresets()[i], 0);
+         memories[getPresets()[i]].value = 0;
+         memories[getPresets()[i]].loadPreset();
       }
     }
     
@@ -165,7 +182,36 @@ class chase { //Begin of chase class--------------------------------------------
   
   void freqToLight() { //This function gives frequence values to chase presets
     for(int i = 0; i < getPresets().length; i++) {
-      memory(getPresets()[i], s2l.freq(int(map(i, 0, getPresets().length, 0, s2l.getFreqMax()))));
+      parent.loadPreset(getPresets()[i], s2l.freq(int(map(i, 0, getPresets().length, 0, s2l.getFreqMax()))));
+    }
+  }
+  
+  
+  void inputModeUp() {
+    changeChaseMode(true, true);
+  }
+  void inputModeDown() {
+    changeChaseMode(true, false);
+  }
+  void outputModeUp() {
+    changeChaseMode(false, true);
+  }
+  void outputModeDown() {
+    changeChaseMode(false, false);
+  }
+  
+  void changeChaseMode(boolean input, boolean next) {
+    if(input) {
+      if(next) { inputMode++; }
+      else { inputMode--; }
+      if(inputMode > inputModeUpLimit) { inputMode = inputModeDownLimit; }
+      if(inputMode < inputModeDownLimit) { inputMode = inputModeUpLimit; }
+    }
+    else {
+      if(next) { outputMode++; }
+      else { outputMode--; }
+      if(outputMode > outputModeUpLimit) { outputMode = outputModeDownLimit; }
+      if(outputMode < outputModeDownLimit) { outputMode = outputModeUpLimit; }
     }
   }
 } //end of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
