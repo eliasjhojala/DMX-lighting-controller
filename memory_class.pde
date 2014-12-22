@@ -151,6 +151,8 @@ class chase { //Begin of chase class--------------------------------------------
   int inputModeUpLimit = 2;
   int outputModeUpLimit = 2;
   
+  int[] presets;
+  
   memory parent;
   //You need to supply a memory parent for this to work properly
   chase(memory parent) {
@@ -160,8 +162,31 @@ class chase { //Begin of chase class--------------------------------------------
     
   int[] getPresets() {
      //here function which returns all the presets in this chase
-     int[] toReturn = new int[1];
+     int[] toReturn = new int[presets.length];
+     for(int i = 0; i < toReturn.length; i++) {
+       toReturn[i] = presets[i];
+     }
      return toReturn;
+  }
+  
+  void newChase() {
+    int a = 0;
+    for(int i = 0; i < memories.length; i++) {
+      if(memories[i].type == 1) {
+        if(memories[i].value > 0) {
+          presets[a] = i;
+          a++;
+        }
+      }
+    }
+  }
+  
+  void loadPreset(int n, int v) {
+    if(parent.type == 2) {
+      if(memories[n].type == 1) {
+        memories[n].loadPreset(v);
+      }
+    }
   }
   
   void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
@@ -169,28 +194,70 @@ class chase { //Begin of chase class--------------------------------------------
     next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && nextStepPressed));
     if(next) {
       for(int i = 0; i < getPresets().length; i++) {
-          memories[getPresets()[i]].value = 255;
-          memories[getPresets()[i]].loadPreset();
+          loadPreset(getPresets()[i], 255);
       }
     }
     else {
       for(int i = 0; i < getPresets().length; i++) {
-         memories[getPresets()[i]].value = 0;
-         memories[getPresets()[i]].loadPreset();
+         loadPreset(getPresets()[i], 0);
       }
     }
     
   }
   
+  int getReverse(int act, int dl, int ul) {
+    int toReturn = 0;
+    if(act > dl) { toReturn = act - 1; }
+    if(act == dl) { toReturn = ul; }
+    return toReturn;
+  }
+  int getNext(int act, int dl, int ul) {
+    int toReturn = 0;
+    if(act < ul) { toReturn = act + 1; }
+    if(act == ul) { toReturn = dl; }
+    return toReturn;
+  }
+  int getInvertedValue(int v, int dl, int ul) {
+    int toReturn = 0;
+    toReturn = int(map(v, dl, ul, ul, dl));
+    return toReturn;
+  }
+  
+  int step;
+  int brightness;
+  boolean stepHasChanged;
+  int fade;
+  
+  void changeFade(int v) {
+    fade = constrain(v, 0, 255);
+  }
   
   void beatToMoving() {
     //This function goes through all the presets. When there is beat this goes to next preset
-    
+    boolean next;
+    next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && nextStepPressed));
+    if(next) { 
+      step = getNext(step, 0, getPresets().length);
+      brightness = 0;
+      stepHasChanged = true;
+    }
+    if(stepHasChanged) {
+      brightness+=getInvertedValue(fade, 0, 255);
+      if(brightness >= 255) {
+        brightness = 255;
+        stepHasChanged = false;
+      }
+    }
+    int s = step;
+    int b = brightness;
+    int rS = getReverse(s, 0, getPresets().length);
+    loadPreset(s, b);
+    loadPreset(rS, getInvertedValue(b, 0, 255));
   }
   
   void freqToLight() { //This function gives frequence values to chase presets
     for(int i = 0; i < getPresets().length; i++) {
-      memories[getPresets()[i]].loadPreset(s2l.freq(int(map(i, 0, getPresets().length, 0, s2l.getFreqMax()))));
+      loadPreset(getPresets()[i], s2l.freq(int(map(i, 0, getPresets().length, 0, s2l.getFreqMax()))));
     }
   }
   
