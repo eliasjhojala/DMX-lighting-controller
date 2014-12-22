@@ -338,7 +338,7 @@ class memoryCreationBox {
     switch(selectedMemoryMode) {
       case 0: //Preset
         arrayCopy(selectedWhatToSave, memories[selectedMemorySlot].whatToSave);
-        saveFixtureMemory(selectedMemorySlot);
+        memories[selectedMemorySlot].savePreset();
       break;
       case 1: //s2l
         soundToLightFromPreset(selectedMemorySlot);

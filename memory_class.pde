@@ -31,6 +31,14 @@ class memory { //Begin of memory class------------------------------------------
   // or setValue(value);                   //|
   //---------------------------------------//|
   
+  //--Memory types--//|
+  // 1: preset      //|
+  // 2: chase       //|
+  // 3: -           //|
+  // 4: master      //|
+  // 5: fade        //|
+  //----------------//|
+  
   
   //chase variables
   int value; //memorys value
@@ -54,6 +62,8 @@ class memory { //Begin of memory class------------------------------------------
     switch(type) {
       case 1: toReturn = "prst"; break;
       case 2: toReturn = "chs"; break;
+      case 4: toReturn = "mstr"; break;
+      case 5: toReturn = "fade"; break;
       default: toReturn = "unkn"; break;
     }
     return toReturn;
@@ -64,18 +74,20 @@ class memory { //Begin of memory class------------------------------------------
       case 1: preset(); break;
       case 2: chase(); break;
       case 4: grandMaster(); break;
+      case 5: fade(); break;
       default: unknown(); break;
     }
   }
   
   void preset() {
     loadPreset();
-    println("TOIMII");
   }
   void chase() {
   }
   void grandMaster() {
     grandMaster = value;
+  }
+  void fade() {
   }
   void unknown() {
   }
@@ -89,7 +101,6 @@ class memory { //Begin of memory class------------------------------------------
   
   
   void savePreset() {
-    println("TOIMII");
       for(int i = 0; i < fixtures.length; i++) {
       repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
@@ -156,6 +167,8 @@ class memory { //Begin of memory class------------------------------------------
 
 class chase { //Begin of chase class--------------------------------------------------------------------------------------------------------------------------------------
   int inputMode, outputMode; //What is input and what will output look like
+  int beatModeId;
+  String beatMode;
   int inputModeDownLimit = 0;
   int outputModeDownLimit = 0;
   int inputModeUpLimit = 2;
@@ -178,6 +191,34 @@ class chase { //Begin of chase class--------------------------------------------
      }
      return toReturn;
   }
+  
+  
+  
+  void setBeatMode(String bM) {
+    beatMode = bM;
+    if(bM.equals("kick")) { beatModeId = 1; }
+    if(bM.equals("snare")) { beatModeId = 2; }
+    if(bM.equals("hat")) { beatModeId = 3; }
+  }
+  
+  void setBeatModeId(int bM) {
+    beatModeId = bM;
+    switch(bM) {
+      case 1: beatMode = "kick"; break;
+      case 2: beatMode = "snare"; break;
+      case 3: beatMode = "hat"; break;
+    }
+  }
+  
+  String getBeatMode() {
+    return beatMode;
+  }
+  
+  int getBeatModeId() {
+    return beatModeId;
+  }
+  
+  
   
   void newChase() {
     int a = 0;
