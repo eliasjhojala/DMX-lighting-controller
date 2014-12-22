@@ -166,6 +166,7 @@ class memoryCreationBox {
     }
     open = true;
     selectedMemorySlot = memory;
+    selectedWhatToSave = new boolean[memories[memory].whatToSave.length];
     arrayCopy(memories[memory].whatToSave, selectedWhatToSave);
     
   }
@@ -336,8 +337,7 @@ class memoryCreationBox {
   void save() {
     switch(selectedMemoryMode) {
       case 0: //Preset
-        arrayCopy(selectedWhatToSave, memories[selectedMemorySlot].whatToSave);
-        memories[selectedMemorySlot].savePreset();
+        memories[selectedMemorySlot].savePreset(selectedWhatToSave);
       break;
       case 1: //s2l
         soundToLightFromPreset(selectedMemorySlot);

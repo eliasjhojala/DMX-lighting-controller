@@ -1,7 +1,7 @@
-void saveFixtureMemory(int number) {
+/*void saveFixtureMemory(int number) {
   memories[number] = new memory();
   memories[number].savePreset();
-}
+}*/
 
 void loadFixtureMemory(int number, int value) {
   try {
@@ -100,7 +100,8 @@ class memory { //Begin of memory class------------------------------------------
   }
   
   
-  void savePreset() {
+  void savePreset(boolean[] newWhatToSave) {
+    arrayCopy(newWhatToSave, whatToSave);
       for(int i = 0; i < fixtures.length; i++) {
       repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
@@ -132,11 +133,11 @@ class memory { //Begin of memory class------------------------------------------
     for (int i = 0; i < fixtures.length; i++) {
       
       if(whatToSave[0] && repOfFixtures[i] != null) {
-//        int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
-//        if(val > fixtures[i].dimmerPresetTarget) {
-//          fixtures[i].dimmerPresetTarget = val;
-//        }
-       fixtures[i].setDimmer(repOfFixtures[i].dimmer);
+        int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
+        if(val > fixtures[i].dimmerPresetTarget) {
+          fixtures[i].dimmerPresetTarget = val;
+        }
+       //fixtures[i].setDimmer(repOfFixtures[i].dimmer);
       }
       if(whatToSave[7] && repOfFixtures[i] != null) {
         fixtures[i].haze = int(map(repOfFixtures[i].haze, 0, 255, 0, value)); fixtures[i].DMXChanged = true;

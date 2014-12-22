@@ -1,13 +1,13 @@
 //Tässä välilehdessä mm. luodaan presettejä
 int[] oldMemoryValue = new int[numberOfMemories]; //Muuttuja, johon tallennetaan memoryn edellinen arvo
 int[] oldPresetValue = new int[numberOfMemories]; //Muuttuja, johon tallennetaan memoryn edellinen arvo
-void makePreset(int memoryNumber) {
+/*void makePreset(int memoryNumber) {
    for (int i = 0; i < fixtures.length; i++) {
     whatToSave[0][memoryNumber] = true;
      
   }
   saveFixtureMemory(memoryNumber);
-}
+}*/
 void preset(int memoryNumber, int value) {
   presetNew(memoryNumber, value);
 }
