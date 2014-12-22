@@ -85,14 +85,15 @@ class memory { //Begin of memory class------------------------------------------
   void chase() {
   }
   void grandMaster() {
+    //function to adjust grandMaster
     grandMaster = value;
   }
   void fade() {
   }
   void unknown() {
   }
-  void setValue(int v) {
-    value = v;
+  void setValue(int val) {
+    value = val;
     draw();
   }
   int getValue() {
@@ -132,11 +133,10 @@ class memory { //Begin of memory class------------------------------------------
     for (int i = 0; i < fixtures.length; i++) {
       
       if(whatToSave[0] && repOfFixtures[i] != null) {
-//        int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
-//        if(val > fixtures[i].dimmerPresetTarget) {
-//          fixtures[i].dimmerPresetTarget = val;
-//        }
-       fixtures[i].setDimmer(repOfFixtures[i].dimmer);
+        int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
+        if(val > fixtures[i].dimmerPresetTarget) {
+          fixtures[i].dimmerPresetTarget = val;
+        }
       }
       if(whatToSave[7] && repOfFixtures[i] != null) {
         fixtures[i].haze = int(map(repOfFixtures[i].haze, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
@@ -265,6 +265,8 @@ class chase { //Begin of chase class--------------------------------------------
     
   }
   
+  /*getNext returns always reverse value and checks that 
+  if you already are at the smallest value then it goes to biggest value */
   int getReverse(int current, int lim_low, int lim_hi) {
     int toReturn = 0;
     if(current > lim_low) { toReturn = current - 1; }
@@ -272,6 +274,8 @@ class chase { //Begin of chase class--------------------------------------------
     return toReturn;
   }
   
+  /*getNext returns always next value and checks that 
+  if you already are at the biggest value then it goes to smallest value */
   int getNext(int current, int lim_low, int lim_hi) {
     int toReturn = 0;
     if(current < lim_hi) { toReturn = current + 1; }
