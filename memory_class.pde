@@ -194,32 +194,37 @@ class chase { //Begin of chase class--------------------------------------------
   
   
   
-  void setBeatMode(String bM) {
-    beatMode = bM;
-    if(bM.equals("kick")) { beatModeId = 1; }
-    if(bM.equals("snare")) { beatModeId = 2; }
-    if(bM.equals("hat")) { beatModeId = 3; }
-  }
+  //-----------------FUNCTIONS TO SET AND GET s2l BEATMODE-------------------------------------//|
+                                                                                               //|
+        void setBeatMode(String bM) {                                                          //|
+          beatMode = bM;                                                                       //|
+          if(bM.equals("kick")) { beatModeId = 1; }                                            //|
+          if(bM.equals("snare")) { beatModeId = 2; }                                           //|
+          if(bM.equals("hat")) { beatModeId = 3; }                                             //|
+        }                                                                                      //|
+                                                                                               //|
+        void setBeatModeId(int bM) {                                                           //|
+          beatModeId = bM;                                                                     //|
+          switch(bM) {                                                                         //|
+            case 1: beatMode = "kick"; break;                                                  //|
+            case 2: beatMode = "snare"; break;                                                 //|
+            case 3: beatMode = "hat"; break;                                                   //|
+          }                                                                                    //|
+        }                                                                                      //|
+                                                                                               //|
+        String getBeatMode() {                                                                 //|
+          return beatMode;                                                                     //|
+        }                                                                                      //|
+                                                                                               //|
+        int getBeatModeId() {                                                                  //|
+          return beatModeId;                                                                   //|
+        }                                                                                      //|
+                                                                                               //|
+  //-----------------FUNCTIONS TO SET AND GET s2l BEATMODE END---------------------------------//|
   
-  void setBeatModeId(int bM) {
-    beatModeId = bM;
-    switch(bM) {
-      case 1: beatMode = "kick"; break;
-      case 2: beatMode = "snare"; break;
-      case 3: beatMode = "hat"; break;
-    }
-  }
   
-  String getBeatMode() {
-    return beatMode;
-  }
-  
-  int getBeatModeId() {
-    return beatModeId;
-  }
-  
-  
-  
+  /* This function saves all the presets to presets[] 
+  array if they are on (value is over 0) */
   void newChase() {
     int a = 0;
     for(int i = 0; i < memories.length; i++) {
@@ -232,10 +237,12 @@ class chase { //Begin of chase class--------------------------------------------
     }
   }
   
-  void loadPreset(int n, int v) {
+  /* This function checks that this memory is a chase 
+  and the memory we're trying to control is a preset. */
+  void loadPreset(int num, int val) {
     if(parent.type == 2) {
-      if(memories[n].type == 1) {
-        memories[n].loadPreset(v);
+      if(memories[num].type == 1) {
+        memories[num].loadPreset(val);
       }
     }
   }

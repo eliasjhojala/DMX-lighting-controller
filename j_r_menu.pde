@@ -113,7 +113,6 @@ void drawMemoryController(int controlledMemoryId, String text) {
       mouseLocked = true;
       mouseLocker = "presetControl";
       value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
-      memory(controlledMemoryId, value);
       memories[controlledMemoryId].setValue(value);
     } else if(mouseButton == RIGHT) memoryCreator.initiateFromExsisting(controlledMemoryId);
   }
