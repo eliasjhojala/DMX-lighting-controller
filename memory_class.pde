@@ -256,21 +256,24 @@ class chase { //Begin of chase class--------------------------------------------
     
   }
   
-  int getReverse(int act, int dl, int ul) {
+  int getReverse(int current, int lim_low, int lim_hi) {
     int toReturn = 0;
-    if(act > dl) { toReturn = act - 1; }
-    if(act == dl) { toReturn = ul; }
+    if(current > lim_low) { toReturn = current - 1; }
+    if(current == lim_low) { toReturn = lim_hi; }
     return toReturn;
   }
-  int getNext(int act, int dl, int ul) {
+  
+  int getNext(int current, int lim_low, int lim_hi) {
     int toReturn = 0;
-    if(act < ul) { toReturn = act + 1; }
-    if(act == ul) { toReturn = dl; }
+    if(current < lim_hi) { toReturn = current + 1; }
+    if(current == lim_hi) { toReturn = lim_low; }
     return toReturn;
   }
-  int getInvertedValue(int v, int dl, int ul) {
+  
+  //getInvertedValue returns value inverted (0 -> 255, 255 -> 0)
+  int getInvertedValue(int val, int lim_low, int lim_hi) {
     int toReturn = 0;
-    toReturn = iMap(v, dl, ul, ul, dl);
+    toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);
     return toReturn;
   }
   
@@ -279,24 +282,28 @@ class chase { //Begin of chase class--------------------------------------------
   boolean stepHasChanged;
   int fade;
   
-  void changeFade(int v) {
-    fade = defaultConstrain(v);
+  void changeFade(int val) {
+    fade = defaultConstrain(val);
   }
   
-  int defaultConstrain(int v) {
+  //defualtConstrain is used to constrain values between 0 and 255, because that is the range used in DMX.
+  int defaultConstrain(int val) {
     int toReturn = 0;
-    toReturn = constrain(v, 0, 255);
+    toReturn = constrain(val, 0, 255);
     return toReturn;
   }
   
-  int iMap(int v, int iD, int iU, int oD, int oU) {
+  //iMap is function which actually is same as map but it returns value as int
+  int iMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
     int toReturn = 0;
-    toReturn = int(map(v, iD, iU, oD, oU));
+    toReturn = int(map(val, in_low, in_hi, out_low, out_hi));
     return toReturn;
   }
-  int rMap(int v, int iD, int iU, int oD, int oU) {
+  
+  //rMap is function which actually is same as map but it returns rounded value as int
+  int rMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
     int toReturn = 0;
-    toReturn = round(map(v, iD, iU, oD, oU));
+    toReturn = round(map(val, in_low, in_hi, out_low, out_hi));
     return toReturn;
   }
   
