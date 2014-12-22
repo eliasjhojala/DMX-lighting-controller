@@ -35,14 +35,26 @@ class Mouse {
   
   //Add on top of an existing element, returns true if successful
   boolean declareElement(String name, String ontopof, int x1, int y1, int x2, int y2) {
-    for(HoverableElement elm : elements) {
-      if(elm.name.equals(ontopof)) {
-        elements.add(new HoverableElement(name, elm.priority + 1, x1, y1, x2, y2, objectUid.incrementAndGet()));
-        return true;
-      }
+    HoverableElement elm = getElementByName(ontopof);
+    if(elm != null) {
+      elements.add(new HoverableElement(name, elm.priority + 1, x1, y1, x2, y2, objectUid.incrementAndGet()));
+      return true;
     }
     return false;
   }
+  
+  //Only declare if already existing, otherwise change the existing one. Returns true if successfull.
+  boolean declareUpdateElement(String name, String ontopof, int x1, int y1. int x2, int y2) {
+    HoverableElement elm = getElementByName(ontopof);
+    if(elm != false) declareUpdateElement(name, elm.priority+1, x1, y1, x2, y2);
+  }
+  
+  boolean declareUpdateElement(String name, int priority, int x1, int y1. int x2, int y2) {
+    if(!updateElement(name, x1, y1, x2, y2)) {
+      declareElement(name, priority, x1, y1, x2, y2);
+    }
+  }
+  
   
   //Removes element. Returns true if element of name 'name' is found and deleted.
   boolean removeElement(String name) {
@@ -53,6 +65,15 @@ class Mouse {
     }
     return false;
     
+  }
+  
+  boolean updateElement(String name, int x1, int y1, int x2, int y2) {
+    HoverableElement elm = getElementByName(name);
+    if(elm != null) {
+      elm.x1 = x1; elm.y1 = y1;
+      elm.x2 = x2; elm.y2 = y2;
+      return true;
+    } else return false;
   }
   
   
@@ -99,13 +120,14 @@ class Mouse {
   
   int getElementIndexByName(String name) {
     for(int i = 0; i < elements.size(); i++) {
-      if(elements.get(i).name = name) return i;
+      if(elements.get(i).name.equals(name)) return i;
     }
     return -1;
   }
   
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 class HoverableElement {
   
