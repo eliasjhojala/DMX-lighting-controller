@@ -166,15 +166,20 @@ class memory { //Begin of memory class------------------------------------------
 
 
 class chase { //Begin of chase class--------------------------------------------------------------------------------------------------------------------------------------
+  //---------------------init all the variables--------------------------------
   int inputMode, outputMode; //What is input and what will output look like
-  int beatModeId;
-  String beatMode;
-  int inputModeDownLimit = 0;
-  int outputModeDownLimit = 0;
-  int inputModeUpLimit = 2;
-  int outputModeUpLimit = 2;
+  int beatModeId; //1, 2 or 3
+  String beatMode; //kick, snare or hat
   
-  int[] presets;
+  int inputModeDownLimit = 0; //not so useful
+  int outputModeDownLimit = 0; //not useful
+  int inputModeUpLimit = 2; //what is the biggest inputMode which we can use
+  int outputModeUpLimit = 2; //what is the biggest outputMode which we can use
+  
+  int[] presets; //all the presets in chase
+  //----------------------end initing variables--------------------------------
+  
+  
   
   memory parent;
   //You need to supply a memory parent for this to work properly
@@ -185,11 +190,7 @@ class chase { //Begin of chase class--------------------------------------------
     
   int[] getPresets() {
      //here function which returns all the presets in this chase
-     int[] toReturn = new int[presets.length];
-     for(int i = 0; i < toReturn.length; i++) {
-       toReturn[i] = presets[i];
-     }
-     return toReturn;
+     return presets;
   }
   
   
@@ -221,6 +222,7 @@ class chase { //Begin of chase class--------------------------------------------
         }                                                                                      //|
                                                                                                //|
   //-----------------FUNCTIONS TO SET AND GET s2l BEATMODE END---------------------------------//|
+  
   
   
   /* This function saves all the presets to presets[] 
