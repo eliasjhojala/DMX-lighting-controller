@@ -15,11 +15,15 @@
 
 
 Mouse mouse = new Mouse();
-
+//--Yes, you can assign multiple mice and assing elements to each of them.
 
 class Mouse {
   AtomicInteger objectUid = new AtomicInteger();
   ArrayList<HoverableElement> elements = new ArrayList<HoverableElement>();
+  
+  boolean captured = false;
+  HoverableElement capturedElement;
+  
   
   Mouse() {
     
@@ -40,15 +44,24 @@ class Mouse {
     return false;
   }
   
-  
-  boolean elmIsHover(String objName) {
-    HoverableElement targetElement;
-    for(HoverableElement elm : elements) {
-      if(elm.name.equals(objName)) return elm.isHovered; else return false;
+  //Removes element. Returns true if element of name 'name' is found and deleted.
+  boolean removeElement(String name) {
+    int index = getElementIndexByName(name);
+    if(index != -1) {
+      elements.remove(index);
+      return true;
     }
     return false;
+    
   }
   
+  
+  boolean elmIsHover(String objName) {
+    HoverableElement targetElement = getElementByName(objName);
+    if(targetElement != null) return targetElement.isHovered; else return false;
+  }
+  
+  //Should be called every draw. Picks one element to assing a capture to.
   void refresh() {
     boolean[] ontop = new boolean[elements.size()];
     for(int i = 0; i < ontop.length; i++) {
@@ -65,9 +78,30 @@ class Mouse {
         curMax = elm.priority;
         maxId = i;
         found = true;
+        break;
       }
     }
     if(found) elements.get(maxId).isHovered = true;
+    if(mousePressed) {
+      if(!captured && found) {
+        captured = true;
+        capturedElement = elements.get(maxId);
+      }
+    } else captured = false;
+  }
+  
+  HoverableElement getElementByName(String name) {
+    for(HoverableElement elm : elements) {
+      if(elm.name.equals(name)) return elm;
+    }
+    return null;
+  }
+  
+  int getElementIndexByName(String name) {
+    for(int i = 0; i < elements.size(); i++) {
+      if(elements.get(i).name = name) return i;
+    }
+    return -1;
   }
   
 }
