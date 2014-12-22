@@ -35,10 +35,7 @@ class memory { //Begin of memory class------------------------------------------
   //chase variables
   int value; //memorys value
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
-  int inputModeDownLimit = 0;
-  int outputModeDownLimit = 0;
-  int inputModeUpLimit = 2;
-  int outputModeUpLimit = 2;
+
   
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length];
   
@@ -77,6 +74,10 @@ class memory { //Begin of memory class------------------------------------------
   }
   void unknown() {
   }
+  void setValue(int v) {
+    value = v;
+    draw();
+  }
   
   
   void savePreset() {
@@ -101,6 +102,11 @@ class memory { //Begin of memory class------------------------------------------
   }
 
 
+
+  void loadPreset(int v) {
+    setValue(v);
+    loadPreset();
+  }
 
   void loadPreset() {
     
@@ -129,8 +135,7 @@ class memory { //Begin of memory class------------------------------------------
 } //end of memory class-----------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 
@@ -142,6 +147,10 @@ class memory { //Begin of memory class------------------------------------------
 
 class chase { //Begin of chase class--------------------------------------------------------------------------------------------------------------------------------------
   int inputMode, outputMode; //What is input and what will output look like
+  int inputModeDownLimit = 0;
+  int outputModeDownLimit = 0;
+  int inputModeUpLimit = 2;
+  int outputModeUpLimit = 2;
   
   memory parent;
   //You need to supply a memory parent for this to work properly
@@ -182,7 +191,7 @@ class chase { //Begin of chase class--------------------------------------------
   
   void freqToLight() { //This function gives frequence values to chase presets
     for(int i = 0; i < getPresets().length; i++) {
-      parent.loadPreset(getPresets()[i], s2l.freq(int(map(i, 0, getPresets().length, 0, s2l.getFreqMax()))));
+      memories[getPresets()[i]].loadPreset(s2l.freq(int(map(i, 0, getPresets().length, 0, s2l.getFreqMax()))));
     }
   }
   
