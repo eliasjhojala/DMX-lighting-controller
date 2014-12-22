@@ -13,7 +13,10 @@ int oldGrandMaster = 40;
 
 void draw() {
   
+  for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
+  
   memories[1].type = 4;
+  memories[2].type = 5;
 
   checkThemeMode();
   

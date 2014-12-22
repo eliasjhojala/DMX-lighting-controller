@@ -100,33 +100,33 @@ void loadAllData() {
     
     
     
-    
-    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[0], "variable_name")) {
-      int mN = int(row.getString("1D"));
-      int fN = int(row.getString("2D"));
-      int v = int(row.getString("value"));
-       if(mN < memories.length) {
-         if(memories[mN] != null) {
-           if(fN < memories[mN].repOfFixtures.length) {
-             if(memories[mN].repOfFixtures[fN] != null) {
-               memories[mN].repOfFixtures[fN].dimmer = v;
-             }
-             else {
-               memories[mN].repOfFixtures[fN] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-             }
-           }
-         }
-         else {
-           memories[mN] = new memory();
-           memories[mN].repOfFixtures[fN] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-           memories[mN].repOfFixtures[fN].dimmer = v;
-         }
-       }
-     }
-      
-      
-      
-      
+//    
+//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[0], "variable_name")) {
+//      int mN = int(row.getString("1D"));
+//      int fN = int(row.getString("2D"));
+//      int v = int(row.getString("value"));
+//       if(mN < memories.length) {
+//         if(memories[mN] != null) {
+//           if(fN < memories[mN].repOfFixtures.length) {
+//             if(memories[mN].repOfFixtures[fN] != null) {
+//               memories[mN].repOfFixtures[fN].dimmer = v;
+//             }
+//             else {
+//               memories[mN].repOfFixtures[fN] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//             }
+//           }
+//         }
+//         else {
+//           memories[mN] = new memory();
+//           memories[mN].repOfFixtures[fN] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//           memories[mN].repOfFixtures[fN].dimmer = v;
+//         }
+//       }
+//     }
+//      
+//      
+//      
+//      
       
  
       

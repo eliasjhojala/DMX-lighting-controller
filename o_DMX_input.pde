@@ -94,21 +94,18 @@ void channelsToDim() {
     }
     
     if(allChannelsOld[5][i] != allChannels[5][i]) {
-        memory(i+memoryMenu, round(map(allChannels[5][i], 0, 255, 0, memoryMasterValue)));
-        memoryValue[i+memoryMenu] = round(map(allChannels[5][i], 0, 255, 0, memoryMasterValue));
+        memories[i+memoryMenu].setValue(round(map(allChannels[5][i], 0, 255, 0, memoryMasterValue)));
         allChannelsOld[5][i] = allChannels[5][i];
     }
     
     if(allChannelsOld[3][i] != allChannels[3][i]) {
-        memory(i, round(map(allChannels[3][i], 0, 255, 0, memoryMasterValue)));
-        memoryValue[i] = round(map(allChannels[3][i], 0, 255, 0, memoryMasterValue));
+        memories[i].setValue(round(map(allChannels[3][i], 0, 255, 0, memoryMasterValue)));
         allChannelsOld[3][i] = allChannels[3][i];
     }
     
     if(allChannelsOld[4][i] != allChannels[4][i]) {
       if(useMemories == true) {
-        memory(i+12, round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue)));
-        memoryValue[i+12-1] = round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue));
+        memories[i+12].setValue(round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue)));
       }
       else {
         fixtures[i+12+12-1].setDimmer(allChannels[4][i]);

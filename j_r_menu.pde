@@ -340,7 +340,7 @@ class memoryCreationBox {
         memories[selectedMemorySlot].savePreset(selectedWhatToSave);
       break;
       case 1: //s2l
-        soundToLightFromPreset(selectedMemorySlot);
+        memories[selectedMemorySlot].myChase.newChase();
       break;
     }
     open = false;

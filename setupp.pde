@@ -14,7 +14,7 @@ boolean loadAllDataInSetup = true;
 public int leveys;
 public int korkeus;
 void setuppi() {
-
+   createMemoryObjects();
   
   leveys = displayWidth;
   korkeus = displayHeight;
@@ -46,7 +46,6 @@ void setuppi() {
   }
   
     fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-  
-   createMemoryObjects();
+
   
 }

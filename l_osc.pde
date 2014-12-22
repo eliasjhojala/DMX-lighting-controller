@@ -60,16 +60,7 @@ void oscEvent(OscMessage theOscMessage) {
          blackOutToggle();
        }
      }
-     
-     if(addr.equals("/strobenow")) {
-       if(digitalValue == 1) {
-         memory(soloMemory, 255);
-       }
-       else {
-         memory(soloMemory, 0);
-       }
-     }
-     
+
      
      if(addr.equals("/nextstep")) {
        if(digitalValue == 1) {

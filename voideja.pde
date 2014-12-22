@@ -276,18 +276,13 @@ void blackOut(boolean state) {
   if(!state) {
     //Turn off blackout
     blackOut = false;
-    memory(1, masterValueBeforeBlackout);
-    valueOfMemory[1] = masterValueBeforeBlackout;
-    memoryValue[1] = masterValueBeforeBlackout;
+    changeGrandMasterValue(masterValueBeforeBlackout);
   }
   if(state) {
     //Turn on blackout
     masterValueBeforeBlackout = grandMaster;
     blackOut = true;
-    grandMaster = 0;
-    valueOfMemory[1] = 0;
-    memoryValue[1] = 0;
-    memory(1, 0);
+    changeGrandMasterValue(0);
   }
   
 }
@@ -333,4 +328,12 @@ void setValuesToSelected() {
       }
     }
   }
+}
+
+
+void changeGrandMasterValue(int val) {
+  memories[1].setValue(val);
+}
+void changeCrossFadeValue(int val) {
+  memories[2].setValue(val);
 }

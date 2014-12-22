@@ -18,6 +18,9 @@ void loadFixtureMemory(int number, int value) {
 void createMemoryObjects() {
   s2l = new soundDetect();
   for (memory temp : memories) temp = new memory();
+  for(int i = 0; i < memories.length; i++) {
+    memories[i] = new memory();
+  }
 }
 
 
@@ -60,6 +63,7 @@ class memory { //Begin of memory class------------------------------------------
   String getText() {
     String toReturn = "";
     switch(type) {
+      case 0: toReturn = ""; break;
       case 1: toReturn = "prst"; break;
       case 2: toReturn = "chs"; break;
       case 4: toReturn = "mstr"; break;
@@ -71,6 +75,7 @@ class memory { //Begin of memory class------------------------------------------
   
   void draw() {
     switch(type) {
+      case 0: empty(); break;
       case 1: preset(); break;
       case 2: chase(); break;
       case 4: grandMaster(); break;
@@ -80,9 +85,12 @@ class memory { //Begin of memory class------------------------------------------
   }
   
   void preset() {
-    loadPreset();
+    if(type == 1) {
+      loadPreset();
+    }
   }
   void chase() {
+    myChase.draw();
   }
   void grandMaster() {
     //function to adjust grandMaster
@@ -91,6 +99,8 @@ class memory { //Begin of memory class------------------------------------------
   void fade() {
   }
   void unknown() {
+  }
+  void empty() {
   }
   void setValue(int val) {
     value = val;
@@ -130,24 +140,25 @@ class memory { //Begin of memory class------------------------------------------
   }
 
   void loadPreset() {
+    if(type == 1) {
     
-    for (int i = 0; i < fixtures.length; i++) {
-      
-      if(whatToSave[0] && repOfFixtures[i] != null) {
-        int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
-        if(val > fixtures[i].dimmerPresetTarget) {
-          fixtures[i].dimmerPresetTarget = val;
+      for (int i = 0; i < fixtures.length; i++) {
+        
+        if(whatToSave[0] && repOfFixtures[i] != null) {
+          int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
+          if(val > fixtures[i].dimmerPresetTarget) {
+            fixtures[i].dimmerPresetTarget = val;
+          }
         }
-       //fixtures[i].setDimmer(repOfFixtures[i].dimmer);
-      }
-      if(whatToSave[7] && repOfFixtures[i] != null) {
-        fixtures[i].haze = int(map(repOfFixtures[i].haze, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
-      }
-      if(whatToSave[8] && repOfFixtures[i] != null) {
-        fixtures[i].fan = int(map(repOfFixtures[i].fan, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
-      }
-      if(whatToSave[9] && repOfFixtures[i] != null) {
-        fixtures[i].fog = int(map(repOfFixtures[i].fog, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
+        if(whatToSave[7] && repOfFixtures[i] != null) {
+          fixtures[i].haze = int(map(repOfFixtures[i].haze, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
+        }
+        if(whatToSave[8] && repOfFixtures[i] != null) {
+          fixtures[i].fan = int(map(repOfFixtures[i].fan, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
+        }
+        if(whatToSave[9] && repOfFixtures[i] != null) {
+          fixtures[i].fog = int(map(repOfFixtures[i].fog, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
+        }
       }
     }
   }
@@ -189,13 +200,13 @@ class chase { //Begin of chase class--------------------------------------------
     this.parent = parent;
   }
   
-    
-  int[] getPresets() {
-     //here function which returns all the presets in this chase
-     return presets;
+  void draw() {
+    if(outputMode == 1) {
+      beatToMoving();
+    }
   }
   
-  
+
   
   //-----------------FUNCTIONS TO SET AND GET s2l BEATMODE-------------------------------------//|
                                                                                                //|
@@ -234,26 +245,47 @@ class chase { //Begin of chase class--------------------------------------------
     for(int i = 0; i < memories.length; i++) {
       if(memories[i].type == 1) {
         if(memories[i].value > 0) {
+          
+          a++;
+        }
+      }
+    }
+    presets = new int[a+1];
+    a = 0;
+    for(int i = 0; i < memories.length; i++) {
+      if(memories[i].type == 1) {
+        if(memories[i].value > 0) {
           presets[a] = i;
           a++;
         }
       }
     }
+    
+    parent.type = 2;
+    inputMode = 1;
+    outputMode = 1;
+    fade = 100;
   }
   
   /* This function checks that this memory is a chase 
   and the memory we're trying to control is a preset. */
   void loadPreset(int num, int val) {
     if(parent.type == 2) {
-      if(memories[num].type == 1) {
-        memories[num].loadPreset(val);
-      }
+        memories[num].setValue(val);
     }
   }
   
+      
+  int[] getPresets() {
+     //here function which returns all the presets in this chase
+     return presets;
+  }
+  
+  
+  
   void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
     boolean next; //boolean which tells do we want to go to next step
-    next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && nextStepPressed));
+    next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && (nextStepPressed || (keyPressed && key == ' '))));
     if(next) {
       for(int i = 0; i < getPresets().length; i++) {
           loadPreset(getPresets()[i], 255);
@@ -324,10 +356,11 @@ class chase { //Begin of chase class--------------------------------------------
   
   void beatToMoving() {
     //This function goes through all the presets. When there is beat this goes to next preset
+    //There is some problems with this function
     boolean next;
-    next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && nextStepPressed));
+    next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && (nextStepPressed || (keyPressed && key == ' '))));
     if(next) { 
-      step = getNext(step, 0, getPresets().length);
+      step = getNext(step, 0, getPresets().length-1);
       brightness = 0;
       stepHasChanged = true;
     }
@@ -340,9 +373,9 @@ class chase { //Begin of chase class--------------------------------------------
     }
     int s = step;
     int b = brightness;
-    int rS = getReverse(s, 0, getPresets().length);
-    loadPreset(s, b);
-    loadPreset(rS, getInvertedValue(b, 0, 255));
+    int rS = getReverse(s, 0, getPresets().length-1);
+    loadPreset(getPresets()[s], b);
+    loadPreset(getPresets()[rS], getInvertedValue(b, 0, 255));
   }
   
   void freqToLight() { //This function gives frequence values to chase presets

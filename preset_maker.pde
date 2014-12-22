@@ -42,12 +42,6 @@ soundToLightSteps[memoryNumber] = a;
 memoryType[memoryNumber] = 2;
 }
 
-void memory(int memoryNumber, int value) {
-  if(value != oldMemoryValue[memoryNumber]) {
-    sendMemoryToIpad(memoryNumber, value); //Läheteetään iPadille memorin arvo, jos se on muuttunut
-  }
-  memories[memoryNumber].setValue(value);
-}
 void changeChaseModeByMemoryNumber(int memoryNumber) {
   fill(0, 0, 255);
   rect(width/2-200, height/2-200, 400, 400);
@@ -64,17 +58,6 @@ void changeChaseModeByMemoryNumber(int memoryNumber) {
     }
   }
   text("chaseModeByMemoryNumber:"+chaseModeByMemoryNumber[memoryNumber], width/2-200+20, height/2-200+50);
-}
-
-void changeGrandMasterValue(int value) {
-  memory(1, value);
-  valueOfMemory[1] = value;
-  memoryValue[1] = value;
-}
-void changeCrossFadeValue(int value) {
-  memory(2, value);
-  valueOfMemory[2] = value;
-  memoryValue[2] = value;
 }
 
 boolean presetIsEmpty(int presetId) {
