@@ -37,7 +37,7 @@ class memory { //Begin of memory class------------------------------------------
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
 
   
-  boolean[] whatToSave = new boolean[saveOptionButtonVariables.length];
+  boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
   
   
   fixture[] repOfFixtures = new fixture[fixtures.length];
@@ -63,14 +63,19 @@ class memory { //Begin of memory class------------------------------------------
     switch(type) {
       case 1: preset(); break;
       case 2: chase(); break;
+      case 4: grandMaster(); break;
       default: unknown(); break;
     }
   }
   
   void preset() {
     loadPreset();
+    println("TOIMII");
   }
   void chase() {
+  }
+  void grandMaster() {
+    grandMaster = value;
   }
   void unknown() {
   }
@@ -78,9 +83,13 @@ class memory { //Begin of memory class------------------------------------------
     value = v;
     draw();
   }
+  int getValue() {
+    return value;
+  }
   
   
   void savePreset() {
+    println("TOIMII");
       for(int i = 0; i < fixtures.length; i++) {
       repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
@@ -112,10 +121,11 @@ class memory { //Begin of memory class------------------------------------------
     for (int i = 0; i < fixtures.length; i++) {
       
       if(whatToSave[0] && repOfFixtures[i] != null) {
-        int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
-        if(val > fixtures[i].dimmerPresetTarget) {
-          fixtures[i].dimmerPresetTarget = val;
-        }
+//        int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
+//        if(val > fixtures[i].dimmerPresetTarget) {
+//          fixtures[i].dimmerPresetTarget = val;
+//        }
+       fixtures[i].setDimmer(repOfFixtures[i].dimmer);
       }
       if(whatToSave[7] && repOfFixtures[i] != null) {
         fixtures[i].haze = int(map(repOfFixtures[i].haze, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
@@ -219,7 +229,7 @@ class chase { //Begin of chase class--------------------------------------------
   }
   int getInvertedValue(int v, int dl, int ul) {
     int toReturn = 0;
-    toReturn = int(map(v, dl, ul, ul, dl));
+    toReturn = iMap(v, dl, ul, ul, dl);
     return toReturn;
   }
   
@@ -229,7 +239,24 @@ class chase { //Begin of chase class--------------------------------------------
   int fade;
   
   void changeFade(int v) {
-    fade = constrain(v, 0, 255);
+    fade = defaultConstrain(v);
+  }
+  
+  int defaultConstrain(int v) {
+    int toReturn = 0;
+    toReturn = constrain(v, 0, 255);
+    return toReturn;
+  }
+  
+  int iMap(int v, int iD, int iU, int oD, int oU) {
+    int toReturn = 0;
+    toReturn = int(map(v, iD, iU, oD, oU));
+    return toReturn;
+  }
+  int rMap(int v, int iD, int iU, int oD, int oU) {
+    int toReturn = 0;
+    toReturn = round(map(v, iD, iU, oD, oU));
+    return toReturn;
   }
   
   void beatToMoving() {
@@ -257,7 +284,7 @@ class chase { //Begin of chase class--------------------------------------------
   
   void freqToLight() { //This function gives frequence values to chase presets
     for(int i = 0; i < getPresets().length; i++) {
-      loadPreset(getPresets()[i], s2l.freq(int(map(i, 0, getPresets().length, 0, s2l.getFreqMax()))));
+      loadPreset(getPresets()[i], s2l.freq(iMap(i, 0, getPresets().length, 0, s2l.getFreqMax())));
     }
   }
   

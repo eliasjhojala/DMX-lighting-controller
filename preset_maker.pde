@@ -46,24 +46,7 @@ void memory(int memoryNumber, int value) {
   if(value != oldMemoryValue[memoryNumber]) {
     sendMemoryToIpad(memoryNumber, value); //Läheteetään iPadille memorin arvo, jos se on muuttunut
   }
-  valueOfMemory[memoryNumber] = value;
-//  memoryValue[memoryNumber] = value;
-  if(memoryType[memoryNumber] == 1) {
-    preset(memoryNumber, value);
-  }
-  if(memoryType[memoryNumber] == 2) {
-    beatDetectionDMX(memoryNumber, value);
-  }
-  if(memoryType[memoryNumber] == 3) {
-    beatDetectionDMX(0, value);
-  }
-  if(memoryType[memoryNumber] == 4) {
-    if(blackOut == false) { grandMaster = value; } else { grandMaster = 0; }
-  }
-  if(memoryType[memoryNumber] == 5) {
-    chaseFade = value-3;
-  }
-  oldMemoryValue[memoryNumber] = value;
+  memories[memoryNumber].setValue(value);
 }
 void changeChaseModeByMemoryNumber(int memoryNumber) {
   fill(0, 0, 255);

@@ -12,6 +12,8 @@ int oldGrandMaster = 40;
 
 
 void draw() {
+  
+  memories[1].type = 4;
 
   checkThemeMode();
   

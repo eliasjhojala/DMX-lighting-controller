@@ -78,7 +78,7 @@ void sivuValikko() {
 
 
 void drawMemoryController(int controlledMemoryId, String text) {
-  int value = memoryValue[controlledMemoryId];
+  int value = memories[controlledMemoryId].getValue();
   
   pushStyle();
   
@@ -114,7 +114,7 @@ void drawMemoryController(int controlledMemoryId, String text) {
       mouseLocker = "presetControl";
       value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
       memory(controlledMemoryId, value);
-      memoryValue[controlledMemoryId] = value;
+      memories[controlledMemoryId].setValue(value);
     } else if(mouseButton == RIGHT) memoryCreator.initiateFromExsisting(controlledMemoryId);
   }
   noFill();
@@ -126,13 +126,7 @@ void drawMemoryController(int controlledMemoryId, String text) {
 
 
 String getMemoryTypeName(int numero) {
-  String nimi = "";
-  if(memoryType[numero] == 1) { nimi = "prst"; }
-  if(memoryType[numero] == 2) { nimi = "s2l"; }
-  if(memoryType[numero] == 4) { nimi = "mstr"; }
-  if(memoryType[numero] == 5) { nimi = "fade"; }
-  if(memoryType[numero] == 6) { nimi = "wave"; }
-  return nimi;
+  return memories[numero].getText();
 }
 
 
@@ -173,7 +167,7 @@ class memoryCreationBox {
     }
     open = true;
     selectedMemorySlot = memory;
-    selectedWhatToSave = whatToSave[memory];
+    selectedWhatToSave = memories[memory].whatToSave;
     
   }
   
@@ -343,7 +337,7 @@ class memoryCreationBox {
   void save() {
     switch(selectedMemoryMode) {
       case 0: //Preset
-        arrayCopy(selectedWhatToSave, whatToSave[selectedMemorySlot]);
+        arrayCopy(selectedWhatToSave, memories[selectedMemorySlot].whatToSave);
         saveFixtureMemory(selectedMemorySlot);
       break;
       case 1: //s2l
