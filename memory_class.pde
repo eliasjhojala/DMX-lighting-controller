@@ -1,29 +1,17 @@
-fixture[][] repOfFixtures = new fixture[fixtures.length][numberOfMemories];
-void saveFixtureMemory(int fixtureMemoryId) {
-      for(int i = 0; i < fixtures.length; i++) {
-      repOfFixtures[i][fixtureMemoryId] = new fixture();
-  } 
-  for (int i = 0; i < fixtures.length; i++) {
-    if(whatToSave[fixtureMemoryId][0]) {
-     repOfFixtures[i][fixtureMemoryId].dimmer = fixtures[i].dimmer;
-    }
-  }
-  memoryType[fixtureMemoryId] = 1;
+void saveFixtureMemory(int number) {
+  memories[number] = new memory();
+  memories[number].savePreset();
 }
 
-
-
-void loadFixtureMemory(int fixtureMemoryId, int value) {
-  for (int i = 0; i < fixtures.length; i++) {
-    if(whatToSave[fixtureMemoryId][0]) {
-      int val = int(map(repOfFixtures[i][fixtureMemoryId].dimmer, 0, 255, 0, value));
-      if(val > fixtures[i].dimmerPresetTarget) {
-        fixtures[i].dimmerPresetTarget = val;
-      }
-    }
+void loadFixtureMemory(int number, int value) {
+  try {
+    memories[number].value = value;
+    memories[number].loadPreset();
+  }
+  catch(Exception e) {
+    println("Can't load memory");
   }
 }
-
 
   soundDetect s2l;
   memory[] memories = new memory[100];
@@ -37,7 +25,9 @@ class memory { //Begin of memory class------------------------------------------
   //chase variables
   int value; //memorys value
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
+  boolean[] whatToSave = new boolean[saveOptionButtonVariables.length];
   
+  fixture[] repOfFixtures = new fixture[fixtures.length];
   
   memory() {
   }
@@ -47,14 +37,77 @@ class memory { //Begin of memory class------------------------------------------
     String toReturn = "";
     switch(type) {
       case 1: toReturn = "prst"; break;
-      case 2: toReturn = "s2l"; break;
+      case 2: toReturn = "chs"; break;
       default: toReturn = "unkn"; break;
     }
     return toReturn;
   }
   
+  void draw() {
+    switch(type) {
+      case 1: preset(); break;
+      case 2: chase(); break;
+      default: unknown(); break;
+    }
+  }
   
-} //en of memory class-----------------------------------------------------------------------------------------------------------------------------------------------------
+  void preset() {
+    loadPreset();
+  }
+  void chase() {
+  }
+  void unknown() {
+  }
+  
+  
+  void savePreset() {
+      for(int i = 0; i < fixtures.length; i++) {
+      repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  }
+    for (int i = 0; i < fixtures.length; i++) {
+      if(whatToSave[0]) {
+       repOfFixtures[i].dimmer = fixtures[i].dimmer;
+      }
+      if(whatToSave[7]) {
+       repOfFixtures[i].haze = fixtures[i].haze;
+      }
+      if(whatToSave[8]) {
+       repOfFixtures[i].fan = fixtures[i].fan;
+      }
+      if(whatToSave[9]) {
+       repOfFixtures[i].fog = fixtures[i].fog;
+      }
+    }
+    type = 1;
+  }
+
+
+
+  void loadPreset() {
+    
+    for (int i = 0; i < fixtures.length; i++) {
+      
+      if(whatToSave[0] && repOfFixtures[i] != null) {
+        int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
+        if(val > fixtures[i].dimmerPresetTarget) {
+          fixtures[i].dimmerPresetTarget = val;
+        }
+      }
+      if(whatToSave[7] && repOfFixtures[i] != null) {
+        fixtures[i].haze = int(map(repOfFixtures[i].haze, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
+      }
+      if(whatToSave[8] && repOfFixtures[i] != null) {
+        fixtures[i].fan = int(map(repOfFixtures[i].fan, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
+      }
+      if(whatToSave[9] && repOfFixtures[i] != null) {
+        fixtures[i].fog = int(map(repOfFixtures[i].fog, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
+      }
+    }
+  }
+
+  
+  
+} //end of memory class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 class chase { //Begin of chase class--------------------------------------------------------------------------------------------------------------------------------------

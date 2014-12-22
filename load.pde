@@ -1,5 +1,5 @@
 //Tässä välilehdessä luetaan aikaisemmin tallennettuja tietoja csv-taulukkotiedostosta
-boolean dataLoaded = false; 
+boolean dataLoaded = false;
 void loadSetupData() {
   if(userId == 1) {
    table = loadTable("/Users/elias/Dropbox/DMX controller/main_for_two_pc/variables/settings.csv", "header"); //Eliaksen polku
@@ -10,17 +10,9 @@ void loadSetupData() {
     } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_for_two_pc\\variables\\settings.csv", "header"); // Roope äidillä -polku
   }
   else if(userId == 3) {
-     table = loadTable("C:\\Users\\elias\\Documents\\GitHub\\DMX Controller\\main_modular\\variables\\settings.csv", "header");
+     table = loadTable("C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\settings.csv", "header");
   }
-  
-  //for (TableRow row : table.findRows("sendOscToAnotherPc", "variable_name")) { sendOscToAnotherPc = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("sendOscToIpad", "variable_name")) { sendOscToIpad = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("sendMemoryToIpad", "variable_name")) { sendMemoryToIpad = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("useCOM", "variable_name")) { useCOM = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("showOutputAsNumbers", "variable_name")) { showOutputAsNumbers = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("use3D", "variable_name")) { use3D = boolean(row.getString("value")); }
-  //for (TableRow row : table.findRows("loadAllDataInSetup", "variable_name")) { loadAllDataInSetup = boolean(row.getString("value")); }
-  
+
   
   use3D = !(userId == 3);
   showOutputAsNumbers = true;
@@ -28,6 +20,8 @@ void loadSetupData() {
 
 void loadAllData() {
     loadSetupData();
+   
+   
     
     if(userId == 1) {
      table = loadTable("/Users/elias/Dropbox/DMX controller/main_modular/variables/pikkusten_disko.csv", "header"); //Eliaksen polku
@@ -38,8 +32,14 @@ void loadAllData() {
       } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roope äidillä -polku
     }
     else if(userId == 3) {
-      table = loadTable("C:\\Users\\elias\\Documents\\GitHub\\DMX Controller\\main_modular\\variables\\pikkusten_disko.csv", "header");
+      table = loadTable("C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\pikkusten_disko.csv", "header");
     }
+    
+//         for(int i = 0; i < repOfFixtures.length; i++) {
+//        for(int ij = 0; ij < repOfFixtures[i].length; ij++) {
+//          repOfFixtures[i][ij] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//        }
+//      }
     
     //FIXTURES---------------------------------------------------------------------------------------------------------------------------
     //Initialize fixtures using type
@@ -79,6 +79,71 @@ void loadAllData() {
         { fixtures[int(row.getString("1D"))].parentAnsa           = int(row.getString("value")); }
     
     //--------------------------------------------------------------------------------------------------------------------------------------
+    // whatToSave titles: { "dimmer", "colorWheel", "gobo", "goboRotation", "shutter", "pan", "tilt" }
+    
+    for (TableRow row : table.findRows("whatToSave", "variable_name")) if(int(row.getString("1D")) < whatToSave.length && int(row.getString("2D")) < whatToSave[0].length)
+    {
+      int val = int(row.getString("value"));
+      
+      whatToSave[int(row.getString("1D"))][int(row.getString("2D"))] = boolean(val);
+    }
+    
+//    
+//    
+//    for (fixture[] fixs : repOfFixtures) for (fixture fix : fixs) fix = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[0], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
+//    {
+//      
+//      
+// 
+//      
+//      //fixture thisObj = repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))];
+//      if (repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] == null) repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//      repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))].dimmer = int(row.getString("value"));
+//    }
+//    
+//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[1], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
+//    {
+//      if (repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] == null) repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//      repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))].colorWheel = int(row.getString("value"));
+//    }
+//    
+//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[2], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
+//    {
+//      
+//      if (repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] == null) repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//      repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))].goboWheel = int(row.getString("value"));
+//    }
+//    
+//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[3], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
+//    {
+//      
+//      if (repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] == null) repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//      repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))].goboRotation = int(row.getString("value"));
+//    }
+//    
+//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[4], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
+//    {
+//      
+//      if (repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] == null) repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//      repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))].shutter = int(row.getString("value"));
+//    }
+//    
+//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[5], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
+//    {
+//      
+//      if (repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] == null) repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//      repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))].pan = int(row.getString("value"));
+//    }
+//    
+//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[6], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
+//    {
+//      
+//      if (repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] == null) repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//      repOfFixtures[int(row.getString("1D"))][int(row.getString("2D"))].tilt = int(row.getString("value"));
+//    }
+//    
+    //---------------------------------------------------------------------------------------------------------------------------------------
     
     for (TableRow row : table.findRows("memoryType", "variable_name")) if(int(row.getString("1D")) < memoryType.length) { memoryType[int(row.getString("1D"))] = int(row.getString("value")); }
     for (TableRow row : table.findRows("soundToLightSteps", "variable_name")) if(int(row.getString("1D")) < soundToLightSteps.length) { soundToLightSteps[int(row.getString("1D"))] = int(row.getString("value")); }
@@ -91,8 +156,8 @@ void loadAllData() {
           
     for (TableRow row : table.findRows("memory", "variable_name")) if(memory.length > int(row.getString("1D")) && memory[0].length > int(row.getString("2D")))
             { memory[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("soundToLightPresets", "variable_name")) if(soundToLightPresets.length > int(row.getString("1D")) && soundToLightPresets[0].length > int(row.getString("2D"))) 
-            { soundToLightPresets[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
+    for (TableRow row : table.findRows("soundToLightPresets", "variable_name")) if(soundToLightPresets.length > int(row.getString("2D")) && soundToLightPresets[0].length > int(row.getString("1D"))) 
+            { soundToLightPresets[int(row.getString("2D"))][int(row.getString("1D"))] = int(row.getString("value")); }
     for (TableRow row : table.findRows("preset", "variable_name")) if(preset.length > int(row.getString("1D")) && preset[0].length > int(row.getString("2D")))
             { preset[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
     
@@ -100,7 +165,7 @@ void loadAllData() {
     for (TableRow row : table.findRows("camY", "variable_name"))              { camY = int(row.getString("value")); }
     for (TableRow row : table.findRows("camZ", "variable_name"))              { camZ = int(row.getString("value")); }
     
-    
+    for (TableRow row : table.findRows("bottomMenuOrder", "variable_name")) if(int(row.getString("1D")) < bottomMenuOrder.length) bottomMenuOrder[int(row.getString("1D"))] = int(row.getString("value"));
     
     
     for (TableRow row : table.findRows("ansaZ", "variable_name"))         { if((int(row.getString("1D")) < ansaZ.length)) { ansaZ[int(row.getString("1D"))] = int(row.getString("value")); } }
@@ -126,11 +191,6 @@ void loadAllData() {
     for (TableRow row : table.findRows("mhx50_createFinalPresetValues[1D][1][2D]", "variable_name"))         if((int(row.getString("2D")) < mhx50_createFinalPresetValues.length) && (int(row.getString("1D")) < mhx50_createFinalPresetValues[0][0].length)) {     { mhx50_createFinalPresetValues[int(row.getString("2D"))][1][int(row.getString("1D"))] = int(row.getString("value")); } }
 
     
-    
-    for (TableRow row : table.findRows("mhx50_s2l_presets", "variable_name"))              { mhx50_s2l_presets[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("mmhx50_s2l_numberOfPresets", "variable_name"))              { mmhx50_s2l_numberOfPresets = int(row.getString("value")); }
-    
-
     
     dataLoaded = true;
     
