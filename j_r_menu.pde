@@ -63,7 +63,7 @@ void sivuValikko() {
     if(memoryMenu+i < numberOfMemories) {
       pushMatrix();
         translate(0, 20*(i-1));
-        drawMemoryController(i+memoryMenu, getMemoryTypeName(i+memoryMenu));
+        drawMemoryController(i+memoryMenu, memories[i+memoryMenu].getText());
       popMatrix();
     }
   }
@@ -151,7 +151,7 @@ class memoryCreationBox {
   void initiateFromExsisting(int memory) {
     
     
-    switch(memoryType[memory]) {
+    switch(memories[memory].type) {
       case 0:
         selectedMemoryMode = 0;
       break;
@@ -166,7 +166,7 @@ class memoryCreationBox {
     }
     open = true;
     selectedMemorySlot = memory;
-    selectedWhatToSave = memories[memory].whatToSave;
+    arrayCopy(memories[memory].whatToSave, selectedWhatToSave);
     
   }
   
