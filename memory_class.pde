@@ -105,7 +105,6 @@ class memory { //Begin of memory class------------------------------------------
 
   void loadPreset(int v) {
     setValue(v);
-    loadPreset();
   }
 
   void loadPreset() {
@@ -195,6 +194,13 @@ class chase { //Begin of chase class--------------------------------------------
     }
   }
   
+  
+  void changeInputMode(int v) {
+    inputMode = constrain(v, inputModeDownLimit, inputModeUpLimit);
+  }
+  void changeOutputMode(int v) {
+    outputMode = constrain(v, outputModeDownLimit, outputModeUpLimit);
+  }
   
   void inputModeUp() {
     changeChaseMode(true, true);
