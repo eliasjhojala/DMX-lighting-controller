@@ -226,11 +226,21 @@ class chase { //Begin of chase class--------------------------------------------
   
   
   String getInputModeDesc() {
-    return str(inputMode);
+    String toReturn = "";
+    switch(inputMode) {
+      case 1: toReturn = "beat"; break;
+      case 2: toReturn = "manual"; break;
+    }
+    return toReturn;
   }
   
   String getOutputModeDesc() {
-    return str(outputMode);
+    String toReturn = "";
+    switch(outputMode) {
+      case 1: toReturn = "steps"; break;
+      case 2: toReturn = "eq"; break;
+    }
+    return toReturn;
   }
   
   String currentFadeMode() {
@@ -263,17 +273,19 @@ class chase { //Begin of chase class--------------------------------------------
                                                                                                //|
         void setBeatMode(String bM) {                                                          //|
           beatMode = bM;                                                                       //|
-          if(bM.equals("kick")) { beatModeId = 1; }                                            //|
-          if(bM.equals("snare")) { beatModeId = 2; }                                           //|
-          if(bM.equals("hat")) { beatModeId = 3; }                                             //|
+          if(bM.equals("beat")) { beatModeId = 1; }                                            //|
+          if(bM.equals("kick")) { beatModeId = 2; }                                            //|
+          if(bM.equals("snare")) { beatModeId = 3; }                                           //|
+          if(bM.equals("hat")) { beatModeId = 4; }                                             //|
         }                                                                                      //|
                                                                                                //|
         void setBeatModeId(int bM) {                                                           //|
           beatModeId = bM;                                                                     //|
           switch(bM) {                                                                         //|
-            case 1: beatMode = "kick"; break;                                                  //|
-            case 2: beatMode = "snare"; break;                                                 //|
-            case 3: beatMode = "hat"; break;                                                   //|
+            case 1: beatMode = "beat"; break;                                                  //|
+            case 2: beatMode = "kick"; break;                                                  //|
+            case 3: beatMode = "snare"; break;                                                 //|
+            case 4: beatMode = "hat"; break;                                                   //|
           }                                                                                    //|
         }                                                                                      //|
                                                                                                //|
@@ -286,10 +298,10 @@ class chase { //Begin of chase class--------------------------------------------
         }                                                                                      //|
                                                                                                //|
         void beatModeUp() {                                                                    //|
-          setBeatModeId(getNext(getBeatModeId(), 1, 3));                                       //|
+          setBeatModeId(getNext(getBeatModeId(), 1, 4));                                       //|
         }                                                                                      //|
         void beatModeDown() {                                                                  //|
-          setBeatModeId(getReverse(getBeatModeId(), 1, 3));                                    //|
+          setBeatModeId(getReverse(getBeatModeId(), 1, 4));                                    //|
         }                                                                                      //|
                                                                                                //|
   //-----------------FUNCTIONS TO SET AND GET s2l BEATMODE END---------------------------------//|
@@ -521,9 +533,10 @@ class soundDetect { //----------------------------------------------------------
     beat.detect(in.mix); //beat detect command of minim library
     boolean toReturn = true;
     switch(bT) {
-      case 1: toReturn = beat.isKick(); break;
-      case 2: toReturn = beat.isSnare(); break;
-      case 3: toReturn = beat.isHat(); break;
+      case 1: toReturn = beat.isOnset(); break;
+      case 2: toReturn = beat.isKick(); break;
+      case 3: toReturn = beat.isSnare(); break;
+      case 4: toReturn = beat.isHat(); break;
     }
     return toReturn;
   }
