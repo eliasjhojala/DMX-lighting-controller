@@ -256,7 +256,7 @@ class memoryCreationBox {
           text("Preset", 2, 25);
         } break;
         case 1: {
-          text("Chase (s2l)", 2, 25);
+          text("Chase", 2, 25);
         } break;
       }
     }
@@ -299,7 +299,7 @@ class memoryCreationBox {
     pushMatrix();
     {
       switch(selectedMemoryMode) {
-        case 0:
+        case 0: //Preset
           //Draw whatToSave checkboxes
           textAlign(LEFT);
           text("What to save:", 10, 125);
@@ -326,8 +326,51 @@ class memoryCreationBox {
             popMatrix();
           }
         break;
-        case 1:
-          
+        case 1: //Chase
+          textAlign(LEFT);
+          { //Chase Input
+            text("Chase Input Mode:", 10, 125);
+            fill(0, 186, 240); noStroke();
+            rect(130, 115, 12, 12, 1.5);
+            if(isHoverSimple(130, 115, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:chI+";
+              memories[selectedMemorySlot].myChase.inputModeUp();
+            }
+            rect(144, 115, 12, 12, 1.5);
+            if(isHoverSimple(144, 115, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:chI+";
+              memories[selectedMemorySlot].myChase.inputModeDown();
+            }
+            textSize(10);
+            fill(0);
+            text("+", 131.5, 124);
+            text("-", 145.5, 124);
+            text(memories[selectedMemorySlot].myChase.getInputModeDesc(), 10, 140);
+          }
+          { //Chase Output
+            textSize(12);
+            text("Chase Output Mode:", 10, 175);
+            fill(0, 186, 240); noStroke();
+            rect(130, 165, 12, 12, 1.5);
+            if(isHoverSimple(130, 165, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:chO+";
+              memories[selectedMemorySlot].myChase.outputModeUp();
+            }
+            rect(144, 165, 12, 12, 1.5);
+            if(isHoverSimple(144, 165, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:chO+";
+              memories[selectedMemorySlot].myChase.outputModeDown();
+            }
+            textSize(10);
+            fill(0);
+            text("+", 131.5, 174);
+            text("-", 145.5, 174);
+            text(memories[selectedMemorySlot].myChase.getOutputModeDesc(), 10, 190);
+          }
         break;
       }
     }

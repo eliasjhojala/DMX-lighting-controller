@@ -211,7 +211,7 @@ class chase { //Begin of chase class--------------------------------------------
   int fade;
   
   
-  //----------------------end initing variables--------------------------------
+  //----------------------end declaring variables--------------------------------
   
   
   
@@ -223,12 +223,21 @@ class chase { //Begin of chase class--------------------------------------------
   
   int value;
   
-    String currentFadeMode() {
-    toReturn = "";
-    switch(myChase.fadeType) {
-      case 1: toReturn = "own";
-      case 2: toReturn = "merged";
-      case 3: toReturn = "master";
+  
+  String getInputModeDesc() {
+    return str(inputMode);
+  }
+  
+  String getOutputModeDesc() {
+    return str(outputMode);
+  }
+  
+  String currentFadeMode() {
+    String toReturn = "";
+    switch(fadeMode) {
+      case 1: toReturn = "Own";
+      case 2: toReturn = "Scaled Master";
+      case 3: toReturn = "Inherit";
     }
     return toReturn;
   }
