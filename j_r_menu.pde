@@ -331,68 +331,84 @@ class memoryCreationBox {
         case 1: //Chase
           textAlign(LEFT);
           { //Chase Input
-            text("Chase Input Mode:", 10, 125);
+            text("Input Mode:", 10, 125);
             fill(0, 186, 240); noStroke();
-            rect(130, 115, 12, 12, 1.5);
-            if(isHoverSimple(130, 115, 12, 12) && mousePressed && !mouseLocked) {
+            rect(110, 115, 12, 12, 1.5);
+            if(isHoverSimple(110, 115, 12, 12) && mousePressed && !mouseLocked) {
               mouseLocked = true;
               mouseLocker = "memoryCreationBox:chI+";
               memories[selectedMemorySlot].myChase.inputModeUp();
             }
-            rect(144, 115, 12, 12, 1.5);
-            if(isHoverSimple(144, 115, 12, 12) && mousePressed && !mouseLocked) {
+            rect(124, 115, 12, 12, 1.5);
+            if(isHoverSimple(124, 115, 12, 12) && mousePressed && !mouseLocked) {
               mouseLocked = true;
               mouseLocker = "memoryCreationBox:chI+";
               memories[selectedMemorySlot].myChase.inputModeDown();
             }
             textSize(10);
             fill(0);
-            text("+", 131.5, 124);
-            text("-", 145.5, 124);
+            text("+", 111.5, 124);
+            text("-", 125.5, 124);
             text(memories[selectedMemorySlot].myChase.getInputModeDesc(), 10, 140);
           }
           { //Chase Output
             textSize(12);
-            text("Chase Output Mode:", 10, 175);
+            text("Output Mode:", 10, 175);
             fill(0, 186, 240); noStroke();
-            rect(130, 165, 12, 12, 1.5);
-            if(isHoverSimple(130, 165, 12, 12) && mousePressed && !mouseLocked) {
+            rect(110, 165, 12, 12, 1.5);
+            if(isHoverSimple(110, 165, 12, 12) && mousePressed && !mouseLocked) {
               mouseLocked = true;
               mouseLocker = "memoryCreationBox:chO+";
               memories[selectedMemorySlot].myChase.outputModeUp();
             }
-            rect(144, 165, 12, 12, 1.5);
-            if(isHoverSimple(144, 165, 12, 12) && mousePressed && !mouseLocked) {
+            rect(124, 165, 12, 12, 1.5);
+            if(isHoverSimple(124, 165, 12, 12) && mousePressed && !mouseLocked) {
               mouseLocked = true;
               mouseLocker = "memoryCreationBox:chO-";
               memories[selectedMemorySlot].myChase.outputModeDown();
             }
             textSize(10);
             fill(0);
-            text("+", 131.5, 174);
-            text("-", 145.5, 174);
+            text("+", 111.5, 174);
+            text("-", 125.5, 174);
             text(memories[selectedMemorySlot].myChase.getOutputModeDesc(), 10, 190);
           }
           { //Beat Mode
+            textSize(12);
             text("Beat Mode:", 10, 225);
             fill(0, 186, 240); noStroke();
-            rect(130, 215, 12, 12, 1.5);
-            if(isHoverSimple(130, 215, 12, 12) && mousePressed && !mouseLocked) {
+            rect(110, 215, 12, 12, 1.5);
+            if(isHoverSimple(110, 215, 12, 12) && mousePressed && !mouseLocked) {
               mouseLocked = true;
               mouseLocker = "memoryCreationBox:bM+";
-              memories[selectedMemorySlot].myChase.inputModeUp();
+              memories[selectedMemorySlot].myChase.beatModeUp();
             }
-            rect(144, 215, 12, 12, 1.5);
-            if(isHoverSimple(144, 215, 12, 12) && mousePressed && !mouseLocked) {
+            rect(124, 215, 12, 12, 1.5);
+            if(isHoverSimple(124, 215, 12, 12) && mousePressed && !mouseLocked) {
               mouseLocked = true;
               mouseLocker = "memoryCreationBox:bM+";
-              memories[selectedMemorySlot].myChase.inputModeDown();
+              memories[selectedMemorySlot].myChase.beatModeDown();
             }
             textSize(10);
             fill(0);
-            text("+", 131.5, 224);
-            text("-", 145.5, 224);
-            text(memories[selectedMemorySlot].myChase.getInputModeDesc(), 10, 240);
+            text("+", 111.5, 224);
+            text("-", 125.5, 224);
+            text(memories[selectedMemorySlot].myChase.beatMode, 10, 240);
+          }
+          //Separator
+          stroke(120);
+          fill(120);
+          strokeWeight(2);
+          line(150, 110, 150, 260);
+          { //fade
+            textSize(12);
+            fill(0);
+            text("Fade: " + memories[selectedMemorySlot].myChase.fade, 160, 125);
+            pushMatrix();
+              translate(160, 130);
+              memories[selectedMemorySlot].myChase.changeFade(quickSlider("memoryCreationBox:fade", memories[selectedMemorySlot].myChase.fade));
+            popMatrix();
+            
           }
         break;
       }

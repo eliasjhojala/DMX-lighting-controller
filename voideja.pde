@@ -337,3 +337,24 @@ void changeGrandMasterValue(int val) {
 void changeCrossFadeValue(int val) {
   memories[2].setValue(val);
 }
+
+
+
+//returns new value
+int quickSlider(String mouseLockID, int value) {
+    //Draw slider
+    drawBottomMenuChControllerSlider(value);
+    //Check for drag
+    if (isHover(0, 0, 20, 100) && mousePressed && !mouseLocked) {
+      //Started dragging
+      mouseLocked = true;
+      mouseLocker = mouseLockID;
+    }
+    boolean valueChanged = false;
+    if (mouseLocked && mouseLocker.equals(mouseLockID)) {
+      value += constrain((mouseX - pmouseX) * 4, 0, 255);
+      value = constrain(value, 0, 255);
+    }
+    
+    return value;
+}
