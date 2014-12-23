@@ -554,21 +554,21 @@ class soundDetect { //----------------------------------------------------------
   int freq(int i) {
     fft.forward( in.mix );
     int toReturn = 0;
-    toReturn = round((map(currentAvg[i], avg[i], 255, 0, 255))*100);
+    toReturn = round((map(fft.getBand(i), avg[i], 255, 0, 255))*100);
     avgTemp[i] += fft.getBand(i);
     avgCounter[i]++;
     if(avgCounter[i] > 2000) {
-      avg[i] = avgTemp[i] / avgCounter[i];
+      avg[i] = (avg[i] + (avgTemp[i] / avgCounter[i])) / 2;
       avgTemp[i] = 0;
       avgCounter[i] = 0;
     }
-    currentAvgTemp[i] += fft.getBand(i);
+ /* currentAvgTemp[i] += fft.getBand(i);
     currentAvgCounter[i]++;
     if(currentAvgCounter[i] > 2) {
       currentAvg[i] = currentAvgTemp[i] / currentAvgCounter[i];
       currentAvgTemp[i] = 0;
       currentAvgCounter[i] = 0;
-    }
+    } */
     return toReturn;
     //command to get  right freq from fft or something like it. 
     //This functions should be done now.
