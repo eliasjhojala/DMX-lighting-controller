@@ -128,6 +128,8 @@ String getMemoryTypeName(int numero) {
   return memories[numero].getText();
 }
 
+/////////MemoryCreationBox////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 class memoryCreationBox {
   memoryCreationBox(boolean o) {
@@ -362,7 +364,7 @@ class memoryCreationBox {
             rect(144, 165, 12, 12, 1.5);
             if(isHoverSimple(144, 165, 12, 12) && mousePressed && !mouseLocked) {
               mouseLocked = true;
-              mouseLocker = "memoryCreationBox:chO+";
+              mouseLocker = "memoryCreationBox:chO-";
               memories[selectedMemorySlot].myChase.outputModeDown();
             }
             textSize(10);
@@ -370,6 +372,27 @@ class memoryCreationBox {
             text("+", 131.5, 174);
             text("-", 145.5, 174);
             text(memories[selectedMemorySlot].myChase.getOutputModeDesc(), 10, 190);
+          }
+          { //Beat Mode
+            text("Beat Mode:", 10, 225);
+            fill(0, 186, 240); noStroke();
+            rect(130, 215, 12, 12, 1.5);
+            if(isHoverSimple(130, 215, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:bM+";
+              memories[selectedMemorySlot].myChase.inputModeUp();
+            }
+            rect(144, 215, 12, 12, 1.5);
+            if(isHoverSimple(144, 215, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:bM+";
+              memories[selectedMemorySlot].myChase.inputModeDown();
+            }
+            textSize(10);
+            fill(0);
+            text("+", 131.5, 224);
+            text("-", 145.5, 224);
+            text(memories[selectedMemorySlot].myChase.getInputModeDesc(), 10, 240);
           }
         break;
       }
