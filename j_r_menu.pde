@@ -395,6 +395,28 @@ class memoryCreationBox {
             text("-", 125.5, 224);
             text(memories[selectedMemorySlot].myChase.beatMode, 10, 240);
           }
+          { //Fade Mode
+            textSize(12);
+            text("Fade Mode:", 10, 275);
+            fill(0, 186, 240); noStroke();
+            rect(110, 265, 12, 12, 1.5);
+            if(isHoverSimple(110, 265, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:fM+";
+              memories[selectedMemorySlot].myChase.fadeModeUp();
+            }
+            rect(124, 265, 12, 12, 1.5);
+            if(isHoverSimple(124, 265, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:fM+";
+              memories[selectedMemorySlot].myChase.fadeModeDown();
+            }
+            textSize(10);
+            fill(0);
+            text("+", 111.5, 274);
+            text("-", 125.5, 274);
+            text(memories[selectedMemorySlot].myChase.getFadeModeDesc(), 10, 290);
+          }
           //Separator
           stroke(120);
           fill(120);
@@ -403,10 +425,10 @@ class memoryCreationBox {
           { //fade
             textSize(12);
             fill(0);
-            text("Fade: " + memories[selectedMemorySlot].myChase.fade, 160, 125);
+            text("Fade: " + memories[selectedMemorySlot].myChase.ownFade, 160, 125);
             pushMatrix();
               translate(160, 130);
-              memories[selectedMemorySlot].myChase.changeFade(quickSlider("memoryCreationBox:fade", memories[selectedMemorySlot].myChase.fade));
+              memories[selectedMemorySlot].myChase.changeFade(quickSlider("memoryCreationBox:fade", memories[selectedMemorySlot].myChase.ownFade));
             popMatrix();
             
           }

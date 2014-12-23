@@ -210,6 +210,7 @@ class chase { //Begin of chase class--------------------------------------------
   boolean stepHasChanged;
   int fade;
   int finalFade;
+  int ownFade;
   
   
   //----------------------end declaring variables--------------------------------
@@ -245,7 +246,7 @@ class chase { //Begin of chase class--------------------------------------------
     return toReturn;
   }
   
-  String currentFadeMode() {
+  String getFadeModeDesc() {
     String toReturn = "";
     switch(fadeMode) {
       case 1: toReturn = "Own"; break;
@@ -266,6 +267,14 @@ class chase { //Begin of chase class--------------------------------------------
    
   }
   
+  
+  
+  void fadeModeUp() {
+    fadeMode = getNext(fadeMode, 1, 3);
+  }
+  void fadeModeDown() {
+    fadeMode = getReverse(fadeMode, 1, 3);
+  }
   
  
   
