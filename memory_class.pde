@@ -261,7 +261,7 @@ class chase { //Begin of chase class--------------------------------------------
         }
       }
     }
-    presets = new int[a+1];
+    presets = new int[a];
     a = 0;
     for(int i = 0; i < memories.length; i++) {
       if(memories[i].type == 1) {
@@ -275,6 +275,7 @@ class chase { //Begin of chase class--------------------------------------------
     parent.type = 2;
     inputMode = 1;
     outputMode = 1;
+    setBeatModeId(1);
     fade = 30;
   }
   
@@ -292,23 +293,7 @@ class chase { //Begin of chase class--------------------------------------------
      return presets;
   }
   
-  
-  
-  void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
-    boolean next; //boolean which tells do we want to go to next step
-    next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && (nextStepPressed || (keyPressed && key == ' '))));
-    if(next) {
-      for(int i = 0; i < getPresets().length; i++) {
-          loadPreset(getPresets()[i], 255);
-      }
-    }
-    else {
-      for(int i = 0; i < getPresets().length; i++) {
-         loadPreset(getPresets()[i], 0);
-      }
-    }
-    
-  }
+
   
   /*getNext returns always reverse value and checks that 
   if you already are at the smallest value then it goes to biggest value */
@@ -332,6 +317,17 @@ class chase { //Begin of chase class--------------------------------------------
   int getInvertedValue(int val, int lim_low, int lim_hi) {
     int toReturn = 0;
     toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);
+    return toReturn;
+  }
+  
+  boolean trigger() {
+    boolean toReturn = false;
+    if(inputMode == 1) {
+      toReturn = s2l.beat(constrain(getBeatModeId(), 1, 3));
+    }
+    if(inputMode == 2) {
+      toReturn = (nextStepPressed || (keyPressed && key == ' '));
+    }
     return toReturn;
   }
   
@@ -366,11 +362,30 @@ class chase { //Begin of chase class--------------------------------------------
     return toReturn;
   }
   
+  
+    
+  
+  void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
+    boolean next; //boolean which tells do we want to go to next step
+    next = trigger();
+    if(next) {
+      for(int i = 0; i < getPresets().length; i++) {
+          loadPreset(getPresets()[i], 255);
+      }
+    }
+    else {
+      for(int i = 0; i < getPresets().length; i++) {
+         loadPreset(getPresets()[i], 0);
+      }
+    }
+    
+  }
+  
   void beatToMoving() {
     //This function goes through all the presets. When there is beat this goes to next preset
     //There is some problems with this function
     boolean next;
-    next = /* (((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && (nextStepPressed || (keyPressed && key == ' ')))))  && */ !stepHasChanged;
+    next = trigger() && !stepHasChanged;
     if(next) { 
       step = getNext(step, 0, getPresets().length-1);
       brightness1 = 0;
