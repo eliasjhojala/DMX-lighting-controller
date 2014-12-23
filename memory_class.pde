@@ -62,6 +62,10 @@ class memory { //Begin of memory class------------------------------------------
     }
   }
 
+  boolean thisIsChase() {
+    return type == 2;
+  }
+
   
   String getText() {
     String toReturn = "";
@@ -196,6 +200,8 @@ class chase { //Begin of chase class--------------------------------------------
   int inputModeUpLimit = 2; //what is the biggest inputMode which we can use
   int outputModeUpLimit = 2; //what is the biggest outputMode which we can use
   
+  int fadeMode; //1 = from own, 2 = from own*master, 3 = from master
+  
   int[] presets; //all the presets in chase
   
   int step;
@@ -216,6 +222,16 @@ class chase { //Begin of chase class--------------------------------------------
   }
   
   int value;
+  
+    String currentFadeMode() {
+    toReturn = "";
+    switch(myChase.fadeType) {
+      case 1: toReturn = "own";
+      case 2: toReturn = "merged";
+      case 3: toReturn = "master";
+    }
+    return toReturn;
+  }
   
   void draw() {
     value = parent.getValue();
