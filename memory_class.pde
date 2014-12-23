@@ -228,6 +228,7 @@ class chase { //Begin of chase class--------------------------------------------
   String getInputModeDesc() {
     String toReturn = "";
     switch(inputMode) {
+      case 0: toReturn = "inherit"; break;
       case 1: toReturn = "beat"; break;
       case 2: toReturn = "manual"; break;
     }
@@ -237,6 +238,7 @@ class chase { //Begin of chase class--------------------------------------------
   String getOutputModeDesc() {
     String toReturn = "";
     switch(outputMode) {
+      case 0: toReturn = "inherit"; break;
       case 1: toReturn = "steps"; break;
       case 2: toReturn = "eq"; break;
     }
@@ -282,6 +284,7 @@ class chase { //Begin of chase class--------------------------------------------
         void setBeatModeId(int bM) {                                                           //|
           beatModeId = bM;                                                                     //|
           switch(bM) {                                                                         //|
+            case 0: beatMode = "inherit"; break;
             case 1: beatMode = "beat"; break;                                                  //|
             case 2: beatMode = "kick"; break;                                                  //|
             case 3: beatMode = "snare"; break;                                                 //|
