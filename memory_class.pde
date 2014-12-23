@@ -193,12 +193,12 @@ class chase { //Begin of chase class--------------------------------------------
   int inputMode, outputMode; //What is input and what will output look like
   int beatModeId; //1, 2 or 3
   String beatMode; //kick, snare or hat
+ 
   
-  
-  int inputModeDownLimit = 0; //not so useful
-  int outputModeDownLimit = 0; //not useful
-  int inputModeUpLimit = 2; //what is the biggest inputMode which we can use
-  int outputModeUpLimit = 2; //what is the biggest outputMode which we can use
+  int[] inputModeLimit = { 1, 3 };
+  int[] outputModeLimit = { 1, 2 };
+  int[] fadeModeLimit = { 1, 3 };
+  int[] beatModeLimit = { 2, 4 };
   
   int fadeMode; //1 = from own, 2 = from own*master, 3 = from master
   
@@ -246,7 +246,48 @@ class chase { //Begin of chase class--------------------------------------------
     return toReturn;
   }
   
-  String getFadeModeDesc() {
+
+  
+  void draw() {
+    setValue();
+    setFade();
+    output();
+    
+   
+  }
+  
+  void setValue() {
+    value = parent.getValue();
+  }
+  
+  void setFade() {
+    switch(fadeMode) {
+      case 1: fade = ownFade; break;
+      case 2: fade = (ownFade + chaseFade) / 2; break;
+      case 3: fade = chaseFade; break;
+      default: fade = chaseFade;
+    }
+  }
+  
+  void output() {
+    switch(outputMode) {
+      case 1: beatToMoving(); break; 
+      case 2: freqToLight(); break;
+    }
+  }
+  
+  
+  
+  
+  //fadeMode functions
+  void fadeModeUp() {
+    fadeMode = getNext(fadeMode, fadeModeLimit[0], fadeModeLimit[1]);
+  }
+  void fadeModeDown() {
+    fadeMode = getReverse(fadeMode, fadeModeLimit[0], fadeModeLimit[1]);
+  }
+  
+    String getFadeModeDesc() {
     String toReturn = "";
     switch(fadeMode) {
       case 1: toReturn = "Own"; break;
@@ -255,68 +296,46 @@ class chase { //Begin of chase class--------------------------------------------
     }
     return toReturn;
   }
-  
-  void draw() {
-    value = parent.getValue();
-    fade = chaseFade;
-    finalFade = fade * fade / 255;
-    switch(outputMode) {
-      case 1: beatToMoving(); break; 
-      case 2: freqToLight(); break;
-    }
-   
-  }
-  
-  
-  
-  void fadeModeUp() {
-    fadeMode = getNext(fadeMode, 1, 3);
-  }
-  void fadeModeDown() {
-    fadeMode = getReverse(fadeMode, 1, 3);
-  }
+  //End of fadeMode functions
   
  
-  
-
-  
-  //-----------------FUNCTIONS TO SET AND GET s2l BEATMODE-------------------------------------//|
-                                                                                               //|
-        void setBeatMode(String bM) {                                                          //|
-          beatMode = bM;                                                                       //|
-          if(bM.equals("beat")) { beatModeId = 1; }                                            //|
-          if(bM.equals("kick")) { beatModeId = 2; }                                            //|
-          if(bM.equals("snare")) { beatModeId = 3; }                                           //|
-          if(bM.equals("hat")) { beatModeId = 4; }                                             //|
-        }                                                                                      //|
-                                                                                               //|
-        void setBeatModeId(int bM) {                                                           //|
-          beatModeId = bM;                                                                     //|
-          switch(bM) {                                                                         //|
+ 
+    
+   //beatMode functions                                                                                        
+        void setBeatMode(String bM) {                                                          
+          beatMode = bM;                                                                       
+          if(bM.equals("beat")) { beatModeId = 1; }                                            
+          if(bM.equals("kick")) { beatModeId = 2; }                                            
+          if(bM.equals("snare")) { beatModeId = 3; }                                           
+          if(bM.equals("hat")) { beatModeId = 4; }                                             
+        }                                                                                      
+                                                                                               
+        void setBeatModeId(int bM) {                                                           
+          beatModeId = bM;                                                                     
+          switch(bM) {                                                                         
             case 0: beatMode = "inherit"; break;
-            case 1: beatMode = "beat"; break;                                                  //|
-            case 2: beatMode = "kick"; break;                                                  //|
-            case 3: beatMode = "snare"; break;                                                 //|
-            case 4: beatMode = "hat"; break;                                                   //|
-          }                                                                                    //|
-        }                                                                                      //|
-                                                                                               //|
-        String getBeatMode() {                                                                 //|
-          return beatMode;                                                                     //|
-        }                                                                                      //|
-                                                                                               //|
-        int getBeatModeId() {                                                                  //|
-          return beatModeId;                                                                   //|
-        }                                                                                      //|
-                                                                                               //|
-        void beatModeUp() {                                                                    //|
-          setBeatModeId(getNext(getBeatModeId(), 1, 4));                                       //|
-        }                                                                                      //|
-        void beatModeDown() {                                                                  //|
-          setBeatModeId(getReverse(getBeatModeId(), 1, 4));                                    //|
-        }                                                                                      //|
-                                                                                               //|
-  //-----------------FUNCTIONS TO SET AND GET s2l BEATMODE END---------------------------------//|
+            case 1: beatMode = "beat"; break;                                                  
+            case 2: beatMode = "kick"; break;                                                  
+            case 3: beatMode = "snare"; break;                                                 
+            case 4: beatMode = "hat"; break;                                                   
+          }                                                                                    
+        }                                                                                      
+                                                                                               
+        String getBeatMode() {                                                                 
+          return beatMode;                                                                     
+        }                                                                                      
+                                                                                               
+        int getBeatModeId() {                                                                  
+          return beatModeId;                                                                   
+        }                                                                                      
+                                                                                               
+        void beatModeUp() {                                                                    
+          setBeatModeId(getNext(getBeatModeId(), beatModeLimit[0], beatModeLimit[1]));                                       
+        }                                                                                      
+        void beatModeDown() {                                                                  
+          setBeatModeId(getReverse(getBeatModeId(), beatModeLimit[0], beatModeLimit[1]));                                    
+        }                                                                                      
+   //End of beatMode functions
   
   
   
@@ -481,39 +500,25 @@ class chase { //Begin of chase class--------------------------------------------
   
   
   void changeInputMode(int v) {
-    inputMode = constrain(v, inputModeDownLimit, inputModeUpLimit);
+    inputMode = constrain(v, inputModeLimit[0], inputModeLimit[1]);
   }
   void changeOutputMode(int v) {
-    outputMode = constrain(v, outputModeDownLimit, outputModeUpLimit);
+    outputMode = constrain(v, outputModeLimit[0], outputModeLimit[1]);
   }
   
   void inputModeUp() {
-    changeChaseMode(true, true);
+    inputMode = getNext(inputMode, inputModeLimit[0], inputModeLimit[1]);
   }
   void inputModeDown() {
-    changeChaseMode(true, false);
+    inputMode = getReverse(inputMode, inputModeLimit[0], inputModeLimit[1]);
   }
   void outputModeUp() {
-    changeChaseMode(false, true);
+    outputMode = getNext(outputMode, outputModeLimit[0], outputModeLimit[1]);
   }
   void outputModeDown() {
-    changeChaseMode(false, false);
+    outputMode = getReverse(outputMode, outputModeLimit[0], outputModeLimit[1]);
   }
-  
-  void changeChaseMode(boolean input, boolean next) {
-    if(input) {
-      if(next) { inputMode++; }
-      else { inputMode--; }
-      if(inputMode > inputModeUpLimit) { inputMode = inputModeDownLimit; }
-      if(inputMode < inputModeDownLimit) { inputMode = inputModeUpLimit; }
-    }
-    else {
-      if(next) { outputMode++; }
-      else { outputMode--; }
-      if(outputMode > outputModeUpLimit) { outputMode = outputModeDownLimit; }
-      if(outputMode < outputModeDownLimit) { outputMode = outputModeUpLimit; }
-    }
-  }
+
 } //end of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 

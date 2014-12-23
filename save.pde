@@ -117,12 +117,7 @@ void saveAllData() {
         //INSIDE SAVING MEMORIES
         
         { //UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   
-          { //Constants which are not really important to save
-            saveDataMainCommands(str(memories[i].myChase.inputModeDownLimit), "memories[i].myChase.inputModeDownLimit", "1", str(i), "-");
-            saveDataMainCommands(str(memories[i].myChase.outputModeDownLimit), "memories[i].myChase.outputModeDownLimit", "1", str(i), "-");
-            saveDataMainCommands(str(memories[i].myChase.inputModeUpLimit), "memories[i].myChase.inputModeUpLimit", "1", str(i), "-");
-            saveDataMainCommands(str(memories[i].myChase.outputModeUpLimit), "memories[i].myChase.outputModeUpLimit", "1", str(i), "-");
-          } //End of saving unimportant constant
+
           
           { //These are not so important variables
             saveDataMainCommands(str(memories[i].myChase.step), "memories[i].myChase.step", "1", str(i), "-");
