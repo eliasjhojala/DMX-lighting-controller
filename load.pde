@@ -91,9 +91,41 @@ void loadAllData() {
     
     
     
+  
+    
+    for(int ijk = 0; ijk < saveOptionButtonVariables.length; ijk++) {
+      for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[ijk], "variable_name")) {
+        int mN = int(row.getString("1D"));
+        if(memories[mN] == null) { 
+          memories[mN] = new memory(); 
+          memories[mN].whatToSave = new boolean[fixtures.length]; 
+        }
+      }
+    }
+    
+    for (TableRow row : table.findRows("memories:whatToSave", "variable_name")) {
+      int mN = int(row.getString("1D"));
+      int fN = int(row.getString("2D"));
+      boolean v = boolean(row.getString("value"));
+      memories[mN].whatToSave[fN] = v;
+    }
+    
+    for(int ijk = 0; ijk < saveOptionButtonVariables.length; ijk++) {
+      for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[ijk], "variable_name")) {
+        int mN = int(row.getString("1D"));
+        int fN = int(row.getString("2D"));
+        int v = int(row.getString("value"));
+        if(ijk == 0 && memories[mN].whatToSave[0]) { memories[mN].repOfFixtures[fN].dimmer = v; }
+      }
+    }
     
     
-    
+    for (TableRow row : table.findRows("memories:chase", "variable_name")) {
+      int mN = int(row.getString("1D"));
+      int fN = int(row.getString("2D"));
+      boolean v = boolean(row.getString("value"));
+      memories[mN].whatToSave[fN] = v;
+    }
     
     
     
