@@ -209,6 +209,7 @@ class chase { //Begin of chase class--------------------------------------------
   int brightness1;
   boolean stepHasChanged;
   int fade;
+  int finalFade;
   
   
   //----------------------end declaring variables--------------------------------
@@ -235,9 +236,9 @@ class chase { //Begin of chase class--------------------------------------------
   String currentFadeMode() {
     String toReturn = "";
     switch(fadeMode) {
-      case 1: toReturn = "Own";
-      case 2: toReturn = "Scaled Master";
-      case 3: toReturn = "Inherit";
+      case 1: toReturn = "Own"; break;
+      case 2: toReturn = "Scaled Master"; break;
+      case 3: toReturn = "Inherit"; break;
     }
     return toReturn;
   }
@@ -245,11 +246,14 @@ class chase { //Begin of chase class--------------------------------------------
   void draw() {
     value = parent.getValue();
     fade = chaseFade;
-    if(outputMode == 1) {
-      /*beatToMoving();*/ freqToLight();
+    finalFade = fade * fade / 255;
+    switch(outputMode) {
+      case 1: beatToMoving(); break; 
+      case 2: freqToLight(); break;
     }
    
   }
+  
   
  
   
@@ -279,6 +283,13 @@ class chase { //Begin of chase class--------------------------------------------
                                                                                                //|
         int getBeatModeId() {                                                                  //|
           return beatModeId;                                                                   //|
+        }                                                                                      //|
+                                                                                               //|
+        void beatModeUp() {                                                                    //|
+          setBeatModeId(getNext(getBeatModeId(), 1, 3));                                       //|
+        }                                                                                      //|
+        void beatModeDown() {                                                                  //|
+          setBeatModeId(getReverse(getBeatModeId(), 1, 3));                                    //|
         }                                                                                      //|
                                                                                                //|
   //-----------------FUNCTIONS TO SET AND GET s2l BEATMODE END---------------------------------//|
