@@ -358,3 +358,59 @@ int quickSlider(String mouseLockID, int value) {
     
     return value;
 }
+
+
+
+
+//Some functions which are really useful tex in chase
+
+    /*getNext returns always reverse value and checks that 
+    if you already are at the smallest value then it goes to biggest value */
+    int getReverse(int current, int lim_low, int lim_hi) {
+      int toReturn = 0;
+      if(current > lim_low) { toReturn = current - 1; }
+      if(current == lim_low) { toReturn = lim_hi; }
+      return toReturn;
+    }
+    
+    /*getNext returns always next value and checks that 
+    if you already are at the biggest value then it goes to smallest value */
+    int getNext(int current, int lim_low, int lim_hi) {
+      int toReturn = 0;
+      if(current < lim_hi) { toReturn = current + 1; }
+      if(current == lim_hi) { toReturn = lim_low; }
+      return toReturn;
+    }
+    
+    //getInvertedValue returns value inverted (0 -> 255, 255 -> 0)
+    int getInvertedValue(int val, int lim_low, int lim_hi) {
+      int toReturn = 0;
+      toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);
+      return toReturn;
+    }
+  
+    
+    //defualtConstrain is used to constrain values between 0 and 255, because that is the range used in DMX.
+    int defaultConstrain(int val) {
+      int toReturn = 0;
+      toReturn = constrain(val, 0, 255);
+      return toReturn;
+    }
+    
+    //iMap is function which actually is same as map but it returns value as int
+    int iMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
+      int toReturn = 0;
+      toReturn = int(map(val, in_low, in_hi, out_low, out_hi));
+      return toReturn;
+    }
+    
+    //rMap is function which actually is same as map but it returns rounded value as int
+    int rMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
+      int toReturn = 0;
+      toReturn = round(map(val, in_low, in_hi, out_low, out_hi));
+      return toReturn;
+    }
+  
+//End of some functions which are really useful tex in chase
+  
+  

@@ -114,13 +114,6 @@ void channelsToDim() {
     }
     
     //End placing data to DMX and memory arrays------------------------------------------------------------------------------------------------------------------------
-    
-    //DMX button check
-    if(enttecDMXchannels > 24) {
-      for(int iii = 1; iii < 12; iii++) {
-        dmxButtonPressed(iii, enttecDMXchannel[iii+24]);
-      }
-    }
-    //End checking dmxbuttons
+
   }
 }

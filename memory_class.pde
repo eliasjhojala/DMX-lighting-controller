@@ -190,8 +190,8 @@ class memory { //Begin of memory class------------------------------------------
 
 class chase { //Begin of chase class--------------------------------------------------------------------------------------------------------------------------------------
   //---------------------init all the variables--------------------------------
-  int inputMode, outputMode; //What is input and what will output look like
-  int beatModeId; //1, 2 or 3
+  int value;
+  int inputMode, outputMode, beatModeId; //What is input and what will output look like
   String beatMode; //kick, snare or hat
  
   
@@ -204,13 +204,9 @@ class chase { //Begin of chase class--------------------------------------------
   
   int[] presets; //all the presets in chase
   
-  int step;
-  int brightness;
-  int brightness1;
+  int step, brightness, brightness1;
   boolean stepHasChanged;
-  int fade;
-  int finalFade;
-  int ownFade;
+  int fade, ownFade;
   
   
   //----------------------end declaring variables--------------------------------
@@ -222,80 +218,48 @@ class chase { //Begin of chase class--------------------------------------------
   chase(memory parent) {
     this.parent = parent;
   }
-  
-  int value;
-  
-  
-  String getInputModeDesc() {
-    String toReturn = "";
-    switch(inputMode) {
-      case 0: toReturn = "inherit"; break;
-      case 1: toReturn = "beat"; break;
-      case 2: toReturn = "manual"; break;
-    }
-    return toReturn;
-  }
-  
-  String getOutputModeDesc() {
-    String toReturn = "";
-    switch(outputMode) {
-      case 0: toReturn = "inherit"; break;
-      case 1: toReturn = "steps"; break;
-      case 2: toReturn = "eq"; break;
-    }
-    return toReturn;
-  }
-  
 
   
   void draw() {
     setValue();
     setFade();
     output();
-    
-   
   }
   
   void setValue() {
     value = parent.getValue();
   }
-  
-  void setFade() {
-    switch(fadeMode) {
-      case 1: fade = ownFade; break;
-      case 2: fade = (ownFade + chaseFade) / 2; break;
-      case 3: fade = chaseFade; break;
-      default: fade = chaseFade;
-    }
-  }
-  
-  void output() {
-    switch(outputMode) {
-      case 1: beatToMoving(); break; 
-      case 2: freqToLight(); break;
-    }
-  }
-  
-  
-  
+
   
   //fadeMode functions
-  void fadeModeUp() {
-    fadeMode = getNext(fadeMode, fadeModeLimit[0], fadeModeLimit[1]);
-  }
-  void fadeModeDown() {
-    fadeMode = getReverse(fadeMode, fadeModeLimit[0], fadeModeLimit[1]);
-  }
-  
-    String getFadeModeDesc() {
-    String toReturn = "";
-    switch(fadeMode) {
-      case 1: toReturn = "Own"; break;
-      case 2: toReturn = "Scaled Master"; break;
-      case 3: toReturn = "Inherit"; break;
-    }
-    return toReturn;
-  }
+      void changeFade(int val) {
+        ownFade = defaultConstrain(val);
+      }
+      void fadeModeUp() {
+        fadeMode = getNext(fadeMode, fadeModeLimit[0], fadeModeLimit[1]);
+      }
+      void fadeModeDown() {
+        fadeMode = getReverse(fadeMode, fadeModeLimit[0], fadeModeLimit[1]);
+      }
+      
+        String getFadeModeDesc() {
+        String toReturn = "";
+        switch(fadeMode) {
+          case 1: toReturn = "Own"; break;
+          case 2: toReturn = "Scaled Master"; break;
+          case 3: toReturn = "Inherit"; break;
+        }
+        return toReturn;
+      }
+      
+        void setFade() {
+          switch(fadeMode) {
+            case 1: fade = ownFade; break;
+            case 2: fade = (ownFade + chaseFade) / 2; break;
+            case 3: fade = chaseFade; break;
+            default: fade = chaseFade;
+          }
+        }
   //End of fadeMode functions
   
  
@@ -336,6 +300,70 @@ class chase { //Begin of chase class--------------------------------------------
           setBeatModeId(getReverse(getBeatModeId(), beatModeLimit[0], beatModeLimit[1]));                                    
         }                                                                                      
    //End of beatMode functions
+   
+   
+   
+   //input and output mode functions
+        void changeInputMode(int v) {
+          inputMode = constrain(v, inputModeLimit[0], inputModeLimit[1]);
+        }
+        void changeOutputMode(int v) {
+          outputMode = constrain(v, outputModeLimit[0], outputModeLimit[1]);
+        }
+        
+        void inputModeUp() {
+          inputMode = getNext(inputMode, inputModeLimit[0], inputModeLimit[1]);
+        }
+        void inputModeDown() {
+          inputMode = getReverse(inputMode, inputModeLimit[0], inputModeLimit[1]);
+        }
+        void outputModeUp() {
+          outputMode = getNext(outputMode, outputModeLimit[0], outputModeLimit[1]);
+        }
+        void outputModeDown() {
+          outputMode = getReverse(outputMode, outputModeLimit[0], outputModeLimit[1]);
+        }
+        
+        void output() {
+          switch(outputMode) {
+            case 1: beatToMoving(); break; 
+            case 2: freqToLight(); break;
+          }
+        }
+        
+        String getOutputModeDesc() {
+          String toReturn = "";
+          switch(outputMode) {
+            case 0: toReturn = "inherit"; break;
+            case 1: toReturn = "steps"; break;
+            case 2: toReturn = "eq"; break;
+          }
+          return toReturn;
+        }
+        
+
+        String getInputModeDesc() {
+          String toReturn = "";
+          switch(inputMode) {
+            case 0: toReturn = "inherit"; break;
+            case 1: toReturn = "beat"; break;
+            case 2: toReturn = "manual"; break;
+            case 3: toReturn = "auto"; break;
+          }
+          return toReturn;
+        }
+        
+          boolean trigger() {
+            boolean toReturn = false;
+            switch(inputMode) {
+              case 1: toReturn = s2l.beat(constrain(getBeatModeId(), beatModeLimit[0], beatModeLimit[1])); break;
+              case 2: toReturn = (nextStepPressed || (keyPressed && key == ' ')); break;
+              case 3: toReturn = true; break;
+            }
+            return toReturn;
+          }
+   //End of input and output mode functions
+   
   
   
   
@@ -382,73 +410,6 @@ class chase { //Begin of chase class--------------------------------------------
      //here function which returns all the presets in this chase
      return presets;
   }
-  
-
-  
-  /*getNext returns always reverse value and checks that 
-  if you already are at the smallest value then it goes to biggest value */
-  int getReverse(int current, int lim_low, int lim_hi) {
-    int toReturn = 0;
-    if(current > lim_low) { toReturn = current - 1; }
-    if(current == lim_low) { toReturn = lim_hi; }
-    return toReturn;
-  }
-  
-  /*getNext returns always next value and checks that 
-  if you already are at the biggest value then it goes to smallest value */
-  int getNext(int current, int lim_low, int lim_hi) {
-    int toReturn = 0;
-    if(current < lim_hi) { toReturn = current + 1; }
-    if(current == lim_hi) { toReturn = lim_low; }
-    return toReturn;
-  }
-  
-  //getInvertedValue returns value inverted (0 -> 255, 255 -> 0)
-  int getInvertedValue(int val, int lim_low, int lim_hi) {
-    int toReturn = 0;
-    toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);
-    return toReturn;
-  }
-  
-  boolean trigger() {
-    boolean toReturn = false;
-    if(inputMode == 1) {
-      toReturn = s2l.beat(constrain(getBeatModeId(), 1, 3));
-    }
-    if(inputMode == 2) {
-      toReturn = (nextStepPressed || (keyPressed && key == ' '));
-    }
-    return toReturn;
-  }
-  
-  
-  
-  void changeFade(int val) {
-    fade = defaultConstrain(val);
-  }
-  
-  //defualtConstrain is used to constrain values between 0 and 255, because that is the range used in DMX.
-  int defaultConstrain(int val) {
-    int toReturn = 0;
-    toReturn = constrain(val, 0, 255);
-    return toReturn;
-  }
-  
-  //iMap is function which actually is same as map but it returns value as int
-  int iMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
-    int toReturn = 0;
-    toReturn = int(map(val, in_low, in_hi, out_low, out_hi));
-    return toReturn;
-  }
-  
-  //rMap is function which actually is same as map but it returns rounded value as int
-  int rMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
-    int toReturn = 0;
-    toReturn = round(map(val, in_low, in_hi, out_low, out_hi));
-    return toReturn;
-  }
-  
-  
     
   
   void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
@@ -497,27 +458,7 @@ class chase { //Begin of chase class--------------------------------------------
       loadPreset(getPresets()[i], s2l.freq(iMap(i, 0, getPresets().length, 0, s2l.getFreqMax())));
     }
   }
-  
-  
-  void changeInputMode(int v) {
-    inputMode = constrain(v, inputModeLimit[0], inputModeLimit[1]);
-  }
-  void changeOutputMode(int v) {
-    outputMode = constrain(v, outputModeLimit[0], outputModeLimit[1]);
-  }
-  
-  void inputModeUp() {
-    inputMode = getNext(inputMode, inputModeLimit[0], inputModeLimit[1]);
-  }
-  void inputModeDown() {
-    inputMode = getReverse(inputMode, inputModeLimit[0], inputModeLimit[1]);
-  }
-  void outputModeUp() {
-    outputMode = getNext(outputMode, outputModeLimit[0], outputModeLimit[1]);
-  }
-  void outputModeDown() {
-    outputMode = getReverse(outputMode, outputModeLimit[0], outputModeLimit[1]);
-  }
+
 
 } //end of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
 

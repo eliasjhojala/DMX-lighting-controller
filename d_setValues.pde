@@ -11,17 +11,7 @@ int[] DMXforOutput = new int[512];
 
 void setDimAndMemoryValuesAtEveryDraw() {
   dimCheckFinished = false;
-  
-  
-  /*for(int i = 0; i < fixtures.length; i++) {
-      int[] dmxFromFixture = fixtures[i].getDMX();
-      for(int ij = 0; ij < dmxFromFixture.length; ij++) {
-        valueToDmxTemp[fixtures[i].channelStart+ij][i] = dmxFromFixture[ij];
-      }
-  }
-  for(int i = 0; i < fixtures.length; i++) {
-    valueToDmx[i] = max(valueToDmxTemp[i]);
-  }*/
+
   
   boolean DMXChangedOverall = false;
   for(fixture fix : fixtures) {
