@@ -128,37 +128,155 @@ void loadAllData() {
     }
     
     
-    
-    
-    
-    
-//    
-//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[0], "variable_name")) {
-//      int mN = int(row.getString("1D"));
-//      int fN = int(row.getString("2D"));
-//      int v = int(row.getString("value"));
-//       if(mN < memories.length) {
-//         if(memories[mN] != null) {
-//           if(fN < memories[mN].repOfFixtures.length) {
-//             if(memories[mN].repOfFixtures[fN] != null) {
-//               memories[mN].repOfFixtures[fN].dimmer = v;
-//             }
-//             else {
-//               memories[mN].repOfFixtures[fN] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//             }
-//           }
-//         }
-//         else {
-//           memories[mN] = new memory();
-//           memories[mN].repOfFixtures[fN] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//           memories[mN].repOfFixtures[fN].dimmer = v;
-//         }
-//       }
-//     }
-//      
-//      
-//      
-//      
+ 
+
+int memoriesLength = 0;
+
+for (TableRow row : table.findRows("memories.length", "variable_name")) {
+  int v = int(row.getString("value"));
+  memoriesLength = v;
+}
+
+int[] repOfFixturesLength = new int[memoriesLength];
+
+for (TableRow row : table.findRows("memories[i].repOfFixtures.length", "variable_name")) {
+  int v = int(row.getString("value"));
+  int D1 = int(row.getString("1D"));
+  repOfFixturesLength[D1] = v;
+}
+
+for(int i = 0; i < memoriesLength; i++) {
+  memories[i] = new memory();
+  memories[i].repOfFixtures = new fixture[repOfFixturesLength[i]];
+  for(int ij = 0; ij < repOfFixturesLength[i]; ij++) {
+    memories[i].repOfFixtures[ij] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  }
+}
+
+//memory objects and repOfFixtures objects are now created but NOT myChase.presets objects
+
+
+int[] myChasePresetsLength = new int[memoriesLength];
+
+for (TableRow row : table.findRows("memories[i].myChase.presets.length", "variable_name")) {
+  int v = int(row.getString("value"));
+  int D1 = int(row.getString("1D"));
+  myChasePresetsLength[D1] = v;
+}
+
+for(int i = 0; i < memoriesLength; i++) {
+  memories[i] = new memory();
+  for(int ij = 0; ij < myChasePresetsLength[i]; ij++) {
+    memories[i].myChase.presets = new int[myChasePresetsLength[i]];
+  }
+}
+
+//Now also myChase.presets objects are created
+
+
+
+for (TableRow row : table.findRows("memories[i].myChase.presets[ij]", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int ij = int(row.getString("2D"));
+  int v = int(row.getString("value"));
+  memories[i].myChase.presets[ij] = v;
+}
+
+for (TableRow row : table.findRows("memories[i].myChase.inputMode", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int v = int(row.getString("value"));
+  memories[i].myChase.inputMode = v;
+}
+
+for (TableRow row : table.findRows("memories[i].myChase.outputMode", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int v = int(row.getString("value"));
+  memories[i].myChase.outputMode = v;
+}
+
+for (TableRow row : table.findRows("memories[i].myChase.beatModeId", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int v = int(row.getString("value"));
+  memories[i].myChase.beatModeId = v;
+}
+
+for (TableRow row : table.findRows("memories[i].myChase.beatMode", "variable_name")) {
+  int i = int(row.getString("1D"));
+  String v = row.getString("value");
+  memories[i].myChase.beatMode = v;
+}
+
+for (TableRow row : table.findRows("memories[i].repOfFixtures[j].dimmer", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int j = int(row.getString("2D"));
+  int v = int(row.getString("value"));
+  memories[i].repOfFixtures[j].dimmer = v;
+}
+
+for (TableRow row : table.findRows("memories[i].repOfFixtures[j].colorWheel", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int j = int(row.getString("2D"));
+  int v = int(row.getString("value"));
+  memories[i].repOfFixtures[j].colorWheel = v;
+}
+
+for (TableRow row : table.findRows("memories[i].repOfFixtures[j].goboWheel", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int j = int(row.getString("2D"));
+  int v = int(row.getString("value"));
+  memories[i].repOfFixtures[j].goboWheel = v;
+}
+
+for (TableRow row : table.findRows("memories[i].repOfFixtures[j].goboRotation", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int j = int(row.getString("2D"));
+  int v = int(row.getString("value"));
+  memories[i].repOfFixtures[j].goboRotation = v;
+}
+
+for (TableRow row : table.findRows("memories[i].repOfFixtures[j].shutter", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int j = int(row.getString("2D"));
+  int v = int(row.getString("value"));
+  memories[i].repOfFixtures[j].shutter = v;
+}
+
+for (TableRow row : table.findRows("memories[i].repOfFixtures[j].pan", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int j = int(row.getString("2D"));
+  int v = int(row.getString("value"));
+  memories[i].repOfFixtures[j].pan = v;
+}
+
+for (TableRow row : table.findRows("memories[i].repOfFixtures[j].tilt", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int j = int(row.getString("2D"));
+  int v = int(row.getString("value"));
+  memories[i].repOfFixtures[j].tilt = v;
+}
+
+
+for (TableRow row : table.findRows("memories[i].whatToSave[ij]", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int j = int(row.getString("2D"));
+  boolean v = boolean(row.getString("value"));
+  memories[i].whatToSave[j] = v;
+}
+
+for (TableRow row : table.findRows("memories[i].type", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int v = int(row.getString("value"));
+  memories[i].type = v;
+}
+
+for (TableRow row : table.findRows("memories[i].value", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int v = int(row.getString("value"));
+  memories[i].value = v;
+}
+
+
+
       
  
       

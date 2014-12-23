@@ -57,6 +57,9 @@ class memory { //Begin of memory class------------------------------------------
   
   memory() {
     myChase = new chase(this);
+    for(int i = 0; i < fixtures.length; i++) {
+      repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    }
   }
 
   
@@ -194,6 +197,14 @@ class chase { //Begin of chase class--------------------------------------------
   int outputModeUpLimit = 2; //what is the biggest outputMode which we can use
   
   int[] presets; //all the presets in chase
+  
+  int step;
+  int brightness;
+  int brightness1;
+  boolean stepHasChanged;
+  int fade;
+  
+  
   //----------------------end initing variables--------------------------------
   
   
@@ -210,7 +221,7 @@ class chase { //Begin of chase class--------------------------------------------
     value = parent.getValue();
     fade = chaseFade;
     if(outputMode == 1) {
-      beatToMoving();
+      /*beatToMoving();*/ freqToLight();
     }
    
   }
@@ -283,7 +294,7 @@ class chase { //Begin of chase class--------------------------------------------
   and the memory we're trying to control is a preset. */
   void loadPreset(int num, int val) {
     if(parent.type == 2) {
-        memories[num].setValue(rMap(val, 0, 255, 0, value));
+        memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
     }
   }
   
@@ -331,11 +342,7 @@ class chase { //Begin of chase class--------------------------------------------
     return toReturn;
   }
   
-  int step;
-  int brightness;
-  int brightness1;
-  boolean stepHasChanged;
-  int fade;
+  
   
   void changeFade(int val) {
     fade = defaultConstrain(val);
@@ -487,8 +494,9 @@ class soundDetect { //----------------------------------------------------------
   
   
   int freq(int i) {
+    fft.forward( in.mix );
     int toReturn = 0;
-    toReturn = round(fft.getBand(i));
+    toReturn = round(fft.getBand(i)*100);
     return toReturn;
     //command to get  right freq from fft or something like it. 
     //This functions should be done now.
