@@ -90,13 +90,16 @@ class memory { //Begin of memory class------------------------------------------
     }
   }
   void chase() {
-    myChase.draw();
+    if(value > 0) {
+       myChase.draw();
+    }
   }
   void grandMaster() {
     //function to adjust grandMaster
     grandMaster = value;
   }
   void fade() {
+    chaseFade = value;
   }
   void unknown() {
   }
@@ -184,6 +187,7 @@ class chase { //Begin of chase class--------------------------------------------
   int beatModeId; //1, 2 or 3
   String beatMode; //kick, snare or hat
   
+  
   int inputModeDownLimit = 0; //not so useful
   int outputModeDownLimit = 0; //not useful
   int inputModeUpLimit = 2; //what is the biggest inputMode which we can use
@@ -200,11 +204,18 @@ class chase { //Begin of chase class--------------------------------------------
     this.parent = parent;
   }
   
+  int value;
+  
   void draw() {
+    value = parent.getValue();
+    fade = chaseFade;
     if(outputMode == 1) {
       beatToMoving();
     }
+   
   }
+  
+ 
   
 
   
@@ -264,14 +275,14 @@ class chase { //Begin of chase class--------------------------------------------
     parent.type = 2;
     inputMode = 1;
     outputMode = 1;
-    fade = 100;
+    fade = 30;
   }
   
   /* This function checks that this memory is a chase 
   and the memory we're trying to control is a preset. */
   void loadPreset(int num, int val) {
     if(parent.type == 2) {
-        memories[num].setValue(val);
+        memories[num].setValue(rMap(val, 0, 255, 0, value));
     }
   }
   
@@ -326,6 +337,7 @@ class chase { //Begin of chase class--------------------------------------------
   
   int step;
   int brightness;
+  int brightness1;
   boolean stepHasChanged;
   int fade;
   
@@ -358,18 +370,19 @@ class chase { //Begin of chase class--------------------------------------------
     //This function goes through all the presets. When there is beat this goes to next preset
     //There is some problems with this function
     boolean next;
-    next = ((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && (nextStepPressed || (keyPressed && key == ' '))));
+    next = /* (((inputMode == 1 && s2l.beat(1)) || (inputMode == 2 && (nextStepPressed || (keyPressed && key == ' ')))))  && */ !stepHasChanged;
     if(next) { 
       step = getNext(step, 0, getPresets().length-1);
-      brightness = 0;
+      brightness1 = 0;
       stepHasChanged = true;
     }
     if(stepHasChanged) {
-      brightness+=getInvertedValue(fade, 0, 255);
-      if(brightness >= 255) {
-        brightness = 255;
+      brightness1 += 1;
+      if(brightness1 >= fade) {
+        brightness1 = fade;
         stepHasChanged = false;
       }
+      brightness = defaultConstrain(iMap(brightness1, 0, fade, 0, 255));
     }
     int s = step;
     int b = brightness;
