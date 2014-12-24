@@ -573,12 +573,31 @@ class quickChase {
      
      
      int[] fixturesInChaseTemp = new int[fixturesInChase.length];
-     for(int i = 0; i < fixturesInChase.length; i++) {
-       fixturesInChaseTemp[i] = fixturesInChase[i];
-     }
+     arrayCopy(fixturesInChase, fixturesInChaseTemp);
      for(int i = 0; i < fixturesInChase.length; i++) {
        fixturesInChase[i] = fixturesInChaseTemp[sortIndex(x)[i]];
      }
+     
+     a = 0;
+     for(int i = 0; i < fixturesInChase.length; i++) {
+       if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
+         a++;
+       }
+     }
+     
+     fixturesInChaseTemp = new int[a];
+     a = 0;
+     for(int i = 0; i < fixturesInChase.length; i++) {
+       if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
+         fixturesInChaseTemp[a] = fixturesInChase[i];
+         a++;
+       }
+     }
+     
+     fixturesInChase = new int[fixturesInChaseTemp.length];
+     
+     arrayCopy(fixturesInChaseTemp, fixturesInChase);
+     
      
      println("READY");
      println(fixturesInChase);

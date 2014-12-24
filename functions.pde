@@ -424,6 +424,11 @@ int quickSlider(String mouseLockID, int value) {
       toReturn = round(map(val, in_low, in_hi, out_low, out_hi));
       return toReturn;
     }
+    
+    int onlyPositive(int val) {
+      if(val < 0) { val = 0; }
+      return val;
+    }
   
 //End of some functions which are really useful tex in chase
   
