@@ -329,6 +329,7 @@ class memoryCreationBox {
           }
         break;
         case 1: //Chase
+          if(memories[selectedMemorySlot].myChase != null) {
           textAlign(LEFT);
           { //Chase Input
             text("Input Mode:", 10, 125);
@@ -431,6 +432,7 @@ class memoryCreationBox {
               memories[selectedMemorySlot].myChase.changeFade(quickSlider("memoryCreationBox:fade", memories[selectedMemorySlot].myChase.ownFade));
             popMatrix();
             
+          }
           }
         break;
       }
