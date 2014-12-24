@@ -14,7 +14,7 @@ void loadFixtureMemory(int number, int value) {
 }
 
   soundDetect s2l;
-  memory[] memories = new memory[100];
+  memory[] memories = new memory[1000];
 void createMemoryObjects() {
   s2l = new soundDetect();
   for (memory temp : memories) temp = new memory();
@@ -117,6 +117,7 @@ class memory { //Begin of memory class------------------------------------------
   int getValue() {
     return value;
   }
+  
   
   
   void savePreset(boolean[] newWhatToSave) {
@@ -541,3 +542,79 @@ class soundDetect { //----------------------------------------------------------
 } //en of soundDetect class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+
+class quickChase {
+  quickChase() {
+  }
+  
+ int[] fixturesInChase;
+ 
+ void create() {
+     int a = 0;
+     
+     for(int i = 0; i < fixtures.length; i++) {
+       if(fixtures[i].selected) {
+         a++;
+       }
+     }
+     fixturesInChase = new int[a];
+
+     int[] x = new int[a];
+     a = 0;
+     for(int i = 0; i < fixtures.length; i++) {
+       if(fixtures[i].selected) {
+         fixturesInChase[a] = i;
+         a++;
+       }
+     }
+     for(int i = 0; i < fixturesInChase.length; i++) {
+       x[i] = fixtures[fixturesInChase[i]].locationOnScreenX;
+     }
+     
+     
+     int[] fixturesInChaseTemp = new int[fixturesInChase.length];
+     for(int i = 0; i < fixturesInChase.length; i++) {
+       fixturesInChaseTemp[i] = fixturesInChase[i];
+     }
+     for(int i = 0; i < fixturesInChase.length; i++) {
+       fixturesInChase[i] = fixturesInChaseTemp[sortIndex(x)[i]];
+     }
+     
+     println("READY");
+     println(fixturesInChase);
+     
+     
+
+ }
+ 
+      int[] sortIndex(int[] toSort) {
+       int[] toReturn = new int[toSort.length];
+       int[] sorted = new int[toSort.length];
+       boolean[] used = new boolean[toSort.length];
+       
+       sorted = sort(toSort);
+       
+       for(int i = 0; i < toSort.length; i++) {
+         for(int j = 0; j < sorted.length; j++) {
+           if(toSort[i] == sorted[j] && !used[j]) {
+             toReturn[j] = i;
+             used[j] = true;
+             break;
+           }
+         }
+       }
+       return toReturn;
+     }
+ 
+ 
+ int ij = 0;
+ void load() {
+   ij++; 
+   if(ij >= fixturesInChase.length) { ij = 0; }
+   fixtures[fixturesInChase[ij]].dimmerPresetTarget = 255;
+   delay(500);
+   fixtures[fixturesInChase[ij]].dimmerPresetTarget = 0;
+   
+ }
+  
+}

@@ -208,7 +208,7 @@ void saveAllData() {
     }
   }
   else if(userId == 3) {
-    saveTable(table, "C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\settings.csv");
+    saveTable(table, "C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\pikkusten_disko.csv");
   }
   println(); println(); println(); 
   println("SAVE READY");

@@ -13,6 +13,8 @@ int oldGrandMaster = 40;
 
 void draw() {
   
+  if(!freeze) {
+  
   for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
   
   memories[1].type = 4;
@@ -39,7 +41,7 @@ void draw() {
   //Invoke every fixtures draw
   if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
 
-
+  }
 }
 
 
