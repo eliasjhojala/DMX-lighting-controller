@@ -30,6 +30,8 @@ class memory { //Begin of memory class------------------------------------------
   // when you use memory, please use       //|
   // command memories[i].setValue(value)   //|
   // Never use value = ;                   //|
+  // You can also use loadPreset(value);   //|
+  // or setValue(value);                   //|
   //---------------------------------------//|
   
   //--Memory types--//|
@@ -190,7 +192,7 @@ class chase { //Begin of chase class--------------------------------------------
   //---------------------init all the variables--------------------------------
   int value;
   int inputMode, outputMode, beatModeId; //What is input and what will output look like
-  String beatMode = new String(); //kick, snare or hat
+  String beatMode; //kick, snare or hat
  
   
   int[] inputModeLimit = { 1, 3 };
@@ -234,10 +236,10 @@ class chase { //Begin of chase class--------------------------------------------
         ownFade = defaultConstrain(val);
       }
       void fadeModeUp() {
-        fadeMode = getNext(fadeMode, fadeModeLimit);
+        fadeMode = getNext(fadeMode, fadeModeLimit[0], fadeModeLimit[1]);
       }
       void fadeModeDown() {
-        fadeMode = getReverse(fadeMode, fadeModeLimit);
+        fadeMode = getReverse(fadeMode, fadeModeLimit[0], fadeModeLimit[1]);
       }
       
         String getFadeModeDesc() {
@@ -292,10 +294,10 @@ class chase { //Begin of chase class--------------------------------------------
         }                                                                                      
                                                                                                
         void beatModeUp() {                                                                    
-          setBeatModeId(getNext(getBeatModeId(), beatModeLimit));                                       
+          setBeatModeId(getNext(getBeatModeId(), beatModeLimit[0], beatModeLimit[1]));                                       
         }                                                                                      
         void beatModeDown() {                                                                  
-          setBeatModeId(getReverse(getBeatModeId(), beatModeLimit));                                    
+          setBeatModeId(getReverse(getBeatModeId(), beatModeLimit[0], beatModeLimit[1]));                                    
         }                                                                                      
    //End of beatMode functions
    
@@ -310,16 +312,16 @@ class chase { //Begin of chase class--------------------------------------------
         }
         
         void inputModeUp() {
-          inputMode = getNext(inputMode, inputModeLimit);
+          inputMode = getNext(inputMode, inputModeLimit[0], inputModeLimit[1]);
         }
         void inputModeDown() {
-          inputMode = getReverse(inputMode, inputModeLimit);
+          inputMode = getReverse(inputMode, inputModeLimit[0], inputModeLimit[1]);
         }
         void outputModeUp() {
-          outputMode = getNext(outputMode, outputModeLimit);
+          outputMode = getNext(outputMode, outputModeLimit[0], outputModeLimit[1]);
         }
         void outputModeDown() {
-          outputMode = getReverse(outputMode, outputModeLimit);
+          outputMode = getReverse(outputMode, outputModeLimit[0], outputModeLimit[1]);
         }
         
         void output() {
@@ -368,35 +370,31 @@ class chase { //Begin of chase class--------------------------------------------
   /* This function saves all the presets to presets[] 
   array if they are on (value is over 0) */
   void newChase() {
-    createPresetsArray();
-    makePresetsArray();
-    setParentType(2); 
-  }
-  
-  int getNumberOfActivePresets() {
     int a = 0;
     for(int i = 0; i < memories.length; i++) {
-      if(memories[i].type == 1 && memories[i].value > 0) { a++; }
-    }
-    return a;
-  }
-  
-  void createPresetsArray() {
-    presets = new int[getNumberOfActivePresets()];
-  }
-  
-  void makePresetsArray() {
-    int a = 0;
-    for(int i = 0; i < memories.length; i++) {
-      if(memories[i].type == 1 && memories[i].value > 0) {
-          presets[a] = i;
+      if(memories[i].type == 1) {
+        if(memories[i].value > 0) {
+          
           a++;
+        }
       }
     }
-  }
-  
-  void setParentType(int t) {
-    parent.type = t;
+    presets = new int[a];
+    a = 0;
+    for(int i = 0; i < memories.length; i++) {
+      if(memories[i].type == 1) {
+        if(memories[i].value > 0) {
+          presets[a] = i;
+          a++;
+        }
+      }
+    }
+    
+    parent.type = 2;
+    inputMode = 1;
+    outputMode = 1;
+    setBeatModeId(1);
+    fade = 30;
   }
   
   /* This function checks that this memory is a chase 
@@ -448,9 +446,11 @@ class chase { //Begin of chase class--------------------------------------------
       }
       brightness = defaultConstrain(iMap(brightness1, 0, fade, 0, 255));
     }
-    int rS = getReverse(step, 0, getPresets().length-1);
-    loadPreset(getPresets()[step], brightness);
-    loadPreset(getPresets()[rS], getInvertedValue(brightness, 0, 255));
+    int s = step;
+    int b = brightness;
+    int rS = getReverse(s, 0, getPresets().length-1);
+    loadPreset(getPresets()[s], b);
+    loadPreset(getPresets()[rS], getInvertedValue(b, 0, 255));
   }
   
   void freqToLight() { //This function gives frequence values to chase presets

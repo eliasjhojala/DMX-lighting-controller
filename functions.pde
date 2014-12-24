@@ -364,25 +364,12 @@ int quickSlider(String mouseLockID, int value) {
 
 //Some functions which are really useful tex in chase
 
-    int getNext(int current, int[] lim) {
-      int toReturn = 0;
-      if(lim.length == 2) { toReturn = getNext(current, lim[0], lim[1]); }
-      return toReturn;
-    }
-    
-    int getReverse(int current, int[] lim) {
-      int toReturn = 0;
-      if(lim.length == 2) { toReturn = getReverse(current, lim[0], lim[1]); }
-      return toReturn;
-    }
-
     /*getNext returns always reverse value and checks that 
     if you already are at the smallest value then it goes to biggest value */
     int getReverse(int current, int lim_low, int lim_hi) {
       int toReturn = 0;
       if(current > lim_low) { toReturn = current - 1; }
       if(current == lim_low) { toReturn = lim_hi; }
-      toReturn = constrain(toReturn, lim_low, lim_hi);
       return toReturn;
     }
     
@@ -392,7 +379,6 @@ int quickSlider(String mouseLockID, int value) {
       int toReturn = 0;
       if(current < lim_hi) { toReturn = current + 1; }
       if(current == lim_hi) { toReturn = lim_low; }
-      toReturn = constrain(toReturn, lim_low, lim_hi);
       return toReturn;
     }
     
@@ -400,7 +386,6 @@ int quickSlider(String mouseLockID, int value) {
     int getInvertedValue(int val, int lim_low, int lim_hi) {
       int toReturn = 0;
       toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);
-      toReturn = constrain(toReturn, lim_low, lim_hi);
       return toReturn;
     }
   
@@ -416,7 +401,6 @@ int quickSlider(String mouseLockID, int value) {
     int iMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
       int toReturn = 0;
       toReturn = int(map(val, in_low, in_hi, out_low, out_hi));
-      toReturn = constrain(toReturn, out_low, out_hi);
       return toReturn;
     }
     
@@ -424,7 +408,6 @@ int quickSlider(String mouseLockID, int value) {
     int rMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
       int toReturn = 0;
       toReturn = round(map(val, in_low, in_hi, out_low, out_hi));
-      toReturn = constrain(toReturn, out_low, out_hi);
       return toReturn;
     }
   
