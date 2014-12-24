@@ -160,7 +160,7 @@ class memoryCreationBox {
       case 1:
         selectedMemoryMode = 0;
       break;
-      case 2:
+      case 2: case 3:
         selectedMemoryMode = 1;
       break;
       

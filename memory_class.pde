@@ -71,6 +71,7 @@ class memory { //Begin of memory class------------------------------------------
       case 0: toReturn = ""; break;
       case 1: toReturn = "prst"; break;
       case 2: toReturn = "chs"; break;
+      case 3: toReturn = "qChs"; break;
       case 4: toReturn = "mstr"; break;
       case 5: toReturn = "fade"; break;
       default: toReturn = "unkn"; break;
@@ -82,6 +83,7 @@ class memory { //Begin of memory class------------------------------------------
     switch(type) {
       case 0: empty(); break;
       case 1: preset(); break;
+      case 3: chase(); break;
       case 2: chase(); break;
       case 4: grandMaster(); break;
       case 5: fade(); break;
@@ -202,6 +204,7 @@ class chase { //Begin of chase class--------------------------------------------
   int fadeMode; //1 = from own, 2 = from own*master, 3 = from master
   
   int[] presets; //all the presets in chase
+  int[] content; //all the content in chase - in the future also presets
   
   int step, brightness, brightness1;
   boolean stepHasChanged;
@@ -406,12 +409,25 @@ class chase { //Begin of chase class--------------------------------------------
     if(parent.type == 2) {
         memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
     }
+    if(parent.type == 3) {
+        fixtures[num].dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
+    }
   }
   
       
   int[] getPresets() {
      //here function which returns all the presets in this chase
-     return presets;
+     int[] toReturn = new int[1];
+     if(parent.type == 2) {
+       toReturn = new int[presets.length];
+       arrayCopy(presets, toReturn);
+     }
+     else if(parent.type == 3) {
+       toReturn = new int[content.length];
+       arrayCopy(content, toReturn);
+     }
+     return toReturn;
+     
   }
     
   
@@ -459,6 +475,87 @@ class chase { //Begin of chase class--------------------------------------------
       loadPreset(getPresets()[i], s2l.freq(iMap(i, 0, getPresets().length, 0, s2l.getFreqMax())));
     }
   }
+  
+  
+  
+  
+  
+  
+  
+   void createQuickChase() {
+     int[] fixturesInChase;
+     int a = 0;
+     
+     for(int i = 0; i < fixtures.length; i++) {
+       if(fixtures[i].selected) {
+         a++;
+       }
+     }
+     fixturesInChase = new int[a];
+
+     int[] x = new int[a];
+     a = 0;
+     for(int i = 0; i < fixtures.length; i++) {
+       if(fixtures[i].selected) {
+         fixturesInChase[a] = i;
+         a++;
+       }
+     }
+     for(int i = 0; i < fixturesInChase.length; i++) {
+       x[i] = fixtures[fixturesInChase[i]].locationOnScreenX;
+     }
+     
+     
+     int[] fixturesInChaseTemp = new int[fixturesInChase.length];
+     arrayCopy(fixturesInChase, fixturesInChaseTemp);
+     for(int i = 0; i < fixturesInChase.length; i++) {
+       fixturesInChase[i] = fixturesInChaseTemp[sortIndex(x)[i]];
+     }
+     
+     a = 0;
+     for(int i = 0; i < fixturesInChase.length; i++) {
+       if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
+         a++;
+       }
+     }
+     
+     fixturesInChaseTemp = new int[a];
+     a = 0;
+     for(int i = 0; i < fixturesInChase.length; i++) {
+       if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
+         fixturesInChaseTemp[a] = fixturesInChase[i];
+         a++;
+       }
+     }
+     
+     fixturesInChase = new int[fixturesInChaseTemp.length];
+     content = new int[fixturesInChaseTemp.length];
+     
+     arrayCopy(fixturesInChaseTemp, fixturesInChase);
+     arrayCopy(fixturesInChase, content);
+     
+     setParentType(3);
+
+ }
+ 
+      int[] sortIndex(int[] toSort) {
+      int[] toReturn = new int[toSort.length];
+      int[] sorted = new int[toSort.length];
+      boolean[] used = new boolean[toSort.length];
+       
+       sorted = sort(toSort);
+       
+       for(int i = 0; i < toSort.length; i++) {
+         for(int j = 0; j < sorted.length; j++) {
+           if(toSort[i] == sorted[j] && !used[j]) {
+             toReturn[j] = i;
+             used[j] = true;
+             break;
+           }
+         }
+       }
+       return toReturn;
+     }
 
 
 } //end of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -542,98 +639,3 @@ class soundDetect { //----------------------------------------------------------
 } //en of soundDetect class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
-class quickChase {
-  quickChase() {
-  }
-  
- int[] fixturesInChase;
- 
- void create() {
-     int a = 0;
-     
-     for(int i = 0; i < fixtures.length; i++) {
-       if(fixtures[i].selected) {
-         a++;
-       }
-     }
-     fixturesInChase = new int[a];
-
-     int[] x = new int[a];
-     a = 0;
-     for(int i = 0; i < fixtures.length; i++) {
-       if(fixtures[i].selected) {
-         fixturesInChase[a] = i;
-         a++;
-       }
-     }
-     for(int i = 0; i < fixturesInChase.length; i++) {
-       x[i] = fixtures[fixturesInChase[i]].locationOnScreenX;
-     }
-     
-     
-     int[] fixturesInChaseTemp = new int[fixturesInChase.length];
-     arrayCopy(fixturesInChase, fixturesInChaseTemp);
-     for(int i = 0; i < fixturesInChase.length; i++) {
-       fixturesInChase[i] = fixturesInChaseTemp[sortIndex(x)[i]];
-     }
-     
-     a = 0;
-     for(int i = 0; i < fixturesInChase.length; i++) {
-       if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
-         a++;
-       }
-     }
-     
-     fixturesInChaseTemp = new int[a];
-     a = 0;
-     for(int i = 0; i < fixturesInChase.length; i++) {
-       if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
-         fixturesInChaseTemp[a] = fixturesInChase[i];
-         a++;
-       }
-     }
-     
-     fixturesInChase = new int[fixturesInChaseTemp.length];
-     
-     arrayCopy(fixturesInChaseTemp, fixturesInChase);
-     
-     
-     println("READY");
-     println(fixturesInChase);
-     
-     
-
- }
- 
-      int[] sortIndex(int[] toSort) {
-       int[] toReturn = new int[toSort.length];
-       int[] sorted = new int[toSort.length];
-       boolean[] used = new boolean[toSort.length];
-       
-       sorted = sort(toSort);
-       
-       for(int i = 0; i < toSort.length; i++) {
-         for(int j = 0; j < sorted.length; j++) {
-           if(toSort[i] == sorted[j] && !used[j]) {
-             toReturn[j] = i;
-             used[j] = true;
-             break;
-           }
-         }
-       }
-       return toReturn;
-     }
- 
- 
- int ij = 0;
- void load() {
-   ij++; 
-   if(ij >= fixturesInChase.length) { ij = 0; }
-   fixtures[fixturesInChase[ij]].dimmerPresetTarget = 255;
-   delay(500);
-   fixtures[fixturesInChase[ij]].dimmerPresetTarget = 0;
-   
- }
-  
-}

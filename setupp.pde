@@ -15,7 +15,7 @@ public int leveys;
 public int korkeus;
 void setuppi() {
    createMemoryObjects();
-qC = new quickChase(); 
+
   leveys = displayWidth;
   korkeus = displayHeight;
   loadSetupData();
