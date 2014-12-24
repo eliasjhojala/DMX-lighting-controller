@@ -157,6 +157,7 @@ for(int i = 0; i < memoriesLength; i++) {
 
 
 int[] myChasePresetsLength = new int[memoriesLength];
+int[] myChaseContentLength = new int[memoriesLength];
 
 for (TableRow row : table.findRows("memories[i].myChase.presets.length", "variable_name")) {
   int v = int(row.getString("value"));
@@ -164,10 +165,19 @@ for (TableRow row : table.findRows("memories[i].myChase.presets.length", "variab
   myChasePresetsLength[D1] = v;
 }
 
+for (TableRow row : table.findRows("memories[i].myChase.content.length", "variable_name")) {
+  int v = int(row.getString("value"));
+  int D1 = int(row.getString("1D"));
+  myChaseContentLength[D1] = v;
+}
+
 for(int i = 0; i < memoriesLength; i++) {
   memories[i] = new memory();
   for(int ij = 0; ij < myChasePresetsLength[i]; ij++) {
     memories[i].myChase.presets = new int[myChasePresetsLength[i]];
+  }
+  for(int ij = 0; ij < myChaseContentLength[i]; ij++) {
+    memories[i].myChase.content = new int[myChaseContentLength[i]];
   }
 }
 
@@ -180,6 +190,13 @@ for (TableRow row : table.findRows("memories[i].myChase.presets[ij]", "variable_
   int ij = int(row.getString("2D"));
   int v = int(row.getString("value"));
   memories[i].myChase.presets[ij] = v;
+}
+
+for (TableRow row : table.findRows("memories[i].myChase.content[ij]", "variable_name")) {
+  int i = int(row.getString("1D"));
+  int ij = int(row.getString("2D"));
+  int v = int(row.getString("value"));
+  memories[i].myChase.content[ij] = v;
 }
 
 for (TableRow row : table.findRows("memories[i].myChase.inputMode", "variable_name")) {
@@ -277,56 +294,6 @@ for (TableRow row : table.findRows("memories[i].value", "variable_name")) {
 
 
 
-      
- 
-      
-//      fixture thisObj = memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))];
-//      if (memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] == null) memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//      memories[int(row.getString("1D"))]].repOfFixtures[[int(row.getString("2D"))].dimmer = int(row.getString("value"));
-//    }
-
-//    
-//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[1], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
-//    {
-//      if (memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] == null) memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//      memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))].colorWheel = int(row.getString("value"));
-//    }
-//    
-//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[2], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
-//    {
-//      
-//      if (memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] == null) memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//      memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))].goboWheel = int(row.getString("value"));
-//    }
-//    
-//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[3], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
-//    {
-//      
-//      if (memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] == null) memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//      memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))].goboRotation = int(row.getString("value"));
-//    }
-//    
-//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[4], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
-//    {
-//      
-//      if (memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] == null) memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//      memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))].shutter = int(row.getString("value"));
-//    }
-//    
-//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[5], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
-//    {
-//      
-//      if (memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] == null) memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//      memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))].pan = int(row.getString("value"));
-//    }
-//    
-//    for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[6], "variable_name")) if(int(row.getString("1D")) < repOfFixtures.length) if(int(row.getString("2D")) < repOfFixtures[0].length)
-//    {
-//      
-//      if (memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] == null) memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//      memories[int(row.getString("1D"))]].repOfFixtures[int(row.getString("2D"))].tilt = int(row.getString("value"));
-//    }
-    
     //---------------------------------------------------------------------------------------------------------------------------------------
     
     

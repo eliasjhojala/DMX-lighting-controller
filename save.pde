@@ -105,6 +105,13 @@ void saveAllData() {
             } //End of for(int ij = 0; ij < memories[i].myChase.presets.length; ij++)
           }
           
+          if(memories[i].myChase.content != null) {
+            saveDataMainCommands(str(memories[i].myChase.content.length), "memories[i].myChase.content.length", "1", str(i), "-"); 
+            for(int ij = 0; ij < memories[i].myChase.content.length; ij++) { //This is the most important part of saving chase data
+              saveDataMainCommands(str(memories[i].myChase.content[ij]), "memories[i].myChase.content[ij]", "2", str(i), str(ij));
+            } //End of for(int ij = 0; ij < memories[i].myChase.content.length; ij++)
+          }
+          
           
           { //Pretty important data to save
             saveDataMainCommands(str(memories[i].myChase.inputMode), "memories[i].myChase.inputMode", "1", str(i), "-");
