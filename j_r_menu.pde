@@ -1,6 +1,8 @@
 //Tässä välilehdessä piirretään sivuvalikko, jossa näkyy memorit ja niiden arvot, sekä tyypit
 
 memoryCreationBox memoryCreator = new memoryCreationBox(false);
+
+boolean savingMemory = false;
  
 void sivuValikko() {
   
@@ -161,7 +163,7 @@ class memoryCreationBox {
         selectedMemoryMode = 0;
       break;
       case 2: case 3:
-        selectedMemoryMode = 1;
+        selectedMemoryMode = 2;
       break;
       
       default: return;
@@ -260,6 +262,9 @@ class memoryCreationBox {
         case 1: {
           text("Chase", 2, 25);
         } break;
+        case 2: {
+          text("QChase", 2, 25);
+        } break;
       }
     }
     popMatrix();
@@ -328,7 +333,7 @@ class memoryCreationBox {
             popMatrix();
           }
         break;
-        case 1: //Chase
+        case 1: case 2: //Chase & quickChase
           if(memories[selectedMemorySlot].myChase != null) {
           textAlign(LEFT);
           { //Chase Input
@@ -441,6 +446,7 @@ class memoryCreationBox {
   }
   
   void save() {
+    savingMemory = true;
     switch(selectedMemoryMode) {
       case 0: //Preset
         memories[selectedMemorySlot].savePreset(selectedWhatToSave);
@@ -448,8 +454,12 @@ class memoryCreationBox {
       case 1: //s2l
         memories[selectedMemorySlot].myChase.newChase();
       break;
+      case 2: //s2l
+        memories[selectedMemorySlot].myChase.createQuickChase();
+      break;
     }
     open = false;
+    savingMemory = false;
   }
   
   //Returns whether box is hovered on
@@ -458,7 +468,7 @@ class memoryCreationBox {
   }
   
   void addToSelectedMemoryMode() {
-    if(selectedMemoryMode < 1) selectedMemoryMode++;
+    if(selectedMemoryMode < 2) selectedMemoryMode++;
     else selectedMemoryMode = 0;
   }
 }

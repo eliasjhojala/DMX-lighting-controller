@@ -80,14 +80,16 @@ class memory { //Begin of memory class------------------------------------------
   }
   
   void draw() {
-    switch(type) {
-      case 0: empty(); break;
-      case 1: preset(); break;
-      case 3: chase(); break;
-      case 2: chase(); break;
-      case 4: grandMaster(); break;
-      case 5: fade(); break;
-      default: unknown(); break;
+    if(!savingMemory) {
+      switch(type) {
+        case 0: empty(); break;
+        case 1: preset(); break;
+        case 3: chase(); break;
+        case 2: chase(); break;
+        case 4: grandMaster(); break;
+        case 5: fade(); break;
+        default: unknown(); break;
+      }
     }
   }
   
