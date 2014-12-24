@@ -432,4 +432,24 @@ int quickSlider(String mouseLockID, int value) {
   
 //End of some functions which are really useful tex in chase
   
-  
+
+/* Sorting algorithm which sorts variables like sort() function,
+but it returns original array index numbers as sorted arrange */
+  int[] sortIndex(int[] toSort) {
+    int[] toReturn = new int[toSort.length];
+    int[] sorted = new int[toSort.length];
+    boolean[] used = new boolean[toSort.length];
+     
+     sorted = sort(toSort);
+     
+     for(int i = 0; i < toSort.length; i++) {
+       for(int j = 0; j < sorted.length; j++) {
+         if(toSort[i] == sorted[j] && !used[j]) {
+           toReturn[j] = i;
+           used[j] = true;
+           break;
+         }
+       }
+     }
+     return toReturn;
+   } //End of sorting algorithm

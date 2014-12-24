@@ -35,7 +35,7 @@ class memory { //Begin of memory class------------------------------------------
   //--Memory types--//|
   // 1: preset      //|
   // 2: chase       //|
-  // 3: -           //|
+  // 3: quickChase  //|
   // 4: master      //|
   // 5: fade        //|
   //----------------//|
@@ -185,8 +185,63 @@ class memory { //Begin of memory class------------------------------------------
 
 
 
+//chase mode variables--------------------------------------------------------------------------------------------------------
 
 
+  int[] inputModeLimit = { 1, 3 };
+  int[] outputModeLimit = { 1, 2 };
+  int[] fadeModeLimit = { 1, 3 };
+  int[] beatModeLimit = { 2, 4 };
+  
+  int inputModeMaster = 0;
+  int outputModeMaster = 0;
+  int beatModeMaster = 0;
+  
+  
+  
+  
+
+
+        void inputModeMasterUp() {
+          inputModeMaster = getNext(inputModeMaster, inputModeLimit);
+        }
+        void inputModeMasterDown() {
+          inputModeMaster = getReverse(inputModeMaster, inputModeLimit);
+        }
+        void outputModeMasterUp() {
+          outputModeMaster = getNext(outputModeMaster, outputModeLimit);
+        }
+        void outputModeMasterDown() {
+          outputModeMaster = getReverse(outputModeMaster, outputModeLimit);
+        }
+
+        
+        String getOutputModeMasterDesc() {
+          String toReturn = "";
+          switch(outputModeMaster) {
+            case 0: toReturn = "inherit"; break;
+            case 1: toReturn = "steps"; break;
+            case 2: toReturn = "eq"; break;
+          }
+          return toReturn;
+        }
+        
+
+        String getInputModeMasterDesc() {
+          String toReturn = "";
+          switch(inputModeMaster) {
+            case 0: toReturn = "inherit"; break;
+            case 1: toReturn = "beat"; break;
+            case 2: toReturn = "manual"; break;
+            case 3: toReturn = "auto"; break;
+          }
+          return toReturn;
+        }
+        
+//chase mode variables end--------------------------------------------------------------------------------------------------------------
+        
+        
+        
 
 
 
@@ -197,11 +252,11 @@ class chase { //Begin of chase class--------------------------------------------
   int inputMode, outputMode, beatModeId; //What is input and what will output look like
   String beatMode = new String(); //kick, snare or hat
  
-  
-  int[] inputModeLimit = { 1, 3 };
-  int[] outputModeLimit = { 1, 2 };
+  int[] inputModeLimit = { 0, 3 };
+  int[] outputModeLimit = { 0, 2 };
   int[] fadeModeLimit = { 1, 3 };
-  int[] beatModeLimit = { 2, 4 };
+  int[] beatModeLimit = { 2, 4 };
+ 
   
   int fadeMode; //1 = from own, 2 = from own*master, 3 = from master
   
@@ -293,8 +348,10 @@ class chase { //Begin of chase class--------------------------------------------
           return beatMode;                                                                     
         }                                                                                      
                                                                                                
-        int getBeatModeId() {                                                                  
-          return beatModeId;                                                                   
+        int getBeatModeId() {   
+          int toReturn = 0;
+          if(beatModeId > 0) { toReturn = beatModeId; } else { toReturn = beatModeMaster; } 
+          return toReturn;                                                                   
         }                                                                                      
                                                                                                
         void beatModeUp() {                                                                    
@@ -329,7 +386,9 @@ class chase { //Begin of chase class--------------------------------------------
         }
         
         void output() {
-          switch(outputMode) {
+          int oM = 0;
+          if(outputMode > 0) { oM = outputMode; } else { oM = outputModeMaster; }
+          switch(oM) {
             case 1: beatToMoving(); break; 
             case 2: freqToLight(); break;
           }
@@ -359,7 +418,9 @@ class chase { //Begin of chase class--------------------------------------------
         
           boolean trigger() {
             boolean toReturn = false;
-            switch(inputMode) {
+            int iM = 0;
+            if(inputMode > 0) { iM = inputMode; } else { iM = inputModeMaster; }
+            switch(iM) {
               case 1: toReturn = s2l.beat(constrain(getBeatModeId(), beatModeLimit[0], beatModeLimit[1])); break;
               case 2: toReturn = (nextStepPressed || (keyPressed && key == ' ')); break;
               case 3: toReturn = true; break;
@@ -482,95 +543,73 @@ class chase { //Begin of chase class--------------------------------------------
   
   
   
+  //Create quickChase-------------------------------------------------------------
+  /*Actually this function only saves selected 
+  fixtures to content array arranged by x location in screen */
   
   
    void createQuickChase() {
-     int[] fixturesInChase;
-     int a = 0;
+     int[] fixturesInChase; //create variable where selected fixtures will be stored
+     int a = 0; //used mainly to count amount of some details
      
-     for(int i = 0; i < fixtures.length; i++) {
-       if(fixtures[i].selected) {
-         a++;
-       }
+     for(int i = 0; i < fixtures.length; i++) { //This for loop is made only to count how many fixtures are selected
+       if(fixtures[i].selected) { a++; }
      }
-     fixturesInChase = new int[a];
+     fixturesInChase = new int[a]; //Now we know how many fixtures are selected so we can create right lengthed array for storing them
 
-     int[] x = new int[a];
-     a = 0;
-     for(int i = 0; i < fixtures.length; i++) {
+     int[] x = new int[a]; //let's make also right lengthed array to store fixtures' x-location
+     a = 0; //reset a variable because we're gonna use it again
+     for(int i = 0; i < fixtures.length; i++) { //This loop places right fixture id:s to fixturesInChase array
        if(fixtures[i].selected) {
          fixturesInChase[a] = i;
          a++;
        }
      }
-     for(int i = 0; i < fixturesInChase.length; i++) {
+     for(int i = 0; i < fixturesInChase.length; i++) { //this function places right x locations to x array
        x[i] = fixtures[fixturesInChase[i]].locationOnScreenX;
      }
      
      
-     int[] fixturesInChaseTemp = new int[fixturesInChase.length];
+     int[] fixturesInChaseTemp = new int[fixturesInChase.length]; //Create temp array to store fixturesInChase array temporarily
      arrayCopy(fixturesInChase, fixturesInChaseTemp);
-     for(int i = 0; i < fixturesInChase.length; i++) {
+     for(int i = 0; i < fixturesInChase.length; i++) { //This function stores fixture values to fixturesInChase array in right order
        fixturesInChase[i] = fixturesInChaseTemp[sortIndex(x)[i]];
      }
      
-     a = 0;
-     for(int i = 0; i < fixturesInChase.length; i++) {
+     //Fixtures are now right ordered in fixtuesInChase array, but the same channeled fixtures aren't removed
+     
+     a = 0; //Reset a again
+     for(int i = 0; i < fixturesInChase.length; i++) { //let's count how long will final array be, when same channeled fixtures are removed
        if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
          a++;
        }
      }
      
-     fixturesInChaseTemp = new int[a];
-     a = 0;
-     for(int i = 0; i < fixturesInChase.length; i++) {
+     fixturesInChaseTemp = new int[a]; //Reset temp array and make it length good for save !(same channeled) fixtures
+     a = 0; //reset a again
+     for(int i = 0; i < fixturesInChase.length; i++) { //This function removes same channeled fixtures
        if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
          fixturesInChaseTemp[a] = fixturesInChase[i];
          a++;
        }
      }
      
-     fixturesInChase = new int[fixturesInChaseTemp.length];
-     content = new int[fixturesInChaseTemp.length];
+     //now fixturesInChaseTemp is ready!
+     //So let's copy it to fixturesInChase and then to content
      
-     arrayCopy(fixturesInChaseTemp, fixturesInChase);
-     arrayCopy(fixturesInChase, content);
+     fixturesInChase = new int[fixturesInChaseTemp.length]; //reset fixturesInChase and make it right lenght
+     content = new int[fixturesInChaseTemp.length]; //reset content array and make it right length
      
-     setParentType(3);
-
- }
- 
-      int[] sortIndex(int[] toSort) {
-      int[] toReturn = new int[toSort.length];
-      int[] sorted = new int[toSort.length];
-      boolean[] used = new boolean[toSort.length];
-       
-       sorted = sort(toSort);
-       
-       for(int i = 0; i < toSort.length; i++) {
-         for(int j = 0; j < sorted.length; j++) {
-           if(toSort[i] == sorted[j] && !used[j]) {
-             toReturn[j] = i;
-             used[j] = true;
-             break;
-           }
-         }
-       }
-       return toReturn;
-     }
-
-
+     arrayCopy(fixturesInChaseTemp, fixturesInChase); //copu temp array to fixturesInChase array
+     arrayCopy(fixturesInChase, content); //copu fixturesInChase to content array
+     
+     setParentType(3); //set parent to 3 which means quickChase 
+     //Saving quickChase is ready!
+ } //End of create quick chase -----------------------------------------------------------------------
 } //end of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-
-
+//inside papplet
 
 
 class soundDetect { //----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -605,6 +644,7 @@ class soundDetect { //----------------------------------------------------------
     return toReturn;
   }
   
+  //inside soundDetect class
   
   int freq(int i) {
     fft.forward( in.mix );
@@ -640,4 +680,6 @@ class soundDetect { //----------------------------------------------------------
   
 } //en of soundDetect class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+//inside papplet
 
