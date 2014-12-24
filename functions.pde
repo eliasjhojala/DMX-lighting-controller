@@ -400,7 +400,6 @@ int quickSlider(String mouseLockID, int value) {
     int getInvertedValue(int val, int lim_low, int lim_hi) {
       int toReturn = 0;
       toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);
-      toReturn = constrain(toReturn, lim_low, lim_hi);
       return toReturn;
     }
   
@@ -416,7 +415,6 @@ int quickSlider(String mouseLockID, int value) {
     int iMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
       int toReturn = 0;
       toReturn = int(map(val, in_low, in_hi, out_low, out_hi));
-      toReturn = constrain(toReturn, out_low, out_hi);
       return toReturn;
     }
     
@@ -424,7 +422,6 @@ int quickSlider(String mouseLockID, int value) {
     int rMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
       int toReturn = 0;
       toReturn = round(map(val, in_low, in_hi, out_low, out_hi));
-      toReturn = constrain(toReturn, out_low, out_hi);
       return toReturn;
     }
   
