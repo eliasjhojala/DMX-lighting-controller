@@ -189,7 +189,7 @@ class memory { //Begin of memory class------------------------------------------
 
 
   int[] inputModeLimit = { 1, 3 };
-  int[] outputModeLimit = { 1, 2 };
+  int[] outputModeLimit = { 1, 3 };
   int[] fadeModeLimit = { 1, 3 };
   int[] beatModeLimit = { 2, 4 };
   
@@ -253,7 +253,7 @@ class chase { //Begin of chase class--------------------------------------------
   String beatMode = new String(); //kick, snare or hat
  
   int[] inputModeLimit = { 0, 3 };
-  int[] outputModeLimit = { 0, 2 };
+  int[] outputModeLimit = { 0, 3 };
   int[] fadeModeLimit = { 1, 3 };
   int[] beatModeLimit = { 2, 4 };
  
@@ -391,6 +391,7 @@ class chase { //Begin of chase class--------------------------------------------
           switch(oM) {
             case 1: beatToMoving(); break; 
             case 2: freqToLight(); break;
+            case 3: shake(); break;
           }
         }
         
@@ -400,6 +401,7 @@ class chase { //Begin of chase class--------------------------------------------
             case 0: toReturn = "inherit"; break;
             case 1: toReturn = "steps"; break;
             case 2: toReturn = "eq"; break;
+            case 3: toReturn = "shaky"; break;
           }
           return toReturn;
         }
@@ -473,7 +475,8 @@ class chase { //Begin of chase class--------------------------------------------
         memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
     }
     if(parent.type == 3) {
-        fixtures[num].dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
+        //fixtures[num].dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
+        fixtures[num].setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
     }
   }
   
@@ -491,6 +494,17 @@ class chase { //Begin of chase class--------------------------------------------
      }
      return toReturn;
      
+  }
+  
+  int getPresetValue(int i) {
+    int toReturn = 0;
+     if(parent.type == 2) {
+       toReturn = memories[getPresets()[i]].getValue();
+     }
+     else if(parent.type == 3) {
+       toReturn = fixtures[getPresets()[i]].dimmer;
+     }
+     return toReturn;
   }
     
   
@@ -536,6 +550,26 @@ class chase { //Begin of chase class--------------------------------------------
   void freqToLight() { //This function gives frequence values to chase presets
     for(int i = 0; i < getPresets().length; i++) {
       loadPreset(getPresets()[i], s2l.freq(iMap(i, 0, getPresets().length, 0, s2l.getFreqMax())));
+    }
+  }
+  
+  void shake() {  
+   sine(); 
+  }
+  
+  float sinStep = 0;
+  int sinChaseStep = 0;
+  boolean started = false;
+  void sine() {
+    int[] valueChange;
+    int[] finalValue;
+    int[] limit = { 0, 10 };
+    valueChange = new int[getPresets().length];
+    finalValue = new int[valueChange.length];
+    for(int i = 0; i < valueChange.length; i++) {
+        sinStep+=map(chaseFade, 0, 255, 0.1, 0.001);
+        finalValue[i] = int(map(sin(sinStep-i), -1, 1, 0, 255));
+        loadPreset(getPresets()[i], finalValue[i]);
     }
   }
   
