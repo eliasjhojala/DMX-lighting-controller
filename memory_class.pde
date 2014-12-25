@@ -59,6 +59,24 @@ class memory { //Begin of memory class------------------------------------------
       repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
   }
+  
+  
+  void toggle(boolean down) {
+    if(down) {
+      if(value > 0) { setValue(0); } else { setValue(255); }
+    }
+  }
+  
+  int valueBeforePush;
+  void push(boolean down) {
+    if(down) {
+      valueBeforePush = getValue();
+      setValue(255);
+    }
+    else {
+      setValue(valueBeforePush);
+    }
+  }
 
   boolean thisIsChase() {
     return type == 2;
@@ -187,11 +205,14 @@ class memory { //Begin of memory class------------------------------------------
 
 //chase mode variables--------------------------------------------------------------------------------------------------------
 
+  String[] outputModeDescs = { "inherit", "steps", "eq", "shaky", "sine", "sSine" };
 
   int[] inputModeLimit = { 1, 3 };
-  int[] outputModeLimit = { 1, 3 };
+  int[] outputModeLimit = { 1, outputModeDescs.length-1 };
   int[] fadeModeLimit = { 1, 3 };
   int[] beatModeLimit = { 2, 4 };
+          
+  
   
   int inputModeMaster = 0;
   int outputModeMaster = 0;
@@ -218,11 +239,7 @@ class memory { //Begin of memory class------------------------------------------
         
         String getOutputModeMasterDesc() {
           String toReturn = "";
-          switch(outputModeMaster) {
-            case 0: toReturn = "inherit"; break;
-            case 1: toReturn = "steps"; break;
-            case 2: toReturn = "eq"; break;
-          }
+          toReturn = outputModeDescs[outputModeMaster];
           return toReturn;
         }
         
@@ -253,7 +270,7 @@ class chase { //Begin of chase class--------------------------------------------
   String beatMode = new String(); //kick, snare or hat
  
   int[] inputModeLimit = { 0, 3 };
-  int[] outputModeLimit = { 0, 3 };
+  int[] outputModeLimit = { 0, outputModeDescs.length-1 };
   int[] fadeModeLimit = { 1, 3 };
   int[] beatModeLimit = { 2, 4 };
  
@@ -266,6 +283,12 @@ class chase { //Begin of chase class--------------------------------------------
   int step, brightness, brightness1;
   boolean stepHasChanged;
   int fade, ownFade;
+  
+  int sineMax = 300;
+  int sineMin = 1;
+  
+  sine[] sines = new sine[sineMax+1];
+  int[][] sineValue = new int[500][sineMax+1];
   
   
   //----------------------end declaring variables--------------------------------
@@ -389,20 +412,17 @@ class chase { //Begin of chase class--------------------------------------------
           int oM = 0;
           if(outputMode > 0) { oM = outputMode; } else { oM = outputModeMaster; }
           switch(oM) {
-            case 1: beatToMoving(); break; 
+            case 1: beatToMoving(); break;
             case 2: freqToLight(); break;
             case 3: shake(); break;
+            case 4: sine(); break;
+            case 5: singleSine(); break;
           }
         }
         
         String getOutputModeDesc() {
           String toReturn = "";
-          switch(outputMode) {
-            case 0: toReturn = "inherit"; break;
-            case 1: toReturn = "steps"; break;
-            case 2: toReturn = "eq"; break;
-            case 3: toReturn = "shaky"; break;
-          }
+          toReturn = outputModeDescs[constrain(outputMode, 0, outputModeDescs.length-1)];
           return toReturn;
         }
         
@@ -553,27 +573,56 @@ class chase { //Begin of chase class--------------------------------------------
     }
   }
   
-  void shake() {  
-   sine(); 
-  }
-  
-  float sinStep = 0;
-  int sinChaseStep = 0;
-  boolean started = false;
-  void sine() {
-    int[] valueChange;
-    int[] finalValue;
-    int[] limit = { 0, 10 };
-    valueChange = new int[getPresets().length];
-    finalValue = new int[valueChange.length];
-    for(int i = 0; i < valueChange.length; i++) {
-        sinStep+=map(chaseFade, 0, 255, 0.1, 0.001);
-        finalValue[i] = int(map(sin(sinStep-i), -1, 1, 0, 255));
-        loadPreset(getPresets()[i], finalValue[i]);
+  int[] originalValue;
+  void shake() { //function to shake fixture values near the original value
+    for(int i = 0; i < getPresets().length; i++) {
+      loadPreset(getPresets()[i], defaultConstrain(round(random(value-value/3, value+value/3))));
     }
   }
   
+  float sinStep = 0; //step of sine wave
+  void sine() { //function to make sine waves to presets
+    int[] finalValue; //output value
+    finalValue = new int[getPresets().length]; //create right lengthed array to place all the output values
+    for(int i = 0; i < getPresets().length; i++) { //go through all the presets in chase
+        sinStep+=map(chaseFade, 0, 255, 0.1, 0.001); //count sinestep according to chaseFade
+        finalValue[i] = int(map(sin(sinStep-i), -1, 1, 0, 255)); //count output value according to sinestep and preset number
+        loadPreset(getPresets()[i], finalValue[i]); //output the output value
+    } //end of for(int i = 0; i < valueChange.length; i++)
+  } //end of void sine()
   
+  
+  void singleSine() {
+    for(int i = 0; i < sines.length; i++) {
+      if(sines[i] != null) {
+        if(sines[i].go) {
+          sines[i].draw();
+        }
+      }
+    }
+    
+    for(int i = 1; i <= sineMax; i++) {
+      loadPreset(getPresets()[i], max(sineValue[i])); 
+    }
+    
+    boolean trigger = trigger();
+    if(trigger) {
+      boolean found = false;
+      for(int i = 0; i < sines.length; i++) {
+        if(sines[i] != null) {
+          if(sines[i].ready) { sines[i].go(); found = true; break; }
+        }
+      }
+      if(!found) { 
+      int numero = 0;
+        for(int i = 0; i < sines.length; i++) {
+          if(sines[i] == null) {
+            numero = i; break;
+          }
+        }
+      sines[numero] = new sine(numero, this); sines[numero].go(); }
+    }
+  }
   
   
   
@@ -716,4 +765,94 @@ class soundDetect { //----------------------------------------------------------
 
 
 //inside papplet
+
+
+
+
+
+
+  
+
+//Single Sine class
+
+
+
+
+class sine {
+  chase parent;
+  sine(int num, chase parent) {
+    me = num;
+    this.parent = parent;
+  }
+
+  
+  
+  float sineStep = 0;
+int step = 0;
+int ofsetY = 0;
+float ofset = 0;
+float i;
+boolean up;
+float val;
+boolean go;
+boolean ready;
+
+int me;
+
+int[] loc = new int[parent.sineMax+1];
+
+int n = 0;
+
+  
+  
+  void draw() {
+
+  float plus = 0.05;
+  ofset+=0.2;
+  
+  for(float i = HALF_PI+(ofset); i*1 <= parent.sineMax; i+=plus) {
+    n = round(i*1)+4;
+    n = constrain(n, 0, loc.length-1);
+    val = sin(HALF_PI)*255;
+    loc[n] = round(map(val, -255, 255, 255, 0));
+  }  
+  for(float i = 0; i < -HALF_PI+(ofset)-plus; i+=plus) {
+    n = round(i-PI)+4;
+    n = constrain(n, 0, loc.length-1);
+    val = sin(HALF_PI)*255;
+    loc[n] = round(map(val, -255, 255, 255, 0));
+  }
+  
+  for(float i = -HALF_PI; i <= HALF_PI; i+=plus) {
+    n = round(i+ofset)+4;
+    n = constrain(n, 0, loc.length-1);
+    val = sin(i)*255;
+    loc[n+1] = round(map(val, -255, 255, 255, 0));
+    
+    n = round((i+ofset)-PI)+4;
+    n = constrain(n, 0, loc.length-1);
+    loc[n] = round(map(val, -255, 255, 0, 255));
+  }
+  
+  if(ofset > parent.sineMax+1) {
+    ready = true;
+    go = false;
+  }
+  else {
+    ready = false;
+  }
+  
+  for(int i = 0; i <= parent.sineMax; i++) {
+    parent.sineValue[i][me] = loc[i];
+  }
+  
+  }
+  
+  void go() {
+    go = true;
+    ofset = -5;
+  }
+  
+  
+}
 
