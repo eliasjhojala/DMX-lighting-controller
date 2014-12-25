@@ -27,6 +27,26 @@ class fixture {
   
   void setDimmer(int val) {dimmer = val; DMXChanged = true;}
   
+  void toggle(boolean down) {
+    if(down) {
+      if(fixtureTypeId == 20) { if(haze < 255 || fan < 255) { haze = 255; fan = 255; } else { haze = 0; fan = 0; } DMXChanged = true; }
+      if(fixtureTypeId == 21) { if(fog < 255) { fog = 255; } else { fog = 0; } DMXChanged = true; }
+      if(fixtureTypeId != 20 && fixtureTypeId != 21) { if(dimmer < 255) { setDimmer(255); } else { setDimmer(0); } }
+    }
+  }
+  void push(boolean down) {
+    if(down) {
+      if(fixtureTypeId == 20) { haze = 255; fan = 255; DMXChanged = true; }
+      if(fixtureTypeId == 21) { fog = 255; DMXChanged = true; }
+      if(fixtureTypeId != 20 && fixtureTypeId != 21) { setDimmer(255); }
+    }
+    else {
+      if(fixtureTypeId == 20) { haze = 0; fan = 0; DMXChanged = true; }
+      if(fixtureTypeId == 21) { fog = 0; DMXChanged = true; }
+      if(fixtureTypeId != 20 && fixtureTypeId != 21) { setDimmer(0); }
+    }
+  }
+  
   String fixtureType;
   int fixtureTypeId;
   int channelStart;

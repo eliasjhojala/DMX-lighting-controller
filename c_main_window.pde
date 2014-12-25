@@ -81,7 +81,7 @@ void drawMainWindow() {
                   mouseReleased = false;
                 }
                 else {
-                  fixtures[i].setDimmer(fixtures[i].dimmer == 255 ? 0 : 255);
+                  fixtures[i].toggle(true);
                 }
               }
             }
