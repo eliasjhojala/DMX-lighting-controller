@@ -809,7 +809,9 @@ int n = 0;
     float plus = 0.05; //Value wich is added in every for loop
     ofset+=0.2; //How fast will wave go on
     
-    for(float i = HALF_PI+(ofset); i*1 <= parent.sineMax; i+=plus) {
+    
+//It seems these functions are unuseful    
+/*   for(float i = HALF_PI+(ofset); i*1 <= parent.sineMax; i+=plus) {
       n = round(i*1)+4;
       n = constrain(n, 0, loc.length-1);
       val = sin(HALF_PI)*255;
@@ -820,17 +822,22 @@ int n = 0;
       n = constrain(n, 0, loc.length-1);
       val = sin(HALF_PI)*255;
       loc[n] = round(map(val, -255, 255, 255, 0));
-    }
+    } */
     
+    //Sine wave itself
     for(float i = -HALF_PI; i <= HALF_PI; i+=plus) {
-      n = round(i+ofset)+4;
-      n = constrain(n, 0, loc.length-1);
-      val = sin(i)*255;
-      loc[n+1] = round(map(val, -255, 255, 255, 0));
+      { //The first half of the sine
+        n = round(i+ofset)+4;
+        n = constrain(n, 0, loc.length-2);
+        val = sin(i)*255;
+        loc[n+1] = round(map(val, -255, 255, 255, 0));
+      }
       
-      n = round((i+ofset)-PI)+4;
-      n = constrain(n, 0, loc.length-1);
-      loc[n] = round(map(val, -255, 255, 0, 255));
+      { //The second half of the sine
+        n = round((i+ofset)-PI)+4;
+        n = constrain(n, 0, loc.length-1);
+        loc[n] = round(map(val, -255, 255, 0, 255));
+      }
     }
     
     if(ofset > parent.sineMax+1) {
@@ -842,7 +849,7 @@ int n = 0;
     }
     
     for(int i = 0; i <= parent.sineMax; i++) {
-      parent.sineValue[i][me] = loc[i];
+      parent.sineValue[i][me] = loc[i]; //Save values
     }
   
   }
