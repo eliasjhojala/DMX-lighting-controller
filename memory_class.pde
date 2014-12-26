@@ -214,9 +214,9 @@ class memory { //Begin of memory class------------------------------------------
           
   
   
-  int inputModeMaster = 0;
-  int outputModeMaster = 0;
-  int beatModeMaster = 0;
+  int inputModeMaster = inputModeLimit[0];
+  int outputModeMaster = outputModeLimit[0];
+  int beatModeMaster = beatModeLimit[0];
   
   
   
