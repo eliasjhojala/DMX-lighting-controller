@@ -790,23 +790,23 @@ class sine {
 
   
   
-float ofset = 0;
-boolean up;
-float val;
-boolean go;
-boolean ready;
-
-int me;
-
-int[] loc;
-
-int n = 0;
+  float ofset = 0;
+  boolean up;
+  float val;
+  boolean go;
+  boolean ready;
+  
+  int me;
+  
+  int[] loc;
+  
+  int n = 0;
 
   
   
   void draw() {
 
-    float plus = 0.5; //Value wich is added in every for loop
+    float plus = map(parent.fade, 0, 255, 0.5, 0.005); //Value wich is added in every for loop
     ofset+=map(parent.fade, 0, 255, 1, 0.001); //How fast will wave go on
        
     int l = loc.length;
@@ -819,13 +819,13 @@ int n = 0;
         n = constrain(n, 0, loc.length-2);
         val = sin(i)*255;
         loc[n+1] = round(map(val, -255, 255, 255, 0));
-      }
+      } //End of firs half
       
       { //The second half of the sine
         n = round((i+ofset)-PI)+4;
         n = constrain(n, 0, loc.length-1);
         loc[n] = round(map(val, -255, 255, 0, 255));
-      }
+      } //End of second half
     }
     
     if(ofset > parent.sineMax+1) {
@@ -837,14 +837,14 @@ int n = 0;
     }
     
     for(int i = 0; i <= parent.sineMax; i++) {
-      parent.sineValue[i][me] = loc[i]; //Save values
+      parent.sineValue[i][me] = loc[constrain(i*2, 0, loc.length-1)]; //Save values
     }
   
   }
   
   void go() {
     go = true;
-    ofset = -5;
+    ofset = -4;
   }
   
   
