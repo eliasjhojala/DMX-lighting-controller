@@ -36,7 +36,13 @@ void initSettingsInSetup() {
             myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
           }
           if(useCOM) {
-            arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
+            try {
+              arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
+            }
+            catch(Exception e) {
+              println("ERROR WITH DMX OUTPUT");
+              useCOM = false;
+            }
           }
         }
         enterPressed = false;

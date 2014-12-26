@@ -289,7 +289,7 @@ class chase { //Begin of chase class--------------------------------------------
   int sineMin = 1;
   
   sine[] sines = new sine[sineMax+1];
-  int[][] sineValue = new int[500][sineMax+1];
+  int[] sineValue = new int[500];
   
   
   //----------------------end declaring variables--------------------------------
@@ -632,7 +632,7 @@ class chase { //Begin of chase class--------------------------------------------
     
     for(int i = 0; i <= sineMax; i++) {
       if(i < getPresets().length) { //No nullpointers anymore
-        loadPreset(getPresets()[i], max(sineValue[i])); //Finally put the values from sine class to loadPreset function
+        loadPreset(getPresets()[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
       }
     }
     
@@ -653,6 +653,7 @@ class chase { //Begin of chase class--------------------------------------------
         }
       sines[numero] = new sine(numero, this); sines[numero].go(); } //Create sine and start it
     }
+    sineValue = new int[500];
   }
   
   
@@ -866,7 +867,9 @@ class sine {
     }
     
     for(int i = 0; i <= parent.sineMax; i++) {
-      parent.sineValue[i][me] = loc[constrain(i*2, 0, loc.length-1)]; //Save values
+      n = constrain(i*2, 0, loc.length-1);
+      //parent.sineValue[i][me] = loc[n]; //Save values
+      if(loc[n] > parent.sineValue[i]) { parent.sineValue[i] = loc[n]; }
     }
   
   }
