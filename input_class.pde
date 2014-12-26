@@ -1,13 +1,13 @@
 boolean setValuesToSelectedFixtures = true;
 
-
+ 
 boolean createFinalValuesPlease;
 boolean saveDimmerValue;
 
 String[] saveOptionButtonVariables = { "dimmer", "colorWheel", "gobo", "goboRotation", "shutter", "pan", "tilt", "haze", "fan", "fog" };
 boolean[] saveOptionButtonVariableValues = new boolean[saveOptionButtonVariables.length];
 boolean[][] whatToSave = new boolean[numberOfMemories][saveOptionButtonVariables.length];
-
+ 
 class fixtureInput {
   int fixtureType;
   int channelStart;
@@ -276,7 +276,7 @@ class fixtureInput {
                   if(value == 1) {
                     if(savePreset) { //If savepresed is true then saves presed to presetplace which you clicked
                       for(int ijk = 0; ijk < whatToSave[0].length; ijk++) { whatToSave[i][ijk] = saveOptionButtonVariableValues[ijk]; }
-                      saveFixtureMemory(i);
+                      //saveFixtureMemory(i);
                       savePreset = false;
                     }
                     else { //Shows preset if you just clicked preset without savePreset or saves2l

@@ -2,7 +2,7 @@ void drawMainWindow() {
   pushMatrix();
     //TÄSSÄ KÄÄNNETÄÄN JA SIIRRETÄÄN NÄKYMÄ OIKEIN - DO ROTATE AND TRANSFORM RIGHT
    
-   
+    
    //Transform
    
    
@@ -33,7 +33,7 @@ void drawMainWindow() {
           if(!mouseLocked || mouseLocker == "main:fixMove") {
               if(!mousePressed) {
                 if(moveLamp == true) {
-                 if(lampToMove < ansaTaka) { //WHY ON EARTH IS HERE USED VARIABLE ansaTaka !?!?!?
+                 if(lampToMove < fixtures.length) {
                   fixtures[lampToMove].x_location = fixtures[lampToMove].x_location + (int(mouseRotated.x) - oldMouseX1) * 100 / zoom - ansaX[fixtures[lampToMove].parentAnsa];
                   fixtures[lampToMove].y_location = fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom;
                   
@@ -81,14 +81,13 @@ void drawMainWindow() {
                   mouseReleased = false;
                 }
                 else {
-                  fixtures[i].setDimmer(fixtures[i].dimmer == 255 ? 0 : 255);
+                 fixtures[i].toggle(true);
                 }
               }
             }
           }
         }
-            
-            
+
             drawFixture(i);
           //
       popMatrix();

@@ -1,5 +1,5 @@
 
-int userId = 1; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
+int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                               //|
                                                                                                                                                                           //|
 boolean showMode = true;                                                                                                                                                  //|
@@ -25,6 +25,8 @@ int touchOscInComing = 8000;                                                    
 
 
 
+
+boolean freeze = false;
 
 
 boolean[][] allowChannel = new boolean[10][512];
@@ -75,6 +77,7 @@ MidiBus Maschine;
 boolean[] noteOn = new boolean[10000];
 
 
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 //--------------------------------------------------------------------------------------------------Moving head variables---------------------------------------------------------
@@ -235,8 +238,6 @@ int movingHeadPan; //Moving headin pan arvo
 int movingHeadTilt; //Moving headin tilt arvo
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 
 

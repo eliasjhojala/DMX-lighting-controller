@@ -1,5 +1,5 @@
 //CONTROL WINDOW CODE//---->
-
+ 
    //This file is based on:
    /**
    * ControlP5 Controlframe
@@ -479,6 +479,15 @@ public class ControlFrame extends PApplet {
      .moveTo("fixtSettings")
      ;
     
+    //Create A Delete All Presets Button
+     cp5.addButton("submitFixture")
+     .setLabel("Save")
+     .setValue(0)
+     .setPosition(this.w - 110, this.h - 60)
+     .setSize(100, 20)
+     .moveTo("fixtSettings")
+     ;
+    
     
     //Create and define the tooltip
     cp5.getTooltip().setDelay(500);
@@ -547,6 +556,7 @@ public class ControlFrame extends PApplet {
       //save fixture data
       if (fixtureColorChangeHasHappened && cp5.tab("fixtSettings").isActive()) {
         bottomMenuControlBoxOpen = false;
+        
         fixtures[changeColorFixtureId].red = int(cp5.controller("colorRed").getValue());
         fixtures[changeColorFixtureId].green = int(cp5.controller("colorGreen").getValue());
         fixtures[changeColorFixtureId].blue = int(cp5.controller("colorBlue").getValue());

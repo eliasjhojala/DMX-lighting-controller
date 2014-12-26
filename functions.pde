@@ -1,6 +1,6 @@
 //Tässä välilehdessä on paljon lyhyitä voideja
 
-
+ 
 //Returns the index of the smalles value that ISN'T checked (input.lenght and checked.length MUST be equal!)
 //Returns -1 if none found
 int indexOfMinCheck(int[] input, boolean[] checked) {
@@ -46,6 +46,8 @@ void ansat() {
 void kalvo(color c) {
   fill(c);
 }
+
+
 
 
 
@@ -217,18 +219,13 @@ void blackOut(boolean state) {
   if(!state) {
     //Turn off blackout
     blackOut = false;
-    memory(1, masterValueBeforeBlackout);
-    valueOfMemory[1] = masterValueBeforeBlackout;
-    memoryValue[1] = masterValueBeforeBlackout;
+    changeGrandMasterValue(masterValueBeforeBlackout);
   }
   if(state) {
     //Turn on blackout
     masterValueBeforeBlackout = grandMaster;
     blackOut = true;
-    grandMaster = 0;
-    valueOfMemory[1] = 0;
-    memoryValue[1] = 0;
-    memory(1, 0);
+    changeGrandMasterValue(0);
   }
   
 }
@@ -275,3 +272,127 @@ void setValuesToSelected() {
     }
   }
 }
+
+
+void changeGrandMasterValue(int val) {
+  memories[1].setValue(val);
+}
+void changeCrossFadeValue(int val) {
+  memories[2].setValue(val);
+}
+
+
+
+//returns new value
+int quickSlider(String mouseLockID, int value) {
+    //Draw slider
+    drawBottomMenuChControllerSlider(value);
+    //Check for drag
+    if (isHover(0, 0, 20, 100) && mousePressed && !mouseLocked) {
+      //Started dragging
+      mouseLocked = true;
+      mouseLocker = mouseLockID;
+    }
+    boolean valueChanged = false;
+    if (mouseLocked && mouseLocker.equals(mouseLockID)) {
+      value += constrain((mouseX - pmouseX) * 4, 0, 255);
+      value = constrain(value, 0, 255);
+    }
+    
+    return value;
+}
+
+
+
+
+//Some functions which are really useful tex in chase
+
+    int getNext(int current, int[] lim) {
+      int toReturn = 0;
+      if(lim.length == 2) { toReturn = getNext(current, lim[0], lim[1]); }
+      return toReturn;
+    }
+    
+    int getReverse(int current, int[] lim) {
+      int toReturn = 0;
+      if(lim.length == 2) { toReturn = getReverse(current, lim[0], lim[1]); }
+      return toReturn;
+    }
+
+    /*getNext returns always reverse value and checks that 
+    if you already are at the smallest value then it goes to biggest value */
+    int getReverse(int current, int lim_low, int lim_hi) {
+      int toReturn = 0;
+      if(current > lim_low) { toReturn = current - 1; }
+      if(current == lim_low) { toReturn = lim_hi; }
+      toReturn = constrain(toReturn, lim_low, lim_hi);
+      return toReturn;
+    }
+    
+    /*getNext returns always next value and checks that 
+    if you already are at the biggest value then it goes to smallest value */
+    int getNext(int current, int lim_low, int lim_hi) {
+      int toReturn = 0;
+      if(current < lim_hi) { toReturn = current + 1; }
+      if(current == lim_hi) { toReturn = lim_low; }
+      toReturn = constrain(toReturn, lim_low, lim_hi);
+      return toReturn;
+    }
+    
+    //getInvertedValue returns value inverted (0 -> 255, 255 -> 0)
+    int getInvertedValue(int val, int lim_low, int lim_hi) {
+      int toReturn = 0;
+      toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);
+      return toReturn;
+    }
+  
+    
+    //defualtConstrain is used to constrain values between 0 and 255, because that is the range used in DMX.
+    int defaultConstrain(int val) {
+      int toReturn = 0;
+      toReturn = constrain(val, 0, 255);
+      return toReturn;
+    }
+    
+    //iMap is function which actually is same as map but it returns value as int
+    int iMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
+      int toReturn = 0;
+      toReturn = int(map(val, in_low, in_hi, out_low, out_hi));
+      return toReturn;
+    }
+    
+    //rMap is function which actually is same as map but it returns rounded value as int
+    int rMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
+      int toReturn = 0;
+      toReturn = round(map(val, in_low, in_hi, out_low, out_hi));
+      return toReturn;
+    }
+    
+    int onlyPositive(int val) {
+      if(val < 0) { val = 0; }
+      return val;
+    }
+  
+//End of some functions which are really useful tex in chase
+  
+
+/* Sorting algorithm which sorts variables like sort() function,
+but it returns original array index numbers as sorted arrange */
+  int[] sortIndex(int[] toSort) {
+    int[] toReturn = new int[toSort.length];
+    int[] sorted = new int[toSort.length];
+    boolean[] used = new boolean[toSort.length];
+     
+     sorted = sort(toSort);
+     
+     for(int i = 0; i < toSort.length; i++) {
+       for(int j = 0; j < sorted.length; j++) {
+         if(toSort[i] == sorted[j] && !used[j]) {
+           toReturn[j] = i;
+           used[j] = true;
+           break;
+         }
+       }
+     }
+     return toReturn;
+   } //End of sorting algorithm

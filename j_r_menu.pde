@@ -2,6 +2,8 @@
 
 memoryCreationBox memoryCreator = new memoryCreationBox(false);
 
+boolean savingMemory = false;
+ 
 void sivuValikko() {
   
   //The old code can be found in old versions
@@ -26,20 +28,39 @@ void sivuValikko() {
     arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
     
     //chaseMode button(s)
-    boolean isHoverCM = isHoverSimple(width-268, bubS/2, 102, 40);
-    fill(isHoverCM ? topMenuTheme : topMenuTheme2);
+    boolean isHoverIM = isHoverSimple(width-268, bubS/2+30, 102, 50);
+    boolean isHoverOM = isHoverSimple(width-268, bubS/2-50, 102, 80);
     stroke(topMenuAccent);  strokeWeight(2);
-    //Lower
-    //rect(width-268, bubS/2+40, 102, 40, 0, 0, 0, 20); - not in use for now
-    //Upper
-    rect(width-268, bubS/2-50, 102, 90, 0, 0, 0, 20);
-    fill(255);
-    text("Chase Mode: " + chaseMode, width-262, bubS/2+34);
+    pushStyle();
+      pushStyle();
+        //inputMode (lower)
+        fill(isHoverIM ? topMenuTheme : topMenuTheme2);
+        rect(width-268, bubS/2+10, 102, 50, 0, 0, 0, 20); //- not in use for now
+      popStyle();
+      pushStyle();
+        fill(255);
+        text("InM: " + getInputModeMasterDesc(), width-262+3, bubS/2+48);
+      popStyle();
+      pushStyle();
+        //outputMode (upper)
+        fill(isHoverOM ? topMenuTheme : topMenuTheme2);
+        rect(width-268, bubS/2-50, 102, 80, 0, 0, 0, 20);
+      popStyle();
+      pushStyle();
+        fill(255);
+        text("OutM: " + getOutputModeMasterDesc(), width-262+3, bubS/2+20);
+      popStyle();
+    popStyle();
     
-    if(mousePressed && isHoverCM && !(mouseLocked && mouseLocker.equals("rearMenu:ChaseMode"))) {
+    if(mousePressed && isHoverIM && !(mouseLocked && mouseLocker.equals("rearMenu:InputMode"))) { //lower
       mouseLocked = true;
-      mouseLocker = "rearMenu:ChaseMode";
-      if(mouseButton == LEFT) nextChaseMode(); else if(mouseButton == RIGHT) reverseChaseMode();
+      mouseLocker = "rearMenu:InputMode";
+      if(mouseButton == LEFT) inputModeMasterUp(); else if(mouseButton == RIGHT) inputModeMasterDown();
+    }
+    if(mousePressed && isHoverOM && !(mouseLocked && mouseLocker.equals("rearMenu:OutputMode"))) { //upper
+      mouseLocked = true;
+      mouseLocker = "rearMenu:OutputMode";
+      if(mouseButton == LEFT) outputModeMasterUp(); else if(mouseButton == RIGHT) outputModeMasterDown();
     }
     
     
@@ -63,7 +84,7 @@ void sivuValikko() {
     if(memoryMenu+i < numberOfMemories) {
       pushMatrix();
         translate(0, 20*(i-1));
-        drawMemoryController(i+memoryMenu, getMemoryTypeName(i+memoryMenu));
+        drawMemoryController(i+memoryMenu, memories[i+memoryMenu].getText());
       popMatrix();
     }
   }
@@ -78,7 +99,7 @@ void sivuValikko() {
 
 
 void drawMemoryController(int controlledMemoryId, String text) {
-  int value = memoryValue[controlledMemoryId];
+  int value = memories[controlledMemoryId].getValue();
   
   pushStyle();
   
@@ -113,8 +134,7 @@ void drawMemoryController(int controlledMemoryId, String text) {
       mouseLocked = true;
       mouseLocker = "presetControl";
       value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
-      memory(controlledMemoryId, value);
-      memoryValue[controlledMemoryId] = value;
+      memories[controlledMemoryId].setValue(value);
     } else if(mouseButton == RIGHT) memoryCreator.initiateFromExsisting(controlledMemoryId);
   }
   noFill();
@@ -126,15 +146,10 @@ void drawMemoryController(int controlledMemoryId, String text) {
 
 
 String getMemoryTypeName(int numero) {
-  String nimi = "";
-  if(memoryType[numero] == 1) { nimi = "prst"; }
-  if(memoryType[numero] == 2) { nimi = "s2l"; }
-  if(memoryType[numero] == 3) { nimi = "myst"; }
-  if(memoryType[numero] == 4) { nimi = "mstr"; }
-  if(memoryType[numero] == 5) { nimi = "fade"; }
-  if(memoryType[numero] == 6) { nimi = "wave"; }
-  return nimi;
+  return memories[numero].getText();
 }
+
+/////////MemoryCreationBox////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 class memoryCreationBox {
@@ -159,22 +174,23 @@ class memoryCreationBox {
   void initiateFromExsisting(int memory) {
     
     
-    switch(memoryType[memory]) {
+    switch(memories[memory].type) {
       case 0:
         selectedMemoryMode = 0;
       break;
       case 1:
         selectedMemoryMode = 0;
       break;
-      case 2:
-        selectedMemoryMode = 1;
+      case 2: case 3:
+        selectedMemoryMode = 2;
       break;
       
       default: return;
     }
     open = true;
     selectedMemorySlot = memory;
-    selectedWhatToSave = whatToSave[memory];
+    selectedWhatToSave = new boolean[memories[memory].whatToSave.length];
+    arrayCopy(memories[memory].whatToSave, selectedWhatToSave);
     
   }
   
@@ -263,7 +279,10 @@ class memoryCreationBox {
           text("Preset", 2, 25);
         } break;
         case 1: {
-          text("Chase (s2l)", 2, 25);
+          text("Chase", 2, 25);
+        } break;
+        case 2: {
+          text("QChase", 2, 25);
         } break;
       }
     }
@@ -306,7 +325,7 @@ class memoryCreationBox {
     pushMatrix();
     {
       switch(selectedMemoryMode) {
-        case 0:
+        case 0: //Preset
           //Draw whatToSave checkboxes
           textAlign(LEFT);
           text("What to save:", 10, 125);
@@ -333,8 +352,112 @@ class memoryCreationBox {
             popMatrix();
           }
         break;
-        case 1:
-          
+        case 1: case 2: //Chase & quickChase
+          if(memories[selectedMemorySlot].myChase != null) {
+          textAlign(LEFT);
+          { //Chase Input
+            text("Input Mode:", 10, 125);
+            fill(0, 186, 240); noStroke();
+            rect(110, 115, 12, 12, 1.5);
+            if(isHoverSimple(110, 115, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:chI+";
+              memories[selectedMemorySlot].myChase.inputModeUp();
+            }
+            rect(124, 115, 12, 12, 1.5);
+            if(isHoverSimple(124, 115, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:chI+";
+              memories[selectedMemorySlot].myChase.inputModeDown();
+            }
+            textSize(10);
+            fill(0);
+            text("+", 111.5, 124);
+            text("-", 125.5, 124);
+            text(memories[selectedMemorySlot].myChase.getInputModeDesc(), 10, 140);
+          }
+          { //Chase Output
+            textSize(12);
+            text("Output Mode:", 10, 175);
+            fill(0, 186, 240); noStroke();
+            rect(110, 165, 12, 12, 1.5);
+            if(isHoverSimple(110, 165, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:chO+";
+              memories[selectedMemorySlot].myChase.outputModeUp();
+            }
+            rect(124, 165, 12, 12, 1.5);
+            if(isHoverSimple(124, 165, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:chO-";
+              memories[selectedMemorySlot].myChase.outputModeDown();
+            }
+            textSize(10);
+            fill(0);
+            text("+", 111.5, 174);
+            text("-", 125.5, 174);
+            text(memories[selectedMemorySlot].myChase.getOutputModeDesc(), 10, 190);
+          }
+          { //Beat Mode
+            textSize(12);
+            text("Beat Mode:", 10, 225);
+            fill(0, 186, 240); noStroke();
+            rect(110, 215, 12, 12, 1.5);
+            if(isHoverSimple(110, 215, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:bM+";
+              memories[selectedMemorySlot].myChase.beatModeUp();
+            }
+            rect(124, 215, 12, 12, 1.5);
+            if(isHoverSimple(124, 215, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:bM+";
+              memories[selectedMemorySlot].myChase.beatModeDown();
+            }
+            textSize(10);
+            fill(0);
+            text("+", 111.5, 224);
+            text("-", 125.5, 224);
+            text(memories[selectedMemorySlot].myChase.beatMode, 10, 240);
+          }
+          { //Fade Mode
+            textSize(12);
+            text("Fade Mode:", 10, 275);
+            fill(0, 186, 240); noStroke();
+            rect(110, 265, 12, 12, 1.5);
+            if(isHoverSimple(110, 265, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:fM+";
+              memories[selectedMemorySlot].myChase.fadeModeUp();
+            }
+            rect(124, 265, 12, 12, 1.5);
+            if(isHoverSimple(124, 265, 12, 12) && mousePressed && !mouseLocked) {
+              mouseLocked = true;
+              mouseLocker = "memoryCreationBox:fM+";
+              memories[selectedMemorySlot].myChase.fadeModeDown();
+            }
+            textSize(10);
+            fill(0);
+            text("+", 111.5, 274);
+            text("-", 125.5, 274);
+            text(memories[selectedMemorySlot].myChase.getFadeModeDesc(), 10, 290);
+          }
+          //Separator
+          stroke(120);
+          fill(120);
+          strokeWeight(2);
+          line(150, 110, 150, 260);
+          { //fade
+            textSize(12);
+            fill(0);
+            text("Fade: " + memories[selectedMemorySlot].myChase.ownFade, 160, 125);
+            pushMatrix();
+              translate(160, 130);
+              memories[selectedMemorySlot].myChase.changeFade(quickSlider("memoryCreationBox:fade", memories[selectedMemorySlot].myChase.ownFade));
+            popMatrix();
+            
+          }
+          }
         break;
       }
     }
@@ -342,16 +465,20 @@ class memoryCreationBox {
   }
   
   void save() {
+    savingMemory = true;
     switch(selectedMemoryMode) {
       case 0: //Preset
-        arrayCopy(selectedWhatToSave, whatToSave[selectedMemorySlot]);
-        saveFixtureMemory(selectedMemorySlot);
+        memories[selectedMemorySlot].savePreset(selectedWhatToSave);
       break;
       case 1: //s2l
-        soundToLightFromPreset(selectedMemorySlot);
+        memories[selectedMemorySlot].myChase.newChase();
+      break;
+      case 2: //s2l
+        memories[selectedMemorySlot].myChase.createQuickChase();
       break;
     }
     open = false;
+    savingMemory = false;
   }
   
   //Returns whether box is hovered on
@@ -360,7 +487,7 @@ class memoryCreationBox {
   }
   
   void addToSelectedMemoryMode() {
-    if(selectedMemoryMode < 1) selectedMemoryMode++;
+    if(selectedMemoryMode < 2) selectedMemoryMode++;
     else selectedMemoryMode = 0;
   }
 }

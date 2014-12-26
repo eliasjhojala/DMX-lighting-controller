@@ -1,6 +1,6 @@
 
 
-
+ 
 
 //Maschine Mikro MK2 Interfacing -------------------------------------------------------------------------------------------------------
 
@@ -223,6 +223,7 @@ void calcMaschineAutoTap() {
   
   if (maschineManualMHadjustButtons[3] && mhx50_tiltValue[0] != 255) { mhx50_tiltValue[0]++; midiPositionButtonPressed = true; }
   if (maschineManualMHadjustButtons[3] && mhx50_tiltValue[1] != 255) { mhx50_tiltValue[1]++; midiPositionButtonPressed = true; }*/
+
   
   //------AutoTap calculations
   //Always turn off the booleans if they were put to true last time

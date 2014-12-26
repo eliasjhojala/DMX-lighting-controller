@@ -2,7 +2,7 @@
 
 int[] midiNotesWithoutBlacks = { 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6, 7, 8, 8, 9, 9, 10, 11, 11, 12, 12, 13, 13, 14, 15, 15, 16, 16, 17, 18, 18, 19, 19, 20, 20, 21, 22, 22, 23, 23, 24, 25, 25, 26, 26, 27, 27, 28, 29, 30, 31 };
 boolean wasAt64 = false;
-
+ 
 int oldMouseX1;
 int oldMouseY1;
 
@@ -12,29 +12,43 @@ int oldGrandMaster = 40;
 
 
 void draw() {
-  checkThemeMode();
   
-  setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
-  if (arduinoFinished) thread("arduinoSend"); //Send dim-values to arduino, which sends them to DMX-shield
+  if(!freeze) {
   
-  drawMainWindow(); //Draw fixtures (tab main_window)
+    for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
+    
+    memories[1].type = 4;
+    memories[2].type = 5;
   
-  if(!printMode) {
-    ylavalikko(); //top menu
-    alavalikko(); //bottom menu
-    sivuValikko(); //right menu
-    contextMenu1.draw();
+    checkThemeMode();
+    
+    setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
+    if (arduinoFinished) thread("arduinoSend"); //Send dim-values to arduino, which sends them to DMX-shield
+    
+    drawMainWindow(); //Draw fixtures (tab main_window)
+    
+    if(!printMode) {
+      ylavalikko(); //top menu
+      alavalikko(); //bottom menu
+      sivuValikko(); //right menu
+      contextMenu1.draw();
+    }
+    thread("detectBeat");
+  
+    
+    if (useMaschine) calcMaschineAutoTap();
+    
+    //Invoke every fixtures draw
+    if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
+
   }
-  thread("detectBeat");
-
-  
-  if (useMaschine) calcMaschineAutoTap();
-  
-  //Invoke every fixtures draw
-  if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
-
-
 }
+
+
+
+
+
+
 
 
 //------------------------------------------------------------------------------------------------------------------------MIDI----------------------------------------------------------------------------------------------------------------------------------

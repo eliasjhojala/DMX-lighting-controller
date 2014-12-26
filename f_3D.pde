@@ -2,7 +2,7 @@
 /*
  This part of the program has mainly been made by Roope Salmi, rpsalmi@gmail.com
  */
-
+ 
 int coneScale = 500;
 
 int[] tablex = {  };

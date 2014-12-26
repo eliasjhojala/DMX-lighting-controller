@@ -1,5 +1,5 @@
 //Tässä välilehdessä luetaan iPadilta touchOSC-ohjelman inputti
-
+ 
 int multixy1_value;
 int multixy1_value_old;
 int multixy1_value_offset;
@@ -89,7 +89,6 @@ void oscEvent(OscMessage theOscMessage) {
          }
        }
      }
-     
      
      if(addr.equals("/nextstep")) {
        if(digitalValue == 1) {
