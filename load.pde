@@ -1,7 +1,8 @@
 //Tässä välilehdessä luetaan aikaisemmin tallennettuja tietoja csv-taulukkotiedostosta
 boolean dataLoaded = false;
+boolean programReadyToRun = false;
 void loadSetupData() {
-  if(userId == 1) {
+  /*if(userId == 1) {
    table = loadTable("/Users/elias/Dropbox/DMX controller/main_for_two_pc/variables/settings.csv", "header"); //Eliaksen polku
   }
   else if(userId == 2) {
@@ -11,7 +12,7 @@ void loadSetupData() {
   }
   else if(userId == 3) {
      table = loadTable("C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\settings.csv", "header");
-  }
+  }*/
 
   
   use3D = !(userId == 3);
@@ -19,27 +20,28 @@ void loadSetupData() {
 }
 
 void loadAllData() {
+  try {
+    loadAllData1();
+    programReadyToRun = true;
+  }
+  catch(Exception e) {
+    if(inputIsSelected) {
+      fileDialogInput();
+      programReadyToRun = false;
+      loadAllData();
+    }
+  }
+}
+void loadAllData1() {
     loadSetupData();
-   
-   
-    
-    if(userId == 1) {
-     table = loadTable("/Users/elias/Dropbox/DMX controller/main_modular/variables/pikkusten_disko.csv", "header"); //Eliaksen polku
-    }
-    else if(userId == 2) {
-      if(!roopeAidilla) {
-       table = loadTable("E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roopen polku
-      } else table = loadTable("C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv", "header"); //Roope äidillä -polku
-    }
-    else if(userId == 3) {
-      table = loadTable("C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\pikkusten_disko.csv", "header");
-    }
-    
-//         for(int i = 0; i < repOfFixtures.length; i++) {
-//        for(int ij = 0; ij < repOfFixtures[i].length; ij++) {
-//          repOfFixtures[i][ij] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//        }
-//      }
+
+     table = loadTable(loadPath, "header"); //Eliaksen polku
+
+         for(int i = 0; i < repOfFixtures.length; i++) {
+        for(int ij = 0; ij < repOfFixtures[i].length; ij++) {
+          repOfFixtures[i][ij] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
+      }
     
     //FIXTURES---------------------------------------------------------------------------------------------------------------------------
     //Initialize fixtures using type

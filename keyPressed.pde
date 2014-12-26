@@ -1,8 +1,15 @@
 //Tässä välilehdessä luetaan tietokoneen omia syöttölaitteita, eli näppäimistöä ja hiirtä
- 
+
+boolean ctrlDown = false;
+boolean shftDown = false;
+boolean rightPressed = false;
+boolean leftPressed = false;
+boolean enterPressed = false;
+
 void keyReleased() {
   keyReleased = true;
   if(key == 'r') { revStepPressed = false; }
+
 }
 
 void keyPressed() {
@@ -15,7 +22,6 @@ void keyPressed() {
   if(key == 'p') { chasePause = !chasePause; }
   if(key == 'r') { revStepPressed = true; }
   if(key == '1') { lampToMove = 1; }
-  if(key == 's') { saveAllData(); }
   if(key == 'l') { thread("loadAllData"); }
   if(key == 'c') {
     for(int i = 0; i < channels; i++) {
@@ -24,19 +30,26 @@ void keyPressed() {
     }
   }
   
-  if(key == 'o') { fileDialogOutput(); }
+  if(keyCode == 17) { ctrlDown = true; }
+  if(keyCode == 16) { shftDown = true; println("toimii"); }
+  if(key == 'o') { fileDialogInput(); ctrlDown = false; }
+  if(key == 's') {
+    if(shftDown) {
+      fileDialogOutput();
+      shftDown = false; println("TOIMII");
+    }
+    else {
+      saveAllData();
+    }
+  }
 
   if(key == 'u') {
       if(upper == true) { enttecDMXplace = enttecDMXplace - 1; upper = false; }
       else { enttecDMXplace = enttecDMXplace + 1; upper = true; }
   } 
-  
-  if(keyCode == RIGHT) {
-   bottomMenuOrder[changeColorFixtureId] = constrain(bottomMenuOrder[changeColorFixtureId] + 1, 0, 1000);
-  }
-  if(keyCode == LEFT) {
-   bottomMenuOrder[changeColorFixtureId] = constrain(bottomMenuOrder[changeColorFixtureId] - 1, 0, 1000);
-  }
+  if(keyCode == RIGHT) { rightPressed = true; }
+  if(keyCode == LEFT) { leftPressed = true; }
+  if(keyCode == ENTER) { enterPressed = true; }
 }
 
 

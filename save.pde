@@ -198,29 +198,17 @@ void saveAllData() {
   saveVariable(int(centerY), "centerY");
   saveVariable(chaseMode, "chaseMode");
   
-
+  saveDataMainCommands(loadPath, "loadPath", "0", "-", "-");
   
 
   //Asetetaan oikeat tallennuspolut käyttäjän mukaan
-
-  if(userId == 1) { //Jos Elias käyttää
-    saveTable(table, "/Users/elias/Dropbox/DMX controller/main_modular/variables/pikkusten_disko.csv"); //Eliaksen polku
-  } 
-  else if(userId == 2) {
-    if(!roopeAidilla) {
-      saveTable(table, "E:\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv"); //Roopen polku
-    } 
-    else {
-      saveTable(table, "C:\\Users\\rpsal_000\\Dropbox\\DMX controller\\main_modular\\variables\\pikkusten_disko.csv");
-    }
-  }
-  else if(userId == 3) {
-    saveTable(table, "C:\\Users\\elias\\Dropbox\\DMX Controller\\main_modular\\variables\\pikkusten_disko.csv");
-  }
+  
+  saveTable(table, savePath); //Roopen polku
+  
   println(); println(); println(); 
   println("SAVE READY");
   long takedTime = millis() - saveDataBeginMillis;
- println("It taked " + str(takedTime) + " ms");
+  println("It taked " + str(takedTime) + " ms");
   println();
   
 }

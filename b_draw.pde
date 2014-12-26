@@ -12,8 +12,7 @@ int oldGrandMaster = 40;
 
 
 void draw() {
-  
-  if(!freeze) {
+  if(programReadyToRun && !freeze) {
   
     for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
     
@@ -43,11 +42,14 @@ void draw() {
 
   }
 }
-
-
-
-
-
+  
+  if (useMaschine) calcMaschineAutoTap();
+  
+  //Invoke every fixtures draw
+  if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
+  }
+  initSettingsInSetup();
+}
 
 
 
