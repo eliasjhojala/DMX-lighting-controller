@@ -15,7 +15,7 @@ class fixture {
   int dimmer; //dimmer value
   int dimmerPresetTarget = 0; //Used for preset calculations
   int lastDimmerPresetTarget = 0; // /\
-  int red, green, blue; //color values
+  int red, green, blue, white, amber; //color values
   int pan, tilt, panFine, tiltFine; //rotation values
   int x_location, y_location, z_location; //location in visualisation
   int locationOnScreenX, locationOnScreenY;
@@ -24,8 +24,8 @@ class fixture {
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
   int frequency; //Strobe freq value
-  int preFadeSpeed = 100;
-  int postFadeSpeed = 100;
+  int preFadeSpeed = 20;
+  int postFadeSpeed = 50;
  
   void setDimmerDirectly(int val) { dimmer = defaultConstrain(val); DMXChanged = true;}
   void setDimmer(int val) { 
@@ -188,6 +188,8 @@ class fixture {
        /* 1ch fog */                       case 21: dmxChannels = new int[1]; dmxChannels[0] = fog; break; //1ch fog
        /* 2ch strobe */                    case 22: dmxChannels = new int[2]; dmxChannels[0] = dimmer; dmxChannels[1] = frequency; break; //2ch strobe
        /* 1ch relay */                     case 23: dmxChannels = new int[1]; if(dimmer > 100) { dmxChannels[0] = 255; } else { dmxChannels[0] = 0; } break; //1ch relay
+       /* rgbw led par */                  case 24: dmxChannels = new int[4]; dmxChannels[0] = red; dmxChannels[1] = green; dmxChannels[2] = blue; dmxChannels[3] = white; break; //rgbw
+       /* rgbwd led par */                 case 25: dmxChannels = new int[5]; dmxChannels[0] = red; dmxChannels[1] = green; dmxChannels[2] = blue; dmxChannels[3] = white; dmxChannels[4] = dimmer; break; //rgbwd
       }
     return dmxChannels; 
   }
@@ -231,6 +233,8 @@ class fixture {
        /* 1ch fog */                       case 21: return 1; //1ch fog
        /* 2ch strobe */                    case 22: return 2; //2ch strobe
        /* 1ch relay */                     case 23: return 1; //1ch relay
+       /* rgbw */                          case 24: return 4; //rgbw
+       /* rgbwd */                         case 25: return 5; //rgbwd
     }
     return 0;
   }
@@ -246,6 +250,8 @@ class fixture {
            /* simple rgb led par with dim */   case 19: dimmer = dmxChannels[0]; red = dmxChannels[1]; green = dmxChannels[2]; blue = dmxChannels[3]; break; //Simple rgb led par with dim
            /* 2ch hazer */                     case 20: haze = dmxChannels[0]; fan = dmxChannels[1]; break; //2ch hazer
            /* 1ch fog */                       case 21: fog = dmxChannels[0]; break; //1ch fog
+           /* rgbw led par */                  case 24: red = dmxChannels[0]; green = dmxChannels[1]; blue = dmxChannels[2]; white = dmxChannels[3]; break; //rgbw led par
+           /* rgbwd led par */                 case 25: red = dmxChannels[0]; green = dmxChannels[1]; blue = dmxChannels[2]; white = dmxChannels[3]; dimmer = dmxChannels[4]; break; //rgbwd led par
         }
       } catch(Exception e) { e.printStackTrace(); return false; }
       DMXChanged = true;
