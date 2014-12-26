@@ -573,12 +573,47 @@ class chase { //Begin of chase class--------------------------------------------
     }
   }
   
-  int[] originalValue;
-  void shake() { //function to shake fixture values near the original value
+  
+
+  void shake1() { //function to shake fixture values near the original value
     for(int i = 0; i < getPresets().length; i++) {
       loadPreset(getPresets()[i], defaultConstrain(round(random(value-value/3, value+value/3))));
     }
   }
+  
+  
+  int[] originalValue;
+  int[] valueChange;
+  int[] finalValue;
+  int[] changed;
+  int[] changeTime;
+  
+  void shake() {
+    originalValue = new int[getPresets().length];
+    valueChange = new int[getPresets().length];
+    finalValue = new int[getPresets().length];
+    for(int i = 0; i < getPresets().length; i++) {
+      originalValue[i] = getPresetValue(i);
+      valueChange[i] = int(random(getPresetValue(i)/6, getPresetValue(i)/3));
+      finalValue[i] = getPresetValue(i) - valueChange[i];
+      loadPreset(getPresets()[i], finalValue[i]);
+      delay(10);
+      finalValue[i] = originalValue[i];
+      loadPreset(getPresets()[i], finalValue[i]);
+    }
+    
+//    for(int i = 0; i < getPresets().length; i++) {
+//      finalValue[i] = originalValue[i] + valueChange[i];
+//      loadPreset(getPresets()[i], finalValue[i]);
+//    }
+//    
+//    for(int i = 0; i < getPresets().length; i++) {
+//      finalValue[i] = originalValue[i];
+//      loadPreset(getPresets()[i], finalValue[i]);
+//    }
+  }
+  
+  
   
   float sinStep = 0; //step of sine wave
   void sine() { //function to make sine waves to presets
