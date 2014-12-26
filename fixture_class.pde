@@ -48,11 +48,13 @@ class fixture {
     }
   }
   
-  float fadeStartMillis;
+  long fadeStartMillis;
   int fadeTarget = 0;
   int preFade;
   int postFade;
   int originalDimmer;
+  
+  boolean fadeComplete = true;
   
   boolean pushWithFadeDown = false;
   
@@ -63,17 +65,20 @@ class fixture {
       postFade = post;
       fadeStartMillis = millis();
       originalDimmer = dimmer;
+      fadeComplete = false;
     }
     
   }
   
   void setDimmerWithFadeInEveryLoop() {
-    int timer = round(millis()-fadeStartMillis);
-    if(dimmer < fadeTarget && dimmer < 255 && timer <= preFade) {
-      setDimmer(iMap(timer, 0, preFade, originalDimmer, fadeTarget));
-    }
-    if(dimmer > fadeTarget && dimmer > 0 && timer <= postFade) {
-      setDimmer(iMap(timer, 0, postFade, originalDimmer, fadeTarget));
+    if(!fadeComplete) {
+      int timer = round(millis()-fadeStartMillis);
+      if(dimmer < fadeTarget && dimmer < 255 /*&& timer <= preFade*/) {
+        setDimmer(iMap(timer, 0, preFade, originalDimmer, fadeTarget));
+      } else
+      if(dimmer > fadeTarget && dimmer > 0 /*&& timer <= postFade*/) {
+        setDimmer(iMap(timer, 0, postFade, originalDimmer, fadeTarget));
+      } else fadeComplete = true;
     }
   }
   
