@@ -24,16 +24,20 @@ class fixture {
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
   int frequency; //Strobe freq value
+  int preFadeSpeed = 0;
+  int postFadeSpeed = 0;
  
-  void setDimmer(int val) { dimmer = defaultConstrain(val); DMXChanged = true;}
+  void setDimmerDirectly(int val) { dimmer = defaultConstrain(val); DMXChanged = true;}
+  void setDimmer(int val) { 
+    setDimmerWithFade(val, preFadeSpeed, postFadeSpeed);
+  }
   
   void toggle(boolean down) {
-//    if(down) {
-//      if(fixtureTypeId == 20) { if(haze < 255 || fan < 255) { haze = 255; fan = 255; } else { haze = 0; fan = 0; } DMXChanged = true; }
-//      if(fixtureTypeId == 21) { if(fog < 255) { fog = 255; } else { fog = 0; } DMXChanged = true; }
-//      if(fixtureTypeId != 20 && fixtureTypeId != 21) { if(dimmer < 255) { setDimmer(255); } else { setDimmer(0); } }
-//    }
-      //setDimmerWithFade(int(down)*255, 1000, 1000);
+    if(down) {
+      if(fixtureTypeId == 20) { if(haze < 255 || fan < 255) { haze = 255; fan = 255; } else { haze = 0; fan = 0; } DMXChanged = true; }
+      if(fixtureTypeId == 21) { if(fog < 255) { fog = 255; } else { fog = 0; } DMXChanged = true; }
+      if(fixtureTypeId != 20 && fixtureTypeId != 21) { if(dimmer < 255) { setDimmer(255); } else { setDimmer(0); } }
+    }
   }
   void push(boolean down) {
     if(down) {
@@ -73,11 +77,11 @@ class fixture {
   void setDimmerWithFadeInEveryLoop() {
     if(!fadeComplete) {
       int timer = round(millis()-fadeStartMillis);
-      if(dimmer < fadeTarget && dimmer < 255 /*&& timer <= preFade*/) {
-        setDimmer(iMap(timer, 0, preFade, originalDimmer, fadeTarget));
+      if(dimmer < fadeTarget && dimmer < 255) {
+        setDimmerDirectly(iMap(timer, 0, preFade, originalDimmer, fadeTarget));
       } else
-      if(dimmer > fadeTarget && dimmer > 0 /*&& timer <= postFade*/) {
-        setDimmer(iMap(timer, 0, postFade, originalDimmer, fadeTarget));
+      if(dimmer > fadeTarget && dimmer > 0) {
+        setDimmerDirectly(iMap(timer, 0, postFade, originalDimmer, fadeTarget));
       } else fadeComplete = true;
     }
   }

@@ -81,18 +81,12 @@ void drawMainWindow() {
                   mouseReleased = false;
                 }
                 else {
-                 //fixtures[i].toggle();
+                 fixtures[i].toggle(true);
                 }
               }
             }
           }
         }
-            if(isHover(0, 0, fixtures[i].size.w, fixtures[i].size.h) && fixtures[i].size.isDrawn && mousePressed) {
-              fixtures[i].setDimmerWithFade(255, 100, 1000);
-            }
-            else {
-              fixtures[i].setDimmerWithFade(0, 100, 1000);
-            }
             drawFixture(i);
           //
       popMatrix();
