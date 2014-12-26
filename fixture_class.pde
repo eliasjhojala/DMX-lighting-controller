@@ -24,8 +24,8 @@ class fixture {
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
   int frequency; //Strobe freq value
-  int preFadeSpeed = 0;
-  int postFadeSpeed = 0;
+  int preFadeSpeed = 100;
+  int postFadeSpeed = 100;
  
   void setDimmerDirectly(int val) { dimmer = defaultConstrain(val); DMXChanged = true;}
   void setDimmer(int val) { 
@@ -78,10 +78,10 @@ class fixture {
     if(!fadeComplete) {
       int timer = round(millis()-fadeStartMillis);
       if(dimmer < fadeTarget && dimmer < 255) {
-        setDimmerDirectly(iMap(timer, 0, preFade, originalDimmer, fadeTarget));
+        setDimmerDirectly(constrain(iMap(timer, 0, preFade, originalDimmer, fadeTarget), originalDimmer, fadeTarget));
       } else
       if(dimmer > fadeTarget && dimmer > 0) {
-        setDimmerDirectly(iMap(timer, 0, postFade, originalDimmer, fadeTarget));
+        setDimmerDirectly(constrain(iMap(timer, 0, postFade, originalDimmer, fadeTarget), fadeTarget, originalDimmer));
       } else fadeComplete = true;
     }
   }
