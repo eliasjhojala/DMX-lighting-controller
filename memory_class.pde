@@ -35,7 +35,7 @@ class memory { //Begin of memory class------------------------------------------
   //--Memory types--//|
   // 1: preset      //|
   // 2: chase       //|
-  // 3: -           //|
+  // 3: quickChase  //|
   // 4: master      //|
   // 5: fade        //|
   //----------------//|
@@ -57,6 +57,24 @@ class memory { //Begin of memory class------------------------------------------
     myChase = new chase(this);
     for(int i = 0; i < fixtures.length; i++) {
       repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    }
+  }
+  
+  
+  void toggle(boolean down) {
+    if(down) {
+      if(value > 0) { setValue(0); } else { setValue(255); }
+    }
+  }
+  
+  int valueBeforePush;
+  void push(boolean down) {
+    if(down) {
+      valueBeforePush = getValue();
+      setValue(255);
+    }
+    else {
+      setValue(valueBeforePush);
     }
   }
 
@@ -185,8 +203,62 @@ class memory { //Begin of memory class------------------------------------------
 
 
 
+//chase mode variables--------------------------------------------------------------------------------------------------------
+
+  String[] outputModeDescs = { "inherit", "steps", "eq", "shaky", "sine", "sSine" };
+
+  int[] inputModeLimit = { 1, 3 };
+  int[] outputModeLimit = { 1, outputModeDescs.length-1 };
+  int[] fadeModeLimit = { 1, 3 };
+  int[] beatModeLimit = { 2, 4 };
+          
+  
+  
+  int inputModeMaster = inputModeLimit[0];
+  int outputModeMaster = outputModeLimit[0];
+  int beatModeMaster = beatModeLimit[0];
+  
+  
+  
+  
 
 
+        void inputModeMasterUp() {
+          inputModeMaster = getNext(inputModeMaster, inputModeLimit);
+        }
+        void inputModeMasterDown() {
+          inputModeMaster = getReverse(inputModeMaster, inputModeLimit);
+        }
+        void outputModeMasterUp() {
+          outputModeMaster = getNext(outputModeMaster, outputModeLimit);
+        }
+        void outputModeMasterDown() {
+          outputModeMaster = getReverse(outputModeMaster, outputModeLimit);
+        }
+
+        
+        String getOutputModeMasterDesc() {
+          String toReturn = "";
+          toReturn = outputModeDescs[outputModeMaster];
+          return toReturn;
+        }
+        
+
+        String getInputModeMasterDesc() {
+          String toReturn = "";
+          switch(inputModeMaster) {
+            case 0: toReturn = "inherit"; break;
+            case 1: toReturn = "beat"; break;
+            case 2: toReturn = "manual"; break;
+            case 3: toReturn = "auto"; break;
+          }
+          return toReturn;
+        }
+        
+//chase mode variables end--------------------------------------------------------------------------------------------------------------
+        
+        
+        
 
 
 
@@ -197,11 +269,11 @@ class chase { //Begin of chase class--------------------------------------------
   int inputMode, outputMode, beatModeId; //What is input and what will output look like
   String beatMode = new String(); //kick, snare or hat
  
-  
-  int[] inputModeLimit = { 1, 3 };
-  int[] outputModeLimit = { 1, 2 };
+  int[] inputModeLimit = { 0, 3 };
+  int[] outputModeLimit = { 0, outputModeDescs.length-1 };
   int[] fadeModeLimit = { 1, 3 };
-  int[] beatModeLimit = { 2, 4 };
+  int[] beatModeLimit = { 2, 4 };
+ 
   
   int fadeMode; //1 = from own, 2 = from own*master, 3 = from master
   
@@ -211,6 +283,12 @@ class chase { //Begin of chase class--------------------------------------------
   int step, brightness, brightness1;
   boolean stepHasChanged;
   int fade, ownFade;
+  
+  int sineMax = 300;
+  int sineMin = 1;
+  
+  sine[] sines = new sine[sineMax+1];
+  int[][] sineValue = new int[500][sineMax+1];
   
   
   //----------------------end declaring variables--------------------------------
@@ -293,8 +371,10 @@ class chase { //Begin of chase class--------------------------------------------
           return beatMode;                                                                     
         }                                                                                      
                                                                                                
-        int getBeatModeId() {                                                                  
-          return beatModeId;                                                                   
+        int getBeatModeId() {   
+          int toReturn = 0;
+          if(beatModeId > 0) { toReturn = beatModeId; } else { toReturn = beatModeMaster; } 
+          return toReturn;                                                                   
         }                                                                                      
                                                                                                
         void beatModeUp() {                                                                    
@@ -329,19 +409,20 @@ class chase { //Begin of chase class--------------------------------------------
         }
         
         void output() {
-          switch(outputMode) {
-            case 1: beatToMoving(); break; 
+          int oM = 0;
+          if(outputMode > 0) { oM = outputMode; } else { oM = outputModeMaster; }
+          switch(oM) {
+            case 1: beatToMoving(); break;
             case 2: freqToLight(); break;
+            case 3: shake(); break;
+            case 4: sine(); break;
+            case 5: singleSine(); break;
           }
         }
         
         String getOutputModeDesc() {
           String toReturn = "";
-          switch(outputMode) {
-            case 0: toReturn = "inherit"; break;
-            case 1: toReturn = "steps"; break;
-            case 2: toReturn = "eq"; break;
-          }
+          toReturn = outputModeDescs[constrain(outputMode, 0, outputModeDescs.length-1)];
           return toReturn;
         }
         
@@ -359,7 +440,9 @@ class chase { //Begin of chase class--------------------------------------------
         
           boolean trigger() {
             boolean toReturn = false;
-            switch(inputMode) {
+            int iM = 0;
+            if(inputMode > 0) { iM = inputMode; } else { iM = inputModeMaster; }
+            switch(iM) {
               case 1: toReturn = s2l.beat(constrain(getBeatModeId(), beatModeLimit[0], beatModeLimit[1])); break;
               case 2: toReturn = (nextStepPressed || (keyPressed && key == ' ')); break;
               case 3: toReturn = true; break;
@@ -412,7 +495,8 @@ class chase { //Begin of chase class--------------------------------------------
         memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
     }
     if(parent.type == 3) {
-        fixtures[num].dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
+        //fixtures[num].dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
+        fixtures[num].setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
     }
   }
   
@@ -430,6 +514,17 @@ class chase { //Begin of chase class--------------------------------------------
      }
      return toReturn;
      
+  }
+  
+  int getPresetValue(int i) {
+    int toReturn = 0;
+     if(parent.type == 2) {
+       toReturn = memories[getPresets()[i]].getValue();
+     }
+     else if(parent.type == 3) {
+       toReturn = fixtures[getPresets()[i]].dimmer;
+     }
+     return toReturn;
   }
     
   
@@ -479,98 +574,154 @@ class chase { //Begin of chase class--------------------------------------------
   }
   
   
+
+  void shake1() { //function to shake fixture values near the original value
+    for(int i = 0; i < getPresets().length; i++) {
+      loadPreset(getPresets()[i], defaultConstrain(round(random(value-value/3, value+value/3))));
+    }
+  }
+  
+  
+  int[] originalValue;
+  int[] valueChange;
+  int[] finalValue;
+  int[] changed;
+  int[] changeTime;
+  
+  void shake() {
+    
+    int[] presets = getPresets();
+    int randomIterations = 10;
+    for(int i = 0; i < presets.length; i++) {
+      
+      int randomVal = 0;
+      for(int j = 0; j < randomIterations; j++) randomVal += int(random(-20, 20));
+      randomVal /= randomIterations;
+      
+      loadPreset(presets[i], defaultConstrain(getPresetValue(i) + randomVal));
+      
+    }
+    
+
+  }
   
   
   
+  float sinStep = 0; //step of sine wave
+  void sine() { //function to make sine waves to presets
+    int[] finalValue; //output value
+    finalValue = new int[getPresets().length]; //create right lengthed array to place all the output values
+    for(int i = 0; i < getPresets().length; i++) { //go through all the presets in chase
+        sinStep+=map(chaseFade, 0, 255, 0.1, 0.001); //count sinestep according to chaseFade
+        finalValue[i] = int(map(sin(sinStep-i), -1, 1, 0, 255)); //count output value according to sinestep and preset number
+        loadPreset(getPresets()[i], finalValue[i]); //output the output value
+    } //end of for(int i = 0; i < valueChange.length; i++)
+  } //end of void sine()
+  
+  
+  void singleSine() { //The function which makes ONE sine wave always when trigger is true
+    for(int i = 0; i < sines.length; i++) { //Go throught all the sines
+      if(sines[i] != null) { //Check if sine is created
+        if(sines[i].go) { //Check if sine has to go on
+          sines[i].draw(); //Count sine wave
+        } //End of sines[i].go check
+      } //End of checking does this sine exist
+    }
+    
+    for(int i = 0; i <= sineMax; i++) {
+      if(i < getPresets().length) { //No nullpointers anymore
+        loadPreset(getPresets()[i], max(sineValue[i])); //Finally put the values from sine class to loadPreset function
+      }
+    }
+    
+    boolean trigger = trigger(); //use trigger function as trigger
+    if(trigger) { //If triggered
+      boolean found = false; //At first let's reset found boolean
+      for(int i = 0; i < sines.length; i++) { //Go trhoughr all the sines
+        if(sines[i] != null) { //Check if sine exist
+          if(sines[i].ready) { sines[i].go(); found = true; break; } //If sine is ready we can use it again for new wave
+        }
+      }
+      if(!found) { //If we didn't found any sine to use 
+      int numero = 0; //Reset numbero variable (numero = number)
+        for(int i = 0; i < sines.length; i++) { //Go trhough all the sines
+          if(sines[i] == null) { //check if sine isn't created
+            numero = i; break; //Select the first sine which isn't created
+          }
+        }
+      sines[numero] = new sine(numero, this); sines[numero].go(); } //Create sine and start it
+    }
+  }
+  
+  
+  
+  //Create quickChase-------------------------------------------------------------
+  /*Actually this function only saves selected 
+  fixtures to content array arranged by x location in screen */
   
   
    void createQuickChase() {
-     int[] fixturesInChase;
-     int a = 0;
+     int[] fixturesInChase; //create variable where selected fixtures will be stored
+     int a = 0; //used mainly to count amount of some details
      
-     for(int i = 0; i < fixtures.length; i++) {
-       if(fixtures[i].selected) {
-         a++;
-       }
+     for(int i = 0; i < fixtures.length; i++) { //This for loop is made only to count how many fixtures are selected
+       if(fixtures[i].selected) { a++; }
      }
-     fixturesInChase = new int[a];
+     fixturesInChase = new int[a]; //Now we know how many fixtures are selected so we can create right lengthed array for storing them
 
-     int[] x = new int[a];
-     a = 0;
-     for(int i = 0; i < fixtures.length; i++) {
+     int[] x = new int[a]; //let's make also right lengthed array to store fixtures' x-location
+     a = 0; //reset a variable because we're gonna use it again
+     for(int i = 0; i < fixtures.length; i++) { //This loop places right fixture id:s to fixturesInChase array
        if(fixtures[i].selected) {
          fixturesInChase[a] = i;
          a++;
        }
      }
-     for(int i = 0; i < fixturesInChase.length; i++) {
+     for(int i = 0; i < fixturesInChase.length; i++) { //this function places right x locations to x array
        x[i] = fixtures[fixturesInChase[i]].locationOnScreenX;
      }
      
      
-     int[] fixturesInChaseTemp = new int[fixturesInChase.length];
+     int[] fixturesInChaseTemp = new int[fixturesInChase.length]; //Create temp array to store fixturesInChase array temporarily
      arrayCopy(fixturesInChase, fixturesInChaseTemp);
-     for(int i = 0; i < fixturesInChase.length; i++) {
+     for(int i = 0; i < fixturesInChase.length; i++) { //This function stores fixture values to fixturesInChase array in right order
        fixturesInChase[i] = fixturesInChaseTemp[sortIndex(x)[i]];
      }
      
-     a = 0;
-     for(int i = 0; i < fixturesInChase.length; i++) {
+     //Fixtures are now right ordered in fixtuesInChase array, but the same channeled fixtures aren't removed
+     
+     a = 0; //Reset a again
+     for(int i = 0; i < fixturesInChase.length; i++) { //let's count how long will final array be, when same channeled fixtures are removed
        if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
          a++;
        }
      }
      
-     fixturesInChaseTemp = new int[a];
-     a = 0;
-     for(int i = 0; i < fixturesInChase.length; i++) {
+     fixturesInChaseTemp = new int[a]; //Reset temp array and make it length good for save !(same channeled) fixtures
+     a = 0; //reset a again
+     for(int i = 0; i < fixturesInChase.length; i++) { //This function removes same channeled fixtures
        if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
          fixturesInChaseTemp[a] = fixturesInChase[i];
          a++;
        }
      }
      
-     fixturesInChase = new int[fixturesInChaseTemp.length];
-     content = new int[fixturesInChaseTemp.length];
+     //now fixturesInChaseTemp is ready!
+     //So let's copy it to fixturesInChase and then to content
      
-     arrayCopy(fixturesInChaseTemp, fixturesInChase);
-     arrayCopy(fixturesInChase, content);
+     fixturesInChase = new int[fixturesInChaseTemp.length]; //reset fixturesInChase and make it right lenght
+     content = new int[fixturesInChaseTemp.length]; //reset content array and make it right length
      
-     setParentType(3);
-
- }
- 
-      int[] sortIndex(int[] toSort) {
-      int[] toReturn = new int[toSort.length];
-      int[] sorted = new int[toSort.length];
-      boolean[] used = new boolean[toSort.length];
-       
-       sorted = sort(toSort);
-       
-       for(int i = 0; i < toSort.length; i++) {
-         for(int j = 0; j < sorted.length; j++) {
-           if(toSort[i] == sorted[j] && !used[j]) {
-             toReturn[j] = i;
-             used[j] = true;
-             break;
-           }
-         }
-       }
-       return toReturn;
-     }
-
-
+     arrayCopy(fixturesInChaseTemp, fixturesInChase); //copu temp array to fixturesInChase array
+     arrayCopy(fixturesInChase, content); //copu fixturesInChase to content array
+     
+     setParentType(3); //set parent to 3 which means quickChase 
+     //Saving quickChase is ready!
+ } //End of create quick chase -----------------------------------------------------------------------
 } //end of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-
-
+//inside papplet
 
 
 class soundDetect { //----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -605,6 +756,7 @@ class soundDetect { //----------------------------------------------------------
     return toReturn;
   }
   
+  //inside soundDetect class
   
   int freq(int i) {
     fft.forward( in.mix );
@@ -640,4 +792,88 @@ class soundDetect { //----------------------------------------------------------
   
 } //en of soundDetect class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+//inside papplet
+
+
+
+
+
+
+  
+
+//Single Sine class
+
+
+
+
+class sine {
+  chase parent;
+  sine(int num, chase parent) {
+    me = num;
+    this.parent = parent;
+    loc = new int[parent.sineMax+1];
+  }
+
+  
+  
+  float ofset = 0;
+  boolean up;
+  float val;
+  boolean go;
+  boolean ready;
+  
+  int me;
+  
+  int[] loc;
+  
+  int n = 0;
+
+  
+  
+  void draw() {
+
+    float plus = map(parent.fade, 0, 255, 0.5, 0.005); //Value wich is added in every for loop
+    ofset+=map(parent.fade, 0, 255, 1, 0.001); //How fast will wave go on
+       
+    int l = loc.length;
+    loc = new int[loc.length]; //Reset loc
+    
+    //Sine wave itself
+    for(float i = -HALF_PI; i <= HALF_PI; i+=plus) {
+      { //The first half of the sine
+        n = round(i+ofset)+4;
+        n = constrain(n, 0, loc.length-2);
+        val = sin(i)*255;
+        loc[n+1] = round(map(val, -255, 255, 255, 0));
+      } //End of firs half
+      
+      { //The second half of the sine
+        n = round((i+ofset)-PI)+4;
+        n = constrain(n, 0, loc.length-1);
+        loc[n] = round(map(val, -255, 255, 0, 255));
+      } //End of second half
+    }
+    
+    if(ofset > parent.sineMax+1) {
+      ready = true;
+      go = false;
+    }
+    else {
+      ready = false;
+    }
+    
+    for(int i = 0; i <= parent.sineMax; i++) {
+      parent.sineValue[i][me] = loc[constrain(i*2, 0, loc.length-1)]; //Save values
+    }
+  
+  }
+  
+  void go() {
+    go = true;
+    ofset = -4;
+  }
+  
+  
+}
 

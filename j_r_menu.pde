@@ -28,20 +28,39 @@ void sivuValikko() {
     arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
     
     //chaseMode button(s)
-    boolean isHoverCM = isHoverSimple(width-268, bubS/2, 102, 40);
-    fill(isHoverCM ? topMenuTheme : topMenuTheme2);
+    boolean isHoverIM = isHoverSimple(width-268, bubS/2+30, 102, 50);
+    boolean isHoverOM = isHoverSimple(width-268, bubS/2-50, 102, 80);
     stroke(topMenuAccent);  strokeWeight(2);
-    //Lower
-    //rect(width-268, bubS/2+40, 102, 40, 0, 0, 0, 20); - not in use for now
-    //Upper
-    rect(width-268, bubS/2-50, 102, 90, 0, 0, 0, 20);
-    fill(255);
-    text("Chase Mode: " + chaseMode, width-262, bubS/2+34);
+    pushStyle();
+      pushStyle();
+        //inputMode (lower)
+        fill(isHoverIM ? topMenuTheme : topMenuTheme2);
+        rect(width-268, bubS/2+10, 102, 50, 0, 0, 0, 20); //- not in use for now
+      popStyle();
+      pushStyle();
+        fill(255);
+        text("InM: " + getInputModeMasterDesc(), width-262+3, bubS/2+48);
+      popStyle();
+      pushStyle();
+        //outputMode (upper)
+        fill(isHoverOM ? topMenuTheme : topMenuTheme2);
+        rect(width-268, bubS/2-50, 102, 80, 0, 0, 0, 20);
+      popStyle();
+      pushStyle();
+        fill(255);
+        text("OutM: " + getOutputModeMasterDesc(), width-262+3, bubS/2+20);
+      popStyle();
+    popStyle();
     
-    if(mousePressed && isHoverCM && !(mouseLocked && mouseLocker.equals("rearMenu:ChaseMode"))) {
+    if(mousePressed && isHoverIM && !(mouseLocked && mouseLocker.equals("rearMenu:InputMode"))) { //lower
       mouseLocked = true;
-      mouseLocker = "rearMenu:ChaseMode";
-      if(mouseButton == LEFT) nextChaseMode(); else if(mouseButton == RIGHT) reverseChaseMode();
+      mouseLocker = "rearMenu:InputMode";
+      if(mouseButton == LEFT) inputModeMasterUp(); else if(mouseButton == RIGHT) inputModeMasterDown();
+    }
+    if(mousePressed && isHoverOM && !(mouseLocked && mouseLocker.equals("rearMenu:OutputMode"))) { //upper
+      mouseLocked = true;
+      mouseLocker = "rearMenu:OutputMode";
+      if(mouseButton == LEFT) outputModeMasterUp(); else if(mouseButton == RIGHT) outputModeMasterDown();
     }
     
     
