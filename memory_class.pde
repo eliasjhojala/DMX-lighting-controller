@@ -592,37 +592,37 @@ class chase { //Begin of chase class--------------------------------------------
   } //end of void sine()
   
   
-  void singleSine() {
-    for(int i = 0; i < sines.length; i++) {
-      if(sines[i] != null) {
-        if(sines[i].go) {
-          sines[i].draw();
-        }
-      }
+  void singleSine() { //The function which makes ONE sine wave always when trigger is true
+    for(int i = 0; i < sines.length; i++) { //Go throught all the sines
+      if(sines[i] != null) { //Check if sine is created
+        if(sines[i].go) { //Check if sine has to go on
+          sines[i].draw(); //Count sine wave
+        } //End of sines[i].go check
+      } //End of checking does this sine exist
     }
     
-    for(int i = 1; i <= sineMax; i++) {
+    for(int i = 0; i <= sineMax; i++) {
       if(i < getPresets().length) { //No nullpointers anymore
-        loadPreset(getPresets()[i], max(sineValue[i])); 
+        loadPreset(getPresets()[i], max(sineValue[i])); //Finally put the values from sine class to loadPreset function
       }
     }
     
-    boolean trigger = trigger();
-    if(trigger) {
-      boolean found = false;
-      for(int i = 0; i < sines.length; i++) {
-        if(sines[i] != null) {
-          if(sines[i].ready) { sines[i].go(); found = true; break; }
+    boolean trigger = trigger(); //use trigger function as trigger
+    if(trigger) { //If triggered
+      boolean found = false; //At first let's reset found boolean
+      for(int i = 0; i < sines.length; i++) { //Go trhoughr all the sines
+        if(sines[i] != null) { //Check if sine exist
+          if(sines[i].ready) { sines[i].go(); found = true; break; } //If sine is ready we can use it again for new wave
         }
       }
-      if(!found) { 
-      int numero = 0;
-        for(int i = 0; i < sines.length; i++) {
-          if(sines[i] == null) {
-            numero = i; break;
+      if(!found) { //If we didn't found any sine to use 
+      int numero = 0; //Reset numbero variable (numero = number)
+        for(int i = 0; i < sines.length; i++) { //Go trhough all the sines
+          if(sines[i] == null) { //check if sine isn't created
+            numero = i; break; //Select the first sine which isn't created
           }
         }
-      sines[numero] = new sine(numero, this); sines[numero].go(); }
+      sines[numero] = new sine(numero, this); sines[numero].go(); } //Create sine and start it
     }
   }
   
