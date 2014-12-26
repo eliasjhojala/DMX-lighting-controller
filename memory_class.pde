@@ -806,23 +806,11 @@ int n = 0;
   
   void draw() {
 
-    float plus = 0.05; //Value wich is added in every for loop
-    ofset+=0.2; //How fast will wave go on
-    
-    
-//It seems these functions are unuseful    
-/*   for(float i = HALF_PI+(ofset); i*1 <= parent.sineMax; i+=plus) {
-      n = round(i*1)+4;
-      n = constrain(n, 0, loc.length-1);
-      val = sin(HALF_PI)*255;
-      loc[n] = round(map(val, -255, 255, 255, 0));
-    }  
-    for(float i = 0; i < -HALF_PI+(ofset)-plus; i+=plus) {
-      n = round(i-PI)+4;
-      n = constrain(n, 0, loc.length-1);
-      val = sin(HALF_PI)*255;
-      loc[n] = round(map(val, -255, 255, 255, 0));
-    } */
+    float plus = 0.5; //Value wich is added in every for loop
+    ofset+=map(parent.fade, 0, 255, 1, 0.001); //How fast will wave go on
+       
+    int l = loc.length;
+    loc = new int[loc.length]; //Reset loc
     
     //Sine wave itself
     for(float i = -HALF_PI; i <= HALF_PI; i+=plus) {
