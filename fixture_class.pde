@@ -24,15 +24,16 @@ class fixture {
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
   int frequency; //Strobe freq value
-  
-  void setDimmer(int val) {dimmer = val; DMXChanged = true;}
+ 
+  void setDimmer(int val) { dimmer = defaultConstrain(val); DMXChanged = true;}
   
   void toggle(boolean down) {
-    if(down) {
-      if(fixtureTypeId == 20) { if(haze < 255 || fan < 255) { haze = 255; fan = 255; } else { haze = 0; fan = 0; } DMXChanged = true; }
-      if(fixtureTypeId == 21) { if(fog < 255) { fog = 255; } else { fog = 0; } DMXChanged = true; }
-      if(fixtureTypeId != 20 && fixtureTypeId != 21) { if(dimmer < 255) { setDimmer(255); } else { setDimmer(0); } }
-    }
+//    if(down) {
+//      if(fixtureTypeId == 20) { if(haze < 255 || fan < 255) { haze = 255; fan = 255; } else { haze = 0; fan = 0; } DMXChanged = true; }
+//      if(fixtureTypeId == 21) { if(fog < 255) { fog = 255; } else { fog = 0; } DMXChanged = true; }
+//      if(fixtureTypeId != 20 && fixtureTypeId != 21) { if(dimmer < 255) { setDimmer(255); } else { setDimmer(0); } }
+//    }
+      //setDimmerWithFade(int(down)*255, 1000, 1000);
   }
   void push(boolean down) {
     if(down) {
@@ -44,6 +45,35 @@ class fixture {
       if(fixtureTypeId == 20) { haze = 0; fan = 0; DMXChanged = true; }
       if(fixtureTypeId == 21) { fog = 0; DMXChanged = true; }
       if(fixtureTypeId != 20 && fixtureTypeId != 21) { setDimmer(0); }
+    }
+  }
+  
+  float fadeStartMillis;
+  int fadeTarget = 0;
+  int preFade;
+  int postFade;
+  int originalDimmer;
+  
+  boolean pushWithFadeDown = false;
+  
+  void setDimmerWithFade(int val, int pre, int post) {
+    if(val != fadeTarget) {
+      fadeTarget = val;
+      preFade = pre;
+      postFade = post;
+      fadeStartMillis = millis();
+      originalDimmer = dimmer;
+    }
+    
+  }
+  
+  void setDimmerWithFadeInEveryLoop() {
+    int timer = round(millis()-fadeStartMillis);
+    if(dimmer < fadeTarget && dimmer < 255 && timer <= preFade) {
+      setDimmer(iMap(timer, 0, preFade, originalDimmer, fadeTarget));
+    }
+    if(dimmer > fadeTarget && dimmer > 0 && timer <= postFade) {
+      setDimmer(iMap(timer, 0, postFade, originalDimmer, fadeTarget));
     }
   }
   
@@ -242,6 +272,7 @@ class fixture {
   int oldFixtureTypeId;
   
   void draw() {
+    setDimmerWithFadeInEveryLoop();
     if (dimmerPresetTarget != -1 && dimmerPresetTarget != lastDimmerPresetTarget) {
       setDimmer(dimmerPresetTarget);
       lastDimmerPresetTarget = dimmerPresetTarget;
