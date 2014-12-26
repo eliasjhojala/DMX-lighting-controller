@@ -8,4 +8,4 @@ void checkThemeMode() {
     background(0); //Jos tulostusmode on pois päältä taustaväri on musta - if printmode is off then background is black
     stroke(255, 255, 255); //Jos tulostusmode on pois päältä kuvoiden reunat ovat valkoisia - if printmode is off then strokes are white
   }
-}
+} 

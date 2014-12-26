@@ -2,7 +2,7 @@
 
 int[] midiNotesWithoutBlacks = { 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6, 7, 8, 8, 9, 9, 10, 11, 11, 12, 12, 13, 13, 14, 15, 15, 16, 16, 17, 18, 18, 19, 19, 20, 20, 21, 22, 22, 23, 23, 24, 25, 25, 26, 26, 27, 27, 28, 29, 30, 31 };
 boolean wasAt64 = false;
-
+ 
 int oldMouseX1;
 int oldMouseY1;
 
@@ -12,43 +12,43 @@ int oldGrandMaster = 40;
 long totalMillis[] = new long[9];
 
 void draw() {
-  long lastMillis = millis();
-  mouse.refresh();
-  totalMillis[0] += millis() - lastMillis; lastMillis = millis();
+  if(programReadyToRun && !freeze) {
   
-  checkThemeMode();
-  totalMillis[1] += millis() - lastMillis; lastMillis = millis();
+    for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
+    
+    memories[1].type = 4;
+    memories[2].type = 5;
   
-  setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
-  totalMillis[2] += millis() - lastMillis; lastMillis = millis();
-  if (arduinoFinished) thread("arduinoSend"); //Send dim-values to arduino, which sends them to DMX-shield
-  totalMillis[3] += millis() - lastMillis; lastMillis = millis();
+    checkThemeMode();
+    
+    setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
+    if (arduinoFinished) thread("arduinoSend"); //Send dim-values to arduino, which sends them to DMX-shield
+    
+    drawMainWindow(); //Draw fixtures (tab main_window)
+    
+    if(!printMode) {
+      ylavalikko(); //top menu
+      alavalikko(); //bottom menu
+      sivuValikko(); //right menu
+      contextMenu1.draw();
+    }
+    thread("detectBeat");
   
-  drawMainWindow(); //Draw fixtures (tab main_window)
-  totalMillis[4] += millis() - lastMillis; lastMillis = millis();
+    
+    if (useMaschine) calcMaschineAutoTap();
+    
+    //Invoke every fixtures draw
+    if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
+
   
-  if(!printMode) {
-    ylavalikko(); //top menu
-    totalMillis[5] += millis() - lastMillis; lastMillis = millis();
-    alavalikko(); //bottom menu
-    totalMillis[6] += millis() - lastMillis; lastMillis = millis();
-    sivuValikko(); //right menu
-    totalMillis[7] += millis() - lastMillis; lastMillis = millis();
-    contextMenu1.draw();
-    totalMillis[8] += millis() - lastMillis; lastMillis = millis();
+    if (useMaschine) calcMaschineAutoTap();
+    
+    //Invoke every fixtures draw
+    if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
   }
-  thread("detectBeat");
-
-  
-  if (useMaschine) calcMaschineAutoTap();
-  
-  //Invoke every fixtures draw
-  if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
-
-  debugSw.draw();
-  println("----");
-  println(totalMillis);
+  initSettingsInSetup();
 }
+
 
 
 //------------------------------------------------------------------------------------------------------------------------MIDI----------------------------------------------------------------------------------------------------------------------------------

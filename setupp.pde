@@ -1,5 +1,5 @@
 //Tähän välilehteen voi laittaa setup-komentoja, jotta main ei tule turhan täyteen
-
+ 
 OscP5 oscP51;
 NetAddress myRemoteLocation1;
 
@@ -14,8 +14,8 @@ boolean loadAllDataInSetup = true;
 public int leveys;
 public int korkeus;
 void setuppi() {
+   createMemoryObjects();
 
-  
   leveys = displayWidth;
   korkeus = displayHeight;
   loadSetupData();
@@ -46,7 +46,6 @@ void setuppi() {
   }
   
     fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-  
-   createMemoryObjects();
+
   
 }

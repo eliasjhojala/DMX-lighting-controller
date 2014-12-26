@@ -3,7 +3,7 @@
 ENSIN LASKETAAN AKTIIVISET MEMORYT JA SEN JÄLKEEN JOKA ISKULLA FOR LOOPPI
 */
 boolean chasePause = false;
-
+ 
 void detectBeat() {
       beat.detect(in.mix); //beat detect command of minim library
       biitti = beat.isKick();

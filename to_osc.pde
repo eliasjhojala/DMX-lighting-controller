@@ -8,7 +8,7 @@ int[] oldChannelValToPc = new int[300];
 int[] oldChannelValToIpad = new int[channels];
 int[] oldMemoryValToIpad = new int[numberOfMemories];
 int[] oldDataValToIpad = new int[100];
-
+ 
 
 void sendOscToAnotherPc(int ch, int val) {
   if(sendOscToAnotherPc == true) {

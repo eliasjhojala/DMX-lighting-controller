@@ -1,13 +1,13 @@
 //Tässä välilehdessä mm. luodaan presettejä
 int[] oldMemoryValue = new int[numberOfMemories]; //Muuttuja, johon tallennetaan memoryn edellinen arvo
 int[] oldPresetValue = new int[numberOfMemories]; //Muuttuja, johon tallennetaan memoryn edellinen arvo
-void makePreset(int memoryNumber) {
+/*void makePreset(int memoryNumber) {
    for (int i = 0; i < fixtures.length; i++) {
     whatToSave[0][memoryNumber] = true;
-    
+     
   }
   saveFixtureMemory(memoryNumber);
-}
+}*/
 void preset(int memoryNumber, int value) {
   presetNew(memoryNumber, value);
 }
@@ -44,29 +44,7 @@ soundToLightSteps[memoryNumber] = a;
 memoryType[memoryNumber] = 2;
 }
 
-void memory(int memoryNumber, int value) {
-  if(value != oldMemoryValue[memoryNumber]) {
-    sendMemoryToIpad(memoryNumber, value); //Läheteetään iPadille memorin arvo, jos se on muuttunut
-  }
-  valueOfMemory[memoryNumber] = value;
-//  memoryValue[memoryNumber] = value;
-  if(memoryType[memoryNumber] == 1) {
-    preset(memoryNumber, value);
-  }
-  if(memoryType[memoryNumber] == 2) {
-    beatDetectionDMX(memoryNumber, value);
-  }
-//  if(memoryType[memoryNumber] == 3) {
-//    beatDetectionDMX(0, value);
-//  }
-  if(memoryType[memoryNumber] == 4) {
-    if(blackOut == false) { grandMaster = value; } else { grandMaster = 0; }
-  }
-  if(memoryType[memoryNumber] == 5) {
-    chaseFade = value-3;
-  }
-  oldMemoryValue[memoryNumber] = value;
-}
+
 void changeChaseModeByMemoryNumber(int memoryNumber) {
   fill(0, 0, 255);
   rect(width/2-200, height/2-200, 400, 400);
@@ -83,17 +61,6 @@ void changeChaseModeByMemoryNumber(int memoryNumber) {
     }
   }
   text("chaseModeByMemoryNumber:"+chaseModeByMemoryNumber[memoryNumber], width/2-200+20, height/2-200+50);
-}
-
-void changeGrandMasterValue(int value) {
-  memory(1, value);
-  valueOfMemory[1] = value;
-  memoryValue[1] = value;
-}
-void changeCrossFadeValue(int value) {
-  memory(2, value);
-  valueOfMemory[2] = value;
-  memoryValue[2] = value;
 }
 
 boolean presetIsEmpty(int presetId) {

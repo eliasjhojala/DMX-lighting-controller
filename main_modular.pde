@@ -1,12 +1,13 @@
 
+
 int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
-boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                               //|
+boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                              //|
                                                                                                                                                                           //|
 boolean showMode = true;                                                                                                                                                  //|
                                                                                                                                                                           //|
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
-boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                      //|
-boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                              //|
+boolean useCOM = true; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                       //|
+boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                               //|
 boolean useAnotherArduino = false;                                                                                                                                        //|
                                                                                                                                                                           //|
 boolean useMaschine = false;                                                                                                                                              //|
@@ -14,9 +15,9 @@ boolean useMaschine = false;                                                    
 int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200);                                                                                                      //|
 int arduinoBaud2 = 9600;                                                                                                                                                  //|
                                                                                                                                                                           //|
-int arduinoIndex = 8; //Arduinon COM-portin järjestysnumero                                                                                                               //|
+int arduinoIndex = 0; //Arduinon COM-portin järjestysnumero                                                                                                               //|
 int arduinoIndex2 = 10;                                                                                                                                                   //|
-int enttecIndex = 0; // Enttecin USB DMX palikan COM-portin järjestysnumero                                                                                               //|
+int enttecIndex = 1; // Enttecin USB DMX palikan COM-portin järjestysnumero                                                                                               //|
                                                                                                                                                                           //|
 int touchOscInComing = 8000;                                                                                                                                              //|
                                                                                                                                                                           //|
@@ -25,6 +26,8 @@ int touchOscInComing = 8000;                                                    
 
 
 
+
+boolean freeze = false;
 
 
 boolean[][] allowChannel = new boolean[10][512];
@@ -76,6 +79,7 @@ boolean[] noteOn = new boolean[10000];
 
 
 import java.util.concurrent.atomic.AtomicInteger;
+
 
 //--------------------------------------------------------------------------------------------------Moving head variables---------------------------------------------------------
 int[][] mhx50_createFinalChannelValues = new int[2][14];
@@ -235,8 +239,6 @@ int movingHeadPan; //Moving headin pan arvo
 int movingHeadTilt; //Moving headin tilt arvo
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 
 
@@ -402,14 +404,24 @@ int[] chaseBright2 = new int[numberOfMemories];
 boolean chase;
 
 void initializeCOM() {
-  if(useEnttec == true) {
-    myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
-  }
-  if(useCOM == true) {
-    arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
-    if(useAnotherArduino == true) {
-      arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);
+  try {
+    if(useEnttec == true) {
+      myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
     }
+  }
+  catch(Exception e) {
+    useEnttec = false;
+  }
+  try {
+    if(useCOM == true) {
+      arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
+      if(useAnotherArduino == true) {
+        arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);
+      }
+    }
+  }
+  catch(Exception e) {
+    useCOM = false;
   }
 }
 
@@ -423,6 +435,7 @@ String fileSeparator = java.io.File.separator;
 String actualSketchPath;
 
 void setup() {
+  loadCoreData();
   actualSketchPath = sketchPath("");
   //Initialize mouseLocker to prevent nullPointers
   mouseLocker = "";

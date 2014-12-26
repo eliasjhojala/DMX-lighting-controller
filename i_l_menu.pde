@@ -2,11 +2,11 @@
 //Alavalikko toimii nyt hyvin ja fixture(i) voidia voi käyttää missä vain ohjelmassa
 /*Jostain syystä id:n vaihtamisen kanssa on välillä pieniä ongelmia
 se pitäisi selvittää*/
-
+ 
 //Create variables for old mouse locations
 int oldMouseX2;
 int oldMouseY2;
-
+ 
 void alavalikko() {
   //The boolean is set to true on a spot that has been checked. It should not be drawn again.
   boolean[] drawn = new boolean[bottomMenuOrder.length];

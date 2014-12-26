@@ -98,8 +98,8 @@ id,variable_name,variable_dimensions,value,1D,2D
 96,red,1,255,9,-
 97,green,1,255,9,-
 98,blue,1,170,9,-
-99,xTaka,1,120,9,-
-100,yTaka,1,5,9,-
+99,xTaka,1,-303,9,-
+100,yTaka,1,113,9,-
 101,rotX,1,180,9,-
 102,fixParam,1,-80,9,-
 103,fixtureTypeS,1,k.fresu,9,-
@@ -109,8 +109,8 @@ id,variable_name,variable_dimensions,value,1D,2D
 107,red,1,255,10,-
 108,green,1,255,10,-
 109,blue,1,152,10,-
-110,xTaka,1,728,10,-
-111,yTaka,1,6,10,-
+110,xTaka,1,1396,10,-
+111,yTaka,1,-11,10,-
 112,rotX,1,180,10,-
 113,fixParam,1,-80,10,-
 114,fixtureTypeS,1,k.fresu,10,-
@@ -1154,4 +1154,4 @@ id,variable_name,variable_dimensions,value,1D,2D
 1152,centerX,0,-5,-,-
 1153,centerY,0,2100,-,-
 1154,chaseMode,0,4,-,-
-1155,loadPath,0,/Users/elias/Dropbox/DMX controller/main_modular/variables/joulujuhla2014.csv,-,-
+1155,loadPath,0,/Users/elias/Dropbox/DMX controller/main_modular/variables/pikkusten_disko.csv,-,-

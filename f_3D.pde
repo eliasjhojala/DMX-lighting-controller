@@ -2,7 +2,7 @@
 /*
  This part of the program has mainly been made by Roope Salmi, rpsalmi@gmail.com
  */
-
+ 
 int coneScale = 500;
 
 int[] tablex = {  };
@@ -106,6 +106,7 @@ void setup() {
     path = assetPath + "3D models\\";
   }
   
+  try {
   par64Model = loadShape(path + "par64.obj");
   par64Holder = loadShape(path + "par64_holder.obj");
   kFresu = loadShape(path + "kFresu.obj");
@@ -121,7 +122,10 @@ void setup() {
   cone = loadShape(path + "cone.obj");
   table = loadShape(path + "table.obj");
   table.disableStyle();
-  
+  }
+  catch (Exception e) {
+    use3D = false;
+  }
   cone.disableStyle();
   base.disableStyle();
   
@@ -141,7 +145,13 @@ int valoScale = 20;
 
 
 void draw() {
-  
+
+  if(!use3D) {   
+    textSize(26);
+    background(0); 
+    fill(255);
+    text("3D not in use", 10, 100); 
+  }
   if(use3D == true && dataLoaded) {
  
               background(0);
