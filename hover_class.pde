@@ -15,7 +15,7 @@
 
 
 Mouse mouse = new Mouse();
-//--Yes, you can assign multiple mice and assing elements to each of them.
+//--Yes, you can assign multiple mice and assing elements to each of them seperately.
 
 class Mouse {
   AtomicInteger objectUid = new AtomicInteger();
@@ -44,14 +44,16 @@ class Mouse {
   }
   
   //Only declare if already existing, otherwise change the existing one. Returns true if successfull.
-  boolean declareUpdateElement(String name, String ontopof, int x1, int y1. int x2, int y2) {
+  boolean declareUpdateElement(String name, String ontopof, int x1, int y1, int x2, int y2) {
     HoverableElement elm = getElementByName(ontopof);
-    if(elm != false) declareUpdateElement(name, elm.priority+1, x1, y1, x2, y2);
+    if(elm != null) declareUpdateElement(name, elm.priority+1, x1, y1, x2, y2); else return false;
+    return true;
   }
   
-  boolean declareUpdateElement(String name, int priority, int x1, int y1. int x2, int y2) {
+  void declareUpdateElement(String name, int priority, int x1, int y1, int x2, int y2) {
     if(!updateElement(name, x1, y1, x2, y2)) {
       declareElement(name, priority, x1, y1, x2, y2);
+      
     }
   }
   
@@ -148,3 +150,4 @@ class HoverableElement {
   }
   
 }
+

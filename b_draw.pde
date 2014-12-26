@@ -9,23 +9,33 @@ int oldMouseY1;
 int grandMaster = 50;
 int oldGrandMaster = 40;
 
-
+long totalMillis[] = new long[9];
 
 void draw() {
+  long lastMillis = millis();
   mouse.refresh();
+  totalMillis[0] += millis() - lastMillis; lastMillis = millis();
   
   checkThemeMode();
+  totalMillis[1] += millis() - lastMillis; lastMillis = millis();
   
   setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
+  totalMillis[2] += millis() - lastMillis; lastMillis = millis();
   if (arduinoFinished) thread("arduinoSend"); //Send dim-values to arduino, which sends them to DMX-shield
+  totalMillis[3] += millis() - lastMillis; lastMillis = millis();
   
   drawMainWindow(); //Draw fixtures (tab main_window)
+  totalMillis[4] += millis() - lastMillis; lastMillis = millis();
   
   if(!printMode) {
     ylavalikko(); //top menu
+    totalMillis[5] += millis() - lastMillis; lastMillis = millis();
     alavalikko(); //bottom menu
+    totalMillis[6] += millis() - lastMillis; lastMillis = millis();
     sivuValikko(); //right menu
+    totalMillis[7] += millis() - lastMillis; lastMillis = millis();
     contextMenu1.draw();
+    totalMillis[8] += millis() - lastMillis; lastMillis = millis();
   }
   thread("detectBeat");
 
@@ -36,6 +46,8 @@ void draw() {
   if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
 
   debugSw.draw();
+  println("----");
+  println(totalMillis);
 }
 
 
