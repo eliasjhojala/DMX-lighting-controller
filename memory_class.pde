@@ -591,22 +591,11 @@ class chase { //Begin of chase class--------------------------------------------
   void shake() {
     
     int[] presets = getPresets();
-    /*originalValue = new int[presets.length];
-    valueChange = new int[presets.length];
-    finalValue = new int[presets.length];
-    for(int i = 0; i < presets.length; i++) {
-      originalValue[i] = getPresetValue(i);
-      valueChange[i] = int(random(getPresetValue(i)/6, getPresetValue(i)/3));
-      finalValue[i] = getPresetValue(i) - valueChange[i];
-      loadPreset(presets[i], finalValue[i]);
-      finalValue[i] = originalValue[i];
-      loadPreset(presets[i], finalValue[i]);
-    }*/
     int randomIterations = 10;
     for(int i = 0; i < presets.length; i++) {
       
       int randomVal = 0;
-      for(int j = 0; j < randomIterations; j++) randomVal += int(random(-10, 10));
+      for(int j = 0; j < randomIterations; j++) randomVal += int(random(-20, 20));
       randomVal /= randomIterations;
       
       loadPreset(presets[i], defaultConstrain(getPresetValue(i) + randomVal));
