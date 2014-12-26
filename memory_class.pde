@@ -602,7 +602,9 @@ class chase { //Begin of chase class--------------------------------------------
     }
     
     for(int i = 1; i <= sineMax; i++) {
-      loadPreset(getPresets()[i], max(sineValue[i])); 
+      if(i < getPresets().length) { //No nullpointers anymore
+        loadPreset(getPresets()[i], max(sineValue[i])); 
+      }
     }
     
     boolean trigger = trigger();
@@ -783,15 +785,12 @@ class sine {
   sine(int num, chase parent) {
     me = num;
     this.parent = parent;
+    loc = new int[parent.sineMax+1];
   }
 
   
   
-  float sineStep = 0;
-int step = 0;
-int ofsetY = 0;
 float ofset = 0;
-float i;
 boolean up;
 float val;
 boolean go;
@@ -799,7 +798,7 @@ boolean ready;
 
 int me;
 
-int[] loc = new int[parent.sineMax+1];
+int[] loc;
 
 int n = 0;
 
@@ -807,44 +806,44 @@ int n = 0;
   
   void draw() {
 
-  float plus = 0.05;
-  ofset+=0.2;
-  
-  for(float i = HALF_PI+(ofset); i*1 <= parent.sineMax; i+=plus) {
-    n = round(i*1)+4;
-    n = constrain(n, 0, loc.length-1);
-    val = sin(HALF_PI)*255;
-    loc[n] = round(map(val, -255, 255, 255, 0));
-  }  
-  for(float i = 0; i < -HALF_PI+(ofset)-plus; i+=plus) {
-    n = round(i-PI)+4;
-    n = constrain(n, 0, loc.length-1);
-    val = sin(HALF_PI)*255;
-    loc[n] = round(map(val, -255, 255, 255, 0));
-  }
-  
-  for(float i = -HALF_PI; i <= HALF_PI; i+=plus) {
-    n = round(i+ofset)+4;
-    n = constrain(n, 0, loc.length-1);
-    val = sin(i)*255;
-    loc[n+1] = round(map(val, -255, 255, 255, 0));
+    float plus = 0.05; //Value wich is added in every for loop
+    ofset+=0.2; //How fast will wave go on
     
-    n = round((i+ofset)-PI)+4;
-    n = constrain(n, 0, loc.length-1);
-    loc[n] = round(map(val, -255, 255, 0, 255));
-  }
-  
-  if(ofset > parent.sineMax+1) {
-    ready = true;
-    go = false;
-  }
-  else {
-    ready = false;
-  }
-  
-  for(int i = 0; i <= parent.sineMax; i++) {
-    parent.sineValue[i][me] = loc[i];
-  }
+    for(float i = HALF_PI+(ofset); i*1 <= parent.sineMax; i+=plus) {
+      n = round(i*1)+4;
+      n = constrain(n, 0, loc.length-1);
+      val = sin(HALF_PI)*255;
+      loc[n] = round(map(val, -255, 255, 255, 0));
+    }  
+    for(float i = 0; i < -HALF_PI+(ofset)-plus; i+=plus) {
+      n = round(i-PI)+4;
+      n = constrain(n, 0, loc.length-1);
+      val = sin(HALF_PI)*255;
+      loc[n] = round(map(val, -255, 255, 255, 0));
+    }
+    
+    for(float i = -HALF_PI; i <= HALF_PI; i+=plus) {
+      n = round(i+ofset)+4;
+      n = constrain(n, 0, loc.length-1);
+      val = sin(i)*255;
+      loc[n+1] = round(map(val, -255, 255, 255, 0));
+      
+      n = round((i+ofset)-PI)+4;
+      n = constrain(n, 0, loc.length-1);
+      loc[n] = round(map(val, -255, 255, 0, 255));
+    }
+    
+    if(ofset > parent.sineMax+1) {
+      ready = true;
+      go = false;
+    }
+    else {
+      ready = false;
+    }
+    
+    for(int i = 0; i <= parent.sineMax; i++) {
+      parent.sineValue[i][me] = loc[i];
+    }
   
   }
   

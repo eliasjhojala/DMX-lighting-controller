@@ -189,14 +189,18 @@ for (TableRow row : table.findRows("memories[i].myChase.presets[ij]", "variable_
   int i = int(row.getString("1D"));
   int ij = int(row.getString("2D"));
   int v = int(row.getString("value"));
-  memories[i].myChase.presets[ij] = v;
+  if(memories[i].myChase.presets != null) { //no nullpointers anymore
+    memories[i].myChase.presets[ij] = v;
+  }
 }
 
 for (TableRow row : table.findRows("memories[i].myChase.content[ij]", "variable_name")) {
   int i = int(row.getString("1D"));
   int ij = int(row.getString("2D"));
   int v = int(row.getString("value"));
-  memories[i].myChase.content[ij] = v;
+  if(memories[i].myChase.content != null) { //no nullpointers anymore
+    memories[i].myChase.content[ij] = v;
+  }
 }
 
 for (TableRow row : table.findRows("memories[i].myChase.inputMode", "variable_name")) {
