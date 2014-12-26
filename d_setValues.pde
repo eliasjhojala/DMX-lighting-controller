@@ -55,52 +55,6 @@ void setDimAndMemoryValuesAtEveryDraw() {
       dmxToDim(); //Set input to dimInput variable
       
       
-      //-------------------------Set memories to their values. If solomemory is on all the others will be of-------------------------
-      
-      memoryData = new int[channels];
-      for(int i = 0; i < numberOfMemories; i++) {
-        if(useSolo == true) {
-          if(valueOfMemory[soloMemory] < 10) {
-            if(soloWasHere == true) {
-              memory(i, valueOfMemoryBeforeSolo[i]);
-              dimInput[i] = valueOfChannelBeforeSolo[i];
-              soloWasHere = false;
-            }
-            else {
-              if(valueOfMemory[i] > 0) {
-                memory(i, valueOfMemory[i]);
-              }
-            }
-          }
-          else {
-            soloWasHere = true;
-            if(soloWasHere == false) {
-              if(i == soloMemory && valueOfMemory[i] != 0) {
-                memory(i, valueOfMemory[i]);
-              }
-              else {
-                if(valueOfMemory[i] != 0 || dim[i] != 0) {
-                  valueOfMemoryBeforeSolo[i] = valueOfMemory[i];
-                  valueOfChannelBeforeSolo[i] = dim[i];
-                } //EndIf: (valueOfMemory[i] != ...)
-                memory(i, 0);
-                dimInput[i] = 0; 
-              } //EndElse
-            } //EndIf: (soloWasHere)
-            else {
-              if(i == soloMemory && valueOfMemory[i] != 0) {
-                memory(i, valueOfMemory[i]);
-              }
-            }//EndElse
-            
-          }
-        } //EndIf: (useSolo == true)
-        else {
-          if(valueOfMemory[i] > 0) {
-            memory(i, valueOfMemory[i]);
-          }
-        } //EndElse: (useSolo == true)
-      } //EndFor: (i < numberOfMemories)
       
 
       

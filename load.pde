@@ -37,11 +37,7 @@ void loadAllData1() {
 
      table = loadTable(loadPath, "header"); //Eliaksen polku
 
-         for(int i = 0; i < repOfFixtures.length; i++) {
-        for(int ij = 0; ij < repOfFixtures[i].length; ij++) {
-          repOfFixtures[i][ij] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        }
-      }
+        
     
     //FIXTURES---------------------------------------------------------------------------------------------------------------------------
     //Initialize fixtures using type

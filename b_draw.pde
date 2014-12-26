@@ -40,13 +40,11 @@ void draw() {
     //Invoke every fixtures draw
     if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
 
-  }
-}
   
-  if (useMaschine) calcMaschineAutoTap();
-  
-  //Invoke every fixtures draw
-  if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
+    if (useMaschine) calcMaschineAutoTap();
+    
+    //Invoke every fixtures draw
+    if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
   }
   initSettingsInSetup();
 }
