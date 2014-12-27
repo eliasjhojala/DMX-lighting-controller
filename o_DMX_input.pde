@@ -8,6 +8,7 @@ boolean dmxToDimFinished = false;
 
 
 void dmxCheck() {
+  try {
   dmxCheckFinished = false;
   enttecDMXchannels = 512;
   if(useEnttec == true) {
@@ -46,6 +47,10 @@ void dmxCheck() {
       } //while (myPort.available() > 0) END
   }
   dmxCheckFinished = true;
+  }
+  catch(Exception e) { 
+    println("ERROR WITH DMX INPUT");
+  }
 }
 void dmxToDim() {
   dmxToDimFinished = false;

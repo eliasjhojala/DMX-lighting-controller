@@ -289,7 +289,7 @@ class chase { //Begin of chase class--------------------------------------------
   int sineMin = 1;
   
   sine[] sines = new sine[sineMax+1];
-  int[][] sineValue = new int[500][sineMax+1];
+  int[] sineValue = new int[500];
   
   
   //----------------------end declaring variables--------------------------------
@@ -492,12 +492,14 @@ class chase { //Begin of chase class--------------------------------------------
   /* This function checks that this memory is a chase 
   and the memory we're trying to control is a preset. */
   void loadPreset(int num, int val) {
-    if(parent.type == 2) {
-        memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
-    }
-    if(parent.type == 3) {
-        //fixtures[num].dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
-        fixtures[num].setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
+    if(val != getPresetValue(num)) { //We don't want to overwrite values if they haven't changed
+      if(parent.type == 2) {
+          memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
+      }
+      if(parent.type == 3) {
+          //fixtures[num].dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
+          fixtures[num].setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
+      }
     }
   }
   
@@ -519,11 +521,12 @@ class chase { //Begin of chase class--------------------------------------------
   
   int getPresetValue(int i) {
     int toReturn = 0;
+    int n = constrain(i, 0, getPresets().length-1);
      if(parent.type == 2) {
-       toReturn = memories[getPresets()[i]].getValue();
+       toReturn = memories[getPresets()[n]].getValue();
      }
      else if(parent.type == 3) {
-       toReturn = fixtures[getPresets()[i]].dimmer;
+       toReturn = fixtures[getPresets()[n]].dimmer;
      }
      return toReturn;
   }
@@ -632,7 +635,7 @@ class chase { //Begin of chase class--------------------------------------------
     
     for(int i = 0; i <= sineMax; i++) {
       if(i < getPresets().length) { //No nullpointers anymore
-        loadPreset(getPresets()[i], max(sineValue[i])); //Finally put the values from sine class to loadPreset function
+        loadPreset(getPresets()[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
       }
     }
     
@@ -653,6 +656,7 @@ class chase { //Begin of chase class--------------------------------------------
         }
       sines[numero] = new sine(numero, this); sines[numero].go(); } //Create sine and start it
     }
+    sineValue = new int[getPresets().length];
   }
   
   
@@ -810,11 +814,12 @@ class soundDetect { //----------------------------------------------------------
 
 
 class sine {
+  int kerroin = 2;
   chase parent;
   sine(int num, chase parent) {
     me = num;
     this.parent = parent;
-    loc = new int[parent.sineMax+1];
+    loc = new int[parent.getPresets().length*kerroin];
   }
 
   
@@ -835,8 +840,8 @@ class sine {
   
   void draw() {
 
-    float plus = map(parent.fade, 0, 255, 0.5, 0.005); //Value wich is added in every for loop
-    ofset+=map(parent.fade, 0, 255, 1, 0.001); //How fast will wave go on
+    float plus = map(parent.fade, 0, 255, 1.0, 0.05); //Value wich is added in every for loop
+    ofset+=map(parent.fade, 0, 255, 2, 0.001); //How fast will wave go on
        
     int l = loc.length;
     loc = new int[loc.length]; //Reset loc
@@ -865,8 +870,11 @@ class sine {
       ready = false;
     }
     
-    for(int i = 0; i <= parent.sineMax; i++) {
-      parent.sineValue[i][me] = loc[constrain(i*2, 0, loc.length-1)]; //Save values
+    for(int i = 0; i < parent.sineValue.length; i++) {
+      n = constrain(i*kerroin, 0, loc.length-1);
+      if(i < parent.sineValue.length) {
+        if(loc[n] > parent.sineValue[i]) { parent.sineValue[i] = loc[n]; }
+      }
     }
   
   }

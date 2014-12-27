@@ -13,7 +13,7 @@ long totalMillis[] = new long[9];
 
 void draw() {
   if(programReadyToRun && !freeze) {
-  
+    textSize(12);
     for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
     
     memories[1].type = 4;
@@ -39,14 +39,10 @@ void draw() {
     
     //Invoke every fixtures draw
     if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
-
-  
-    if (useMaschine) calcMaschineAutoTap();
     
-    //Invoke every fixtures draw
-    if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
+    
   }
-  initSettingsInSetup();
+  if(!freeze) initSettingsInSetup();
 }
 
 
