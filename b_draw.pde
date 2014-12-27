@@ -13,7 +13,7 @@ int oldGrandMaster = 40;
 
 void draw() {
   if(programReadyToRun && !freeze) {
-  
+    textSize(12);
     for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
     
     memories[1].type = 4;
