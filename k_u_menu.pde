@@ -61,7 +61,7 @@ void ylavalikko() {
   //Time display
   fill(255);
   textSize(25);
-  text(hour() + ":" + minute() + ":" + second(), 3, 28);
+  text(getTimeAsString(), 3, 28);
   textSize(12);
   
   
@@ -109,6 +109,20 @@ void resetChaseVariables() {
   //These two variables are important to prevent trouble between chaseMode 8 and 3
   steppi = new int[numberOfMemories];
   steppi1 = new int[numberOfMemories];
+}
+
+
+
+String getTimeAsString() {
+  return conToStr(hour(), 2) + ":" + conToStr(minute(), 2) + ":" + conToStr(second(), 2);
+}
+
+String conToStr(int val, int mindigits) {
+  String toReturn = str(val);
+  for(int i = 1; i < mindigits; i++) {
+    if(val < (10 ^ i)) toReturn = str(0) + toReturn;
+  }
+  return toReturn;
 }
 
 
