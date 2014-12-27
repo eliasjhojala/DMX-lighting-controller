@@ -497,6 +497,7 @@ void setup() {
     thread("initializeMaschine");
   }
   thread("ylavalikkoSetup");
+  colorWashSetup();
 }
 
 

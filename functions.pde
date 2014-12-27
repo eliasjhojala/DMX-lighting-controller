@@ -402,3 +402,13 @@ but it returns original array index numbers as sorted arrange */
      }
      return toReturn;
    } //End of sorting algorithm
+   
+   
+boolean isAbout(int a, int b) {
+  if(abs(a - b) <= a/5) {
+    return true;
+  }
+  return false;
+}  
+   
+   
