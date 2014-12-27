@@ -83,12 +83,18 @@ class Mouse {
     if(elm != null) declareUpdateElement(name, elm.priority+1, x1, y1, x2, y2); else return false;
     return true;
   }
+  boolean declareUpdateElementRelative(String name, String ontopof, int x1, int y1, int x2, int y2) {
+    return declareUpdateElement(name, ontopof, iScreenX(x1, y1), iScreenY(x1, y1), iScreenX(x1 + x2, y1 + y2), iScreenY(x1 + x2, y1 + y2));
+  }
   
   void declareUpdateElement(String name, int priority, int x1, int y1, int x2, int y2) {
     if(!updateElement(name, x1, y1, x2, y2)) {
       declareElement(name, priority, x1, y1, x2, y2);
       
     }
+  }
+  void declareUpdateElementRelative(String name, int priority, int x1, int y1, int x2, int y2) {
+    declareUpdateElement(name, priority, iScreenX(x1, y1), iScreenY(x1, y1), iScreenX(x1 + x2, y1 + y2), iScreenY(x1 + x2, y1 + y2));
   }
   
   
@@ -112,6 +118,14 @@ class Mouse {
     } else return false;
   }
   
+  boolean setElementExpire(String name, int newExpire) {
+    HoverableElement elm = getElementByName(name);
+    if(elm != null) {
+      elm.expires = newExpire;
+      return true;
+    } else return false;
+  }
+  
   
   boolean elmIsHover(String objName) {
     HoverableElement targetElement = getElementByName(objName);
@@ -130,7 +144,7 @@ class Mouse {
     int curMax = -2147483648;
     int maxId = 0;
     boolean found = false;
-    for(int i = 0; i < ontop.length; i++) {
+    for(int i = 0; i < elements.size(); i++) {
       HoverableElement elm = elements.get(i);
       
       if(ontop[i] && elm.priority > curMax) {
@@ -140,7 +154,10 @@ class Mouse {
       }
       
       //Handle expiration
-      if(elm.expires != -1) if(elm.expires > 0) elm.expires--; else elements.remove(i);
+      if(elm.expires != -1) {
+        
+        if(elm.expires > 0) elm.expires--; else elements.remove(i);
+      }
     }
     if(found) {
       for(int i = 0; i < elements.size(); i++)
@@ -150,7 +167,7 @@ class Mouse {
     }
     if(mousePressed) {
       if(elements.get(maxId).autoCapture) capture(elements.get(maxId));
-      firstCaptureFrame = true;
+      
       
     } else captured = false;
   }
@@ -160,6 +177,7 @@ class Mouse {
     if(elm.isHovered && !captured) {
         captured = true;
         capturedElement = elm;
+        firstCaptureFrame = true;
     }
   }
   

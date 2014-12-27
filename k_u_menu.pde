@@ -120,7 +120,7 @@ String getTimeAsString() {
 String conToStr(int val, int mindigits) {
   String toReturn = str(val);
   for(int i = 1; i < mindigits; i++) {
-    if(val < (10 ^ i)) toReturn = str(0) + toReturn;
+    if(val+1 < (10 ^ i)) toReturn = str(0) + toReturn;
   }
   return toReturn;
 }
