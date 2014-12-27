@@ -3,3 +3,15 @@ colorWash wash2 = new colorWash(r, g, b); wash2.go();
 colorWash wash3 = new colorWash(r, g, b, w); wash3.go();
 colorWash wash4 = new colorWash(r, g, b, w, d); wash4.go();
 colorWash wash5 = new colorWash(h, s, b, "HSB"); wash5.go();
+
+OPTIONAL
+
+wash.clear();
+wash.useOnlyLeds();
+wash.useOnlyHalogens();
+wash.useOnlySelected();
+wash.noHalogens();
+wash.noLeds();
+wash.useHalogens();
+wash.useLeds();
+wash.useAll(); //Use halogens, leds and unselected fixtures
