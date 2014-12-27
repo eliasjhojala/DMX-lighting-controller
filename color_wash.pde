@@ -53,7 +53,7 @@ class colorName {
 }
 
 int[] convertColor(int[] original, int from, int to) {
-  //original array: { r, g, b, w, d } or { h, s, b } or { c, m, y, k }
+  //original array: { r, g, b, w, d } or { h, s, b } or
   //from & to: 1 = rgb, 2 = hsb, 3 = rgbw, 4 = rgbwd, 5 = rgbd
   int[] toReturn = { 0, 0, 0 };
   pushStyle(); //we use colorModes in this function so make sure they don't affect to other parts of the software
