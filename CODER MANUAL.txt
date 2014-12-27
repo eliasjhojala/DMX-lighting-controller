@@ -1,4 +1,4 @@
-getUniversalDMX and setUniversalDMX
+getUniversalDMX and setUniversalDMX and whatToSave order in the future
   1: dimmer
   2: red
   3: green
