@@ -379,3 +379,44 @@ int[] convertColor(int[] original, int from, int to) {
   return toReturn;
 }
 
+
+//Got from https://processing.org/discourse/beta/num_1228243376.html
+//USAGE
+  /*
+  colorMode(RGB, 255);
+  color swatch = color(255,0,255);
+  CMYK_Colour cmyk_swatch = new CMYK_Colour(swatch);
+  //output CMYK values (these are floats)
+  println("CYAN: " + cmyk_swatch.cyan);
+  println("MAGENTA: " + cmyk_swatch.magenta);
+  println("YELLOW: " + cmyk_swatch.yellow);
+  println("BLACK: " + cmyk_swatch.black);
+
+*/
+class CMYK_Colour {
+
+//fields
+float cyan, magenta, yellow, black;
+
+//constructor - requires colorMode(RGB,255) is set
+CMYK_Colour(color c) {
+//convert to CMY
+cyan = 1 - (red(c) / 255);
+magenta = 1 - (green(c) / 255);
+yellow = 1 - (blue(c) / 255);
+//convert to CMYK
+black = 1; 
+if (cyan < black) { black = cyan; }
+if (magenta < black) { black = magenta; }
+if (yellow < black) { black = yellow; }
+cyan = ( cyan - black ) / ( 1 - black );
+magenta = ( magenta - black ) / ( 1 - black );
+yellow = ( yellow - black ) / ( 1 - black ); 
+//convert to value between 0 and 100
+cyan = cyan * 100;
+magenta = magenta * 100;
+yellow = yellow * 100;
+black = black * 100;
+}  
+
+}   
