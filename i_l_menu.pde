@@ -11,9 +11,9 @@ void alavalikko() {
   //The boolean is set to true on a spot that has been checked. It should not be drawn again.
   boolean[] drawn = new boolean[bottomMenuOrder.length];
   
-  pushMatrix(); 
+  pushMatrix();
     translate(0, height-170); //alavalikko is located to bottom of the window
-    //Upper row
+    /*//Upper row
     pushMatrix();
       for(int i = 0; i < 20; i++) {
         int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
@@ -44,8 +44,22 @@ void alavalikko() {
         translate(65, 0); //moves box to its place
         createFixtureBox(tempIndex); //Create fixture boxes including buttons and their functions
       }
-    popMatrix(); 
+    popMatrix();*/
+    int row = 20;
+    int rows = 3;
+    mouse.declareUpdateElement("bottomMenu", "main:move", 65, height-260, (row+1)*65, height-260 + rows*65);
+    for(int i = 0; i < row*rows; i++) {
+      int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
+      drawn[tempIndex] = true;
+      pushMatrix();
+        translate(65*(i%row+1), 65*(i/row));
+        createFixtureBox(tempIndex);
+      popMatrix();
+    }
   popMatrix();
+    
+  
+  
   
   drawBottomMenuControlBox();
 }
@@ -66,7 +80,7 @@ void drawFixtureRectangles(int id) {
   stroke(0, 0, 0); //black corners for other rects
   fill(0, 255, 0); //green color for title box
   rect(0, -40, 60, -15); //title box
-  if (isHover(0, -40, 60, -15) && mousePressed && !mouseLocked) openBottomMenuControlBox(id); //Open control box
+  //if (isHover(0, -40, 60, -15) && mousePressed && !mouseLocked)  //Open control box
   fill(0, 0, 0); //black color for title
   text(str(id)+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
   text("Ch " + str(fixtures[id].channelStart) , 2, -30); // Channel
@@ -122,6 +136,8 @@ void checkFixtureBoxRightClick(int id) {
     toChangeFixtureColor = true; //Tells controlP5 to open fixtureSettings window
     toRotateFixture = true; //Tells controlP5 to open fixtureSettings window
     changeColorFixtureId = id; //Tells controlP5 which fixture to edit
+    
+    openBottomMenuControlBox(id); // open bottomMenu
   }
   if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && keyPressed && keyCode == RIGHT && keyReleased) { //Check if mouse is on the title box anf clicked
     bottomMenuOrder[id] = constrain(bottomMenuOrder[id] + 1, 0, 1000);

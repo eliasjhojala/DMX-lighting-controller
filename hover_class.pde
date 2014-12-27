@@ -56,6 +56,7 @@ class Mouse {
   
   boolean captured = false;
   HoverableElement capturedElement;
+  boolean firstCaptureFrame = false;
   
   
   Mouse() {
@@ -119,6 +120,7 @@ class Mouse {
   
   //Should be called every draw. Picks one element to assing a capture to.
   void refresh() {
+    firstCaptureFrame = false;
     boolean[] ontop = new boolean[elements.size()];
     for(int i = 0; i < ontop.length; i++) {
       HoverableElement elm = elements.get(i);
@@ -130,20 +132,25 @@ class Mouse {
     boolean found = false;
     for(int i = 0; i < ontop.length; i++) {
       HoverableElement elm = elements.get(i);
+      
       if(ontop[i] && elm.priority > curMax) {
         curMax = elm.priority;
         maxId = i;
         found = true;
       }
+      
+      //Handle expiration
+      if(elm.expires != -1) if(elm.expires > 0) elm.expires--; else elements.remove(i);
     }
     if(found) {
-      for(int i = 0; i < ontop.length; i++)
+      for(int i = 0; i < elements.size(); i++)
         if(ontop[i] && elements.get(i).priority == curMax)
-          elements.get(maxId).isHovered = true;
+          elements.get(i).isHovered = true;
           //If Mouse is on top of the element and it has the same priority as the other highest-priority elements currently Moused over, select it
     }
     if(mousePressed) {
       if(elements.get(maxId).autoCapture) capture(elements.get(maxId));
+      firstCaptureFrame = true;
       
     } else captured = false;
   }
@@ -190,6 +197,8 @@ class HoverableElement {
   
   int uid;            //unique identifier
   
+  int expires = -1;
+  
   boolean isHovered;  //Is element selected as the one to be hovered (not direct indication of capture)
   
   //You have to modify this manually
@@ -202,6 +211,8 @@ class HoverableElement {
     x2 = X2; y2 = Y2;
     uid = UID;
   }
+  
+  
   
 }
 

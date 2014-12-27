@@ -297,19 +297,27 @@ void changeCrossFadeValue(int val) {
 }
 
 
+//Get ScreenX (or Y) and convert to int
+int iScreenX(float x, float y) {
+  return int(screenX(x, y));
+}
+
+int iScreenY(float x, float y) {
+  return int(screenY(x, y));
+}
 
 //returns new value
 int quickSlider(String mouseLockID, int value) {
     //Draw slider
     drawBottomMenuChControllerSlider(value);
+    //Handle mouse
+    //todo get priority more intelligently
+    mouse.declareUpdateElement(mouseLockID, 1000, iScreenX(0, 0), iScreenY(0, 0), iScreenX(20, 100), iScreenY(20, 100));
+    mouse.getElementByName(mouseLockID).expires = 2;
+    
     //Check for drag
-    if (isHover(0, 0, 20, 100) && mousePressed && !mouseLocked) {
-      //Started dragging
-      mouseLocked = true;
-      mouseLocker = mouseLockID;
-    }
     boolean valueChanged = false;
-    if (mouseLocked && mouseLocker.equals(mouseLockID)) {
+    if (mouse.captured && mouse.capturedElement == mouse.getElementByName(mouseLockID)) {
       value += constrain((mouseX - pmouseX) * 4, 0, 255);
       value = constrain(value, 0, 255);
     }
@@ -364,28 +372,21 @@ int quickSlider(String mouseLockID, int value) {
     
     //defualtConstrain is used to constrain values between 0 and 255, because that is the range used in DMX.
     int defaultConstrain(int val) {
-      int toReturn = 0;
-      toReturn = constrain(val, 0, 255);
-      return toReturn;
+      return constrain(val, 0, 255);
     }
     
     //iMap is function which actually is same as map but it returns value as int
     int iMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
-      int toReturn = 0;
-      toReturn = int(map(val, in_low, in_hi, out_low, out_hi));
-      return toReturn;
+      return int(map(val, in_low, in_hi, out_low, out_hi));
     }
     
     //rMap is function which actually is same as map but it returns rounded value as int
     int rMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
-      int toReturn = 0;
-      toReturn = round(map(val, in_low, in_hi, out_low, out_hi));
-      return toReturn;
+      return round(map(val, in_low, in_hi, out_low, out_hi));
     }
     
     int onlyPositive(int val) {
-      if(val < 0) { val = 0; }
-      return val;
+      return val < 0 ? 0 : val;
     }
   
 //End of some functions which are really useful tex in chase

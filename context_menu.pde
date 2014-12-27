@@ -31,6 +31,7 @@ class contextMenu {
         }
       } catch(Exception e) { e.printStackTrace(); }
       open = true;
+      declareMouseElement();
     } else throw new IllegalArgumentException(); // the two arrays have to be of same size, otherwise throw an IllegalArgumentException
   }
   
@@ -48,8 +49,13 @@ class contextMenu {
         }
       } catch(Exception e) { e.printStackTrace(); }
       open = true;
+      declareMouseElement();
     } else throw new IllegalArgumentException(); // the two arrays have to be of same size, otherwise throw an IllegalArgumentException
     
+  }
+  
+  void declareMouseElement() {
+    mouse.declareElement("contextMenu", 100000, x, y, x+200, y+22*options.length);
   }
   
   int fixtureId = 0;
@@ -94,6 +100,7 @@ class contextMenu {
   }
   
   void execute(int optionId) {
+    mouse.removeElement("contextMenu");
     open = false;
     try {
       options[optionId].action.invoke(parent);
@@ -168,8 +175,7 @@ class Switch {
       rect(0, 0, 30, 10, 5);
       if(mousePressed && isHoverSimple(-3, -3, 36, 16)) {
         state = !state;
-        mouseLocked = true;
-        mouseLocker = "toggleSw";
+        /*todo - capture mouse*/
       }
       
       //Knob

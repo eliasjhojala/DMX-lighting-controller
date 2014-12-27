@@ -33,7 +33,7 @@ void drawMainWindow() {
     
     for(int i = 0; i < ansaTaka; i++) {
       pushMatrix();
-          if(!mouse.captured || mouse.capturer == mouse.getElementByName("main:fixtures")) {
+          if(!mouse.captured || mouse.capturedElement == mouse.getElementByName("main:fixtures")) {
               if(!mousePressed) {
                 if(moveLamp == true) {
                  if(lampToMove < fixtures.length) {
@@ -48,7 +48,7 @@ void drawMainWindow() {
               }
       
             if(moveLamp == true) {
-              mouse.capture("main:fixtures");
+              mouse.capture(mouse.getElementByName("main:fixtures"));
               if(i == lampToMove) { translate(fixtures[lampToMove].x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom), fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures[lampToMove].parentAnsa]); }
               else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
             }
@@ -61,19 +61,20 @@ void drawMainWindow() {
   
          if(fixtures[i].fixtureTypeId != 14) { rotate(radians(fixtures[i].rotationZ)); }
          
-          if(!mouse.captured || mouse.capturer == mouse.getElementByName("main:fixtures")) {
+          if(!mouse.captured || mouse.capturedElement == mouse.getElementByName("main:fixtures")) {
             if(mousePressed) {
               
             //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
-            if(isHover(0, 0, fixtures[i].size.w, fixtures[i].size.h) && fixtures[i].size.isDrawn && mousePressed) {
+            if(isHover(0, 0, fixtures[i].size.w, fixtures[i].size.h) && fixtures[i].size.isDrawn && mousePressed && !mouse.captured) {
              
               if(mouseButton == RIGHT) {
                 toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; 
-                mouse.capture("main:fixtures");
+                mouse.capture(mouse.getElementByName("main:fixtures"));
                 
                 contextMenu1.initiateForFixture(i);
               }
-              else if(mouseReleased) {
+              else {
+                mouse.capture(mouse.getElementByName("main:fixtures"));
                 if(!showMode) {
                   oldMouseX1 = int(mouseRotated.x);
                   oldMouseY1 = int(mouseRotated.y);
@@ -101,13 +102,13 @@ void drawMainWindow() {
   }//Endof: draw all elements
       
   //---------------View drag & box selection
-  if(!moveLamp && mouse.getElementByName("main:move").isHovered) {
+  if(!moveLamp) {
+    
     if(mousePressed) {
       
       if (mouseButton == LEFT) {
-        if (!mouse.captured) {
-          mouseLocked = true;
-          mouseLocker = "main";
+        if (!mouse.captured || mouse.capturedElement == mouse.getElementByName("main:move")) {
+          mouse.capture(mouse.getElementByName("main:move"));
           movePage();
         }
       } else if(mouseButton == RIGHT) {
@@ -115,6 +116,7 @@ void drawMainWindow() {
         
         
         doBoxSelect();
+        mouse.capture(mouse.getElementByName("main:move"));
       }
     }
   }

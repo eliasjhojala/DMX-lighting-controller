@@ -13,12 +13,11 @@ void sivuValikko() {
     //Open MemoryCreator bubblebutton
     int bubS = 250;
     int origBubS = bubS;
-    boolean bubbleHover = isHover(width-168, 0, -bubS/2, bubS/2);
-    if (bubbleHover) bubS += 10;
+    mouse.declareUpdateElement("addMemory", "main:move", width-168, 0, width-168-bubS/2, bubS/2);
+    if (mouse.getElementByName("addMemory").isHovered) bubS += 10;
     
-    if (bubbleHover && mousePressed && mouseLocker.equals("main")) {
-      mouseLocker = "addMemory";
-      mouseLocked = true;
+    
+    if (mouse.isCaptured("addMemory") && mouse.firstCaptureFrame) {
       memoryCreator.initiatePassive();
     }
     
@@ -80,6 +79,7 @@ void sivuValikko() {
   //-
   pushMatrix();
   translate(width-168, 0);
+  mouse.declareUpdateElement("rearMenu:presetcontrols", "main:move", width-168, 0, width, height);
   for(int i = 1; i <= height/20+1; i++) {
     if(memoryMenu+i < numberOfMemories) {
       pushMatrix();
@@ -129,10 +129,8 @@ void drawMemoryController(int controlledMemoryId, String text) {
   fill(0);
   text(value, 68, 16);
   
-  if (isHoverSimple(0, 0, 170, 20) && mousePressed && (!mouseLocked || mouseLocker.equals("presetControl"))) {
+  if (isHoverSimple(0, 0, 170, 20) && mouse.isCaptured("rearMenu:presetcontrols")) {
     if(mouseButton == LEFT) {
-      mouseLocked = true;
-      mouseLocker = "presetControl";
       value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
       memories[controlledMemoryId].setValue(value);
     } else if(mouseButton == RIGHT) memoryCreator.initiateFromExsisting(controlledMemoryId);
