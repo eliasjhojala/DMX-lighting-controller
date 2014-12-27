@@ -4,6 +4,7 @@ void colorWashSetup() {
 }
 void newColorWash() {
    colorWash wash = new colorWash("red");
+   wash.go();
 }
 
 class colorWash {
@@ -24,8 +25,6 @@ class colorWash {
         }
       }
     }
-    setColorToLeds();
-    setColorToHalogens();
   }
   
   void setRgb(int r, int g, int b) {
@@ -61,24 +60,23 @@ class colorWash {
   
   colorWash(int r, int g, int b) {
     setRgbwd(r, g, b, 0, 255);
-    setColorToLeds();
-    setColorToHalogens();
   }
   
   colorWash(int r, int g, int b, int w) {
     setRgbwd(r, g, b, w, 255);
-    setColorToLeds();
-    setColorToHalogens();
   }
   
   colorWash(int r, int g, int b, int w, int d) {
     setRgbwd(r, g, b, w, d);
-    setColorToLeds();
-    setColorToHalogens();
   }
   
   colorWash(int h, int s, int b, String mode) {
     setHsb(h, s, b);
+  }
+  
+  void go() {
+    setColorToLeds();
+    setColorToHalogens();
   }
 
   
