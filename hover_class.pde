@@ -123,7 +123,7 @@ class Mouse {
     for(int i = 0; i < ontop.length; i++) {
       HoverableElement elm = elements.get(i);
       elm.isHovered = false;
-      ontop[i] = isHover(elm.x1, elm.y1, elm.x2, elm.y2);
+      ontop[i] = isHoverAB(elm.x1, elm.y1, elm.x2, elm.y2);
     }
     int curMax = -2147483648;
     int maxId = 0;
@@ -134,10 +134,14 @@ class Mouse {
         curMax = elm.priority;
         maxId = i;
         found = true;
-        break;
       }
     }
-    if(found) elements.get(maxId).isHovered = true;
+    if(found) {
+      for(int i = 0; i < ontop.length; i++)
+        if(ontop[i] && elements.get(i).priority == curMax)
+          elements.get(maxId).isHovered = true;
+          //If Mouse is on top of the element and it has the same priority as the other highest-priority elements currently Moused over, select it
+    }
     if(mousePressed) {
       if(elements.get(maxId).autoCapture) capture(elements.get(maxId));
       

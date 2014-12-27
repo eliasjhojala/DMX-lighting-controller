@@ -2,7 +2,10 @@ void drawMainWindow() {
   pushMatrix();
     //TÄSSÄ KÄÄNNETÄÄN JA SIIRRETÄÄN NÄKYMÄ OIKEIN - DO ROTATE AND TRANSFORM RIGHT
    
-    
+   mouse.declareUpdateElement("main:fixtures", 0, 0, 0, width, height);
+   mouse.getElementByName("main:fixtures").autoCapture = false;
+   mouse.declareUpdateElement("main:move", 0, 0, 0, width, height);
+   mouse.getElementByName("main:move").autoCapture = false;
    //Transform
    
    
@@ -23,14 +26,14 @@ void drawMainWindow() {
     PVector mouseRotated = new PVector(mouseX, mouseY);
     mouseRotated.rotate(radians(-pageRotation));
     
-    if(moveLamp) {
+    /*if(moveLamp) {
       mouseLocked = true;
       mouseLocker = "main:fixMove";
-    }
+    }*/
     
     for(int i = 0; i < ansaTaka; i++) {
       pushMatrix();
-          if(!mouseLocked || mouseLocker == "main:fixMove") {
+          if(!mouse.captured || mouse.capturer == mouse.getElementByName("main:fixtures")) {
               if(!mousePressed) {
                 if(moveLamp == true) {
                  if(lampToMove < fixtures.length) {
@@ -45,8 +48,7 @@ void drawMainWindow() {
               }
       
             if(moveLamp == true) {
-              mouseLocked = true;
-              mouseLocker = "main:fixMove";
+              mouse.capture("main:fixtures");
               if(i == lampToMove) { translate(fixtures[lampToMove].x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom), fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures[lampToMove].parentAnsa]); }
               else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
             }
@@ -59,7 +61,7 @@ void drawMainWindow() {
   
          if(fixtures[i].fixtureTypeId != 14) { rotate(radians(fixtures[i].rotationZ)); }
          
-          if(!mouseLocked || mouseLocker == "main:fixMove") {
+          if(!mouse.captured || mouse.capturer == mouse.getElementByName("main:fixtures")) {
             if(mousePressed) {
               
             //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
@@ -67,8 +69,7 @@ void drawMainWindow() {
              
               if(mouseButton == RIGHT) {
                 toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; 
-                mouseLocked = true;
-                mouseLocker = "main:openToolBox";
+                mouse.capture("main:fixtures");
                 
                 contextMenu1.initiateForFixture(i);
               }
@@ -100,11 +101,11 @@ void drawMainWindow() {
   }//Endof: draw all elements
       
   //---------------View drag & box selection
-  if(!moveLamp && inBdsMouse(0, 0, width - 165, height - 225) && !isHoverBottomMenu() && !memoryCreator.isMouseOver()) {
+  if(!moveLamp && mouse.getElementByName("main:move").isHovered) {
     if(mousePressed) {
       
       if (mouseButton == LEFT) {
-        if (!mouseLocked || mouseLocker == "main") {
+        if (!mouse.captured) {
           mouseLocked = true;
           mouseLocker = "main";
           movePage();
