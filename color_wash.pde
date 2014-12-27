@@ -36,12 +36,20 @@ void createColorNames() {
 
 class colorName {
   String name;
-  int red, green, blue, white;
+  int red, green, blue, white, dim;
+  int[] col = new int[3];
+  int[] rgbw = new int[4];
+  int[] rgbwd = new int[5];
   colorName(String colour, int r, int g, int b) {
     name = colour;
     red = r;
     green = g;
     blue = b;
+    col[0] = r; col[1] = g; col[2] = b;
+    white = 0;
+    dim = 255;
+    makeColorArrays();
+    
   }
   colorName(String colour, int r, int g, int b, int w) {
     name = colour;
@@ -49,6 +57,44 @@ class colorName {
     green = g;
     blue = b;
     white = w;
+    dim = 255;
+    makeColorArrays();
+  }
+  
+  void makeColorArrays() {
+    rgbw[0] = red;
+    rgbw[1] = green;
+    rgbw[2] = blue;
+    rgbw[3] = white;
+    arrayCopy(rgbw, rgbwd);
+    rgbwd[4] = dim;
+  }
+  
+  void setColorToLeds() {
+    for(int i = 0; i < fixtures.length; i++) {
+      if(fixtureUseRgb) {
+        fixtures[i].red = red;
+        fixtures[i].green = green;
+        fixtures[i].blue = blue;
+      if(fixtureUseWhite) {
+        fixtures[i].white = white;
+      }
+      if(fixtureUseDim) {
+        fixtures[i].dimmer = dim;
+      }
+    }
+  }
+  boolean fixtureUseRgb() {
+    int fT = fixtures[i].fixtureTypeId;
+    return fT == 24 || fT == 25 || fT == 18 || fT == 19;
+  }
+  boolean fixtureUseDim() {
+    int fT = fixtures[i].fixtureTypeId;
+    return fT == 25 || fT == 19;
+  }
+  boolean fixtureUseWhite() {
+    int fT = fixtures[i].fixtureTypeId;
+    return fT == 25 || fT == 24;
   }
 }
 
