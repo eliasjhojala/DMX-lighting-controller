@@ -27,6 +27,59 @@ class colorWash {
     setColorToLeds();
     setColorToHalogens();
   }
+  
+  void setRgb(int r, int g, int b) {
+    red = r;
+    green = g;
+    blue = b;
+  }
+  void setRgbw(int r, int g, int b, int w) {
+    setRgb(r, g, b);
+    white = w;
+  }
+  void setRgbwd(int r, int g, int b, int w, int d) {
+    setRgbw(r, g, b, w);
+    dim = d;
+  }
+  void setRgb(int[] c) {
+    if(c.length == 3) { setRgb(c[0], c[1], c[2]); }
+  }
+  void setRgbw(int[] c) {
+    if(c.length == 4) { setRgbw(c[0], c[1], c[2], c[3]); }
+  }
+  void setRgbwd(int[] c) {
+    if(c.length == 5) { setRgbwd(c[0], c[1], c[2], c[3], c[4]); }
+  }
+  
+  void setHsb(int h, int s, int b) {
+    int[] colors = new int[3];
+    colors[0] = h;
+    colors[1] = s;
+    colors[2] = b;
+    setRgbwd(convertColor(colors, 2, 4));
+  }
+  
+  colorWash(int r, int g, int b) {
+    setRgbwd(r, g, b, 0, 255);
+    setColorToLeds();
+    setColorToHalogens();
+  }
+  
+  colorWash(int r, int g, int b, int w) {
+    setRgbwd(r, g, b, w, 255);
+    setColorToLeds();
+    setColorToHalogens();
+  }
+  
+  colorWash(int r, int g, int b, int w, int d) {
+    setRgbwd(r, g, b, w, d);
+    setColorToLeds();
+    setColorToHalogens();
+  }
+  
+  colorWash(int h, int s, int b, String mode) {
+    setHsb(h, s, b);
+  }
 
   
   void setColorToLeds() {
