@@ -1,6 +1,5 @@
 void colorWashSetup() {
   createColorNames();
- 
 }
 void newColorWash() {
    colorWash wash = new colorWash("red");
@@ -13,18 +12,12 @@ class colorWash {
   int[] rgbw = new int[4];
   int[] rgbwd = new int[5];
   
+  boolean useHalogens = true;
+  boolean useLeds = true;
+  boolean onlySelected = false;
+  
   colorWash(String colour) {
-    for(int i = 0; i < colorNames.length; i++) {
-      if(colorNames[i] != null) {
-        if(colorNames[i].name.equals(colour)) {
-          red = colorNames[i].red;
-          green = colorNames[i].green;
-          blue = colorNames[i].blue;
-          white = colorNames[i].white;
-          dim = colorNames[i].dim;
-        }
-      }
-    }
+    setRgbwd(getColorFromName(colour));
   }
   
   void setRgb(int r, int g, int b) {
@@ -74,41 +67,89 @@ class colorWash {
     setHsb(h, s, b);
   }
   
+  void onlyHalogens() { useLeds = false; useHalogens = true; }
+  void onlyLeds() { useLeds = true; useHalogens = false; }
+  void noHalogens() { useHalogens = false; }
+  void noLeds() { useLeds = false; }
+  void useHalogens() { useHalogens = true; }
+  void useLeds() { useLeds = true; }
+  void useOnlySelected() { onlySelected = true; }
+  void useAll() { useLeds = true; useHalogens = true; onlySelected = false; }
+  
   void go() {
-    setColorToLeds();
-    setColorToHalogens();
+    if(useLeds) { setColorToLeds(); }
+    if(useHalogens) { setColorToHalogens(); }
   }
+  
 
   
   void setColorToLeds() {
     for(int i = 0; i < fixtures.length; i++) {
       if(fixtures[i] != null) {
-        if(fixtureUseRgb(i)) {
-          fixtures[i].red = red;
-          fixtures[i].green = green;
-          fixtures[i].blue = blue;
-          if(fixtureUseWhite(i)) {
-            fixtures[i].white = white;
+        if(!onlySelected || fixtures[i].selected) {
+          if(fixtureUseRgb(i)) {
+            fixtures[i].red = red;
+            fixtures[i].green = green;
+            fixtures[i].blue = blue;
+            if(fixtureUseWhite(i)) {
+              fixtures[i].white = white;
+            }
+            if(fixtureUseDim(i)) {
+              fixtures[i].dimmer = dim;
+            }
+            fixtures[i].DMXChanged = true;
           }
-          if(fixtureUseDim(i)) {
-            fixtures[i].dimmer = dim;
-          }
-          fixtures[i].DMXChanged = true;
         }
       }
     }
-    println("rgbwd(" + str(red) + ", " + str(green) + ", " + str(blue) + ", " + str(white) + ", " + str(dim) + ")");
   } 
+  
+  void clear() {
+    for(int i = 0; i < fixtures.length; i++) {
+      if(fixtures[i] != null) {
+        if(!onlySelected || fixtures[i].selected) {
+          if(fixtureUseRgb(i)) {
+            fixtures[i].red = 0;
+            fixtures[i].green = 0;
+            fixtures[i].blue = 0;
+            if(fixtureUseWhite(i)) {
+              fixtures[i].white = 0;
+            }
+            if(fixtureUseDim(i)) {
+              fixtures[i].dimmer = 0;
+            }
+            fixtures[i].DMXChanged = true;
+          }
+        }
+      }
+    }
+    for(int i = 0; i < fixtures.length; i++) {
+      if(fixtures[i] != null) {
+        if(fixtures[i].isHalogen()) {
+          if(!onlySelected || fixtures[i].selected) {
+            int r = fixtures[i].red;
+            int g = fixtures[i].green;
+            int b = fixtures[i].blue;
+            if(isAbout(r, red) && isAbout(g, green) && isAbout(b, blue)) {
+              fixtures[i].setDimmer(0);
+            }
+          }
+        }
+      }
+    }
+  }
   
   void setColorToHalogens() {
     for(int i = 0; i < fixtures.length; i++) {
       if(fixtures[i] != null) {
         if(fixtures[i].isHalogen()) {
-          int r = fixtures[i].red;
-          int g = fixtures[i].green;
-          int b = fixtures[i].blue;
-          if(isAbout(r, red) && isAbout(g, green) && isAbout(b, blue)) {
-            fixtures[i].setDimmer(255);
+          if(!onlySelected || fixtures[i].selected) {
+            int r = fixtures[i].red;
+            int g = fixtures[i].green;
+            int b = fixtures[i].blue;
+            if(isAbout(r, red) && isAbout(g, green) && isAbout(b, blue)) {
+              fixtures[i].setDimmer(255);
+            }
           }
         }
       }
@@ -166,6 +207,22 @@ void createColorNames() {
   colorNames[22] = new colorName("clearWhite", 0, 0, 0, 255);
   colorNames[23] = new colorName("coldWhite", 0, 50, 100, 255);
   colorNames[24] = new colorName("hotWhite", 100, 0, 0, 255);
+}
+
+int[] getColorFromName(String colour) {
+  int[] toReturn = new int[5];
+    for(int i = 0; i < colorNames.length; i++) {
+      if(colorNames[i] != null) {
+        if(colorNames[i].name.equals(colour)) {
+          toReturn[0] = colorNames[i].red;
+          toReturn[1] = colorNames[i].green;
+          toReturn[2] = colorNames[i].blue;
+          toReturn[3] = colorNames[i].white;
+          toReturn[4] = colorNames[i].dim;
+        }
+      }
+    }
+    return toReturn;
 }
 
 class colorName {
