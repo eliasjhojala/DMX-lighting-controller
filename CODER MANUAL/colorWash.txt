@@ -1,2 +1,5 @@
-colorWash theNameYouWant = new colorWash("theColorYouWant");
-colorWash wash = new colorWash("red");
+colorWash wash1 = new colorWash("red");
+colorWash wash2 = new colorWash(r, g, b);
+colorWash wash3 = new colorWash(r, g, b, w);
+colorWash wash4 = new colorWash(r, g, b, w, d);
+colorWash wash5 = new colorWash(h, s, b, "HSB");
