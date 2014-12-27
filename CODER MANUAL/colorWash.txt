@@ -1,0 +1,2 @@
+colorWash theNameYouWant = new colorWash("theColorYouWant");
+colorWash wash = new colorWash("red");
