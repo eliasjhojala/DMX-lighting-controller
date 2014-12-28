@@ -7,14 +7,14 @@ void newColorWash() {
    wash.go();
 }
 
-boolean colorWashMenuOpen;
+boolean colorWashMenuOpen = true;
 void drawColorWashMenu() {
   if(colorWashMenuOpen) {
     pushStyle();
       stroke(150);
-      strokeWeight(1);
+      strokeWeight(3);
       fill(0);
-
+      int[] ofset = { 100, 100 };
       int[] activeColorNames = new int[colorNames.length];
       int[] activeColorNamesTemp = new int[colorNames.length];
       int n = 0;
@@ -24,8 +24,8 @@ void drawColorWashMenu() {
           n++;
         }
       }
-      mouse.declareElement("colorSelectBox", 10000, 50, 80, 50+n/5*100, 80+5*50+20);
-      rect(50, 80, n/5*100, 5*50+20, 20, 20, 20, 20); //The whole box
+      mouse.declareElement("colorSelectBox", 10000, ofset[0]+50, ofset[1]+80, ofset[0]+50+n/5*100, ofset[1]+80+5*50+20);
+      rect(ofset[0]+50, ofset[1]+80, n/5*100, 5*50+20, 20, 20, 20, 20); //The whole box
       arrayCopy(activeColorNames, activeColorNamesTemp);
       activeColorNames = new int[n];
       for(int i = 0; i < activeColorNames.length; i++) {
@@ -38,12 +38,12 @@ void drawColorWashMenu() {
             if(i*5+j < activeColorNames.length) { 
               if(colorNames[activeColorNames[i*5+j]] != null) {
                 a++;
-                mouse.declareElement("color"+str(i*5+j), "colorSelectBox",  80+50*i, 30+50+a*40, 80+50*i+40, 30+50+a*40+30); 
+                mouse.declareElement("color"+str(i*5+j), "colorSelectBox",  ofset[0]+80+50*i, ofset[1]+30+50+a*40, ofset[0]+80+50*i+40, ofset[1]+30+50+a*40+30); 
                 fill(colorNames[activeColorNames[i*5+j]].getRGB()); //Fill rect with right color
                 if(mouse.isCaptured("color"+str(i*5+j))) { strokeWeight(3); //Check if mouse is on color rect
                 if(wash != null) { wash.clear();  } //Check does wash already exist
                 wash = new colorWash(colorNames[activeColorNames[i*5+j]].name); wash.go(); } else { strokeWeight(1); } //Check if color rect is pressed
-                rect(80+50*i, 30+50+a*40, 40, 30, 5); //Draw color rect
+                rect(ofset[0]+80+50*i, ofset[0]+30+50+a*40, 40, 30, 5); //Draw color rect
               }
             }
           }
