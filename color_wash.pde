@@ -163,6 +163,7 @@ class colorWash {
   
 } 
 
+//Colorname class is only to call colors with their names
 colorName[] colorNames = new colorName[30];
 void createColorNames() {
   colorNames[0] = new colorName("red", 255, 0, 0);
@@ -188,6 +189,8 @@ void createColorNames() {
   colorNames[22] = new colorName("clearWhite", 0, 0, 0, 255);
   colorNames[23] = new colorName("coldWhite", 0, 50, 100, 255);
   colorNames[24] = new colorName("hotWhite", 100, 0, 0, 255);
+  
+  colorNames[25] = new colorName("halogen", 255, 255, 180);
 }
 
 int[] getColorFromName(String colour) {
@@ -200,6 +203,18 @@ int[] getColorFromName(String colour) {
           toReturn[2] = colorNames[i].blue;
           toReturn[3] = colorNames[i].white;
           toReturn[4] = colorNames[i].dim;
+        }
+      }
+    }
+    return toReturn;
+}
+
+color getRGBfromName(String colour) {
+  color toReturn = color(0, 0, 0);
+    for(int i = 0; i < colorNames.length; i++) {
+      if(colorNames[i] != null) {
+        if(colorNames[i].name.equals(colour)) {
+          toReturn = color(colorNames[i].red, colorNames[i].green, colorNames[i].blue);
         }
       }
     }
@@ -382,18 +397,22 @@ int[] convertColor(int[] original, int from, int to) {
             color c = color(original[0], original[1], original[2]);
             int dim = original[3];
             if(to == 1) { //rgb
+              //When we conver RGBD to RGB we only have to map all the RGB values with dim value
               toReturn = new int[3];
               toReturn[0] = rMap(round(red(c)), 0, 255, 0, dim);
               toReturn[1] = rMap(round(green(c)), 0, 255, 0, dim);
               toReturn[2] = rMap(round(blue(c)), 0, 255, 0, dim);
             }
             else if(to == 2) { //hsb
+              //When converting RGBD to HSB we have to take HSB values with hue(), saturation() and brightness functions
+              //We also have to take account of dim value
               toReturn = new int[3];
               toReturn[0] = round(hue(c));
               toReturn[1] = round(saturation(c));
               toReturn[2] = round(min(brightness(c), dim));
             }
             else if(to == 3) { //rgbw
+              //When converting RGBD to RGBW we will first convert the RGB part to RGBW and then map all the values with dim
               toReturn = new int[4];
               arrayCopy(convertColor(original, 1, 3), toReturn);
               for(int i = 0; i < toReturn.length; i++) {
@@ -401,11 +420,13 @@ int[] convertColor(int[] original, int from, int to) {
               }
             }
             else if(to == 4) { //rgbwd
+              //When converting rgbd to rgbwd we will convert only RGB part to RGBW and then add dim to end
               toReturn = new int[5];
               arrayCopy(convertColor(original, 1, 3), toReturn);
               toReturn[4] = dim;
             }
             else if(to == 5) { //rgbd
+              //RGBD to RGBD doesn't need any convertion so we can copy the original array to return array
               toReturn = new int[4];
               arrayCopy(original, toReturn);
             }
