@@ -179,6 +179,11 @@ void endBoxSelect() {
         
        
     }
+  } else {
+    //open contextMwnu
+    String[] acts = { "createNewFixtureAt00" };
+    String[] texs = { "Create new fixture" };
+    contextMenu1.initiate(acts, texs, mouseX, mouseY);
   }
 }
 //----------/

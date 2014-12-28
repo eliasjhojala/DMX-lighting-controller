@@ -180,7 +180,7 @@ class memory { //Begin of memory class------------------------------------------
   void loadPreset() {
     if(type == 1) {
     
-      for (int i = 0; i < fixtures.size(); i++) {
+      for (int i = 0; i < fixtures.size(); i++) if(repOfFixtures.length > i) {
         
         if(whatToSave[0] && repOfFixtures[i] != null) {
           int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
