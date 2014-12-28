@@ -9,16 +9,20 @@ int oldMouseY1;
 int grandMaster = 50;
 int oldGrandMaster = 40;
 
-
+long totalMillis[] = new long[9];
 
 void draw() {
   if(programReadyToRun && !freeze) {
     textSize(12);
+    
+    mouse.refresh();
+    
+    //Move this to setDimAndMemoryValuesAtEveryDraw, maybe?
     for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
     
     memories[1].type = 4;
     memories[2].type = 5;
-  
+    
     checkThemeMode();
     
     setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values

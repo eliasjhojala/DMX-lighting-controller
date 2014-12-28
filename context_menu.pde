@@ -31,6 +31,7 @@ class contextMenu {
         }
       } catch(Exception e) { e.printStackTrace(); }
       open = true;
+      declareMouseElement();
     } else throw new IllegalArgumentException(); // the two arrays have to be of same size, otherwise throw an IllegalArgumentException
   }
   
@@ -48,8 +49,13 @@ class contextMenu {
         }
       } catch(Exception e) { e.printStackTrace(); }
       open = true;
+      declareMouseElement();
     } else throw new IllegalArgumentException(); // the two arrays have to be of same size, otherwise throw an IllegalArgumentException
     
+  }
+  
+  void declareMouseElement() {
+    mouse.declareElement("contextMenu", 100000, x, y, x+200, y+22*options.length);
   }
   
   int fixtureId = 0;
@@ -94,6 +100,7 @@ class contextMenu {
   }
   
   void execute(int optionId) {
+    mouse.removeElement("contextMenu");
     open = false;
     try {
       options[optionId].action.invoke(parent);
@@ -114,6 +121,74 @@ class contextMenuOption {
   }
   
   
+}
+
+Switch debugSw = new Switch();
+
+class Switch {
+  
+  boolean state;
+  color bg, fg;
+  
+  //Initailize with default settings
+  Switch() {
+    state = false;
+    bg = color(45, 138, 179);
+    fg = color(61, 190, 255);
+  }
+  
+  //Initialize with state
+  Switch(boolean state) {
+    this.state = state;
+    bg = color(45, 138, 179);
+    fg = color(61, 190, 255);
+  }
+  
+  //Initialize with custom colors
+  Switch(boolean state, color bg, color fg) {
+    this.state = state;
+    this.bg = bg;
+    this.fg = fg;
+  }
+  
+  int animationState = 0;
+  void draw() {
+    if(state && animationState < 25) {
+      animationState += 3;
+    } else
+    if(!state && animationState > 0) {
+      animationState -= 3;
+    }
+    int animState = animationState;
+    
+    pushStyle(); pushMatrix();
+    {
+      //-db\
+      translate(10, 50);
+      //-/
+      
+      //background
+      fill(80, 150);
+      noStroke();
+      rect(1.5, 1.5, 30, 10, 5);
+      fill(multiplyColor(bg, float(constrain(animState, 15, 25)) / 25));
+      rect(0, 0, 30, 10, 5);
+      if(mousePressed && isHoverSimple(-3, -3, 36, 16)) {
+        state = !state;
+        /*todo - capture mouse*/
+      }
+      
+      //Knob
+      fill(80, 120);
+      translate(animState - 3, -3);
+      ellipseMode(CORNER);
+      ellipse(1.5, 1.5, 16, 16);
+      fill(fg);
+      ellipse(0, 0, 16, 16);
+    }
+    popStyle(); popMatrix();
+    
+  }
 }
 
 

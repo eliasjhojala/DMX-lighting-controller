@@ -79,7 +79,7 @@ void drawFixture(int i) {
     fixtures.get(i).locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
     if(fixtureTypeId == 13) { rectMode(CENTER); rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
     if(selected) stroke(100, 100, 255); else stroke(255);
-    rect(x1, y1, lampWidth, lampHeight);
+    rect(x1, y1, lampWidth, lampHeight, 3);
     if(fixtureTypeId == 13) { rectMode(CENTER); popMatrix(); rectMode(CORNER); }
     if(zoom > 50) {
       if(printMode == false) {
@@ -165,6 +165,15 @@ boolean isHoverBottomMenu() {
     return inBdsMouseOffst(65, height - 260 - bottomMenuControlBoxHeight, bottomMenuControlBoxWidth, bottomMenuControlBoxHeight) && !(mouseLocked && mouseLocker.equals("main"));
   }
   return false;
+}
+
+color multiplyColor(color col, float mult) {
+  color toReturn = color(
+    red(col) * mult,
+    green(col) * mult,
+    blue(col) * mult
+  );
+  return toReturn;
 }
 
 void movePage() {
@@ -288,20 +297,28 @@ void changeCrossFadeValue(int val) {
 }
 
 
+//Get ScreenX (or Y) and convert to int
+int iScreenX(float x, float y) {
+  return int(screenX(x, y));
+}
+
+int iScreenY(float x, float y) {
+  return int(screenY(x, y));
+}
 
 //returns new value
 int quickSlider(String mouseLockID, int value) {
     //Draw slider
     drawBottomMenuChControllerSlider(value);
+    //Handle mouse
+    //todo get priority more intelligently
+    mouse.declareUpdateElement(mouseLockID, 1000, iScreenX(0, 0), iScreenY(0, 0), iScreenX(20, 100), iScreenY(20, 100));
+    mouse.getElementByName(mouseLockID).expires = 2;
+    
     //Check for drag
-    if (isHover(0, 0, 20, 100) && mousePressed && !mouseLocked) {
-      //Started dragging
-      mouseLocked = true;
-      mouseLocker = mouseLockID;
-    }
     boolean valueChanged = false;
-    if (mouseLocked && mouseLocker.equals(mouseLockID)) {
-      value += constrain((mouseX - pmouseX) * 4, 0, 255);
+    if (mouse.isCaptured(mouseLockID)) {
+      value -= (mouseY - pmouseY);
       value = constrain(value, 0, 255);
     }
     
@@ -355,28 +372,26 @@ int quickSlider(String mouseLockID, int value) {
     
     //defualtConstrain is used to constrain values between 0 and 255, because that is the range used in DMX.
     int defaultConstrain(int val) {
-      int toReturn = 0;
-      toReturn = constrain(val, 0, 255);
-      return toReturn;
+      return constrain(val, 0, 255);
     }
     
     //iMap is function which actually is same as map but it returns value as int
     int iMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
-      int toReturn = 0;
-      toReturn = int(map(val, in_low, in_hi, out_low, out_hi));
-      return toReturn;
+      return int(map(val, in_low, in_hi, out_low, out_hi));
     }
     
     //rMap is function which actually is same as map but it returns rounded value as int
     int rMap(int val, int in_low, int in_hi, int out_low, int out_hi) {
-      int toReturn = 0;
-      toReturn = round(map(val, in_low, in_hi, out_low, out_hi));
-      return toReturn;
+      return round(map(val, in_low, in_hi, out_low, out_hi));
     }
     
     int onlyPositive(int val) {
-      if(val < 0) { val = 0; }
-      return val;
+      return val < 0 ? 0 : val;
+    }
+    
+    int overZero(int val) {
+      if(val > 0) { return val; }
+      else { return 1; }
     }
   
 //End of some functions which are really useful tex in chase
@@ -404,11 +419,15 @@ but it returns original array index numbers as sorted arrange */
    } //End of sorting algorithm
    
    
-boolean isAbout(int a, int b) {
-  if(abs(a - b) <= a/5) {
+boolean isAbout(int a, int b, int accu) {
+  if(abs(a - b) <= a/overZero(accu)) {
     return true;
   }
   return false;
+}  
+
+boolean isAbout(int a, int b) {
+  return isAbout(a, b, 5);
 }  
    
    
@@ -418,3 +437,22 @@ boolean isInList(int i, int[] list) {
   }
   return false;
 }  
+
+int[] toArray(int a) {
+  int[] toReturn = new int[1];
+  toReturn[0] = a;
+  return toReturn;
+}
+int[] toArray(int a, int b) {
+  int[] toReturn = new int[2];
+  toReturn[0] = a;
+  toReturn[1] = b;
+  return toReturn;
+}
+int[] toArray(int a, int b, int c) {
+  int[] toReturn = new int[3];
+  toReturn[0] = a;
+  toReturn[1] = b;
+  toReturn[2] = c;
+  return toReturn;
+}

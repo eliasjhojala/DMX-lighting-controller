@@ -1,0 +1,32 @@
+getColorFromName("colorName"); returns array { red, green, blue, white, dim }
+getRGBfromName("colorName"); returns color object
+
+Available colorNames
+
+BASIC RGB COLOURS:
+red
+green
+blue
+yellow
+cyan
+lila
+pink
+orange
+
+LIGHT COLOURS:
+lightRed
+lightGreen
+lightBlue
+lightYellow
+lightCyan
+lightLila
+lightPink
+lightOrange
+
+WHITE COLOURS:
+amber
+white
+clearWhite
+coldWhite
+hotWhite
+halogen

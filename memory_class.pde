@@ -117,9 +117,15 @@ class memory { //Begin of memory class------------------------------------------
       loadPreset();
     }
   }
+  
+  boolean firstTimeAtZero;
   void chase() {
-    if(value > 0) {
+    if(value > 0 || firstTimeAtZero) {
        myChase.draw();
+       firstTimeAtZero = false;
+    }
+    if(value > 0) {
+      firstTimeAtZero = true;
     }
   }
   void grandMaster() {
@@ -491,8 +497,14 @@ class chase { //Begin of chase class--------------------------------------------
   
   /* This function checks that this memory is a chase 
   and the memory we're trying to control is a preset. */
+  boolean firstTimeLoading = true;
+  int[] oldValue;
   void loadPreset(int num, int val) {
-    if(val != getPresetValue(num)) { //We don't want to overwrite values if they haven't changed
+    if(firstTimeLoading) {
+      oldValue = new int[getPresets().length];
+      firstTimeLoading = false;
+    }
+    if(val != oldValue[constrain(num, 0, oldValue.length-1)]) { //Maked oldValue array, because getPresetValue casued some problems
       if(parent.type == 2) {
           memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
@@ -500,6 +512,7 @@ class chase { //Begin of chase class--------------------------------------------
           //fixtures.get(num).dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
           fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
+      oldValue[constrain(num, 0, oldValue.length-1)] = val;
     }
   }
   

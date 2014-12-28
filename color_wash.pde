@@ -20,6 +20,14 @@ class colorWash {
   boolean onlySelected = false;
   boolean onlyList = false;
   int[] selectedFixtures;
+  boolean disableByType;
+  int[] disabledTypes;
+  
+  boolean odd = true;
+  boolean even = true;
+  boolean pairless;
+  
+  int accuracy = 5;
   
   colorWash(String colour) {
     setRgbwd(getColorFromName(colour));
@@ -79,9 +87,16 @@ class colorWash {
   void useHalogens() { useHalogens = true; }
   void useLeds() { useLeds = true; }
   void useOnlySelected() { onlySelected = true; }
-  void useAll() { useLeds = true; useHalogens = true; onlySelected = false; onlyList = false; }
+  void useAll() { useHalogens(); useLeds(); onlySelected = false; onlyList = false; disableByType = false; oddAndEven(); }
   void useOnlyList() { onlyList = true; }
   void setList(int[] list) { selectedFixtures = new int[list.length]; arrayCopy(list, selectedFixtures); }
+  void setDisabledTypes(int[] list) { disabledTypes = new int[list.length]; arrayCopy(list, disabledTypes); }
+  void useDisabledTypes() { disableByType = true; }
+  void noDisabledTypes() { disableByType = false; }
+  void odd() { odd = true; even = false; }
+  void even() { odd = false; even = true; }
+  void oddAndEven() { odd = true; even = true; }
+  void setAccuracy(int a) { accuracy = a; }
   
   void go() { //Activate colorWash
     if(useLeds) { setColorToLeds(255); } //If useLeds is true then we set right colors to them
@@ -122,11 +137,11 @@ class colorWash {
         //First we have check is the fixture halogen when we can only change it's dimmer
         if(fixtures.get(i).isHalogen()) {
           //If onlySelected or onlyList is true then we have to check is fixture selected or in list
-          if((!onlySelected && !onlyList) || fixtures.get(i).selected || isInList(i, selectedFixtures)) { 
+          if(useThisFixture(i)) { 
             int r = fixtures.get(i).red;
             int g = fixtures.get(i).green;
             int b = fixtures.get(i).blue;
-            if(isAbout(r, red) && isAbout(g, green) && isAbout(b, blue)) { //Check that halogen's colour (foil) is about same colour than selected wash colour
+            if(isAbout(r, red, accuracy) && isAbout(g, green, accuracy) && isAbout(b, blue, accuracy)) { //Check that halogen's colour (foil) is about same colour than selected wash colour
               fixtures.get(i).setDimmer(val); //Put halogen on if it's right-coloured
             } //End of checking is the colour of this fixture right
           } //End of checking will we use this fixture 
@@ -135,19 +150,28 @@ class colorWash {
     } //End of for loop
   } //End void of setColorToHalogens
   
-  //Inside colorWash class
   
+  
+  //Inside colorWash class
+    int fT(int i) {
+      return fixtures.get(i).fixtureTypeId;
+    }
+    boolean fixtureIsSelected(int i) {
+      return fixtures.get(i).selected;
+    }
     boolean fixtureUseRgb(int i) {
-      int fT = fixtures.get(i).fixtureTypeId;
-      return fT == 24 || fT == 25 || fT == 18 || fT == 19;
+      return fT(i) == 24 || fT(i) == 25 || fT(i) == 18 || fT(i) == 19;
     }
     boolean fixtureUseDim(int i) {
-      int fT = fixtures.get(i).fixtureTypeId;
-      return fT == 25 || fT == 19;
+      return fT(i) == 25 || fT(i) == 19;
     }
     boolean fixtureUseWhite(int i) {
-      int fT = fixtures.get(i).fixtureTypeId;
-      return fT == 25 || fT == 24;
+      return fT(i) == 25 || fT(i) == 24;
+    }
+    
+    boolean useThisFixture(int i) {
+      pairless = !pairless;
+      return (!onlySelected || fixtureIsSelected(i)) && (!onlyList || isInList(i, selectedFixtures)) && (!disableByType || !isInList(fT(i), disabledTypes)) && ((odd && !pairless) || (even && pairless));
     }
   
   
@@ -290,6 +314,15 @@ int[] convertColor(int[] original, int from, int to) {
               toReturn[2] = original[2];
               toReturn[3] = 255;
             }
+            else if(to == 6) { //cmyk
+              color c = color(original[0], original[1], original[2]);
+              CMYK_Colour cmyk = new CMYK_Colour(c);
+              toReturn = new int[4];
+              toReturn[0] = round(cmyk.cyan);
+              toReturn[1] = round(cmyk.magenta);
+              toReturn[2] = round(cmyk.yellow);
+              toReturn[3] = round(cmyk.black);
+            }
           popStyle();
       }
       else if(from == 2) { //hsb
@@ -317,6 +350,10 @@ int[] convertColor(int[] original, int from, int to) {
             else if(to == 5) { //rgbd
               toReturn = new int[4];
               arrayCopy(convertColor(convertColor(original, 2, 1), 1, 5), toReturn);
+            }
+            else if(to == 6) { //cmyk
+              toReturn = new int[4];
+              arrayCopy(convertColor(convertColor(original, 2, 1), 1, 6), toReturn);
             }
         popStyle();
       }
@@ -348,6 +385,10 @@ int[] convertColor(int[] original, int from, int to) {
               toReturn = new int[4];
               arrayCopy(convertColor(original, 3, 1), toReturn); //rgb values
               toReturn[3] = 255; //dimmer
+            }
+            else if(to == 6) { //cmyk
+              toReturn = new int[4];
+              arrayCopy(convertColor(convertColor(original, 3, 1), 1, 6), toReturn);
             }
         popStyle();
       }
@@ -388,6 +429,10 @@ int[] convertColor(int[] original, int from, int to) {
             arrayCopy(convertColor(original, 4, 1), toReturn);
             toReturn[3] = original[4];
           }
+          else if(to == 6) { //cmyk
+              toReturn = new int[4];
+              arrayCopy(convertColor(convertColor(original, 4, 1), 1, 6), toReturn);
+            }
           
         popStyle();
       }
@@ -429,6 +474,10 @@ int[] convertColor(int[] original, int from, int to) {
               //RGBD to RGBD doesn't need any convertion so we can copy the original array to return array
               toReturn = new int[4];
               arrayCopy(original, toReturn);
+            }
+            else if(to == 6) { //cmyk
+              toReturn = new int[4];
+              arrayCopy(convertColor(convertColor(original, 5, 1), 1, 6), toReturn);
             }
         popStyle(); 
       }
