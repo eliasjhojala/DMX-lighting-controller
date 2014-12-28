@@ -15,6 +15,8 @@ class colorWash {
   boolean useHalogens = true;
   boolean useLeds = true;
   boolean onlySelected = false;
+  boolean onlyList = false;
+  int[] selectedFixtures;
   
   colorWash(String colour) {
     setRgbwd(getColorFromName(colour));
@@ -74,28 +76,30 @@ class colorWash {
   void useHalogens() { useHalogens = true; }
   void useLeds() { useLeds = true; }
   void useOnlySelected() { onlySelected = true; }
-  void useAll() { useLeds = true; useHalogens = true; onlySelected = false; }
+  void useAll() { useLeds = true; useHalogens = true; onlySelected = false; onlyList = false; }
+  void useOnlyList() { onlyList = true; }
+  void setList(int[] list) { selectedFixtures = new int[list.length]; arrayCopy(list, selectedFixtures); }
   
   void go() {
-    if(useLeds) { setColorToLeds(); }
-    if(useHalogens) { setColorToHalogens(); }
+    if(useLeds) { setColorToLeds(255); }
+    if(useHalogens) { setColorToHalogens(255); }
   }
   
 
   
-  void setColorToLeds() {
+  void setColorToLeds(int val) {
     for(int i = 0; i < fixtures.length; i++) {
       if(fixtures[i] != null) {
-        if(!onlySelected || fixtures[i].selected) {
+        if((!onlySelected && !onlyList) || fixtures[i].selected || isInList(i, selectedFixtures)) {
           if(fixtureUseRgb(i)) {
-            fixtures[i].red = red;
-            fixtures[i].green = green;
-            fixtures[i].blue = blue;
+            fixtures[i].red = rMap(red, 0, 255, 0, val);
+            fixtures[i].green = rMap(green, 0, 255, 0, val);
+            fixtures[i].blue = rMap(blue, 0, 255, 0, val);
             if(fixtureUseWhite(i)) {
-              fixtures[i].white = white;
+              fixtures[i].white = rMap(white, 0, 255, 0, val);
             }
             if(fixtureUseDim(i)) {
-              fixtures[i].dimmer = dim;
+              fixtures[i].dimmer = rMap(dim, 0, 255, 0, val);
             }
             fixtures[i].DMXChanged = true;
           }
@@ -105,50 +109,20 @@ class colorWash {
   } 
   
   void clear() {
-    for(int i = 0; i < fixtures.length; i++) {
-      if(fixtures[i] != null) {
-        if(!onlySelected || fixtures[i].selected) {
-          if(fixtureUseRgb(i)) {
-            fixtures[i].red = 0;
-            fixtures[i].green = 0;
-            fixtures[i].blue = 0;
-            if(fixtureUseWhite(i)) {
-              fixtures[i].white = 0;
-            }
-            if(fixtureUseDim(i)) {
-              fixtures[i].dimmer = 0;
-            }
-            fixtures[i].DMXChanged = true;
-          }
-        }
-      }
-    }
-    for(int i = 0; i < fixtures.length; i++) {
-      if(fixtures[i] != null) {
-        if(fixtures[i].isHalogen()) {
-          if(!onlySelected || fixtures[i].selected) {
-            int r = fixtures[i].red;
-            int g = fixtures[i].green;
-            int b = fixtures[i].blue;
-            if(isAbout(r, red) && isAbout(g, green) && isAbout(b, blue)) {
-              fixtures[i].setDimmer(0);
-            }
-          }
-        }
-      }
-    }
+    if(useLeds) { setColorToLeds(0); }
+    if(useHalogens) { setColorToHalogens(0); }
   }
   
-  void setColorToHalogens() {
+  void setColorToHalogens(int val) {
     for(int i = 0; i < fixtures.length; i++) {
       if(fixtures[i] != null) {
         if(fixtures[i].isHalogen()) {
-          if(!onlySelected || fixtures[i].selected) {
+          if((!onlySelected && !onlyList) || fixtures[i].selected || isInList(i, selectedFixtures)) {
             int r = fixtures[i].red;
             int g = fixtures[i].green;
             int b = fixtures[i].blue;
             if(isAbout(r, red) && isAbout(g, green) && isAbout(b, blue)) {
-              fixtures[i].setDimmer(255);
+              fixtures[i].setDimmer(val);
             }
           }
         }
