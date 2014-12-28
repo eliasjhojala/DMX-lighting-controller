@@ -1,52 +1,58 @@
 void colorWashSetup() {
   createColorNames();
 }
+  colorWash wash;
 void newColorWash() {
    colorWash wash = new colorWash("red");
    wash.go();
 }
 
+boolean colorWashMenuOpen;
 void drawColorWashMenu() {
-  pushStyle();
-    stroke(150);
-    strokeWeight(1);
-    fill(0);
-    
-  //  if(isHovered && isClicked) {
-  //  }
-  int[] activeColorNames = new int[colorNames.length];
-  int[] activeColorNamesTemp = new int[colorNames.length];
-  int n = 0;
-  for(int i = 0; i < colorNames.length; i++) {
-    if(colorNames[i] != null) {
-      activeColorNames[n] = i;
-      n++;
+  if(colorWashMenuOpen) {
+    pushStyle();
+      stroke(150);
+      strokeWeight(1);
+      fill(0);
+      
+    //  if(isHovered && isClicked) {
+    //  }
+    int[] activeColorNames = new int[colorNames.length];
+    int[] activeColorNamesTemp = new int[colorNames.length];
+    int n = 0;
+    for(int i = 0; i < colorNames.length; i++) {
+      if(colorNames[i] != null) {
+        activeColorNames[n] = i;
+        n++;
+      }
     }
-  }
-  mouse.declareElement("colorSelectBox", 10000, 50, 80, 50+n/5*100, 80+5*50+20);
-  rect(50, 80, n/5*100, 5*50+20, 20, 20, 20, 20);
-  arrayCopy(activeColorNames, activeColorNamesTemp);
-  activeColorNames = new int[n];
-  for(int i = 0; i < activeColorNames.length; i++) {
-    activeColorNames[i] = activeColorNamesTemp[i];
-  }
-  
-    int a = 0;
+    mouse.declareElement("colorSelectBox", 10000, 50, 80, 50+n/5*100, 80+5*50+20);
+    rect(50, 80, n/5*100, 5*50+20, 20, 20, 20, 20);
+    arrayCopy(activeColorNames, activeColorNamesTemp);
+    activeColorNames = new int[n];
     for(int i = 0; i < activeColorNames.length; i++) {
-      for(int j = 0; j < 5; j++) {
-        if(i*5+j < activeColorNames.length) {
-          if(colorNames[activeColorNames[i*5+j]] != null) {
-            a++;
-            mouse.declareElement("colorSelectBox", "color"+str(a), 80+50*i, 30+50+a*40, 80+50*i+40, 30+50+a*40+30);
-            fill(colorNames[activeColorNames[i*5+j]].getRGB());
-            if(mouse.isCaptured("color"+str(a))) { strokeWeight(3); } else { strokeWeight(1); }
-            rect(80+50*i, 30+50+a*40, 40, 30, 5);
+      activeColorNames[i] = activeColorNamesTemp[i];
+    }
+    
+      int a = 0;
+      for(int i = 0; i < activeColorNames.length; i++) {
+        for(int j = 0; j < 5; j++) {
+          if(i*5+j < activeColorNames.length) {
+            if(colorNames[activeColorNames[i*5+j]] != null) {
+              a++;
+              mouse.declareElement("color"+str(i*5+j), "colorSelectBox",  80+50*i, 30+50+a*40, 80+50*i+40, 30+50+a*40+30);
+              fill(colorNames[activeColorNames[i*5+j]].getRGB());
+              if(mouse.isCaptured("color"+str(i*5+j))) { strokeWeight(3); 
+              if(wash != null) { wash.clear();  }
+              wash = new colorWash(colorNames[activeColorNames[i*5+j]].name); wash.go(); } else { strokeWeight(1); }
+              rect(80+50*i, 30+50+a*40, 40, 30, 5);
+            }
           }
         }
+        a = 0;
       }
-      a = 0;
-    }
-  popStyle();
+    popStyle();
+  }
 }
 
 class colorWash {
