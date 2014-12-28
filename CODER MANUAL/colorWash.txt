@@ -1,8 +1,11 @@
-colorWash wash1 = new colorWash("red"); wash1.go();
-colorWash wash2 = new colorWash(r, g, b); wash2.go();
-colorWash wash3 = new colorWash(r, g, b, w); wash3.go();
-colorWash wash4 = new colorWash(r, g, b, w, d); wash4.go();
-colorWash wash5 = new colorWash(h, s, b, "HSB"); wash5.go();
+SETUP
+
+colorWash wash = new colorWash("red"); wash.go();
+colorWash wash = new colorWash(r, g, b); wash.go();
+colorWash wash = new colorWash(r, g, b, w); wash.go();
+colorWash wash = new colorWash(r, g, b, w, d); wash.go();
+colorWash wash = new colorWash(h, s, b, "HSB"); wash.go();
+
 
 OPTIONAL
 
