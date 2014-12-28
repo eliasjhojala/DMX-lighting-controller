@@ -34,20 +34,18 @@ class fixture {
   void setDimmerDirectly(int val) { dimmer = defaultConstrain(val); DMXChanged = true;}
   void setDimmer(int val) { 
    // setDimmerWithFade(val, preFadeSpeed, postFadeSpeed);
-   if(fades[0] != null) {
-     fades[0].startFade(dimmer, val, preFadeSpeed, postFadeSpeed);
-   }
-   else {
-     fades[0] = new Fade(dimmer, val, preFadeSpeed, postFadeSpeed);
-   }
+     if(fades[0] != null) {
+       fades[0].startFade(dimmer, val, preFadeSpeed, postFadeSpeed);
+     }
+     else {
+       fades[0] = new Fade(dimmer, val, preFadeSpeed, postFadeSpeed);
+     }
   }
   
   void setFadeValues() {
     if(fades[0] != null) {
       fades[0].countActualValue();
-      if(fades[0].getActualValue() != dimmer) {
-        setDimmerDirectly(fades[0].getActualValue());
-      }
+      setDimmerDirectly(fades[0].getActualValue());
     }
   }
   
