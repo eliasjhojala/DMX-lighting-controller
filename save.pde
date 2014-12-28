@@ -65,7 +65,7 @@ void saveAllData() {
   table.addColumn("1D");
   table.addColumn("2D");
 
-  for (int i = 0; i < fixtures.length; i++) {
+  for (int i = 0; i < fixtures.size(); i++) {
     saveDataMainCommands(str(fixtures.get(i).red),           "red", "1", str(i), "-");
     saveDataMainCommands(str(fixtures.get(i).green),         "green", "1", str(i), "-");
     saveDataMainCommands(str(fixtures.get(i).blue),          "blue", "1", str(i), "-");

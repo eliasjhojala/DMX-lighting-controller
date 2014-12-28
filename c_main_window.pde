@@ -28,7 +28,7 @@ void drawMainWindow() {
       mouseLocker = "main:fixMove";
     }
     
-    for(int i = 0; i < ansaTaka; i++) {
+    for(int i = 0; i < fixtures.size(); i++) {
       pushMatrix();
           if(!mouseLocked || mouseLocker == "main:fixMove") {
               if(!mousePressed) {
@@ -159,7 +159,7 @@ void endBoxSelect() {
   boolean shiftDown = keyPressed && keyCode == SHIFT;
   boolean ctrlDown = keyPressed && keyCode == CONTROL;
   
-  for (int i = 0; i < fixtures.length; i++) {
+  for (int i = 0; i < fixtures.size(); i++) {
     boolean inside = inBds2D(
       fixtures.get(i).locationOnScreenX,
       fixtures.get(i).locationOnScreenY,

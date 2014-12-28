@@ -434,6 +434,7 @@ String fileSeparator = java.io.File.separator;
 String actualSketchPath;
 
 void setup() {
+
   loadCoreData();
   actualSketchPath = sketchPath("");
   //Initialize mouseLocker to prevent nullPointers
@@ -498,6 +499,7 @@ void setup() {
   }
   thread("ylavalikkoSetup");
   colorWashSetup();
+  
 }
 
 

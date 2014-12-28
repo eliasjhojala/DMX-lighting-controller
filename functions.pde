@@ -205,16 +205,16 @@ boolean isClicked(int x1, int y1, int x2, int y2) {
 void fullOn(boolean state) {
   if(fullOn && !state) {
     //Turn off full on
-    for(int ii = 0; ii < fixtures.length; ii++) {
-       fixtures[ii].setDimmer(valueOfDimBeforeFullOn[ii]);
+    for(int ii = 0; ii < fixtures.size(); ii++) {
+       fixtures.get(ii).setDimmer(valueOfDimBeforeFullOn[ii]);
     }
     fullOn = false;
   }
   if(!fullOn && state) {
     //Turn on full on
-    for(int ii = 0; ii < fixtures.length; ii++) {
-       valueOfDimBeforeFullOn[ii] = fixtures[ii].dimmer;
-       fixtures[ii].setDimmer(255);
+    for(int ii = 0; ii < fixtures.size(); ii++) {
+       valueOfDimBeforeFullOn[ii] = fixtures.get(ii).dimmer;
+       fixtures.get(ii).setDimmer(255);
     }
     fullOn = true;
   }
@@ -262,7 +262,7 @@ void setValuesToSelected() {
   
   if (bottomMenuAllFixtures && bottomMenuControlBoxOpen) {
     int a = 0;
-    for(int i = 0; i < fixtures.length; i++) {
+    for(int i = 0; i < fixtures.size(); i++) {
       if(fixtures.get(i).selected) {
         fixtures.get(i).setDimmer(fixtureForSelected[a].dimmer);
         fixtures.get(i).pan = fixtureForSelected[a].pan;

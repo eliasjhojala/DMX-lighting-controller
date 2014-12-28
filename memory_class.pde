@@ -50,14 +50,14 @@ class memory { //Begin of memory class------------------------------------------
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
   
   
-  fixture[] repOfFixtures = new fixture[fixtures.length];
+  fixture[] repOfFixtures = new fixture[fixtures.size()];
   
   chase myChase;
   
   memory() {
     myChase = new chase(this);
-    for(int i = 0; i < fixtures.length; i++) {
-      repOffixtures.get(i) = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    for(int i = 0; i < repOfFixtures.length; i++) {
+      repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
   }
   
@@ -145,21 +145,21 @@ class memory { //Begin of memory class------------------------------------------
   
   void savePreset(boolean[] newWhatToSave) {
     arrayCopy(newWhatToSave, whatToSave);
-      for(int i = 0; i < fixtures.length; i++) {
-      repOffixtures.get(i) = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+      for(int i = 0; i < fixtures.size(); i++) {
+      repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
-    for (int i = 0; i < fixtures.length; i++) {
+    for (int i = 0; i < fixtures.size(); i++) {
       if(whatToSave[0]) {
-       repOffixtures.get(i).dimmer = fixtures.get(i).dimmer;
+       repOfFixtures[i].dimmer = fixtures.get(i).dimmer;
       }
       if(whatToSave[7]) {
-       repOffixtures.get(i).haze = fixtures.get(i).haze;
+       repOfFixtures[i].haze = fixtures.get(i).haze;
       }
       if(whatToSave[8]) {
-       repOffixtures.get(i).fan = fixtures.get(i).fan;
+       repOfFixtures[i].fan = fixtures.get(i).fan;
       }
       if(whatToSave[9]) {
-       repOffixtures.get(i).fog = fixtures.get(i).fog;
+       repOfFixtures[i].fog = fixtures.get(i).fog;
       }
     }
     type = 1;
@@ -174,22 +174,22 @@ class memory { //Begin of memory class------------------------------------------
   void loadPreset() {
     if(type == 1) {
     
-      for (int i = 0; i < fixtures.length; i++) {
+      for (int i = 0; i < fixtures.size(); i++) {
         
-        if(whatToSave[0] && repOffixtures.get(i) != null) {
-          int val = int(map(repOffixtures.get(i).dimmer, 0, 255, 0, value));
+        if(whatToSave[0] && repOfFixtures[i] != null) {
+          int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
           if(val > fixtures.get(i).dimmerPresetTarget) {
             fixtures.get(i).dimmerPresetTarget = val;
           }
         }
-        if(whatToSave[7] && repOffixtures.get(i) != null) {
-          fixtures.get(i).haze = int(map(repOffixtures.get(i).haze, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
+        if(whatToSave[7] && repOfFixtures[i] != null) {
+          fixtures.get(i).haze = int(map(repOfFixtures[i].haze, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
         }
-        if(whatToSave[8] && repOffixtures.get(i) != null) {
-          fixtures.get(i).fan = int(map(repOffixtures.get(i).fan, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
+        if(whatToSave[8] && repOfFixtures[i] != null) {
+          fixtures.get(i).fan = int(map(repOfFixtures[i].fan, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
         }
-        if(whatToSave[9] && repOffixtures.get(i) != null) {
-          fixtures.get(i).fog = int(map(repOffixtures.get(i).fog, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
+        if(whatToSave[9] && repOfFixtures[i] != null) {
+          fixtures.get(i).fog = int(map(repOfFixtures[i].fog, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
         }
       }
     }
@@ -497,8 +497,8 @@ class chase { //Begin of chase class--------------------------------------------
           memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
       if(parent.type == 3) {
-          //fixtures[num].dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
-          fixtures[num].setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
+          //fixtures.get(num).dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
+          fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
     }
   }
@@ -526,7 +526,7 @@ class chase { //Begin of chase class--------------------------------------------
        toReturn = memories[getPresets()[n]].getValue();
      }
      else if(parent.type == 3) {
-       toReturn = fixtures[getPresets()[n]].dimmer;
+       toReturn = fixtures.get(getPresets()[n]).dimmer;
      }
      return toReturn;
   }
@@ -670,21 +670,21 @@ class chase { //Begin of chase class--------------------------------------------
      int[] fixturesInChase; //create variable where selected fixtures will be stored
      int a = 0; //used mainly to count amount of some details
      
-     for(int i = 0; i < fixtures.length; i++) { //This for loop is made only to count how many fixtures are selected
+     for(int i = 0; i < fixtures.size(); i++) { //This for loop is made only to count how many fixtures are selected
        if(fixtures.get(i).selected) { a++; }
      }
      fixturesInChase = new int[a]; //Now we know how many fixtures are selected so we can create right lengthed array for storing them
 
      int[] x = new int[a]; //let's make also right lengthed array to store fixtures' x-location
      a = 0; //reset a variable because we're gonna use it again
-     for(int i = 0; i < fixtures.length; i++) { //This loop places right fixture id:s to fixturesInChase array
+     for(int i = 0; i < fixtures.size(); i++) { //This loop places right fixture id:s to fixturesInChase array
        if(fixtures.get(i).selected) {
          fixturesInChase[a] = i;
          a++;
        }
      }
      for(int i = 0; i < fixturesInChase.length; i++) { //this function places right x locations to x array
-       x[i] = fixtures[fixturesInChase[i]].locationOnScreenX;
+       x[i] = fixtures.get(fixturesInChase[i]).locationOnScreenX;
      }
      
      
@@ -698,7 +698,7 @@ class chase { //Begin of chase class--------------------------------------------
      
      a = 0; //Reset a again
      for(int i = 0; i < fixturesInChase.length; i++) { //let's count how long will final array be, when same channeled fixtures are removed
-       if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
+       if(fixtures.get(fixturesInChase[i]).channelStart != fixtures.get(fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]).channelStart) {
          a++;
        }
      }
@@ -706,7 +706,7 @@ class chase { //Begin of chase class--------------------------------------------
      fixturesInChaseTemp = new int[a]; //Reset temp array and make it length good for save !(same channeled) fixtures
      a = 0; //reset a again
      for(int i = 0; i < fixturesInChase.length; i++) { //This function removes same channeled fixtures
-       if(fixtures[fixturesInChase[i]].channelStart != fixtures[fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]].channelStart) {
+       if(fixtures.get(fixturesInChase[i]).channelStart != fixtures.get(fixturesInChase[getReverse(i, 0, fixturesInChase.length-1)]).channelStart) {
          fixturesInChaseTemp[a] = fixturesInChase[i];
          a++;
        }

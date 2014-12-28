@@ -94,7 +94,7 @@ class colorWash {
   }
   
   void setColorToLeds(int val) { //Set right colors to leds
-    for(int i = 0; i < fixtures.length; i++) { //Go through all the fixtures
+    for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
       if(fixtures.get(i) != null) { //Check that fixture exist
         //If onlySelected or onlyList is true then we have to check is fixture selected or in list
         if((!onlySelected && !onlyList) || fixtures.get(i).selected || isInList(i, selectedFixtures)) {
@@ -117,7 +117,7 @@ class colorWash {
 
   
   void setColorToHalogens(int val) { //Put halogens on if they are right-colored
-    for(int i = 0; i < fixtures.length; i++) { //Go through all the fixtures
+    for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
       if(fixtures.get(i) != null) { //Check that fixture exist
         //First we have check is the fixture halogen when we can only change it's dimmer
         if(fixtures.get(i).isHalogen()) {
