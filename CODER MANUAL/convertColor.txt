@@ -1,0 +1,9 @@
+convertColor(originalColor, fromId, toId);
+originalColor is array containing one of the followings:
+
+Id   Color
+1     { r, g, b }
+2     { h, s, b }
+3     { r, g, b, w }
+4     { r, g, b, w, d }
+5     { r, g, b, d }
