@@ -363,7 +363,7 @@ void setDmxChannel(int channel, int value) {                                    
 }                                                                                                                       //|
 //----------------------------------------------------------------------------------------------------------------------//|
 
-ArrayList<fixture> fixtures = new ArrayList<fixture>();
+FixtureArray fixtures = new FixtureArray();
 fixture[] fixtureForSelected = new fixture[1];
 
 //New system for organizing the boxes in the bottom menu. Array index = fixture id, data = fixture location

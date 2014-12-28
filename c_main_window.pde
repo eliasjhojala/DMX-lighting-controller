@@ -28,7 +28,7 @@ void drawMainWindow() {
       mouseLocker = "main:fixMove";
     }
     
-    for(int i = 0; i < fixtures.size(); i++) {
+    for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) {
       pushMatrix();
           if(!mouseLocked || mouseLocker == "main:fixMove") {
               if(!mousePressed) {

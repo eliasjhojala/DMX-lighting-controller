@@ -1,9 +1,83 @@
 boolean invokeFixturesDrawFinished = true;
 void invokeFixturesDraw() {
   invokeFixturesDrawFinished = false;
-  for (fixture temp : fixtures) temp.draw();
+  for (int ai = 0; ai < fixtures.size(); ai++) fixtures.get(ai).draw();
   invokeFixturesDrawFinished = true;
 }
+
+
+ArrayList<Integer> idLookupTable;
+
+class FixtureArray {
+  
+  
+ 
+  FixtureArray() {
+    array = new ArrayList<fixture>();
+    if(idLookupTable == null) idLookupTable = new ArrayList<Integer>();
+    
+  }
+  
+  ArrayList<fixture> array;
+  
+  void add(fixture newFix) {
+    int newId = array.size();
+    array.add(newFix);
+    
+    if(idLookupTable.indexOf(newId) == -1) {
+      //Add to first empty place, if none found, add to new place
+      int newIndex = idLookupTable.indexOf(-1);
+      if(newIndex != -1) {
+        idLookupTable.set(newIndex, newId);
+      } else idLookupTable.add(newId);
+    }
+    
+  }
+  
+  void remove(int id) {
+    array.remove(getArrayId(id));
+    for(int i = 0; i < idLookupTable.size(); i++) {
+      if(getArrayId(i) > id) {
+        idLookupTable.set(i, getArrayId(i)-1);
+      }
+    }
+    idLookupTable.set(id, -1);
+  }
+  
+  
+  int getArrayId(int fid) {
+    return idLookupTable.get(fid);
+  }
+  
+  fixture get(int fid) {
+    int result = getArrayId(fid);
+    if(result != -1 && result < array.size()) return array.get(result);
+      else {
+        fixture newFixture = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        newFixture.size.isDrawn = false;
+        return newFixture;
+      }
+    
+  }
+  
+  
+  int size() {
+    return idLookupTable.size();
+  }
+  
+  void clearThis() {
+    for(fixture fix : array) fix = null;
+  }
+  
+  void clear() {
+    array.clear();
+    idLookupTable.clear();
+  }
+  
+}
+
+
+
 
  
 class fixture {
@@ -395,7 +469,15 @@ class fixture {
   
 }
 
+void removeFixtureFromCM() {
+  fixtures.remove(contextMenu1.fixtureId);
+}
 
+void removeAllSelectedFixtures() {
+  for(int i = 0; i < fixtures.size(); i++) {
+    if(fixtures.get(i).selected) fixtures.remove(i);
+  }
+}
 
 
 class fixtureSize {
