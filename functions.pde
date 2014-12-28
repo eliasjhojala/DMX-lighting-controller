@@ -364,7 +364,9 @@ int quickSlider(String mouseLockID, int value) {
     
     //getInvertedValue returns value inverted (0 -> 255, 255 -> 0)
     int getInvertedValue(int val, int lim_low, int lim_hi) {
-      return lim_hi-val+lim_low;
+      int toReturn = 0;
+      toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);
+      return toReturn;
     }
   
     
