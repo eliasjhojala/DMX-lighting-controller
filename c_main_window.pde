@@ -33,7 +33,7 @@ void drawMainWindow() {
     
     for(int i = 0; i < ansaTaka; i++) {
       pushMatrix();
-          if(!mouse.captured || mouse.capturedElement == mouse.getElementByName("main:fixtures")) {
+          if(!mouse.captured || mouse.isCaptured("main:fixtures")) {
               if(!mousePressed) {
                 if(moveLamp == true) {
                  if(lampToMove < fixtures.length) {
@@ -61,7 +61,7 @@ void drawMainWindow() {
   
          if(fixtures[i].fixtureTypeId != 14) { rotate(radians(fixtures[i].rotationZ)); }
          
-          if(!mouse.captured || mouse.capturedElement == mouse.getElementByName("main:fixtures")) {
+          if(!mouse.captured || mouse.isCaptured("main:fixtures")) {
             if(mousePressed) {
               
             //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
@@ -97,7 +97,7 @@ void drawMainWindow() {
     }
     popMatrix();
     
-    if(!mousePressed) { mouseLocked = false; }
+    
     
   }//Endof: draw all elements
       
@@ -107,7 +107,7 @@ void drawMainWindow() {
     if(mousePressed) {
       
       if (mouseButton == LEFT) {
-        if (!mouse.captured || mouse.capturedElement == mouse.getElementByName("main:move")) {
+        if (!mouse.captured || mouse.isCaptured("main:move")) {
           mouse.capture(mouse.getElementByName("main:move"));
           movePage();
         }
@@ -159,23 +159,26 @@ void endBoxSelect() {
   int y1 = min(cornerY);
   int y2 = max(cornerY);
   
-  boolean shiftDown = keyPressed && keyCode == SHIFT;
-  boolean ctrlDown = keyPressed && keyCode == CONTROL;
-  
-  for (int i = 0; i < fixtures.length; i++) {
-    boolean inside = inBds2D(
-      fixtures[i].locationOnScreenX,
-      fixtures[i].locationOnScreenY,
-      x1, y1,
-      x2, y2
-    );
+  if(abs(x2 - x1) > 15 && abs(y2 - y1) > 15) {
     
+    boolean shiftDown = keyPressed && keyCode == SHIFT;
+    boolean ctrlDown = keyPressed && keyCode == CONTROL;
     
-    if(shiftDown) fixtures[i].selected = fixtures[i].selected || inside; //additive select
-      else if(ctrlDown) fixtures[i].selected = inside ? false : fixtures[i].selected; //exclusive select
-        else fixtures[i].selected = inside;
-    
-   
+    for (int i = 0; i < fixtures.length; i++) {
+      boolean inside = inBds2D(
+        fixtures[i].locationOnScreenX,
+        fixtures[i].locationOnScreenY,
+        x1, y1,
+        x2, y2
+      );
+      
+      
+      if(shiftDown) fixtures[i].selected = fixtures[i].selected || inside; //additive select
+        else if(ctrlDown) fixtures[i].selected = inside ? false : fixtures[i].selected; //exclusive select
+          else fixtures[i].selected = inside;
+      
+     
+    }
   }
 }
 //----------/

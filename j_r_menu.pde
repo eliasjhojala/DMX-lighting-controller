@@ -27,10 +27,10 @@ void sivuValikko() {
     arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
     
     //chaseMode button(s)
-    mouse.declareUpdateElementRelative("InMode", "main:move", width-268, bubS/2+30, 102, 50);
+    mouse.declareUpdateElementRelative("InMode", "main:move", width-268, bubS/2+30, 102, 30);
     mouse.setElementExpire("InMode", 2);
     boolean isHoverIM = mouse.elmIsHover("InMode");
-    mouse.declareUpdateElementRelative("OutMode", "main:move", width-268, bubS/2-50, 102, 50);
+    mouse.declareUpdateElementRelative("OutMode", "main:move", width-268, bubS/2, 102, 30);
     mouse.setElementExpire("OutMode", 2);
     boolean isHoverOM = mouse.elmIsHover("OutMode");
     stroke(topMenuAccent);  strokeWeight(2);
@@ -38,7 +38,7 @@ void sivuValikko() {
       pushStyle();
         //inputMode (lower)
         fill(isHoverIM ? topMenuTheme : topMenuTheme2);
-        rect(width-268, bubS/2+10, 102, 50, 0, 0, 0, 20); //- not in use for now
+        rect(width-268, bubS/2+10, 102, 50, 0, 0, 0, 20);
       popStyle();
       pushStyle();
         fill(255);

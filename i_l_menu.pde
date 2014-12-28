@@ -48,6 +48,7 @@ void alavalikko() {
     int row = 20;
     int rows = 3;
     mouse.declareUpdateElement("bottomMenu", "main:move", 65, height-260, (row+1)*65, height-260 + rows*65);
+    
     for(int i = 0; i < row*rows; i++) {
       int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
       drawn[tempIndex] = true;
@@ -58,8 +59,8 @@ void alavalikko() {
     }
   popMatrix();
     
-  
-  
+  if(!mousePressed) { mouseLocked = false; }
+  if(mouse.captured && !mouse.isCaptured("bottomMenu")) { mouseLocked = true; mouseLocker = "external"; }
   
   drawBottomMenuControlBox();
 }

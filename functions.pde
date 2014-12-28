@@ -317,8 +317,8 @@ int quickSlider(String mouseLockID, int value) {
     
     //Check for drag
     boolean valueChanged = false;
-    if (mouse.captured && mouse.capturedElement == mouse.getElementByName(mouseLockID)) {
-      value += constrain((mouseX - pmouseX) * 4, 0, 255);
+    if (mouse.isCaptured(mouseLockID)) {
+      value -= (mouseY - pmouseY);
       value = constrain(value, 0, 255);
     }
     
