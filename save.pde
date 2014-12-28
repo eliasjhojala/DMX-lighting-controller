@@ -203,7 +203,7 @@ void saveAllData() {
 
   //Asetetaan oikeat tallennuspolut käyttäjän mukaan
   
-  saveTable(table, savePath); //Roopen polku
+  saveTable(table, savePath, "csv"); //Roopen polku
   
   println(); println(); println(); 
   println("SAVE READY");
