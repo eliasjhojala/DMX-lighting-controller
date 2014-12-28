@@ -492,7 +492,7 @@ class chase { //Begin of chase class--------------------------------------------
   /* This function checks that this memory is a chase 
   and the memory we're trying to control is a preset. */
   void loadPreset(int num, int val) {
-    if(val != getPresetValue(num)) { //We don't want to overwrite values if they haven't changed
+    //if(val != getPresetValue(num)) { THIS IF MAKES SOME PROBLEMS!!!! //We don't want to overwrite values if they haven't changed
       if(parent.type == 2) {
           memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
@@ -500,7 +500,7 @@ class chase { //Begin of chase class--------------------------------------------
           //fixtures[num].dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
           fixtures[num].setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
-    }
+    //}
   }
   
       
