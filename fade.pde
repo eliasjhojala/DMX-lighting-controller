@@ -13,7 +13,7 @@ class Fade {
   }
   
   void startFade(int from, int to, int pre, int post) {
-    if(from != targetValue) {
+    if(to != targetValue) {
       preFade = pre;
       postFade = post;
       startMillis = millis();
@@ -37,5 +37,8 @@ class Fade {
   
   int getActualValue() {
     return actualValue;
+  }
+  boolean  isCompleted() {
+    return complete;
   }
 }

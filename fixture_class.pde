@@ -26,12 +26,29 @@ class fixture {
   int haze, fan, fog; //Pyro values
   int frequency; //Strobe freq value
   int special1, special2, special3, special4; //Some special values for strange fixtures
-  int preFadeSpeed = 20;
-  int postFadeSpeed = 50;
+  int preFadeSpeed = 200;
+  int postFadeSpeed = 500;
+  
+  Fade[] fades = new Fade[10];
  
   void setDimmerDirectly(int val) { dimmer = defaultConstrain(val); DMXChanged = true;}
   void setDimmer(int val) { 
-    setDimmerWithFade(val, preFadeSpeed, postFadeSpeed);
+   // setDimmerWithFade(val, preFadeSpeed, postFadeSpeed);
+   if(fades[0] != null) {
+     fades[0].startFade(dimmer, val, preFadeSpeed, postFadeSpeed);
+   }
+   else {
+     fades[0] = new Fade(dimmer, val, preFadeSpeed, postFadeSpeed);
+   }
+  }
+  
+  void setFadeValues() {
+    if(fades[0] != null) {
+      fades[0].countActualValue();
+      if(fades[0].getActualValue() != dimmer) {
+        setDimmerDirectly(fades[0].getActualValue());
+      }
+    }
   }
   
   void toggle(boolean down) {
@@ -373,7 +390,7 @@ class fixture {
   int oldFixtureTypeId;
   
   void draw() {
-    setDimmerWithFadeInEveryLoop();
+    setFadeValues();
     if (dimmerPresetTarget != -1 && dimmerPresetTarget != lastDimmerPresetTarget) {
       setDimmer(dimmerPresetTarget);
       lastDimmerPresetTarget = dimmerPresetTarget;
