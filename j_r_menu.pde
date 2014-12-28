@@ -238,13 +238,13 @@ class memoryCreationBox {
         text("Cancel", 55, 24);
         //Save button
         mouse.declareUpdateElementRelative("memoryCreationBox:save", "memoryCreationBox", 290, 290, -50, -20);
-        mouse.setElementExpire("memoryCreationBox:cancel", 2);
+        mouse.setElementExpire("memoryCreationBox:save", 2);
         boolean saveHover = mouse.elmIsHover("memoryCreationBox:save");
         fill(50, saveHover ? 240 : 220, 60);
         rect(290, 290, -50, -20, 4, 4, 20, 4);
         fill(255);
         text("Save", 265, 285);
-        if(mouse.isCaptured("memoryCreationBox:cancel")) {
+        if(mouse.isCaptured("memoryCreationBox:save")) {
           save();
         }
       }
