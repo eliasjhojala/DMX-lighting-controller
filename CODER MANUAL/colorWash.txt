@@ -18,3 +18,6 @@ wash.useLeds(); //Use leds
 wash.useAll(); //Use halogens, leds and unselected fixtures
 wash.useOnlyList(); //Use only list that you will give
 wash.setList(array); //Give a list of fixture id's to use
+wash.useDisabledTypes(); //Now you can disable fixtureTypes you want
+wash.setDisabledTypes(array); //Tell what types do you want to disable
+wash.noDisabledTypes(); //Don't disable anything by type

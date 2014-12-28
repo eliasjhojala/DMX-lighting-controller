@@ -20,6 +20,8 @@ class colorWash {
   boolean onlySelected = false;
   boolean onlyList = false;
   int[] selectedFixtures;
+  boolean disableByType;
+  int[] disabledTypes;
   
   colorWash(String colour) {
     setRgbwd(getColorFromName(colour));
@@ -79,9 +81,12 @@ class colorWash {
   void useHalogens() { useHalogens = true; }
   void useLeds() { useLeds = true; }
   void useOnlySelected() { onlySelected = true; }
-  void useAll() { useLeds = true; useHalogens = true; onlySelected = false; onlyList = false; }
+  void useAll() { useLeds = true; useHalogens = true; onlySelected = false; onlyList = false; disableByType = false; }
   void useOnlyList() { onlyList = true; }
   void setList(int[] list) { selectedFixtures = new int[list.length]; arrayCopy(list, selectedFixtures); }
+  void setDisabledTypes(int[] list) { disabledTypes = new int[list.length]; arrayCopy(list, disabledTypes); }
+  void useDisabledTypes() { disableByType = true; }
+  void noDisabledTypes() { disableByType = false; }
   
   void go() { //Activate colorWash
     if(useLeds) { setColorToLeds(255); } //If useLeds is true then we set right colors to them
@@ -122,7 +127,7 @@ class colorWash {
         //First we have check is the fixture halogen when we can only change it's dimmer
         if(fixtures[i].isHalogen()) {
           //If onlySelected or onlyList is true then we have to check is fixture selected or in list
-          if((!onlySelected && !onlyList) || fixtures[i].selected || isInList(i, selectedFixtures)) { 
+          if(useThisFixture(i)) { 
             int r = fixtures[i].red;
             int g = fixtures[i].green;
             int b = fixtures[i].blue;
@@ -135,19 +140,27 @@ class colorWash {
     } //End of for loop
   } //End void of setColorToHalogens
   
-  //Inside colorWash class
   
+  
+  //Inside colorWash class
+    int fT(int i) {
+      return fixtures[i].fixtureTypeId;
+    }
+    boolean fixtureIsSelected(int i) {
+      return fixtures[i].selected;
+    }
     boolean fixtureUseRgb(int i) {
-      int fT = fixtures[i].fixtureTypeId;
-      return fT == 24 || fT == 25 || fT == 18 || fT == 19;
+      return fT(i) == 24 || fT(i) == 25 || fT(i) == 18 || fT(i) == 19;
     }
     boolean fixtureUseDim(int i) {
-      int fT = fixtures[i].fixtureTypeId;
-      return fT == 25 || fT == 19;
+      return fT(i) == 25 || fT(i) == 19;
     }
     boolean fixtureUseWhite(int i) {
-      int fT = fixtures[i].fixtureTypeId;
-      return fT == 25 || fT == 24;
+      return fT(i) == 25 || fT(i) == 24;
+    }
+    
+    boolean useThisFixture(int i) {
+      return (!onlySelected || fixtureIsSelected(i)) && (!onlyList || isInList(i, selectedFixtures)) && (!disableByType || !isInList(fT(i), disabledTypes));
     }
   
   
