@@ -2,9 +2,7 @@ void colorWashSetup() {
   createColorNames();
 }
 void newColorWash() {
-   colorWash wash = new colorWash("halogen");
-   wash.useDisabledTypes();
-   wash.setDisabledTypes(toArray(5));
+   colorWash wash = new colorWash("red");
    wash.go();
 }
 
