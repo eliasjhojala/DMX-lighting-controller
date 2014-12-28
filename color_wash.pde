@@ -8,13 +8,17 @@ void newColorWash() {
 }
 
 boolean colorWashMenuOpen = true;
+int[] ofset = { 10, 10 };
 void drawColorWashMenu() {
   if(colorWashMenuOpen) {
     pushStyle();
+      if(wash == null) {
+        wash = new colorWash("");
+      }
       stroke(150);
       strokeWeight(3);
       fill(0);
-      int[] ofset = { 100, 100 };
+     
       int[] activeColorNames = new int[colorNames.length];
       int[] activeColorNamesTemp = new int[colorNames.length];
       int n = 0;
@@ -24,7 +28,7 @@ void drawColorWashMenu() {
           n++;
         }
       }
-      mouse.declareElement("colorSelectBox", 10000, ofset[0]+50, ofset[1]+80, ofset[0]+50+n/5*100+200, ofset[1]+80+5*50+20);
+      mouse.declareUpdateElementRelative("colorSelectBox", 10000, ofset[0]+50, ofset[1]+80, ofset[0]+50+n/5*100+200, ofset[1]+80+5*50+20);
       rect(ofset[0]+50, ofset[1]+80, n/5*100+200, 5*50+20, 20, 20, 20, 20); //The whole box
       arrayCopy(activeColorNames, activeColorNamesTemp);
       activeColorNames = new int[n];
@@ -32,13 +36,49 @@ void drawColorWashMenu() {
         activeColorNames[i] = activeColorNamesTemp[i];
       }
       
+      if(mouse.isCaptured("colorSelectBox")) { wash.clear(); }
       
-      rect(ofset[0]+80+50*6-80, ofset[0]+30+50+1*40, 120, 30, 5); //Draw color rect
+      
+      //ONLY SELECTED BUTTON
+      mouse.declareElement("onlySelected", "colorSelectBox",  ofset[0]+80+50*6-40, ofset[1]+30+50+1*40, 120+ofset[0]+80+50*6-40, 30+ofset[1]+30+50+1*40); 
+      
+      rect(ofset[0]+80+50*6-40, ofset[1]+30+50+1*40, 120, 30, 5); //Draw color rect
       pushStyle();
       fill(255);
       textSize(15);
-      text("Only selected", ofset[0]+80+50*6-40, ofset[0]+30+50+1*40+15);
+
+      if(wash.onlySelected) {
+        text("Selected", ofset[0]+80+50*6-40+10, ofset[1]+30+50+1*40+20);
+        if(mouse.isCaptured("onlySelected")) { fill(100); wash.onlySelected = false; } else { fill(0); }
+      }
+      else {
+        text("All", ofset[0]+80+50*6-40+10, ofset[1]+30+50+1*40+20);
+        if(mouse.isCaptured("onlySelected")) { fill(100); wash.onlySelected = true; } else { fill(0); }
+      }
       popStyle();
+      //END OF ONLY SELECTED BUTTON
+      
+      
+      //ODDEVEN BUTTON
+      mouse.declareElement("oddEven", "colorSelectBox",  ofset[0]+80+50*6-40, 50+ofset[1]+30+50+1*40, 120+ofset[0]+80+50*6-40, 50+30+ofset[1]+30+50+1*40); 
+      
+      rect(ofset[0]+80+50*6-40, 50+ofset[1]+30+50+1*40, 120, 30, 5); //Draw color rect
+      pushStyle();
+      fill(255);
+      textSize(15);
+
+        String[] OEMS = { "", "Odd", "Even", "All" };
+        String OEM = OEMS[wash.oddEvenMode];
+        text(OEM, ofset[0]+80+50*6-40+10, 50+ofset[1]+30+50+1*40+20);
+        if(mouse.isCaptured("oddEven")) { fill(100); wash.oddEvenNext(); } else { fill(0); }
+  
+      popStyle();
+      //END OF ODDEVEN BUTTON
+      
+      if(mouse.isCaptured("colorSelectBox")) {
+          ofset[1] += mouseY - pmouseY;
+          ofset[0] += mouseX - pmouseX;
+      }
       
         int a = 0;
         for(int i = 0; i < activeColorNames.length; i++) { //Go through all the activeColorNames
@@ -49,9 +89,9 @@ void drawColorWashMenu() {
                 mouse.declareElement("color"+str(i*5+j), "colorSelectBox",  ofset[0]+80+50*i, ofset[1]+30+50+a*40, ofset[0]+80+50*i+40, ofset[1]+30+50+a*40+30); 
                 fill(colorNames[activeColorNames[i*5+j]].getRGB()); //Fill rect with right color
                 if(mouse.isCaptured("color"+str(i*5+j))) { strokeWeight(3); //Check if mouse is on color rect
-                if(wash != null) { wash.clear();  } //Check does wash already exist
-                wash = new colorWash(colorNames[activeColorNames[i*5+j]].name); wash.go(); } else { strokeWeight(1); } //Check if color rect is pressed
-                rect(ofset[0]+80+50*i, ofset[0]+30+50+a*40, 40, 30, 5); //Draw color rect
+                wash.clear(); 
+                wash.setColor(colorNames[activeColorNames[i*5+j]].name); wash.go(); } else { strokeWeight(1); } //Check if color rect is pressed
+                rect(ofset[0]+80+50*i, ofset[1]+30+50+a*40, 40, 30, 5); //Draw color rect
               }
             }
           }
@@ -82,9 +122,15 @@ class colorWash {
   boolean even = true;
   boolean pairless;
   
+  int oddEvenMode = 1;
+  
   int accuracy = 5;
   
   colorWash(String colour) {
+    setRgbwd(getColorFromName(colour));
+  }
+  
+  void setColor(String colour) {
     setRgbwd(getColorFromName(colour));
   }
   
@@ -152,6 +198,13 @@ class colorWash {
   void even() { odd = false; even = true; }
   void oddAndEven() { odd = true; even = true; }
   void setAccuracy(int a) { accuracy = a; }
+  void oddEvenNext() { 
+    oddEvenMode = getNext(oddEvenMode, 1, 3); 
+    if(oddEvenMode == 1) { odd(); }
+    if(oddEvenMode == 2) { even(); }
+    if(oddEvenMode == 3) { oddAndEven(); }
+  }
+  
   
   void go() { //Activate colorWash
     if(useLeds) { setColorToLeds(255); } //If useLeds is true then we set right colors to them
