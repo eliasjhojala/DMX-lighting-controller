@@ -12,3 +12,4 @@ Id   Color
 3     { r, g, b, w }
 4     { r, g, b, w, d }
 5     { r, g, b, d }
+6     { c, m, y, k }        (only output)

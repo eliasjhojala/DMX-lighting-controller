@@ -314,6 +314,15 @@ int[] convertColor(int[] original, int from, int to) {
               toReturn[2] = original[2];
               toReturn[3] = 255;
             }
+            else if(to == 6) { //cmyk
+              color c = color(original[0], original[1], original[2]);
+              CMYK_Colour cmyk = new CMYK_Colour(c);
+              toReturn = new int[4];
+              toReturn[0] = round(cmyk.cyan);
+              toReturn[1] = round(cmyk.magenta);
+              toReturn[2] = round(cmyk.yellow);
+              toReturn[3] = round(cmyk.black);
+            }
           popStyle();
       }
       else if(from == 2) { //hsb
@@ -341,6 +350,10 @@ int[] convertColor(int[] original, int from, int to) {
             else if(to == 5) { //rgbd
               toReturn = new int[4];
               arrayCopy(convertColor(convertColor(original, 2, 1), 1, 5), toReturn);
+            }
+            else if(to == 6) { //cmyk
+              toReturn = new int[4];
+              arrayCopy(convertColor(convertColor(original, 2, 1), 1, 6), toReturn);
             }
         popStyle();
       }
@@ -372,6 +385,10 @@ int[] convertColor(int[] original, int from, int to) {
               toReturn = new int[4];
               arrayCopy(convertColor(original, 3, 1), toReturn); //rgb values
               toReturn[3] = 255; //dimmer
+            }
+            else if(to == 6) { //cmyk
+              toReturn = new int[4];
+              arrayCopy(convertColor(convertColor(original, 3, 1), 1, 6), toReturn);
             }
         popStyle();
       }
@@ -412,6 +429,10 @@ int[] convertColor(int[] original, int from, int to) {
             arrayCopy(convertColor(original, 4, 1), toReturn);
             toReturn[3] = original[4];
           }
+          else if(to == 6) { //cmyk
+              toReturn = new int[4];
+              arrayCopy(convertColor(convertColor(original, 4, 1), 1, 6), toReturn);
+            }
           
         popStyle();
       }
@@ -453,6 +474,10 @@ int[] convertColor(int[] original, int from, int to) {
               //RGBD to RGBD doesn't need any convertion so we can copy the original array to return array
               toReturn = new int[4];
               arrayCopy(original, toReturn);
+            }
+            else if(to == 6) { //cmyk
+              toReturn = new int[4];
+              arrayCopy(convertColor(convertColor(original, 5, 1), 1, 6), toReturn);
             }
         popStyle(); 
       }
