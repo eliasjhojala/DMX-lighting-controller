@@ -29,18 +29,18 @@ class fixture {
   int preFadeSpeed = 100;
   int postFadeSpeed = 500;
   
-  Fade[] fades = new Fade[10];
+  //Fade[] fades = new Fade[10];
  
-  void setDimmerDirectly(int val) { 
+  void setDimmer(int val) { 
     if(val != dimmer) {
-      if(fades[0] != null) {
-        if(!fades[0].isCompleted()) {
+     // if(fades[0] != null) {
+      //  if(!fades[0].isCompleted()) {
           dimmer = defaultConstrain(val); DMXChanged = true;
-        }
-      }
+       // }
+     // }
     }
   }
-  void setDimmer(int val) { 
+  /*void setDimmer(int val) { 
     //setDimmerDirectly(val);
    // setDimmerWithFade(val, preFadeSpeed, postFadeSpeed);
    if(val != dimmer) {
@@ -62,7 +62,7 @@ class fixture {
         setDimmerDirectly(fades[0].getActualValue());
       }
     }
-  }
+  } */
   
   void toggle(boolean down) {
     if(down) {
@@ -94,7 +94,7 @@ class fixture {
   
   boolean pushWithFadeDown = false;
   
-  void setDimmerWithFade(int val, int pre, int post) {
+/*  void setDimmerWithFade(int val, int pre, int post) {
     if(val != fadeTarget) {
       fadeTarget = val;
       preFade = pre;
@@ -116,7 +116,7 @@ class fixture {
         setDimmerDirectly(constrain(iMap(timer, 0, postFade, originalDimmer, fadeTarget), fadeTarget, originalDimmer));
       } else fadeComplete = true;
     }
-  }
+  } */
   
 
   
@@ -403,7 +403,7 @@ class fixture {
   int oldFixtureTypeId;
   
   void draw() {
-    setFadeValues();
+    //setFadeValues();
     if (dimmerPresetTarget != -1 && dimmerPresetTarget != lastDimmerPresetTarget) {
       setDimmer(dimmerPresetTarget);
       lastDimmerPresetTarget = dimmerPresetTarget;
