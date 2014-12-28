@@ -116,7 +116,7 @@ void drawMainWindow() {
         
         
         doBoxSelect();
-        mouse.capture(mouse.getElementByName("main:move"));
+        
       }
     }
   }
@@ -130,14 +130,14 @@ void drawMainWindow() {
 int boxStartX, boxStartY;
 boolean boxSelect = false;
 void doBoxSelect() {
-    if (!mouseLocked) {
+    if (!mouse.captured) {
       
-      mouseLocked = true;
-      mouseLocker = "boxSelect";
+      mouse.capture(mouse.getElementByName("main:move"));
+      
       boxSelect = true;
       boxStartX = mouseX;
       boxStartY = mouseY; 
-    } else if(mouseLocker.equals("boxSelect")) {
+    } else if(mouse.isCaptured("main:move")) {
       
       pushStyle();
       fill(50, 50, 150, 150);
