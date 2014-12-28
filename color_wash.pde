@@ -95,20 +95,20 @@ class colorWash {
   
   void setColorToLeds(int val) { //Set right colors to leds
     for(int i = 0; i < fixtures.length; i++) { //Go through all the fixtures
-      if(fixtures[i] != null) { //Check that fixture exist
+      if(fixtures.get(i) != null) { //Check that fixture exist
         //If onlySelected or onlyList is true then we have to check is fixture selected or in list
-        if((!onlySelected && !onlyList) || fixtures[i].selected || isInList(i, selectedFixtures)) {
+        if((!onlySelected && !onlyList) || fixtures.get(i).selected || isInList(i, selectedFixtures)) {
           if(fixtureUseRgb(i)) { //Check that does this fixture use rgb
-            fixtures[i].red = rMap(red, 0, 255, 0, val); //Set red value
-            fixtures[i].green = rMap(green, 0, 255, 0, val); //Set green value
-            fixtures[i].blue = rMap(blue, 0, 255, 0, val); //Set blue value
+            fixtures.get(i).red = rMap(red, 0, 255, 0, val); //Set red value
+            fixtures.get(i).green = rMap(green, 0, 255, 0, val); //Set green value
+            fixtures.get(i).blue = rMap(blue, 0, 255, 0, val); //Set blue value
             if(fixtureUseWhite(i)) { //Check that does this fixture use also white
-              fixtures[i].white = rMap(white, 0, 255, 0, val); //set white value
+              fixtures.get(i).white = rMap(white, 0, 255, 0, val); //set white value
             } //End of white check
             if(fixtureUseDim(i)) { //Check that does this fixture use also dimmer
-              fixtures[i].dimmer = rMap(dim, 0, 255, 0, val); //Set dimmer value
+              fixtures.get(i).dimmer = rMap(dim, 0, 255, 0, val); //Set dimmer value
             } //End of dimmer check
-            fixtures[i].DMXChanged = true; //Tell to fixture class that DMX has changed
+            fixtures.get(i).DMXChanged = true; //Tell to fixture class that DMX has changed
           } //End of rgb check
         } //End of checking will we use this fixture 
       } //End of null-check
@@ -118,16 +118,16 @@ class colorWash {
   
   void setColorToHalogens(int val) { //Put halogens on if they are right-colored
     for(int i = 0; i < fixtures.length; i++) { //Go through all the fixtures
-      if(fixtures[i] != null) { //Check that fixture exist
+      if(fixtures.get(i) != null) { //Check that fixture exist
         //First we have check is the fixture halogen when we can only change it's dimmer
-        if(fixtures[i].isHalogen()) {
+        if(fixtures.get(i).isHalogen()) {
           //If onlySelected or onlyList is true then we have to check is fixture selected or in list
-          if((!onlySelected && !onlyList) || fixtures[i].selected || isInList(i, selectedFixtures)) { 
-            int r = fixtures[i].red;
-            int g = fixtures[i].green;
-            int b = fixtures[i].blue;
+          if((!onlySelected && !onlyList) || fixtures.get(i).selected || isInList(i, selectedFixtures)) { 
+            int r = fixtures.get(i).red;
+            int g = fixtures.get(i).green;
+            int b = fixtures.get(i).blue;
             if(isAbout(r, red) && isAbout(g, green) && isAbout(b, blue)) { //Check that halogen's colour (foil) is about same colour than selected wash colour
-              fixtures[i].setDimmer(val); //Put halogen on if it's right-coloured
+              fixtures.get(i).setDimmer(val); //Put halogen on if it's right-coloured
             } //End of checking is the colour of this fixture right
           } //End of checking will we use this fixture 
         } //End of halogen-check
@@ -138,15 +138,15 @@ class colorWash {
   //Inside colorWash class
   
     boolean fixtureUseRgb(int i) {
-      int fT = fixtures[i].fixtureTypeId;
+      int fT = fixtures.get(i).fixtureTypeId;
       return fT == 24 || fT == 25 || fT == 18 || fT == 19;
     }
     boolean fixtureUseDim(int i) {
-      int fT = fixtures[i].fixtureTypeId;
+      int fT = fixtures.get(i).fixtureTypeId;
       return fT == 25 || fT == 19;
     }
     boolean fixtureUseWhite(int i) {
-      int fT = fixtures[i].fixtureTypeId;
+      int fT = fixtures.get(i).fixtureTypeId;
       return fT == 25 || fT == 24;
     }
   

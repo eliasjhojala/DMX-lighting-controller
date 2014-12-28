@@ -65,26 +65,26 @@ void oscEvent(OscMessage theOscMessage) {
      if(addr.equals("/strobenow")) {
        if(digitalValue == 1) {
          for(int i = 0; i < fixtures.length; i++) {
-           valueOfDimBeforeStrobe[i] = fixtures[i].dimmer;
-           fixtures[i].setDimmer(0);
+           valueOfDimBeforeStrobe[i] = fixtures.get(i).dimmer;
+           fixtures.get(i).setDimmer(0);
          }
          for(int i = 0; i < fixtures.length; i++) {
-           if(getFixtureNameByType(fixtures[i].fixtureTypeId) == "strobe") {
-             fixtures[i].setDimmer(255);
-             fixtures[i].frequency = 200;
-             fixtures[i].DMXChanged = true;
+           if(getFixtureNameByType(fixtures.get(i).fixtureTypeId) == "strobe") {
+             fixtures.get(i).setDimmer(255);
+             fixtures.get(i).frequency = 200;
+             fixtures.get(i).DMXChanged = true;
            }
          }
        }
        else {
          for(int i = 0; i < fixtures.length; i++) {
-           fixtures[i].setDimmer(valueOfDimBeforeStrobe[i]);
+           fixtures.get(i).setDimmer(valueOfDimBeforeStrobe[i]);
          }
          for(int i = 0; i < fixtures.length; i++) {
-           if(getFixtureNameByType(fixtures[i].fixtureTypeId) == "strobe") {
-             fixtures[i].setDimmer(0);
-             fixtures[i].frequency = 0;
-             fixtures[i].DMXChanged = true;
+           if(getFixtureNameByType(fixtures.get(i).fixtureTypeId) == "strobe") {
+             fixtures.get(i).setDimmer(0);
+             fixtures.get(i).frequency = 0;
+             fixtures.get(i).DMXChanged = true;
            }
          }
        }

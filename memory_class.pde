@@ -57,7 +57,7 @@ class memory { //Begin of memory class------------------------------------------
   memory() {
     myChase = new chase(this);
     for(int i = 0; i < fixtures.length; i++) {
-      repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+      repOffixtures.get(i) = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
   }
   
@@ -146,20 +146,20 @@ class memory { //Begin of memory class------------------------------------------
   void savePreset(boolean[] newWhatToSave) {
     arrayCopy(newWhatToSave, whatToSave);
       for(int i = 0; i < fixtures.length; i++) {
-      repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+      repOffixtures.get(i) = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
     for (int i = 0; i < fixtures.length; i++) {
       if(whatToSave[0]) {
-       repOfFixtures[i].dimmer = fixtures[i].dimmer;
+       repOffixtures.get(i).dimmer = fixtures.get(i).dimmer;
       }
       if(whatToSave[7]) {
-       repOfFixtures[i].haze = fixtures[i].haze;
+       repOffixtures.get(i).haze = fixtures.get(i).haze;
       }
       if(whatToSave[8]) {
-       repOfFixtures[i].fan = fixtures[i].fan;
+       repOffixtures.get(i).fan = fixtures.get(i).fan;
       }
       if(whatToSave[9]) {
-       repOfFixtures[i].fog = fixtures[i].fog;
+       repOffixtures.get(i).fog = fixtures.get(i).fog;
       }
     }
     type = 1;
@@ -176,20 +176,20 @@ class memory { //Begin of memory class------------------------------------------
     
       for (int i = 0; i < fixtures.length; i++) {
         
-        if(whatToSave[0] && repOfFixtures[i] != null) {
-          int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
-          if(val > fixtures[i].dimmerPresetTarget) {
-            fixtures[i].dimmerPresetTarget = val;
+        if(whatToSave[0] && repOffixtures.get(i) != null) {
+          int val = int(map(repOffixtures.get(i).dimmer, 0, 255, 0, value));
+          if(val > fixtures.get(i).dimmerPresetTarget) {
+            fixtures.get(i).dimmerPresetTarget = val;
           }
         }
-        if(whatToSave[7] && repOfFixtures[i] != null) {
-          fixtures[i].haze = int(map(repOfFixtures[i].haze, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
+        if(whatToSave[7] && repOffixtures.get(i) != null) {
+          fixtures.get(i).haze = int(map(repOffixtures.get(i).haze, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
         }
-        if(whatToSave[8] && repOfFixtures[i] != null) {
-          fixtures[i].fan = int(map(repOfFixtures[i].fan, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
+        if(whatToSave[8] && repOffixtures.get(i) != null) {
+          fixtures.get(i).fan = int(map(repOffixtures.get(i).fan, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
         }
-        if(whatToSave[9] && repOfFixtures[i] != null) {
-          fixtures[i].fog = int(map(repOfFixtures[i].fog, 0, 255, 0, value)); fixtures[i].DMXChanged = true;
+        if(whatToSave[9] && repOffixtures.get(i) != null) {
+          fixtures.get(i).fog = int(map(repOffixtures.get(i).fog, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
         }
       }
     }
@@ -671,14 +671,14 @@ class chase { //Begin of chase class--------------------------------------------
      int a = 0; //used mainly to count amount of some details
      
      for(int i = 0; i < fixtures.length; i++) { //This for loop is made only to count how many fixtures are selected
-       if(fixtures[i].selected) { a++; }
+       if(fixtures.get(i).selected) { a++; }
      }
      fixturesInChase = new int[a]; //Now we know how many fixtures are selected so we can create right lengthed array for storing them
 
      int[] x = new int[a]; //let's make also right lengthed array to store fixtures' x-location
      a = 0; //reset a variable because we're gonna use it again
      for(int i = 0; i < fixtures.length; i++) { //This loop places right fixture id:s to fixturesInChase array
-       if(fixtures[i].selected) {
+       if(fixtures.get(i).selected) {
          fixturesInChase[a] = i;
          a++;
        }
