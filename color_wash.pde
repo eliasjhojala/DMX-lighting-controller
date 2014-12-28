@@ -24,13 +24,21 @@ void drawColorWashMenu() {
           n++;
         }
       }
-      mouse.declareElement("colorSelectBox", 10000, ofset[0]+50, ofset[1]+80, ofset[0]+50+n/5*100, ofset[1]+80+5*50+20);
-      rect(ofset[0]+50, ofset[1]+80, n/5*100, 5*50+20, 20, 20, 20, 20); //The whole box
+      mouse.declareElement("colorSelectBox", 10000, ofset[0]+50, ofset[1]+80, ofset[0]+50+n/5*100+200, ofset[1]+80+5*50+20);
+      rect(ofset[0]+50, ofset[1]+80, n/5*100+200, 5*50+20, 20, 20, 20, 20); //The whole box
       arrayCopy(activeColorNames, activeColorNamesTemp);
       activeColorNames = new int[n];
       for(int i = 0; i < activeColorNames.length; i++) {
         activeColorNames[i] = activeColorNamesTemp[i];
       }
+      
+      
+      rect(ofset[0]+80+50*6-80, ofset[0]+30+50+1*40, 120, 30, 5); //Draw color rect
+      pushStyle();
+      fill(255);
+      textSize(15);
+      text("Only selected", ofset[0]+80+50*6-40, ofset[0]+30+50+1*40+15);
+      popStyle();
       
         int a = 0;
         for(int i = 0; i < activeColorNames.length; i++) { //Go through all the activeColorNames
