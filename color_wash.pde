@@ -7,6 +7,9 @@ void newColorWash() {
 }
 
 class colorWash {
+  //TODO: clear should set all the lamps to values where they was before colorwash
+  //TODO: rgbw values should be converted to rgb values if we are using rgb lamps
+  
   int red, green, blue, white, dim;
   int[] rgb = new int[3];
   int[] rgbw = new int[4];
@@ -80,55 +83,59 @@ class colorWash {
   void useOnlyList() { onlyList = true; }
   void setList(int[] list) { selectedFixtures = new int[list.length]; arrayCopy(list, selectedFixtures); }
   
-  void go() {
-    if(useLeds) { setColorToLeds(255); }
-    if(useHalogens) { setColorToHalogens(255); }
+  void go() { //Activate colorWash
+    if(useLeds) { setColorToLeds(255); } //If useLeds is true then we set right colors to them
+    if(useHalogens) { setColorToHalogens(255); } //If useHalogens is true then we put them on if they are right-colored
+  }
+    
+  void clear() { //Clear colorWash
+    if(useLeds) { setColorToLeds(0); } //If useLeds is true then we turn off them
+    if(useHalogens) { setColorToHalogens(0); } //If useHalogens is true then we turn off them
   }
   
+  void setColorToLeds(int val) { //Set right colors to leds
+    for(int i = 0; i < fixtures.length; i++) { //Go through all the fixtures
+      if(fixtures[i] != null) { //Check that fixture exist
+        //If onlySelected or onlyList is true then we have to check is fixture selected or in list
+        if((!onlySelected && !onlyList) || fixtures[i].selected || isInList(i, selectedFixtures)) {
+          if(fixtureUseRgb(i)) { //Check that does this fixture use rgb
+            fixtures[i].red = rMap(red, 0, 255, 0, val); //Set red value
+            fixtures[i].green = rMap(green, 0, 255, 0, val); //Set green value
+            fixtures[i].blue = rMap(blue, 0, 255, 0, val); //Set blue value
+            if(fixtureUseWhite(i)) { //Check that does this fixture use also white
+              fixtures[i].white = rMap(white, 0, 255, 0, val); //set white value
+            } //End of white check
+            if(fixtureUseDim(i)) { //Check that does this fixture use also dimmer
+              fixtures[i].dimmer = rMap(dim, 0, 255, 0, val); //Set dimmer value
+            } //End of dimmer check
+            fixtures[i].DMXChanged = true; //Tell to fixture class that DMX has changed
+          } //End of rgb check
+        } //End of checking will we use this fixture 
+      } //End of null-check
+    } //End of for loop
+  }  //End of void setColorToLeds
 
   
-  void setColorToLeds(int val) {
-    for(int i = 0; i < fixtures.length; i++) {
-      if(fixtures[i] != null) {
-        if((!onlySelected && !onlyList) || fixtures[i].selected || isInList(i, selectedFixtures)) {
-          if(fixtureUseRgb(i)) {
-            fixtures[i].red = rMap(red, 0, 255, 0, val);
-            fixtures[i].green = rMap(green, 0, 255, 0, val);
-            fixtures[i].blue = rMap(blue, 0, 255, 0, val);
-            if(fixtureUseWhite(i)) {
-              fixtures[i].white = rMap(white, 0, 255, 0, val);
-            }
-            if(fixtureUseDim(i)) {
-              fixtures[i].dimmer = rMap(dim, 0, 255, 0, val);
-            }
-            fixtures[i].DMXChanged = true;
-          }
-        }
-      }
-    }
-  } 
-  
-  void clear() {
-    if(useLeds) { setColorToLeds(0); }
-    if(useHalogens) { setColorToHalogens(0); }
-  }
-  
-  void setColorToHalogens(int val) {
-    for(int i = 0; i < fixtures.length; i++) {
-      if(fixtures[i] != null) {
+  void setColorToHalogens(int val) { //Put halogens on if they are right-colored
+    for(int i = 0; i < fixtures.length; i++) { //Go through all the fixtures
+      if(fixtures[i] != null) { //Check that fixture exist
+        //First we have check is the fixture halogen when we can only change it's dimmer
         if(fixtures[i].isHalogen()) {
-          if((!onlySelected && !onlyList) || fixtures[i].selected || isInList(i, selectedFixtures)) {
+          //If onlySelected or onlyList is true then we have to check is fixture selected or in list
+          if((!onlySelected && !onlyList) || fixtures[i].selected || isInList(i, selectedFixtures)) { 
             int r = fixtures[i].red;
             int g = fixtures[i].green;
             int b = fixtures[i].blue;
-            if(isAbout(r, red) && isAbout(g, green) && isAbout(b, blue)) {
-              fixtures[i].setDimmer(val);
-            }
-          }
-        }
-      }
-    }
-  }
+            if(isAbout(r, red) && isAbout(g, green) && isAbout(b, blue)) { //Check that halogen's colour (foil) is about same colour than selected wash colour
+              fixtures[i].setDimmer(val); //Put halogen on if it's right-coloured
+            } //End of checking is the colour of this fixture right
+          } //End of checking will we use this fixture 
+        } //End of halogen-check
+      } //End of null-check
+    } //End of for loop
+  } //End void of setColorToHalogens
+  
+  //Inside colorWash class
   
     boolean fixtureUseRgb(int i) {
       int fT = fixtures[i].fixtureTypeId;
