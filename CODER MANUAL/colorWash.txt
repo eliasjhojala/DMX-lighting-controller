@@ -8,16 +8,23 @@ OPTIONAL
 
 wash.go(); //Turn on
 wash.clear(); //Turn off
+
 wash.useOnlyLeds(); //Use only leds
 wash.useOnlyHalogens(); //Use only halogens
-wash.useOnlySelected(); //Use only selected fixtures
 wash.noHalogens(); //Don't use halogens
 wash.noLeds(); //Don't use leds
 wash.useHalogens(); //Use halogens 
 wash.useLeds(); //Use leds
+
+wash.useOnlySelected(); //Use only selected fixtures
 wash.useAll(); //Use halogens, leds and unselected fixtures
 wash.useOnlyList(); //Use only list that you will give
 wash.setList(array); //Give a list of fixture id's to use
 wash.useDisabledTypes(); //Now you can disable fixtureTypes you want
-wash.setDisabledTypes(array); //Tell what types do you want to disable
 wash.noDisabledTypes(); //Don't disable anything by type
+wash.setDisabledTypes(array); //Tell what types do you want to disable
+
+wash.odd(); //Use only odd fixtures
+wash.even(); //Use only even fixtures
+wash.oddAndEven(); //Don't care is fixture odd or not
+wash.setAccuracy(1-10); //How big can difference be between wash value and halogen color

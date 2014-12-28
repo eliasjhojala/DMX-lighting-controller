@@ -388,6 +388,11 @@ int quickSlider(String mouseLockID, int value) {
     int onlyPositive(int val) {
       return val < 0 ? 0 : val;
     }
+    
+    int overZero(int val) {
+      if(val > 0) { return val; }
+      else { return 1; }
+    }
   
 //End of some functions which are really useful tex in chase
   
@@ -414,11 +419,15 @@ but it returns original array index numbers as sorted arrange */
    } //End of sorting algorithm
    
    
-boolean isAbout(int a, int b) {
-  if(abs(a - b) <= a/5) {
+boolean isAbout(int a, int b, int accu) {
+  if(abs(a - b) <= a/overZero(accu)) {
     return true;
   }
   return false;
+}  
+
+boolean isAbout(int a, int b) {
+  return isAbout(a, b, 5);
 }  
    
    
@@ -428,3 +437,22 @@ boolean isInList(int i, int[] list) {
   }
   return false;
 }  
+
+int[] toArray(int a) {
+  int[] toReturn = new int[1];
+  toReturn[0] = a;
+  return toReturn;
+}
+int[] toArray(int a, int b) {
+  int[] toReturn = new int[2];
+  toReturn[0] = a;
+  toReturn[1] = b;
+  return toReturn;
+}
+int[] toArray(int a, int b, int c) {
+  int[] toReturn = new int[3];
+  toReturn[0] = a;
+  toReturn[1] = b;
+  toReturn[2] = c;
+  return toReturn;
+}

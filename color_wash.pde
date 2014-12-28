@@ -2,7 +2,9 @@ void colorWashSetup() {
   createColorNames();
 }
 void newColorWash() {
-   colorWash wash = new colorWash("red");
+   colorWash wash = new colorWash("halogen");
+   wash.useDisabledTypes();
+   wash.setDisabledTypes(toArray(5));
    wash.go();
 }
 
@@ -22,6 +24,12 @@ class colorWash {
   int[] selectedFixtures;
   boolean disableByType;
   int[] disabledTypes;
+  
+  boolean odd = true;
+  boolean even = true;
+  boolean pairless;
+  
+  int accuracy = 5;
   
   colorWash(String colour) {
     setRgbwd(getColorFromName(colour));
@@ -81,12 +89,16 @@ class colorWash {
   void useHalogens() { useHalogens = true; }
   void useLeds() { useLeds = true; }
   void useOnlySelected() { onlySelected = true; }
-  void useAll() { useLeds = true; useHalogens = true; onlySelected = false; onlyList = false; disableByType = false; }
+  void useAll() { useHalogens(); useLeds(); onlySelected = false; onlyList = false; disableByType = false; oddAndEven(); }
   void useOnlyList() { onlyList = true; }
   void setList(int[] list) { selectedFixtures = new int[list.length]; arrayCopy(list, selectedFixtures); }
   void setDisabledTypes(int[] list) { disabledTypes = new int[list.length]; arrayCopy(list, disabledTypes); }
   void useDisabledTypes() { disableByType = true; }
   void noDisabledTypes() { disableByType = false; }
+  void odd() { odd = true; even = false; }
+  void even() { odd = false; even = true; }
+  void oddAndEven() { odd = true; even = true; }
+  void setAccuracy(int a) { accuracy = a; }
   
   void go() { //Activate colorWash
     if(useLeds) { setColorToLeds(255); } //If useLeds is true then we set right colors to them
@@ -131,7 +143,7 @@ class colorWash {
             int r = fixtures[i].red;
             int g = fixtures[i].green;
             int b = fixtures[i].blue;
-            if(isAbout(r, red) && isAbout(g, green) && isAbout(b, blue)) { //Check that halogen's colour (foil) is about same colour than selected wash colour
+            if(isAbout(r, red, accuracy) && isAbout(g, green, accuracy) && isAbout(b, blue, accuracy)) { //Check that halogen's colour (foil) is about same colour than selected wash colour
               fixtures[i].setDimmer(val); //Put halogen on if it's right-coloured
             } //End of checking is the colour of this fixture right
           } //End of checking will we use this fixture 
@@ -160,7 +172,8 @@ class colorWash {
     }
     
     boolean useThisFixture(int i) {
-      return (!onlySelected || fixtureIsSelected(i)) && (!onlyList || isInList(i, selectedFixtures)) && (!disableByType || !isInList(fT(i), disabledTypes));
+      pairless = !pairless;
+      return (!onlySelected || fixtureIsSelected(i)) && (!onlyList || isInList(i, selectedFixtures)) && (!disableByType || !isInList(fT(i), disabledTypes)) && ((odd && !pairless) || (even && pairless));
     }
   
   
