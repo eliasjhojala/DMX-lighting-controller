@@ -1,5 +1,10 @@
 convertColor(originalColor, fromId, toId);
-originalColor is array containing one of the followings:
+
+fromId tells what is originalColor
+toId tells what will be returnet color be
+
+originalColor is array containing one of the followings
+function also returns an array containing one of the followings
 
 Id   Color
 1     { r, g, b }
