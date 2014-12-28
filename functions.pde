@@ -456,3 +456,11 @@ int[] toArray(int a, int b, int c) {
   toReturn[2] = c;
   return toReturn;
 }
+int[] toArray(int a, int b, int c, int d) {
+  int[] toReturn = new int[4];
+  toReturn[0] = a;
+  toReturn[1] = b;
+  toReturn[2] = c;
+  toReturn[3] = d;
+  return toReturn;
+}

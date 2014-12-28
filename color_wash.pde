@@ -6,6 +6,49 @@ void newColorWash() {
    wash.go();
 }
 
+void drawColorWashMenu() {
+  pushStyle();
+    stroke(150);
+    strokeWeight(1);
+    fill(0);
+    
+  //  if(isHovered && isClicked) {
+  //  }
+  int[] activeColorNames = new int[colorNames.length];
+  int[] activeColorNamesTemp = new int[colorNames.length];
+  int n = 0;
+  for(int i = 0; i < colorNames.length; i++) {
+    if(colorNames[i] != null) {
+      activeColorNames[n] = i;
+      n++;
+    }
+  }
+  mouse.declareElement("colorSelectBox", 10000, 50, 80, 50+n/5*100, 80+5*50+20);
+  rect(50, 80, n/5*100, 5*50+20, 20, 20, 20, 20);
+  arrayCopy(activeColorNames, activeColorNamesTemp);
+  activeColorNames = new int[n];
+  for(int i = 0; i < activeColorNames.length; i++) {
+    activeColorNames[i] = activeColorNamesTemp[i];
+  }
+  
+    int a = 0;
+    for(int i = 0; i < activeColorNames.length; i++) {
+      for(int j = 0; j < 5; j++) {
+        if(i*5+j < activeColorNames.length) {
+          if(colorNames[activeColorNames[i*5+j]] != null) {
+            a++;
+            mouse.declareElement("colorSelectBox", "color"+str(a), 80+50*i, 30+50+a*40, 80+50*i+40, 30+50+a*40+30);
+            fill(colorNames[activeColorNames[i*5+j]].getRGB());
+            if(mouse.isCaptured("color"+str(a))) { strokeWeight(3); } else { strokeWeight(1); }
+            rect(80+50*i, 30+50+a*40, 40, 30, 5);
+          }
+        }
+      }
+      a = 0;
+    }
+  popStyle();
+}
+
 class colorWash {
   //TODO: clear should set all the lamps to values where they was before colorwash
   //TODO: rgbw values should be converted to rgb values if we are using rgb lamps
@@ -248,6 +291,7 @@ color getRGBfromName(String colour) {
 class colorName {
   String name;
   int red, green, blue, white, dim;
+  int colorMode;
   
   colorName(String colour, int r, int g, int b) {
     name = colour;
@@ -256,6 +300,7 @@ class colorName {
     blue = b;
     white = 0;
     dim = 255;
+    colorMode = 1;
   }
   
   colorName(String colour, int r, int g, int b, int w) {
@@ -265,6 +310,20 @@ class colorName {
     blue = b;
     white = w;
     dim = 255;
+    colorMode = 3;
+  }
+  
+  color getRGB() {
+    color c = color(0, 0, 0);
+    if(colorMode == 3) {
+      int[] rgb = new int[3];
+      arrayCopy(convertColor(toArray(red, green, blue, white), 3, 1), rgb);
+      c = color(rgb[0], rgb[1], rgb[2]);
+    }
+    if(colorMode == 1) {
+      c = color(red, green, blue);
+    }
+    return c;
   }
   
   
@@ -362,11 +421,11 @@ int[] convertColor(int[] original, int from, int to) {
           colorMode(RGB);
             if(to == 1) { //rgb
               color c = color(original[0], original[1], original[2]);
-              int white = toReturn[4];
+              int white = original[3];
               toReturn = new int[3];
-              toReturn[1] = round(red(c) + white/3);
-              toReturn[2] = round(green(c) + white/3); 
-              toReturn[3] = round(blue(c) + white/3); 
+              toReturn[0] = round(red(c) + white/2);
+              toReturn[1] = round(green(c) + white/2); 
+              toReturn[2] = round(blue(c) + white/2); 
             }
             else if(to == 2) { //hsb
               toReturn = new int[3];
