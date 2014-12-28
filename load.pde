@@ -30,6 +30,7 @@ void loadAllData() {
       programReadyToRun = false;
       loadAllData();
     }
+    e.printStackTrace();
   }
 }
 void loadAllData1() {
@@ -43,15 +44,16 @@ void loadAllData1() {
     //Initialize fixtures using type
     
   
+    fixtures.clear();
     
-    int fL = fixtures.size();
-    for (TableRow row : table.findRows("fixtureType1", "variable_name")) if(fL > int(row.getString("1D"))) 
+    for (TableRow row : table.findRows("fixtureType1", "variable_name")) 
         { 
         
-          fixtures.set(int(row.getString("1D")), new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+          fixtures.add(new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, int(row.getString("value"))));
         
         }
-    
+    int fL = fixtures.size();
+    println(fL);
     for (TableRow row : table.findRows("xTaka", "variable_name"))      if(fL > int(row.getString("1D"))) 
         { fixtures.get(int(row.getString("1D"))).x_location           = int(row.getString("value")); }
         
@@ -154,7 +156,7 @@ for(int i = 0; i < memoriesLength; i++) {
   memories[i] = new memory();
   memories[i].repOfFixtures = new fixture[repOfFixturesLength[i]];
   for(int ij = 0; ij < repOfFixturesLength[i]; ij++) {
-    fixtures.add(new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+    memories[i].repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
 }
 
