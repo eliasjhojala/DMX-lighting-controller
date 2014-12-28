@@ -556,20 +556,23 @@ class chase { //Begin of chase class--------------------------------------------
     next = trigger() && !stepHasChanged;
     if(next) { 
       step = getNext(step, 0, getPresets().length-1);
-      brightness1 = 0;
+      brightness1 = -1;
+      brightness = 0;
       stepHasChanged = true;
+      
     }
     if(stepHasChanged) {
       brightness1 += 1;
-      if(brightness1 >= fade) {
+      if(brightness1 > fade) {
         brightness1 = fade;
         stepHasChanged = false;
       }
-      brightness = defaultConstrain(iMap(brightness1, 0, fade, 0, 255));
     }
+    if(255-brightness < 5) { println("TOIMII"); }
+    brightness = round(constrain(map(brightness1, 0, fade, 0, 255), 0, 255));
     int rS = getReverse(step, 0, getPresets().length-1);
     loadPreset(getPresets()[step], brightness);
-    loadPreset(getPresets()[rS], getInvertedValue(brightness, 0, 255));
+    loadPreset(getPresets()[rS], 255-brightness);
   }
   
   void freqToLight() { //This function gives frequence values to chase presets
