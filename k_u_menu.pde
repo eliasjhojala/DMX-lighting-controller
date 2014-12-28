@@ -40,8 +40,8 @@ void ylavalikko() {
   
   pushMatrix();
   strokeWeight(10);
-  stroke(settingsHover ? 255 : 240);
-  fill(settingsHover ? 255 : 240);
+  if(settingsHover) stroke(250); else stroke(topMenuTheme);
+  if(settingsHover) fill(250); else fill(topMenuTheme);
   translate(bubS/2 + 4, 4);
   scale(0.08);
   if (settingsIcon != null) shape(settingsIcon); // The asset might have not loaded yet
@@ -61,7 +61,7 @@ void ylavalikko() {
   //Time display
   fill(255);
   textSize(25);
-  text(hour() + ":" + minute() + ":" + second(), 3, 28);
+  text(getTimeAsString(), 3, 28);
   textSize(12);
   
   
@@ -111,5 +111,19 @@ void resetChaseVariables() {
   steppi1 = new int[numberOfMemories];
 }
 
+
+
+String getTimeAsString() {
+  return conToStr(hour(), 2) + ":" + conToStr(minute(), 2) + ":" + conToStr(second(), 2);
+}
+
+//Converts an int into a string, but if the digits it has is less than mindigits, place zeros in those digits
+String conToStr(int val, int mindigits) {
+  String toReturn = str(val);
+  for(int i = 1; i < mindigits; i++) {
+    if(val+1 < (10 ^ i)) toReturn = str(0) + toReturn;
+  }
+  return toReturn;
+}
 
 

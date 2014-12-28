@@ -316,7 +316,7 @@ for (TableRow row : table.findRows("memories[i].value", "variable_name")) {
     
     
     int[] grouping = new int[3];
-    for (TableRow row : table.findRows("grouping", "variable_name")) { grouping[int(row.getString("1D"))] = int(row.getString("value")); }
+    for (TableRow row : table.findRows("grouping", "variable_name")) if(int(row.getString("1D")) < grouping.length) { grouping[int(row.getString("1D"))] = int(row.getString("value")); }
     controlP5place = grouping[0]; enttecDMXplace = grouping[1]; touchOSCplace = grouping[2];
           
     for (TableRow row : table.findRows("memory", "variable_name")) if(memory.length > int(row.getString("1D")) && memory[0].length > int(row.getString("2D")))
