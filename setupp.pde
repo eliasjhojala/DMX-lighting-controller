@@ -1,6 +1,6 @@
 //Tähän välilehteen voi laittaa setup-komentoja, jotta main ei tule turhan täyteen
  
-OscP5 oscP51;
+OscP5 oscP51; 
 NetAddress myRemoteLocation1;
 
 OscP5 oscP52;

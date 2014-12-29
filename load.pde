@@ -1,6 +1,6 @@
 //Tässä välilehdessä luetaan aikaisemmin tallennettuja tietoja csv-taulukkotiedostosta
 boolean dataLoaded = false;
-boolean programReadyToRun = false;
+boolean programReadyToRun = false; 
 void loadSetupData() {
   /*if(userId == 1) {
    table = loadTable("/Users/elias/Dropbox/DMX controller/main_for_two_pc/variables/settings.csv", "header"); //Eliaksen polku

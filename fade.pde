@@ -1,4 +1,4 @@
-class Fade {
+class Fade { 
   int originalValue, targetValue, actualValue;
   int preFade, postFade;
   long startMillis;

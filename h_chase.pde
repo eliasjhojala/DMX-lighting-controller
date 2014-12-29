@@ -1,5 +1,5 @@
 //Tässä välilehdessä pyöritetään automaattisia, manuaalisia ja musiikin tahdissa pyöriviä chaseja
-/* IDEA JOLLA TÄMÄN SAA TOIMIMAAN:
+/* IDEA JOLLA TÄMÄN SAA TOIMIMAAN: 
 ENSIN LASKETAAN AKTIIVISET MEMORYT JA SEN JÄLKEEN JOKA ISKULLA FOR LOOPPI
 */
 boolean chasePause = false;

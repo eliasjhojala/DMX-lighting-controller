@@ -1,5 +1,5 @@
 boolean setValuesToSelectedFixtures = true;
-
+ 
  
 boolean createFinalValuesPlease;
 boolean saveDimmerValue;

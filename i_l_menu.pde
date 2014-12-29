@@ -1,4 +1,4 @@
-//Tässä välilehdessä piirretään alavalikko, jossa näkyy mm. fixtuurien nykyiset arvot
+//Tässä välilehdessä piirretään alavalikko, jossa näkyy mm. fixtuurien nykyiset arvot 
 //Alavalikko toimii nyt hyvin ja fixture(i) voidia voi käyttää missä vain ohjelmassa
 /*Jostain syystä id:n vaihtamisen kanssa on välillä pieniä ongelmia
 se pitäisi selvittää*/

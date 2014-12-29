@@ -3,7 +3,7 @@ boolean inputIsSelected = true;
 
 void inputSelected(File selection) {   
   if (selection != null) {
-    loadPath = selection.getAbsolutePath(); 
+    loadPath = selection.getAbsolutePath();  
     saveCoreData(); 
   }
   inputIsSelected = true;

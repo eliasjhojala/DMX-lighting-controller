@@ -1,5 +1,5 @@
 HSBColorPicker colorPick = new HSBColorPicker();
-class HSBColorPicker {
+class HSBColorPicker { 
   
   HSBColorPicker() {
   }

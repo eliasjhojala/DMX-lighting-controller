@@ -1,4 +1,4 @@
-boolean invokeFixturesDrawFinished = true;
+boolean invokeFixturesDrawFinished = true; 
 void invokeFixturesDraw() {
   invokeFixturesDrawFinished = false;
   for (int ai = 0; ai < fixtures.size(); ai++) fixtures.get(ai).draw();
@@ -46,10 +46,7 @@ class FixtureArray {
   
   
   int getArrayId(int fid) {
-    if(fid < idLookupTable.size())
-      return idLookupTable.get(fid);
-    else
-      return -1;
+    return idLookupTable.get(fid);
   }
   
   fixture get(int fid) {

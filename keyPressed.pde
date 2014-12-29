@@ -1,6 +1,6 @@
 //Tässä välilehdessä luetaan tietokoneen omia syöttölaitteita, eli näppäimistöä ja hiirtä
 
-boolean ctrlDown = false;
+boolean ctrlDown = false; 
 boolean shftDown = false;
 boolean rightPressed = false;
 boolean leftPressed = false;

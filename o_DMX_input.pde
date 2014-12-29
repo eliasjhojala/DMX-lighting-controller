@@ -1,7 +1,7 @@
 //Tässä välilehdessä luetaan dmx-inputti, sekä järjestetään myös muut inputit oikeaan järjestykseen mm. dimInput[]-muuttujaan
 
 int numberOfAllChannelsFirstDimensions = 5; // allChannels[numberOfAllChannelsFirstDimensions][];
-
+ 
 boolean dmxCheckFinished = false;
 boolean dmxToDimFinished = false;
 

@@ -1,5 +1,5 @@
 //Tässä välilehdessä piirretään sivuvalikko, jossa näkyy memorit ja niiden arvot, sekä tyypit
-
+ 
 memoryCreationBox memoryCreator = new memoryCreationBox(false);
 
 boolean savingMemory = false;

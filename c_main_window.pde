@@ -1,5 +1,5 @@
 void drawMainWindow() {
-  pushMatrix();
+  pushMatrix(); 
     //TÄSSÄ KÄÄNNETÄÄN JA SIIRRETÄÄN NÄKYMÄ OIKEIN - DO ROTATE AND TRANSFORM RIGHT
    
    mouse.declareUpdateElement("main:fixtures", 0, 0, 0, width, height);

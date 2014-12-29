@@ -1,6 +1,6 @@
 //Tässä välilehdessä tallennetaan tietoja csv-taulukkotiedostoon
 
-Table table;
+Table table; 
 
 void saveVariable(int variable, String variableName) {
   if(variable != 0) { //Don't save zero values

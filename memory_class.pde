@@ -1,7 +1,7 @@
 
 /*void saveFixtureMemory(int number) {
   memories[number] = new memory();
-  memories[number].savePreset();
+  memories[number].savePreset(); 
 }*/
 
 void loadFixtureMemory(int number, int value) {

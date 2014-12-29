@@ -3,7 +3,7 @@
 
 //Gets dimensions of fixture #id
 //0 = width, 1 = height, 2 = (0 or 1) render fixture?
-int[] getFixtureSizeByType(int type) {
+int[] getFixtureSizeByType(int type) { 
   //Default to this
   int[] toReturn = {30, 40, 1};
   

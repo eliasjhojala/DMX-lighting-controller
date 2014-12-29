@@ -1,5 +1,5 @@
 //Tässä välilehdessä piirretään 3D-mallinnus
-/*
+/* 
  This part of the program has mainly been made by Roope Salmi, rpsalmi@gmail.com
  */
  

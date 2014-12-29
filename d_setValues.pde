@@ -1,4 +1,4 @@
-//int[] dimInputOld = new int[fixtures.size()];
+//int[] dimInputOld = new int[fixtures.size()]; 
 //int[] dimInputWithMasterOld = new int[fixtures.size()];
 //int[] dimFixturesOld = new int[fixtures.size()];
 boolean dimCheckFinished = true;

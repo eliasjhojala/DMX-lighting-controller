@@ -1,4 +1,4 @@
-boolean initSettingsInSetupDone = false;
+boolean initSettingsInSetupDone = false; 
 int initSettingsInSetupStep;
 int initSettingsInSetupSelected;
 void initSettingsInSetup() {
