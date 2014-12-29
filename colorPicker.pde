@@ -1,4 +1,8 @@
-
+HSBColorPicker colorPick = new HSBColorPicker();
+class HSBColorPicker() {
+  
+  HSBColorPicker() {
+  }
 
 int hue = 0;
 int saturation = 255*2;
@@ -100,4 +104,4 @@ boolean colorSelectorOpen = true;
       return c;
     
   }
-
+}
