@@ -432,8 +432,10 @@ boolean isAbout(int a, int b) {
    
    
 boolean isInList(int i, int[] list) {
-  for(int j = 0; j < list.length; j++) {
-    if(list[j] == i) { return true; }
+  if(list != null) {
+    for(int j = 0; j < list.length; j++) {
+      if(list[j] == i) { return true; }
+    }
   }
   return false;
 }  
@@ -456,3 +458,13 @@ int[] toArray(int a, int b, int c) {
   toReturn[2] = c;
   return toReturn;
 }
+int[] toArray(int a, int b, int c, int d) {
+  int[] toReturn = new int[4];
+  toReturn[0] = a;
+  toReturn[1] = b;
+  toReturn[2] = c;
+  toReturn[3] = d;
+  return toReturn;
+}
+
+
