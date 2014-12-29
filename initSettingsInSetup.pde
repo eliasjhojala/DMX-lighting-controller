@@ -3,6 +3,7 @@ int initSettingsInSetupStep;
 int initSettingsInSetupSelected;
 void initSettingsInSetup() {
   if(!initSettingsInSetupDone) {
+    initSettingsInSetupDone = true; 
     useEnttec = false;
     useCOM = false;
     background(0);
