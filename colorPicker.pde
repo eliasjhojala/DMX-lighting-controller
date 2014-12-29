@@ -66,40 +66,40 @@ boolean colorSelectorOpen = true;
   
   void showBrightness() {
     pushMatrix();
-    translate(0, 50);
-    for(int i = 0; i < 255; i++) {
-      pushStyle();
-        colorMode(HSB);
-        stroke(hue/2, saturation/2, i);
-        fill(hue/2, saturation/2, i);
-        rect(i*2, 10, 2, 10);
-      popStyle();
-    }
-    fill(255);
-    triangle(brightness, 20, brightness-10, 30, brightness+10, 30);
+      translate(0, 50);
+      for(int i = 0; i < 255; i++) {
+        pushStyle();
+          colorMode(HSB);
+          stroke(hue/2, saturation/2, i);
+          fill(hue/2, saturation/2, i);
+          rect(i*2, 10, 2, 10);
+        popStyle();
+      }
+      fill(255);
+      triangle(brightness, 20, brightness-10, 30, brightness+10, 30);
     popMatrix();
   }
 
   void showSaturation() {
     pushMatrix();
-    translate(0, 100);
-    for(int i = 0; i < 255; i++) {
-      pushStyle();
-        colorMode(HSB);
-        stroke(hue/2, i, brightness/2);
-        fill(hue/2, i, brightness/2);
-        rect(i*2, 10, 2, 10);
-      popStyle();
-    }
-    fill(255);
-    triangle(saturation, 20, saturation-10, 30, saturation+10, 30);
+      translate(0, 100);
+      for(int i = 0; i < 255; i++) {
+        pushStyle();
+          colorMode(HSB);
+          stroke(hue/2, i, brightness/2);
+          fill(hue/2, i, brightness/2);
+          rect(i*2, 10, 2, 10);
+        popStyle();
+      }
+      fill(255);
+      triangle(saturation, 20, saturation-10, 30, saturation+10, 30);
     popMatrix();
   }
 
   color getColorFromPicker() {
     pushStyle();
       colorMode(HSB);
-      color c = color(hue/2, saturation/2, brightness/2);
+      color c = color(hue/2, saturation/2, brightness/2); //Divide all the values with two because they are 0-255*2
       popStyle();
       return c;
     
