@@ -46,7 +46,10 @@ class FixtureArray {
   
   
   int getArrayId(int fid) {
-    return idLookupTable.get(fid);
+    if(fid < idLookupTable.size())
+      return idLookupTable.get(fid);
+    else
+      return -1;
   }
   
   fixture get(int fid) {
