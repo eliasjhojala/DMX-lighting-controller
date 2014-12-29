@@ -31,14 +31,14 @@ void drawMainWindow() {
       mouseLocker = "main:fixMove";
     }*/
     
-    for(int i = 0; i < ansaTaka; i++) {
+    for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) {
       pushMatrix();
           if(!mouse.captured || mouse.isCaptured("main:fixtures")) {
               if(!mousePressed) {
                 if(moveLamp == true) {
-                 if(lampToMove < fixtures.length) {
-                  fixtures[lampToMove].x_location = fixtures[lampToMove].x_location + (int(mouseRotated.x) - oldMouseX1) * 100 / zoom - ansaX[fixtures[lampToMove].parentAnsa];
-                  fixtures[lampToMove].y_location = fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom;
+                 if(lampToMove < fixtures.size()) {
+                  fixtures.get(lampToMove).x_location = fixtures.get(lampToMove).x_location + (int(mouseRotated.x) - oldMouseX1) * 100 / zoom - ansaX[fixtures.get(lampToMove).parentAnsa];
+                  fixtures.get(lampToMove).y_location = fixtures.get(lampToMove).y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom;
                   
                 }
           
@@ -49,23 +49,23 @@ void drawMainWindow() {
       
             if(moveLamp == true) {
               mouse.capture(mouse.getElementByName("main:fixtures"));
-              if(i == lampToMove) { translate(fixtures[lampToMove].x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom), fixtures[lampToMove].y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures[lampToMove].parentAnsa]); }
-              else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
+              if(i == lampToMove) { translate(fixtures.get(lampToMove).x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom), fixtures.get(lampToMove).y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures.get(lampToMove).parentAnsa]); }
+              else { translate(fixtures.get(i).x_location+ansaX[fixtures.get(i).parentAnsa], fixtures.get(i).y_location+ansaY[fixtures.get(i).parentAnsa]); }
             }
-            else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
+            else { translate(fixtures.get(i).x_location+ansaX[fixtures.get(i).parentAnsa], fixtures.get(i).y_location+ansaY[fixtures.get(i).parentAnsa]); }
           }
           
           
-          else { translate(fixtures[i].x_location+ansaX[fixtures[i].parentAnsa], fixtures[i].y_location+ansaY[fixtures[i].parentAnsa]); }
+          else { translate(fixtures.get(i).x_location+ansaX[fixtures.get(i).parentAnsa], fixtures.get(i).y_location+ansaY[fixtures.get(i).parentAnsa]); }
   
   
-         if(fixtures[i].fixtureTypeId != 14) { rotate(radians(fixtures[i].rotationZ)); }
+         if(fixtures.get(i).fixtureTypeId != 14) { rotate(radians(fixtures.get(i).rotationZ)); }
          
           if(!mouse.captured || mouse.isCaptured("main:fixtures")) {
             if(mousePressed) {
               
             //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
-            if(isHover(0, 0, fixtures[i].size.w, fixtures[i].size.h) && fixtures[i].size.isDrawn && mousePressed && !mouse.captured) {
+            if(isHover(0, 0, fixtures.get(i).size.w, fixtures.get(i).size.h) && fixtures.get(i).size.isDrawn && mousePressed && !mouse.captured) {
              
               if(mouseButton == RIGHT) {
                 toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; 
@@ -83,7 +83,7 @@ void drawMainWindow() {
                   mouseReleased = false;
                 }
                 else {
-                 fixtures[i].toggle(true);
+                 fixtures.get(i).toggle(true);
                 }
               }
             }
@@ -164,21 +164,26 @@ void endBoxSelect() {
     boolean shiftDown = keyPressed && keyCode == SHIFT;
     boolean ctrlDown = keyPressed && keyCode == CONTROL;
     
-    for (int i = 0; i < fixtures.length; i++) {
+    for (int i = 0; i < fixtures.size(); i++) {
       boolean inside = inBds2D(
-        fixtures[i].locationOnScreenX,
-        fixtures[i].locationOnScreenY,
+        fixtures.get(i).locationOnScreenX,
+        fixtures.get(i).locationOnScreenY,
         x1, y1,
         x2, y2
       );
       
       
-      if(shiftDown) fixtures[i].selected = fixtures[i].selected || inside; //additive select
-        else if(ctrlDown) fixtures[i].selected = inside ? false : fixtures[i].selected; //exclusive select
-          else fixtures[i].selected = inside;
-      
-     
+      if(shiftDown) fixtures.get(i).selected = fixtures.get(i).selected || inside; //additive select
+        else if(ctrlDown) fixtures.get(i).selected = inside ? false : fixtures.get(i).selected; //exclusive select
+          else fixtures.get(i).selected = inside;
+        
+       
     }
+  } else {
+    //open contextMwnu
+    String[] acts = { "createNewFixtureAt00" };
+    String[] texs = { "Create new fixture" };
+    contextMenu1.initiate(acts, texs, mouseX, mouseY);
   }
 }
 //----------/

@@ -557,17 +557,17 @@ public class ControlFrame extends PApplet {
       if (fixtureColorChangeHasHappened && cp5.tab("fixtSettings").isActive()) {
         bottomMenuControlBoxOpen = false;
         
-        fixtures[changeColorFixtureId].red = int(cp5.controller("colorRed").getValue());
-        fixtures[changeColorFixtureId].green = int(cp5.controller("colorGreen").getValue());
-        fixtures[changeColorFixtureId].blue = int(cp5.controller("colorBlue").getValue());
-        fixtures[changeColorFixtureId].rotationZ = int(cp5.controller("fixtRotation").getValue());
-        fixtures[changeColorFixtureId].rotationX = int(cp5.controller("fixtRotationX").getValue());
-        fixtures[changeColorFixtureId].z_location = int(cp5.controller("fixtZ").getValue());
-        fixtures[changeColorFixtureId].channelStart = int(cp5.controller("fixtChan").getValue());
-        fixtures[changeColorFixtureId].parameter = int(cp5.controller("fixtParam").getValue());
-        fixtures[changeColorFixtureId].parentAnsa = int(cp5.controller("ansaParent").getValue());
+        fixtures.get(changeColorFixtureId).red = int(cp5.controller("colorRed").getValue());
+        fixtures.get(changeColorFixtureId).green = int(cp5.controller("colorGreen").getValue());
+        fixtures.get(changeColorFixtureId).blue = int(cp5.controller("colorBlue").getValue());
+        fixtures.get(changeColorFixtureId).rotationZ = int(cp5.controller("fixtRotation").getValue());
+        fixtures.get(changeColorFixtureId).rotationX = int(cp5.controller("fixtRotationX").getValue());
+        fixtures.get(changeColorFixtureId).z_location = int(cp5.controller("fixtZ").getValue());
+        fixtures.get(changeColorFixtureId).channelStart = int(cp5.controller("fixtChan").getValue());
+        fixtures.get(changeColorFixtureId).parameter = int(cp5.controller("fixtParam").getValue());
+        fixtures.get(changeColorFixtureId).parentAnsa = int(cp5.controller("ansaParent").getValue());
         bottomMenuOrder[changeColorFixtureId] = int(cp5.controller("orderNumber").getValue());
-        fixtures[changeColorFixtureId].fixtureTypeId = int(lb.getValue());
+        fixtures.get(changeColorFixtureId).fixtureTypeId = int(lb.getValue());
       }
     }
     
@@ -779,17 +779,17 @@ public class ControlFrame extends PApplet {
       //Check for fixture color change initiation
       if (toChangeFixtureColor){
         fixtureColorChangeHasHappened = true;
-        cp5.controller("colorRed").setValue(fixtures[changeColorFixtureId].red);
-        cp5.controller("colorGreen").setValue(fixtures[changeColorFixtureId].green);
-        cp5.controller("colorBlue").setValue(fixtures[changeColorFixtureId].blue);
-        cp5.controller("fixtRotation").setValue(fixtures[changeColorFixtureId].rotationZ);
-        cp5.controller("fixtRotationX").setValue(fixtures[changeColorFixtureId].rotationX);
-        cp5.controller("fixtZ").setValue(fixtures[changeColorFixtureId].z_location);
-        cp5.controller("fixtChan").setValue(fixtures[changeColorFixtureId].channelStart);
-        cp5.controller("fixtParam").setValue(fixtures[changeColorFixtureId].parameter);
-        cp5.controller("ansaParent").setValue(fixtures[changeColorFixtureId].parentAnsa);
+        cp5.controller("colorRed").setValue(fixtures.get(changeColorFixtureId).red);
+        cp5.controller("colorGreen").setValue(fixtures.get(changeColorFixtureId).green);
+        cp5.controller("colorBlue").setValue(fixtures.get(changeColorFixtureId).blue);
+        cp5.controller("fixtRotation").setValue(fixtures.get(changeColorFixtureId).rotationZ);
+        cp5.controller("fixtRotationX").setValue(fixtures.get(changeColorFixtureId).rotationX);
+        cp5.controller("fixtZ").setValue(fixtures.get(changeColorFixtureId).z_location);
+        cp5.controller("fixtChan").setValue(fixtures.get(changeColorFixtureId).channelStart);
+        cp5.controller("fixtParam").setValue(fixtures.get(changeColorFixtureId).parameter);
+        cp5.controller("ansaParent").setValue(fixtures.get(changeColorFixtureId).parentAnsa);
         cp5.controller("orderNumber").setValue(bottomMenuOrder[changeColorFixtureId]);
-        lb.setIndex(fixtures[changeColorFixtureId].fixtureTypeId - 1);
+        lb.setIndex(fixtures.get(changeColorFixtureId).fixtureTypeId - 1);
         //Make the color tab visible and activate it
         cp5.tab("fixtSettings").setVisible(true).setLabel("Fixture ID: " + str(changeColorFixtureId));
         cp5.window(this).activateTab("fixtSettings");

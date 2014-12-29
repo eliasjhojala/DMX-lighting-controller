@@ -73,52 +73,54 @@ void createFixtureBox(int id) {
 }
 
 void drawFixtureRectangles(int id) {
-  String fixtuuriTyyppi = fixtures[id].fixtureType;
-  
-  fill(255, 255, 255); //White color for fixtureBox
-  stroke(255, 255, 0); //Yellow corners for fixtureBox
-  rect(0, 0, 60, -51); //The whole fixtureBox
-  stroke(0, 0, 0); //black corners for other rects
-  fill(0, 255, 0); //green color for title box
-  rect(0, -40, 60, -15); //title box
-  //if (isHover(0, -40, 60, -15) && mousePressed && !mouseLocked)  //Open control box
-  fill(0, 0, 0); //black color for title
-  text(str(id)+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
-  text("Ch " + str(fixtures[id].channelStart) , 2, -30); // Channel
-  fill(0, 0, 255); //blue color for slider
-  rect(0, 0, 10, (map(fixtures[id].dimmer, 0, 255, 0, 30))*(-1)); //Draw slider
-  fill(255, 255, 255); //white color for Go button
-  rect(10, 0, 49, -15); //Draw Go button
-  fill(0, 0, 0); //black color for Go text
-  text("Go", 12, -3); //go text
-  fill(255, 255, 255); //white color for toggle button
-  rect(10, -15, 49, -15); //Draw Toggle button
-  fill(0, 0, 0); //black color fot toggle text
-  text("Toggle", 12, -18); //toggle text
-  fill(255, 255, 255); //white color at end
+  if(id < fixtures.size()) {
+    String fixtuuriTyyppi = fixtures.get(id).fixtureType;
+    
+    fill(255, 255, 255); //White color for fixtureBox
+    stroke(255, 255, 0); //Yellow corners for fixtureBox
+    rect(0, 0, 60, -51); //The whole fixtureBox
+    stroke(0, 0, 0); //black corners for other rects
+    fill(0, 255, 0); //green color for title box
+    rect(0, -40, 60, -15); //title box
+    if (isHover(0, -40, 60, -15) && mousePressed && !mouseLocked) openBottomMenuControlBox(id); //Open control box
+    fill(0, 0, 0); //black color for title
+    text(str(id)+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
+    text("Ch " + str(fixtures.get(id).channelStart) , 2, -30); // Channel
+    fill(0, 0, 255); //blue color for slider
+    rect(0, 0, 10, (map(fixtures.get(id).dimmer, 0, 255, 0, 30))*(-1)); //Draw slider
+    fill(255, 255, 255); //white color for Go button
+    rect(10, 0, 49, -15); //Draw Go button
+    fill(0, 0, 0); //black color for Go text
+    text("Go", 12, -3); //go text
+    fill(255, 255, 255); //white color for toggle button
+    rect(10, -15, 49, -15); //Draw Toggle button
+    fill(0, 0, 0); //black color fot toggle text
+    text("Toggle", 12, -18); //toggle text
+    fill(255, 255, 255); //white color at end
+  }
 }
 
 void checkFixtureBoxGo(int id) { //This void checks Go button
   if(isHover(10, 0, 49, -15) && mousePressed && !mouseLocked) { //Check if mouse is on go box
       mouseLocked = true;
       mouseLocker = "fbox" + id + ":go";
-      fixtures[id].setDimmer(255); //Set dimInput value to max
+      fixtures.get(id).setDimmer(255); //Set dimInput value to max
     
   } else
   if(!mousePressed && mouseLocker.equals("fbox" + id + ":go")) { //Check if mouse is released
     mouseLocker = ":";
-    fixtures[id].setDimmer(0); //Set dimInput value to min
+    fixtures.get(id).setDimmer(0); //Set dimInput value to min
    }
 }
 void checkFixtureBoxToggle(int id) { //This void checks Toggle button
   if(isHover(10, -15, 49, -15) && mousePressed && !mouseLocked) { //Check if mouse is on toggle box and clicked and released before it
     mouseLocked = true;
     mouseLocker = "fbox" + id + ":toggle";
-    if(fixtures[id].dimmer == 255) { //Check if dimInput is 255
-      fixtures[id].setDimmer(0); //If dimInput is at 255 then set it to zero
+    if(fixtures.get(id).dimmer == 255) { //Check if dimInput is 255
+      fixtures.get(id).setDimmer(0); //If dimInput is at 255 then set it to zero
     }
     else {
-      fixtures[id].setDimmer(255); //If dimInput is not at max value then set it to max
+      fixtures.get(id).setDimmer(255); //If dimInput is not at max value then set it to max
     }
   }
 }
@@ -127,8 +129,8 @@ void checkFixtureBoxSlider(int id) {
       mouseLocked = true;
       mouseLocker = "fbox" + id + ":slider";
   } else if(mouseLocked && mouseLocker.equals("fbox" + id + ":slider")) {
-      fixtures[id].setDimmer(fixtures[id].dimmer + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
-      fixtures[id].setDimmer(constrain(fixtures[id].dimmer, 0, 255)); //Make sure that dimInput value is between 0-255 
+      fixtures.get(id).setDimmer(fixtures.get(id).dimmer + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
+      fixtures.get(id).setDimmer(constrain(fixtures.get(id).dimmer, 0, 255)); //Make sure that dimInput value is between 0-255 
   }
 }
 
@@ -178,7 +180,7 @@ String bottomMenuControlBoxSubstr = "bottomMenuControlBox";//|
 void openBottomMenuControlBoxForSelectedFs() {
   openBottomMenuControlBox(contextMenu1.fixtureId);
   bottomMenuControlBoxDisplayText = "Controlling all selected fixtures, configuration from fixture " + contextMenu1.fixtureId;
-  fixtureForSelected[0].fixtureTypeId = fixtures[contextMenu1.fixtureId].fixtureTypeId;
+  fixtureForSelected[0].fixtureTypeId = fixtures.get(contextMenu1.fixtureId).fixtureTypeId;
   bottomMenuAllFixtures = true;
 }
 
@@ -190,9 +192,9 @@ void openBottomMenuControlBox(int owner) {
   bottomMenuControlBoxOpen = true;
   bottomMenuAllFixtures = false;
   currentBottomMenuControlBoxOwner = owner;
-  bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures[owner].fixtureType + ", Starting Channel: " + fixtures[owner].channelStart;
+  bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures.get(owner).fixtureType + ", Starting Channel: " + fixtures.get(owner).channelStart;
   boolean successInit = false; //This boolean is set to true, if the fixtureType has a specific configuration applied for it.
-  switch(fixtures[owner].fixtureTypeId) {
+  switch(fixtures.get(owner).fixtureTypeId) {
     //Configure box according to fixtureType
     case 1: case 2: case 3: case 4: case 5: case 6:
       // all "dumb" fixtures (with only one channel: dim)
@@ -240,7 +242,7 @@ void openBottomMenuControlBox(int owner) {
     break;
   }
   if (successInit) {
-    bottomMenuControlBoxDMXValues = fixtures[owner].getDMX();
+    bottomMenuControlBoxDMXValues = fixtures.get(owner).getDMX();
     bottomMenuControlBoxDMXValueChanged = new boolean[bottomMenuControlBoxDMXValues.length];
   }
 }
@@ -300,7 +302,7 @@ void drawBottomMenuControlBox() {
 }
 
 void bottomMenuDMXUpdate() {
-  int[] tempDMX = fixtures[currentBottomMenuControlBoxOwner].getDMX();
+  int[] tempDMX = fixtures.get(currentBottomMenuControlBoxOwner).getDMX();
   int arrayIndex = 0;
   //This value is true if any of the entries in the boolean array are true
   boolean changd = false;
@@ -323,7 +325,7 @@ void submitDMXFromBMCB(int[] input) {
     fixtureForSelected[0].receiveDMX(input);
     setValuesToSelected();
   } else {
-    fixtures[currentBottomMenuControlBoxOwner].receiveDMX(input);
+    fixtures.get(currentBottomMenuControlBoxOwner).receiveDMX(input);
   }
 }
 

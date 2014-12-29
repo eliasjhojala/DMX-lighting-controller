@@ -363,7 +363,7 @@ void setDmxChannel(int channel, int value) {                                    
 }                                                                                                                       //|
 //----------------------------------------------------------------------------------------------------------------------//|
 
-fixture[] fixtures = new fixture[numberOfAllFixtures];
+FixtureArray fixtures = new FixtureArray();
 fixture[] fixtureForSelected = new fixture[1];
 
 //New system for organizing the boxes in the bottom menu. Array index = fixture id, data = fixture location
@@ -434,6 +434,7 @@ String fileSeparator = java.io.File.separator;
 String actualSketchPath;
 
 void setup() {
+
   loadCoreData();
   actualSketchPath = sketchPath("");
   //Initialize mouseLocker to prevent nullPointers
@@ -498,6 +499,7 @@ void setup() {
   }
   thread("ylavalikkoSetup");
   colorWashSetup();
+  
 }
 
 

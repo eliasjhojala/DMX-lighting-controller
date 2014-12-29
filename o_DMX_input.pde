@@ -123,7 +123,7 @@ void channelsToDim() {
         memories[i+12].setValue(round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue)));
       }
       else {
-        fixtures[i+12+12-1].setDimmer(allChannels[4][i]);
+        fixtures.get(i+12+12-1).setDimmer(allChannels[4][i]);
       }
       allChannelsOld[4][i] = allChannels[4][i];
     }

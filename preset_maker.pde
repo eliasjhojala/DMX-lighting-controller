@@ -2,7 +2,7 @@
 int[] oldMemoryValue = new int[numberOfMemories]; //Muuttuja, johon tallennetaan memoryn edellinen arvo
 int[] oldPresetValue = new int[numberOfMemories]; //Muuttuja, johon tallennetaan memoryn edellinen arvo
 /*void makePreset(int memoryNumber) {
-   for (int i = 0; i < fixtures.length; i++) {
+   for (int i = 0; i < fixtures.size(); i++) {
     whatToSave[0][memoryNumber] = true;
      
   }

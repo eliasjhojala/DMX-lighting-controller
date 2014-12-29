@@ -1,8 +1,8 @@
-//int[] dimInputOld = new int[fixtures.length];
-//int[] dimInputWithMasterOld = new int[fixtures.length];
-//int[] dimFixturesOld = new int[fixtures.length];
+//int[] dimInputOld = new int[fixtures.size()];
+//int[] dimInputWithMasterOld = new int[fixtures.size()];
+//int[] dimFixturesOld = new int[fixtures.size()];
 boolean dimCheckFinished = true;
-//int[][] valueToDmxTemp = new int[fixtures.length][fixtures.length];
+//int[][] valueToDmxTemp = new int[fixtures.size()][fixtures.size()];
 
 final int DMX_CHAN_LENGTH = 512;
 
@@ -20,7 +20,8 @@ void setDimAndMemoryValuesAtEveryDraw() {
   
   
   boolean DMXChangedOverall = false;
-  for(fixture fix : fixtures) {
+  for(int ai = 0; ai < fixtures.size(); ai++) {
+    fixture fix = fixtures.get(ai);
     if(fix.DMXChanged) {
       DMXChangedOverall = true;
       int[] dmxFromFixture = fix.getDMX();
@@ -33,13 +34,14 @@ void setDimAndMemoryValuesAtEveryDraw() {
     }
   }
   if(true) {
-    for(fixture fix : fixtures) {
-       int[] toFixture = new int[fix.getDMXLength()];
-       for (int i = 0; i < toFixture.length; i++) {
-         toFixture[i] = DMX[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)];
-       }
-       fix.receiveDMX(toFixture);
-       fix.DMXChanged = false;
+    for(int ai = 0; ai < fixtures.size(); ai++) {
+      fixture fix = fixtures.get(ai);
+      int[] toFixture = new int[fix.getDMXLength()];
+      for (int i = 0; i < toFixture.length; i++) {
+        toFixture[i] = DMX[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)];
+      }
+      fix.receiveDMX(toFixture);
+      fix.DMXChanged = false;
     }
   }
   

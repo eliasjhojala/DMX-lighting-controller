@@ -20,6 +20,7 @@ void loadSetupData() {
 }
 
 void loadAllData() {
+  programReadyToRun = false;
   try {
     loadAllData1();
     programReadyToRun = true;
@@ -30,6 +31,7 @@ void loadAllData() {
       programReadyToRun = false;
       loadAllData();
     }
+    e.printStackTrace();
   }
 }
 void loadAllData1() {
@@ -41,89 +43,70 @@ void loadAllData1() {
     
     //FIXTURES---------------------------------------------------------------------------------------------------------------------------
     //Initialize fixtures using type
-    int fL = fixtures.length;
-    for (TableRow row : table.findRows("fixtureType1", "variable_name")) if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, int(row.getString("value")) ); }
+    idLookupTable = new ArrayList<Integer>();
+    for(TableRow row : table.findRows("idLookupTable", "variable_name")) {
+      idLookupTable.add(int(row.getString("value")));
+    }
     
-    for (TableRow row : table.findRows("xTaka", "variable_name"))      if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))].x_location           = int(row.getString("value")); }
+  
+    fixtures.clear();
+    
+    for (TableRow row : table.findRows("fixtureType1", "variable_name")) 
+        { 
         
-    for (TableRow row : table.findRows("yTaka", "variable_name"))      if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))].y_location           = int(row.getString("value")); }
+          fixtures.add(new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, int(row.getString("value"))));
         
-    for (TableRow row : table.findRows("fixZ", "variable_name"))       if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))].z_location           = int(row.getString("value")); }
+        }
+    
+    
+    for (TableRow row : table.findRows("xTaka", "variable_name"))      if(fixtures.size() > int(row.getString("1D"))) 
+        { fixtures.get(int(row.getString("1D"))).x_location           = int(row.getString("value")); }
+    
+    for (TableRow row : table.findRows("yTaka", "variable_name"))      if(fixtures.size() > int(row.getString("1D"))) 
+        { fixtures.get(int(row.getString("1D"))).y_location           = int(row.getString("value")); }
         
-    for (TableRow row : table.findRows("rotTaka", "variable_name"))    if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))].rotationZ            = int(row.getString("value")); }
+    for (TableRow row : table.findRows("fixZ", "variable_name"))       if(fixtures.size() > int(row.getString("1D"))) 
+        { fixtures.get(int(row.getString("1D"))).z_location           = int(row.getString("value")); }
         
-    for (TableRow row : table.findRows("rotX", "variable_name"))       if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))].rotationX            = int(row.getString("value")); }
+    for (TableRow row : table.findRows("rotTaka", "variable_name"))    if(fixtures.size() > int(row.getString("1D"))) 
+        { fixtures.get(int(row.getString("1D"))).rotationZ            = int(row.getString("value")); }
+        
+    for (TableRow row : table.findRows("rotX", "variable_name"))       if(fixtures.size() > int(row.getString("1D"))) 
+        { fixtures.get(int(row.getString("1D"))).rotationX            = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("fixParam", "variable_name"))   if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))].parameter            = int(row.getString("value")); }
+    for (TableRow row : table.findRows("fixParam", "variable_name"))   if(fixtures.size() > int(row.getString("1D"))) 
+        { fixtures.get(int(row.getString("1D"))).parameter            = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("red", "variable_name"))        if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))].red                  = int(row.getString("value")); }
-    for (TableRow row : table.findRows("green", "variable_name"))      if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))].green                = int(row.getString("value")); }
-    for (TableRow row : table.findRows("blue", "variable_name"))       if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))].blue                 = int(row.getString("value")); }
+    for (TableRow row : table.findRows("red", "variable_name"))        if(fixtures.size() > int(row.getString("1D"))) 
+        { fixtures.get(int(row.getString("1D"))).red                  = int(row.getString("value")); }
+    for (TableRow row : table.findRows("green", "variable_name"))      if(fixtures.size() > int(row.getString("1D"))) 
+        { fixtures.get(int(row.getString("1D"))).green                = int(row.getString("value")); }
+    for (TableRow row : table.findRows("blue", "variable_name"))       if(fixtures.size() > int(row.getString("1D"))) 
+        { fixtures.get(int(row.getString("1D"))).blue                 = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("channel", "variable_name"))    if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))].channelStart         = int(row.getString("value")); }
+    for (TableRow row : table.findRows("channel", "variable_name"))    if(fixtures.size() > int(row.getString("1D"))) 
+        { fixtures.get(int(row.getString("1D"))).channelStart         = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("ansaParent", "variable_name")) if(fL > int(row.getString("1D"))) 
-        { fixtures[int(row.getString("1D"))].parentAnsa           = int(row.getString("value")); }
+    for (TableRow row : table.findRows("ansaParent", "variable_name")) if(fixtures.size() > int(row.getString("1D"))) 
+        { fixtures.get(int(row.getString("1D"))).parentAnsa           = int(row.getString("value")); }
     
     //--------------------------------------------------------------------------------------------------------------------------------------
     // whatToSave titles: { "dimmer", "colorWheel", "gobo", "goboRotation", "shutter", "pan", "tilt" }
     
-    for (TableRow row : table.findRows("whatToSave", "variable_name")) if(int(row.getString("1D")) < whatToSave.length && int(row.getString("2D")) < whatToSave[0].length)
+    /*for (TableRow row : table.findRows("whatToSave", "variable_name")) if(int(row.getString("1D")) < whatToSave.length && int(row.getString("2D")) < whatToSave[0].length)
     {
       int val = int(row.getString("value"));
       
       whatToSave[int(row.getString("1D"))][int(row.getString("2D"))] = boolean(val);
-    }
+    }*/
     
     
     
     
   
     
-    for(int ijk = 0; ijk < saveOptionButtonVariables.length; ijk++) {
-      for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[ijk], "variable_name")) {
-        int mN = int(row.getString("1D"));
-        if(memories[mN] == null) { 
-          memories[mN] = new memory(); 
-          memories[mN].whatToSave = new boolean[fixtures.length]; 
-        }
-      }
-    }
-    
-    for (TableRow row : table.findRows("memories:whatToSave", "variable_name")) {
-      int mN = int(row.getString("1D"));
-      int fN = int(row.getString("2D"));
-      boolean v = boolean(row.getString("value"));
-      memories[mN].whatToSave[fN] = v;
-    }
-    
-    for(int ijk = 0; ijk < saveOptionButtonVariables.length; ijk++) {
-      for (TableRow row : table.findRows("repOF:" + saveOptionButtonVariables[ijk], "variable_name")) {
-        int mN = int(row.getString("1D"));
-        int fN = int(row.getString("2D"));
-        int v = int(row.getString("value"));
-        if(ijk == 0 && memories[mN].whatToSave[0]) { memories[mN].repOfFixtures[fN].dimmer = v; }
-      }
-    }
     
     
-    for (TableRow row : table.findRows("memories:chase", "variable_name")) {
-      int mN = int(row.getString("1D"));
-      int fN = int(row.getString("2D"));
-      boolean v = boolean(row.getString("value"));
-      memories[mN].whatToSave[fN] = v;
-    }
     
     
  
@@ -170,7 +153,7 @@ for (TableRow row : table.findRows("memories[i].myChase.content.length", "variab
 }
 
 for(int i = 0; i < memoriesLength; i++) {
-  memories[i] = new memory();
+  
   for(int ij = 0; ij < myChasePresetsLength[i]; ij++) {
     memories[i].myChase.presets = new int[myChasePresetsLength[i]];
   }
@@ -310,8 +293,8 @@ for (TableRow row : table.findRows("memories[i].value", "variable_name")) {
     
     
     
-    for (TableRow row : table.findRows("memoryType", "variable_name")) if(int(row.getString("1D")) < memoryType.length) { memoryType[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("soundToLightSteps", "variable_name")) if(int(row.getString("1D")) < soundToLightSteps.length) { soundToLightSteps[int(row.getString("1D"))] = int(row.getString("value")); }
+    //for (TableRow row : table.findRows("memoryType", "variable_name")) if(int(row.getString("1D")) < memoryType.length) { memoryType[int(row.getString("1D"))] = int(row.getString("value")); }
+    //for (TableRow row : table.findRows("soundToLightSteps", "variable_name")) if(int(row.getString("1D")) < soundToLightSteps.length) { soundToLightSteps[int(row.getString("1D"))] = int(row.getString("value")); }
     
     
     
@@ -319,12 +302,12 @@ for (TableRow row : table.findRows("memories[i].value", "variable_name")) {
     for (TableRow row : table.findRows("grouping", "variable_name")) if(int(row.getString("1D")) < grouping.length) { grouping[int(row.getString("1D"))] = int(row.getString("value")); }
     controlP5place = grouping[0]; enttecDMXplace = grouping[1]; touchOSCplace = grouping[2];
           
-    for (TableRow row : table.findRows("memory", "variable_name")) if(memory.length > int(row.getString("1D")) && memory[0].length > int(row.getString("2D")))
-            { memory[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("soundToLightPresets", "variable_name")) if(soundToLightPresets.length > int(row.getString("2D")) && soundToLightPresets[0].length > int(row.getString("1D"))) 
-            { soundToLightPresets[int(row.getString("2D"))][int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("preset", "variable_name")) if(preset.length > int(row.getString("1D")) && preset[0].length > int(row.getString("2D")))
-            { preset[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
+    //for (TableRow row : table.findRows("memory", "variable_name")) if(memory.length > int(row.getString("1D")) && memory[0].length > int(row.getString("2D")))
+    //        { memory[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
+    //for (TableRow row : table.findRows("soundToLightPresets", "variable_name")) if(soundToLightPresets.length > int(row.getString("2D")) && soundToLightPresets[0].length > int(row.getString("1D"))) 
+    //        { soundToLightPresets[int(row.getString("2D"))][int(row.getString("1D"))] = int(row.getString("value")); }
+    //for (TableRow row : table.findRows("preset", "variable_name")) if(preset.length > int(row.getString("1D")) && preset[0].length > int(row.getString("2D")))
+    //        { preset[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
     
     for (TableRow row : table.findRows("camX", "variable_name"))              { camX = int(row.getString("value")); }
     for (TableRow row : table.findRows("camY", "variable_name"))              { camY = int(row.getString("value")); }
@@ -339,14 +322,14 @@ for (TableRow row : table.findRows("memories[i].value", "variable_name")) {
     for (TableRow row : table.findRows("ansaType", "variable_name"))    { if((int(row.getString("1D")) < ansaType.length)) { ansaType[int(row.getString("1D"))] = int(row.getString("value")); } }
   
     
-    for (TableRow row : table.findRows("chaseModeByMemoryNumber", "variable_name"))              { chaseModeByMemoryNumber[int(row.getString("1D"))] = int(row.getString("value")); }
+    //for (TableRow row : table.findRows("chaseModeByMemoryNumber", "variable_name"))              { chaseModeByMemoryNumber[int(row.getString("1D"))] = int(row.getString("value")); }
     for (TableRow row : table.findRows("chaseMode", "variable_name"))              { chaseMode = int(row.getString("value")); }
     
     
-    for (TableRow row : table.findRows("valueOfMemory", "variable_name")) if(valueOfMemory.length > int(row.getString("1D")))
-          { valueOfMemory[int(row.getString("1D"))] = int(row.getString("value")); }
-    for (TableRow row : table.findRows("memoryValue", "variable_name")) if(memoryValue.length > int(row.getString("1D")))
-          { memoryValue[int(row.getString("1D"))] = int(row.getString("value")); }
+    //for (TableRow row : table.findRows("valueOfMemory", "variable_name")) if(valueOfMemory.length > int(row.getString("1D")))
+    //      { valueOfMemory[int(row.getString("1D"))] = int(row.getString("value")); }
+    //for (TableRow row : table.findRows("memoryValue", "variable_name")) if(memoryValue.length > int(row.getString("1D")))
+    //      { memoryValue[int(row.getString("1D"))] = int(row.getString("value")); }
     
     for (TableRow row : table.findRows("centerX", "variable_name"))              { centerX = int(row.getString("value")); }
     for (TableRow row : table.findRows("centerY", "variable_name"))              { centerY = int(row.getString("value")); }

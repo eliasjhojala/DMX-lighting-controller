@@ -24,7 +24,7 @@ void keyPressed() {
   if(key == 'p') { chasePause = !chasePause; }
   if(key == 'r') { revStepPressed = true; }
   if(key == '1') { lampToMove = 1; }
-  if(key == 'l') { thread("loadAllData"); }
+  if(key == 'l') { loadAllData(); }
   if(key == 'c') {
     for(int i = 0; i < channels; i++) {
       valueOfDimBeforeBlackout[i] = 0;

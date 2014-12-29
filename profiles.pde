@@ -29,7 +29,7 @@ int[] getFixtureSizeByType(int type) {
 }
 
 int[] getFixtureSize(int id) {
-  return getFixtureSizeByType(fixtures[id].fixtureTypeId);
+  return getFixtureSizeByType(fixtures.get(id).fixtureTypeId);
 }
 
 
@@ -92,7 +92,7 @@ int getFixtureTypeId1(String fixtureType) {
 
 
 String getFixtureName(int id) {
-  return getFixtureNameByType(fixtures[id].fixtureTypeId);
+  return getFixtureNameByType(fixtures.get(id).fixtureTypeId);
 }
 
 
