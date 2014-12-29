@@ -47,7 +47,6 @@ void draw() {
     
   }
   if(!freeze) initSettingsInSetup();
-  
 }
 
 
