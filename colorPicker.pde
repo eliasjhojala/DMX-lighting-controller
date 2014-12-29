@@ -1,5 +1,5 @@
 HSBColorPicker colorPick = new HSBColorPicker();
-class HSBColorPicker() {
+class HSBColorPicker {
   
   HSBColorPicker() {
   }
@@ -103,5 +103,9 @@ boolean colorSelectorOpen = true;
       popStyle();
       return c;
     
+  }
+  
+  boolean changed() {
+    return true; //TODO: check if value is changed
   }
 }
