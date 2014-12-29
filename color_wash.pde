@@ -103,11 +103,7 @@ void drawColorWashMenu() { //Color wash selection menu box
             
             fill(0);
             textSize(15);
-      
-
-              text("Clear all", round(clearButton.x+textOffset.x), round(clearButton.y+textOffset.y));
-              
-        
+            text("Clear all", round(clearButton.x+textOffset.x), round(clearButton.y+textOffset.y));
             popStyle();
             //END OF ODDEVEN BUTTON
             
