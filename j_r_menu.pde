@@ -166,6 +166,8 @@ class memoryCreationBox {
   //Initiate with last configuration
   void initiatePassive() {
     open = true;
+    locY = 40;
+    locX = width - (320 + 168);
   }
   
   //Initiate with configuration from an existing memory
@@ -197,6 +199,7 @@ class memoryCreationBox {
   
   boolean open;
   int locY;
+  int locX;
   
   int selectedMemoryMode = 0;
   int selectedMemorySlot = 1;
@@ -208,7 +211,7 @@ class memoryCreationBox {
       pushMatrix();
       pushStyle();
       { // frame & frame controls
-        translate(width - (320 + 168), locY);
+        translate(locX, locY);
         fill(255, 230);
         stroke(150);
         strokeWeight(3);
@@ -224,6 +227,7 @@ class memoryCreationBox {
         mouse.setElementExpire("memoryCreationBox:move", 2);
         if(mouse.isCaptured("memoryCreationBox:move")) {
           locY = constrain(mouseY - pmouseY + locY, 40, height - 340);
+          locX = constrain(mouseX - pmouseX + locX, 40, width - (320 + 168));
         }
         //Cancel button
         mouse.declareUpdateElementRelative("memoryCreationBox:cancel", "memoryCreationBox", 30, 10, 50, 20);
