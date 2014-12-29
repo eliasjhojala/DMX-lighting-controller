@@ -126,18 +126,19 @@ void drawColorWashMenu() { //Color wash selection menu box
             
            
            if(HSBPicker) {
-             colorPick.colorSelectorOpen = true;
-             color c = colorPick.getColorFromPicker();
+             colorSelectorOpen = true;
+             color c = getColorFromPicker();
              wash.clear();
              wash = new colorWash(round(red(c)), round(green(c)), round(blue(c)));
              wash.go();
              pushMatrix();
              translate(500, 0);
-             colorPick.showColorSelector();
+             showColorSelector();
              popMatrix();
            }
            else {
-             colorPick.colorSelectorOpen = false;
+             
+             colorSelectorOpen = false;
            }
             
             //Move the whole selection box
