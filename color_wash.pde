@@ -12,6 +12,7 @@ void newColorWash() {
 }
 
 boolean colorWashMenuOpen = false;
+boolean HSBPicker = false;
 PVector colorMenuOffset = new PVector(0, 0);
 
 void drawColorWashMenu() { //Color wash selection menu box
@@ -59,6 +60,7 @@ void drawColorWashMenu() { //Color wash selection menu box
             PVector buttonSize = new PVector(120, 30);
             PVector oddEvenButton = new PVector(50*6-40, 30+50+2*40);
             PVector clearButton = new PVector(50*6-40, 30+50+3*40);
+            PVector HSBPickerButton = new PVector(50*6-40, 30+50+4*40);
             PVector textOffset = new PVector(15, 22);
             int buttonCorners = 5;
             
@@ -105,9 +107,39 @@ void drawColorWashMenu() { //Color wash selection menu box
             textSize(15);
             text("Clear all", round(clearButton.x+textOffset.x), round(clearButton.y+textOffset.y));
             popStyle();
-            //END OF ODDEVEN BUTTON
+            //END OF CLEAR BUTTON
+            
+             //ONLY SELECTED BUTTON
+            mouse.declareUpdateElementRelative("HSBPicker", "colorSelectBox",  round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y)); 
+            pushStyle();
+            if(mouse.isCaptured("HSBPicker") && mouse.firstCaptureFrame) { stroke(0); HSBPicker = !HSBPicker; }
+            rect(round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
+            
+              fill(0);
+              textSize(15);
+        
+              
+              if(HSBPicker) { text("Close", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
+              else { text("ColorPicker", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
+            popStyle();
+            //END OF ONLY SELECTED BUTTON
             
            
+           if(HSBPicker) {
+             colorSelectorOpen = true;
+             color c = getColorFromPicker();
+             wash.clear();
+             wash = new colorWash(round(red(c)), round(green(c)), round(blue(c)));
+             wash.go();
+             pushMatrix();
+             translate(500, 0);
+             showColorSelector();
+             popMatrix();
+           }
+           else {
+             
+             colorSelectorOpen = false;
+           }
             
             //Move the whole selection box
             if(mouse.isCaptured("colorSelectBox")) {
