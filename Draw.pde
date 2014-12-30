@@ -36,8 +36,7 @@ void draw() {
       sivuValikko(); //right menu
       contextMenu1.draw();
     }
-    thread("detectBeat");
-  
+
     
     if (useMaschine) calcMaschineAutoTap();
     
