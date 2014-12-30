@@ -17,7 +17,7 @@ void initializeMaschine() {
   selectMaschinePad(1, false);
   
   //Turn the play button light on according to current pause status
-  if(!chasePause) Maschine.sendControllerChange(10, 108, 127); else Maschine.sendControllerChange(10, 108, 0);
+ // if(!chasePause) Maschine.sendControllerChange(10, 108, 127); else Maschine.sendControllerChange(10, 108, 0);
 }
 
 //0: panDo, 1: tiltDo, 2: panUp, 3: tiltUp
@@ -129,9 +129,9 @@ void maschineControllerChange(int number, int value) {
     
     //toggle chasePause
     case 108: 
-      chasePause = !chasePause;
+    //  chasePause = !chasePause;
       //Turn the play button light on according to current pause status
-      if(!chasePause) Maschine.sendControllerChange(10, 108, 127); else Maschine.sendControllerChange(10, 108, 0);
+     // if(!chasePause) Maschine.sendControllerChange(10, 108, 127); else Maschine.sendControllerChange(10, 108, 0);
     break;
     
     //register tempo tap (REC button)
