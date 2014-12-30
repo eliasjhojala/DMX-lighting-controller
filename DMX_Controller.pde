@@ -500,6 +500,8 @@ void setup() {
   thread("ylavalikkoSetup");
   colorWashSetup();
   
+  memoryCreator = new memoryCreationBox(false);
+  
 }
 
 
