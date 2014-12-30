@@ -46,7 +46,6 @@ void loadAllData1() {
     fixtures.clear();
     for(TableRow row : table.findRows("idLookupTable", "variable_name")) {
       idLookupTable.add(int(row.getString("value")));
-      println(row.getString("value"));
     }
     
   
