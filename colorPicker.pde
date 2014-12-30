@@ -30,22 +30,25 @@ boolean colorSelectorOpen = true;
   }
 
   void countHue() {
-    mouse.declareUpdateElementRelative("hue", 11000000, 0, 0, 255*3, 30);
-    if(mouse.isCaptured("hue")) {
+    mouse.declareUpdateElementRelative("HSBP:hue", 11000000, 0, 0, 255*3, 30);
+    mouse.setElementExpire("HSBP:hue", 2);
+    if(mouse.isCaptured("HSBP:hue")) {
         hue+=(mouseX-pmouseX);
         hue = constrain(hue, 0, 255*2);
     }
   }
   void countBrightness() {
-    mouse.declareUpdateElementRelative("brightness", 11000000, 0, 50, 255*3, 30);
-    if(mouse.isCaptured("brightness")) {
+    mouse.declareUpdateElementRelative("HSBP:brightness", 11000000, 0, 50, 255*3, 30);
+    mouse.setElementExpire("HSBP:brightness", 2);
+    if(mouse.isCaptured("HSBP:brightness")) {
         brightness+=(mouseX-pmouseX);
         brightness = constrain(brightness, 0, 255*2);
     }
   }
   void countSaturation() {
-    mouse.declareUpdateElementRelative("saturation", 11000000, 0, 100, 255*3, 30);
-    if(mouse.isCaptured("saturation")) {
+    mouse.declareUpdateElementRelative("HSBP:saturation", 11000000, 0, 100, 255*3, 30);
+    mouse.setElementExpire("HSBP:saturation", 2);
+    if(mouse.isCaptured("HSBP:saturation")) {
         saturation+=(mouseX-pmouseX);
         saturation = constrain(saturation, 0, 255*2);
     }
