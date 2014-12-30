@@ -34,6 +34,7 @@ class FixtureArray {
     
   }
   
+  
   void remove(int id) {
     array.remove(getArrayId(id));
     for(int i = 0; i < idLookupTable.size(); i++) {

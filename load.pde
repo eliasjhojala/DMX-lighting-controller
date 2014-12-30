@@ -43,18 +43,19 @@ void loadAllData1() {
     
     //FIXTURES---------------------------------------------------------------------------------------------------------------------------
     //Initialize fixtures using type
-    idLookupTable = new ArrayList<Integer>();
+    fixtures.clear();
     for(TableRow row : table.findRows("idLookupTable", "variable_name")) {
       idLookupTable.add(int(row.getString("value")));
+      println(row.getString("value"));
     }
     
   
-    fixtures.clear();
+    
+    //fixtures.array.ensureCapacity(int(table.findRow("fixtures.size", "variable_name").getString("value")));
     
     for (TableRow row : table.findRows("fixtureType1", "variable_name")) 
         { 
-        
-          fixtures.add(new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, int(row.getString("value"))));
+          fixtures.array.add(int(row.getString("1D")), new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, int(row.getString("value"))));
         
         }
     
