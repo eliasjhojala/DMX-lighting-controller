@@ -27,7 +27,7 @@ void drawColorWashMenu() { //Color wash selection menu box
           fill(255, 230); //White transperent background
         }
        
-       { //Count all the active colorNames (the colorNames object array is'n really good-ordered)
+        //Count all the active colorNames (the colorNames object array is'n really good-ordered)
           int[] activeColorNames = new int[colorNames.length];
           int[] activeColorNamesTemp = new int[colorNames.length];
           int n = 0;
@@ -45,7 +45,7 @@ void drawColorWashMenu() { //Color wash selection menu box
           for(int i = 0; i < activeColorNames.length; i++) {
             activeColorNames[i] = activeColorNamesTemp[i];
           }
-       } //End counting active colorNames
+        //End counting active colorNames
 
         pushMatrix(); 
             translate(80, 0);
