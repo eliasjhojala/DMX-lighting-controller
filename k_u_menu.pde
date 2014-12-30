@@ -72,7 +72,7 @@ void ylavalikko() {
     int round = 20;
     translate(-2, 150);
     pushStyle();
-      fill(topMenuTheme);
+      fill(topMenuTheme2);
       rect(0, 0, 40, 100, 0, round, round, 0);
       mouse.declareUpdateElementRelative("washButton", 10000000, 0, 0, 40, 100);
       boolean isHovered = isHover(0, 0, 40, 100);
