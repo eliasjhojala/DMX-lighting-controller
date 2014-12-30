@@ -21,7 +21,6 @@ void keyPressed() {
   if(key == 'm') {
     showMode = !showMode;
   }
-  if(key == 'p') { chasePause = !chasePause; }
   if(key == 'r') { revStepPressed = true; }
   if(key == '1') { lampToMove = 1; }
   if(key == 'l') { loadAllData(); }
