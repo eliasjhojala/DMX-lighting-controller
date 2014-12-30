@@ -70,8 +70,6 @@ void ylavalikko() {
   
   pushMatrix();
     int round = 20;
-    color topMenuTextColor1 = color(255, 100, 100);
-    color topMenuTextColor2 = color(255, 255, 255);
     translate(-2, 150);
     pushStyle();
       fill(topMenuTheme);
@@ -86,10 +84,10 @@ void ylavalikko() {
       rotate(radians(90));
       pushStyle();
         if(isHovered) {
-          fill(topMenuTextColor2);
+          fill(250);
         }
         else {
-          fill(topMenuTextColor1);
+          fill(topMenuTheme);
         }
         textSize(20);
         text("Wash", 0, 0);
