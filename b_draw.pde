@@ -12,7 +12,6 @@ int oldGrandMaster = 40;
 long totalMillis[] = new long[9];
 
 void draw() {
-  /*debug*/ println(idLookupTable);
   if(programReadyToRun && !freeze) {
     textSize(12);
     
