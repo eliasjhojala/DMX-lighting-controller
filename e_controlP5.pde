@@ -757,6 +757,25 @@ public class ControlFrame extends PApplet {
   
   //Used to determine whether view rotation knob value should be sent to the main window (it should only happen when the knob is changed)
   int oldKnobVal;
+  
+  void refreshAnsas() {
+    {
+      for (int i = 0; i < createdAnsaZBoxes; i++) {
+        cp5.controller("ansaZ" + str(i)).setValue(ansaZ[i]);
+      }
+      for (int i = 0; i < createdAnsaXBoxes; i++) {
+        cp5.controller("ansaX" + str(i)).setValue(ansaX[i]);
+      }
+      for (int i = 0; i < createdAnsaYBoxes; i++) {
+        cp5.controller("ansaY" + str(i)).setValue(ansaY[i]);
+      }
+      for (int i = 0; i < createdAnsaTypeBoxes; i++) {
+        cp5.controller("ansaType" + str(i)).setValue(ansaType[i]);
+      }
+    }
+    
+  }
+  
   public void draw() {
     
     //startof: Draw
