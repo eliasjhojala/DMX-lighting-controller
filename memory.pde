@@ -647,7 +647,7 @@ class chase { //Begin of chase class--------------------------------------------
     if(true) {
       pushStyle();
         colorMode(HSB);
-        hueOffset += getInvertedValue(fade, 0, 255);
+        hueOffset += getInvertedValue(fade, 0, 255)/10;
         if(hueOffset > 255) { hueOffset = 0; }
         for(int i = 0; i < getPresets().length; i++) {
           color c = color(loopMap(i, 0, getPresets().length-1, 255, hueOffset), 255, 255);
@@ -825,16 +825,9 @@ class soundDetect { //----------------------------------------------------------
       avgTemp[i] = 0;
       avgCounter[i] = 0;
     }
-    max[i]-=0.01;
-    max[i] = overZero(max[i]);
+    
+    if(max[i] > 0.1) { max[i]-=0.01; }
     if(val > max[i]) { max[i] = val; }
- /* currentAvgTemp[i] += fft.getBand(i);
-    currentAvgCounter[i]++;
-    if(currentAvgCounter[i] > 2) {
-      currentAvg[i] = currentAvgTemp[i] / currentAvgCounter[i];
-      currentAvgTemp[i] = 0;
-      currentAvgCounter[i] = 0;
-    } */
     return toReturn;
     //command to get  right freq from fft or something like it. 
     //This functions should be done now.
