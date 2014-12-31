@@ -543,6 +543,15 @@ class chase { //Begin of chase class--------------------------------------------
      }
      return toReturn;
   }
+  
+  boolean isQuickChase() {
+    return parent.type == 3;
+  }
+  
+  int loopMap(int val, int in_lo, int in_hi, int out_hi) {
+    return int(map(val, in_lo, in_hi, 0, out_hi)) % out_hi;
+  }
+  
     
   
   void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
@@ -621,7 +630,17 @@ class chase { //Begin of chase class--------------------------------------------
     }
     
 
+  }  
+  
+  
+  void rainbow() {
+    if(true) {
+      pushStyle();
+        colorMode(HSB);
+      popStyle();
+    }
   }
+  
   
   
   
@@ -672,7 +691,7 @@ class chase { //Begin of chase class--------------------------------------------
     sineValue = new int[getPresets().length];
   }
   
-  
+
   
   //Create quickChase-------------------------------------------------------------
   /*Actually this function only saves selected 
