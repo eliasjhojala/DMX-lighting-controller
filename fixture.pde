@@ -162,6 +162,37 @@ class fixture {
     }
   }
   
+  boolean fixtureUseRgb() {
+    int fT = fixtureTypeId;
+    return fT == 24 || fT == 25 || fT == 18 || fT == 19;
+  }
+    
+  boolean fixtureUseDim() {
+    int fT = fixtureTypeId;
+    return fT == 25 || fT == 19;
+  }
+  boolean fixtureUseWhite() {
+    int fT = fixtureTypeId;
+    return fT == 25 || fT == 24;
+  }
+  
+  boolean fixtureIsLed() {
+    return fixtureUseRgb();
+  }
+  
+  void setColorForLed(int c) {
+    if(fixtureIsLed()) {
+      setColor(c);
+    }
+  }
+  
+  void setColor(int c) {
+    red = rRed(c);
+    green = rGreen(c);
+    blue = rBlue(c);
+    DMXChanged = true;
+  }
+  
   long fadeStartMillis;
   int fadeTarget = 0;
   int preFade;
