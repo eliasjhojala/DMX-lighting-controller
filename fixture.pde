@@ -1,8 +1,86 @@
-boolean invokeFixturesDrawFinished = true;
+boolean invokeFixturesDrawFinished = true; 
 void invokeFixturesDraw() {
   invokeFixturesDrawFinished = false;
-  for (fixture temp : fixtures) temp.draw();
+  for (int ai = 0; ai < fixtures.size(); ai++) fixtures.get(ai).draw();
   invokeFixturesDrawFinished = true;
+}
+
+
+ArrayList<Integer> idLookupTable;
+
+class FixtureArray {
+  
+  
+ 
+  FixtureArray() {
+    array = new ArrayList<fixture>();
+    if(idLookupTable == null) idLookupTable = new ArrayList<Integer>();
+    
+  }
+  
+  ArrayList<fixture> array;
+  
+  void add(fixture newFix) {
+    int newId = array.size();
+    array.add(newFix);
+    
+    if(idLookupTable.indexOf(newId) == -1) {
+      //Add to first empty place, if none found, add to new place
+      int newIndex = idLookupTable.indexOf(-1);
+      if(newIndex != -1) {
+        idLookupTable.set(newIndex, newId);
+      } else idLookupTable.add(newId);
+    }
+    
+  }
+  
+  
+  void remove(int id) {
+    int idi = getArrayId(id);
+    array.remove(idi);
+    for(int i = 0; i < idLookupTable.size(); i++) {
+      if(getArrayId(i) > idi) {
+        idLookupTable.set(i, getArrayId(i)-1);
+      }
+    }
+    idLookupTable.set(id, -1);
+  }
+  
+  
+  int getArrayId(int fid) {
+    return idLookupTable.get(fid);
+  }
+  
+  fixture get(int fid) {
+    int result = getArrayId(fid);
+    if(result != -1 && result < array.size()) return array.get(result);
+      else {
+        fixture newFixture = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        newFixture.size.isDrawn = false;
+        return newFixture;
+      }
+    
+  }
+  
+  
+  int size() {
+    return idLookupTable.size();
+  }
+  
+  void clearThis() {
+    for(fixture fix : array) fix = null;
+  }
+  
+  void clear() {
+    array.clear();
+    idLookupTable.clear();
+  }
+  
+}
+
+
+void createNewFixtureAt00() {
+  fixtures.add(new fixture(0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 }
 
  
@@ -25,13 +103,44 @@ class fixture {
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
   int frequency; //Strobe freq value
-  int preFadeSpeed = 20;
-  int postFadeSpeed = 50;
+  int special1, special2, special3, special4; //Some special values for strange fixtures
+  int preFadeSpeed = 100;
+  int postFadeSpeed = 500;
+  
+  //Fade[] fades = new Fade[10];
  
-  void setDimmerDirectly(int val) { dimmer = defaultConstrain(val); DMXChanged = true;}
   void setDimmer(int val) { 
-    setDimmerWithFade(val, preFadeSpeed, postFadeSpeed);
+    if(val != dimmer) {
+     // if(fades[0] != null) {
+      //  if(!fades[0].isCompleted()) {
+          dimmer = defaultConstrain(val); DMXChanged = true;
+       // }
+     // }
+    }
   }
+  /*void setDimmer(int val) { 
+    //setDimmerDirectly(val);
+   // setDimmerWithFade(val, preFadeSpeed, postFadeSpeed);
+   if(val != dimmer) {
+     if(fades[0] != null) {
+       if(val != fades[0].targetValue) {
+         fades[0].startFade(dimmer, val, preFadeSpeed, postFadeSpeed);
+       }
+     }
+     else {
+       fades[0] = new Fade(dimmer, val, preFadeSpeed, postFadeSpeed);
+     }
+   }
+  }
+  
+  void setFadeValues() {
+    if(fades[0] != null) {
+      fades[0].countActualValue();
+      if(!fades[0].isCompleted()) {
+        setDimmerDirectly(fades[0].getActualValue());
+      }
+    }
+  } */
   
   void toggle(boolean down) {
     if(down) {
@@ -63,7 +172,7 @@ class fixture {
   
   boolean pushWithFadeDown = false;
   
-  void setDimmerWithFade(int val, int pre, int post) {
+/*  void setDimmerWithFade(int val, int pre, int post) {
     if(val != fadeTarget) {
       fadeTarget = val;
       preFade = pre;
@@ -85,7 +194,7 @@ class fixture {
         setDimmerDirectly(constrain(iMap(timer, 0, postFade, originalDimmer, fadeTarget), fadeTarget, originalDimmer));
       } else fadeComplete = true;
     }
-  }
+  } */
   
 
   
@@ -172,6 +281,94 @@ class fixture {
   int getFixtureTypeId() {
     return getFixtureTypeId1(fixtureType);
   }
+  
+  //Universal DMX: dimmer, red, green, blue, white, amber, pan, tilt, panFine, tiltFine, 
+  //colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, frequency, responseSpeed, 
+  //autoPrograms, specialFunctions, haze, fan, fog, special1, special2, special3, special4
+  
+  int[] getUniversalDMX() {
+    int[] toReturn = new int[29];
+    for(int i = 1; i <= 28; i++) {
+      toReturn[i] = getUniversalDMX(i);
+    }
+    return toReturn;
+  }
+  
+  int getUniversalDMX(int i) {
+    int toReturn = 0;
+    switch(i) {
+      case 1: toReturn = dimmer; break;
+      case 2: toReturn = red; break;
+      case 3: toReturn = green; break;
+      case 4: toReturn = blue; break;
+      case 5: toReturn = white; break;
+      case 6: toReturn = amber; break;
+      case 7: toReturn = pan; break;
+      case 8: toReturn = tilt; break;
+      case 9: toReturn = panFine; break;
+      case 10: toReturn = tiltFine; break;
+      case 11: toReturn = colorWheel; break;
+      case 12: toReturn = goboWheel; break;
+      case 13: toReturn = goboRotation; break;
+      case 14: toReturn = prism; break;
+      case 15: toReturn = focus; break;
+      case 16: toReturn = shutter; break;
+      case 17: toReturn = strobe; break;
+      case 18: toReturn = frequency; break;
+      case 19: toReturn = responseSpeed; break;
+      case 20: toReturn = autoPrograms; break;
+      case 21: toReturn = specialFunctions; break;
+      case 22: toReturn = haze; break;
+      case 23: toReturn = fan; break;
+      case 24: toReturn = fog; break;
+      case 25: toReturn = special1; break;
+      case 26: toReturn = special2; break;
+      case 27: toReturn = special3; break;
+      case 28: toReturn = special4; break;
+    }
+    return toReturn;
+  }
+  
+  void setUniversalDMX(int[] vals) {
+    for(int i = 1; i < vals.length; i++) {
+      setUniversalDMX(i, vals[i]);
+    }
+  }
+  void setUniversalDMX(int i, int val) {
+    switch(i) {
+      case 1: setDimmer(val); break;
+      case 2: red = val; break;
+      case 3: green = val; break;
+      case 4: blue = val; break;
+      case 5: white = val; break;
+      case 6: amber = val; break;
+      case 7: pan = val; break;
+      case 8: tilt = val; break;
+      case 9: panFine = val; break;
+      case 10: tiltFine = val; break;
+      case 11: colorWheel = val; break;
+      case 12: goboWheel = val; break;
+      case 13: goboRotation = val; break;
+      case 14: prism = val; break;
+      case 15: focus = val; break;
+      case 16: shutter = val; break;
+      case 17: strobe = val; break;
+      case 18: frequency = val; break;
+      case 19: responseSpeed = val; break;
+      case 20: autoPrograms = val; break;
+      case 21: specialFunctions = val; break;
+      case 22: haze = val; break;
+      case 23: fan = val; break;
+      case 24: fog = val; break;
+      case 25: special1 = val; break;
+      case 26: special2 = val; break;
+      case 27: special3 = val; break;
+      case 28: special4 = val; break;
+    }
+    DMXChanged = true;
+  }
+  
+  
   
   int[] getDMX() {
     int[] dmxChannels = new int[30];
@@ -284,7 +481,7 @@ class fixture {
   int oldFixtureTypeId;
   
   void draw() {
-    setDimmerWithFadeInEveryLoop();
+    //setFadeValues();
     if (dimmerPresetTarget != -1 && dimmerPresetTarget != lastDimmerPresetTarget) {
       setDimmer(dimmerPresetTarget);
       lastDimmerPresetTarget = dimmerPresetTarget;
@@ -306,7 +503,15 @@ class fixture {
   
 }
 
+void removeFixtureFromCM() {
+  fixtures.remove(contextMenu1.fixtureId);
+}
 
+void removeAllSelectedFixtures() {
+  for(int i = 0; i < fixtures.size(); i++) {
+    if(fixtures.get(i).selected) fixtures.remove(i);
+  }
+}
 
 
 class fixtureSize {

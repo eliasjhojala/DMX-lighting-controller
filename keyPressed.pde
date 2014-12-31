@@ -1,6 +1,6 @@
 //Tässä välilehdessä luetaan tietokoneen omia syöttölaitteita, eli näppäimistöä ja hiirtä
 
-boolean ctrlDown = false;
+boolean ctrlDown = false; 
 boolean shftDown = false;
 boolean rightPressed = false;
 boolean leftPressed = false;
@@ -13,16 +13,17 @@ void keyReleased() {
 }
 
 void keyPressed() {
+  
+  if(key == 'k') { newColorWash(); }
 
   
   if(key==27) { key=0; } //Otetaan esc-näppäin pois käytöstä. on kumminkin huomioitava, että tämä toimii vain pääikkunassa
   if(key == 'm') {
     showMode = !showMode;
   }
-  if(key == 'p') { chasePause = !chasePause; }
   if(key == 'r') { revStepPressed = true; }
   if(key == '1') { lampToMove = 1; }
-  if(key == 'l') { thread("loadAllData"); }
+  if(key == 'l') { loadAllData(); }
   if(key == 'c') {
     for(int i = 0; i < channels; i++) {
       valueOfDimBeforeBlackout[i] = 0;

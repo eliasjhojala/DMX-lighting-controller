@@ -1,0 +1,30 @@
+getUniversalDMX and setUniversalDMX and whatToSave order in the future
+  1: dimmer
+  2: red
+  3: green
+  4: blue
+  5: white
+  6: amber
+  7: pan
+  8: tilt
+  9: panFine
+  10: tiltFine
+  11: colorWheel
+  12: goboWheel
+  13: goboRotation
+  14: prism
+  15: focus
+  16: shutter
+  17: strobe 
+  18: frequency
+  19: responseSpeed, 
+  20: autoPrograms
+  21: specialFunctions
+  22: haze
+  23: fan
+  24: fog
+  25: special1
+  26: special2
+  27: special3
+  28: special4
+    

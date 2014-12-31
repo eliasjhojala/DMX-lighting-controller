@@ -1,6 +1,6 @@
 //in this tab software sends data to other pc and ipad
 
-boolean sendOscToAnotherPc = true;
+boolean sendOscToAnotherPc = true; 
 boolean sendOscToIpad = true;
 boolean sendMemoryToIpad = true;
 

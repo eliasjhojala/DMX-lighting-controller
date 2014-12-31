@@ -1,5 +1,5 @@
 //Tässä välilehdessä on paljon lyhyitä voideja
-
+  
 
 boolean scrolledDown = false;
 boolean scrolledUp = false;
@@ -55,28 +55,28 @@ void kalvo(color c) {
 
 
 void drawFixture(int i) {
-  kalvo(fixtures[i].getColor_wDim());
+  kalvo(fixtures.get(i).getColor_wDim());
   boolean showFixture = true;
   int lampWidth = 30;
   int lampHeight = 40;
   
   String fixtuuriTyyppi = getFixtureName(i);
   
-  int fixtureTypeId = fixtures[i].fixtureTypeId;
+  int fixtureTypeId = fixtures.get(i).fixtureTypeId;
   
   if(fixtureTypeId >= 1 && fixtureTypeId <= 13) {
-    lampWidth = fixtures[i].size.w;
-    lampHeight = fixtures[i].size.h;
-    showFixture = fixtures[i].size.isDrawn;
+    lampWidth = fixtures.get(i).size.w;
+    lampHeight = fixtures.get(i).size.h;
+    showFixture = fixtures.get(i).size.isDrawn;
   }
   
-  boolean selected = fixtures[i].selected && showFixture;
+  boolean selected = fixtures.get(i).selected && showFixture;
   
   
   if(showFixture == true) {
     int x1 = 0; int y1 = 0;
-    fixtures[i].locationOnScreenX = int(screenX(x1 + lampWidth/2, y1 + lampHeight/2));
-    fixtures[i].locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
+    fixtures.get(i).locationOnScreenX = int(screenX(x1 + lampWidth/2, y1 + lampHeight/2));
+    fixtures.get(i).locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
     if(fixtureTypeId == 13) { rectMode(CENTER); rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
     if(selected) stroke(100, 100, 255); else stroke(255);
     rect(x1, y1, lampWidth, lampHeight, 3);
@@ -84,14 +84,14 @@ void drawFixture(int i) {
     if(zoom > 50) {
       if(printMode == false) {
         fill(255, 255, 255);
-        text(fixtures[i].getDimmerWithMaster(), x1, y1 + lampHeight + 15);
+        text(fixtures.get(i).getDimmerWithMaster(), x1, y1 + lampHeight + 15);
       }
       else {
         fill(0, 0, 0);
         text(fixtuuriTyyppi, x1, y1 + lampHeight + 15);
       }
     
-     text(i + "/" + fixtures[i].channelStart, x1, y1 - 15);
+     text(i + "/" + fixtures.get(i).channelStart, x1, y1 - 15);
     }
   }
 }
@@ -214,16 +214,16 @@ boolean isClicked(int x1, int y1, int x2, int y2) {
 void fullOn(boolean state) {
   if(fullOn && !state) {
     //Turn off full on
-    for(int ii = 0; ii < fixtures.length; ii++) {
-       fixtures[ii].setDimmer(valueOfDimBeforeFullOn[ii]);
+    for(int ii = 0; ii < fixtures.size(); ii++) {
+       fixtures.get(ii).setDimmer(valueOfDimBeforeFullOn[ii]);
     }
     fullOn = false;
   }
   if(!fullOn && state) {
     //Turn on full on
-    for(int ii = 0; ii < fixtures.length; ii++) {
-       valueOfDimBeforeFullOn[ii] = fixtures[ii].dimmer;
-       fixtures[ii].setDimmer(255);
+    for(int ii = 0; ii < fixtures.size(); ii++) {
+       valueOfDimBeforeFullOn[ii] = fixtures.get(ii).dimmer;
+       fixtures.get(ii).setDimmer(255);
     }
     fullOn = true;
   }
@@ -271,18 +271,18 @@ void setValuesToSelected() {
   
   if (bottomMenuAllFixtures && bottomMenuControlBoxOpen) {
     int a = 0;
-    for(int i = 0; i < fixtures.length; i++) {
-      if(fixtures[i].selected) {
-        fixtures[i].setDimmer(fixtureForSelected[a].dimmer);
-        fixtures[i].pan = fixtureForSelected[a].pan;
-        fixtures[i].tilt = fixtureForSelected[a].tilt;
-        fixtures[i].panFine = fixtureForSelected[a].panFine;
-        fixtures[i].tiltFine = fixtureForSelected[a].tiltFine;
-        fixtures[i].colorWheel = fixtureForSelected[a].colorWheel;
-        fixtures[i].focus = fixtureForSelected[a].focus;
-        fixtures[i].prism = fixtureForSelected[a].prism;
-        fixtures[i].goboWheel = fixtureForSelected[a].goboWheel;
-        fixtures[i].shutter = fixtureForSelected[a].shutter;
+    for(int i = 0; i < fixtures.size(); i++) {
+      if(fixtures.get(i).selected) {
+        fixtures.get(i).setDimmer(fixtureForSelected[a].dimmer);
+        fixtures.get(i).pan = fixtureForSelected[a].pan;
+        fixtures.get(i).tilt = fixtureForSelected[a].tilt;
+        fixtures.get(i).panFine = fixtureForSelected[a].panFine;
+        fixtures.get(i).tiltFine = fixtureForSelected[a].tiltFine;
+        fixtures.get(i).colorWheel = fixtureForSelected[a].colorWheel;
+        fixtures.get(i).focus = fixtureForSelected[a].focus;
+        fixtures.get(i).prism = fixtureForSelected[a].prism;
+        fixtures.get(i).goboWheel = fixtureForSelected[a].goboWheel;
+        fixtures.get(i).shutter = fixtureForSelected[a].shutter;
       }
     }
   }
@@ -388,6 +388,11 @@ int quickSlider(String mouseLockID, int value) {
     int onlyPositive(int val) {
       return val < 0 ? 0 : val;
     }
+    
+    int overZero(int val) {
+      if(val > 0) { return val; }
+      else { return 1; }
+    }
   
 //End of some functions which are really useful tex in chase
   
@@ -412,3 +417,54 @@ but it returns original array index numbers as sorted arrange */
      }
      return toReturn;
    } //End of sorting algorithm
+   
+   
+boolean isAbout(int a, int b, int accu) {
+  if(abs(a - b) <= a/overZero(accu)) {
+    return true;
+  }
+  return false;
+}  
+
+boolean isAbout(int a, int b) {
+  return isAbout(a, b, 5);
+}  
+   
+   
+boolean isInList(int i, int[] list) {
+  if(list != null) {
+    for(int j = 0; j < list.length; j++) {
+      if(list[j] == i) { return true; }
+    }
+  }
+  return false;
+}  
+
+int[] toArray(int a) {
+  int[] toReturn = new int[1];
+  toReturn[0] = a;
+  return toReturn;
+}
+int[] toArray(int a, int b) {
+  int[] toReturn = new int[2];
+  toReturn[0] = a;
+  toReturn[1] = b;
+  return toReturn;
+}
+int[] toArray(int a, int b, int c) {
+  int[] toReturn = new int[3];
+  toReturn[0] = a;
+  toReturn[1] = b;
+  toReturn[2] = c;
+  return toReturn;
+}
+int[] toArray(int a, int b, int c, int d) {
+  int[] toReturn = new int[4];
+  toReturn[0] = a;
+  toReturn[1] = b;
+  toReturn[2] = c;
+  toReturn[3] = d;
+  return toReturn;
+}
+
+

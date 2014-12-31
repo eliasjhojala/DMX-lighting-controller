@@ -1,10 +1,9 @@
 
-
-int userId = 2; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
-boolean roopeAidilla = false; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                              //|
+int userId = 3; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
+boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                               //|
                                                                                                                                                                           //|
 boolean showMode = true;                                                                                                                                                  //|
-                                                                                                                                                                          //|
+                                                                                                                                                                          //| 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
 boolean useCOM = true; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                       //|
 boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                               //|
@@ -364,7 +363,7 @@ void setDmxChannel(int channel, int value) {                                    
 }                                                                                                                       //|
 //----------------------------------------------------------------------------------------------------------------------//|
 
-fixture[] fixtures = new fixture[numberOfAllFixtures];
+FixtureArray fixtures = new FixtureArray();
 fixture[] fixtureForSelected = new fixture[1];
 
 //New system for organizing the boxes in the bottom menu. Array index = fixture id, data = fixture location
@@ -435,6 +434,7 @@ String fileSeparator = java.io.File.separator;
 String actualSketchPath;
 
 void setup() {
+
   loadCoreData();
   actualSketchPath = sketchPath("");
   //Initialize mouseLocker to prevent nullPointers
@@ -498,6 +498,10 @@ void setup() {
     thread("initializeMaschine");
   }
   thread("ylavalikkoSetup");
+  colorWashSetup();
+  
+  memoryCreator = new memoryCreationBox(false);
+  
 }
 
 

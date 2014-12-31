@@ -3,7 +3,7 @@ boolean inputIsSelected = true;
 
 void inputSelected(File selection) {   
   if (selection != null) {
-    loadPath = selection.getAbsolutePath(); 
+    loadPath = selection.getAbsolutePath();  
     saveCoreData(); 
   }
   inputIsSelected = true;
@@ -11,7 +11,8 @@ void inputSelected(File selection) {
 }
 void outputSelected(File selection) {    
   if (selection != null) {
-    savePath = selection.getAbsolutePath() + ".csv"; 
+    savePath = selection.getAbsolutePath();
+    if(!savePath.endsWith(".csv")) savePath = savePath + ".csv";
     saveCoreData(); 
     saveAllData(); 
   }

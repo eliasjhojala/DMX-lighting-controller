@@ -1,6 +1,6 @@
 //Tässä välilehdessä tulostetaan mustalle taustalle valkoisin tekstein dim-arvot, sekä muutamien muiden muuuttujien arvoja
 
-boolean showOutputAsNumbers;
+boolean showOutputAsNumbers; 
  
 public class secondApplet extends PApplet {
 

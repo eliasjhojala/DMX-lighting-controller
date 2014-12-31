@@ -1,5 +1,5 @@
 
-
+ 
 
       ////////////////////HOVER/-/CLASS/////////////////////////////////////////////////////////////
       //                                                                                          //
@@ -147,17 +147,22 @@ class Mouse {
     for(int i = 0; i < elements.size(); i++) {
       HoverableElement elm = elements.get(i);
       
-      if(ontop[i] && elm.priority > curMax) {
-        curMax = elm.priority;
-        maxId = i;
-        found = true;
+      //Handle expiration
+      boolean doNotContinue = false;
+      if(elm.expires != -1)
+        if(elm.expires > 0)  elm.expires--; else { elements.remove(i); doNotContinue = true; }
+      
+      if(!doNotContinue) {
+        
+        
+        if(ontop[i] && elm.priority > curMax) {
+          curMax = elm.priority;
+          maxId = i;
+          found = true;
+        }
       }
       
-      //Handle expiration
-      if(elm.expires != -1) {
-        
-        if(elm.expires > 0) elm.expires--; else elements.remove(i);
-      }
+      
     }
     if(found) {
       for(int i = 0; i < elements.size(); i++)

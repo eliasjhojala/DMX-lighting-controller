@@ -1,5 +1,5 @@
 boolean setValuesToSelectedFixtures = true;
-
+ 
  
 boolean createFinalValuesPlease;
 boolean saveDimmerValue;
@@ -46,7 +46,7 @@ class fixtureInput {
 
    void updateVariables() {
       sF = selectedFixture; //This variable tells what is actual fixtureId
-      fT = fixtures[sF].fixtureTypeId; //This variable tells actual fixtureType
+      fT = fixtures.get(sF).fixtureTypeId; //This variable tells actual fixtureType
    }
  
    void receiveFromBottomMenu(int[] dmxChannels, int fixtId) {
@@ -220,27 +220,27 @@ class fixtureInput {
           setValuesToSelected();
        }
        else {
-          if(fT >= 1 && fT <= 6) { if(dimmer != fixtures[constrain(sF-1, 0, fixtures.length)].dimmer) fixtures[constrain(sF-1, 0, fixtures.length)].setDimmer(dimmer); }
-          if(fT == fogId) { fixtures[constrain(sF-1, 0, fixtures.length)].fog = dimmer; }
-          if(fT == hazeId) { fixtures[sF].haze = dimmer; fixtures[sF].fan = dimmer; }
+          if(fT >= 1 && fT <= 6) { if(dimmer != fixtures.get(constrain(sF-1, 0, fixtures.size())).dimmer) fixtures.get(constrain(sF-1, 0, fixtures.size())).setDimmer(dimmer); }
+          if(fT == fogId) { fixtures.get(constrain(sF-1, 0, fixtures.size())).fog = dimmer; }
+          if(fT == hazeId) { fixtures.get(sF).haze = dimmer; fixtures.get(sF).fan = dimmer; }
           if(ftIsMhX50()) {
-            if(dimmer != fixtures[constrain(sF-1, 0, fixtures.length)].dimmer) fixtures[constrain(sF-1, 0, fixtures.length)].setDimmer(dimmer);
-            fixtures[constrain(sF-1, 0, fixtures.length)].pan = pan;
-            fixtures[constrain(sF-1, 0, fixtures.length)].tilt = tilt;
-            fixtures[constrain(sF-1, 0, fixtures.length)].panFine = panFine;
-            fixtures[constrain(sF-1, 0, fixtures.length)].tiltFine = tiltFine;
-            fixtures[constrain(sF-1, 0, fixtures.length)].red = red;
-            fixtures[constrain(sF-1, 0, fixtures.length)].green = green;
-            fixtures[constrain(sF-1, 0, fixtures.length)].blue = blue;
-            fixtures[constrain(sF-1, 0, fixtures.length)].goboWheel = goboWheel;
-            fixtures[constrain(sF-1, 0, fixtures.length)].goboRotation = goboRotation;
-            fixtures[constrain(sF-1, 0, fixtures.length)].colorWheel = colorWheel;
-            fixtures[constrain(sF-1, 0, fixtures.length)].specialFunctions = specialFunctions;
-            fixtures[constrain(sF-1, 0, fixtures.length)].autoPrograms = autoPrograms;
-            fixtures[constrain(sF-1, 0, fixtures.length)].shutter = shutter;
-            fixtures[constrain(sF-1, 0, fixtures.length)].prism = prism;
-            fixtures[constrain(sF-1, 0, fixtures.length)].focus = focus;
-            fixtures[constrain(sF-1, 0, fixtures.length)].responseSpeed = responseSpeed;
+            if(dimmer != fixtures.get(constrain(sF-1, 0, fixtures.size())).dimmer) fixtures.get(constrain(sF-1, 0, fixtures.size())).setDimmer(dimmer);
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).pan = pan;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).tilt = tilt;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).panFine = panFine;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).tiltFine = tiltFine;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).red = red;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).green = green;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).blue = blue;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).goboWheel = goboWheel;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).goboRotation = goboRotation;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).colorWheel = colorWheel;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).specialFunctions = specialFunctions;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).autoPrograms = autoPrograms;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).shutter = shutter;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).prism = prism;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).focus = focus;
+            fixtures.get(constrain(sF-1, 0, fixtures.size())).responseSpeed = responseSpeed;
           }
        }
     }
