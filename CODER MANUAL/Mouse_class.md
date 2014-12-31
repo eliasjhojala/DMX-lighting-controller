@@ -1,24 +1,24 @@
 Mouse Class
 -----------
 
-How to use:
-To declare an element you can use:
+###How to use:
+####To declare an element you can use:
 mouse.declareElement(String name, int priority, int x1, int y1, int x2, int y2);
 or
 mouse.declareElement(String name, String ontopof, int x1, int y1, int x2, int y2);
 where ontopof is the name of the element you want to place this element on top.
 
-To update an elements location you can use:
+####To update an elements location you can use:
 mouse.updateElement(String name, int x1, int y1, int x2, int y2);
 The name has to be the same as what it was when you created it
 
-You can change other preferences directly by getting the desired element like this:
+####You can change other preferences directly by getting the desired element like this:
 mouse.getElementByName(String name).autoCapture = false;
 where autocapture can be anything in the HoverableElement class.
 autoCapture determines whether the object is automatically catpured or will
 the owner do it when it's "ready".
 
-More advanced solutions:
+###More advanced solutions:
 
 mouse.declareUpdateElement(String name, int priority, int x1, int y1, int x2, int y2);
 and
@@ -28,7 +28,7 @@ These methods sort-of passively create an element if it doesn't exist and update
 mouse.setElementExpire(String name, int expire);
 if you want the element to expire after $expire frames. Useful if you don't get any chance to know when a window is closed for example.
 
-Finally, the important things:
+###Finally, the important things:
 
 mouse.removeElement(String name); for deleting your element.
 
