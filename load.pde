@@ -46,36 +46,36 @@ void loadAllData1() {
         }
     
     
-    for (TableRow row : table.findRows("xTaka", "variable_name"))      if(fixtures.size() > int(row.getString("1D"))) 
-        { fixtures.get(int(row.getString("1D"))).x_location           = int(row.getString("value")); }
+    for (TableRow row : table.findRows("xTaka", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D"))) 
+        { fixtures.array.get(int(row.getString("1D"))).x_location           = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("yTaka", "variable_name"))      if(fixtures.size() > int(row.getString("1D"))) 
-        { fixtures.get(int(row.getString("1D"))).y_location           = int(row.getString("value")); }
+    for (TableRow row : table.findRows("yTaka", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D"))) 
+        { fixtures.array.get(int(row.getString("1D"))).y_location           = int(row.getString("value")); }
         
-    for (TableRow row : table.findRows("fixZ", "variable_name"))       if(fixtures.size() > int(row.getString("1D"))) 
-        { fixtures.get(int(row.getString("1D"))).z_location           = int(row.getString("value")); }
+    for (TableRow row : table.findRows("fixZ", "variable_name"))       if(fixtures.array.size() > int(row.getString("1D"))) 
+        { fixtures.array.get(int(row.getString("1D"))).z_location           = int(row.getString("value")); }
         
-    for (TableRow row : table.findRows("rotTaka", "variable_name"))    if(fixtures.size() > int(row.getString("1D"))) 
-        { fixtures.get(int(row.getString("1D"))).rotationZ            = int(row.getString("value")); }
+    for (TableRow row : table.findRows("rotTaka", "variable_name"))    if(fixtures.array.size() > int(row.getString("1D"))) 
+        { fixtures.array.get(int(row.getString("1D"))).rotationZ            = int(row.getString("value")); }
         
-    for (TableRow row : table.findRows("rotX", "variable_name"))       if(fixtures.size() > int(row.getString("1D"))) 
-        { fixtures.get(int(row.getString("1D"))).rotationX            = int(row.getString("value")); }
+    for (TableRow row : table.findRows("rotX", "variable_name"))       if(fixtures.array.size() > int(row.getString("1D"))) 
+        { fixtures.array.get(int(row.getString("1D"))).rotationX            = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("fixParam", "variable_name"))   if(fixtures.size() > int(row.getString("1D"))) 
-        { fixtures.get(int(row.getString("1D"))).parameter            = int(row.getString("value")); }
+    for (TableRow row : table.findRows("fixParam", "variable_name"))   if(fixtures.array.size() > int(row.getString("1D"))) 
+        { fixtures.array.get(int(row.getString("1D"))).parameter            = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("red", "variable_name"))        if(fixtures.size() > int(row.getString("1D"))) 
-        { fixtures.get(int(row.getString("1D"))).red                  = int(row.getString("value")); }
-    for (TableRow row : table.findRows("green", "variable_name"))      if(fixtures.size() > int(row.getString("1D"))) 
-        { fixtures.get(int(row.getString("1D"))).green                = int(row.getString("value")); }
-    for (TableRow row : table.findRows("blue", "variable_name"))       if(fixtures.size() > int(row.getString("1D"))) 
-        { fixtures.get(int(row.getString("1D"))).blue                 = int(row.getString("value")); }
+    for (TableRow row : table.findRows("red", "variable_name"))        if(fixtures.array.size() > int(row.getString("1D"))) 
+        { fixtures.array.get(int(row.getString("1D"))).red                  = int(row.getString("value")); }
+    for (TableRow row : table.findRows("green", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D"))) 
+        { fixtures.array.get(int(row.getString("1D"))).green                = int(row.getString("value")); }
+    for (TableRow row : table.findRows("blue", "variable_name"))       if(fixtures.array.size() > int(row.getString("1D"))) 
+        { fixtures.array.get(int(row.getString("1D"))).blue                 = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("channel", "variable_name"))    if(fixtures.size() > int(row.getString("1D"))) 
-        { fixtures.get(int(row.getString("1D"))).channelStart         = int(row.getString("value")); }
+    for (TableRow row : table.findRows("channel", "variable_name"))    if(fixtures.array.size() > int(row.getString("1D"))) 
+        { fixtures.array.get(int(row.getString("1D"))).channelStart         = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("ansaParent", "variable_name")) if(fixtures.size() > int(row.getString("1D"))) 
-        { fixtures.get(int(row.getString("1D"))).parentAnsa           = int(row.getString("value")); }
+    for (TableRow row : table.findRows("ansaParent", "variable_name")) if(fixtures.array.size() > int(row.getString("1D"))) 
+        { fixtures.array.get(int(row.getString("1D"))).parentAnsa           = int(row.getString("value")); }
     
     //--------------------------------------------------------------------------------------------------------------------------------------
     // whatToSave titles: { "dimmer", "colorWheel", "gobo", "goboRotation", "shutter", "pan", "tilt" }

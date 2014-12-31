@@ -86,20 +86,20 @@ void saveAllData() {
     
   }
   saveDataBYPASSZERO(str(fixtures.array.size()), "fixtures.size", "0", "-", "-");
-  for (int i = 0; i < fixtures.size(); i++) {
-      saveDataMainCommands(str(fixtures.get(i).red),           "red", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.get(i).green),         "green", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.get(i).blue),          "blue", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.get(i).x_location),    "xTaka", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.get(i).y_location),    "yTaka", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.get(i).z_location),    "fixZ", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.get(i).rotationX),     "rotX", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.get(i).rotationZ),     "rotTaka", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.get(i).parameter),     "fixParam", "1", str(i), "-");
-      saveDataMainCommands(fixtures.get(i).fixtureType,        "fixtureTypeS", "1", str(i), "-");
-      saveDataBYPASSZERO(str(fixtures.get(i).fixtureTypeId), "fixtureType1", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.get(i).channelStart),  "channel", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.get(i).parentAnsa),    "ansaParent", "1", str(i), "-");
+  for (int i = 0; i < fixtures.array.size(); i++) {
+      saveDataMainCommands(str(fixtures.array.get(i).red),           "red", "1", str(i), "-");
+      saveDataMainCommands(str(fixtures.array.get(i).green),         "green", "1", str(i), "-");
+      saveDataMainCommands(str(fixtures.array.get(i).blue),          "blue", "1", str(i), "-");
+      saveDataMainCommands(str(fixtures.array.get(i).x_location),    "xTaka", "1", str(i), "-");
+      saveDataMainCommands(str(fixtures.array.get(i).y_location),    "yTaka", "1", str(i), "-");
+      saveDataMainCommands(str(fixtures.array.get(i).z_location),    "fixZ", "1", str(i), "-");
+      saveDataMainCommands(str(fixtures.array.get(i).rotationX),     "rotX", "1", str(i), "-");
+      saveDataMainCommands(str(fixtures.array.get(i).rotationZ),     "rotTaka", "1", str(i), "-");
+      saveDataMainCommands(str(fixtures.array.get(i).parameter),     "fixParam", "1", str(i), "-");
+      saveDataMainCommands(fixtures.array.get(i).fixtureType,        "fixtureTypeS", "1", str(i), "-");
+      saveDataBYPASSZERO(str(fixtures.array.get(i).fixtureTypeId), "fixtureType1", "1", str(i), "-");
+      saveDataMainCommands(str(fixtures.array.get(i).channelStart),  "channel", "1", str(i), "-");
+      saveDataMainCommands(str(fixtures.array.get(i).parentAnsa),    "ansaParent", "1", str(i), "-");
   }
   
   
