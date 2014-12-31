@@ -61,10 +61,55 @@ void initSettingsInSetup() {
 }
 
 String[] getSerialList() {
-  String[] toReturn = { "yksi", "kaksi", "kolme", "neljä", "viisi" };
-  toReturn = new String[Serial.list().length];
-  for(int i = 0; i < toReturn.length; i++) {
-    toReturn[i] = Serial.list()[i];
+  return Serial.list();
+}
+
+
+
+
+////////////////////////////////////////SETTINGS//GUI///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class SettingsWindow {
+  
+  SettingsWindow() {
   }
-  return toReturn;
+  
+  int locX, locY;
+  
+  boolean open;
+  
+  void draw() {
+    if(open) {
+      pushMatrix();
+      pushStyle();
+      { // frame & frame controls
+        translate(locX, locY);
+        fill(255, 230);
+        stroke(150);
+        strokeWeight(3);
+        //Box itself
+        rect(0, 0, 300, 300, 20);
+        mouse.declareUpdateElementRelative("settings", "-", 0, 0, 300, 300);
+        mouse.setElementExpire("settings", 2);
+        //Grabable location button
+        fill(180);
+        noStroke();
+        rect(10, 10, 20, 20, 20, 0, 0, 4);
+        mouse.declareUpdateElementRelative("settings:move", "settings", 10, 10, 20, 20);
+        mouse.setElementExpire("settings:move", 2);
+        if(mouse.isCaptured("settings:move")) {
+          locY = constrain(mouseY - pmouseY + locY, 40, height - 340);
+          locX = constrain(mouseX - pmouseX + locX, 40, width - (320 + 168));
+        }
+        
+      }
+      
+      {
+        
+      }
+      popMatrix();
+      popStyle();
+    }
+  }
+  
 }

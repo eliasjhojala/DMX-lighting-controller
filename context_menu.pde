@@ -1,4 +1,5 @@
 
+//////////////////////////////////////////////////////////////CONTEXT//MENU///////////////////////////////////////////////////////////////////////////////////////////////////
 contextMenu contextMenu1 = new contextMenu(this); 
 
 class contextMenu {
@@ -123,37 +124,46 @@ class contextMenuOption {
   
 }
 
-Switch debugSw = new Switch();
+//////////////////////////////////////////////////////////////////////////SWITCH////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Switch {
   
   boolean state;
   color bg, fg;
   
+  String captureName;
+  String ontopofName;
+  
   //Initailize with default settings
   Switch() {
     state = false;
     bg = color(45, 138, 179);
     fg = color(61, 190, 255);
+    captureName = "switch";
+    ontopofName = "main:move";
   }
   
   //Initialize with state
-  Switch(boolean state) {
+  Switch(boolean state, String captureName, String ontopofName) {
     this.state = state;
     bg = color(45, 138, 179);
     fg = color(61, 190, 255);
+    this.captureName = captureName;
+    this.ontopofName = ontopofName;
   }
   
   //Initialize with custom colors
-  Switch(boolean state, color bg, color fg) {
+  Switch(boolean state, color bg, color fg, String captureName, String ontopofName) {
     this.state = state;
     this.bg = bg;
     this.fg = fg;
+    this.captureName = captureName;
+    this.ontopofName = ontopofName;
   }
   
   int animationState = 0;
   void draw() {
-    if(state && animationState < 25) {
+    if(state && animationState < 19) {
       animationState += 3;
     } else
     if(!state && animationState > 0) {
@@ -171,9 +181,11 @@ class Switch {
       fill(80, 150);
       noStroke();
       rect(1.5, 1.5, 30, 10, 5);
-      fill(multiplyColor(bg, float(constrain(animState, 15, 25)) / 25));
+      fill(multiplyColor(bg, float(constrain(animState, 15, 25)) / 19));
       rect(0, 0, 30, 10, 5);
-      if(mousePressed && isHoverSimple(-3, -3, 36, 16)) {
+      mouse.declareUpdateElementRelative(captureName, ontopofName, -3, -3, 36, 16);
+      mouse.setElementExpire(captureName, 2);
+      if(mouse.isCaptured(captureName) && mouse.firstCaptureFrame) {
         state = !state;
         /*todo - capture mouse*/
       }
