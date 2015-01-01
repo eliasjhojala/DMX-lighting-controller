@@ -811,7 +811,7 @@ class soundDetect { //----------------------------------------------------------
     fft.forward(in.mix);
     int toReturn = 0;
     float val = getBand(i);
-    toReturn = round((map(val, avg[i], max[i], 0, 255))); //This is what this function returns
+    toReturn = constrain(round((map(val, avg[i], max[i], 0, 300))), 0, 255); //This is what this function returns
     { //Counting avg values
       avgTemp[i] += val; 
       avgCounter[i]++;
@@ -823,7 +823,7 @@ class soundDetect { //----------------------------------------------------------
     } //End of counting avg values
     
     { //Counting max values
-      if(max[i] > 0.3) { max[i]-=0.01; } //Make sure max isn't too big
+      if(max[i] > 0.5) { max[i]-=0.01; } //Make sure max isn't too big
       if(val > max[i]) { max[i] = val; } //Make sure max isn't too small
     } //End of counting max values
     return toReturn;
