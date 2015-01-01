@@ -790,11 +790,11 @@ class soundDetect { //----------------------------------------------------------
   float[] currentAvg = new float[getFreqMax()];
   float[] currentAvgCounter = new float[getFreqMax()];
   float[] max = new float[getFreqMax()];
+  boolean blinky = true;
   //end initing variables
   
   
   soundDetect() {
-    fft.forward( in.mix );
     bands = new float[fft.specSize()];
   }
   
@@ -811,30 +811,46 @@ class soundDetect { //----------------------------------------------------------
     return toReturn;
   }
   
-  //inside soundDetect class
-  
-  int freq(int i) {
-    fft.forward( in.mix );
+  //inside soundDetect class  
+  int freq(int i) { //Get freq of specific band
+    fft.forward(in.mix);
     int toReturn = 0;
-    float val = fft.getBand(i);
-    toReturn = round((map(val, avg[i], max[i], 0, 255)));
-    avgTemp[i] += val;
-    avgCounter[i]++;
-    if(avgCounter[i] > 2000) {
-      avg[i] = (avg[i] + (avgTemp[i] / avgCounter[i])) / 2;
-      avgTemp[i] = 0;
-      avgCounter[i] = 0;
-    }
+    float val = getBand(i);
+    toReturn = round((map(val, avg[i], max[i], 0, 255))); //This is what this function returns
+    { //Counting avg values
+      avgTemp[i] += val; 
+      avgCounter[i]++;
+      if(avgCounter[i] > 2000) {
+        avg[i] = (avg[i] + (avgTemp[i] / avgCounter[i])) / 2;
+        avgTemp[i] = 0;
+        avgCounter[i] = 0;
+      }
+    } //End of counting avg values
     
-    if(max[i] > 0.1) { max[i]-=0.01; }
-    if(val > max[i]) { max[i] = val; }
+    { //Counting max values
+      if(max[i] > 0.5) { max[i]-=0.01; } //Make sure max isn't too big
+      if(val > max[i]) { max[i] = val; } //Make sure max isn't too small
+    } //End of counting max values
     return toReturn;
     //command to get  right freq from fft or something like it. 
     //This functions should be done now.
+   
   }
   
+  float getBand(int i) {
+    if(blinky) {
+      return log(getRawBand(i));
+    }
+    else {
+      return getRawBand(i);
+    }
+  }
   
-  int getFreqMax() {
+  float getRawBand(int i) {
+    return fft.getBand(i);
+  }
+  
+  int getFreqMax() { //How many bands are available
     int toReturn = fft.specSize();
     return toReturn;
     //command which tells how many frequencies there is available. 
