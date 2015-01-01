@@ -14,7 +14,7 @@ void keyReleased() {
 
 void keyPressed() {
   
-  if(key == 'b') { s2l.blinky = !s2l.blinky; println(s2l.blinky); }
+  if(key == 'b') { boolean b = s2l.blinky; s2l = new soundDetect(); s2l.blinky = !b; }
   
   if(key == 'k') { newColorWash(); }
 
