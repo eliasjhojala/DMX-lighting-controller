@@ -511,8 +511,8 @@ class chase { //Begin of chase class--------------------------------------------
           memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
       if(parent.type == 3) {
-          //fixtures.get(num).dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
-          fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
+          fixtures.get(num).dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
+          //fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
     //  }
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
     }
