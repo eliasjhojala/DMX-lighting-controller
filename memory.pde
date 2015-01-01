@@ -212,7 +212,7 @@ class memory { //Begin of memory class------------------------------------------
 
 //chase mode variables--------------------------------------------------------------------------------------------------------
 
-  String[] outputModeDescs = { "inherit", "steps", "eq", "shaky", "sine", "sSine", "rainbow" };
+  String[] outputModeDescs = { "inherit", "steps", "eq", "shaky", "sine", "sSine", "rainbow", "onoff" };
 
   int[] inputModeLimit = { 1, 3 };
   int[] outputModeLimit = { 1, outputModeDescs.length-1 };
@@ -425,6 +425,7 @@ class chase { //Begin of chase class--------------------------------------------
             case 4: sine(); break;
             case 5: singleSine(); break;
             case 6: rainbow(); break;
+            case 7: beatToLight(); break;
           }
         }
         
@@ -563,21 +564,15 @@ class chase { //Begin of chase class--------------------------------------------
 
   
     
-  
+  int beatToLightValue;
   void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
-    boolean next; //boolean which tells do we want to go to next step
-    next = trigger();
-    if(next) {
-      for(int i = 0; i < getPresets().length; i++) {
-          loadPreset(getPresets()[i], 255);
-      }
+    if(trigger()) {
+      beatToLightValue = 255;
     }
-    else {
       for(int i = 0; i < getPresets().length; i++) {
-         loadPreset(getPresets()[i], 0);
-      }
-    }
-    
+          loadPreset(getPresets()[i], beatToLightValue);
+      } 
+      beatToLightValue = constrain(beatToLightValue-getInvertedValue(fade, 0, 255), 0, 255);
   }
   
 
@@ -828,7 +823,7 @@ class soundDetect { //----------------------------------------------------------
     } //End of counting avg values
     
     { //Counting max values
-      if(max[i] > 0.5) { max[i]-=0.01; } //Make sure max isn't too big
+      if(max[i] > 0.3) { max[i]-=0.01; } //Make sure max isn't too big
       if(val > max[i]) { max[i] = val; } //Make sure max isn't too small
     } //End of counting max values
     return toReturn;

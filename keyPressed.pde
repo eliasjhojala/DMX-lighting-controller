@@ -14,6 +14,8 @@ void keyReleased() {
 
 void keyPressed() {
   
+  if(key == 'b') { s2l.blinky = !s2l.blinky; println(s2l.blinky); }
+  
   if(key == 'k') { newColorWash(); }
 
   
