@@ -134,31 +134,36 @@ class Switch {
   String captureName;
   String ontopofName;
   
+  int locX, locY;
+  
   //Initailize with default settings
-  Switch() {
+  Switch(int locX, int locY) {
     state = false;
     bg = color(45, 138, 179);
     fg = color(61, 190, 255);
     captureName = "switch";
     ontopofName = "main:move";
+    this.locX = locX; this.locY = locY;
   }
   
   //Initialize with state
-  Switch(boolean state, String captureName, String ontopofName) {
+  Switch(boolean state, String captureName, String ontopofName, int locX, int locY) {
     this.state = state;
     bg = color(45, 138, 179);
     fg = color(61, 190, 255);
     this.captureName = captureName;
     this.ontopofName = ontopofName;
+    this.locX = locX; this.locY = locY;
   }
   
   //Initialize with custom colors
-  Switch(boolean state, color bg, color fg, String captureName, String ontopofName) {
+  Switch(boolean state, color bg, color fg, String captureName, String ontopofName, int locX, int locY) {
     this.state = state;
     this.bg = bg;
     this.fg = fg;
     this.captureName = captureName;
     this.ontopofName = ontopofName;
+    this.locX = locX; this.locY = locY;
   }
   
   int animationState = 0;
@@ -173,9 +178,9 @@ class Switch {
     
     pushStyle(); pushMatrix();
     {
-      //-db\
-      translate(10, 50);
-      //-/
+      
+      translate(locX, locY);
+      
       
       //background
       fill(80, 150);

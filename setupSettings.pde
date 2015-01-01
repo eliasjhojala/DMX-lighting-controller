@@ -84,6 +84,8 @@ class SettingsWindow {
   
   boolean open;
   
+  
+  
   final int size = 500;
   
   void draw() {
@@ -131,4 +133,24 @@ class SettingsWindow {
     }
   }
   
+}
+
+class BooleanSettingController {
+  
+  String text;
+  Switch controller;
+  
+  boolean setting;
+  
+  
+  BooleanSettingController(String tx, boolean se) {
+    text = tx;
+    setting = se;
+    controller = new Switch(se, "settings:" + text, "settings", 0, 0);
+  }
+  
+  //Draws and returns true if boolean export changed
+  boolean changed() {
+    
+  }
 }
