@@ -154,12 +154,14 @@ class memoryCreationBox {
   memoryCreationBox(boolean o) {
     open = o;
     locY = 40;
+    locX = width - (320 + 168);
     selectedWhatToSave = new boolean[saveOptionButtonVariables.length];
   }
   
-  void initiate(int slot, int lY) {
+  void initiate(int slot, int lY, int lX) {
     open = true;
     locY = lY;
+    locX = lX;
     selectedMemorySlot = slot;
   }
   

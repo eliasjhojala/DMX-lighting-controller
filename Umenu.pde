@@ -16,6 +16,7 @@ int avgFrameRate = 0;
 void ylavalikko() {
   pushStyle();
   
+  
   //Main bubble size
   int bubS = 250;
   if (inBoundsCircle(0, 0, bubS/2, mouseX, mouseY)) bubS += 10;
@@ -74,7 +75,7 @@ void ylavalikko() {
     pushStyle();
       fill(topMenuTheme2);
       rect(0, 0, 40, 100, 0, round, round, 0);
-      mouse.declareUpdateElementRelative("washButton", 10000000, 0, 0, 40, 100);
+      mouse.declareUpdateElementRelative("washButton", "main:move", 0, 0, 40, 100);
       boolean isHovered = isHover(0, 0, 40, 100);
       boolean isClicked = mouse.isCaptured("washButton") && mouse.firstCaptureFrame;
       if(isClicked) { colorWashMenuOpen = !colorWashMenuOpen; }
@@ -94,7 +95,7 @@ void ylavalikko() {
       popStyle();
     popMatrix();
   popMatrix();
-  
+  settingsWindow.draw();
   popStyle();
   
 }

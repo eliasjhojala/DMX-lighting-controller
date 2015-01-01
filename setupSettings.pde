@@ -69,14 +69,22 @@ String[] getSerialList() {
 
 ////////////////////////////////////////SETTINGS//GUI///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+SettingsWindow settingsWindow = new SettingsWindow(true);
+
 class SettingsWindow {
   
   SettingsWindow() {
   }
   
+  SettingsWindow(boolean open) {
+    this.open = open;
+  }
+  
   int locX, locY;
   
   boolean open;
+  
+  final int size = 500;
   
   void draw() {
     if(open) {
@@ -88,8 +96,8 @@ class SettingsWindow {
         stroke(150);
         strokeWeight(3);
         //Box itself
-        rect(0, 0, 300, 300, 20);
-        mouse.declareUpdateElementRelative("settings", "-", 0, 0, 300, 300);
+        rect(0, 0, size, size, 20);
+        mouse.declareUpdateElementRelative("settings", "main:move", 0, 0, size, size);
         mouse.setElementExpire("settings", 2);
         //Grabable location button
         fill(180);
@@ -98,9 +106,20 @@ class SettingsWindow {
         mouse.declareUpdateElementRelative("settings:move", "settings", 10, 10, 20, 20);
         mouse.setElementExpire("settings:move", 2);
         if(mouse.isCaptured("settings:move")) {
-          locY = constrain(mouseY - pmouseY + locY, 40, height - 340);
-          locX = constrain(mouseX - pmouseX + locX, 40, width - (320 + 168));
+          locY = constrain(mouseY - pmouseY + locY, 40, height - (size+40));
+          locX = constrain(mouseX - pmouseX + locX, 40, width - (size + 20 + 168));
         }
+        //Close button 
+        mouse.declareUpdateElementRelative("settings:close", "settings", 30, 10, 50, 20);
+        mouse.setElementExpire("settings:close", 2);
+        boolean cancelHover = mouse.elmIsHover("settings:close");
+        fill(cancelHover ? 220 : 180, 30, 30);
+        //Close if close is pressed
+        if(mouse.isCaptured("settings:close")) open = false;
+        rect(30, 10, 50, 20, 0, 4, 4, 0);
+        fill(230);
+        textAlign(CENTER);
+        text("Close", 55, 24);
         
       }
       
