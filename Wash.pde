@@ -366,13 +366,13 @@ class colorWash {
       return fixtures.get(i).selected;
     }
     boolean fixtureUseRgb(int i) {
-      return fT(i) == 24 || fT(i) == 25 || fT(i) == 18 || fT(i) == 19;
+      return fixtures.get(i).fixtureUseRgb();
     }
     boolean fixtureUseDim(int i) {
-      return fT(i) == 25 || fT(i) == 19;
+      return fixtures.get(i).fixtureUseDim();
     }
     boolean fixtureUseWhite(int i) {
-      return fT(i) == 25 || fT(i) == 24;
+      return fixtures.get(i).fixtureUseWhite();
     }
     
     boolean useThisFixture(int i) {

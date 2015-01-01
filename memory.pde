@@ -212,7 +212,7 @@ class memory { //Begin of memory class------------------------------------------
 
 //chase mode variables--------------------------------------------------------------------------------------------------------
 
-  String[] outputModeDescs = { "inherit", "steps", "eq", "shaky", "sine", "sSine" };
+  String[] outputModeDescs = { "inherit", "steps", "eq", "shaky", "sine", "sSine", "rainbow" };
 
   int[] inputModeLimit = { 1, 3 };
   int[] outputModeLimit = { 1, outputModeDescs.length-1 };
@@ -424,6 +424,7 @@ class chase { //Begin of chase class--------------------------------------------
             case 3: shake(); break;
             case 4: sine(); break;
             case 5: singleSine(); break;
+            case 6: rainbow(); break;
           }
         }
         
@@ -504,14 +505,14 @@ class chase { //Begin of chase class--------------------------------------------
       oldValue = new int[getPresets().length];
       firstTimeLoading = false;
     }
-    if(val != oldValue[constrain(num, 0, oldValue.length-1)]) { //Maked oldValue array, because getPresetValue casued some problems
+   // if(val != oldValue[constrain(num, 0, oldValue.length-1)]) { //Maked oldValue array, because getPresetValue casued some problems THIS IS ALSO CAUSING SOME PROBLEMS AT LEAST WITH singleSine
       if(parent.type == 2) {
           memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
       if(parent.type == 3) {
           //fixtures.get(num).dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
           fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
-      }
+    //  }
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
     }
   }
@@ -543,6 +544,24 @@ class chase { //Begin of chase class--------------------------------------------
      }
      return toReturn;
   }
+  
+  boolean isQuickChase() {
+    return parent.type == 3;
+  }
+  
+  int loopMap(int val, int in_lo, int in_hi, int out_hi, int offset) {
+    return (int(map(val, in_lo, in_hi, 0, out_hi)) + offset) % out_hi;
+  }
+  
+  void setColor(int i, color c) {
+    if(isQuickChase()) {
+      if(fixtures.get(i).fixtureIsLed()) {
+        fixtures.get(i).setColorForLed(c);
+      }
+    }
+  }
+
+  
     
   
   void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
@@ -621,7 +640,23 @@ class chase { //Begin of chase class--------------------------------------------
     }
     
 
+  }  
+  
+  int hueOffset = 0;
+  void rainbow() {
+    if(true) {
+      pushStyle();
+        colorMode(HSB);
+        hueOffset += getInvertedValue(fade, 0, 255)/10;
+        if(hueOffset > 255) { hueOffset = 0; }
+        for(int i = 0; i < getPresets().length; i++) {
+          color c = color(loopMap(i, 0, getPresets().length-1, 255, hueOffset), 255, 255);
+          setColor(getPresets()[i], c);
+        }
+      popStyle();
+    }
   }
+  
   
   
   
@@ -672,7 +707,7 @@ class chase { //Begin of chase class--------------------------------------------
     sineValue = new int[getPresets().length];
   }
   
-  
+
   
   //Create quickChase-------------------------------------------------------------
   /*Actually this function only saves selected 
@@ -754,6 +789,7 @@ class soundDetect { //----------------------------------------------------------
   float[] currentAvgTemp = new float[getFreqMax()];
   float[] currentAvg = new float[getFreqMax()];
   float[] currentAvgCounter = new float[getFreqMax()];
+  float[] max = new float[getFreqMax()];
   //end initing variables
   
   
@@ -780,21 +816,18 @@ class soundDetect { //----------------------------------------------------------
   int freq(int i) {
     fft.forward( in.mix );
     int toReturn = 0;
-    toReturn = round((map(fft.getBand(i), avg[i], 255, 0, 255))*100);
-    avgTemp[i] += fft.getBand(i);
+    float val = fft.getBand(i);
+    toReturn = round((map(val, avg[i], max[i], 0, 255)));
+    avgTemp[i] += val;
     avgCounter[i]++;
     if(avgCounter[i] > 2000) {
       avg[i] = (avg[i] + (avgTemp[i] / avgCounter[i])) / 2;
       avgTemp[i] = 0;
       avgCounter[i] = 0;
     }
- /* currentAvgTemp[i] += fft.getBand(i);
-    currentAvgCounter[i]++;
-    if(currentAvgCounter[i] > 2) {
-      currentAvg[i] = currentAvgTemp[i] / currentAvgCounter[i];
-      currentAvgTemp[i] = 0;
-      currentAvgCounter[i] = 0;
-    } */
+    
+    if(max[i] > 0.1) { max[i]-=0.01; }
+    if(val > max[i]) { max[i] = val; }
     return toReturn;
     //command to get  right freq from fft or something like it. 
     //This functions should be done now.

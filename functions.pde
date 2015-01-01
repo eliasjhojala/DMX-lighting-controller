@@ -389,7 +389,16 @@ int quickSlider(String mouseLockID, int value) {
       return val < 0 ? 0 : val;
     }
     
+    float onlyPositive(float val) {
+      return val < 0 ? 0 : val;
+    }
+    
     int overZero(int val) {
+      if(val > 0) { return val; }
+      else { return 1; }
+    }
+    
+    float overZero(float val) {
       if(val > 0) { return val; }
       else { return 1; }
     }
@@ -476,6 +485,7 @@ int[] toArray(int a, int b, int c, int d) {
 
 
 
+
 boolean ctrlDown = false; 
 boolean shftDown = false;
 boolean rightPressed = false;
@@ -536,5 +546,16 @@ void mousePressed() {
 void mouseReleased() {
   mouseClicked = false;
   mouseReleased = true;
+}
+
+
+int rRed(color c) {
+  return round(red(c));
+}
+int rGreen(color c) {
+  return round(green(c));
+}
+int rBlue(color c) {
+  return round(blue(c));
 }
 
