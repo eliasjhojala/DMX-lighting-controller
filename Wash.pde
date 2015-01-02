@@ -320,14 +320,14 @@ class colorWash {
         //If onlySelected or onlyList is true then we have to check is fixture selected or in list
         if((!onlySelected && !onlyList) || fixtures.get(i).selected || isInList(i, selectedFixtures)) {
           if(fixtureUseRgb(i)) { //Check that does this fixture use rgb
-            fixtures.get(i).red = rMap(red, 0, 255, 0, val); //Set red value
-            fixtures.get(i).green = rMap(green, 0, 255, 0, val); //Set green value
-            fixtures.get(i).blue = rMap(blue, 0, 255, 0, val); //Set blue value
+            fixtures.get(i).in.setUniversalDMX(DMX_RED, rMap(red, 0, 255, 0, val)); //Set red value
+            fixtures.get(i).in.setUniversalDMX(DMX_GREEN, rMap(green, 0, 255, 0, val)); //Set green value
+            fixtures.get(i).in.setUniversalDMX(DMX_BLUE, rMap(blue, 0, 255, 0, val)); //Set blue value
             if(fixtureUseWhite(i)) { //Check that does this fixture use also white
-              fixtures.get(i).white = rMap(white, 0, 255, 0, val); //set white value
+              fixtures.get(i).in.setUniversalDMX(DMX_WHITE, rMap(white, 0, 255, 0, val)); //set white value
             } //End of white check
             if(fixtureUseDim(i)) { //Check that does this fixture use also dimmer
-              fixtures.get(i).dimmer = rMap(dim, 0, 255, 0, val); //Set dimmer value
+              fixtures.get(i).in.setUniversalDMX(DMX_DIMMER, rMap(dim, 0, 255, 0, val)); //Set dimmer value
             } //End of dimmer check
             fixtures.get(i).DMXChanged = true; //Tell to fixture class that DMX has changed
           } //End of rgb check
@@ -344,9 +344,9 @@ class colorWash {
         if(fixtures.get(i).isHalogen()) {
           //If onlySelected or onlyList is true then we have to check is fixture selected or in list
           if(useThisFixture(i)) { 
-            int r = fixtures.get(i).red;
-            int g = fixtures.get(i).green;
-            int b = fixtures.get(i).blue;
+            int r = fixtures.get(i).in.getUniversalDMX(DMX_RED);
+            int g = fixtures.get(i).in.getUniversalDMX(DMX_GREEN);
+            int b = fixtures.get(i).in.getUniversalDMX(DMX_BLUE);
             if(isAbout(r, red, accuracy) && isAbout(g, green, accuracy) && isAbout(b, blue, accuracy)) { //Check that halogen's colour (foil) is about same colour than selected wash colour
               fixtures.get(i).setDimmer(val); //Put halogen on if it's right-coloured
             } //End of checking is the colour of this fixture right

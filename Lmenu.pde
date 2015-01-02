@@ -87,7 +87,7 @@ void drawFixtureRectangles(int id) {
     text(str(id)+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
     text("Ch " + str(fixtures.get(id).channelStart) , 2, -30); // Channel
     fill(0, 0, 255); //blue color for slider
-    rect(0, 0, 10, (map(fixtures.get(id).dimmer, 0, 255, 0, 30))*(-1)); //Draw slider
+    rect(0, 0, 10, (map(fixtures.get(id).in.getUniversalDMX(1), 0, 255, 0, 30))*(-1)); //Draw slider
     fill(255, 255, 255); //white color for Go button
     rect(10, 0, 49, -15); //Draw Go button
     fill(0, 0, 0); //black color for Go text
@@ -116,7 +116,7 @@ void checkFixtureBoxToggle(int id) { //This void checks Toggle button
   if(isHover(10, -15, 49, -15) && mousePressed && !mouseLocked) { //Check if mouse is on toggle box and clicked and released before it
     mouseLocked = true;
     mouseLocker = "fbox" + id + ":toggle";
-    if(fixtures.get(id).dimmer == 255) { //Check if dimInput is 255
+    if(fixtures.get(id).in.getUniversalDMX(1) == 255) { //Check if dimInput is 255
       fixtures.get(id).setDimmer(0); //If dimInput is at 255 then set it to zero
     }
     else {
@@ -129,8 +129,8 @@ void checkFixtureBoxSlider(int id) {
       mouseLocked = true;
       mouseLocker = "fbox" + id + ":slider";
   } else if(mouseLocked && mouseLocker.equals("fbox" + id + ":slider")) {
-      fixtures.get(id).setDimmer(fixtures.get(id).dimmer + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
-      fixtures.get(id).setDimmer(constrain(fixtures.get(id).dimmer, 0, 255)); //Make sure that dimInput value is between 0-255 
+      fixtures.get(id).setDimmer(fixtures.get(id).in.getUniversalDMX(1) + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
+      fixtures.get(id).setDimmer(constrain(fixtures.get(id).in.getUniversalDMX(1), 0, 255)); //Make sure that dimInput value is between 0-255 
   }
 }
 

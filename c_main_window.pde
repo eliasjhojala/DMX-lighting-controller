@@ -73,7 +73,7 @@ void drawMainWindow() {
              moveLamp = true;
              mouseReleased = false;
            } else {
-            fixtures.get(i).toggle(true);
+          //  fixtures.get(i).toggle(true);
            }
            
          }

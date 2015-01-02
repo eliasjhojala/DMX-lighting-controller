@@ -210,7 +210,7 @@ void draw() {
               }
 
               
-              
+            /*  
               //Draw lights
               for (int i = 0; i < ansaTaka; i++) {
                 //If light is of type par64 OR moving head dim
@@ -255,7 +255,7 @@ void draw() {
                 }
               }
               
-              
+              */
               
               
 }

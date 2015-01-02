@@ -273,16 +273,16 @@ void setValuesToSelected() {
     int a = 0;
     for(int i = 0; i < fixtures.size(); i++) {
       if(fixtures.get(i).selected) {
-        fixtures.get(i).setDimmer(fixtureForSelected[a].dimmer);
-        fixtures.get(i).pan = fixtureForSelected[a].pan;
-        fixtures.get(i).tilt = fixtureForSelected[a].tilt;
-        fixtures.get(i).panFine = fixtureForSelected[a].panFine;
-        fixtures.get(i).tiltFine = fixtureForSelected[a].tiltFine;
-        fixtures.get(i).colorWheel = fixtureForSelected[a].colorWheel;
-        fixtures.get(i).focus = fixtureForSelected[a].focus;
-        fixtures.get(i).prism = fixtureForSelected[a].prism;
-        fixtures.get(i).goboWheel = fixtureForSelected[a].goboWheel;
-        fixtures.get(i).shutter = fixtureForSelected[a].shutter;
+//        fixtures.get(i).setDimmer(fixtureForSelected[a].dimmer);
+//        fixtures.get(i).pan = fixtureForSelected[a].pan;
+//        fixtures.get(i).tilt = fixtureForSelected[a].tilt;
+//        fixtures.get(i).panFine = fixtureForSelected[a].panFine;
+//        fixtures.get(i).tiltFine = fixtureForSelected[a].tiltFine;
+//        fixtures.get(i).colorWheel = fixtureForSelected[a].colorWheel;
+//        fixtures.get(i).focus = fixtureForSelected[a].focus;
+//        fixtures.get(i).prism = fixtureForSelected[a].prism;
+//        fixtures.get(i).goboWheel = fixtureForSelected[a].goboWheel;
+//        fixtures.get(i).shutter = fixtureForSelected[a].shutter;
       }
     }
   }
