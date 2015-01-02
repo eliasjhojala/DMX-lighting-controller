@@ -1,8 +1,4 @@
-//int[] dimInputOld = new int[fixtures.size()]; 
-//int[] dimInputWithMasterOld = new int[fixtures.size()];
-//int[] dimFixturesOld = new int[fixtures.size()];
 boolean dimCheckFinished = true;
-//int[][] valueToDmxTemp = new int[fixtures.size()][fixtures.size()];
 
 final int DMX_CHAN_LENGTH = 512;
 
