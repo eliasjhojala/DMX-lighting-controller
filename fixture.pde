@@ -202,31 +202,7 @@ class fixture {
   boolean fadeComplete = true;
   
   boolean pushWithFadeDown = false;
-  
-/*  void setDimmerWithFade(int val, int pre, int post) {
-    if(val != fadeTarget) {
-      fadeTarget = val;
-      preFade = pre;
-      postFade = post;
-      fadeStartMillis = millis();
-      originalDimmer = dimmer;
-      fadeComplete = false;
-    }
-    
-  }
-  
-  void setDimmerWithFadeInEveryLoop() {
-    if(!fadeComplete) {
-      int timer = round(millis()-fadeStartMillis);
-      if(dimmer < fadeTarget && dimmer < 255) {
-        setDimmerDirectly(constrain(iMap(timer, 0, preFade, originalDimmer, fadeTarget), originalDimmer, fadeTarget));
-      } else
-      if(dimmer > fadeTarget && dimmer > 0) {
-        setDimmerDirectly(constrain(iMap(timer, 0, postFade, originalDimmer, fadeTarget), fadeTarget, originalDimmer));
-      } else fadeComplete = true;
-    }
-  } */
-  
+
 
   
   String fixtureType;
