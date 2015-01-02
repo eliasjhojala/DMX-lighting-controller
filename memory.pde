@@ -212,7 +212,7 @@ class memory { //Begin of memory class------------------------------------------
 
 //chase mode variables--------------------------------------------------------------------------------------------------------
 
-  String[] outputModeDescs = { "inherit", "steps", "eq", "shaky", "sine", "sSine", "rainbow" };
+  String[] outputModeDescs = { "inherit", "steps", "eq", "shaky", "sine", "sSine", "rainbow", "onoff" };
 
   int[] inputModeLimit = { 1, 3 };
   int[] outputModeLimit = { 1, outputModeDescs.length-1 };
@@ -425,6 +425,7 @@ class chase { //Begin of chase class--------------------------------------------
             case 4: sine(); break;
             case 5: singleSine(); break;
             case 6: rainbow(); break;
+            case 7: beatToLight(); break;
           }
         }
         
@@ -510,8 +511,8 @@ class chase { //Begin of chase class--------------------------------------------
           memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
       if(parent.type == 3) {
-          //fixtures.get(num).dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
-          fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
+          fixtures.get(num).dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
+          //fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
     //  }
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
     }
@@ -563,21 +564,15 @@ class chase { //Begin of chase class--------------------------------------------
 
   
     
-  
+  int beatToLightValue;
   void beatToLight() { //This function turns all the lights in chase on if there is beat, else it turns all the lights off
-    boolean next; //boolean which tells do we want to go to next step
-    next = trigger();
-    if(next) {
-      for(int i = 0; i < getPresets().length; i++) {
-          loadPreset(getPresets()[i], 255);
-      }
+    if(trigger()) {
+      beatToLightValue = 255;
     }
-    else {
       for(int i = 0; i < getPresets().length; i++) {
-         loadPreset(getPresets()[i], 0);
-      }
-    }
-    
+          loadPreset(getPresets()[i], beatToLightValue);
+      } 
+      beatToLightValue = constrain(beatToLightValue-getInvertedValue(fade, 0, 255), 0, 255);
   }
   
 
@@ -790,11 +785,11 @@ class soundDetect { //----------------------------------------------------------
   float[] currentAvg = new float[getFreqMax()];
   float[] currentAvgCounter = new float[getFreqMax()];
   float[] max = new float[getFreqMax()];
+  boolean blinky = true;
   //end initing variables
   
   
   soundDetect() {
-    fft.forward( in.mix );
     bands = new float[fft.specSize()];
   }
   
@@ -811,30 +806,46 @@ class soundDetect { //----------------------------------------------------------
     return toReturn;
   }
   
-  //inside soundDetect class
-  
-  int freq(int i) {
-    fft.forward( in.mix );
+  //inside soundDetect class  
+  int freq(int i) { //Get freq of specific band
+    fft.forward(in.mix);
     int toReturn = 0;
-    float val = fft.getBand(i);
-    toReturn = round((map(val, avg[i], max[i], 0, 255)));
-    avgTemp[i] += val;
-    avgCounter[i]++;
-    if(avgCounter[i] > 2000) {
-      avg[i] = (avg[i] + (avgTemp[i] / avgCounter[i])) / 2;
-      avgTemp[i] = 0;
-      avgCounter[i] = 0;
-    }
+    float val = getBand(i);
+    toReturn = constrain(round((map(val, avg[i], max[i], 0, 300))), 0, 255); //This is what this function returns
+    { //Counting avg values
+      avgTemp[i] += val; 
+      avgCounter[i]++;
+      if(avgCounter[i] > 2000) {
+        avg[i] = (avg[i] + (avgTemp[i] / avgCounter[i])) / 2;
+        avgTemp[i] = 0;
+        avgCounter[i] = 0;
+      }
+    } //End of counting avg values
     
-    if(max[i] > 0.1) { max[i]-=0.01; }
-    if(val > max[i]) { max[i] = val; }
+    { //Counting max values
+      if(max[i] > 0.5) { max[i]-=0.01; } //Make sure max isn't too big
+      if(val > max[i]) { max[i] = val; } //Make sure max isn't too small
+    } //End of counting max values
     return toReturn;
     //command to get  right freq from fft or something like it. 
     //This functions should be done now.
+   
   }
   
+  float getBand(int i) {
+    if(blinky) {
+      return log(getRawBand(i));
+    }
+    else {
+      return getRawBand(i);
+    }
+  }
   
-  int getFreqMax() {
+  float getRawBand(int i) {
+    return fft.getBand(i);
+  }
+  
+  int getFreqMax() { //How many bands are available
     int toReturn = fft.specSize();
     return toReturn;
     //command which tells how many frequencies there is available. 
