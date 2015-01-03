@@ -168,6 +168,7 @@ class fixture {
     for(int i = 0; i < in.DMXlength; i++) {
         out.setUniversalDMX(i, in.getUniversalDMX(i));
     }
+    DMXChanged = true;
   }
   
   boolean fixtureUseRgb() {
@@ -335,8 +336,10 @@ class fixture {
       dimmerLast = out.dimmer;
     } else if(isHalogen()) { out.dimmer = int(map(dimmerLast, 0, 255, 0, grandMaster)); } */
     
-    int[] dmxChannels = out.getDMX();
-    dmxChannels[0] = 255;
+    int[] dmxChannels = new int[out.getDMX().length];
+    for(int i = 0; i < dmxChannels.length; i++) {
+      dmxChannels[i] = in.getDMX()[i];
+    }
  //   out.dimmer = tempDimmer;
     return dmxChannels; 
   }
