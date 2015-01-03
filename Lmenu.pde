@@ -104,12 +104,12 @@ void checkFixtureBoxGo(int id) { //This void checks Go button
   if(isHover(10, 0, 49, -15) && mousePressed && !mouseLocked) { //Check if mouse is on go box
       mouseLocked = true;
       mouseLocker = "fbox" + id + ":go";
-      fixtures.get(id).setDimmer(255); //Set dimInput value to max
+      fixtures.get(id).in.setDimmer(255); //Set dimInput value to max
     
   } else
   if(!mousePressed && mouseLocker.equals("fbox" + id + ":go")) { //Check if mouse is released
     mouseLocker = ":";
-    fixtures.get(id).setDimmer(0); //Set dimInput value to min
+    fixtures.get(id).in.setDimmer(0); //Set dimInput value to min
    }
 }
 void checkFixtureBoxToggle(int id) { //This void checks Toggle button
@@ -117,10 +117,10 @@ void checkFixtureBoxToggle(int id) { //This void checks Toggle button
     mouseLocked = true;
     mouseLocker = "fbox" + id + ":toggle";
     if(fixtures.get(id).in.getUniversalDMX(1) == 255) { //Check if dimInput is 255
-      fixtures.get(id).setDimmer(0); //If dimInput is at 255 then set it to zero
+      fixtures.get(id).in.setDimmer(0); //If dimInput is at 255 then set it to zero
     }
     else {
-      fixtures.get(id).setDimmer(255); //If dimInput is not at max value then set it to max
+      fixtures.get(id).in.setDimmer(255); //If dimInput is not at max value then set it to max
     }
   }
 }
@@ -129,8 +129,8 @@ void checkFixtureBoxSlider(int id) {
       mouseLocked = true;
       mouseLocker = "fbox" + id + ":slider";
   } else if(mouseLocked && mouseLocker.equals("fbox" + id + ":slider")) {
-      fixtures.get(id).setDimmer(fixtures.get(id).in.getUniversalDMX(1) + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
-      fixtures.get(id).setDimmer(constrain(fixtures.get(id).in.getUniversalDMX(1), 0, 255)); //Make sure that dimInput value is between 0-255 
+      fixtures.get(id).in.setDimmer(fixtures.get(id).in.getUniversalDMX(1) + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
+      fixtures.get(id).in.setDimmer(constrain(fixtures.get(id).in.getUniversalDMX(1), 0, 255)); //Make sure that dimInput value is between 0-255 
   }
 }
 
@@ -242,7 +242,7 @@ void openBottomMenuControlBox(int owner) {
     break;
   }
   if (successInit) {
-    bottomMenuControlBoxDMXValues = fixtures.get(owner).getDMX();
+    bottomMenuControlBoxDMXValues = fixtures.get(owner).in.getDMX();
     bottomMenuControlBoxDMXValueChanged = new boolean[bottomMenuControlBoxDMXValues.length];
   }
 }
@@ -325,7 +325,7 @@ void submitDMXFromBMCB(int[] input) {
     fixtureForSelected[0].receiveDMX(input);
     setValuesToSelected();
   } else {
-    fixtures.get(currentBottomMenuControlBoxOwner).receiveDMX(input);
+    fixtures.get(currentBottomMenuControlBoxOwner).in.receiveDMX(input);
   }
 }
 

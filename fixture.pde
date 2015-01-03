@@ -110,9 +110,9 @@ class fixture {
   int frequency; //Strobe freq value
   int special1, special2, special3, special4; //Some special values for strange fixtures
   
-  FixtureDMX in = new FixtureDMX();
-  FixtureDMX process = new FixtureDMX();
-  FixtureDMX out = new FixtureDMX();
+  FixtureDMX in;
+  FixtureDMX process;
+  FixtureDMX out;
   
   
   //Fade[] fades = new Fade[10];
@@ -164,9 +164,11 @@ class fixture {
 //    }
 //  }
 
-void processDMXvalues() {
-  out.setUniversalDMX(in.getUniversalDMX());
-}
+  void processDMXvalues() {
+    for(int i = 0; i < in.DMXlength; i++) {
+        out.setUniversalDMX(i, in.getUniversalDMX(i));
+    }
+  }
   
   boolean fixtureUseRgb() {
     int fT = fixtureTypeId;
@@ -193,10 +195,10 @@ void processDMXvalues() {
   }
   
   void setColor(int c) {
-//    red = rRed(c);
-//    green = rGreen(c);
-//    blue = rBlue(c);
-//    DMXChanged = true;
+    in.red = rRed(c);
+    in.green = rGreen(c);
+    in.blue = rBlue(c);
+    DMXChanged = true;
   }
   
   long fadeStartMillis;
@@ -219,6 +221,12 @@ void processDMXvalues() {
   
   int parentAnsa;
   
+  
+  void createDMXobjects() {
+    in = new FixtureDMX(this);
+    process = new FixtureDMX(this);
+    out = new FixtureDMX(this);
+  }
 
   //Initialization----------------------------------------------------------------------------
   
@@ -226,12 +234,14 @@ void processDMXvalues() {
   fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int param, String fixtType) {
    fixtureType = fixtType;
    initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, ch, parentA, param, getFixtureTypeId());
+   createDMXobjects();
   }
   
   //Type in int
   fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int param, int fixtTypeId) {
     initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, ch, parentA, param, fixtTypeId);
     fixtureType = getFixtureNameByType(fixtTypeId);
+    createDMXobjects();
   }
   
   //Empty fixture
@@ -279,13 +289,23 @@ void processDMXvalues() {
   //Returns raw fixture color in type color
   
   color getRawColor() {
-    return color(red, green, blue);
+    if(!isHalogen()) {
+      return color(out.red, out.green, out.blue);
+    }
+    else {
+      return color(red, green, blue);
+    }
   }
   
   //Returns dimmed fixture color in type color
   color getColor_wDim() {
     int dwm = getDimmerWithMaster();
-    return color(map(out.red, 0, 255, 0, dwm), map(out.green, 0, 255, 0, dwm), map(out.blue, 0, 255, 0, dwm));
+    if(!isHalogen()) {
+      return color(map(out.red, 0, 255, 0, dwm), map(out.green, 0, 255, 0, dwm), map(out.blue, 0, 255, 0, dwm));
+    }
+    else {
+      return color(map(red, 0, 255, 0, dwm), map(green, 0, 255, 0, dwm), map(blue, 0, 255, 0, dwm));
+    }
   }
   
   
@@ -300,37 +320,24 @@ void processDMXvalues() {
   
   
   int[] getDMX() {
-   int[] dmxChannels = new int[30];
-      switch(fixtureTypeId) {
-       /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: dmxChannels = new int[1]; dmxChannels[0] = dimmer; break; //dimmers
-       /* MH-X50 14-channel mode */        case 16: dmxChannels = new int[14]; dmxChannels[0] = pan; dmxChannels[1] = tilt; dmxChannels[2] = panFine; dmxChannels[3] = tiltFine; dmxChannels[4] = responseSpeed; dmxChannels[5] = colorWheel; dmxChannels[6] = shutter; dmxChannels[7] = dimmer; dmxChannels[8] = goboWheel; dmxChannels[9] = goboRotation; dmxChannels[10] = specialFunctions; dmxChannels[11] = autoPrograms; dmxChannels[12] = prism; dmxChannels[13] = focus; break; //MH-X50
-       /* MH-X50 8-channel mode */         case 17: dmxChannels = new int[8]; dmxChannels[0] = pan; dmxChannels[1] = tilt; dmxChannels[2] = colorWheel; dmxChannels[3] = shutter; dmxChannels[4] = goboWheel; dmxChannels[5] = goboRotation; dmxChannels[6] = prism; dmxChannels[7] = focus; break; //MH-X50 8-ch mode
-       /* simple rgb led par */            case 18: dmxChannels = new int[3]; dmxChannels[0] = red; dmxChannels[1] = green; dmxChannels[2] = blue; break; //Simple rgb led par
-       /* simple rgb led par with dim */   case 19: dmxChannels = new int[4]; dmxChannels[0] = dimmer; dmxChannels[1] = red; dmxChannels[2] = green; dmxChannels[3] = blue; break; //Simple rgb led par with dim
-       /* 2ch hazer */                     case 20: dmxChannels = new int[2]; dmxChannels[0] = haze; dmxChannels[1] = fan; break; //2ch hazer
-       /* 1ch fog */                       case 21: dmxChannels = new int[1]; dmxChannels[0] = fog; break; //1ch fog
-       /* 2ch strobe */                    case 22: dmxChannels = new int[2]; dmxChannels[0] = dimmer; dmxChannels[1] = frequency; break; //2ch strobe
-       /* 1ch relay */                     case 23: dmxChannels = new int[1]; if(dimmer > 100) { dmxChannels[0] = 255; } else { dmxChannels[0] = 0; } break; //1ch relay
-       /* rgbw led par */                  case 24: dmxChannels = new int[4]; dmxChannels[0] = red; dmxChannels[1] = green; dmxChannels[2] = blue; dmxChannels[3] = white; break; //rgbw
-       /* rgbwd led par */                 case 25: dmxChannels = new int[5]; dmxChannels[0] = red; dmxChannels[1] = green; dmxChannels[2] = blue; dmxChannels[3] = white; dmxChannels[4] = dimmer; break; //rgbwd
-      }
-    return dmxChannels; 
+    return out.getDMX(); 
   }
   
   int dimmerLast = 0;
   int[] getDMXforOutput() {
     
     //We're going to temporarily modify the dimmer variable to suit our needs
-    int tempDimmer = dimmer;
-    if(abs(dimmer - dimmerLast) >= 5) {
-      dimmer = getDimmerWithMaster();
-      if(dimmer < 5) dimmer = 0;
-      if(dimmer > 250) dimmer = 255;
-      dimmerLast = dimmer;
-    } else if(isHalogen()) { dimmer = int(map(dimmerLast, 0, 255, 0, grandMaster)); }
+ /*   int tempDimmer = out.dimmer;
+    if(abs(out.dimmer - dimmerLast) >= 5) {
+      out.dimmer = getDimmerWithMaster();
+      if(out.dimmer < 5) out.dimmer = 0;
+      if(out.dimmer > 250) out.dimmer = 255;
+      dimmerLast = out.dimmer;
+    } else if(isHalogen()) { out.dimmer = int(map(dimmerLast, 0, 255, 0, grandMaster)); } */
     
-    int[] dmxChannels = getDMX();
-    dimmer = tempDimmer;
+    int[] dmxChannels = out.getDMX();
+    dmxChannels[0] = 255;
+ //   out.dimmer = tempDimmer;
     return dmxChannels; 
   }
   
@@ -364,22 +371,8 @@ void processDMXvalues() {
   
   //Returns true if operation is succesful
   boolean receiveDMX(int[] dmxChannels) {
-    try {
-      switch(fixtureTypeId) {
-           /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: dimmer = dmxChannels[0]; break; //dimmers
-           /* MH-X50 14-channel mode */        case 16: pan = dmxChannels[0]; tilt = dmxChannels[1]; panFine = dmxChannels[2]; tiltFine = dmxChannels[3]; responseSpeed = dmxChannels[4]; colorWheel = dmxChannels[5]; shutter = dmxChannels[6]; dimmer = dmxChannels[7]; goboWheel = dmxChannels[8]; goboRotation = dmxChannels[9]; specialFunctions = dmxChannels[10]; autoPrograms = dmxChannels[11]; prism = dmxChannels[12]; focus = dmxChannels[13]; setColorValuesFromDmxValue(colorWheel); break; //MH-X50
-           /* MH-X50 8-channel mode */         case 17: pan = dmxChannels[0]; tilt = dmxChannels[1]; colorWheel = dmxChannels[2]; shutter = dmxChannels[3]; dimmer = shutter; goboWheel = dmxChannels[4]; goboRotation = dmxChannels[5]; prism = dmxChannels[6]; focus = dmxChannels[7]; setColorValuesFromDmxValue(colorWheel); break; //MH-X50 8-ch mode
-           /* simple rgb led par */            case 18: red = dmxChannels[0]; green = dmxChannels[1]; blue = dmxChannels[2]; break; //Simple rgb led par
-           /* simple rgb led par with dim */   case 19: dimmer = dmxChannels[0]; red = dmxChannels[1]; green = dmxChannels[2]; blue = dmxChannels[3]; break; //Simple rgb led par with dim
-           /* 2ch hazer */                     case 20: haze = dmxChannels[0]; fan = dmxChannels[1]; dimmer = (haze + fan) / 2; break; //2ch hazer
-           /* 1ch fog */                       case 21: fog = dmxChannels[0]; dimmer = fog; break; //1ch fog
-           /* rgbw led par */                  case 24: red = dmxChannels[0]; green = dmxChannels[1]; blue = dmxChannels[2]; white = dmxChannels[3]; break; //rgbw led par
-           /* rgbwd led par */                 case 25: red = dmxChannels[0]; green = dmxChannels[1]; blue = dmxChannels[2]; white = dmxChannels[3]; dimmer = dmxChannels[4]; break; //rgbwd led par
-        }
-      } catch(Exception e) { e.printStackTrace(); return false; }
-      DMXChanged = true;
-      return true;
-      
+    //return in.receiveDMX(dmxChannels);
+    return true;
   }
   
    void setColorValuesFromDmxValue(int a) {

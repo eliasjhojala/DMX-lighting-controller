@@ -16,7 +16,7 @@ void setDimAndMemoryValuesAtEveryDraw() {
   
   
   boolean DMXChangedOverall = false;
-  for(int ai = 0; ai < fixtures.size(); ai++) {
+for(int ai = 0; ai < fixtures.size(); ai++) {
     fixture fix = fixtures.get(ai);
     if(fix.DMXChanged) {
       DMXChangedOverall = true;
@@ -29,7 +29,7 @@ void setDimAndMemoryValuesAtEveryDraw() {
       fix.DMXChanged = false;
     }
   }
-  if(true) {
+ if(true) {
     for(int ai = 0; ai < fixtures.size(); ai++) {
       fixture fix = fixtures.get(ai);
       int[] toFixture = new int[fix.getDMXLength()];
@@ -39,9 +39,8 @@ void setDimAndMemoryValuesAtEveryDraw() {
       fix.receiveDMX(toFixture);
       fix.DMXChanged = false;
     }
-  }
-  
-  
+  } 
+
 
   { // Memory checks --->
   
