@@ -150,6 +150,8 @@ class memory { //Begin of memory class------------------------------------------
   
   
   void savePreset(boolean[] newWhatToSave) {
+    //Scared of AIOOBs with this part of code
+    /*
     arrayCopy(newWhatToSave, whatToSave);
       for(int i = 0; i < fixtures.size(); i++) {
       repOfFixtures[i] = new FixtureDMX();
@@ -162,6 +164,7 @@ class memory { //Begin of memory class------------------------------------------
       }
     }
     type = 1;
+    */
   }
 
 
