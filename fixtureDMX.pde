@@ -57,6 +57,9 @@ class FixtureDMX { //Class containig all the dmx values
   FixtureDMX(fixture parent) {
     this.parent = parent;
   }
+  
+  FixtureDMX() {
+  }
 
   
  

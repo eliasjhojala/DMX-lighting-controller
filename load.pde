@@ -113,13 +113,13 @@ for (TableRow row : table.findRows("memories[i].repOfFixtures.length", "variable
   repOfFixturesLength[D1] = v;
 }
 
-for(int i = 0; i < memoriesLength; i++) {
+/*for(int i = 0; i < memoriesLength; i++) {
   memories[i] = new memory();
   memories[i].repOfFixtures = new fixture[repOfFixturesLength[i]];
   for(int ij = 0; ij < repOfFixturesLength[i]; ij++) {
     memories[i].repOfFixtures[ij] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
-}
+}*/
 
 //memory objects and repOfFixtures objects are now created but NOT myChase.presets objects
 

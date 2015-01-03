@@ -50,14 +50,14 @@ class memory { //Begin of memory class------------------------------------------
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
   
   
-  fixture[] repOfFixtures = new fixture[fixtures.size()];
+  FixtureDMX[] repOfFixtures = new FixtureDMX[fixtures.size()];
   
   chase myChase;
   
   memory() {
     myChase = new chase(this);
     for(int i = 0; i < repOfFixtures.length; i++) {
-      repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+      repOfFixtures[i] = new FixtureDMX();
     }
   }
   
@@ -152,20 +152,13 @@ class memory { //Begin of memory class------------------------------------------
   void savePreset(boolean[] newWhatToSave) {
     arrayCopy(newWhatToSave, whatToSave);
       for(int i = 0; i < fixtures.size(); i++) {
-      repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+      repOfFixtures[i] = new FixtureDMX();
   }
     for (int i = 0; i < fixtures.size(); i++) {
-      if(whatToSave[0]) {
-       repOfFixtures[i].dimmer = fixtures.get(i).dimmer;
-      }
-      if(whatToSave[7]) {
-       repOfFixtures[i].haze = fixtures.get(i).haze;
-      }
-      if(whatToSave[8]) {
-       repOfFixtures[i].fan = fixtures.get(i).fan;
-      }
-      if(whatToSave[9]) {
-       repOfFixtures[i].fog = fixtures.get(i).fog;
+      for(int j = 0; j < fixtures.get(i).out.DMXlength; i++) {
+        if(whatToSave[j]) {
+          repOfFixtures[i].setUniversalDMX(j, fixtures.get(i).out.getUniversalDMX(j));
+        }
       }
     }
     type = 1;
@@ -179,25 +172,14 @@ class memory { //Begin of memory class------------------------------------------
 
   void loadPreset() {
     if(type == 1) {
-    
-      for (int i = 0; i < fixtures.size(); i++) if(repOfFixtures.length > i) {
-        
-        if(whatToSave[0] && repOfFixtures[i] != null) {
-          int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
-          if(val > fixtures.get(i).dimmerPresetTarget) {
-            fixtures.get(i).dimmerPresetTarget = val;
+      //The following part of code makes AIOOBs so I commented it
+      /*for(int i = 0; i < fixtures.size(); i++) {
+        for(int j = 0; j < fixtures.get(i).out.DMXlength; i++) {
+          if(whatToSave[j]) {
+            fixtures.get(i).out.setUniversalDMX(j, repOfFixtures[i].getUniversalDMX(j));
           }
         }
-        if(whatToSave[7] && repOfFixtures[i] != null) {
-          fixtures.get(i).haze = int(map(repOfFixtures[i].haze, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
-        }
-        if(whatToSave[8] && repOfFixtures[i] != null) {
-          fixtures.get(i).fan = int(map(repOfFixtures[i].fan, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
-        }
-        if(whatToSave[9] && repOfFixtures[i] != null) {
-          fixtures.get(i).fog = int(map(repOfFixtures[i].fog, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
-        }
-      }
+      }*/
     }
   }
 

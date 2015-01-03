@@ -4,7 +4,11 @@ boolean setValuesToSelectedFixtures = true;
 boolean createFinalValuesPlease;
 boolean saveDimmerValue;
 
-String[] saveOptionButtonVariables = { "dimmer", "colorWheel", "gobo", "goboRotation", "shutter", "pan", "tilt", "haze", "fan", "fog" };
+String[] saveOptionButtonVariables = { "dimmer", "red", "green", "blue", "white", "amber", "pan", "tilt", "panFine", "tiltFine", 
+"colorWheel", "goboWheel", "goboRotation", "prism", "focus", "shutter", "strobe", "frequency", "responseSpeed", 
+"autoPrograms", "specialFunctions", "haze", "fan", "fog", "special1", "special2", "special3", "special4" };
+
+
 boolean[] saveOptionButtonVariableValues = new boolean[saveOptionButtonVariables.length];
 boolean[][] whatToSave = new boolean[numberOfMemories][saveOptionButtonVariables.length];
  
