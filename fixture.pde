@@ -305,10 +305,7 @@ class fixture {
   color getColor_wDim() {
     int dwm = getDimmerWithMaster();
     if(!isHalogen()) {
-      if(fixtureUseDim()) {
-        return color(map(out.red, 0, 255, 0, dwm), map(out.green, 0, 255, 0, dwm), map(out.blue, 0, 255, 0, dwm));
-      }
-      else { (!fixtureUseDim()) { return color(out.red, out.green, out.blue); }
+      return color(map(out.red, 0, 255, 0, dwm), map(out.green, 0, 255, 0, dwm), map(out.blue, 0, 255, 0, dwm));
     }
     else {
       return color(map(red, 0, 255, 0, dwm), map(green, 0, 255, 0, dwm), map(blue, 0, 255, 0, dwm));
