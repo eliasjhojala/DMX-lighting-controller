@@ -268,7 +268,6 @@ boolean inBoundsCircle(int cPosX, int cPosY, int cRadius, int pointerX, int poin
 
 
 void setValuesToSelected() {
-  
   if (bottomMenuAllFixtures && bottomMenuControlBoxOpen) {
     int a = 0;
     for(int i = 0; i < fixtures.size(); i++) {
@@ -276,17 +275,6 @@ void setValuesToSelected() {
         for(int j = 0; j < fixtures.get(i).in.DMXlength; j++) {
           fixtures.get(i).in.setUniversalDMX(j, fixtureForSelected[a].in.getUniversalDMX(j));
         }
-//        fixtures.get(i).in.setDimmer(fixtureForSelected[a].in.dimmer);
-//        fixtures.get(i).in.pan = fixtureForSelected[a].in.pan;
-//        fixtures.get(i).in.tilt = fixtureForSelected[a].in.tilt;
-//        fixtures.get(i).in.panFine = fixtureForSelected[a].in.panFine;
-//        fixtures.get(i).in.tiltFine = fixtureForSelected[a].in.tiltFine;
-//        fixtures.get(i).in.colorWheel = fixtureForSelected[a].in.colorWheel;
-//        fixtures.get(i).in.focus = fixtureForSelected[a].in.focus;
-//        fixtures.get(i).in.prism = fixtureForSelected[a].in.prism;
-//        fixtures.get(i).in.goboWheel = fixtureForSelected[a].in.goboWheel;
-//        fixtures.get(i).in.shutter = fixtureForSelected[a].in.shutter;
-//        fixtures.get(i).in.DMXChanged = true;
       }
     }
   }
