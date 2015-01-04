@@ -56,6 +56,9 @@ class memory { //Begin of memory class------------------------------------------
   
   memory() {
     myChase = new chase(this);
+    for(int i = 0; i < repOfFixtures.length; i++) {
+      repOfFixtures[i] = new FixtureDMX();
+    }
   }
   
   
@@ -176,7 +179,10 @@ class memory { //Begin of memory class------------------------------------------
         valueOld = value;
         for(int i = 0; i < fixtures.size(); i++) {
           for(int jk = 0; jk < fixtures.get(i).out.DMXlength; jk++) {
-            fixtures.get(i).in.setUniversalDMX(jk, rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value));
+            int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
+            if(val > fixtures.get(i).preset.getUniversalDMX(jk)) {
+              fixtures.get(i).preset.setUniversalDMX(jk, rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value));
+            }
           }
         }
       }
@@ -805,7 +811,7 @@ class soundDetect { //----------------------------------------------------------
     } //End of counting avg values
     
     { //Counting max values
-      if(max[i] > 0.5) { max[i]-=0.01; } //Make sure max isn't too big
+      if(max[i] > 0.3) { max[i]-=0.01; } //Make sure max isn't too big
       if(val > max[i]) { max[i] = val; } //Make sure max isn't too small
     } //End of counting max values
     return toReturn;

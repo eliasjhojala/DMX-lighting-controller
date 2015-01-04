@@ -117,6 +117,8 @@ class fixture {
   
   
   //Fade[] fades = new Fade[10];
+  
+  
  
   void setDimmer(int val) { 
     in.setDimmer(val);
