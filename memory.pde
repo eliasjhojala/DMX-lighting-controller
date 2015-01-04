@@ -43,7 +43,7 @@ class memory { //Begin of memory class------------------------------------------
   
   
   //chase variables
-  int value, valueOld; //memorys value
+  int value; //memorys value
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
 
   
@@ -56,6 +56,9 @@ class memory { //Begin of memory class------------------------------------------
   
   memory() {
     myChase = new chase(this);
+    for(int i = 0; i < repOfFixtures.length; i++) {
+      repOfFixtures[i] = new FixtureDMX();
+    }
   }
   
   
@@ -147,20 +150,21 @@ class memory { //Begin of memory class------------------------------------------
   
   
   void savePreset(boolean[] newWhatToSave) {
-    
+    //Scared of AIOOBs with this part of code
+    /*
     arrayCopy(newWhatToSave, whatToSave);
-    
-    for(int i = 0; i < fixtures.size(); i++) {
-        repOfFixtures[i] = new FixtureDMX();
-    }
-      
-    for(int i = 0; i < fixtures.size(); i++) {
-      for(int jk = 0; jk < fixtures.get(i).out.DMXlength; jk++) {
-        repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).out.getUniversalDMX(jk));
+      for(int i = 0; i < fixtures.size(); i++) {
+      repOfFixtures[i] = new FixtureDMX();
+  }
+    for (int i = 0; i < fixtures.size(); i++) {
+      for(int j = 0; j < fixtures.get(i).out.DMXlength; i++) {
+        if(whatToSave[j]) {
+          repOfFixtures[i].setUniversalDMX(j, fixtures.get(i).out.getUniversalDMX(j));
+        }
       }
     }
     type = 1;
-    
+    */
   }
 
 
@@ -172,16 +176,15 @@ class memory { //Begin of memory class------------------------------------------
   void loadPreset() {
     if(type == 1) {
       //The following part of code makes AIOOBs so I commented it
-      if(value != valueOld) { //overwirtecheck
-        valueOld = value;
-        for(int i = 0; i < fixtures.size(); i++) {
-          for(int jk = 0; jk < fixtures.get(i).out.DMXlength; jk++) {
-            fixtures.get(i).in.setUniversalDMX(jk, rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value));
+      /*for(int i = 0; i < fixtures.size(); i++) {
+          for(int j = 0; j < fixtures.get(i).out.DMXlength; i++) {
+            if(whatToSave[j]) {
+              fixtures.get(i).out.setUniversalDMX(j, repOfFixtures[i].getUniversalDMX(j));
+            }
           }
-        }
+        }*/
       }
     }
-  }
 
   
   

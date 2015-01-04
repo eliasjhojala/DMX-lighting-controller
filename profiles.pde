@@ -51,10 +51,10 @@ String[] getChNamesByFixType(int fT) {
       case 19: tR = new String[4]; arrayCopy(returnRGB(), tR); tR[3] = "Dimmer"; break; //RGBD.par
       case 20: String[] tR20 = {"Haze", "Fan"}; tR = new String[tR20.length]; arrayCopy(tR20, tR); break; //Hazer
       case 21: String[] tR21 = {"Fog"}; tR = new String[tR21.length]; arrayCopy(tR21, tR); break; //Fog machine
-      case 24: case 26: tR = new String[4]; arrayCopy(returnRGB(), tR); tR[3] = "White"; break; //RGBW.par and also Stairville RGBW 4ch
-      case 25: tR = new String[5]; arrayCopy(returnRGB(), tR); tR[3] = "White"; tR[4] = "Dimmer"; break; //RGBWD.par
-      case 27: String[] tR27 = {"Mode", "Red", "Green", "Blue", "White", "Effect"}; tR = new String[tR27.length]; arrayCopy(tR27, tR); break; //Stairville RGBW 6ch
-      case 28: String[] tR28 = {"Red", "Green", "Blue", "White", "Color", "Strobe", "Mode", "Dimmer"}; tR = new String[tR28.length]; arrayCopy(tR28, tR); break; //Stairville RGBW 8ch
+      case 24: tR = new String[4]; arrayCopy(returnRGB(), tR); tR[3] = "White"; break; //RGBW.par
+//      case 25: case 26: tR = new String[5]; arrayCopy(returnRGB(), tR); tR[3] = "White"; tR[4] = "Dimmer"; break; //RGBWD.par and also Stairville RGBW 4ch
+//      case 27: String[] tR26 = {"Mode", "Red", "Green", "Blue", "White", "Effect"}; tR = new String[tR26.length]; arrayCopy(tR26, tR); break; //Stairville RGBW 6ch
+//      case 28: String[] tR28 = {"Red", "Green", "Blue", "White", "Effect", "Color", "Strobe", "Mode", "Dimmer"}; tR = new String[tR28.length]; arrayCopy(tR28, tR); break; //Stairville RGBW 8ch
     }
   return tR;
 }

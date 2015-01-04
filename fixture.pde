@@ -175,12 +175,12 @@ class fixture {
   
   boolean fixtureUseRgb() {
     int fT = fixtureTypeId;
-    return (fT >= 24 && fT <= 28) || fT == 18 || fT == 19;
+    return fT == 24 || fT == 25 || fT == 18 || fT == 19;
   }
     
   boolean fixtureUseDim() {
     int fT = fixtureTypeId;
-    return fT == 28 || fT == 25 || fT == 19;
+    return fT == 25 || fT == 19;
   }
   boolean fixtureUseWhite() {
     int fT = fixtureTypeId;
@@ -308,7 +308,7 @@ class fixture {
       if(fixtureUseDim()) {
         return color(map(out.red, 0, 255, 0, dwm), map(out.green, 0, 255, 0, dwm), map(out.blue, 0, 255, 0, dwm));
       }
-      else { return color(out.red, out.green, out.blue); }
+      else { (!fixtureUseDim()) { return color(out.red, out.green, out.blue); }
     }
     else {
       return color(map(red, 0, 255, 0, dwm), map(green, 0, 255, 0, dwm), map(blue, 0, 255, 0, dwm));
