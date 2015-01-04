@@ -115,8 +115,7 @@ class fixture {
   FixtureDMX out;
   FixtureDMX preset;
   
-  
-  //Fade[] fades = new Fade[10];
+
   
   
  
@@ -128,36 +127,12 @@ class fixture {
    void processDMXvalues() {
     preset.presetProcess();
     for(int i = 0; i < in.DMXlength; i++) {
-
-       
+      //TODO: overwriteCHECK
+        out.setUniversalDMX(i, in.getUniversalDMX(i));
     }
     DMXChanged = true;
   }
-  
-  
-  /*void setDimmer(int val) { 
-    //setDimmerDirectly(val);
-   // setDimmerWithFade(val, preFadeSpeed, postFadeSpeed);
-   if(val != dimmer) {
-     if(fades[0] != null) {
-       if(val != fades[0].targetValue) {
-         fades[0].startFade(dimmer, val, preFadeSpeed, postFadeSpeed);
-       }
-     }
-     else {
-       fades[0] = new Fade(dimmer, val, preFadeSpeed, postFadeSpeed);
-     }
-   }
-  }
-  
-  void setFadeValues() {
-    if(fades[0] != null) {
-      fades[0].countActualValue();
-      if(!fades[0].isCompleted()) {
-        setDimmerDirectly(fades[0].getActualValue());
-      }
-    }
-  } */
+
   
   void toggle(boolean down) {
     if(down) {
