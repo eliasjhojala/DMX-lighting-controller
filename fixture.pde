@@ -100,8 +100,8 @@ class fixture {
   int locationOnScreenX, locationOnScreenY;
   int rotationX, rotationZ;
   int parameter;
-  int preFadeSpeed = 1000;
-  int postFadeSpeed = 5000;
+  int preFadeSpeed = 100;
+  int postFadeSpeed = 500;
   
   int red, green, blue, white, amber; //color values
   int pan, tilt, panFine, tiltFine; //rotation values
@@ -123,18 +123,6 @@ class fixture {
   void setDimmer(int val) { 
     in.setDimmer(val);
   }
-  
-  
-   void processDMXvalues() {
-    preset.presetProcess();
-    for(int i = 0; i < in.DMXlength; i++) {
-
-       
-    }
-    DMXChanged = true;
-  }
-  
-  
   /*void setDimmer(int val) { 
     //setDimmerDirectly(val);
    // setDimmerWithFade(val, preFadeSpeed, postFadeSpeed);
@@ -179,7 +167,13 @@ class fixture {
     }
   }
 
- 
+  void processDMXvalues() {
+    preset.presetProcess();
+    for(int i = 0; i < in.DMXlength; i++) {
+        out.setUniversalDMX(i, in.getUniversalDMX(i));
+    }
+    DMXChanged = true;
+  }
   
   boolean fixtureUseRgb() {
     int fT = fixtureTypeId;
@@ -238,8 +232,6 @@ class fixture {
     process = new FixtureDMX(this);
     out = new FixtureDMX(this);
     preset = new FixtureDMX(this);
-    
-    process.fades = new Fade[process.DMXlength];
   }
 
   //Initialization----------------------------------------------------------------------------

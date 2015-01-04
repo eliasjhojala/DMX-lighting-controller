@@ -49,8 +49,6 @@ class FixtureDMX { //Class containig all the dmx values
   int frequency; //Strobe freq value
   int special1, special2, special3, special4; //Some special values for strange fixtures
   
-  Fade[] fades;
-  
   void presetProcess() {
     for(int i = 0; i < DMXlength; i++) {
          if (getUniversalDMX(i) != -1 && getUniversalDMX(i) != DMXold[i]) {
