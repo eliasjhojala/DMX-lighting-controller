@@ -147,25 +147,25 @@ class fixture {
     }
   } */
   
-//  void toggle(boolean down) {
-//    if(down) {
-//      if(fixtureTypeId == 20) { if(haze < 255 || fan < 255) { haze = 255; fan = 255; } else { haze = 0; fan = 0; } DMXChanged = true; }
-//      if(fixtureTypeId == 21) { if(fog < 255) { fog = 255; } else { fog = 0; } DMXChanged = true; }
-//      if(fixtureTypeId != 20 && fixtureTypeId != 21) { if(dimmer < 255) { setDimmer(255); } else { setDimmer(0); } }
-//    }
-//  }
-//  void push(boolean down) {
-//    if(down) {
-//      if(fixtureTypeId == 20) { haze = 255; fan = 255; DMXChanged = true; }
-//      if(fixtureTypeId == 21) { fog = 255; DMXChanged = true; }
-//      if(fixtureTypeId != 20 && fixtureTypeId != 21) { setDimmer(255); }
-//    }
-//    else {
-//      if(fixtureTypeId == 20) { haze = 0; fan = 0; DMXChanged = true; }
-//      if(fixtureTypeId == 21) { fog = 0; DMXChanged = true; }
-//      if(fixtureTypeId != 20 && fixtureTypeId != 21) { setDimmer(0); }
-//    }
-//  }
+  void toggle(boolean down) {
+    if(down) {
+      if(fixtureTypeId == 20) { if(in.haze < 255 || in.fan < 255) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); } else { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); } }
+      if(fixtureTypeId == 21) { if(in.fog < 255) { in.setUniversalDMX(DMX_FOG, 255); } else { in.setUniversalDMX(DMX_FOG, 0); } }
+      if(fixtureTypeId != 20 && fixtureTypeId != 21) { if(in.dimmer < 255) { in.setDimmer(255); } else { in.setDimmer(0); } }
+    }
+  }
+  void push(boolean down) {
+    if(down) {
+      if(fixtureTypeId == 20) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); }
+      if(fixtureTypeId == 21) { in.setUniversalDMX(DMX_FOG, 255); }
+      if(fixtureTypeId != 20 && fixtureTypeId != 21) { in.setDimmer(255); }
+    }
+    else {
+      if(fixtureTypeId == 20) { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); }
+      if(fixtureTypeId == 21) { in.setUniversalDMX(DMX_FOG, 0); }
+      if(fixtureTypeId != 20 && fixtureTypeId != 21) { in.setDimmer(0); }
+    }
+  }
 
   void processDMXvalues() {
     preset.presetProcess();

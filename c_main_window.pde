@@ -72,8 +72,9 @@ void drawMainWindow() {
              lampToMove = i;
              moveLamp = true;
              mouseReleased = false;
-           } else {
-          //  fixtures.get(i).toggle(true);
+           } 
+           else {
+              fixtures.get(i).toggle(true);
            }
            
          }
