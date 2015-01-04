@@ -171,20 +171,6 @@ class FixtureDMX { //Class containig all the dmx values
            /* 1ch fog */                       case 21: fog = dmxChannels[0]; dimmer = fog; break; //1ch fog
            /* rgbw led par */                  case 24: red = dmxChannels[0]; green = dmxChannels[1]; blue = dmxChannels[2]; white = dmxChannels[3]; break; //rgbw led par
            /* rgbwd led par */                 case 25: red = dmxChannels[0]; green = dmxChannels[1]; blue = dmxChannels[2]; white = dmxChannels[3]; dimmer = dmxChannels[4]; break; //rgbwd led par
-//           /* stairville rgbwd led par 4ch */  case 26: red = dmxChannels[0]; green = dmxChannels[1]; blue = dmxChannels[2]; white = dmxChannels[3]; break; //stairville rgbwd led par 4ch
-//           /* stairville rgbwd led par 6ch */  case 27: special1 = dmxChannels[0]; red = dmxChannels[1]; green = dmxChannels[2]; blue = dmxChannels[3]; white = dmxChannels[4]; special2 = dmxChannels[5]; break; //stairville rgbwd led par 6ch
-//           
-//           /* stairville rgbwd led par 8ch */  
-//           case 28: 
-//               red = dmxChannels[0]; 
-//               green = dmxChannels[1]; 
-//               blue = dmxChannels[2]; 
-//               white = dmxChannels[3]; 
-//               special2 = dmxChannels[4];
-//               strobe = dmxChannels[5]; 
-//               special1 = dmxChannels[6];
-//               dimmer = dmxChannels[7];
-//            break; //stairville rgbwd led par 8ch
         }
       } catch(Exception e) { e.printStackTrace(); return false; }
       DMXChanged = true;
@@ -206,21 +192,6 @@ class FixtureDMX { //Class containig all the dmx values
        /* 1ch relay */                     case 23: dmxChannels = new int[1]; if(dimmer > 100) { dmxChannels[0] = 255; } else { dmxChannels[0] = 0; } break; //1ch relay
        /* rgbw led par */                  case 24: dmxChannels = new int[4]; dmxChannels[0] = red; dmxChannels[1] = green; dmxChannels[2] = blue; dmxChannels[3] = white; break; //rgbw
        /* rgbwd led par */                 case 25: dmxChannels = new int[5]; dmxChannels[0] = red; dmxChannels[1] = green; dmxChannels[2] = blue; dmxChannels[3] = white; dmxChannels[4] = dimmer; break; //rgbwd
-//       /* stairville rgbwd led par 4ch */  case 26: dmxChannels = new int[4]; dmxChannels[0] = red; dmxChannels[1] = green; dmxChannels[2] = blue; dmxChannels[3] = white; break; //stairville rgbwd led par 4ch
-//       /* stairville rgbwd led par 6ch */  case 27: dmxChannels = new int[6]; dmxChannels[0] = special1; dmxChannels[1] = red; dmxChannels[2] = green; dmxChannels[3] = blue; dmxChannels[4] = white; dmxChannels[5] = special2; break; //stairville rgbwd led par 6ch
-////           
-//           /* stairville rgbwd led par 8ch */  
-//           case 28: 
-//               dmxChannels = new int[8];
-//               dmxChannels[0] = red; 
-//               dmxChannels[1] = green; 
-//               dmxChannels[2] = blue; 
-//               dmxChannels[3] = white; 
-//               dmxChannels[4] = special2;
-//               dmxChannels[5] = strobe; 
-//               dmxChannels[6] = special1;
-//               dmxChannels[7] = dimmer;
-//            break; //stairville rgbwd led par 8ch
       }
     return dmxChannels; 
   }
