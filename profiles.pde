@@ -72,11 +72,11 @@ String[] fixtureNames = {
   "i.fresu", //4
   "flood", //5
   "linssi", //6
-  "lhaze", //7
-  "lfan", //8
+  "lhaze", //7 REMOVE
+  "lfan", //8 REMOVE
   "strobe", //9
   "freq", //10
-  "lfog", //11
+  "lfog", //11 REMOVE
   "pinspot", //12
   "", //13
   "", //14

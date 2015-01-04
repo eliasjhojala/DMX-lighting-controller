@@ -32,6 +32,7 @@ for(int ai = 0; ai < fixtures.size(); ai++) {
     }
   }
  if(true) {
+   //TODO: BETTER "COMMUNICATION" BETWEEN SAME-CHANNELLED FIXTURES!!!!! THIS IS IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! FIX FAST!!! IMPORTANT!!! FIX FAST!!!
     for(int ai = 0; ai < fixtures.size(); ai++) {
       fixture fix = fixtures.get(ai);
       int[] toFixture = new int[fix.getDMXLength()];

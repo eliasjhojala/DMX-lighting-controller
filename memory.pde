@@ -811,7 +811,7 @@ class soundDetect { //----------------------------------------------------------
     } //End of counting avg values
     
     { //Counting max values
-      if(max[i] > 0.3) { max[i]-=0.01; } //Make sure max isn't too big
+      if(max[i] > 0.5) { max[i]-=0.01; } //Make sure max isn't too big
       if(val > max[i]) { max[i] = val; } //Make sure max isn't too small
     } //End of counting max values
     return toReturn;
