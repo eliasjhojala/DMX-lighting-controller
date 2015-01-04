@@ -20,7 +20,7 @@ public class secondApplet extends PApplet {
         text("DMX", 5, 10);
           pushMatrix();
             for(int i = j*100; i < (j+1)*100; i++) {
-              if(i <= 512) { //DMX protocol max channel
+              if(i <= DMX_CHAN_LENGTH) { //DMX protocol max channel
                 fill(255, 255, 255);
                 translate(0, 12);
                 text(i + ":" + DMXforOutput[constrain(i, 0, DMXforOutput.length-1)], 10, 10);
