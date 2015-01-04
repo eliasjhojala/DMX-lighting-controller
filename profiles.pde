@@ -32,6 +32,36 @@ int[] getFixtureSize(int id) {
   return getFixtureSizeByType(fixtures.get(id).fixtureTypeId);
 }
 
+String[] getChNamesByFixType(int fT) {
+  String[] tR = { "Default" };
+    switch(fT) {
+      case 1: case 2: case 3: case 4: case 5: case 6: String[] tR1 = { "Dimmer" }; tR = new String[tR1.length]; arrayCopy(tR1, tR); break;
+     
+      case 16: //mhX50 14ch
+        String[] tR16 = {"Pan", "Tilt", "Fine Pan", "Fine Tilt", "Resp. Speed", "Color Wheel", "Shutter", "Dimmer", "Gobo", "Gobo Rotation", "S. Function", "Auto Program", "Prism", "Focus"}; 
+        tR = new String[tR16.length]; arrayCopy(tR16, tR); 
+      break;
+      
+      case 17: //mhX50 8ch
+        String[] tR17 = {"Pan", "Tilt", "Color Wheel", "Shutter", "Gobo", "Gobo Rotation", "Prism", "Focus"}; 
+        tR = new String[tR17.length]; arrayCopy(tR17, tR); 
+      break; 
+      
+      case 18: tR = new String[3]; arrayCopy(returnRGB(), tR); break; //RGB.par
+      case 19: tR = new String[4]; arrayCopy(returnRGB(), tR); tR[3] = "Dimmer"; break; //RGBD.par
+      case 20: String[] tR20 = {"Haze", "Fan"}; tR = new String[tR20.length]; arrayCopy(tR20, tR); break; //Hazer
+      case 21: String[] tR21 = {"Fog"}; tR = new String[tR21.length]; arrayCopy(tR21, tR); break; //Fog machine
+      case 24: tR = new String[4]; arrayCopy(returnRGB(), tR); tR[3] = "White"; break; //RGBW.par
+      case 25: tR = new String[5]; arrayCopy(returnRGB(), tR); tR[3] = "White"; tR[4] = "Dimmer"; break; //RGBWD.par
+    }
+  return tR;
+}
+
+String[] returnRGB() {
+  String[] tR = { "Red", "Green", "Blue" };
+  return tR;
+}
+
 
 String[] fixtureNames = { 
   "par64", //1
@@ -80,7 +110,7 @@ String getFixtureNameByType(int type) {
 }
 
 int getNumberOfFixtureTypes() {
-  return 21;
+  return fixtureNames.length-1;
 }
 
 
