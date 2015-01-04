@@ -220,6 +220,24 @@ void openBottomMenuControlBox(int owner) {
       successInit = true;
     break;
     
+    case 18:
+      String[] chanNamesTp18 = {"Red", "Green", "Blue"};
+      bottomMenuControlBoxControllers = new bottomMenuChController[chanNamesTp18.length];
+      for (int i = 0; i < chanNamesTp18.length; i++) {
+        bottomMenuControlBoxControllers[i] = new bottomMenuChController(30 + i*90, 50, i, 0, chanNamesTp18[i]);
+      }
+      successInit = true;
+    break;
+    
+    case 19:
+      String[] chanNamesTp19 = {"Red", "Green", "Blue", "Dimmer"};
+      bottomMenuControlBoxControllers = new bottomMenuChController[chanNamesTp19.length];
+      for (int i = 0; i < chanNamesTp19.length; i++) {
+        bottomMenuControlBoxControllers[i] = new bottomMenuChController(30 + i*90, 50, i, 0, chanNamesTp19[i]);
+      }
+      successInit = true;
+    break;
+    
     case 20:
       bottomMenuControlBoxControllers = new bottomMenuChController[2];
       String[] chanNamesTp20 = {"Haze", "Fan"};
@@ -232,6 +250,25 @@ void openBottomMenuControlBox(int owner) {
     case 21:
       bottomMenuControlBoxControllers = new bottomMenuChController[1];
       bottomMenuControlBoxControllers[0] = new bottomMenuChController(50, 50, 0, 0, "Fog");
+      successInit = true;
+    break;
+    
+    
+    case 24:
+      String[] chanNamesTp24 = {"Red", "Green", "Blue", "White"};
+      bottomMenuControlBoxControllers = new bottomMenuChController[chanNamesTp24.length];
+      for (int i = 0; i < chanNamesTp24.length; i++) {
+        bottomMenuControlBoxControllers[i] = new bottomMenuChController(30 + i*90, 50, i, 0, chanNamesTp24[i]);
+      }
+      successInit = true;
+    break;
+    
+    case 25:
+      String[] chanNamesTp25 = {"Red", "Green", "Blue", "White", "Dimmer"};
+      bottomMenuControlBoxControllers = new bottomMenuChController[chanNamesTp25.length];
+      for (int i = 0; i < chanNamesTp25.length; i++) {
+        bottomMenuControlBoxControllers[i] = new bottomMenuChController(30 + i*90, 50, i, 0, chanNamesTp25[i]);
+      }
       successInit = true;
     break;
     
@@ -322,7 +359,7 @@ void bottomMenuDMXUpdate() {
 void submitDMXFromBMCB(int[] input) {
   
   if(bottomMenuAllFixtures) {
-    fixtureForSelected[0].receiveDMX(input);
+    fixtureForSelected[0].in.receiveDMX(input);
     setValuesToSelected();
   } else {
     fixtures.get(currentBottomMenuControlBoxOwner).in.receiveDMX(input);

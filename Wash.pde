@@ -100,7 +100,7 @@ void drawColorWashMenu() { //Color wash selection menu box
               popStyle();
             //END OF CLEAR BUTTON
             
-            //ONLY SELECTED BUTTON
+            //COLORPICKER BUTTON
               mouse.declareUpdateElementRelative("cWB:HSBPicker", "colorSelectBox",  round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y)); 
               mouse.setElementExpire("cWB:HSBPicker", 2);
               pushStyle();
@@ -114,7 +114,7 @@ void drawColorWashMenu() { //Color wash selection menu box
                 if(HSBPicker) { text("Close", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
                 else { text("ColorPicker", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
               popStyle();
-            //END OF ONLY SELECTED BUTTON
+            //END OF COLORPICKER BUTTON
             
            
            if(HSBPicker) { //Check that should color picker be open

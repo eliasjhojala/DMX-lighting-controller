@@ -113,6 +113,7 @@ class fixture {
   FixtureDMX in;
   FixtureDMX process;
   FixtureDMX out;
+  FixtureDMX preset;
   
   
   //Fade[] fades = new Fade[10];
@@ -165,6 +166,7 @@ class fixture {
 //  }
 
   void processDMXvalues() {
+    preset.presetProcess();
     for(int i = 0; i < in.DMXlength; i++) {
         out.setUniversalDMX(i, in.getUniversalDMX(i));
     }
@@ -227,6 +229,7 @@ class fixture {
     in = new FixtureDMX(this);
     process = new FixtureDMX(this);
     out = new FixtureDMX(this);
+    preset = new FixtureDMX(this);
   }
 
   //Initialization----------------------------------------------------------------------------

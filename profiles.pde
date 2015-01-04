@@ -34,27 +34,32 @@ int[] getFixtureSize(int id) {
 
 
 String[] fixtureNames = { 
-  "par64", 
-  "p.fresu", 
-  "k.fresu", 
-  "i.fresu", 
-  "flood", 
-  "linssi", 
-  "lhaze", 
-  "lfan", 
-  "strobe", 
-  "freq", 
-  "lfog", 
-  "pinspot", 
-  "",
-  "",
-  "",
-  "MX50.14ch", 
-  "MX50.8ch",
-  "RGB.par",
-  "RGBD.par",
-  "hazer",
-  "fog"
+  "par64", //1
+  "p.fresu", //2
+  "k.fresu", //3
+  "i.fresu", //4
+  "flood", //5
+  "linssi", //6
+  "lhaze", //7
+  "lfan", //8
+  "strobe", //9
+  "freq", //10
+  "lfog", //11
+  "pinspot", //12
+  "", //13
+  "", //14
+  "", //15
+  "MX50.14ch", //16
+  "MX50.8ch", //17
+  "RGB.par", //18
+  "RGBD.par", //19
+  "hazer", //20
+  "fog", //21
+  "", //22
+  "", //23
+  "RGBW.par", //24
+  "RGBWD.par" //25
+  
 };
 
 //Gets type description of fixture #id
