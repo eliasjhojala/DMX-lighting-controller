@@ -110,13 +110,23 @@ class fixture {
   int frequency; //Strobe freq value
   int special1, special2, special3, special4; //Some special values for strange fixtures
   
+  
+  
+  String fixtureType;
+  int fixtureTypeId;
+  int channelStart;
+  
+  fixtureSize size;
+  
+  int parentAnsa;
+  
   FixtureDMX in;
   FixtureDMX process;
   FixtureDMX out;
   FixtureDMX preset;
   
 
-  
+  //End of initing variables
   
  
   void setDimmer(int val) { 
@@ -183,26 +193,8 @@ class fixture {
     in.blue = rBlue(c);
     DMXChanged = true;
   }
-  
-  long fadeStartMillis;
-  int fadeTarget = 0;
-  int preFade;
-  int postFade;
-  int originalDimmer;
-  
-  boolean fadeComplete = true;
-  
-  boolean pushWithFadeDown = false;
 
 
-  
-  String fixtureType;
-  int fixtureTypeId;
-  int channelStart;
-  
-  fixtureSize size;
-  
-  int parentAnsa;
   
   
   void createDMXobjects() {
