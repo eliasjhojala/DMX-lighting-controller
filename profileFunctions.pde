@@ -76,12 +76,13 @@ int[] receiveDMXtoUniversal(int fT, int[] dmxChannels) {
 
 int[] getDMXfromUniversal(int fT, int[] universal) {
    int[] dmxChannels = new int[universalDMXlength];
-   if(fixtureProfiles[fT] != null) {
-     dmxChannels = new int[fixtureProfiles[fT].channelTypes.length];
-     for(int j = 0; j < fixtureProfiles[fT].channelTypes.length; j++) {
-       dmxChannels[j] = universal[fixtureProfiles[fT].channelTypes[j]];
+   if(fixtureProfiles.length > fT)
+     if(fixtureProfiles[fT] != null) {
+       dmxChannels = new int[fixtureProfiles[fT].channelTypes.length];
+       for(int j = 0; j < fixtureProfiles[fT].channelTypes.length; j++) {
+         dmxChannels[j] = universal[fixtureProfiles[fT].channelTypes[j]];
+       }
      }
-   }
    return dmxChannels; 
 }
  

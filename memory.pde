@@ -175,17 +175,17 @@ class memory { //Begin of memory class------------------------------------------
   void loadPreset() {
     if(type == 1) {
       //The following part of code makes AIOOBs so I commented it
-      if(value != valueOld) { //overwirtecheck
+      //if(value != valueOld) { //overwirtecheck
         valueOld = value;
         for(int i = 0; i < fixtures.size(); i++) {
           for(int jk = 0; jk < fixtures.get(i).out.DMXlength; jk++) {
             int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
             if(val > fixtures.get(i).preset.getUniversalDMX(jk)) {
-              fixtures.get(i).preset.setUniversalDMX(jk, rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value));
+              fixtures.get(i).preset.setUniversalDMX(jk, val);
             }
           }
         }
-      }
+      //}
     }
   }
 

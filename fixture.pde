@@ -1,7 +1,8 @@
 boolean invokeFixturesDrawFinished = true; 
 void invokeFixturesDraw() {
   invokeFixturesDrawFinished = false;
-  for (int ai = 0; ai < fixtures.size(); ai++) fixtures.get(ai).draw();
+  for (int ai = 0; ai < fixtures.size(); ai++) if(memoriesFinished) fixtures.get(ai).draw();
+    else { while(!memoriesFinished){} ai--; }
   invokeFixturesDrawFinished = true;
 }
 
@@ -134,13 +135,17 @@ class fixture {
   }
   
   
-   void processDMXvalues() {
+  void processDMXvalues() {
     preset.presetProcess();
-    for(int i = 0; i < in.DMXlength; i++) {
-      //TODO: overwriteCHECK
-        out.setUniversalDMX(i, in.getUniversalDMX(i));
-    }
-    DMXChanged = true;
+    int[] newIn  = in.getUniversalDMX();
+    int[] oldOut = out.getUniversalDMX();
+    //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
+    if(abs(newIn[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5 && isHalogen())
+      newIn[DMX_DIMMER] = oldOut[DMX_DIMMER];
+    newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]);
+    out.setUniversalDMX(newIn);
+    
+    
   }
 
   
@@ -301,7 +306,7 @@ class fixture {
   
   
   int[] getDMX() {
-    return out.getDMX(); 
+    return in.getDMX(); 
   }
   
   int dimmerLast = 0;
@@ -316,13 +321,9 @@ class fixture {
       dimmerLast = out.dimmer;
     } else if(isHalogen()) { out.dimmer = int(map(dimmerLast, 0, 255, 0, grandMaster)); } */
     
-    int[] dmxChannels = new int[out.getDMX().length];
-    for(int i = 0; i < dmxChannels.length; i++) {
-      dmxChannels[i] = in.getDMX()[i];
-    }
- //   out.dimmer = tempDimmer;
-    return dmxChannels; 
+    return out.getDMX();
   }
+  
   
   boolean isHalogen() {
     switch(fixtureTypeId) {
@@ -332,7 +333,11 @@ class fixture {
   }
   
   int getDimmerWithMaster() {
-    return int(map(out.dimmer, 0, 255, 0, grandMaster));
+    return masterize(in.getUniversalDMX(DMX_DIMMER));
+  }
+  
+  int masterize(int val) {
+    return int(map(val, 0, 255, 0, grandMaster));
   }
   
   int getDMXLength() {
@@ -375,10 +380,10 @@ class fixture {
   void draw() {
     //setFadeValues();
     processDMXvalues();
-    if (dimmerPresetTarget != -1 && dimmerPresetTarget != lastDimmerPresetTarget) {
+    /*if (dimmerPresetTarget != -1 && dimmerPresetTarget != lastDimmerPresetTarget) {
       setDimmer(dimmerPresetTarget);
       lastDimmerPresetTarget = dimmerPresetTarget;
-    } dimmerPresetTarget = -1;
+    } dimmerPresetTarget = -1;*/
    
     
 //    if (fixtureTypeId == 16 || fixtureTypeId == 17) visualisationSettingsFromMovingHeadData();

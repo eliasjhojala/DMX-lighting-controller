@@ -18,7 +18,7 @@ void draw() {
     mouse.refresh();
     
     //Move this to setDimAndMemoryValuesAtEveryDraw, maybe?
-    for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
+    updateMemories();
     
     memories[1].type = 4;
     memories[2].type = 5;
@@ -41,11 +41,19 @@ void draw() {
     if (useMaschine) calcMaschineAutoTap();
     
     //Invoke every fixtures draw
-    if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
+    //if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
+    invokeFixturesDraw();
     drawColorWashMenu();
     
   }
   if(!freeze) initSettingsInSetup();
+}
+
+boolean memoriesFinished = true;
+void updateMemories() {
+  memoriesFinished = false;
+  for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
+  memoriesFinished = true;
 }
 
 

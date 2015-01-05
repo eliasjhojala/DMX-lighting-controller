@@ -53,11 +53,15 @@ class FixtureDMX { //Class containig all the dmx values
   
   void presetProcess() {
     for(int i = 0; i < DMXlength; i++) {
-         if (getUniversalDMX(i) != -1 && getUniversalDMX(i) != DMXold[i]) {
-          parent.in.setUniversalDMX(i, getUniversalDMX(i));
-          DMXold[i] = getUniversalDMX(i);
-        } 
+        int newV = getUniversalDMX(i);
+        if (newV != -1 && newV != DMXold[i]) {
+          parent.in.setUniversalDMX(i, newV);
+          parent.DMXChanged = true;
+        }
+        DMXold[i] = newV;
         setUniversalDMX(i, -1);
+        
+        
     }
   }
   
@@ -127,6 +131,8 @@ class FixtureDMX { //Class containig all the dmx values
       setUniversalDMX(i, vals[i]);
     }
   }
+  
+  
   void setUniversalDMX(int i, int val) {
     switch(i) {
       case 1: setDimmer(val); break;

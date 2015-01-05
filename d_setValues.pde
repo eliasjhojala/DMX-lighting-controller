@@ -2,6 +2,7 @@ boolean dimCheckFinished = true;
 
 final int DMX_CHAN_LENGTH = 512;
 
+
 //__________________IMPORTANT VARIABLE(s)
 int[] DMX = new int[DMX_CHAN_LENGTH+1];
 int[] DMXforOutput = new int[DMX_CHAN_LENGTH+1];
@@ -46,7 +47,7 @@ for(int ai = 0; ai < fixtures.size(); ai++) {
           toFixture[constrain(i, 0, toFixture.length-1)] = fromFixture[constrain(i, 0, fromFixture.length-1)];
         }
       }
-      fix.out.receiveDMX(toFixture);
+      fix.in.receiveDMX(toFixture);
       fix.DMXChanged = false;
     }
   } 

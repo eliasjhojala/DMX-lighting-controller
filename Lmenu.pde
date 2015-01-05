@@ -267,7 +267,7 @@ void drawBottomMenuControlBox() {
 }
 
 void bottomMenuDMXUpdate() {
-  int[] tempDMX = fixtures.get(currentBottomMenuControlBoxOwner).getDMX();
+  int[] tempDMX = fixtures.get(currentBottomMenuControlBoxOwner).in.getDMX();
   int arrayIndex = 0;
   //This value is true if any of the entries in the boolean array are true
   boolean changd = false;
