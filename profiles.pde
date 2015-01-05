@@ -166,3 +166,9 @@ int[] getDMXfromUniversal(int fT, int[] universal) {
          }
     return dmxChannels; 
   }
+ 
+FixtureProfile[] fixtureProfiles = new FixtureProfile[18]; 
+void createFixtureProfiles() {
+  fixtureProfiles[1] = new FixtureProfile("par64", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
+  fixtureProfiles[16] = new FixtureProfile("stairville", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
+}
