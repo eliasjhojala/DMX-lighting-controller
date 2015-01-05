@@ -344,21 +344,8 @@ class fixture {
   }
   
   int getDMXLength() {
-    switch(fixtureTypeId) {
-       /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: return 1; //dimmers
-       /* MH-X50 14-channel mode */        case 16: return 14; //MH-X50
-       /* MH-X50 8-channel mode */         case 17: return 8; //MH-X50 8-ch mode
-       /* simple rgb led par */            case 18: return 3; //Simple rgb led par
-       /* simple rgb led par with dim */   case 19: return 4; //Simple rgb led par with dim
-       /* 2ch hazer */                     case 20: return 2; //2ch hazer
-       /* 1ch fog */                       case 21: return 1; //1ch fog
-       /* 2ch strobe */                    case 22: return 2; //2ch strobe
-       /* 1ch relay */                     case 23: return 1; //1ch relay
-       /* rgbw */                          case 24: return 4; //rgbw
-       /* rgbwd */                         case 25: return 5; //rgbwd
-    }
-    return 0;
-  }
+    return out.getDMX().length;
+  } 
   
   //Returns true if operation is succesful
   boolean receiveDMX(int[] dmxChannels) {

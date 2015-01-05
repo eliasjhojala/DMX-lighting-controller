@@ -8,16 +8,19 @@ int[] getFixtureSizeByType(int type) {
   int[] toReturn = {30, 40, 1};
   
   switch(type) {
-    case 1: toReturn[0] = 30; toReturn[1] = 50; toReturn[2] = 1; break;
-    case 2: toReturn[0] = 25; toReturn[1] = 30; toReturn[2] = 1; break;
-    case 3: toReturn[0] = 35; toReturn[1] = 40; toReturn[2] = 1; break;
-    case 4: toReturn[0] = 40; toReturn[1] = 50; toReturn[2] = 1; break;
-    case 5: toReturn[0] = 40; toReturn[1] = 20; toReturn[2] = 1; break;
-    case 6: toReturn[0] = 20; toReturn[1] = 60; toReturn[2] = 1; break;
-    //STROBE
-    //HAZE, FOG
-    //LEDS
-    //MOVING HEADS
+    case 1: toReturn[0] = 30; toReturn[1] = 50; toReturn[2] = 1; break; //Par64
+    case 2: toReturn[0] = 25; toReturn[1] = 30; toReturn[2] = 1; break; //Small fressnel
+    case 3: toReturn[0] = 35; toReturn[1] = 40; toReturn[2] = 1; break; //Middle fressnel
+    case 4: toReturn[0] = 40; toReturn[1] = 50; toReturn[2] = 1; break; //Big fressnel
+    case 5: toReturn[0] = 40; toReturn[1] = 20; toReturn[2] = 1; break; //Flood
+    case 6: toReturn[0] = 20; toReturn[1] = 60; toReturn[2] = 1; break; //Zoom lens
+    case 7: toReturn[0] = 40; toReturn[1] = 25; toReturn[2] = 1; break; //Strobe
+    case 8: toReturn[0] = 40; toReturn[1] = 45; toReturn[2] = 1; break; //Haze
+    case 9: toReturn[0] = 40; toReturn[1] = 55; toReturn[2] = 1; break; //Fog
+    case 10: case 11: case 12: case 13: case 14: case 15: case 16: //Leds
+      toReturn[0] = 30; toReturn[1] = 40; toReturn[2] = 1; break; //Leds
+    case 17: case 18: //Moving heads
+      toReturn[0] = 30; toReturn[1] = 35; toReturn[2] = 1; break; //Moving heads
   }
   return toReturn;
   
@@ -78,9 +81,7 @@ String[] fixtureNames = {
   "PAR64 CX-3 RGBW 6CH", //15
   "PAR64 CX-3 RGBW 8CH", //16
   "MX50.14ch", //17
-  "MX50.8ch" //18
-  
-  
+  "MX50.8ch" //18 
 };
 
 boolean fixtureUseRgbByType(int fT) { return fT >= 10 && fT <= 16; }
@@ -90,19 +91,7 @@ boolean fixtureIsLedByType(int fT) { return fixtureUseRgbByType(fT); }
 
 //Gets type description of fixture #id
 String getFixtureNameByType(int type) {
-  
-  //* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6:  //dimmers
-  //* MH-X50 14-channel mode */        case 16:  //MH-X50
-  //* MH-X50 8-channel mode */         case 17:  //MH-X50 8-ch mode
-  //* simple rgb led par */            case 18:  //Simple rgb led par
-  //* simple rgb led par with dim */   case 19:  //Simple rgb led par with dim
-  //* 2ch hazer */                     case 20:  //2ch hazer
-  //* 1ch fog */                       case 21:  //1ch fog
-  
-  String toReturn = "-";
-
-  if(type-1 < fixtureNames.length && type-1 >= 0) { toReturn = fixtureNames[type-1]; }
-  return toReturn;
+  return fixtureNames[constrain(type-1, 0, fixtureNames.length-1)];
 }
 
 int getNumberOfFixtureTypes() {
@@ -117,9 +106,6 @@ int getFixtureTypeId1(String fixtureType) {
   }
   return toReturn;
 }
-
-
-
 
 
 String getFixtureName(int id) {
