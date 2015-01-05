@@ -6,10 +6,12 @@
 int[] getFixtureSizeByType(int type) { 
   //Default to this
   int[] toReturn = {30, 40, 1};
-  n = constrain(type, 0, fixtureProfiles.length-1);
-  toReturn[0] = fixtureProfiles[n].size.w;
-  toReturn[1] = fixtureProfiles[n].size.h;
-  toReturn[2] = int(fixtureProfiles[n].size.isDrawn);
+  int n = constrain(type, 0, fixtureProfiles.length-1);
+  if(fixtureProfiles[n] != null) {
+    toReturn[0] = fixtureProfiles[n].size.w;
+    toReturn[1] = fixtureProfiles[n].size.h;
+    toReturn[2] = int(fixtureProfiles[n].size.isDrawn);
+  }
   return toReturn;
   
 }
