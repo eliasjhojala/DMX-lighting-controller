@@ -14,15 +14,10 @@ int[] getFixtureSizeByType(int type) {
     case 4: toReturn[0] = 40; toReturn[1] = 50; toReturn[2] = 1; break;
     case 5: toReturn[0] = 40; toReturn[1] = 20; toReturn[2] = 1; break;
     case 6: toReturn[0] = 20; toReturn[1] = 60; toReturn[2] = 1; break;
-    case 7: toReturn[0] = 50; toReturn[1] = 50; toReturn[2] = 1; break;
-    case 8: toReturn[2] = 0; break;
-    case 9: toReturn[0] = 40; toReturn[1] = 30; toReturn[2] = 1; break;
-    case 10: toReturn[2] = 0; break;
-    case 11: toReturn[0] = 50; toReturn[1] = 70; toReturn[2] = 1; break;
-    case 12: toReturn[0] = 5; toReturn[1] = 8; toReturn[2] = 1; break;
-    case 13: toReturn[0] = 30; toReturn[1] = 50; toReturn[2] = 1; break;
-    case 20: toReturn[0] = 60; toReturn[1] = 70; toReturn[2] = 1; break; //Hazer
-    case 21: toReturn[0] = 60; toReturn[1] = 80; toReturn[2] = 1; break; //Fog
+    //STROBE
+    //HAZE, FOG
+    //LEDS
+    //MOVING HEADS
   }
   return toReturn;
   
@@ -37,24 +32,24 @@ String[] getChNamesByFixType(int fT) {
     switch(fT) {
       case 1: case 2: case 3: case 4: case 5: case 6: String[] tR1 = { "Dimmer" }; tR = new String[tR1.length]; arrayCopy(tR1, tR); break;
      
-      case 16: //mhX50 14ch
+      case 17: //mhX50 14ch
         String[] tR16 = {"Pan", "Tilt", "Fine Pan", "Fine Tilt", "Resp. Speed", "Color Wheel", "Shutter", "Dimmer", "Gobo", "Gobo Rotation", "S. Function", "Auto Program", "Prism", "Focus"}; 
         tR = new String[tR16.length]; arrayCopy(tR16, tR); 
       break;
       
-      case 17: //mhX50 8ch
+      case 18: //mhX50 8ch
         String[] tR17 = {"Pan", "Tilt", "Color Wheel", "Shutter", "Gobo", "Gobo Rotation", "Prism", "Focus"}; 
         tR = new String[tR17.length]; arrayCopy(tR17, tR); 
       break; 
       
-      case 18: tR = new String[3]; arrayCopy(returnRGB(), tR); break; //RGB.par
-      case 19: tR = new String[4]; arrayCopy(returnRGB(), tR); tR[3] = "Dimmer"; break; //RGBD.par
+      case 10: tR = new String[3]; arrayCopy(returnRGB(), tR); break; //RGB.par
+      case 11: tR = new String[4]; arrayCopy(returnRGB(), tR); tR[3] = "Dimmer"; break; //RGBD.par
       case 20: String[] tR20 = {"Haze", "Fan"}; tR = new String[tR20.length]; arrayCopy(tR20, tR); break; //Hazer
       case 21: String[] tR21 = {"Fog"}; tR = new String[tR21.length]; arrayCopy(tR21, tR); break; //Fog machine
-      case 24: case 26: tR = new String[4]; arrayCopy(returnRGB(), tR); tR[3] = "White"; break; //RGBW.par and also Stairville RGBW 4ch
-      case 25: tR = new String[5]; arrayCopy(returnRGB(), tR); tR[3] = "White"; tR[4] = "Dimmer"; break; //RGBWD.par
-      case 27: String[] tR27 = {"Mode", "Red", "Green", "Blue", "White", "Effect"}; tR = new String[tR27.length]; arrayCopy(tR27, tR); break; //Stairville RGBW 6ch
-      case 28: String[] tR28 = {"Red", "Green", "Blue", "White", "Color", "Strobe", "Mode", "Dimmer"}; tR = new String[tR28.length]; arrayCopy(tR28, tR); break; //Stairville RGBW 8ch
+      case 12: case 14: tR = new String[4]; arrayCopy(returnRGB(), tR); tR[3] = "White"; break; //RGBW.par and also Stairville RGBW 4ch
+      case 13: tR = new String[5]; arrayCopy(returnRGB(), tR); tR[3] = "White"; tR[4] = "Dimmer"; break; //RGBWD.par
+      case 15: String[] tR27 = {"Mode", "Red", "Green", "Blue", "White", "Effect"}; tR = new String[tR27.length]; arrayCopy(tR27, tR); break; //Stairville RGBW 6ch
+      case 16: String[] tR28 = {"Red", "Green", "Blue", "White", "Color", "Strobe", "Mode", "Dimmer"}; tR = new String[tR28.length]; arrayCopy(tR28, tR); break; //Stairville RGBW 8ch
     }
   return tR;
 }
@@ -72,28 +67,19 @@ String[] fixtureNames = {
   "i.fresu", //4
   "flood", //5
   "linssi", //6
-  "lhaze", //7 REMOVE
-  "lfan", //8 REMOVE
-  "strobe", //9
-  "freq", //10
-  "lfog", //11 REMOVE
-  "pinspot", //12
-  "", //13
-  "", //14
-  "", //15
-  "MX50.14ch", //16
-  "MX50.8ch", //17
-  "RGB.par", //18
-  "RGBD.par", //19
-  "hazer", //20
-  "fog", //21
-  "", //22
-  "", //23
-  "RGBW.par", //24
-  "RGBWD.par", //25
-  "PAR64 CX-3 RGBW 4CH", //26
-  "PAR64 CX-3 RGBW 6CH", //27
-  "PAR64 CX-3 RGBW 8CH" //28
+  "strobe", //7
+  "hazer", //8
+  "fog", //9
+  "RGB.par", //10
+  "RGBD.par", //11
+  "RGBW.par", //12
+  "RGBWD.par", //13
+  "PAR64 CX-3 RGBW 4CH", //14 
+  "PAR64 CX-3 RGBW 6CH", //15
+  "PAR64 CX-3 RGBW 8CH", //16
+  "MX50.14ch", //17
+  "MX50.8ch" //18
+  
   
 };
 

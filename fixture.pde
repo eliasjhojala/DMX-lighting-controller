@@ -136,21 +136,21 @@ class fixture {
   
   void toggle(boolean down) {
     if(down) {
-      if(fixtureTypeId == 20) { if(in.haze < 255 || in.fan < 255) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); } else { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); } }
-      if(fixtureTypeId == 21) { if(in.fog < 255) { in.setUniversalDMX(DMX_FOG, 255); } else { in.setUniversalDMX(DMX_FOG, 0); } }
-      if(fixtureTypeId != 20 && fixtureTypeId != 21) { if(in.dimmer < 255) { in.setDimmer(255); } else { in.setDimmer(0); } }
+      if(fixtureTypeId == 8) { if(in.haze < 255 || in.fan < 255) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); } else { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); } }
+      if(fixtureTypeId == 9) { if(in.fog < 255) { in.setUniversalDMX(DMX_FOG, 255); } else { in.setUniversalDMX(DMX_FOG, 0); } }
+      if(fixtureTypeId != 8 && fixtureTypeId != 9) { if(in.dimmer < 255) { in.setDimmer(255); } else { in.setDimmer(0); } }
     }
   }
   void push(boolean down) {
     if(down) {
-      if(fixtureTypeId == 20) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); }
-      if(fixtureTypeId == 21) { in.setUniversalDMX(DMX_FOG, 255); }
-      if(fixtureTypeId != 20 && fixtureTypeId != 21) { in.setDimmer(255); }
+      if(fixtureTypeId == 8) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); }
+      if(fixtureTypeId == 9) { in.setUniversalDMX(DMX_FOG, 255); }
+      if(fixtureTypeId != 8 && fixtureTypeId != 9) { in.setDimmer(255); }
     }
     else {
-      if(fixtureTypeId == 20) { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); }
-      if(fixtureTypeId == 21) { in.setUniversalDMX(DMX_FOG, 0); }
-      if(fixtureTypeId != 20 && fixtureTypeId != 21) { in.setDimmer(0); }
+      if(fixtureTypeId == 8) { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); }
+      if(fixtureTypeId == 9) { in.setUniversalDMX(DMX_FOG, 0); }
+      if(fixtureTypeId != 8 && fixtureTypeId != 9) { in.setDimmer(0); }
     }
   }
 
@@ -158,16 +158,16 @@ class fixture {
   
   boolean fixtureUseRgb() {
     int fT = fixtureTypeId;
-    return (fT >= 24 && fT <= 28) || fT == 18 || fT == 19;
+    return (fT >= 10 && fT <= 16);
   }
     
   boolean fixtureUseDim() {
     int fT = fixtureTypeId;
-    return fT == 28 || fT == 25 || fT == 19;
+    return fT == 11 || fT == 13 || fT == 16;
   }
   boolean fixtureUseWhite() {
     int fT = fixtureTypeId;
-    return fT == 25 || fT == 24;
+    return fT >= 12 && fT <= 16;
   }
   
   boolean fixtureIsLed() {

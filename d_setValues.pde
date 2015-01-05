@@ -43,7 +43,7 @@ for(int ai = 0; ai < fixtures.size(); ai++) {
           channelValuesOld[i] = toFixture[i];
         }
         else {
-          toFixture[i] = fromFixture[i];
+          toFixture[constrain(i, 0, toFixture.length-1)] = fromFixture[constrain(i, 0, fromFixture.length-1)];
         }
       }
       fix.out.receiveDMX(toFixture);
