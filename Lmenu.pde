@@ -55,7 +55,7 @@ void drawFixtureRectangles(int id) {
     text(str(id)+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
     text("Ch " + str(fixtures.get(id).channelStart) , 2, -30); // Channel
     fill(0, 0, 255); //blue color for slider
-    rect(0, 0, 10, (map(fixtures.get(id).bottomMenu.getUniversalDMX(1), 0, 255, 0, 30))*(-1)); //Draw slider
+    rect(0, 0, 10, (map(fixtures.get(id).in.getUniversalDMX(1), 0, 255, 0, 30))*(-1)); //Draw slider
     fill(255, 255, 255); //white color for Go button
     rect(10, 0, 49, -15); //Draw Go button
     fill(0, 0, 0); //black color for Go text
@@ -72,23 +72,23 @@ void checkFixtureBoxGo(int id) { //This void checks Go button
   if(isHover(10, 0, 49, -15) && mousePressed && !mouseLocked) { //Check if mouse is on go box
       mouseLocked = true;
       mouseLocker = "fbox" + id + ":go";
-      fixtures.get(id).bottomMenu.setDimmer(255); //Set dimInput value to max
+      fixtures.get(id).in.setDimmer(255); //Set dimInput value to max
     
   } else
   if(!mousePressed && mouseLocker.equals("fbox" + id + ":go")) { //Check if mouse is released
     mouseLocker = ":";
-    fixtures.get(id).bottomMenu.setDimmer(0); //Set dimInput value to min
+    fixtures.get(id).in.setDimmer(0); //Set dimInput value to min
    }
 }
 void checkFixtureBoxToggle(int id) { //This void checks Toggle button
   if(isHover(10, -15, 49, -15) && mousePressed && !mouseLocked) { //Check if mouse is on toggle box and clicked and released before it
     mouseLocked = true;
     mouseLocker = "fbox" + id + ":toggle";
-    if(fixtures.get(id).bottomMenu.getUniversalDMX(1) == 255) { //Check if dimInput is 255
-      fixtures.get(id).bottomMenu.setDimmer(0); //If dimInput is at 255 then set it to zero
+    if(fixtures.get(id).in.getUniversalDMX(1) == 255) { //Check if dimInput is 255
+      fixtures.get(id).in.setDimmer(0); //If dimInput is at 255 then set it to zero
     }
     else {
-      fixtures.get(id).bottomMenu.setDimmer(255); //If dimInput is not at max value then set it to max
+      fixtures.get(id).in.setDimmer(255); //If dimInput is not at max value then set it to max
     }
   }
 }
@@ -97,8 +97,8 @@ void checkFixtureBoxSlider(int id) {
       mouseLocked = true;
       mouseLocker = "fbox" + id + ":slider";
   } else if(mouseLocked && mouseLocker.equals("fbox" + id + ":slider")) {
-      fixtures.get(id).bottomMenu.setDimmer(fixtures.get(id).bottomMenu.getUniversalDMX(1) + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
-      fixtures.get(id).bottomMenu.setDimmer(constrain(fixtures.get(id).bottomMenu.getUniversalDMX(1), 0, 255)); //Make sure that dimInput value is between 0-255 
+      fixtures.get(id).in.setDimmer(fixtures.get(id).in.getUniversalDMX(1) + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
+      fixtures.get(id).in.setDimmer(constrain(fixtures.get(id).in.getUniversalDMX(1), 0, 255)); //Make sure that dimInput value is between 0-255 
   }
 }
 
