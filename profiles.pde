@@ -117,6 +117,7 @@ int universalDMXlength = 28+1;
 
 int[][] profileChannels = 
 {
+  { },
   { DMX_DIMMER },
   { DMX_DIMMER },
   { DMX_DIMMER },
@@ -141,25 +142,13 @@ int[] receiveDMXtoUniversal(int fT, int[] dmxChannels) {
   int[] toReturn = new int[universalDMXlength];
   for(int i = 0; i < toReturn.length; i++) { toReturn[i] = -2; }
   try {
-    switch(fT) {
-         /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: toReturn[DMX_DIMMER] = dmxChannels[0]; break; //dimmers
-         
-         /* 2ch strobe */                    case 7: break; //2ch strobe
-         /* 2ch hazer */                     case 8: toReturn[DMX_HAZE] = dmxChannels[0]; toReturn[DMX_FAN] = dmxChannels[1]; toReturn[DMX_DIMMER] = (toReturn[DMX_HAZE] + toReturn[DMX_FAN]) / 2; break; //2ch hazer
-         /* 1ch fog */                       case 9: toReturn[DMX_FOG] = dmxChannels[0]; toReturn[DMX_DIMMER] = toReturn[DMX_FOG]; break; //1ch fog
-         
-         /* simple rgb led par */            case 10: toReturn[DMX_RED] = dmxChannels[0]; toReturn[DMX_GREEN] = dmxChannels[1]; toReturn[DMX_HAZE] = dmxChannels[2]; break; //Simple rgb led par
-         /* simple rgb led par with dim */   case 11: toReturn[DMX_DIMMER] = dmxChannels[3]; toReturn[DMX_RED] = dmxChannels[0]; toReturn[DMX_GREEN] = dmxChannels[1]; toReturn[DMX_BLUE] = dmxChannels[2]; break; //Simple rgb led par with dim
-         /* rgbw led par */                  case 12: toReturn[DMX_RED] = dmxChannels[0]; toReturn[DMX_GREEN] = dmxChannels[1]; toReturn[DMX_BLUE] = dmxChannels[2]; toReturn[DMX_WHITE] = dmxChannels[3]; break; //rgbw led par
-         /* rgbwd led par */                 case 13: toReturn[DMX_RED] = dmxChannels[0]; toReturn[DMX_GREEN] = dmxChannels[1]; toReturn[DMX_BLUE] = dmxChannels[2]; toReturn[DMX_WHITE] = dmxChannels[3]; toReturn[DMX_DIMMER] = dmxChannels[4]; break; //rgbwd led par
-         /* stairville rgbwd led par 4ch */  case 14: toReturn[DMX_RED] = dmxChannels[0]; toReturn[DMX_GREEN] = dmxChannels[1]; toReturn[DMX_BLUE] = dmxChannels[2]; toReturn[DMX_WHITE] = dmxChannels[3]; break; //stairville rgbwd led par 4ch
-         /* stairville rgbwd led par 6ch */  case 15: toReturn[DMX_SPECIAL1] = dmxChannels[0]; toReturn[DMX_RED] = dmxChannels[1]; toReturn[DMX_GREEN] = dmxChannels[2]; toReturn[DMX_BLUE] = dmxChannels[3]; toReturn[DMX_WHITE] = dmxChannels[4]; toReturn[DMX_SPECIAL2] = dmxChannels[5]; break; //stairville rgbwd led par 6ch
-         /* stairville rgbwd led par 8ch */  case 16: toReturn[DMX_RED] = dmxChannels[0]; toReturn[DMX_GREEN] = dmxChannels[1]; toReturn[DMX_BLUE] = dmxChannels[2]; toReturn[DMX_WHITE] = dmxChannels[3]; toReturn[DMX_SPECIAL2] = dmxChannels[4]; toReturn[DMX_STROBE] = dmxChannels[5]; toReturn[DMX_SPECIAL1] = dmxChannels[6]; toReturn[DMX_DIMMER] = dmxChannels[7]; break; //stairville rgbwd led par 8ch
-         
-         /* MH-X50 14-channel mode */        case 17: toReturn[DMX_PAN] = dmxChannels[0]; toReturn[DMX_TILT] = dmxChannels[1]; toReturn[DMX_PANFINE] = dmxChannels[2]; toReturn[DMX_TILTFINE] = dmxChannels[3]; toReturn[DMX_RESPONSESPEED] = dmxChannels[4]; toReturn[DMX_COLORWHEEL] = dmxChannels[5]; toReturn[DMX_SHUTTER] = dmxChannels[6]; toReturn[DMX_DIMMER] = dmxChannels[7]; toReturn[DMX_GOBOWHEEL] = dmxChannels[8]; toReturn[DMX_GOBOROTATION] = dmxChannels[9]; toReturn[DMX_SPECIALFUNCTIONS] = dmxChannels[10]; toReturn[DMX_AUTOPROGRAMS] = dmxChannels[11]; toReturn[DMX_PRISM] = dmxChannels[12]; toReturn[DMX_FOCUS] = dmxChannels[13]; break; //MH-X50
-         /* MH-X50 8-channel mode */         case 18: toReturn[DMX_PAN] = dmxChannels[0]; toReturn[DMX_TILT] = dmxChannels[1]; toReturn[DMX_COLORWHEEL] = dmxChannels[2]; toReturn[DMX_SHUTTER] = dmxChannels[3]; toReturn[DMX_DIMMER] = toReturn[DMX_SHUTTER]; toReturn[DMX_GOBOWHEEL] = dmxChannels[4]; toReturn[DMX_GOBOROTATION] = dmxChannels[5]; toReturn[DMX_PRISM] = dmxChannels[6]; toReturn[DMX_FOCUS] = dmxChannels[7]; break; //MH-X50 8-ch mode
-         
-      }
+         for(int i = 0; i < profileChannels.length; i++) {
+           if(fT == i) { 
+             for(int j = 0; j < profileChannels[i].length; j++) {
+               toReturn[profileChannels[i][j]] = dmxChannels[j];
+             }
+           }
+         }
     } catch(Exception e) { e.printStackTrace(); }
     return toReturn;
     
@@ -167,27 +156,13 @@ int[] receiveDMXtoUniversal(int fT, int[] dmxChannels) {
 
 int[] getDMXfromUniversal(int fT, int[] universal) {
    int[] dmxChannels = new int[universalDMXlength];
-      switch(fT) {
-       /* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6: dmxChannels = new int[1]; dmxChannels[0] = universal[DMX_DIMMER]; break; //universal[DMX_DIMMER]s
-       
-       /* 2ch universal[DMX_STROBE] */     case 7: dmxChannels = new int[2]; dmxChannels[0] = universal[DMX_DIMMER]; dmxChannels[1] = universal[DMX_FREQUENCY]; break; //2ch universal[DMX_STROBE]
-       /* 2ch universal[DMX_HAZE]r */      case 8: dmxChannels = new int[2]; dmxChannels[0] = universal[DMX_HAZE]; dmxChannels[1] = universal[DMX_FAN]; break; //2ch universal[DMX_HAZE]r
-       /* 1ch universal[DMX_FOG] */       case 9: dmxChannels = new int[1]; dmxChannels[0] = universal[DMX_FOG]; break; //1ch universal[DMX_FOG]
-      
-       /* simple rgb led par */            case 10: dmxChannels = new int[3]; dmxChannels[0] = universal[DMX_RED]; dmxChannels[1] = universal[DMX_GREEN]; dmxChannels[2] = universal[DMX_BLUE]; break; //Simple rgb led par
-       /* simple rgb led par with dim */   case 11: dmxChannels = new int[4]; dmxChannels[3] = universal[DMX_DIMMER]; dmxChannels[0] = universal[DMX_RED]; dmxChannels[1] = universal[DMX_GREEN]; dmxChannels[2] = universal[DMX_BLUE]; break; //Simple rgb led par with dim
-       /* rgbw led par */                  case 12: dmxChannels = new int[4]; dmxChannels[0] = universal[DMX_RED]; dmxChannels[1] = universal[DMX_GREEN]; dmxChannels[2] = universal[DMX_BLUE]; dmxChannels[3] = universal[DMX_WHITE]; break; //rgbw
-       /* rgbwd led par */                 case 13: dmxChannels = new int[5]; dmxChannels[0] = universal[DMX_RED]; dmxChannels[1] = universal[DMX_GREEN]; dmxChannels[2] = universal[DMX_BLUE]; dmxChannels[3] = universal[DMX_WHITE]; dmxChannels[4] = universal[DMX_DIMMER]; break; //rgbwd
-       /* stairville rgbwd led par 4ch */  case 14: dmxChannels = new int[4]; dmxChannels[0] = universal[DMX_RED]; dmxChannels[1] = universal[DMX_GREEN]; dmxChannels[2] = universal[DMX_BLUE]; dmxChannels[3] = universal[DMX_WHITE]; break; //stairville rgbwd led par 4ch
-       /* stairville rgbwd led par 6ch */  case 15: dmxChannels = new int[6]; dmxChannels[0] = universal[DMX_SPECIAL1]; dmxChannels[1] = universal[DMX_RED]; dmxChannels[2] = universal[DMX_GREEN]; dmxChannels[3] = universal[DMX_BLUE]; dmxChannels[4] = universal[DMX_WHITE]; dmxChannels[5] = universal[DMX_SPECIAL2]; break; //stairville rgbwd led par 6ch
-       /* stairville rgbwd led par 8ch */  case 16: dmxChannels = new int[8]; dmxChannels[0] = universal[DMX_RED]; dmxChannels[1] = universal[DMX_GREEN]; dmxChannels[2] = universal[DMX_BLUE]; dmxChannels[3] = universal[DMX_WHITE]; dmxChannels[4] = universal[DMX_SPECIAL2]; dmxChannels[5] = universal[DMX_STROBE]; dmxChannels[6] = universal[DMX_SPECIAL1]; dmxChannels[7] = universal[DMX_DIMMER]; break; //stairville rgbwd led par 8ch
-                
-       /* MH-X50 14-channel mode */        case 17: dmxChannels = new int[14]; dmxChannels[0] = universal[DMX_PAN]; dmxChannels[1] = universal[DMX_TILT]; dmxChannels[2] = universal[DMX_PANFINE]; dmxChannels[3] = universal[DMX_TILTFINE]; dmxChannels[4] = universal[DMX_RESPONSESPEED]; dmxChannels[5] = universal[DMX_COLORWHEEL]; dmxChannels[6] = universal[DMX_SHUTTER]; dmxChannels[7] = universal[DMX_DIMMER]; dmxChannels[8] = universal[DMX_GOBOWHEEL]; dmxChannels[9] = universal[DMX_GOBOROTATION]; dmxChannels[10] = universal[DMX_SPECIALFUNCTIONS]; dmxChannels[11] = universal[DMX_AUTOPROGRAMS]; dmxChannels[12] = universal[DMX_PRISM]; dmxChannels[13] = universal[DMX_FOCUS]; break; //MH-X50
-       /* MH-X50 8-channel mode */         case 18: dmxChannels = new int[8]; dmxChannels[0] = universal[DMX_PAN]; dmxChannels[1] = universal[DMX_TILT]; dmxChannels[2] = universal[DMX_COLORWHEEL]; dmxChannels[3] = universal[DMX_SHUTTER]; dmxChannels[4] = universal[DMX_GOBOWHEEL]; dmxChannels[5] = universal[DMX_GOBOROTATION]; dmxChannels[6] = universal[DMX_PRISM]; dmxChannels[7] = universal[DMX_FOCUS]; break; //MH-X50 8-ch mode
-       
-       /* 1ch relay */                     case 23: dmxChannels = new int[1]; if(universal[DMX_DIMMER] > 100) { dmxChannels[0] = 255; } else { dmxChannels[0] = 0; } break; //1ch relay
-       
-       
-    }
+      for(int i = 0; i < profileChannels.length; i++) {
+           if(fT == i) { 
+             dmxChannels = new int[profileChannels[i].length];
+             for(int j = 0; j < profileChannels[i].length; j++) {
+               dmxChannels[j] = universal[profileChannels[i][j]];
+             }
+           }
+         }
     return dmxChannels; 
   }
