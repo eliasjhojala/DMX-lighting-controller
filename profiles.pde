@@ -14,9 +14,13 @@ int[] getFixtureSizeByType(int type) {
     case 4: toReturn[0] = 40; toReturn[1] = 50; toReturn[2] = 1; break; //Big fressnel
     case 5: toReturn[0] = 40; toReturn[1] = 20; toReturn[2] = 1; break; //Flood
     case 6: toReturn[0] = 20; toReturn[1] = 60; toReturn[2] = 1; break; //Zoom lens
+    
+    
     case 7: toReturn[0] = 40; toReturn[1] = 25; toReturn[2] = 1; break; //Strobe
     case 8: toReturn[0] = 40; toReturn[1] = 45; toReturn[2] = 1; break; //Haze
     case 9: toReturn[0] = 40; toReturn[1] = 55; toReturn[2] = 1; break; //Fog
+    
+    
     case 10: case 11: case 12: case 13: case 14: case 15: case 16: //Leds
       toReturn[0] = 30; toReturn[1] = 40; toReturn[2] = 1; break; //Leds
     case 17: case 18: //Moving heads
@@ -33,33 +37,6 @@ int[] getFixtureSize(int id) {
 String[] getChNamesByFixType(int fT) {
   return fixtureProfiles[fT].channelNames;
 }
-
-String[] returnRGB() {
-  String[] tR = { "Red", "Green", "Blue" };
-  return tR;
-}
-
-
-String[] fixtureNames = { 
-  "par64", //1
-  "p.fresu", //2
-  "k.fresu", //3
-  "i.fresu", //4
-  "flood", //5
-  "linssi", //6
-  "strobe", //7
-  "hazer", //8
-  "fog", //9
-  "RGB.par", //10
-  "RGBD.par", //11
-  "RGBW.par", //12
-  "RGBWD.par", //13
-  "PAR64 CX-3 RGBW 4CH", //14 
-  "PAR64 CX-3 RGBW 6CH", //15
-  "PAR64 CX-3 RGBW 8CH", //16
-  "MX50.14ch", //17
-  "MX50.8ch" //18 
-};
 
 boolean fixtureUseRgbByType(int fT) { return fT >= 10 && fT <= 16; }
 boolean fixtureUseDimByType(int fT) { return fT == 11 || fT == 13 || fT == 16; }
@@ -146,19 +123,19 @@ int[] getDMXfromUniversal(int fT, int[] universal) {
    return dmxChannels; 
 }
  
-FixtureProfile[] fixtureProfiles = new FixtureProfile[18]; 
+FixtureProfile[] fixtureProfiles = new FixtureProfile[19]; 
 void createFixtureProfiles() {
-  fixtureProfiles[1] = new FixtureProfile("par64", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
-  fixtureProfiles[2] = new FixtureProfile("p.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
-  fixtureProfiles[3] = new FixtureProfile("k.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
-  fixtureProfiles[4] = new FixtureProfile("i.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
-  fixtureProfiles[5] = new FixtureProfile("flood", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
-  fixtureProfiles[6] = new FixtureProfile("linssi", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
+  fixtureProfiles[1] = new FixtureProfile("par64", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(30, 50) );
+  fixtureProfiles[2] = new FixtureProfile("p.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(25, 30) );
+  fixtureProfiles[3] = new FixtureProfile("k.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(35, 40) );
+  fixtureProfiles[4] = new FixtureProfile("i.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(40, 50) );
+  fixtureProfiles[5] = new FixtureProfile("flood", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(40, 20) );
+  fixtureProfiles[6] = new FixtureProfile("linssi", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(20, 60) );
   
-  fixtureProfiles[7] = new FixtureProfile("Strobe", new String[] {"Dimmer", "Frequency"}, new int[] {DMX_DIMMER, DMX_FREQUENCY});
-  fixtureProfiles[8] = new FixtureProfile("Hazer", new String[] {"Haze", "Fan"}, new int[] {DMX_HAZE, DMX_FAN});
-  fixtureProfiles[9] = new FixtureProfile("Fog", new String[] {"Fog"}, new int[] {DMX_FOG});
-  
+  fixtureProfiles[7] = new FixtureProfile("Strobe", new String[] {"Dimmer", "Frequency"}, new int[] {DMX_DIMMER, DMX_FREQUENCY}, toFixtureSize(40, 25) );
+  fixtureProfiles[8] = new FixtureProfile("Hazer", new String[] {"Haze", "Fan"}, new int[] {DMX_HAZE, DMX_FAN}, toFixtrueSize(40, 45) );
+  fixtureProfiles[9] = new FixtureProfile("Fog", new String[] {"Fog"}, new int[] {DMX_FOG}, toFixtrueSize(40, 55) );
+ 
   fixtureProfiles[16] = new FixtureProfile("strv 8ch", 
     new String[] {"Red", "Green", "Blue", "White", "Color", "Strobe", "Mode", "Dimmer"}, 
     new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE, DMX_SPECIAL2, DMX_STROBE, DMX_SPECIAL1, DMX_DIMMER} );
@@ -195,4 +172,13 @@ void createFixtureProfiles() {
     new String[] {"Pan", "Tilt", "Colorwheel", "Shutter", "Gobowheel", "Gobo rotation", "Prism", "Focus" }, 
     new int[] {DMX_PAN, DMX_TILT, DMX_COLORWHEEL, DMX_SHUTTER, DMX_GOBOWHEEL, DMX_GOBOROTATION, DMX_PRISM, DMX_FOCUS} );
     
+}
+
+fixtureSize toFixtureSize(int w, int h, boolean tdrwn) {
+  fixtureSize fS = new fixtureSize(w, h, tdrwn);
+  return fS;
+}
+fixtureSize toFixtureSize(int w, int h) {
+  fixtureSize fS = new fixtureSize(w, h, true);
+  return fS;
 }
