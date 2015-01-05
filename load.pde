@@ -195,11 +195,14 @@ for (TableRow row : table.findRows("memories[i].myChase.beatMode", "variable_nam
   memories[i].myChase.beatMode = v;
 }
 
-for (TableRow row : table.findRows("memories[i].repOfFixtures[j].dimmer", "variable_name")) {
-  int i = int(row.getString("1D"));
-  int j = int(row.getString("2D"));
-  int v = int(row.getString("value"));
-  memories[i].repOfFixtures[j].setUniDMX(DMX_DIMMER, v);
+for(int abc = 0; abc < universalDMXlength; abc++) {
+  for (TableRow row : table.findRows("memories[i].repOfFixtures[j].getUniDMX(" + str(abc) + ")", "variable_name")) {
+    int i = int(row.getString("1D"));
+    int j = int(row.getString("2D"));
+    int v = int(row.getString("value"));
+    memories[i].repOfFixtures[j].setUniDMX(abc, v);
+    
+  }
 }
 
 for (TableRow row : table.findRows("memories[i].repOfFixtures[j].colorWheel", "variable_name")) {
