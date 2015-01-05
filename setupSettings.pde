@@ -151,6 +151,6 @@ class BooleanSettingController {
   
   //Draws and returns true if boolean export changed
   boolean changed() {
-    
+    return false;
   }
 }

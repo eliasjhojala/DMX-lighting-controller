@@ -69,36 +69,6 @@ void ylavalikko() {
   text(avgFrameRate + " fps", 3, 28, 125, 125);
   avgFrameRate = (avgFrameRate + int(frameRate)) / 2;
   
-<<<<<<< HEAD
-  pushMatrix();
-    int round = 20;
-    translate(-2, 150);
-    pushStyle();
-      fill(topMenuTheme2);
-      rect(0, 0, 40, 100, 0, round, round, 0);
-      mouse.declareUpdateElementRelative("washButton", "main:move", 0, 0, 40, 100);
-      boolean isHovered = isHover(0, 0, 40, 100);
-      boolean isClicked = mouse.isCaptured("washButton") && mouse.firstCaptureFrame;
-      if(isClicked) { colorWashMenuOpen = !colorWashMenuOpen; }
-    popStyle();
-    pushMatrix();
-      translate(13, 27);
-      rotate(radians(90));
-      pushStyle();
-        if(isHovered) {
-          fill(250);
-        }
-        else {
-          fill(topMenuTheme);
-        }
-        textSize(20);
-        text("Wash", 0, 0);
-      popStyle();
-    popMatrix();
-  popMatrix();
-  settingsWindow.draw();
-=======
-  
   { //Here you can place buttons to left side
     { //Wash button
       pushMatrix();
@@ -107,7 +77,7 @@ void ylavalikko() {
         pushStyle();
           fill(topMenuTheme2);
           rect(0, 0, 40, 100, 0, round, round, 0);
-          mouse.declareUpdateElementRelative("washButton", 10000000, 0, 0, 40, 100);
+          mouse.declareUpdateElementRelative("washButton", "main:move", 0, 0, 40, 100);
           boolean isHovered = isHover(0, 0, 40, 100);
           boolean isClicked = mouse.isCaptured("washButton") && mouse.firstCaptureFrame;
           if(isClicked) { colorWashMenuOpen = !colorWashMenuOpen; }
@@ -130,8 +100,7 @@ void ylavalikko() {
     } //End of wash button
   
   } //End of buttons placed to left side
-  
->>>>>>> c20d5a439fe94e0f7178bca354ac738692bc8471
+  settingsWindow.draw();
   popStyle();
   
 }

@@ -480,12 +480,6 @@ int[] toArray(int a, int b, int c, int d) {
 
 
 
-
-
-
-
-
-
 boolean ctrlDown = false; 
 boolean shftDown = false;
 boolean rightPressed = false;
@@ -499,6 +493,8 @@ void keyReleased() {
 }
 
 void keyPressed() {
+  
+  if(key == 'b') { boolean b = s2l.blinky; s2l = new soundDetect(); s2l.blinky = !b; }
   
   if(key == 'k') { newColorWash(); }
 
