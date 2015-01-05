@@ -117,6 +117,7 @@ class fixture {
   FixtureDMX process;
   FixtureDMX out;
   FixtureDMX preset;
+  FixtureDMX bottomMenu;
   
 
   //End of initing variables
@@ -129,6 +130,13 @@ class fixture {
   
    void processDMXvalues() {
     preset.presetProcess();
+    for(int i = 0; i < bottomMenu.DMXlength; i++) {
+      if(bottomMenu.DMX[i] != bottomMenu.DMXold[i]) {
+        in.DMX[i] = bottomMenu.DMX[i];
+        in.DMXChanged = true;
+        bottomMenu.DMXold[i] = bottomMenu.DMX[i];
+      }
+    }
     for(int i = 0; i < in.DMXlength; i++) {
       //TODO: overwriteCHECK
         out.setUniversalDMX(i, in.getUniversalDMX(i));
@@ -195,6 +203,7 @@ class fixture {
     process = new FixtureDMX(this);
     out = new FixtureDMX(this);
     preset = new FixtureDMX(this);
+    bottomMenu = new FixtureDMX(this);
     
     process.fades = new Fade[process.DMXlength];
   }

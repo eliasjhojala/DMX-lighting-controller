@@ -273,7 +273,7 @@ void setValuesToSelected() {
     for(int i = 0; i < fixtures.size(); i++) {
       if(fixtures.get(i).selected) {
         for(int j = 0; j < fixtures.get(i).in.DMXlength; j++) {
-          fixtures.get(i).in.setUniversalDMX(j, fixtureForSelected[a].in.getUniversalDMX(j));
+          fixtures.get(i).bottomMenu.setUniversalDMX(j, fixtureForSelected[a].bottomMenu.getUniversalDMX(j));
         }
       }
     }
