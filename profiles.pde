@@ -187,9 +187,12 @@ void createFixtureProfiles() {
     new String[] {"Red", "Green", "Blue"}, 
     new int[] {DMX_RED, DMX_GREEN, DMX_BLUE} );
     
-  fixtureProfiles[10] = new FixtureProfile("RGB", 
-    new String[] {"Red", "Green", "Blue", "White", "Color", "Strobe", "Mode", "Dimmer"}, 
+  fixtureProfiles[17] = new FixtureProfile("MHX50", 
+    new String[] {"Pan", "Tilt", "Pan fine", "Tilt fine", "Responsespeed", "Colorwheel", "Shutter", "Dimmer", "Gobowheel", "Goborotation", "Specialfunctions", "Autoprograms", "Prism", "Focus" }, 
     new int[] { DMX_PAN, DMX_TILT, DMX_PANFINE, DMX_TILTFINE, DMX_RESPONSESPEED, DMX_COLORWHEEL, DMX_SHUTTER, DMX_DIMMER, DMX_GOBOWHEEL, DMX_GOBOROTATION, DMX_SPECIALFUNCTIONS, DMX_AUTOPROGRAMS, DMX_PRISM, DMX_FOCUS } );
     
+  fixtureProfiles[18] = new FixtureProfile("MHX50", 
+    new String[] {"Pan", "Tilt", "Colorwheel", "Shutter", "Gobowheel", "Gobo rotation", "Prism", "Focus" }, 
+    new int[] {DMX_PAN, DMX_TILT, DMX_COLORWHEEL, DMX_SHUTTER, DMX_GOBOWHEEL, DMX_GOBOROTATION, DMX_PRISM, DMX_FOCUS} );
     
 }
