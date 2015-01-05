@@ -23,21 +23,10 @@ void createFixtureProfiles() {
     new String[] {"Red", "Green", "Blue", "White"}, 
     new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE} );
     
-  fixtureProfiles[13] = new FixtureProfile("RGBWD", 
-    new String[] {"Red", "Green", "Blue", "White", "Dimmer"}, 
-    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE, DMX_DIMMER} );
-    
-  fixtureProfiles[12] = new FixtureProfile("RGBW", 
-    new String[] {"Red", "Green", "Blue", "White"}, 
-    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE} );
-    
-  fixtureProfiles[11] = new FixtureProfile("RGBD", 
-    new String[] {"Red", "Green", "Blue", "Dimmer"}, 
-    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_DIMMER} );
-    
-  fixtureProfiles[10] = new FixtureProfile("RGB", 
-    new String[] {"Red", "Green", "Blue"}, 
-    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE} );
+  fixtureProfiles[13] = new FixtureProfile("RGBWD", new String[] {"Red", "Green", "Blue", "White", "Dimmer"}, new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE, DMX_DIMMER} );
+  fixtureProfiles[12] = new FixtureProfile("RGBW", new String[] {"Red", "Green", "Blue", "White"}, new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE} );
+  fixtureProfiles[11] = new FixtureProfile("RGBD", new String[] {"Red", "Green", "Blue", "Dimmer"}, new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_DIMMER} );
+  fixtureProfiles[10] = new FixtureProfile("RGB", new String[] {"Red", "Green", "Blue"}, new int[] {DMX_RED, DMX_GREEN, DMX_BLUE} );
     
   fixtureProfiles[17] = new FixtureProfile("MHX50", 
     new String[] {"Pan", "Tilt", "Pan fine", "Tilt fine", "Responsespeed", "Colorwheel", "Shutter", "Dimmer", "Gobowheel", "Goborotation", "Specialfunctions", "Autoprograms", "Prism", "Focus" }, 
