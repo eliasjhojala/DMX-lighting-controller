@@ -133,8 +133,8 @@ void createFixtureProfiles() {
   fixtureProfiles[6] = new FixtureProfile("linssi", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(20, 60) );
   
   fixtureProfiles[7] = new FixtureProfile("Strobe", new String[] {"Dimmer", "Frequency"}, new int[] {DMX_DIMMER, DMX_FREQUENCY}, toFixtureSize(40, 25) );
-  fixtureProfiles[8] = new FixtureProfile("Hazer", new String[] {"Haze", "Fan"}, new int[] {DMX_HAZE, DMX_FAN}, toFixtrueSize(40, 45) );
-  fixtureProfiles[9] = new FixtureProfile("Fog", new String[] {"Fog"}, new int[] {DMX_FOG}, toFixtrueSize(40, 55) );
+  fixtureProfiles[8] = new FixtureProfile("Hazer", new String[] {"Haze", "Fan"}, new int[] {DMX_HAZE, DMX_FAN}, toFixtureSize(40, 45) );
+  fixtureProfiles[9] = new FixtureProfile("Fog", new String[] {"Fog"}, new int[] {DMX_FOG}, toFixtureSize(40, 55) );
  
   fixtureProfiles[16] = new FixtureProfile("strv 8ch", 
     new String[] {"Red", "Green", "Blue", "White", "Color", "Strobe", "Mode", "Dimmer"}, 
