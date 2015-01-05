@@ -544,7 +544,7 @@ class chase { //Begin of chase class--------------------------------------------
   
   void setColor(int i, color c) {
     if(isQuickChase()) {
-      if(fixtures.get(i).fixtureIsLed()) {
+      if(fixtures.get(i).thisFixtureIsLed()) {
         fixtures.get(i).setColorForLed(c);
       }
     }

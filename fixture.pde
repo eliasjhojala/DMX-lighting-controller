@@ -156,26 +156,23 @@ class fixture {
 
  
   
-  boolean fixtureUseRgb() {
-    int fT = fixtureTypeId;
-    return (fT >= 10 && fT <= 16);
+  boolean thisFixtureUseRgb() {
+    return fixtureUseRgbByType(fixtureTypeId);
   }
     
-  boolean fixtureUseDim() {
-    int fT = fixtureTypeId;
-    return fT == 11 || fT == 13 || fT == 16;
+  boolean thisFixtureUseDim() {
+    return fixtureUseDimByType(fixtureTypeId);
   }
-  boolean fixtureUseWhite() {
-    int fT = fixtureTypeId;
-    return fT >= 12 && fT <= 16;
+  boolean thisFixtureUseWhite() {
+    return fixtureUseWhiteByType(fixtureTypeId);
   }
   
-  boolean fixtureIsLed() {
-    return fixtureUseRgb();
+  boolean thisFixtureIsLed() {
+    return thisFixtureUseRgb();
   }
   
   void setColorForLed(int c) {
-    if(fixtureIsLed()) {
+    if(thisFixtureIsLed()) {
       setColor(c);
     }
   }
@@ -290,7 +287,7 @@ class fixture {
   color getColor_wDim() {
     int dwm = getDimmerWithMaster();
     if(!isHalogen()) {
-      if(fixtureUseDim()) {
+      if(thisFixtureUseDim()) {
         return color(map(out.red, 0, 255, 0, dwm), map(out.green, 0, 255, 0, dwm), map(out.blue, 0, 255, 0, dwm));
       }
       else { return color(out.red, out.green, out.blue); }

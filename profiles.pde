@@ -83,6 +83,11 @@ String[] fixtureNames = {
   
 };
 
+boolean fixtureUseRgbByType(int fT) { return fT >= 10 && fT <= 16; }
+boolean fixtureUseDimByType(int fT) { return fT == 11 || fT == 13 || fT == 16; }
+boolean fixtureUseWhiteByType(int fT) { return fT >= 12 && fT <= 16; }
+boolean fixtureIsLedByType(int fT) { return fixtureUseRgbByType(fT); }
+
 //Gets type description of fixture #id
 String getFixtureNameByType(int type) {
   

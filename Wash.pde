@@ -319,14 +319,14 @@ class colorWash {
       if(fixtures.get(i) != null) { //Check that fixture exist
         //If onlySelected or onlyList is true then we have to check is fixture selected or in list
         if((!onlySelected && !onlyList) || fixtures.get(i).selected || isInList(i, selectedFixtures)) {
-          if(fixtureUseRgb(i)) { //Check that does this fixture use rgb
+          if(thisFixtureUseRgb(i)) { //Check that does this fixture use rgb
             fixtures.get(i).in.setUniversalDMX(DMX_RED, rMap(red, 0, 255, 0, val)); //Set red value
             fixtures.get(i).in.setUniversalDMX(DMX_GREEN, rMap(green, 0, 255, 0, val)); //Set green value
             fixtures.get(i).in.setUniversalDMX(DMX_BLUE, rMap(blue, 0, 255, 0, val)); //Set blue value
-            if(fixtureUseWhite(i)) { //Check that does this fixture use also white
+            if(thisFixtureUseWhite(i)) { //Check that does this fixture use also white
               fixtures.get(i).in.setUniversalDMX(DMX_WHITE, rMap(white, 0, 255, 0, val)); //set white value
             } //End of white check
-            if(fixtureUseDim(i)) { //Check that does this fixture use also dimmer
+            if(thisFixtureUseDim(i)) { //Check that does this fixture use also dimmer
               fixtures.get(i).in.setUniversalDMX(DMX_DIMMER, rMap(dim, 0, 255, 0, val)); //Set dimmer value
             } //End of dimmer check
             fixtures.get(i).DMXChanged = true; //Tell to fixture class that DMX has changed
@@ -365,14 +365,14 @@ class colorWash {
     boolean fixtureIsSelected(int i) {
       return fixtures.get(i).selected;
     }
-    boolean fixtureUseRgb(int i) {
-      return fixtures.get(i).fixtureUseRgb();
+    boolean thisFixtureUseRgb(int i) {
+      return fixtures.get(i).thisFixtureUseRgb();
     }
-    boolean fixtureUseDim(int i) {
-      return fixtures.get(i).fixtureUseDim();
+    boolean thisFixtureUseDim(int i) {
+      return fixtures.get(i).thisFixtureUseDim();
     }
-    boolean fixtureUseWhite(int i) {
-      return fixtures.get(i).fixtureUseWhite();
+    boolean thisFixtureUseWhite(int i) {
+      return fixtures.get(i).thisFixtureUseWhite();
     }
     
     boolean useThisFixture(int i) {
