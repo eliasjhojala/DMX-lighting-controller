@@ -124,7 +124,9 @@ class FixtureDMX { //Class containig all the dmx values
   
   void setUniversalDMX(int[] vals) {
     for(int i = 1; i < vals.length; i++) {
-      setUniversalDMX(i, vals[i]);
+      if(vals[i] != -2) {
+        setUniversalDMX(i, vals[i]);
+      }
     }
   }
   void setUniversalDMX(int i, int val) {
