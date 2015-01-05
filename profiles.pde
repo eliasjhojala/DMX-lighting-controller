@@ -31,30 +31,7 @@ int[] getFixtureSize(int id) {
 }
 
 String[] getChNamesByFixType(int fT) {
-  String[] tR = { "Default" };
-    switch(fT) {
-      case 1: case 2: case 3: case 4: case 5: case 6: String[] tR1 = { "Dimmer" }; tR = new String[tR1.length]; arrayCopy(tR1, tR); break;
-     
-      case 17: //mhX50 14ch
-        String[] tR16 = {"Pan", "Tilt", "Fine Pan", "Fine Tilt", "Resp. Speed", "Color Wheel", "Shutter", "Dimmer", "Gobo", "Gobo Rotation", "S. Function", "Auto Program", "Prism", "Focus"}; 
-        tR = new String[tR16.length]; arrayCopy(tR16, tR); 
-      break;
-      
-      case 18: //mhX50 8ch
-        String[] tR17 = {"Pan", "Tilt", "Color Wheel", "Shutter", "Gobo", "Gobo Rotation", "Prism", "Focus"}; 
-        tR = new String[tR17.length]; arrayCopy(tR17, tR); 
-      break; 
-      
-      case 10: tR = new String[3]; arrayCopy(returnRGB(), tR); break; //RGB.par
-      case 11: tR = new String[4]; arrayCopy(returnRGB(), tR); tR[3] = "Dimmer"; break; //RGBD.par
-      case 20: String[] tR20 = {"Haze", "Fan"}; tR = new String[tR20.length]; arrayCopy(tR20, tR); break; //Hazer
-      case 21: String[] tR21 = {"Fog"}; tR = new String[tR21.length]; arrayCopy(tR21, tR); break; //Fog machine
-      case 12: case 14: tR = new String[4]; arrayCopy(returnRGB(), tR); tR[3] = "White"; break; //RGBW.par and also Stairville RGBW 4ch
-      case 13: tR = new String[5]; arrayCopy(returnRGB(), tR); tR[3] = "White"; tR[4] = "Dimmer"; break; //RGBWD.par
-      case 15: String[] tR27 = {"Mode", "Red", "Green", "Blue", "White", "Effect"}; tR = new String[tR27.length]; arrayCopy(tR27, tR); break; //Stairville RGBW 6ch
-      case 16: String[] tR28 = {"Red", "Green", "Blue", "White", "Color", "Strobe", "Mode", "Dimmer"}; tR = new String[tR28.length]; arrayCopy(tR28, tR); break; //Stairville RGBW 8ch
-    }
-  return tR;
+  return fixtureProfiles[fT].channelNames;
 }
 
 String[] returnRGB() {
@@ -142,13 +119,11 @@ int[] receiveDMXtoUniversal(int fT, int[] dmxChannels) {
   int[] toReturn = new int[universalDMXlength];
   for(int i = 0; i < toReturn.length; i++) { toReturn[i] = -2; }
   try {
-         for(int i = 0; i < profileChannels.length; i++) {
-           if(fT == i) { 
-             for(int j = 0; j < profileChannels[i].length; j++) {
-               toReturn[profileChannels[i][j]] = dmxChannels[j];
-             }
-           }
-         }
+     if(fixtureProfiles[fT] != null) {
+       for(int j = 0; j < fixtureProfiles[fT].channelTypes.length; j++) {
+         toReturn[fixtureProfiles[fT].channelTypes[j]] = dmxChannels[j];
+       }
+     }
     } catch(Exception e) { e.printStackTrace(); }
     return toReturn;
     
@@ -156,19 +131,53 @@ int[] receiveDMXtoUniversal(int fT, int[] dmxChannels) {
 
 int[] getDMXfromUniversal(int fT, int[] universal) {
    int[] dmxChannels = new int[universalDMXlength];
-      for(int i = 0; i < profileChannels.length; i++) {
-           if(fT == i) { 
-             dmxChannels = new int[profileChannels[i].length];
-             for(int j = 0; j < profileChannels[i].length; j++) {
-               dmxChannels[j] = universal[profileChannels[i][j]];
-             }
-           }
-         }
-    return dmxChannels; 
-  }
+   if(fixtureProfiles[fT] != null) {
+     dmxChannels = new int[fixtureProfiles[fT].channelTypes.length];
+     for(int j = 0; j < fixtureProfiles[fT].channelTypes.length; j++) {
+       dmxChannels[j] = universal[fixtureProfiles[fT].channelTypes[j]];
+     }
+   }
+   return dmxChannels; 
+}
  
 FixtureProfile[] fixtureProfiles = new FixtureProfile[18]; 
 void createFixtureProfiles() {
   fixtureProfiles[1] = new FixtureProfile("par64", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
-  fixtureProfiles[16] = new FixtureProfile("stairville", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
+  fixtureProfiles[2] = new FixtureProfile("p.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
+  fixtureProfiles[3] = new FixtureProfile("k.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
+  fixtureProfiles[4] = new FixtureProfile("i.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
+  fixtureProfiles[5] = new FixtureProfile("flood", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
+  fixtureProfiles[6] = new FixtureProfile("linssi", new String[] {"Dimmer"}, new int[] {DMX_DIMMER} );
+  
+  fixtureProfiles[7] = new FixtureProfile("Strobe", new String[] {"Dimmer", "Frequency"}, new int[] {DMX_DIMMER, DMX_FREQUENCY});
+  fixtureProfiles[8] = new FixtureProfile("Hazer", new String[] {"Haze", "Fan"}, new int[] {DMX_HAZE, DMX_FAN});
+  fixtureProfiles[9] = new FixtureProfile("Fog", new String[] {"Fog"}, new int[] {DMX_FOG});
+  
+  fixtureProfiles[16] = new FixtureProfile("strv 8ch", 
+    new String[] {"Red", "Green", "Blue", "White", "Color", "Strobe", "Mode", "Dimmer"}, 
+    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE, DMX_SPECIAL2, DMX_STROBE, DMX_SPECIAL1, DMX_DIMMER} );
+    
+  fixtureProfiles[15] = new FixtureProfile("strv 6ch", 
+    new String[] {"Mode", "Red", "Green", "Blue", "White", "Effect"}, 
+    new int[] {DMX_SPECIAL1, DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE, DMX_SPECIAL2} );
+    
+  fixtureProfiles[14] = new FixtureProfile("strv 4ch", 
+    new String[] {"Red", "Green", "Blue", "White"}, 
+    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE} );
+    
+  fixtureProfiles[13] = new FixtureProfile("RGBWD", 
+    new String[] {"Red", "Green", "Blue", "White", "Dimmer"}, 
+    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE, DMX_DIMMER} );
+    
+  fixtureProfiles[12] = new FixtureProfile("RGBW", 
+    new String[] {"Red", "Green", "Blue", "White"}, 
+    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE} );
+    
+  fixtureProfiles[11] = new FixtureProfile("RGBD", 
+    new String[] {"Red", "Green", "Blue", "Dimmer"}, 
+    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_DIMMER} );
+    
+  fixtureProfiles[10] = new FixtureProfile("RGB", 
+    new String[] {"Red", "Green", "Blue"}, 
+    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE} );
 }

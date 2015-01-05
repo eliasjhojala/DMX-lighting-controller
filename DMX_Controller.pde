@@ -478,6 +478,8 @@ void setup() {
   
   memoryCreator = new memoryCreationBox(false);
   
+  createFixtureProfiles();
+  
 }
 
 

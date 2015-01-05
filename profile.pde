@@ -13,6 +13,8 @@ class FixtureProfile {
   
    FixtureProfile(String fN, String[] cN, int[] cT) {
     fixtureName = fN;
+    channelNames = new String[cN.length];
+    channelTypes = new int[cT.length];
     arrayCopy(cN, channelNames);
     arrayCopy(cT, channelTypes);
   }
