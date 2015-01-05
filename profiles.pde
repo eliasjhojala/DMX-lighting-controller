@@ -68,18 +68,24 @@ boolean fixtureIsLedByType(int fT) { return fixtureUseRgbByType(fT); }
 
 //Gets type description of fixture #id
 String getFixtureNameByType(int type) {
-  return fixtureNames[constrain(type-1, 0, fixtureNames.length-1)];
+  String toReturn = "";
+  if(fixtureProfiles[constrain(type, 0, fixtureProfiles.length-1)] != null) {
+    toReturn = fixtureProfiles[constrain(type, 0, fixtureProfiles.length-1)].fixtureName;
+  }
+  return toReturn;
 }
 
 int getNumberOfFixtureTypes() {
-  return fixtureNames.length;
+  return fixtureProfiles.length;
 }
 
 
 int getFixtureTypeId1(String fixtureType) {
   int toReturn = 0;
-  for(int i = 0; i < fixtureNames.length; i++) {
-    if(fixtureType == fixtureNames[i]) { toReturn = i+1; break; }
+  for(int i = 0; i < fixtureProfiles.length; i++) {
+    if(fixtureProfiles[i] != null) {
+      if(fixtureType == fixtureProfiles[i].fixtureName) { toReturn = i; break; }
+    }
   }
   return toReturn;
 }
@@ -180,4 +186,10 @@ void createFixtureProfiles() {
   fixtureProfiles[10] = new FixtureProfile("RGB", 
     new String[] {"Red", "Green", "Blue"}, 
     new int[] {DMX_RED, DMX_GREEN, DMX_BLUE} );
+    
+  fixtureProfiles[10] = new FixtureProfile("RGB", 
+    new String[] {"Red", "Green", "Blue", "White", "Color", "Strobe", "Mode", "Dimmer"}, 
+    new int[] { DMX_PAN, DMX_TILT, DMX_PANFINE, DMX_TILTFINE, DMX_RESPONSESPEED, DMX_COLORWHEEL, DMX_SHUTTER, DMX_DIMMER, DMX_GOBOWHEEL, DMX_GOBOROTATION, DMX_SPECIALFUNCTIONS, DMX_AUTOPROGRAMS, DMX_PRISM, DMX_FOCUS } );
+    
+    
 }
