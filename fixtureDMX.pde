@@ -40,14 +40,14 @@ class FixtureDMX { //Class containig all the dmx values
   boolean DMXChanged;
   
   
-  int dimmer; //dimmer value
+/*  int dimmer; //dimmer value
   
   int red, green, blue, white, amber; //color values
   int pan, tilt, panFine, tiltFine; //rotation values
   int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
   int haze, fan, fog; //Pyro values
   int frequency; //Strobe freq value
-  int special1, special2, special3, special4; //Some special values for strange fixtures
+  int special1, special2, special3, special4; //Some special values for strange fixtures */
   
   Fade[] fades;
   
@@ -62,7 +62,7 @@ class FixtureDMX { //Class containig all the dmx values
   }
   
   void setDimmer(int val) {
-    dimmer = val; DMXChanged = true;
+    setUniversalDMX(DMX_DIMMER, val);
   }
   
   fixture parent;
@@ -89,38 +89,14 @@ class FixtureDMX { //Class containig all the dmx values
   
   int getUniversalDMX(int i) {
     int toReturn = 0;
-    switch(i) {
-      case 1: toReturn = dimmer; break;
-      case 2: toReturn = red; break;
-      case 3: toReturn = green; break;
-      case 4: toReturn = blue; break;
-      case 5: toReturn = white; break;
-      case 6: toReturn = amber; break;
-      case 7: toReturn = pan; break;
-      case 8: toReturn = tilt; break;
-      case 9: toReturn = panFine; break;
-      case 10: toReturn = tiltFine; break;
-      case 11: toReturn = colorWheel; break;
-      case 12: toReturn = goboWheel; break;
-      case 13: toReturn = goboRotation; break;
-      case 14: toReturn = prism; break;
-      case 15: toReturn = focus; break;
-      case 16: toReturn = shutter; break;
-      case 17: toReturn = strobe; break;
-      case 18: toReturn = frequency; break;
-      case 19: toReturn = responseSpeed; break;
-      case 20: toReturn = autoPrograms; break;
-      case 21: toReturn = specialFunctions; break;
-      case 22: toReturn = haze; break;
-      case 23: toReturn = fan; break;
-      case 24: toReturn = fog; break;
-      case 25: toReturn = special1; break;
-      case 26: toReturn = special2; break;
-      case 27: toReturn = special3; break;
-      case 28: toReturn = special4; break;
-    }
+    toReturn = DMX[i];
     return toReturn;
   }
+  
+  void setUniDMX(int i, int val) { setUniversalDMX(i, val); }
+  int getUniDMX(int i) { return getUniversalDMX(i); }
+  void setUniDMX(int[] vals) { setUniversalDMX(vals); }
+  int[] getUniDMX() { return getUniversalDMX(); }
   
   void setUniversalDMX(int[] vals) {
     for(int i = 1; i < vals.length; i++) {
@@ -130,36 +106,7 @@ class FixtureDMX { //Class containig all the dmx values
     }
   }
   void setUniversalDMX(int i, int val) {
-    switch(i) {
-      case 1: setDimmer(val); break;
-      case 2: red = val; break;
-      case 3: green = val; break;
-      case 4: blue = val; break;
-      case 5: white = val; break;
-      case 6: amber = val; break;
-      case 7: pan = val; break;
-      case 8: tilt = val; break;
-      case 9: panFine = val; break;
-      case 10: tiltFine = val; break;
-      case 11: colorWheel = val; break;
-      case 12: goboWheel = val; break;
-      case 13: goboRotation = val; break;
-      case 14: prism = val; break;
-      case 15: focus = val; break;
-      case 16: shutter = val; break;
-      case 17: strobe = val; break;
-      case 18: frequency = val; break;
-      case 19: responseSpeed = val; break;
-      case 20: autoPrograms = val; break;
-      case 21: specialFunctions = val; break;
-      case 22: haze = val; break;
-      case 23: fan = val; break;
-      case 24: fog = val; break;
-      case 25: special1 = val; break;
-      case 26: special2 = val; break;
-      case 27: special3 = val; break;
-      case 28: special4 = val; break;
-    }
+    DMX[i] = val;
     DMXChanged = true;
   }
  

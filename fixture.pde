@@ -103,14 +103,7 @@ class fixture {
   int preFadeSpeed = 1000;
   int postFadeSpeed = 5000;
   
-  int red, green, blue, white, amber; //color values
-  int pan, tilt, panFine, tiltFine; //rotation values
-  int colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, responseSpeed, autoPrograms, specialFunctions; //special values for moving heads etc.
-  int haze, fan, fog; //Pyro values
-  int frequency; //Strobe freq value
-  int special1, special2, special3, special4; //Some special values for strange fixtures
-  
-  
+  int red, green, blue; //color values
   
   String fixtureType;
   int fixtureTypeId;
@@ -146,9 +139,9 @@ class fixture {
   
   void toggle(boolean down) {
     if(down) {
-      if(fixtureTypeId == 8) { if(in.haze < 255 || in.fan < 255) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); } else { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); } }
-      if(fixtureTypeId == 9) { if(in.fog < 255) { in.setUniversalDMX(DMX_FOG, 255); } else { in.setUniversalDMX(DMX_FOG, 0); } }
-      if(fixtureTypeId != 8 && fixtureTypeId != 9) { if(in.dimmer < 255) { in.setDimmer(255); } else { in.setDimmer(0); } }
+      if(fixtureTypeId == 8) { if(in.getUniversalDMX(DMX_HAZE) < 255 || in.getUniversalDMX(DMX_FAN) < 255) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); } else { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); } }
+      if(fixtureTypeId == 9) { if(in.getUniversalDMX(DMX_FOG) < 255) { in.setUniversalDMX(DMX_FOG, 255); } else { in.setUniversalDMX(DMX_FOG, 0); } }
+      if(fixtureTypeId != 8 && fixtureTypeId != 9) { if(in.getUniversalDMX(DMX_DIMMER) < 255) { in.setUniversalDMX(DMX_DIMMER, 255); } else { in.setUniversalDMX(DMX_DIMMER, 0); } }
     }
   }
   void push(boolean down) {
@@ -188,9 +181,9 @@ class fixture {
   }
   
   void setColor(int c) {
-    in.red = rRed(c);
-    in.green = rGreen(c);
-    in.blue = rBlue(c);
+    in.setUniversalDMX(DMX_RED, rRed(c));
+    in.setUniversalDMX(DMX_GREEN, rGreen(c));
+    in.setUniversalDMX(DMX_BLUE, rBlue(c));
     DMXChanged = true;
   }
 
@@ -268,7 +261,7 @@ class fixture {
   
   color getRawColor() {
     if(!isHalogen()) {
-      return color(out.red, out.green, out.blue);
+      return color(out.getUniversalDMX(DMX_RED), out.getUniversalDMX(DMX_GREEN), out.getUniversalDMX(DMX_BLUE));
     }
     else {
       return color(red, green, blue);
@@ -278,11 +271,12 @@ class fixture {
   //Returns dimmed fixture color in type color
   color getColor_wDim() {
     int dwm = getDimmerWithMaster();
+    color c = getRawColor();
     if(!isHalogen()) {
       if(thisFixtureUseDim()) {
-        return color(map(out.red, 0, 255, 0, dwm), map(out.green, 0, 255, 0, dwm), map(out.blue, 0, 255, 0, dwm));
+        return color(map(red(c), 0, 255, 0, dwm), map(green(c), 0, 255, 0, dwm), map(blue(c), 0, 255, 0, dwm));
       }
-      else { return color(out.red, out.green, out.blue); }
+      else { return c; }
     }
     else {
       return color(map(red, 0, 255, 0, dwm), map(green, 0, 255, 0, dwm), map(blue, 0, 255, 0, dwm));
@@ -332,7 +326,7 @@ class fixture {
   }
   
   int getDimmerWithMaster() {
-    return int(map(out.dimmer, 0, 255, 0, grandMaster));
+    return int(map(out.getUniversalDMX(DMX_DIMMER), 0, 255, 0, grandMaster));
   }
   
   int getDMXLength() {
