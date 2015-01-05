@@ -633,7 +633,7 @@ class chase { //Begin of chase class--------------------------------------------
         hueOffset += getInvertedValue(fade, 0, 255)/10;
         if(hueOffset > 255) { hueOffset = 0; }
         for(int i = 0; i < getPresets().length; i++) {
-          color c = color(loopMap(i, 0, getPresets().length-1, 255, hueOffset), 255, 255);
+          color c = color(loopMap(i, 0, getPresets().length, 255, hueOffset), 255, 255);
           setColor(getPresets()[i], c);
         }
       popStyle();
