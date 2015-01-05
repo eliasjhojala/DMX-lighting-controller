@@ -195,53 +195,56 @@ for (TableRow row : table.findRows("memories[i].myChase.beatMode", "variable_nam
   memories[i].myChase.beatMode = v;
 }
 
-for (TableRow row : table.findRows("memories[i].repOfFixtures[j].dimmer", "variable_name")) {
-  int i = int(row.getString("1D"));
-  int j = int(row.getString("2D"));
-  int v = int(row.getString("value"));
-  memories[i].repOfFixtures[j].dimmer = v;
+for(int abc = 0; abc < universalDMXlength; abc++) {
+  for (TableRow row : table.findRows("memories[i].repOfFixtures[j].getUniDMX(" + str(abc) + ")", "variable_name")) {
+    int i = int(row.getString("1D"));
+    int j = int(row.getString("2D"));
+    int v = int(row.getString("value"));
+    memories[i].repOfFixtures[j].setUniDMX(abc, v);
+    
+  }
 }
 
 for (TableRow row : table.findRows("memories[i].repOfFixtures[j].colorWheel", "variable_name")) {
   int i = int(row.getString("1D"));
   int j = int(row.getString("2D"));
   int v = int(row.getString("value"));
-  memories[i].repOfFixtures[j].colorWheel = v;
+  memories[i].repOfFixtures[j].setUniDMX(DMX_COLORWHEEL, v);
 }
 
 for (TableRow row : table.findRows("memories[i].repOfFixtures[j].goboWheel", "variable_name")) {
   int i = int(row.getString("1D"));
   int j = int(row.getString("2D"));
   int v = int(row.getString("value"));
-  memories[i].repOfFixtures[j].goboWheel = v;
+  memories[i].repOfFixtures[j].setUniDMX(DMX_GOBOWHEEL, v);
 }
 
 for (TableRow row : table.findRows("memories[i].repOfFixtures[j].goboRotation", "variable_name")) {
   int i = int(row.getString("1D"));
   int j = int(row.getString("2D"));
   int v = int(row.getString("value"));
-  memories[i].repOfFixtures[j].goboRotation = v;
+  memories[i].repOfFixtures[j].setUniDMX(DMX_GOBOROTATION, v);
 }
 
 for (TableRow row : table.findRows("memories[i].repOfFixtures[j].shutter", "variable_name")) {
   int i = int(row.getString("1D"));
   int j = int(row.getString("2D"));
   int v = int(row.getString("value"));
-  memories[i].repOfFixtures[j].shutter = v;
+  memories[i].repOfFixtures[j].setUniDMX(DMX_SHUTTER, v);
 }
 
 for (TableRow row : table.findRows("memories[i].repOfFixtures[j].pan", "variable_name")) {
   int i = int(row.getString("1D"));
   int j = int(row.getString("2D"));
   int v = int(row.getString("value"));
-  memories[i].repOfFixtures[j].pan = v;
+  memories[i].repOfFixtures[j].setUniDMX(DMX_PAN, v);
 }
 
 for (TableRow row : table.findRows("memories[i].repOfFixtures[j].tilt", "variable_name")) {
   int i = int(row.getString("1D"));
   int j = int(row.getString("2D"));
   int v = int(row.getString("value"));
-  memories[i].repOfFixtures[j].tilt = v;
+  memories[i].repOfFixtures[j].setUniDMX(DMX_TILT, v);
 }
 
 

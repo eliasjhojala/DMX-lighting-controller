@@ -13,38 +13,6 @@ void alavalikko() {
   
   pushMatrix();
     translate(0, height-170); //alavalikko is located to bottom of the window
-    /*//Upper row
-    pushMatrix();
-      for(int i = 0; i < 20; i++) {
-        int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
-        drawn[tempIndex] = true;
-        
-        translate(65, 0); //moves box to its place
-        createFixtureBox(tempIndex); //Create fixture boxes including buttons and their functions
-      }
-    popMatrix();
-    //Lower row
-    pushMatrix();
-      translate(0, 65); 
-      for(int i = 20; i <= 40; i++) {
-        int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
-        drawn[tempIndex] = true;
-        
-        translate(65, 0); //moves box to its place
-        createFixtureBox(tempIndex); //Create fixture boxes including buttons and their functions
-      }
-    popMatrix(); 
-    
-    pushMatrix();
-      translate(0, 65+65); 
-      for(int i = 40; i <= 60; i++) {
-        int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
-        drawn[tempIndex] = true;
-        
-        translate(65, 0); //moves box to its place
-        createFixtureBox(tempIndex); //Create fixture boxes including buttons and their functions
-      }
-    popMatrix();*/
     int row = 20;
     int rows = 3;
     mouse.declareUpdateElement("bottomMenu", "main:move", 65, height-260, (row+1)*65, height-260 + rows*65);
@@ -207,7 +175,7 @@ void openBottomMenuControlBox(int owner) {
   }
 
   if (successInit) {
-    bottomMenuControlBoxDMXValues = fixtures.get(owner).in.getDMX();
+    bottomMenuControlBoxDMXValues = fixtures.get(owner).bottomMenu.getDMX();
     bottomMenuControlBoxDMXValueChanged = new boolean[bottomMenuControlBoxDMXValues.length];
   }
 }
@@ -287,10 +255,10 @@ void bottomMenuDMXUpdate() {
 void submitDMXFromBMCB(int[] input) {
   
   if(bottomMenuAllFixtures) {
-    fixtureForSelected[0].in.receiveDMX(input);
+    fixtureForSelected[0].bottomMenu.receiveDMX(input);
     setValuesToSelected();
   } else {
-    fixtures.get(currentBottomMenuControlBoxOwner).in.receiveDMX(input);
+    fixtures.get(currentBottomMenuControlBoxOwner).bottomMenu.receiveDMX(input);
   }
 }
 
