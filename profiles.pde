@@ -1,5 +1,6 @@
 FixtureProfile[] fixtureProfiles = new FixtureProfile[19]; 
 void createFixtureProfiles() {
+  fixtureProfiles[0] = new FixtureProfile("", new String[] { }, new int[] { }, toFixtureSize(50, 50, false) );
   fixtureProfiles[1] = new FixtureProfile("par64", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(30, 50) );
   fixtureProfiles[2] = new FixtureProfile("p.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(25, 30) );
   fixtureProfiles[3] = new FixtureProfile("k.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(35, 40) );

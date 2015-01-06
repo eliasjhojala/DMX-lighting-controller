@@ -153,13 +153,15 @@ class memory { //Begin of memory class------------------------------------------
     
     arrayCopy(newWhatToSave, whatToSave);
     
+    repOfFixtures = new FixtureDMX[fixtures.size()];
     for(int i = 0; i < fixtures.size(); i++) {
         repOfFixtures[i] = new FixtureDMX();
     }
       
     for(int i = 0; i < fixtures.size(); i++) {
-      for(int jk = 0; jk < fixtures.get(i).out.DMXlength; jk++) {
-        repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).out.getUniversalDMX(jk));
+      for(int jk = 0; jk < fixtures.get(i).in.DMXlength; jk++) {
+        if(whatToSave[jk])
+          repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
       }
     }
     type = 1;
@@ -178,11 +180,13 @@ class memory { //Begin of memory class------------------------------------------
       //if(value != valueOld) { //overwirtecheck
         valueOld = value;
         for(int i = 0; i < fixtures.size(); i++) {
-          for(int jk = 0; jk < fixtures.get(i).out.DMXlength; jk++) {
-            int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
-            if(val > fixtures.get(i).preset.getUniversalDMX(jk)) {
-              fixtures.get(i).preset.setUniversalDMX(jk, val);
-            }
+          for(int jk = 0; jk < fixtures.get(i).preset.DMXlength; jk++) {
+            //if(whatToSave[jk]) {
+              int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
+              if(val > fixtures.get(i).preset.getUniversalDMX(jk)) {
+                fixtures.get(i).preset.setUniversalDMX(jk, val);
+              }
+            //}
           }
         }
       //}

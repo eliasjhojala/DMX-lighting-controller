@@ -168,7 +168,7 @@ void saveAllData() {
    for (int j = 0; j < memories[i].repOfFixtures.length; j++) {
        // whatToSave titles: { "dimmer", "colorWheel", "gobo", "goboRotation", "shutter", "pan", "tilt" }
        for(int jk = 0; jk < universalDMXlength; jk++) {
-          if(memories[i].whatToSave[0]) saveDataMainCommands(str(memories[i].repOfFixtures[j].getUniDMX(jk)), "memories[i].repOfFixtures[j].getUniDMX(" + str(jk) + ")", "2", str(i), str(j));
+          if(memories[i].whatToSave[jk]) saveDataMainCommands(str(memories[i].repOfFixtures[j].getUniDMX(jk)), "memories[i].repOfFixtures[j].getUniDMX(" + str(jk) + ")", "2", str(i), str(j));
        }
     } //End of for (int j = 1; j < memories[i].repOfFixtures.length; j++)
 
