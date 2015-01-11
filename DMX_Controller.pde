@@ -1,13 +1,3 @@
-
-
-import themidibus.*; 
-import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
-
-import com.rngtng.launchpad.*;
-
-
-
-
 int userId = 3; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                               //|
                                                                                                                                                                           //|
@@ -76,6 +66,8 @@ void setFixtureChannelsAtSoftwareBegin() {
   }
 }
 
+import themidibus.*; 
+import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
 
 MidiBus myBus; // The MidiBus
 MidiBus Maschine;
