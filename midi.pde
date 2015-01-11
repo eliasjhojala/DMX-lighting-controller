@@ -1,3 +1,15 @@
+class behringerLC2412 {
+  int[][] faderValues; //[row][number]
+  int[] buttonValues; //[number]
+  int masterAvalue;
+  int masterBvalue;
+  int masterValue;
+  
+  void midiMessageIn(int num, int val) {
+    if(isBetween(num, 0, 11)) {
+    }
+  }
+}
 
 
  
