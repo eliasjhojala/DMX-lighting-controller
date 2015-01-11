@@ -477,7 +477,3 @@ int rGreen(color c) {
 int rBlue(color c) {
   return round(blue(c));
 }
-
-boolean isBetween(int in, int min, int max) {
-  return in <= max && in >= min;
-}
