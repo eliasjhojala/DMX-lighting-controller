@@ -7,7 +7,8 @@ OscP5 oscP52;
 NetAddress myRemoteLocation2;
 
 
-
+Launchpad launchpad;
+byte[] data = new byte[64];
 
 boolean loadAllDataInSetup = true;
 
@@ -41,5 +42,6 @@ void setuppi() {
   
     fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-  
+  launchpad = new Launchpad(this);
+  launchpad.flashingAuto();
 }
