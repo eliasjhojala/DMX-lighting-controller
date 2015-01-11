@@ -1,92 +1,15 @@
 class behringerLC2412 {
-  int[][] faderValue; //[row][number]
-  boolean[] buttons; //[number]
+  int[][] faderValues; //[row][number]
+  int[] buttonValues; //[number]
   int masterAvalue;
   int masterBvalue;
   int masterValue;
-  int speedValue, xFadeValue, chaserValue;
-  int bank;
-  int chaserNumber;
-  boolean stepKey, channelFlashKey, soloKey, special1Key, special2Key, manualKey, chaserModeKey, insertKey, presetKey, memoryKey;
   
   void midiMessageIn(int num, int val) {
     if(isBetween(num, 0, 11)) {
-      faderValue[0][num] = midiToDMX(val);
-    }
-    else if(isBetween(num, 12, 23)) {
-      faderValue[1][num-12] = midiToDMX(val);
-    }
-    else if(isBetween(num, 31, 42)) {
-      buttons[num-31] = midiToBoolean(val);
-    }
-    else {
-      switch(num) {
-        case 24: speedValue = midiToDMX(val);
-        case 25: xFadeValue = midiToDMX(val);
-        case 26: chaserValue = midiToDMX(val);
-        case 27: masterValue = midiToDMX(val);
-        case 28: masterAvalue = midiToDMX(val);
-        case 29: masterBvalue = midiToDMX(val);
-        case 30: stepKey = midiToBoolean(val);
-        case 43: bank = val;
-        case 44: chaserNumber = val;
-        case 45: channelFlashKey = midiToBoolean(val);
-        case 46: soloKey = midiToBoolean(val);
-        case 47: special1Key = midiToBoolean(val);
-        case 48: special2Key = midiToBoolean(val);
-        case 49: manualKey = midiToBoolean(val);
-        case 50: chaserModeKey = midiToBoolean(val);
-        case 51: insertKey = midiToBoolean(val);
-        case 52: presetKey = midiToBoolean(val);
-        case 53: memoryKey = midiToBoolean(val);
-      }
     }
   }
 }
-
-boolean midiToBoolean(int val) {
-  return val > 63;
-}
-int midiToDMX(int val) {
-  return rMap(val, 0, 127, 0, 255);
-}
-
-
-
-
-public void launchpadGridPressed(int x, int y) {
-  println("GridButton pressed at: " + x + ", " + y);
-  launchpad.changeGrid(x, y, LColor.RED_HIGH);
-}
-
-public void launchpadGridReleased(int x, int y) {
-  println("GridButton released at: " + x + ", " + y);
-  launchpad.changeGrid(x, y, LColor.YELLOW_HIGH);
-}
-
-public void launchpadButtonPressed(int buttonCode) {
-  println("Button pressed: " + buttonCode);
-  launchpad.changeButton(buttonCode, LColor.GREEN_HIGH);
-}  
-
-public void launchpadButtonReleased(int buttonCode) {
-  println("Button pressed: " + buttonCode);
-  launchpad.changeButton(buttonCode, LColor.RED_HIGH + LColor.FLASHING);
-}  
-
-
-public void launchpadSceneButtonPressed(int buttonCode) {
-  println("Scene Button pressed: " + buttonCode);
-  launchpad.changeSceneButton(buttonCode, LColor.RED_HIGH);
-}  
-
-public void launchpadSceneButtonReleased(int buttonCode) {
-  println("Scene Button pressed: " + buttonCode);
-  launchpad.changeSceneButton(buttonCode, LColor.GREEN_HIGH + LColor.FLASHING);
-}  
-
-
-
 
 
  
