@@ -503,7 +503,7 @@ class chase { //Begin of chase class--------------------------------------------
           memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
       if(parent.type == 3) {
-          fixtures.get(num).dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
+          fixtures.get(num).preset.setUniDMX(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
           //fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
     //  }
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
@@ -533,7 +533,7 @@ class chase { //Begin of chase class--------------------------------------------
        toReturn = memories[getPresets()[n]].getValue();
      }
      else if(parent.type == 3) {
-       toReturn = fixtures.get(getPresets()[n]).dimmer;
+       toReturn = fixtures.get(getPresets()[n]).in.getUniDMX(DMX_DIMMER);
      }
      return toReturn;
   }
@@ -667,10 +667,10 @@ class chase { //Begin of chase class--------------------------------------------
         } //End of sines[i].go check
       } //End of checking does this sine exist
     }
-    
+    int[] presets = getPresets();
     for(int i = 0; i <= sineMax; i++) {
-      if(i < getPresets().length) { //No nullpointers anymore
-        loadPreset(getPresets()[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
+      if(i < presets.length) { //No nullpointers anymore
+        loadPreset(presets[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
       }
     }
     

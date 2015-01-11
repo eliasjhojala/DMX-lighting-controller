@@ -6,6 +6,7 @@ NetAddress myRemoteLocation1;
 OscP5 oscP52;
 NetAddress myRemoteLocation2;
 
+
 boolean loadAllDataInSetup = true;
 
 public int leveys;
@@ -38,5 +39,6 @@ void setuppi() {
   
     fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
+  
   createMidiClasses();
 }

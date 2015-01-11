@@ -1,3 +1,4 @@
+
 class behringerLC2412 {
   int[][] faderValue; //[row][number]
   boolean[] buttons; //[number]

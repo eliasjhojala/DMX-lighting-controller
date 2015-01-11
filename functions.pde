@@ -222,7 +222,7 @@ void fullOn(boolean state) {
   if(!fullOn && state) {
     //Turn on full on
     for(int ii = 0; ii < fixtures.size(); ii++) {
-       valueOfDimBeforeFullOn[ii] = fixtures.get(ii).dimmer;
+       valueOfDimBeforeFullOn[ii] = fixtures.get(ii).in.getUniDMX(DMX_DIMMER);
        fixtures.get(ii).setDimmer(255);
     }
     fullOn = true;
@@ -476,8 +476,4 @@ int rGreen(color c) {
 }
 int rBlue(color c) {
   return round(blue(c));
-}
-
-boolean isBetween(int in, int min, int max) {
-  return in <= max && in >= min;
 }
