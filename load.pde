@@ -27,7 +27,7 @@ void loadAllData1() {
      table = loadTable(loadPath, "header"); //Eliaksen polku
 
         
-    
+   
     //FIXTURES---------------------------------------------------------------------------------------------------------------------------
     //Initialize fixtures using type
     fixtures.clear();
@@ -91,7 +91,7 @@ void loadAllData1() {
     
     
   
-    
+   
     
     
     
@@ -113,13 +113,13 @@ for (TableRow row : table.findRows("memories[i].repOfFixtures.length", "variable
   repOfFixturesLength[D1] = v;
 }
 
-/*for(int i = 0; i < memoriesLength; i++) {
+for(int i = 0; i < memoriesLength; i++) {
   memories[i] = new memory();
-  memories[i].repOfFixtures = new fixture[repOfFixturesLength[i]];
+  memories[i].repOfFixtures = new FixtureDMX[repOfFixturesLength[i]];
   for(int ij = 0; ij < repOfFixturesLength[i]; ij++) {
-    memories[i].repOfFixtures[ij] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    memories[i].repOfFixtures[ij] = new FixtureDMX();
   }
-}*/
+}
 
 //memory objects and repOfFixtures objects are now created but NOT myChase.presets objects
 
@@ -195,6 +195,8 @@ for (TableRow row : table.findRows("memories[i].myChase.beatMode", "variable_nam
   memories[i].myChase.beatMode = v;
 }
 
+
+
 for(int abc = 0; abc < universalDMXlength; abc++) {
   for (TableRow row : table.findRows("memories[i].repOfFixtures[j].getUniDMX(" + str(abc) + ")", "variable_name")) {
     int i = int(row.getString("1D"));
@@ -205,7 +207,8 @@ for(int abc = 0; abc < universalDMXlength; abc++) {
   }
 }
 
-for (TableRow row : table.findRows("memories[i].repOfFixtures[j].colorWheel", "variable_name")) {
+
+/*for (TableRow row : table.findRows("memories[i].repOfFixtures[j].colorWheel", "variable_name")) {
   int i = int(row.getString("1D"));
   int j = int(row.getString("2D"));
   int v = int(row.getString("value"));
@@ -245,7 +248,7 @@ for (TableRow row : table.findRows("memories[i].repOfFixtures[j].tilt", "variabl
   int j = int(row.getString("2D"));
   int v = int(row.getString("value"));
   memories[i].repOfFixtures[j].setUniDMX(DMX_TILT, v);
-}
+}*/
 
 
 for (TableRow row : table.findRows("memories[i].whatToSave[ij]", "variable_name")) {

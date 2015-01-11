@@ -116,7 +116,7 @@ import javax.swing.JFrame; //Käytetään frame-kirjastoa, jonka avulla voidaan 
 PFrame f1 = new PFrame(); //Luodaan uusi ikkuna
 secondApplet1 s1;
 
-PFrame1 f = new PFrame1(); //Luodaan toinenkin uusi ikkuna
+PFrame1 f = new PFrame1(this); //Luodaan toinenkin uusi ikkuna
 secondApplet s;
 
 
