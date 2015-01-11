@@ -42,6 +42,6 @@ void setuppi() {
   
     fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-  launchpad = new Launchpad(this);
-  launchpad.flashingAuto();
+//  launchpad = new Launchpad(this);
+//  launchpad.flashingAuto();
 }
