@@ -144,7 +144,7 @@ class fixture {
     for(int i = 0; i < bottomMenu.DMXlength; i++) {
       if(bottomMenu.DMX[i] != bottomMenu.DMXold[i]) {
         in.DMX[i] = bottomMenu.DMX[i];
-        in.DMXChanged = true;
+        DMXChanged = true;
         bottomMenu.DMXold[i] = bottomMenu.DMX[i];
       }
     }
@@ -157,6 +157,7 @@ class fixture {
       if(fixtureTypeId == 8) { if(in.getUniversalDMX(DMX_HAZE) < 255 || in.getUniversalDMX(DMX_FAN) < 255) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); } else { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); } }
       if(fixtureTypeId == 9) { if(in.getUniversalDMX(DMX_FOG) < 255) { in.setUniversalDMX(DMX_FOG, 255); } else { in.setUniversalDMX(DMX_FOG, 0); } }
       if(fixtureTypeId != 8 && fixtureTypeId != 9) { if(in.getUniversalDMX(DMX_DIMMER) < 255) { in.setUniversalDMX(DMX_DIMMER, 255); } else { in.setUniversalDMX(DMX_DIMMER, 0); } }
+      DMXChanged = true;
     }
   }
   void push(boolean down) {

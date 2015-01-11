@@ -221,7 +221,7 @@ class memoryCreationBox {
         strokeWeight(3);
         //Box itself
         rect(0, 0, 300, saveBoxHeight, 20);
-        mouse.declareUpdateElementRelative("memoryCreationBox", "addMemory", 0, 0, 300, 300);
+        mouse.declareUpdateElementRelative("memoryCreationBox", "addMemory", 0, 0, 300, saveBoxHeight);
         mouse.setElementExpire("memoryCreationBox", 2);
         //Grabable location button
         fill(180);
@@ -342,7 +342,8 @@ class memoryCreationBox {
           textAlign(LEFT);
           text("What to save:", 10, 125);
           translate(10, 132);
-          int rows = saveOptionButtonVariables.length/2;
+          int cols = 2;
+          int rows = saveOptionButtonVariables.length/cols;
           for(int i = 0; i < saveOptionButtonVariables.length; i++) {
             pushMatrix();
               translate(i / rows * 120, i % rows * 30);

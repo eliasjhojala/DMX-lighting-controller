@@ -53,12 +53,15 @@ class FixtureDMX { //Class containig all the dmx values
   
   void presetProcess() {
     for(int i = 0; i < DMXlength; i++) {
-        int newV = getUniversalDMX(i);
+        int newV = getUniDMX(i);
         if (newV != -1 && newV != DMXold[i]) {
           parent.in.setUniversalDMX(i, newV);
           parent.DMXChanged = true;
+          
+          println(DMXold[i] + ":" + newV);
+          DMXold[i] = newV;
         }
-        DMXold[i] = newV;
+        
         setUniversalDMX(i, -1);
         
         

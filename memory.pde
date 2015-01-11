@@ -159,8 +159,8 @@ class memory { //Begin of memory class------------------------------------------
     }
       
     for(int i = 0; i < fixtures.size(); i++) {
-      for(int jk = 0; jk < fixtures.get(i).in.DMXlength; jk++) {
-        if(whatToSave[jk])
+      for(int jk = 1; jk < fixtures.get(i).in.DMXlength; jk++) {
+        if(whatToSave[jk-1])
           repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
       }
     }
@@ -180,13 +180,13 @@ class memory { //Begin of memory class------------------------------------------
       //if(value != valueOld) { //overwirtecheck
         valueOld = value;
         for(int i = 0; i < fixtures.size(); i++) {
-          for(int jk = 0; jk < fixtures.get(i).preset.DMXlength; jk++) {
-            //if(whatToSave[jk]) {
+          for(int jk = 1; jk < fixtures.get(i).preset.DMXlength; jk++) {
+            if(whatToSave[jk-1]) {
               int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
               if(val > fixtures.get(i).preset.getUniversalDMX(jk)) {
                 fixtures.get(i).preset.setUniversalDMX(jk, val);
               }
-            //}
+            }
           }
         }
       //}
