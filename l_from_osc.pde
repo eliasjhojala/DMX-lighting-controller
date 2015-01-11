@@ -65,7 +65,7 @@ void oscEvent(OscMessage theOscMessage) {
      if(addr.equals("/strobenow")) {
        if(digitalValue == 1) {
          for(int i = 0; i < fixtures.size(); i++) {
-           valueOfDimBeforeStrobe[i] = fixtures.get(i).dimmer;
+           valueOfDimBeforeStrobe[i] = fixtures.get(i).in.getUniDMX(DMX_DIMMER);
            fixtures.get(i).setDimmer(0);
          }
          for(int i = 0; i < fixtures.size(); i++) {

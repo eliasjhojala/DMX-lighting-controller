@@ -533,7 +533,7 @@ class chase { //Begin of chase class--------------------------------------------
        toReturn = memories[getPresets()[n]].getValue();
      }
      else if(parent.type == 3) {
-       toReturn = fixtures.get(getPresets()[n]).dimmer;
+       toReturn = fixtures.get(getPresets()[n]).in.getUniDMX(DMX_DIMMER);
      }
      return toReturn;
   }

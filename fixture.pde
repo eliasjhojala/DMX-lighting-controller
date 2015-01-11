@@ -91,9 +91,7 @@ class fixture {
   
   boolean DMXChanged = false;
 
-  int dimmer;
-  int dimmerPresetTarget = 0; //Used for preset calculations
-  int lastDimmerPresetTarget = 0; // /\
+  //int dimmer;
   
 
   
@@ -222,21 +220,21 @@ class fixture {
   fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int param, String fixtType) {
    fixtureType = fixtType;
    initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, ch, parentA, param, getFixtureTypeId());
-   createDMXobjects();
   }
   
   //Type in int
   fixture(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int param, int fixtTypeId) {
     initFixtureObj(dim, r, g, b, x, y, z, rZ, rX, ch, parentA, param, fixtTypeId);
     fixtureType = getFixtureNameByType(fixtTypeId);
-    createDMXobjects();
+    
   }
   
   //Empty fixture
   fixture() {}
   
   void initFixtureObj(int dim, int r, int g, int b, int x, int y, int z, int rZ, int rX, int ch, int parentA, int param, int fixtTypeId) {
-   dimmer = dim;
+   createDMXobjects();
+   in.setUniDMX(DMX_DIMMER, dim);
    channelStart = ch;
    red = r;
    green = g;
