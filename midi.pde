@@ -1,8 +1,27 @@
 Launchpad launchpad;
 
+final int OUTPUT_TO_FIXTURES = 1;
+final int OUTPUT_TO_DMX = 2;
+final int OUTPUT_TO_MEMORIES = 3;
+
 public class Launchpad {
+  final int LEARN = 0;
+  final int VIEW = 1;
+  final int PAGEDOWN = 2;
+  final int PAGEUP = 3;
+  final int SESSION = 4;
+  final int USER1 = 5;
+  final int USER2 = 6;
+  final int MIXER = 7;
+  
   boolean[][] pads;
   boolean[][] padsToggle;
+  
+  boolean[] upperPads;
+  boolean[] upperPadsToggle;
+  
+  int[] mapping;
+  int output;
   
   MidiBus bus;
   
@@ -15,6 +34,10 @@ public class Launchpad {
     bus = new MidiBus(this, inputIndex, outputIndex);
     pads = new boolean[8][8];
     padsToggle = new boolean[8][8];
+    upperPads = new boolean[8];
+    upperPadsToggle = new boolean[8];
+    
+    output = 2;
     
   }
   
@@ -23,20 +46,30 @@ public class Launchpad {
     boolean val = midiToBoolean(velocity);
     pads[x][y] = val;
     if(val) padsToggle[x][y] = !padsToggle[x][y];
-    memories[x+8*y+1].setValue(padsToggle[x][y] ? 255 : 0);
+    
     bus.sendNoteOn(0, pitch, byte(padsToggle[x][y]) * 127);
+    if(output == 1) { memories[x+8*y+1].setValue(padsToggle[x][y] ? 255 : 0); }
+    else if(output == 2) { fixtures.get(x+8*y).setDimmer(padsToggle[x][y] ? 255 : 0); }
   }
+  
   void noteOff(int channel, int pitch, int velocity) {
     noteOn(channel, pitch, 0);
   }
 
   
+  void controllerChange(int channel, int number, int value) {
+    boolean val = midiToBoolean(value);
+    int x = constrain(number-104, 0, upperPads.length-1);
+    upperPads[x] = val;
+    if(val) upperPadsToggle[x] = !upperPadsToggle[x];
+  }
   
+
 
 }
 
 
-class behringerLC2412 {
+public class behringerLC2412 {
   int[][] faderValue; //[row][number]
   int[][] faderValueOld; //[row][number]
   boolean[] buttons; //[number]
@@ -50,10 +83,25 @@ class behringerLC2412 {
   int bank;
   int chaserNumber;
   boolean stepKey, channelFlashKey, soloKey, special1Key, special2Key, manualKey, chaserModeKey, insertKey, presetKey, memoryKey;
+  
+  int output = 3;
 
   
-  void setup() {
+  behringerLC2412(int inputIndex, int outputIndex) {
+    setup(inputIndex, outputIndex);
+  }
+  
+  MidiBus bus;
+  void setup(int inputIndex, int outputIndex) {
     //Midi start commands
+    bus = new MidiBus(this, inputIndex, outputIndex);
+  }
+  
+  void noteOn(int channel, int pitch, int velocity) {
+    midiMessageIn(pitch, velocity);
+  }
+  void noteOff(int channel, int pitch, int velocity) {
+    midiMessageIn(pitch, velocity);
   }
   
   void midiMessageIn(int num, int val) {
@@ -90,20 +138,69 @@ class behringerLC2412 {
     }
   }
   
-  void controlMemories() {
-    for(int i = 0; i <= 11; i++) {
-      if(faderValue[1][i] != faderValueOld[1][i]) {
-        memories[i+1+(bank+1)*12].setValue(faderValue[1][i]);
-        faderValueOld[1][i] = faderValue[1][i];
-      }
-    }
-  }
+  
   void processValues() {
     if(masterValues[0] != masterValuesOld[0]) {
       changeGrandMasterValue(masterValues[0]);
       masterValuesOld[0] = masterValues[0];
     }
   }
+}
+
+class Input {
+  Input() {
+  }
+  
+  void draw() {
+    processBehringerLC2412();
+  }
+  
+  void processBehringerLC2412() {
+    if(LC2412 != null) {
+      processBehringerLC2412master();
+      processBehringerLC2412faders();
+    }
+    
+  }
+  void processBehringerLC2412master() {
+    if(LC2412.masterValues[0] != LC2412.masterValuesOld[0]) {
+      changeGrandMasterValue(LC2412.masterValues[0]);
+      LC2412.masterValuesOld[0] = LC2412.masterValues[0];
+    }
+  }
+  void processBehringerLC2412faders() {
+    for(int i = 0; i <= 11; i++) {
+      if(setValueToOutput(i, LC2412.output, LC2412.bank*12, LC2412.faderValue[1], LC2412.faderValueOld[1])) {
+        LC2412.faderValueOld[1][i] = LC2412.faderValue[1][i];
+      }
+    }
+  }
+  
+  boolean setValueToOutput(int number, int output, int offset, int[] data, int[] dataOld) {
+    int n = number+offset;
+    if(isBetween(number, 0, min(data.length-1, dataOld.length-1))) {
+      if(data[number] != dataOld[number]) {
+        if(output == OUTPUT_TO_FIXTURES) {
+          if(n < fixtures.size()) {
+            fixtures.get(n).setDimmer(data[number]);
+          }
+        }
+        else if(output == OUTPUT_TO_DMX) {
+          //Put value to dmx
+        }
+        else if(output == OUTPUT_TO_MEMORIES) {
+          if(n < memories.length) {
+            memories[n].setValue(data[number]);
+          }
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+
+  
+  
 }
 
 boolean midiToBoolean(int val) {
@@ -121,10 +218,14 @@ class LaunchpadData {
  
  void createMidiClasses() {
    LaunchpadData launchpadData = new LaunchpadData();
-   launchpad = new Launchpad(0, 3);
+   launchpad = new Launchpad(1, 2);
+//   behringerLC2412 LC2412 = new behringerLC2412(-2, -2);
+   inputClass = new Input();
  }
 
  LaunchpadData launchpadData;
+ behringerLC2412 LC2412;
+ Input inputClass;
 
 
  

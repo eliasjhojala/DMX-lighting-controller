@@ -14,7 +14,7 @@ long totalMillis[] = new long[9];
 void draw() {
   if(programReadyToRun && !freeze) {
     textSize(12);
-    
+
     mouse.refresh();
     
     //Move this to setDimAndMemoryValuesAtEveryDraw, maybe?
