@@ -38,14 +38,19 @@ public class Launchpad {
 
 class behringerLC2412 {
   int[][] faderValue; //[row][number]
+  int[][] faderValueOld; //[row][number]
   boolean[] buttons; //[number]
-  int masterAvalue;
-  int masterBvalue;
-  int masterValue;
+  boolean[] buttonsOld; //[number]
+  int masterAvalue, masterBvalue, masterValue;
+  int[] masterValues = new int[3];
+  int[] masterValuesOld = new int[3];
+  int[] chaserValues = new int[3];
+  int[] chaserValuesOld = new int[3];
   int speedValue, xFadeValue, chaserValue;
   int bank;
   int chaserNumber;
   boolean stepKey, channelFlashKey, soloKey, special1Key, special2Key, manualKey, chaserModeKey, insertKey, presetKey, memoryKey;
+
   
   void setup() {
     //Midi start commands
@@ -63,12 +68,12 @@ class behringerLC2412 {
     }
     else {
       switch(num) {
-        case 24: speedValue = midiToDMX(val);
-        case 25: xFadeValue = midiToDMX(val);
-        case 26: chaserValue = midiToDMX(val);
-        case 27: masterValue = midiToDMX(val);
-        case 28: masterAvalue = midiToDMX(val);
-        case 29: masterBvalue = midiToDMX(val);
+        case 24: chaserValues[0] = midiToDMX(val);
+        case 25: chaserValues[1] = midiToDMX(val);
+        case 26: chaserValues[2] = midiToDMX(val);
+        case 27: masterValues[0] = midiToDMX(val);
+        case 28: masterValues[1] = midiToDMX(val);
+        case 29: masterValues[2] = midiToDMX(val);
         case 30: stepKey = midiToBoolean(val);
         case 43: bank = val;
         case 44: chaserNumber = val;
@@ -82,6 +87,21 @@ class behringerLC2412 {
         case 52: presetKey = midiToBoolean(val);
         case 53: memoryKey = midiToBoolean(val);
       }
+    }
+  }
+  
+  void controlMemories() {
+    for(int i = 0; i <= 11; i++) {
+      if(faderValue[1][i] != faderValueOld[1][i]) {
+        memories[i+1+(bank+1)*12].setValue(faderValue[1][i]);
+        faderValueOld[1][i] = faderValue[1][i];
+      }
+    }
+  }
+  void processValues() {
+    if(masterValues[0] != masterValuesOld[0]) {
+      changeGrandMasterValue(masterValues[0]);
+      masterValuesOld[0] = masterValues[0];
     }
   }
 }
