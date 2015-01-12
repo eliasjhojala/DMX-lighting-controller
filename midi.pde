@@ -1,3 +1,40 @@
+Launchpad launchpad;
+
+public class Launchpad {
+  boolean[][] pads;
+  boolean[][] padsToggle;
+  
+  MidiBus bus;
+  
+  Launchpad(int inputIndex, int outputIndex) {
+    setup(inputIndex, outputIndex);
+  }
+  
+  void setup(int inputIndex, int outputIndex) {
+    
+    bus = new MidiBus(this, inputIndex, outputIndex);
+    pads = new boolean[8][8];
+    padsToggle = new boolean[8][8];
+    
+  }
+  
+  void noteOn(int channel, int pitch, int velocity) {
+    int x = constrain(pitch%16, 0, pads.length-1), y = constrain(pitch/16, 0, pads[0].length-1);
+    boolean val = midiToBoolean(velocity);
+    pads[x][y] = val;
+    if(val) padsToggle[x][y] = !padsToggle[x][y];
+    memories[x+8*y+1].setValue(padsToggle[x][y] ? 255 : 0);
+    bus.sendNoteOn(0, pitch, byte(padsToggle[x][y]) * 127);
+  }
+  void noteOff(int channel, int pitch, int velocity) {
+    noteOn(channel, pitch, 0);
+  }
+
+  
+  
+
+}
+
 
 class behringerLC2412 {
   int[][] faderValue; //[row][number]
@@ -9,6 +46,10 @@ class behringerLC2412 {
   int bank;
   int chaserNumber;
   boolean stepKey, channelFlashKey, soloKey, special1Key, special2Key, manualKey, chaserModeKey, insertKey, presetKey, memoryKey;
+  
+  void setup() {
+    //Midi start commands
+  }
   
   void midiMessageIn(int num, int val) {
     if(isBetween(num, 0, 11)) {
@@ -60,6 +101,7 @@ class LaunchpadData {
  
  void createMidiClasses() {
    LaunchpadData launchpadData = new LaunchpadData();
+   launchpad = new Launchpad(0, 3);
  }
 
  LaunchpadData launchpadData;

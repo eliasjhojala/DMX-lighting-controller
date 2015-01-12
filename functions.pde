@@ -157,7 +157,7 @@ boolean inBds2D(int pointerX, int pointerY, int x1, int y1, int x2, int y2){
 }
 
 boolean inBds1D(int pointer, int x1, int x2){
-  return pointer > x1 && pointer < x2;
+  return pointer >= x1 && pointer <= x2;
 }
 
 boolean isHoverBottomMenu() {
@@ -476,4 +476,8 @@ int rGreen(color c) {
 }
 int rBlue(color c) {
   return round(blue(c));
+}
+
+boolean isBetween(int original, int min, int max) {
+  return inBds1D(original, min, max);
 }
