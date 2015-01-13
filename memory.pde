@@ -176,19 +176,19 @@ class memory { //Begin of memory class------------------------------------------
 
   void loadPreset() {
     if(type == 1) {
-      //The following part of code makes AIOOBs so I commented it
       //if(value != valueOld) { //overwirtecheck
-        valueOld = value;
-        for(int i = 0; i < fixtures.size(); i++) {
-          for(int jk = 1; jk < fixtures.get(i).preset.DMXlength; jk++) {
-            if(whatToSave[jk-1]) {
+      valueOld = value;
+      for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
+        if(whatToSave[jk-1])
+          for(int i = 0; i < fixtures.size(); i++) {
+            if(i < repOfFixtures.length) if(jk < fixtures.get(i).preset.DMXlength) {
               int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
               if(val > fixtures.get(i).preset.getUniversalDMX(jk)) {
                 fixtures.get(i).preset.setUniversalDMX(jk, val);
               }
-            }
+            } else {} else break;
           }
-        }
+      }
       //}
     }
   }
@@ -502,8 +502,9 @@ class chase { //Begin of chase class--------------------------------------------
       if(parent.type == 2) {
           memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
-      if(parent.type == 3) {
-          fixtures.get(num).preset.setUniDMX(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
+      if(parent.type == 3)  {
+          if(fixtures.get(num).preset.getUniDMX(DMX_DIMMER) < defaultConstrain(rMap(val, 0, 255, 0, value)))
+            fixtures.get(num).preset.setUniDMX(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
           //fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
     //  }
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
@@ -586,9 +587,10 @@ class chase { //Begin of chase class--------------------------------------------
       }
       brightness = defaultConstrain(iMap(brightness1, 0, fade, 0, 255));
     }
-    int rS = getReverse(step, 0, getPresets().length-1);
-    loadPreset(getPresets()[step], brightness);
-    loadPreset(getPresets()[rS], getInvertedValue(brightness, 0, 255));
+    int[] presets = getPresets();
+    int rS = getReverse(step, 0, presets.length-1);
+    loadPreset(presets[step], brightness);
+    loadPreset(presets[rS], getInvertedValue(brightness, 0, 255));
   }
   
   void freqToLight() { //This function gives frequence values to chase presets

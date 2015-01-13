@@ -58,7 +58,7 @@ class FixtureDMX { //Class containig all the dmx values
           parent.in.setUniversalDMX(i, newV);
           parent.DMXChanged = true;
           
-          println(DMXold[i] + ":" + newV);
+          
           DMXold[i] = newV;
         }
         
