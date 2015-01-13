@@ -50,6 +50,8 @@ public class Launchpad {
     bus.sendNoteOn(0, pitch, byte(padsToggle[x][y]) * 127);
     if(output == 1) { memories[x+8*y+1].setValue(padsToggle[x][y] ? 255 : 0); }
     else if(output == 2) { fixtures.get(x+8*y).setDimmer(padsToggle[x][y] ? 255 : 0); }
+    
+    println("RECEIVED LAUNCHPAD MIDI");
   }
   
   void noteOff(int channel, int pitch, int velocity) {
@@ -99,6 +101,7 @@ public class behringerLC2412 {
   
   void noteOn(int channel, int pitch, int velocity) {
     midiMessageIn(pitch, velocity);
+    println("RECEIVED BEHRINGER MIDI");
   }
   void noteOff(int channel, int pitch, int velocity) {
     midiMessageIn(pitch, velocity);
@@ -182,7 +185,8 @@ class Input {
       if(data[number] != dataOld[number]) {
         if(output == OUTPUT_TO_FIXTURES) {
           if(n < fixtures.size()) {
-            fixtures.get(n).setDimmer(data[number]);
+            fixtures.get(n).in.setUniversalDMX(DMX_DIMMER, data[number]);
+            fixtures.get(n).DMXChanged = true;
           }
         }
         else if(output == OUTPUT_TO_DMX) {
@@ -218,8 +222,8 @@ class LaunchpadData {
  
  void createMidiClasses() {
    LaunchpadData launchpadData = new LaunchpadData();
-   launchpad = new Launchpad(1, 2);
-//   behringerLC2412 LC2412 = new behringerLC2412(-2, -2);
+   launchpad = new Launchpad(0, 3);
+   behringerLC2412 LC2412 = new behringerLC2412(1, 2);
    inputClass = new Input();
  }
 
