@@ -6,6 +6,7 @@
  Input inputClass;
  Keyrig49 keyRig49;
 
+
  void createMidiClasses() {
    LaunchpadData launchpadData = new LaunchpadData();
    launchpad = new Launchpad(2, 2);
@@ -24,10 +25,18 @@ final int OUTPUT_TO_MEMORIES = 3;
 
 public class Keyrig49 {
   
+  final boolean[] OCTAVE = {true, false, true, false, true, true, false, true, false, true, false, true};
+  final int PIANO_OCTAVE_PATTERN_OFFSET = 0;
+  
   MidiBus bus;
   
   boolean[] useToggle;
   boolean[] keys;
+  boolean[] keysOld;
+  int[] keysVal;
+  int[] keysValOld;
+  
+  int output = OUTPUT_TO_FIXTURES;
   
   Keyrig49(int inputIndex) {
     setup(inputIndex);
@@ -37,15 +46,23 @@ public class Keyrig49 {
     
     bus = new MidiBus(this, inputIndex, 0);
     keys = new boolean[49];
+    keysOld = new boolean[49];
     useToggle = new boolean[49];
+    keysVal = new int[49];
+    keysValOld = new int[49];
     
   }
   
   void noteOn(int channel, int pitch, int velocity) {
-    keys[constrain(pitch, 0, keys.length-1)] = midiToBoolean(velocity);
+    int whiteI = 0;
+    for(int k = 0; k < pitch; k++) {
+       if(OCTAVE[(k + PIANO_OCTAVE_PATTERN_OFFSET) % OCTAVE.length]) whiteI++;
+    }
+    keys[constrain(whiteI, 0, keys.length-1)] = midiToBoolean(velocity);
+    keysVal[constrain(whiteI, 0, keys.length-1)] = midiToDMX(velocity);
   }
   void noteOff(int channel, int pitch, int velocity) {
-    keys[constrain(pitch, 0, keys.length-1)] = midiToBoolean(velocity);
+    noteOn(channel, pitch, velocity);
   }
   
 }
@@ -224,6 +241,7 @@ class Input {
       processBehringerLC2412master();
       processBehringerLC2412faders();
     }
+    if(keyRig49 != null) processKeyrig49Keys();
       
     
   }
@@ -239,7 +257,14 @@ class Input {
         LC2412.faderValueOld[1][i] = LC2412.faderValue[1][i];
       }
     }
-   
+  }
+  
+  void processKeyrig49Keys() {
+    for(int i = 0; i < 49; i++) {
+      if(setValueToOutput(i, keyRig49.output, 0, keyRig49.keysVal, keyRig49.keysValOld)) {
+        keyRig49.keysValOld[i] = keyRig49.keysVal[i];
+      }
+    }
   }
   
   boolean setValueToOutput(int number, int output, int offset, int[] data, int[] dataOld) {
