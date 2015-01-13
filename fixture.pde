@@ -135,7 +135,8 @@ class fixture {
     //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
     if(abs(newIn[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5 && isHalogen())
       newIn[DMX_DIMMER] = oldOut[DMX_DIMMER];
-    newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]);
+      newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]);
+    
     out.setUniversalDMX(newIn);
     
     

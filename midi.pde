@@ -4,12 +4,14 @@
  LaunchpadData launchpadData;
  behringerLC2412 LC2412;
  Input inputClass;
+ Keyrig49 keyRig49;
 
  void createMidiClasses() {
    LaunchpadData launchpadData = new LaunchpadData();
-   launchpad = new Launchpad(1, 2);
+   launchpad = new Launchpad(2, 2);
    LC2412 = new behringerLC2412(0, 0);
    inputClass = new Input();
+   keyRig49 = new Keyrig49(1);
  }
 
 
@@ -18,6 +20,35 @@ Launchpad launchpad;
 final int OUTPUT_TO_FIXTURES = 1;
 final int OUTPUT_TO_DMX = 2;
 final int OUTPUT_TO_MEMORIES = 3;
+
+
+public class Keyrig49 {
+  
+  MidiBus bus;
+  
+  boolean[] useToggle;
+  boolean[] keys;
+  
+  Keyrig49(int inputIndex) {
+    setup(inputIndex);
+  }
+  
+  void setup(int inputIndex) {
+    
+    bus = new MidiBus(this, inputIndex, 0);
+    keys = new boolean[49];
+    useToggle = new boolean[49];
+    
+  }
+  
+  void noteOn(int channel, int pitch, int velocity) {
+    keys[constrain(pitch, 0, keys.length-1)] = midiToBoolean(velocity);
+  }
+  void noteOff(int channel, int pitch, int velocity) {
+    keys[constrain(pitch, 0, keys.length-1)] = midiToBoolean(velocity);
+  }
+  
+}
 
 public class Launchpad {
   final int LEARN = 0;
