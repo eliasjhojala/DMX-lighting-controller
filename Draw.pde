@@ -14,6 +14,8 @@ long totalMillis[] = new long[9];
 void draw() {
   if(programReadyToRun && !freeze) {
     textSize(12);
+    
+    inputClass.draw();
 
     mouse.refresh();
     
