@@ -92,39 +92,39 @@ void updateMemories() {
 
 
 void controllerChange(ControlChange change) {
-  if (change.channel() != 10 && !useMaschine) {
-    int i = round(map(change.value(), 0, 127, 0, 255));
-    if(change.number() == 7) {
-      changeGrandMasterValue(i);
-    }
-    else if(change.number() == 1) {
-      changeCrossFadeValue(i);
-    }
-  } else {
-    //Coming from Maschine
-    maschineControllerChange(change.number(), change.value());
-  }
+//  if (change.channel() != 10 && !useMaschine) {
+//    int i = round(map(change.value(), 0, 127, 0, 255));
+//    if(change.number() == 7) {
+//      changeGrandMasterValue(i);
+//    }
+//    else if(change.number() == 1) {
+//      changeCrossFadeValue(i);
+//    }
+//  } else {
+//    //Coming from Maschine
+//    maschineControllerChange(change.number(), change.value());
+//  }
 
 }
 
 
 void midiMessage(MidiMessage message) { // You can also use midiMessage(MidiMessage message, long timestamp, String bus_name)
 
-  if(message.getStatus() == 224) {
-    if(((int)(message.getMessage()[2] & 0xFF)) > 64 && wasAt64) {
-      chaseMode++;
-    }
-    if(((int)(message.getMessage()[2] & 0xFF)) < 64 && wasAt64) {
-      chaseMode--;
-    }
-    if((int)(message.getMessage()[2] & 0xFF) == 64) {
-      wasAt64 = true;
-    }
-    else {
-      wasAt64 = false;
-    }
-  }
-  
+//  if(message.getStatus() == 224) {
+//    if(((int)(message.getMessage()[2] & 0xFF)) > 64 && wasAt64) {
+//      chaseMode++;
+//    }
+//    if(((int)(message.getMessage()[2] & 0xFF)) < 64 && wasAt64) {
+//      chaseMode--;
+//    }
+//    if((int)(message.getMessage()[2] & 0xFF) == 64) {
+//      wasAt64 = true;
+//    }
+//    else {
+//      wasAt64 = false;
+//    }
+//  }
+//  
 }
 
 //----------------------------------------------------------------------------------------------------------------------MIDI END--------------------------------------------------------------------------------------------------------------------------------
