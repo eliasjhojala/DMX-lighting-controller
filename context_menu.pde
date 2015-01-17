@@ -84,7 +84,7 @@ class contextMenu {
           boolean hovered = isHoverSimple(-2, -2, 204, 26);
           if(hovered && mousePressed && mouseButton == LEFT) {
             execute(i);
-          } else if (!hovered && mousePressed && mouseButton == LEFT) open = false;
+          } else if (!hovered && mousePressed && mouseButton == LEFT) close();
           fill(hovered ? 220 : 180);
           stroke(170); strokeWeight(1);
           rect(2, 2, 196, 18, 2);
@@ -98,6 +98,11 @@ class contextMenu {
       popMatrix();
       popStyle();
     }
+  }
+  
+  void close() {
+    open = false;
+    mouse.removeElement("contextMenu");
   }
   
   void execute(int optionId) {
