@@ -22,6 +22,8 @@ int indexOfMinCheck(int[] input, boolean[] checked) {
 
 int ansaWidth;
 
+int[] valueToDmxOld = new int[DMX_CHAN_LENGTH+1];
+
 boolean arduinoFinished = true;
 void arduinoSend() {
   arduinoFinished = false;
