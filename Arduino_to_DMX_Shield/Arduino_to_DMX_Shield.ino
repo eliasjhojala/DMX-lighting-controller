@@ -1,7 +1,7 @@
-//DMX communication protocol for Processing ---> Arduino
+//(Based on:)DMX communication protocol for Processing ---> Arduino
 //Made by Roope Salmi
 
-
+#include <DmxSimple.h>
 
 void setup() {
   Serial.begin(115200);
@@ -26,6 +26,10 @@ void loop() {
 }
 
 void parseMessage(byte* mesg) {
+  if(mesg[0] == 255 && mesg[2] > 5) {
+    //Configuration command
+    configurationCommand(mesg[2], mesg[1]);
+  } else
   switch(mesg[0]) {
     case 250:
       execute(mesg[1]+1, mesg[2]);
@@ -49,7 +53,18 @@ void parseMessage(byte* mesg) {
 }
 
 void execute(int channel, int data) {
-  Serial.write(channel);
   //Now you can do whatever you like with this data
+  DmxSimple.write(channel, data);
+}
+
+void configurationCommand(byte type, byte data) {
+  switch(type) {
+    case 6:
+      DmxSimple.maxChannel((data+1)*2);
+    break;
+    case 7:
+      DmxSimple.maxChannel((data+1+250)*2);
+    break;
+  }
 }
 
