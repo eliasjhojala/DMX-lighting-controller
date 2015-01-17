@@ -55,6 +55,7 @@ class contextMenu {
   }
   
   void declareMouseElement() {
+    mouse.removeElement("contextMenu");
     mouse.declareElement("contextMenu", 100000, x, y, x+200, y+22*options.length);
   }
   
@@ -63,7 +64,7 @@ class contextMenu {
     fixtureId = fId;
     String[] acts = {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs", "removeFixtureFromCM", "removeAllSelectedFixtures"};
     String[] labs = {"Control this", "Control all selected", "Remove this", "Remove all selected"};
-    initiate(acts, labs, mouseX, mouseY);
+    initiate(acts, labs, mouseX+2, mouseY+2);
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -/
   
