@@ -193,9 +193,9 @@ class memory { //Begin of memory class------------------------------------------
           for(int i = 0; i < fixtures.size(); i++) {
             if(i < repOfFixtures.length) if(jk < fixtures.get(i).preset.DMXlength) {
               int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
-              if(val > fixtures.get(i).preset.getUniversalDMX(jk)) {
-                fixtures.get(i).preset.setUniversalDMX(jk, val);
-              }
+              
+              fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
+              
             } else {} else break;
           }
       }
@@ -513,8 +513,7 @@ class chase { //Begin of chase class--------------------------------------------
           memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
       if(parent.type == 3)  {
-          if(fixtures.get(num).preset.getUniDMX(DMX_DIMMER) < defaultConstrain(rMap(val, 0, 255, 0, value)))
-            fixtures.get(num).preset.setUniDMX(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
+            fixtures.get(num).preset.setUniDMXfromPreset(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
           //fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
     //  }
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
@@ -560,7 +559,7 @@ class chase { //Begin of chase class--------------------------------------------
   void setColor(int i, color c) {
     if(isQuickChase()) {
       if(fixtures.get(i).thisFixtureIsLed()) {
-        fixtures.get(i).setColorForLed(c);
+        fixtures.get(i).setColorForLedFromPreset(c);
       }
     }
   }

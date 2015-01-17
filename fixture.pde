@@ -138,7 +138,7 @@ class fixture {
     int[] newIn  = in.getUniversalDMX();
     int[] oldOut = out.getUniversalDMX();
     //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
-    if(abs(newIn[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5 && isHalogen())
+    if(isHalogen() && abs(newIn[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
       newIn[DMX_DIMMER] = oldOut[DMX_DIMMER];
     newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]);
     out.setUniversalDMX(newIn);
@@ -198,6 +198,15 @@ class fixture {
       setColor(c);
     }
   }
+  
+  void setColorForLedFromPreset(int c) {
+    if(thisFixtureIsLed()) {
+      preset.setUniDMXfromPreset(DMX_RED, rRed(c));
+      preset.setUniDMXfromPreset(DMX_GREEN, rGreen(c));
+      preset.setUniDMXfromPreset(DMX_BLUE, rBlue(c));
+    }
+  }
+  
   
   void setColor(int c) {
     in.setUniversalDMX(DMX_RED, rRed(c));
