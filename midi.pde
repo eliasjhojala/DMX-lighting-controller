@@ -225,7 +225,7 @@ public class behringerLC2412 {
         case 48: special2Key = midiToBoolean(val); break;
         case 49: manualKey = midiToBoolean(val); break;
         case 50: chaserModeKey = midiToBoolean(val); break;
-        case 51: insertKey = midiToBoolean(val); if(insertKey) { insertToggle = !insertToggle; } break;
+        case 51: insertKey = midiToBoolean(val); if(insertKey) { insertToggle = !insertToggle; } memories[chaserNumber].savePreset(new boolean[] { true }); break;
         case 52: presetFlashKey = midiToBoolean(val); if(presetFlashKey) { presetFlashToggle = !presetFlashToggle; } break;
         case 53: memoryFlashKey = midiToBoolean(val); if(memoryFlashKey) { memoryFlashToggle = !memoryFlashToggle; } break;
       }
@@ -285,6 +285,18 @@ class Input {
         }
       }
     }
+    
+    for(int i = 0; i <= 2; i++) {
+      if(LC2412.chaserValues[i] != LC2412.chaserValuesOld[i]) {
+        switch(i) {
+          case 0: break;
+          case 1: changeCrossFadeValue(LC2412.chaserValues[i]); break;
+          case 2: break;
+        }
+        LC2412.chaserValuesOld[i] = LC2412.chaserValues[i];
+      }
+    }
+    
   }
   
   void processKeyrig49Keys() {
