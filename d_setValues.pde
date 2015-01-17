@@ -6,20 +6,21 @@ final int DMX_CHAN_LENGTH = 512;
 //__________________IMPORTANT VARIABLE(s)
 int[] DMX = new int[DMX_CHAN_LENGTH+1];
 int[] DMXforOutput = new int[DMX_CHAN_LENGTH+1];
+int[] DMXforCrossFixtureOld = new int[DMX_CHAN_LENGTH+1];
 //------------------ SO VERY IMPORTANT
 
 
 int dmxTriedTimes = 0;
 boolean dmxIsWorking = false;
 
-int[] channelValuesOld = new int[DMX_CHAN_LENGTH+1];
+
 
 void setDimAndMemoryValuesAtEveryDraw() {
   dimCheckFinished = false;
   
   
   boolean DMXChangedOverall = false;
-for(int ai = 0; ai < fixtures.size(); ai++) {
+  for(int ai = 0; ai < fixtures.size(); ai++) {
     fixture fix = fixtures.get(ai);
     if(fix.DMXChanged) {
       DMXChangedOverall = true;
@@ -32,26 +33,26 @@ for(int ai = 0; ai < fixtures.size(); ai++) {
       fix.DMXChanged = false;
     }
   }
- if(true) {
-   //TODO: BETTER "COMMUNICATION" BETWEEN SAME-CHANNELLED FIXTURES!!!!! THIS IS IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! FIX FAST!!! IMPORTANT!!! FIX FAST!!!
+  if(true) {
+    //TODO: BETTER "COMMUNICATION" BETWEEN SAME-CHANNELLED FIXTURES!!!!! THIS IS IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! FIX FAST!!! IMPORTANT!!! FIX FAST!!!
     for(int ai = 0; ai < fixtures.size(); ai++) {
       fixture fix = fixtures.get(ai);
       int[] toFixture = new int[fix.getDMXLength()];
       int[] fromFixture = fix.getDMX();
       for (int i = 0; i < toFixture.length; i++) {
-        if(DMX[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)] != channelValuesOld[i]) {
+        if(DMX[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)] != DMXforCrossFixtureOld[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)]) {
           toFixture[i] = DMX[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)];
-          channelValuesOld[i] = toFixture[i];
-        }
-        else {
+          //channelValuesOld[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)] = toFixture[i];
+        } else {
           toFixture[constrain(i, 0, toFixture.length-1)] = fromFixture[constrain(i, 0, fromFixture.length-1)];
         }
       }
       fix.in.receiveDMX(toFixture);
       fix.DMXChanged = false;
     }
-  } 
-
+  }
+  
+  arrayCopy(DMX, DMXforCrossFixtureOld);
 
   { // Memory checks --->
   

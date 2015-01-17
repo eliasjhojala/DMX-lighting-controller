@@ -16,10 +16,13 @@ class FixtureArray {
   FixtureArray() {
     array = new ArrayList<fixture>();
     if(idLookupTable == null) idLookupTable = new ArrayList<Integer>();
+    //dummyFixture = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     
   }
   
   ArrayList<fixture> array;
+  
+  fixture dummyFixture;  
   
   void add(fixture newFix) {
     int newId = array.size();
@@ -49,16 +52,18 @@ class FixtureArray {
   
   
   int getArrayId(int fid) {
-    return idLookupTable.get(constrain(fid, 0, idLookupTable.size()-1));
+    if(fid < idLookupTable.size())
+      return idLookupTable.get(fid);
+    else return -1;
   }
   
   fixture get(int fid) {
     int result = getArrayId(fid);
     if(result != -1 && result < array.size()) return array.get(result);
       else {
-        fixture newFixture = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        newFixture.size.isDrawn = false;
-        return newFixture;
+        if(dummyFixture == null) dummyFixture = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        dummyFixture.size.isDrawn = false;
+        return dummyFixture;
       }
     
   }
@@ -133,7 +138,7 @@ class fixture {
     int[] newIn  = in.getUniversalDMX();
     int[] oldOut = out.getUniversalDMX();
     //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
-    if(abs(newIn[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5 && isHalogen())
+    if(isHalogen() && abs(newIn[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
       newIn[DMX_DIMMER] = oldOut[DMX_DIMMER];
       newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]); //PROBLEM this is causing some masterloop problemes! If master isn't 255 all the lights fade off PROBLEM!!!!!!!!!!
     
@@ -194,6 +199,15 @@ class fixture {
       setColor(c);
     }
   }
+  
+  void setColorForLedFromPreset(int c) {
+    if(thisFixtureIsLed()) {
+      preset.setUniDMXfromPreset(DMX_RED, rRed(c));
+      preset.setUniDMXfromPreset(DMX_GREEN, rGreen(c));
+      preset.setUniDMXfromPreset(DMX_BLUE, rBlue(c));
+    }
+  }
+  
   
   void setColor(int c) {
     in.setUniversalDMX(DMX_RED, rRed(c));

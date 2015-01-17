@@ -22,6 +22,8 @@ int indexOfMinCheck(int[] input, boolean[] checked) {
 
 int ansaWidth;
 
+int[] valueToDmxOld = new int[DMX_CHAN_LENGTH+1];
+
 boolean arduinoFinished = true;
 void arduinoSend() {
   arduinoFinished = false;
@@ -356,9 +358,9 @@ int quickSlider(String mouseLockID, int value) {
     
     //getInvertedValue returns value inverted (0 -> 255, 255 -> 0)
     int getInvertedValue(int val, int lim_low, int lim_hi) {
-      int toReturn = 0;
-      toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);
-      return toReturn;
+      /*int toReturn = 0;
+      toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);*/
+      return lim_hi + lim_low - val;
     }
   
     

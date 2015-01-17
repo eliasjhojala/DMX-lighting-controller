@@ -54,15 +54,16 @@ class FixtureDMX { //Class containig all the dmx values
   void presetProcess() {
     for(int i = 0; i < DMXlength; i++) {
         int newV = getUniDMX(i);
-        if (newV != -1 && newV != DMXold[i]) {
+        newV = iMap(newV, 0, 255, 0, memoryMasterValue);
+        if (newV != DMXold[i]) {
           parent.in.setUniversalDMX(i, newV);
           parent.DMXChanged = true;
           
-          println(DMXold[i] + ":" + newV);
+          
           DMXold[i] = newV;
         }
         
-        setUniversalDMX(i, -1);
+        setUniversalDMX(i, 0);
         
         
     }
@@ -87,7 +88,9 @@ class FixtureDMX { //Class containig all the dmx values
   //autoPrograms, specialFunctions, haze, fan, fog, special1, special2, special3, special4
   
   int[] getUniversalDMX() {
-    return DMX;
+    int[] toReturn = new int[DMX.length];
+    arrayCopy(DMX, toReturn);
+    return toReturn;
   }
   
   int getUniversalDMX(int i) {
@@ -105,6 +108,10 @@ class FixtureDMX { //Class containig all the dmx values
         setUniversalDMX(i, vals[i]);
       }
     }
+  }
+  
+  void setUniDMXfromPreset(int i, int val) {
+    if(val > DMX[i]) DMX[i] = val;
   }
   
   

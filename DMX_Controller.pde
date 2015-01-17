@@ -350,7 +350,6 @@ int[] bottomMenuOrder = new int[numberOfAllFixtures];
 int[] y = { 500, 200 };
 int ansaTaka = 32;
 int[] valueToDmx = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
-int[] valueToDmxOld = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
 int[] dim = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
 int[] dimOld = new int[512];
 int[] dimInput = new int[512];
