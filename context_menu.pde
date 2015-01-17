@@ -80,7 +80,7 @@ class contextMenu {
         for(int i = 0; i < options.length; i++) {
           pushMatrix();
           translate(0, 22*i);
-          boolean hovered = isHoverSimple(0, 0, 200, 22);
+          boolean hovered = isHoverSimple(-2, -2, 204, 26);
           if(hovered && mousePressed && mouseButton == LEFT) {
             execute(i);
           } else if (!hovered && mousePressed && mouseButton == LEFT) open = false;
