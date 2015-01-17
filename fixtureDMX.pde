@@ -87,7 +87,9 @@ class FixtureDMX { //Class containig all the dmx values
   //autoPrograms, specialFunctions, haze, fan, fog, special1, special2, special3, special4
   
   int[] getUniversalDMX() {
-    return DMX;
+    int[] toReturn = new int[DMX.length];
+    arrayCopy(DMX, toReturn);
+    return toReturn;
   }
   
   int getUniversalDMX(int i) {

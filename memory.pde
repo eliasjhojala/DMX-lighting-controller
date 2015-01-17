@@ -130,7 +130,7 @@ class memory { //Begin of memory class------------------------------------------
   }
   void grandMaster() {
     //function to adjust grandMaster
-    grandMaster = value;
+    setGrandMaster(value);
   }
   void fade() {
     chaseFade = value;
@@ -145,6 +145,16 @@ class memory { //Begin of memory class------------------------------------------
   }
   int getValue() {
     return value;
+  }
+  
+  void setGrandMaster(int value) {
+    grandMaster = value;
+    if(grandMaster != oldGrandMaster) {
+      for(int i = 0; i < fixtures.size(); i++) {
+        fixtures.get(i).DMXChanged = true;
+      }
+      oldGrandMaster = grandMaster;
+    }
   }
   
   
