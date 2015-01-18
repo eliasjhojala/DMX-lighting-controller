@@ -135,6 +135,14 @@ class fixture {
   void processDMXvalues() {
     preset.presetProcess();
     
+    for(int i = 0; i < bottomMenu.DMXlength; i++) {
+      if(bottomMenu.DMX[i] != bottomMenu.DMXold[i]) {
+        in.DMX[i] = bottomMenu.DMX[i];
+        DMXChanged = true;
+        bottomMenu.DMXold[i] = bottomMenu.DMX[i];
+      }
+    }
+    
     int[] newIn  = in.getUniversalDMX();
     int[] oldOut = out.getUniversalDMX();
     //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
@@ -144,13 +152,7 @@ class fixture {
     out.setUniversalDMX(newIn);
     
     
-    for(int i = 0; i < bottomMenu.DMXlength; i++) {
-      if(bottomMenu.DMX[i] != bottomMenu.DMXold[i]) {
-        in.DMX[i] = bottomMenu.DMX[i];
-        DMXChanged = true;
-        bottomMenu.DMXold[i] = bottomMenu.DMX[i];
-      }
-    }
+    
     
   }
 
