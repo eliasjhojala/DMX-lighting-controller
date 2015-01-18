@@ -12,7 +12,7 @@ int[] tablePositionsLength = new int[3];
 
 boolean rotateZopposite = true;
 
-boolean use3D = false;
+boolean use3D = true;
 
 int userOneFrameRate = 30;
 int userTwoFrameRate = 30;
@@ -83,7 +83,7 @@ void setup() {
   stroboOn = new boolean[ansaTaka];
   
   if(userId == 1) { //Jos Elias käyttää
-    assetPath = "/Users/elias/Dropbox/DMX controller/Roopen Kopiot/";
+    assetPath = "/Users/elias/Dropbox/DMX controller/DMX_Controller/data/";
   }
   else if(userId == 2) { //Jos Roope käyttää
     if(getPaths == true) {
@@ -210,52 +210,52 @@ void draw() {
               }
 
               
-            /*  
+              
               //Draw lights
               for (int i = 0; i < ansaTaka; i++) {
                 //If light is of type par64 OR moving head dim
                 if(fixtures.get(i).fixtureTypeId == 1 || fixtures.get(i).fixtureTypeId == 13){
-                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, par64ConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, -60, fixtures.get(i).parentAnsa, par64Model);
+                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, par64ConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).out.getUniversalDMX(DMX_DIMMER), -60, fixtures.get(i).parentAnsa, par64Model);
                 } else 
                 //If light is of type p. fresu ("small" F.A.L. fresnel)
                 if(fixtures.get(i).fixtureTypeId == 2) {
-                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location + 40, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, int(valoScale * 0.6), pFresuConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 0, fixtures.get(i).parentAnsa, iFresu);
+                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location + 40, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, int(valoScale * 0.6), pFresuConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).out.getUniversalDMX(DMX_DIMMER), 0, fixtures.get(i).parentAnsa, iFresu);
                 } else 
                 //If light is of type k. fresu (F.A.L. fresnel)
                 if(fixtures.get(i).fixtureTypeId == 3) {
-                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, kFresuConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 0, fixtures.get(i).parentAnsa, kFresu);
+                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, kFresuConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).out.getUniversalDMX(DMX_DIMMER), 0, fixtures.get(i).parentAnsa, kFresu);
                 } else 
                 //If light is of type i. fresu ("big" F.A.L. fresnel)
                 if(fixtures.get(i).fixtureTypeId == 4) {
-                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, iFresuConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 0, fixtures.get(i).parentAnsa, iFresu);
+                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, iFresuConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).out.getUniversalDMX(DMX_DIMMER), 0, fixtures.get(i).parentAnsa, iFresu);
                 } else
                 //If light is of type flood
                 if(fixtures.get(i).fixtureTypeId == 5) {
                   pushMatrix();
                   translate(0, 15, 0);
-                  drawFlood(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, floodConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 0, fixtures.get(i).parentAnsa, flood, fixParam[i]);
+                  drawFlood(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, floodConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).out.getUniversalDMX(DMX_DIMMER), 0, fixtures.get(i).parentAnsa, flood, fixtures.get(i).parameter);
                   popMatrix();
                 } else
                 //If light is of type linssi (linssi = lens)
                 if(fixtures.get(i).fixtureTypeId == 6) {
-                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, linssiConeDiameter * map(fixParam[i], 45, -42, 2, 1), fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 120, fixtures.get(i).parentAnsa, linssi);
+                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, linssiConeDiameter * map(fixtures.get(i).parameter, 45, -42, 2, 1), fixtures.get(i).getRawColor(), fixtures.get(i).out.getUniversalDMX(DMX_DIMMER), 120, fixtures.get(i).parentAnsa, linssi);
                 } else
                 //If light is of type strobo brightness
                 if(fixtures.get(i).fixtureTypeId == 9) {
                   boolean stroboOnTemp = !stroboOn[i];
-                  drawStrobo(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, int(valoScale * 1.2), stroboConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 0, fixtures.get(i).parentAnsa, strobo, stroboOnTemp);
+                  drawStrobo(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, int(valoScale * 1.2), stroboConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).out.getUniversalDMX(DMX_DIMMER), 0, fixtures.get(i).parentAnsa, strobo, stroboOnTemp);
                   stroboOn[i] = stroboOnTemp;
                 }
                 //If light is of type Stairville MHX50 (moving head)
                 if(fixtures.get(i).fixtureTypeId == 16 || fixtures.get(i).fixtureTypeId == 17) {
                   pushMatrix();
                   translate(0, -50, 0);
-                  drawMHX(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, mhxConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, -30, fixtures.get(i).parentAnsa, mhMain);
+                  drawMHX(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, mhxConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).out.getUniversalDMX(DMX_DIMMER), -30, fixtures.get(i).parentAnsa, mhMain);
                   popMatrix();
                 }
               }
               
-              */
+              
               
               
 }
