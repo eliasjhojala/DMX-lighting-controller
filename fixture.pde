@@ -175,7 +175,7 @@ class fixture {
           if(!fades[i].isCompleted()) {
             fades[i].countActualValue();
             fadeVal[i] = fades[i].getActualValue();
-            in.setUniversalDMX(i, fadeVal[i]);
+            out.setUniversalDMX(i, fadeVal[i]);
           }
         }
       }
