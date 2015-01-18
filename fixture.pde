@@ -172,9 +172,11 @@ class fixture {
       int[] fadeVal = new int[fades.length];
       for(int i = 0; i < fades.length; i++) {
         if(fades[i] != null) {
-          fades[i].countActualValue();
-          fadeVal[i] = fades[i].getActualValue();
-          in.setUniversalDMX(i, fadeVal[i]);
+          if(!fades[i].isCompleted()) {
+            fades[i].countActualValue();
+            fadeVal[i] = fades[i].getActualValue();
+            in.setUniversalDMX(i, fadeVal[i]);
+          }
         }
       }
 //      int[] oldOut = out.getUniversalDMX();
