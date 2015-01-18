@@ -122,6 +122,9 @@ class fixture {
   FixtureDMX out;
   FixtureDMX preset;
   FixtureDMX bottomMenu;
+  FixtureDMX fade;
+  
+  Fade[] fades = new Fade[universalDMXlength];
   
 
   //End of initing variables
@@ -134,6 +137,8 @@ class fixture {
   
   void processDMXvalues() {
     preset.presetProcess();
+    
+    processFade();
     
     int[] newIn  = in.getUniversalDMX();
     int[] oldOut = out.getUniversalDMX();
@@ -154,6 +159,29 @@ class fixture {
     }
     
   }
+  
+  void setUniversalDMXwithFade(int i, int val) {
+    if(i >= 0 && i < fades.length) {
+      fades[i] = new Fade(in.getUniversalDMX(i), val);
+    }
+  }
+  
+  void processFade() {
+    if(fades != null) {
+      int[] fadeVal = new int[fades.length];
+      for(int i = 0; i < fades.length; i++) {
+        if(fades[i] != null) {
+          fadeVal[i] = fades[i].getActualValue();
+        }
+      }
+      int[] oldOut = out.getUniversalDMX();
+      //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
+      if(isHalogen() && abs(fadeVal[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
+        fadeVal[DMX_DIMMER] = oldOut[DMX_DIMMER];
+      fadeVal[DMX_DIMMER] = masterize(fadeVal[DMX_DIMMER]);
+      out.setUniversalDMX(fadeVal);
+    }
+  } 
 
   
   void toggle(boolean down) {
