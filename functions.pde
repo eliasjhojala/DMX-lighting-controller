@@ -38,7 +38,7 @@ void arduinoSend() {
   }
   arduinoFinished = true;
 }
-
+Arduino arduino;
 class Arduino {
   String portName;
   int baudRate;
@@ -47,6 +47,7 @@ class Arduino {
   int currentRange = DMX_CHAN_LENGTH;
   
   long[] lastMessageSendTime;
+  byte[] reSendTimes;
   
   int[] lastUniversum;
   
@@ -65,6 +66,7 @@ class Arduino {
     serial = new Serial(parent, portName, baudRate);
     lastMessageSendTime = new long[DMX_CHAN_LENGTH+1];
     lastUniversum = new int[DMX_CHAN_LENGTH+1];
+    reSendTimes = new byte[DMX_CHAN_LENGTH+1];
   }
   
   void sendUniversum(int[] newUniversum) {
@@ -75,19 +77,26 @@ class Arduino {
         sendDMXmessage(i, newUniversum[i]);
         lastUniversum[i] = newUniversum[i];
         sentMessages++;
+        reSendTimes[i] = 0;
       }
     }
-    while(sentMessages > preferredAmountOfMessages) {
+    
+    while(sentMessages < preferredAmountOfMessages) {
       int chanToSend = 1;
       long curMax = 0;
+      boolean found = false;
       for(int i = 1; i <= DMX_CHAN_LENGTH; i++) {
-        if(millis() - lastMessageSendTime[i] > curMax) {
+        if(millis() - lastMessageSendTime[i] > curMax && reSendTimes[i] < 5) {
           chanToSend = i;
           curMax = lastMessageSendTime[i];
+          found = true;
         }
       }
-      sendDMXmessage(chanToSend, newUniversum[chanToSend]);
-      sentMessages++;
+      if(found) {
+        sendDMXmessage(chanToSend, newUniversum[chanToSend]);
+        reSendTimes[chanToSend]++;
+        sentMessages++;
+      } else break;
     }
     
   }
@@ -138,6 +147,7 @@ class Arduino {
         }
       }
       serial.write(message);
+      println(chan + "|" + serial.read());
       lastMessageSendTime[chan] = millis();
     } else println("Warning: Couldn't send message to Arduino: serial object is null!");
   }
