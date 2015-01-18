@@ -5,6 +5,8 @@
 
 void setup() {
   Serial.begin(115200);
+  Serial.println("SerialToDMXshield ready for commands");
+  Serial.println("Protocol: https://gist.github.com/ollpu/239cc50beb91bfe06189");
 }
 
 byte message[3];
@@ -55,6 +57,7 @@ void parseMessage(byte* mesg) {
 void execute(int channel, int data) {
   //Now you can do whatever you like with this data
   DmxSimple.write(channel, data);
+  Serial.write(channel);
 }
 
 void configurationCommand(byte type, byte data) {

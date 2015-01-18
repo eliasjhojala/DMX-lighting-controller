@@ -39,6 +39,111 @@ void arduinoSend() {
   arduinoFinished = true;
 }
 
+class Arduino {
+  String portName;
+  int baudRate;
+  Serial serial;
+  
+  int currentRange = DMX_CHAN_LENGTH;
+  
+  long[] lastMessageSendTime;
+  
+  int[] lastUniversum;
+  
+  Arduino(PApplet parent, String portName) {
+    this.portName = portName;
+    this.baudRate = 115200;
+    startSerial(parent);
+  }
+  Arduino(PApplet parent, String portname, int baudRate) {
+    this.portName = portName;
+    this.baudRate = baudRate;
+    startSerial(parent);
+  }
+  
+  void startSerial(PApplet parent) {
+    serial = new Serial(parent, portName, baudRate);
+    lastMessageSendTime = new long[DMX_CHAN_LENGTH+1];
+    lastUniversum = new int[DMX_CHAN_LENGTH+1];
+  }
+  
+  void sendUniversum(int[] newUniversum) {
+    int preferredAmountOfMessages = baudRate / 288;
+    int sentMessages = 0;
+    for(int i = 1; i <= DMX_CHAN_LENGTH; i++) {
+      if(newUniversum[i] != lastUniversum[i]) {
+        sendDMXmessage(i, newUniversum[i]);
+        lastUniversum[i] = newUniversum[i];
+        sentMessages++;
+      }
+    }
+    while(sentMessages > preferredAmountOfMessages) {
+      int chanToSend = 1;
+      long curMax = 0;
+      for(int i = 1; i <= DMX_CHAN_LENGTH; i++) {
+        if(millis() - lastMessageSendTime[i] > curMax) {
+          chanToSend = i;
+          curMax = lastMessageSendTime[i];
+        }
+      }
+      sendDMXmessage(chanToSend, newUniversum[chanToSend]);
+      sentMessages++;
+    }
+    
+  }
+  
+  void sendDMXmessage(int chan, int val) {
+    if(serial != null) {
+      chan = constrain(chan, 1, currentRange);
+      val = defaultConstrain(val);
+      byte[] message = new byte[3];
+      
+      if(chan-1 < 250) {
+        if(val < 250) {
+          //Channel and value below 250
+          message[0] = (byte)250;
+          message[1] = (byte)(chan-1);
+          message[2] = (byte)val;
+        } else {
+          //Only channel below 250
+          message[0] = (byte)251;
+          message[1] = (byte)(chan-1);
+          message[2] = (byte)(val - 250);
+        }
+      } else {
+        if(chan-1 < 262) {
+          if(val < 250) {
+            //Channel below 256 and value below 250
+            message[0] = (byte)252;
+            message[1] = (byte)(chan-1 - 250);
+            message[2] = (byte)val;
+          } else {
+            //Channel below 256 and value above 250
+            message[0] = (byte)253;
+            message[1] = (byte)(chan-1 - 250);
+            message[2] = (byte)(val - 250);
+          }
+        } else {
+          if(val < 250) {
+            //Channel above 262 and value below 250
+            message[0] = (byte)254;
+            message[1] = (byte)(chan-1 - 262);
+            message[2] = (byte)val;
+          } else {
+            //Channel above 262 and value above 250
+            message[0] = (byte)255;
+            message[1] = (byte)(chan-1 - 262);
+            message[2] = (byte)(val - 250);
+          }
+        }
+      }
+      serial.write(message);
+      lastMessageSendTime[chan] = millis();
+    } else println("Warning: Couldn't send message to Arduino: serial object is null!");
+  }
+  
+}
+
 
 void ansat() {
     fill(0, 0, 0);
