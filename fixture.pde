@@ -138,7 +138,7 @@ class fixture {
   void processDMXvalues() {
     preset.presetProcess();
     
-    processFade();
+    
     
     int[] newIn  = in.getUniversalDMX();
     int[] oldOut = out.getUniversalDMX();
@@ -149,6 +149,7 @@ class fixture {
     
     out.setUniversalDMX(newIn);
     
+    processFade();
     
     for(int i = 0; i < bottomMenu.DMXlength; i++) {
       if(bottomMenu.DMX[i] != bottomMenu.DMXold[i]) {
@@ -157,29 +158,33 @@ class fixture {
         bottomMenu.DMXold[i] = bottomMenu.DMX[i];
       }
     }
-    
   }
   
   void setUniversalDMXwithFade(int i, int val) {
     if(i >= 0 && i < fades.length) {
-      fades[i] = new Fade(in.getUniversalDMX(i), val);
+      fades[i] = new Fade(in.getUniversalDMX(i), val, 10, 500);
     }
   }
   
   void processFade() {
     if(fades != null) {
+      
       int[] fadeVal = new int[fades.length];
       for(int i = 0; i < fades.length; i++) {
         if(fades[i] != null) {
+          fades[i].countActualValue();
           fadeVal[i] = fades[i].getActualValue();
+          in.setUniversalDMX(i, fadeVal[i]);
         }
       }
-      int[] oldOut = out.getUniversalDMX();
-      //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
-      if(isHalogen() && abs(fadeVal[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
-        fadeVal[DMX_DIMMER] = oldOut[DMX_DIMMER];
-      fadeVal[DMX_DIMMER] = masterize(fadeVal[DMX_DIMMER]);
-      out.setUniversalDMX(fadeVal);
+//      int[] oldOut = out.getUniversalDMX();
+//      //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
+////      if(isHalogen() && abs(fadeVal[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
+////        fadeVal[DMX_DIMMER] = oldOut[DMX_DIMMER];
+////      fadeVal[DMX_DIMMER] = masterize(fadeVal[DMX_DIMMER]);
+//      out.setUniversalDMX(fadeVal);
+//      DMXChanged = true;
+//      out.DMXChanged = true;
     }
   } 
 

@@ -338,7 +338,8 @@ class Input {
       if(data[number] != dataOld[number]) {
         if(output == OUTPUT_TO_FIXTURES) {
           if(n < fixtures.size()) {
-            fixtures.get(n).in.setUniversalDMX(DMX_DIMMER, data[number] ? 255 : 0);
+            fixtures.get(n).setUniversalDMXwithFade(DMX_DIMMER, data[number] ? 255 : 0);
+            //fixtures.get(n).in.setUniversalDMX(DMX_DIMMER, data[number] ? 255 : 0);
             fixtures.get(n).DMXChanged = true;
             
           }
