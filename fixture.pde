@@ -242,6 +242,10 @@ class fixture {
     in.setUniversalDMX(DMX_BLUE, rBlue(c));
     DMXChanged = true;
   }
+  
+  color getColor() {
+    return color(red, green, blue);
+  }
 
 
   

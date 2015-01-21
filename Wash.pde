@@ -344,9 +344,10 @@ class colorWash {
         if(fixtures.get(i).isHalogen()) {
           //If onlySelected or onlyList is true then we have to check is fixture selected or in list
           if(useThisFixture(i)) { 
-            int r = fixtures.get(i).in.getUniversalDMX(DMX_RED);
-            int g = fixtures.get(i).in.getUniversalDMX(DMX_GREEN);
-            int b = fixtures.get(i).in.getUniversalDMX(DMX_BLUE);
+            color c = fixtures.get(i).getColor();
+            float r = red(c);
+            float g = green(c);
+            float b = blue(c);
             if(isAbout(r, red, accuracy) && isAbout(g, green, accuracy) && isAbout(b, blue, accuracy)) { //Check that halogen's colour (foil) is about same colour than selected wash colour
               fixtures.get(i).setDimmer(val); //Put halogen on if it's right-coloured
             } //End of checking is the colour of this fixture right
