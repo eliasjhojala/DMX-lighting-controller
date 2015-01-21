@@ -122,7 +122,12 @@ class SettingsWindow {
         fill(230);
         textAlign(CENTER);
         text("Close", 55, 24);
-        
+        //Window title text
+        fill(150, 200);
+        rect(size/2-80, 0, 160, 36, 0, 0, 4, 4);
+        fill(255, 230);
+        textSize(28);
+        text("SETTINGS", size/2, 29);
       }
       
       {
@@ -133,6 +138,22 @@ class SettingsWindow {
     }
   }
   
+}
+
+
+class SettingsTab {
+  //A container for multiple settings
+  SettingController[] controllers;
+  SettingsTab() {
+  }
+}
+
+
+class SettingController {
+  BooleanSettingController booleanController;
+  IntSettingController intController;
+  SettingController() {
+  }
 }
 
 class BooleanSettingController {
@@ -152,5 +173,13 @@ class BooleanSettingController {
   //Draws and returns true if boolean export changed
   boolean changed() {
     return false;
+  }
+}
+
+
+class IntSettingController {
+  int mode = 0; //0: numbox, 1: slider, 2: knob
+  IntSettingController(int mode) {
+    this.mode = mode;
   }
 }
