@@ -29,7 +29,12 @@ void ylavalikko() {
   //Settings button
   
   //Hover
-  boolean settingsHover = isHoverSimple(bubS/2, 0, 60, 60);
+  mouse.declareUpdateElementRelative("uppMenu:openSettings", "main:move", bubS/2, 0, 60, 60);
+  boolean settingsHover = mouse.getElementByName("uppMenu:openSettings").isHovered;
+  
+  if(mouse.isCaptured("uppMenu:openSettings")) {
+    settingsWindow.open();
+  }
   
   noFill();
   stroke(0, 120); strokeWeight(6);
@@ -40,12 +45,12 @@ void ylavalikko() {
   
   
   pushMatrix();
-  strokeWeight(10);
-  if(settingsHover) stroke(250); else stroke(topMenuTheme);
-  if(settingsHover) fill(250); else fill(topMenuTheme);
-  translate(bubS/2 + 4, 4);
-  scale(0.08);
-  if (settingsIcon != null) shape(settingsIcon); // The asset might have not loaded yet
+    strokeWeight(10);
+    if(settingsHover) stroke(250); else stroke(topMenuTheme);
+    if(settingsHover) fill(250); else fill(topMenuTheme);
+    translate(bubS/2 + 4, 4);
+    scale(0.08);
+    if (settingsIcon != null) shape(settingsIcon); // The asset might have not loaded yet
   popMatrix();
   
   
