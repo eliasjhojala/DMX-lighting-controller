@@ -169,8 +169,8 @@ class SettingsTab {
   //Return true if pressed
   boolean drawSelector() {
     int wid = text.length() * 10;
-    mouse.declareUpdateElementRelative("Settings:TabSelector:" + text, "settings", 0, 0, wid * 10);
-    mouse.setExpire("Settings:TabSelector:" + text, 2);
+    mouse.declareUpdateElementRelative("Settings:TabSelector:" + text, "settings", 0, 0, wid * 10, 18);
+    mouse.setElementExpire("Settings:TabSelector:" + text, 2);
     if(mouse.getElementByName("Settings:TabSelector:" + text).isHovered) {
       //---draw hover rect
     }
