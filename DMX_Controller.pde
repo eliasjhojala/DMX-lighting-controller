@@ -116,7 +116,7 @@ import javax.swing.JFrame; //Käytetään frame-kirjastoa, jonka avulla voidaan 
 PFrame f1 = new PFrame(); //Luodaan uusi ikkuna
 secondApplet1 s1;
 
-PFrame1 f = new PFrame1(); //Luodaan toinenkin uusi ikkuna
+PFrame1 f = new PFrame1(this); //Luodaan toinenkin uusi ikkuna
 secondApplet s;
 
 
@@ -348,7 +348,6 @@ int[] bottomMenuOrder = new int[numberOfAllFixtures];
 int[] y = { 500, 200 };
 int ansaTaka = 32;
 int[] valueToDmx = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
-int[] valueToDmxOld = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
 int[] dim = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
 int[] dimOld = new int[512];
 int[] dimInput = new int[512];
@@ -477,6 +476,8 @@ void setup() {
   colorWashSetup();
   
   memoryCreator = new memoryCreationBox(false);
+  
+  createFixtureProfiles();
   
 }
 

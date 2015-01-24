@@ -8,14 +8,23 @@ int hue = 0;
 int saturation = 255*2;
 int brightness = 255*2;
 boolean colorSelectorOpen = true;
+PVector offset = new PVector(0, 0);
   void showColorSelector() {
     pushMatrix();
       pushStyle();
       translate(100, 100);
+      translate(offset.x, offset.y);
         if(colorSelectorOpen) {
         
           fill(255, 230);
           rect(-10, -10, 255*2+20, 150+20, 20);
+          
+          mouse.declareUpdateElementRelative("HSBP", 11000000, -10, -10, 255*2+20, 150+20);
+          mouse.setElementExpire("HSBP", 2);
+          if(mouse.isCaptured("HSBP")) {
+            offset.x += mouseX-pmouseX;
+            offset.y += mouseY-pmouseY;
+          }
           
           countHue();
           countSaturation();
@@ -30,7 +39,7 @@ boolean colorSelectorOpen = true;
   }
 
   void countHue() {
-    mouse.declareUpdateElementRelative("HSBP:hue", 11000000, 0, 0, 255*3, 30);
+    mouse.declareUpdateElementRelative("HSBP:hue", "HSBP", 0, 0, 255*3, 30);
     mouse.setElementExpire("HSBP:hue", 2);
     if(mouse.isCaptured("HSBP:hue")) {
         hue+=(mouseX-pmouseX);
@@ -38,7 +47,7 @@ boolean colorSelectorOpen = true;
     }
   }
   void countBrightness() {
-    mouse.declareUpdateElementRelative("HSBP:brightness", 11000000, 0, 50, 255*3, 30);
+    mouse.declareUpdateElementRelative("HSBP:brightness", "HSBP", 0, 50, 255*3, 30);
     mouse.setElementExpire("HSBP:brightness", 2);
     if(mouse.isCaptured("HSBP:brightness")) {
         brightness+=(mouseX-pmouseX);
@@ -46,7 +55,7 @@ boolean colorSelectorOpen = true;
     }
   }
   void countSaturation() {
-    mouse.declareUpdateElementRelative("HSBP:saturation", 11000000, 0, 100, 255*3, 30);
+    mouse.declareUpdateElementRelative("HSBP:saturation", "HSBP", 0, 100, 255*3, 30);
     mouse.setElementExpire("HSBP:saturation", 2);
     if(mouse.isCaptured("HSBP:saturation")) {
         saturation+=(mouseX-pmouseX);

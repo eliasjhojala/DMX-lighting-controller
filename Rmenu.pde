@@ -195,7 +195,13 @@ class memoryCreationBox {
     open = true;
     selectedMemorySlot = memory;
     selectedWhatToSave = new boolean[memories[memory].whatToSave.length];
+    boolean[] defaultWhatToSave = new boolean[memories[memory].whatToSave.length];
+    defaultWhatToSave[0] = true;
     arrayCopy(memories[memory].whatToSave, selectedWhatToSave);
+    
+    if(memories[memory].type == 0) {
+      arrayCopy(defaultWhatToSave, selectedWhatToSave);
+    }
     
   }
   
@@ -213,13 +219,14 @@ class memoryCreationBox {
       pushMatrix();
       pushStyle();
       { // frame & frame controls
+        int saveBoxHeight = 600;
         translate(locX, locY);
         fill(255, 230);
         stroke(150);
         strokeWeight(3);
         //Box itself
-        rect(0, 0, 300, 300, 20);
-        mouse.declareUpdateElementRelative("memoryCreationBox", "addMemory", 0, 0, 300, 300);
+        rect(0, 0, 300, saveBoxHeight, 20);
+        mouse.declareUpdateElementRelative("memoryCreationBox", "addMemory", 0, 0, 300, saveBoxHeight);
         mouse.setElementExpire("memoryCreationBox", 2);
         //Grabable location button
         fill(180);
@@ -243,13 +250,13 @@ class memoryCreationBox {
         textAlign(CENTER);
         text("Cancel", 55, 24);
         //Save button
-        mouse.declareUpdateElementRelative("memoryCreationBox:save", "memoryCreationBox", 290, 290, -50, -20);
+        mouse.declareUpdateElementRelative("memoryCreationBox:save", "memoryCreationBox", 290, saveBoxHeight-10, -50, -20);
         mouse.setElementExpire("memoryCreationBox:save", 2);
         boolean saveHover = mouse.elmIsHover("memoryCreationBox:save");
         fill(50, saveHover ? 240 : 220, 60);
-        rect(290, 290, -50, -20, 4, 4, 20, 4);
+        rect(290, saveBoxHeight-10, -50, -20, 4, 4, 20, 4);
         fill(255);
-        text("Save", 265, 285);
+        text("Save", 265, saveBoxHeight-15);
         if(mouse.isCaptured("memoryCreationBox:save")) {
           save();
         }
@@ -341,7 +348,8 @@ class memoryCreationBox {
           textAlign(LEFT);
           text("What to save:", 10, 125);
           translate(10, 132);
-          int rows = 5;
+          int cols = 2;
+          int rows = saveOptionButtonVariables.length/cols;
           for(int i = 0; i < saveOptionButtonVariables.length; i++) {
             pushMatrix();
               translate(i / rows * 120, i % rows * 30);

@@ -24,7 +24,7 @@ void oscEvent(OscMessage theOscMessage) {
   }
   
   
-  fixtureInputs[0].receiveOSC(digitalValue, digitalValue2, addr);
+ // fixtureInputs[0].receiveOSC(digitalValue, digitalValue2, addr);
   
   for(int i = 1; i <= touchOSCchannels; i++) { //Käydään kaikki touchOSCin kanavat (faderit) läpi
     String nimi = "/1/fader" + str(i);
@@ -65,14 +65,13 @@ void oscEvent(OscMessage theOscMessage) {
      if(addr.equals("/strobenow")) {
        if(digitalValue == 1) {
          for(int i = 0; i < fixtures.size(); i++) {
-           valueOfDimBeforeStrobe[i] = fixtures.get(i).dimmer;
+           valueOfDimBeforeStrobe[i] = fixtures.get(i).in.getUniDMX(DMX_DIMMER);
            fixtures.get(i).setDimmer(0);
          }
          for(int i = 0; i < fixtures.size(); i++) {
            if(getFixtureNameByType(fixtures.get(i).fixtureTypeId) == "strobe") {
-             fixtures.get(i).setDimmer(255);
-             fixtures.get(i).frequency = 200;
-             fixtures.get(i).DMXChanged = true;
+             fixtures.get(i).in.setUniDMX(DMX_DIMMER, 200);
+             fixtures.get(i).in.setUniDMX(DMX_FREQUENCY, 200);
            }
          }
        }
@@ -82,9 +81,8 @@ void oscEvent(OscMessage theOscMessage) {
          }
          for(int i = 0; i < fixtures.size(); i++) {
            if(getFixtureNameByType(fixtures.get(i).fixtureTypeId) == "strobe") {
-             fixtures.get(i).setDimmer(0);
-             fixtures.get(i).frequency = 0;
-             fixtures.get(i).DMXChanged = true;
+             fixtures.get(i).in.setUniDMX(DMX_DIMMER, 0);
+             fixtures.get(i).in.setUniDMX(DMX_FREQUENCY, 0);
            }
          }
        }

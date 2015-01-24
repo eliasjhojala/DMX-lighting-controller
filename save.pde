@@ -167,13 +167,9 @@ void saveAllData() {
     
    for (int j = 0; j < memories[i].repOfFixtures.length; j++) {
        // whatToSave titles: { "dimmer", "colorWheel", "gobo", "goboRotation", "shutter", "pan", "tilt" }
-        if(memories[i].whatToSave[0]) saveDataMainCommands(str(memories[i].repOfFixtures[j].dimmer), "memories[i].repOfFixtures[j].dimmer", "2", str(i), str(j));
-        if(memories[i].whatToSave[1]) saveDataMainCommands(str(memories[i].repOfFixtures[j].colorWheel), "memories[i].repOfFixtures[j].colorWheel", "2", str(i), str(j));
-        if(memories[i].whatToSave[2]) saveDataMainCommands(str(memories[i].repOfFixtures[j].goboWheel), "memories[i].repOfFixtures[j].goboWheel", "2", str(i), str(j));
-        if(memories[i].whatToSave[3]) saveDataMainCommands(str(memories[i].repOfFixtures[j].goboRotation), "memories[i].repOfFixtures[j].goboRotation", "2", str(i), str(j));
-        if(memories[i].whatToSave[4]) saveDataMainCommands(str(memories[i].repOfFixtures[j].shutter), "memories[i].repOfFixtures[j].shutter", "2", str(i), str(j));
-        if(memories[i].whatToSave[5]) saveDataMainCommands(str(memories[i].repOfFixtures[j].pan), "memories[i].repOfFixtures[j].pan", "2", str(i), str(j));
-        if(memories[i].whatToSave[6]) saveDataMainCommands(str(memories[i].repOfFixtures[j].tilt), "memories[i].repOfFixtures[j].tilt", "2", str(i), str(j));
+       for(int jk = 0; jk < universalDMXlength; jk++) {
+          if(memories[i].whatToSave[jk]) saveDataMainCommands(str(memories[i].repOfFixtures[j].getUniDMX(jk)), "memories[i].repOfFixtures[j].getUniDMX(" + str(jk) + ")", "2", str(i), str(j));
+       }
     } //End of for (int j = 1; j < memories[i].repOfFixtures.length; j++)
 
   } //End of for(int i = 0; i < memories.length; i++)

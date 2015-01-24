@@ -43,21 +43,21 @@ class memory { //Begin of memory class------------------------------------------
   
   
   //chase variables
-  int value; //memorys value
+  int value, valueOld; //memorys value
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
 
   
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
   
   
-  fixture[] repOfFixtures = new fixture[fixtures.size()];
+  FixtureDMX[] repOfFixtures = new FixtureDMX[fixtures.size()];
   
   chase myChase;
   
   memory() {
     myChase = new chase(this);
     for(int i = 0; i < repOfFixtures.length; i++) {
-      repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+      repOfFixtures[i] = new FixtureDMX();
     }
   }
   
@@ -130,7 +130,7 @@ class memory { //Begin of memory class------------------------------------------
   }
   void grandMaster() {
     //function to adjust grandMaster
-    grandMaster = value;
+    setGrandMaster(value);
   }
   void fade() {
     chaseFade = value;
@@ -147,28 +147,35 @@ class memory { //Begin of memory class------------------------------------------
     return value;
   }
   
+  void setGrandMaster(int value) {
+    grandMaster = value;
+    if(grandMaster != oldGrandMaster) {
+      for(int i = 0; i < fixtures.size(); i++) {
+        fixtures.get(i).DMXChanged = true;
+      }
+      oldGrandMaster = grandMaster;
+    }
+  }
+  
   
   
   void savePreset(boolean[] newWhatToSave) {
+    
     arrayCopy(newWhatToSave, whatToSave);
-      for(int i = 0; i < fixtures.size(); i++) {
-      repOfFixtures[i] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-  }
-    for (int i = 0; i < fixtures.size(); i++) {
-      if(whatToSave[0]) {
-       repOfFixtures[i].dimmer = fixtures.get(i).dimmer;
-      }
-      if(whatToSave[7]) {
-       repOfFixtures[i].haze = fixtures.get(i).haze;
-      }
-      if(whatToSave[8]) {
-       repOfFixtures[i].fan = fixtures.get(i).fan;
-      }
-      if(whatToSave[9]) {
-       repOfFixtures[i].fog = fixtures.get(i).fog;
+    
+    repOfFixtures = new FixtureDMX[fixtures.size()];
+    for(int i = 0; i < fixtures.size(); i++) {
+        repOfFixtures[i] = new FixtureDMX();
+    }
+      
+    for(int i = 0; i < fixtures.size(); i++) {
+      for(int jk = 1; jk < fixtures.get(i).in.DMXlength; jk++) {
+        if(whatToSave[jk-1])
+          repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
       }
     }
     type = 1;
+    
   }
 
 
@@ -179,25 +186,20 @@ class memory { //Begin of memory class------------------------------------------
 
   void loadPreset() {
     if(type == 1) {
-    
-      for (int i = 0; i < fixtures.size(); i++) if(repOfFixtures.length > i) {
-        
-        if(whatToSave[0] && repOfFixtures[i] != null) {
-          int val = int(map(repOfFixtures[i].dimmer, 0, 255, 0, value));
-          if(val > fixtures.get(i).dimmerPresetTarget) {
-            fixtures.get(i).dimmerPresetTarget = val;
+      //if(value != valueOld) { //overwirtecheck
+      valueOld = value;
+      for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
+        if(whatToSave[jk-1])
+          for(int i = 0; i < fixtures.size(); i++) {
+            if(i < repOfFixtures.length) if(jk < fixtures.get(i).preset.DMXlength) {
+              int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
+              
+              fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
+              
+            } else {} else break;
           }
-        }
-        if(whatToSave[7] && repOfFixtures[i] != null) {
-          fixtures.get(i).haze = int(map(repOfFixtures[i].haze, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
-        }
-        if(whatToSave[8] && repOfFixtures[i] != null) {
-          fixtures.get(i).fan = int(map(repOfFixtures[i].fan, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
-        }
-        if(whatToSave[9] && repOfFixtures[i] != null) {
-          fixtures.get(i).fog = int(map(repOfFixtures[i].fog, 0, 255, 0, value)); fixtures.get(i).DMXChanged = true;
-        }
       }
+      //}
     }
   }
 
@@ -510,8 +512,8 @@ class chase { //Begin of chase class--------------------------------------------
       if(parent.type == 2) {
           memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
       }
-      if(parent.type == 3) {
-          fixtures.get(num).dimmerPresetTarget = defaultConstrain(rMap(val, 0, 255, 0, value));
+      if(parent.type == 3)  {
+            fixtures.get(num).preset.setUniDMXfromPreset(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
           //fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
     //  }
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
@@ -541,7 +543,7 @@ class chase { //Begin of chase class--------------------------------------------
        toReturn = memories[getPresets()[n]].getValue();
      }
      else if(parent.type == 3) {
-       toReturn = fixtures.get(getPresets()[n]).dimmer;
+       toReturn = fixtures.get(getPresets()[n]).in.getUniDMX(DMX_DIMMER);
      }
      return toReturn;
   }
@@ -556,8 +558,8 @@ class chase { //Begin of chase class--------------------------------------------
   
   void setColor(int i, color c) {
     if(isQuickChase()) {
-      if(fixtures.get(i).fixtureIsLed()) {
-        fixtures.get(i).setColorForLed(c);
+      if(fixtures.get(i).thisFixtureIsLed()) {
+        fixtures.get(i).setColorForLedFromPreset(c);
       }
     }
   }
@@ -594,9 +596,10 @@ class chase { //Begin of chase class--------------------------------------------
       }
       brightness = defaultConstrain(iMap(brightness1, 0, fade, 0, 255));
     }
-    int rS = getReverse(step, 0, getPresets().length-1);
-    loadPreset(getPresets()[step], brightness);
-    loadPreset(getPresets()[rS], getInvertedValue(brightness, 0, 255));
+    int[] presets = getPresets();
+    int rS = getReverse(step, 0, presets.length-1);
+    loadPreset(presets[step], brightness);
+    loadPreset(presets[rS], getInvertedValue(brightness, 0, 255));
   }
   
   void freqToLight() { //This function gives frequence values to chase presets
@@ -645,7 +648,7 @@ class chase { //Begin of chase class--------------------------------------------
         hueOffset += getInvertedValue(fade, 0, 255)/10;
         if(hueOffset > 255) { hueOffset = 0; }
         for(int i = 0; i < getPresets().length; i++) {
-          color c = color(loopMap(i, 0, getPresets().length-1, 255, hueOffset), 255, 255);
+          color c = color(loopMap(i, 0, getPresets().length, 255, hueOffset), 255, 255);
           setColor(getPresets()[i], c);
         }
       popStyle();
@@ -675,10 +678,10 @@ class chase { //Begin of chase class--------------------------------------------
         } //End of sines[i].go check
       } //End of checking does this sine exist
     }
-    
+    int[] presets = getPresets();
     for(int i = 0; i <= sineMax; i++) {
-      if(i < getPresets().length) { //No nullpointers anymore
-        loadPreset(getPresets()[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
+      if(i < presets.length) { //No nullpointers anymore
+        loadPreset(presets[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
       }
     }
     

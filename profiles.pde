@@ -1,98 +1,40 @@
-//In this file should be all the functions related to fixture profiles located
-
-
-//Gets dimensions of fixture #id
-//0 = width, 1 = height, 2 = (0 or 1) render fixture?
-int[] getFixtureSizeByType(int type) { 
-  //Default to this
-  int[] toReturn = {30, 40, 1};
+FixtureProfile[] fixtureProfiles = new FixtureProfile[19]; 
+void createFixtureProfiles() {
+  fixtureProfiles[0] = new FixtureProfile("", new String[] { }, new int[] { }, toFixtureSize(50, 50, false) );
+  fixtureProfiles[1] = new FixtureProfile("par64", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(30, 50) );
+  fixtureProfiles[2] = new FixtureProfile("p.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(25, 30) );
+  fixtureProfiles[3] = new FixtureProfile("k.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(35, 40) );
+  fixtureProfiles[4] = new FixtureProfile("i.fresu", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(40, 50) );
+  fixtureProfiles[5] = new FixtureProfile("flood", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(40, 20) );
+  fixtureProfiles[6] = new FixtureProfile("linssi", new String[] {"Dimmer"}, new int[] {DMX_DIMMER}, toFixtureSize(20, 60) );
   
-  switch(type) {
-    case 1: toReturn[0] = 30; toReturn[1] = 50; toReturn[2] = 1; break;
-    case 2: toReturn[0] = 25; toReturn[1] = 30; toReturn[2] = 1; break;
-    case 3: toReturn[0] = 35; toReturn[1] = 40; toReturn[2] = 1; break;
-    case 4: toReturn[0] = 40; toReturn[1] = 50; toReturn[2] = 1; break;
-    case 5: toReturn[0] = 40; toReturn[1] = 20; toReturn[2] = 1; break;
-    case 6: toReturn[0] = 20; toReturn[1] = 60; toReturn[2] = 1; break;
-    case 7: toReturn[0] = 50; toReturn[1] = 50; toReturn[2] = 1; break;
-    case 8: toReturn[2] = 0; break;
-    case 9: toReturn[0] = 40; toReturn[1] = 30; toReturn[2] = 1; break;
-    case 10: toReturn[2] = 0; break;
-    case 11: toReturn[0] = 50; toReturn[1] = 70; toReturn[2] = 1; break;
-    case 12: toReturn[0] = 5; toReturn[1] = 8; toReturn[2] = 1; break;
-    case 13: toReturn[0] = 30; toReturn[1] = 50; toReturn[2] = 1; break;
-    case 20: toReturn[0] = 60; toReturn[1] = 70; toReturn[2] = 1; break; //Hazer
-    case 21: toReturn[0] = 60; toReturn[1] = 80; toReturn[2] = 1; break; //Fog
-  }
-  return toReturn;
-  
+  fixtureProfiles[7] = new FixtureProfile("Strobe", new String[] {"Dimmer", "Frequency"}, new int[] {DMX_DIMMER, DMX_FREQUENCY}, toFixtureSize(40, 25) );
+  fixtureProfiles[8] = new FixtureProfile("Hazer", new String[] {"Haze", "Fan"}, new int[] {DMX_HAZE, DMX_FAN}, toFixtureSize(40, 45) );
+  fixtureProfiles[9] = new FixtureProfile("Fog", new String[] {"Fog"}, new int[] {DMX_FOG}, toFixtureSize(40, 55) );
+ 
+  fixtureProfiles[16] = new FixtureProfile("strv 8ch", 
+    new String[] {"Red", "Green", "Blue", "White", "Color", "Strobe", "Mode", "Dimmer"}, 
+    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE, DMX_SPECIAL2, DMX_STROBE, DMX_SPECIAL1, DMX_DIMMER} );
+    
+  fixtureProfiles[15] = new FixtureProfile("strv 6ch", 
+    new String[] {"Mode", "Red", "Green", "Blue", "White", "Effect"}, 
+    new int[] {DMX_SPECIAL1, DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE, DMX_SPECIAL2} );
+    
+  fixtureProfiles[14] = new FixtureProfile("strv 4ch", 
+    new String[] {"Red", "Green", "Blue", "White"}, 
+    new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE} );
+    
+  fixtureProfiles[13] = new FixtureProfile("RGBWD", new String[] {"Red", "Green", "Blue", "White", "Dimmer"}, new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE, DMX_DIMMER} );
+  fixtureProfiles[12] = new FixtureProfile("RGBW", new String[] {"Red", "Green", "Blue", "White"}, new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_WHITE} );
+  fixtureProfiles[11] = new FixtureProfile("RGBD", new String[] {"Red", "Green", "Blue", "Dimmer"}, new int[] {DMX_RED, DMX_GREEN, DMX_BLUE, DMX_DIMMER} );
+  fixtureProfiles[10] = new FixtureProfile("RGB", new String[] {"Red", "Green", "Blue"}, new int[] {DMX_RED, DMX_GREEN, DMX_BLUE} );
+    
+  fixtureProfiles[17] = new FixtureProfile("MHX50", 
+    new String[] {"Pan", "Tilt", "Pan fine", "Tilt fine", "Responsespeed", "Colorwheel", "Shutter", "Dimmer", "Gobowheel", "Goborotation", "Specialfunctions", "Autoprograms", "Prism", "Focus" }, 
+    new int[] { DMX_PAN, DMX_TILT, DMX_PANFINE, DMX_TILTFINE, DMX_RESPONSESPEED, DMX_COLORWHEEL, DMX_SHUTTER, DMX_DIMMER, DMX_GOBOWHEEL, DMX_GOBOROTATION, DMX_SPECIALFUNCTIONS, DMX_AUTOPROGRAMS, DMX_PRISM, DMX_FOCUS } );
+    
+  fixtureProfiles[18] = new FixtureProfile("MHX50", 
+    new String[] {"Pan", "Tilt", "Colorwheel", "Shutter", "Gobowheel", "Gobo rotation", "Prism", "Focus" }, 
+    new int[] {DMX_PAN, DMX_TILT, DMX_COLORWHEEL, DMX_SHUTTER, DMX_GOBOWHEEL, DMX_GOBOROTATION, DMX_PRISM, DMX_FOCUS} );
+    
 }
-
-int[] getFixtureSize(int id) {
-  return getFixtureSizeByType(fixtures.get(id).fixtureTypeId);
-}
-
-
-String[] fixtureNames = { 
-  "par64", 
-  "p.fresu", 
-  "k.fresu", 
-  "i.fresu", 
-  "flood", 
-  "linssi", 
-  "lhaze", 
-  "lfan", 
-  "strobe", 
-  "freq", 
-  "lfog", 
-  "pinspot", 
-  "",
-  "",
-  "",
-  "MX50.14ch", 
-  "MX50.8ch",
-  "RGB.par",
-  "RGBD.par",
-  "hazer",
-  "fog"
-};
-
-//Gets type description of fixture #id
-String getFixtureNameByType(int type) {
-  
-  //* Dimmer channels */               case 1: case 2: case 3: case 4: case 5: case 6:  //dimmers
-  //* MH-X50 14-channel mode */        case 16:  //MH-X50
-  //* MH-X50 8-channel mode */         case 17:  //MH-X50 8-ch mode
-  //* simple rgb led par */            case 18:  //Simple rgb led par
-  //* simple rgb led par with dim */   case 19:  //Simple rgb led par with dim
-  //* 2ch hazer */                     case 20:  //2ch hazer
-  //* 1ch fog */                       case 21:  //1ch fog
-  
-  String toReturn = "-";
-
-  if(type-1 < fixtureNames.length && type-1 >= 0) { toReturn = fixtureNames[type-1]; }
-  return toReturn;
-}
-
-int getNumberOfFixtureTypes() {
-  return 21;
-}
-
-
-int getFixtureTypeId1(String fixtureType) {
-  int toReturn = 0;
-  for(int i = 0; i < fixtureNames.length; i++) {
-    if(fixtureType == fixtureNames[i]) { toReturn = i+1; break; }
-  }
-  return toReturn;
-}
-
-
-
-
-
-String getFixtureName(int id) {
-  return getFixtureNameByType(fixtures.get(id).fixtureTypeId);
-}
-
-

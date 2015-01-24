@@ -13,38 +13,6 @@ void alavalikko() {
   
   pushMatrix();
     translate(0, height-170); //alavalikko is located to bottom of the window
-    /*//Upper row
-    pushMatrix();
-      for(int i = 0; i < 20; i++) {
-        int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
-        drawn[tempIndex] = true;
-        
-        translate(65, 0); //moves box to its place
-        createFixtureBox(tempIndex); //Create fixture boxes including buttons and their functions
-      }
-    popMatrix();
-    //Lower row
-    pushMatrix();
-      translate(0, 65); 
-      for(int i = 20; i <= 40; i++) {
-        int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
-        drawn[tempIndex] = true;
-        
-        translate(65, 0); //moves box to its place
-        createFixtureBox(tempIndex); //Create fixture boxes including buttons and their functions
-      }
-    popMatrix(); 
-    
-    pushMatrix();
-      translate(0, 65+65); 
-      for(int i = 40; i <= 60; i++) {
-        int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
-        drawn[tempIndex] = true;
-        
-        translate(65, 0); //moves box to its place
-        createFixtureBox(tempIndex); //Create fixture boxes including buttons and their functions
-      }
-    popMatrix();*/
     int row = 20;
     int rows = 3;
     mouse.declareUpdateElement("bottomMenu", "main:move", 65, height-260, (row+1)*65, height-260 + rows*65);
@@ -87,7 +55,7 @@ void drawFixtureRectangles(int id) {
     text(str(id)+":" +fixtuuriTyyppi, 2, -44); //Title (fixture id and type texts)
     text("Ch " + str(fixtures.get(id).channelStart) , 2, -30); // Channel
     fill(0, 0, 255); //blue color for slider
-    rect(0, 0, 10, (map(fixtures.get(id).dimmer, 0, 255, 0, 30))*(-1)); //Draw slider
+    rect(0, 0, 10, (map(fixtures.get(id).in.getUniversalDMX(1), 0, 255, 0, 30))*(-1)); //Draw slider
     fill(255, 255, 255); //white color for Go button
     rect(10, 0, 49, -15); //Draw Go button
     fill(0, 0, 0); //black color for Go text
@@ -104,23 +72,23 @@ void checkFixtureBoxGo(int id) { //This void checks Go button
   if(isHover(10, 0, 49, -15) && mousePressed && !mouseLocked) { //Check if mouse is on go box
       mouseLocked = true;
       mouseLocker = "fbox" + id + ":go";
-      fixtures.get(id).setDimmer(255); //Set dimInput value to max
+      fixtures.get(id).in.setDimmer(255); //Set dimInput value to max
     
   } else
   if(!mousePressed && mouseLocker.equals("fbox" + id + ":go")) { //Check if mouse is released
     mouseLocker = ":";
-    fixtures.get(id).setDimmer(0); //Set dimInput value to min
+    fixtures.get(id).in.setDimmer(0); //Set dimInput value to min
    }
 }
 void checkFixtureBoxToggle(int id) { //This void checks Toggle button
   if(isHover(10, -15, 49, -15) && mousePressed && !mouseLocked) { //Check if mouse is on toggle box and clicked and released before it
     mouseLocked = true;
     mouseLocker = "fbox" + id + ":toggle";
-    if(fixtures.get(id).dimmer == 255) { //Check if dimInput is 255
-      fixtures.get(id).setDimmer(0); //If dimInput is at 255 then set it to zero
+    if(fixtures.get(id).in.getUniversalDMX(1) == 255) { //Check if dimInput is 255
+      fixtures.get(id).in.setDimmer(0); //If dimInput is at 255 then set it to zero
     }
     else {
-      fixtures.get(id).setDimmer(255); //If dimInput is not at max value then set it to max
+      fixtures.get(id).in.setDimmer(255); //If dimInput is not at max value then set it to max
     }
   }
 }
@@ -129,8 +97,8 @@ void checkFixtureBoxSlider(int id) {
       mouseLocked = true;
       mouseLocker = "fbox" + id + ":slider";
   } else if(mouseLocked && mouseLocker.equals("fbox" + id + ":slider")) {
-      fixtures.get(id).setDimmer(fixtures.get(id).dimmer + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
-      fixtures.get(id).setDimmer(constrain(fixtures.get(id).dimmer, 0, 255)); //Make sure that dimInput value is between 0-255 
+      fixtures.get(id).in.setDimmer(fixtures.get(id).in.getUniversalDMX(1) + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
+      fixtures.get(id).in.setDimmer(constrain(fixtures.get(id).in.getUniversalDMX(1), 0, 255)); //Make sure that dimInput value is between 0-255 
   }
 }
 
@@ -194,55 +162,20 @@ void openBottomMenuControlBox(int owner) {
   currentBottomMenuControlBoxOwner = owner;
   bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures.get(owner).fixtureType + ", Starting Channel: " + fixtures.get(owner).channelStart;
   boolean successInit = false; //This boolean is set to true, if the fixtureType has a specific configuration applied for it.
-  switch(fixtures.get(owner).fixtureTypeId) {
-    //Configure box according to fixtureType
-    case 1: case 2: case 3: case 4: case 5: case 6:
-      // all "dumb" fixtures (with only one channel: dim)
-      bottomMenuControlBoxControllers = new bottomMenuChController[1];
-      bottomMenuControlBoxControllers[0] = new bottomMenuChController(50, 50, 0, 0, "Dimmer");
-      successInit = true;
-    break;
-    //MH-X50 14&8 channel modes
-    case 16:
-      bottomMenuControlBoxControllers = new bottomMenuChController[14];
-      String[] chanNamesTp16 = {"Pan", "Tilt", "Fine Pan", "Fine Tilt", "Resp. Speed", "Color Wheel", "Shutter", "Dimmer", "Gobo", "Gobo Rotation", "S. Function", "Auto Program", "Prism", "Focus"};
-      for (int i = 0; i < chanNamesTp16.length; i++) {
-        bottomMenuControlBoxControllers[i] = new bottomMenuChController(30 + i*90, 50, i, 0, chanNamesTp16[i]);
-      }
-      successInit = true;
-    break;
-    case 17:
-      bottomMenuControlBoxControllers = new bottomMenuChController[8];
-      String[] chanNamesTp17 = {"Pan", "Tilt", "Color Wheel", "Shutter", "Gobo", "Gobo Rotation", "Prism", "Focus"};
-      for (int i = 0; i < chanNamesTp17.length; i++) {
-        bottomMenuControlBoxControllers[i] = new bottomMenuChController(50 + i*120, 50, i, 0, chanNamesTp17[i]);
-      }
-      successInit = true;
-    break;
-    
-    case 20:
-      bottomMenuControlBoxControllers = new bottomMenuChController[2];
-      String[] chanNamesTp20 = {"Haze", "Fan"};
-      for (int i = 0; i < chanNamesTp20.length; i++) {
-        bottomMenuControlBoxControllers[i] = new bottomMenuChController(50 + i*120, 50, i, 0, chanNamesTp20[i]);
-      }
-      successInit = true;
-    break;
-    
-    case 21:
-      bottomMenuControlBoxControllers = new bottomMenuChController[1];
-      bottomMenuControlBoxControllers[0] = new bottomMenuChController(50, 50, 0, 0, "Fog");
-      successInit = true;
-    break;
-    
-    default:
-      bottomMenuControlBoxControllers = new bottomMenuChController[0];
-      bottomMenuControlBoxDMXValues = new int[0];
-      bottomMenuControlBoxDMXValueChanged = new boolean[0];
-    break;
+  
+  //Get data from functions in profiles.pde 
+  {
+    int fT = fixtures.get(owner).fixtureTypeId;
+    String[] chNames = getChNamesByFixType(fT);
+    bottomMenuControlBoxControllers = new bottomMenuChController[chNames.length];
+    for (int i = 0; i < chNames.length; i++) {
+      bottomMenuControlBoxControllers[i] = new bottomMenuChController(30 + i*90, 50, i, 0, chNames[i]);
+    }
+    successInit = true;
   }
+
   if (successInit) {
-    bottomMenuControlBoxDMXValues = fixtures.get(owner).getDMX();
+    bottomMenuControlBoxDMXValues = fixtures.get(owner).bottomMenu.getDMX();
     bottomMenuControlBoxDMXValueChanged = new boolean[bottomMenuControlBoxDMXValues.length];
   }
 }
@@ -302,7 +235,7 @@ void drawBottomMenuControlBox() {
 }
 
 void bottomMenuDMXUpdate() {
-  int[] tempDMX = fixtures.get(currentBottomMenuControlBoxOwner).getDMX();
+  int[] tempDMX = fixtures.get(currentBottomMenuControlBoxOwner).in.getDMX();
   int arrayIndex = 0;
   //This value is true if any of the entries in the boolean array are true
   boolean changd = false;
@@ -322,10 +255,10 @@ void bottomMenuDMXUpdate() {
 void submitDMXFromBMCB(int[] input) {
   
   if(bottomMenuAllFixtures) {
-    fixtureForSelected[0].receiveDMX(input);
+    fixtureForSelected[0].bottomMenu.receiveDMX(input);
     setValuesToSelected();
   } else {
-    fixtures.get(currentBottomMenuControlBoxOwner).receiveDMX(input);
+    fixtures.get(currentBottomMenuControlBoxOwner).bottomMenu.receiveDMX(input);
   }
 }
 

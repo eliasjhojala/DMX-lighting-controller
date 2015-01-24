@@ -44,7 +44,7 @@ void drawMainWindow() {
           }
     
           if(moveLamp == true) {
-            mouse.capture(mouse.getElementByName("main:fixtures"));
+            //mouse.capture(mouse.getElementByName("main:fixtures"));
             if(i == lampToMove) { translate(fixtures.get(lampToMove).x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom)  + ansaX[fixtures.get(lampToMove).parentAnsa], fixtures.get(lampToMove).y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures.get(lampToMove).parentAnsa]); }
               else { translate(fixtures.get(i).x_location+ansaX[fixtures.get(i).parentAnsa], fixtures.get(i).y_location+ansaY[fixtures.get(i).parentAnsa]); }
           } else { translate(fixtures.get(i).x_location+ansaX[fixtures.get(i).parentAnsa], fixtures.get(i).y_location+ansaY[fixtures.get(i).parentAnsa]); }
@@ -72,8 +72,9 @@ void drawMainWindow() {
              lampToMove = i;
              moveLamp = true;
              mouseReleased = false;
-           } else {
-            fixtures.get(i).toggle(true);
+           } 
+           else {
+              fixtures.get(i).toggle(true);
            }
            
          }

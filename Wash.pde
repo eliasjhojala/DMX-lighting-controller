@@ -100,7 +100,7 @@ void drawColorWashMenu() { //Color wash selection menu box
               popStyle();
             //END OF CLEAR BUTTON
             
-            //ONLY SELECTED BUTTON
+            //COLORPICKER BUTTON
               mouse.declareUpdateElementRelative("cWB:HSBPicker", "colorSelectBox",  round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y)); 
               mouse.setElementExpire("cWB:HSBPicker", 2);
               pushStyle();
@@ -114,7 +114,7 @@ void drawColorWashMenu() { //Color wash selection menu box
                 if(HSBPicker) { text("Close", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
                 else { text("ColorPicker", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
               popStyle();
-            //END OF ONLY SELECTED BUTTON
+            //END OF COLORPICKER BUTTON
             
            
            if(HSBPicker) { //Check that should color picker be open
@@ -319,15 +319,15 @@ class colorWash {
       if(fixtures.get(i) != null) { //Check that fixture exist
         //If onlySelected or onlyList is true then we have to check is fixture selected or in list
         if((!onlySelected && !onlyList) || fixtures.get(i).selected || isInList(i, selectedFixtures)) {
-          if(fixtureUseRgb(i)) { //Check that does this fixture use rgb
-            fixtures.get(i).red = rMap(red, 0, 255, 0, val); //Set red value
-            fixtures.get(i).green = rMap(green, 0, 255, 0, val); //Set green value
-            fixtures.get(i).blue = rMap(blue, 0, 255, 0, val); //Set blue value
-            if(fixtureUseWhite(i)) { //Check that does this fixture use also white
-              fixtures.get(i).white = rMap(white, 0, 255, 0, val); //set white value
+          if(thisFixtureUseRgb(i)) { //Check that does this fixture use rgb
+            fixtures.get(i).in.setUniversalDMX(DMX_RED, rMap(red, 0, 255, 0, val)); //Set red value
+            fixtures.get(i).in.setUniversalDMX(DMX_GREEN, rMap(green, 0, 255, 0, val)); //Set green value
+            fixtures.get(i).in.setUniversalDMX(DMX_BLUE, rMap(blue, 0, 255, 0, val)); //Set blue value
+            if(thisFixtureUseWhite(i)) { //Check that does this fixture use also white
+              fixtures.get(i).in.setUniversalDMX(DMX_WHITE, rMap(white, 0, 255, 0, val)); //set white value
             } //End of white check
-            if(fixtureUseDim(i)) { //Check that does this fixture use also dimmer
-              fixtures.get(i).dimmer = rMap(dim, 0, 255, 0, val); //Set dimmer value
+            if(thisFixtureUseDim(i)) { //Check that does this fixture use also dimmer
+              fixtures.get(i).in.setUniversalDMX(DMX_DIMMER, rMap(dim, 0, 255, 0, val)); //Set dimmer value
             } //End of dimmer check
             fixtures.get(i).DMXChanged = true; //Tell to fixture class that DMX has changed
           } //End of rgb check
@@ -344,9 +344,10 @@ class colorWash {
         if(fixtures.get(i).isHalogen()) {
           //If onlySelected or onlyList is true then we have to check is fixture selected or in list
           if(useThisFixture(i)) { 
-            int r = fixtures.get(i).red;
-            int g = fixtures.get(i).green;
-            int b = fixtures.get(i).blue;
+            color c = fixtures.get(i).getColor();
+            float r = red(c);
+            float g = green(c);
+            float b = blue(c);
             if(isAbout(r, red, accuracy) && isAbout(g, green, accuracy) && isAbout(b, blue, accuracy)) { //Check that halogen's colour (foil) is about same colour than selected wash colour
               fixtures.get(i).setDimmer(val); //Put halogen on if it's right-coloured
             } //End of checking is the colour of this fixture right
@@ -365,14 +366,14 @@ class colorWash {
     boolean fixtureIsSelected(int i) {
       return fixtures.get(i).selected;
     }
-    boolean fixtureUseRgb(int i) {
-      return fixtures.get(i).fixtureUseRgb();
+    boolean thisFixtureUseRgb(int i) {
+      return fixtures.get(i).thisFixtureUseRgb();
     }
-    boolean fixtureUseDim(int i) {
-      return fixtures.get(i).fixtureUseDim();
+    boolean thisFixtureUseDim(int i) {
+      return fixtures.get(i).thisFixtureUseDim();
     }
-    boolean fixtureUseWhite(int i) {
-      return fixtures.get(i).fixtureUseWhite();
+    boolean thisFixtureUseWhite(int i) {
+      return fixtures.get(i).thisFixtureUseWhite();
     }
     
     boolean useThisFixture(int i) {

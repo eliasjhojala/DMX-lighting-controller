@@ -29,9 +29,6 @@ int[] ansaX = new int[numberOfAnsas];
 int[] ansaY = new int[numberOfAnsas];
 int[] ansaType = new int[numberOfAnsas];
 
-
-int[] fixParam = { 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45 };
-
 float camX = s1.width/2.0, camY = s1.height/2.0 + 4000, camZ = 1000;
 public class PFrame extends JFrame {
   public PFrame() {
@@ -47,7 +44,10 @@ public class PFrame extends JFrame {
 
 //Begin 3D visualizer window class
 public class secondApplet1 extends PApplet {
-  
+  PApplet parent;
+  secondApplet1(PApplet parent) {
+    this.parent = parent;
+  }
 
 PShape par64Model;
 PShape par64Holder;
@@ -107,20 +107,20 @@ void setup() {
   }
   
   try {
-  par64Model = loadShape(path + "par64.obj");
-  par64Holder = loadShape(path + "par64_holder.obj");
-  kFresu = loadShape(path + "kFresu.obj");
-  iFresu = loadShape(path + "iFresu.obj");
-  linssi = loadShape(path + "linssi.obj");
-  flood = loadShape(path + "flood.obj");
-  floodCover = loadShape(path + "floodCover.obj");
-  strobo = loadShape(path + "strobo.obj");
-  mhMain = loadShape(path + "mhMain.obj");
-  mhHolder = loadShape(path + "mhHolder.obj");
-  mhBase = loadShape(path + "mhBase.obj"); 
-  base = loadShape(path + "base.obj");
-  cone = loadShape(path + "cone.obj");
-  table = loadShape(path + "table.obj");
+  par64Model = loadShape(parent.dataPath("par64.obj"));
+  par64Holder = loadShape(parent.dataPath( "par64_holder.obj"));
+  kFresu = loadShape(parent.dataPath( "kFresu.obj"));
+  iFresu = loadShape(parent.dataPath( "iFresu.obj"));
+  linssi = loadShape(parent.dataPath( "linssi.obj"));
+  flood = loadShape(parent.dataPath( "flood.obj"));
+  floodCover = loadShape(parent.dataPath( "floodCover.obj"));
+  strobo = loadShape(parent.dataPath( "strobo.obj"));
+  mhMain = loadShape(parent.dataPath( "mhMain.obj"));
+  mhHolder = loadShape(parent.dataPath( "mhHolder.obj"));
+  mhBase = loadShape(parent.dataPath( "mhBase.obj")); 
+  base = loadShape(parent.dataPath( "base.obj"));
+  cone = loadShape(parent.dataPath( "cone.obj"));
+  table = loadShape(parent.dataPath( "table.obj"));
   table.disableStyle();
   }
   catch (Exception e) {
@@ -210,7 +210,7 @@ void draw() {
               }
 
               
-              
+            /*  
               //Draw lights
               for (int i = 0; i < ansaTaka; i++) {
                 //If light is of type par64 OR moving head dim
@@ -255,7 +255,7 @@ void draw() {
                 }
               }
               
-              
+              */
               
               
 }
@@ -501,10 +501,11 @@ void keyPressed()
 }
 
 public class PFrame1 extends JFrame {
-  public PFrame1() {
+  
+  public PFrame1(PApplet parent) {
           setBounds(0, 0, 600, 340);
           setResizable(true);
-          s1 = new secondApplet1();
+          s1 = new secondApplet1(parent);
           add(s1);
           s1.init();
           show();

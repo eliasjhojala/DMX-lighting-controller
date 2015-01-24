@@ -557,9 +557,9 @@ public class ControlFrame extends PApplet {
       if (fixtureColorChangeHasHappened && cp5.tab("fixtSettings").isActive()) {
         bottomMenuControlBoxOpen = false;
         
-        fixtures.get(changeColorFixtureId).red = int(cp5.controller("colorRed").getValue());
-        fixtures.get(changeColorFixtureId).green = int(cp5.controller("colorGreen").getValue());
-        fixtures.get(changeColorFixtureId).blue = int(cp5.controller("colorBlue").getValue());
+        fixtures.get(changeColorFixtureId).in.setUniversalDMX(DMX_RED, int(cp5.controller("colorRed").getValue()));
+        fixtures.get(changeColorFixtureId).in.setUniversalDMX(DMX_GREEN, int(cp5.controller("colorGreen").getValue()));
+        fixtures.get(changeColorFixtureId).in.setUniversalDMX(DMX_BLUE, int(cp5.controller("colorBlue").getValue()));
         fixtures.get(changeColorFixtureId).rotationZ = int(cp5.controller("fixtRotation").getValue());
         fixtures.get(changeColorFixtureId).rotationX = int(cp5.controller("fixtRotationX").getValue());
         fixtures.get(changeColorFixtureId).z_location = int(cp5.controller("fixtZ").getValue());
@@ -798,9 +798,9 @@ public class ControlFrame extends PApplet {
       //Check for fixture color change initiation
       if (toChangeFixtureColor){
         fixtureColorChangeHasHappened = true;
-        cp5.controller("colorRed").setValue(fixtures.get(changeColorFixtureId).red);
-        cp5.controller("colorGreen").setValue(fixtures.get(changeColorFixtureId).green);
-        cp5.controller("colorBlue").setValue(fixtures.get(changeColorFixtureId).blue);
+        cp5.controller("colorRed").setValue(fixtures.get(changeColorFixtureId).in.getUniversalDMX(DMX_RED));
+        cp5.controller("colorGreen").setValue(fixtures.get(changeColorFixtureId).in.getUniversalDMX(DMX_GREEN));
+        cp5.controller("colorBlue").setValue(fixtures.get(changeColorFixtureId).in.getUniversalDMX(DMX_BLUE));
         cp5.controller("fixtRotation").setValue(fixtures.get(changeColorFixtureId).rotationZ);
         cp5.controller("fixtRotationX").setValue(fixtures.get(changeColorFixtureId).rotationX);
         cp5.controller("fixtZ").setValue(fixtures.get(changeColorFixtureId).z_location);

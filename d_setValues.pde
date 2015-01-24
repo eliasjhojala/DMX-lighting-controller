@@ -1,19 +1,19 @@
-//int[] dimInputOld = new int[fixtures.size()]; 
-//int[] dimInputWithMasterOld = new int[fixtures.size()];
-//int[] dimFixturesOld = new int[fixtures.size()];
 boolean dimCheckFinished = true;
-//int[][] valueToDmxTemp = new int[fixtures.size()][fixtures.size()];
 
 final int DMX_CHAN_LENGTH = 512;
+
 
 //__________________IMPORTANT VARIABLE(s)
 int[] DMX = new int[DMX_CHAN_LENGTH+1];
 int[] DMXforOutput = new int[DMX_CHAN_LENGTH+1];
+int[] DMXforCrossFixtureOld = new int[DMX_CHAN_LENGTH+1];
 //------------------ SO VERY IMPORTANT
 
 
 int dmxTriedTimes = 0;
 boolean dmxIsWorking = false;
+
+
 
 void setDimAndMemoryValuesAtEveryDraw() {
   dimCheckFinished = false;
@@ -34,18 +34,25 @@ void setDimAndMemoryValuesAtEveryDraw() {
     }
   }
   if(true) {
+    //TODO: BETTER "COMMUNICATION" BETWEEN SAME-CHANNELLED FIXTURES!!!!! THIS IS IMPORTANT!!! IMPORTANT!!! IMPORTANT!!! FIX FAST!!! IMPORTANT!!! FIX FAST!!!
     for(int ai = 0; ai < fixtures.size(); ai++) {
       fixture fix = fixtures.get(ai);
       int[] toFixture = new int[fix.getDMXLength()];
+      int[] fromFixture = fix.getDMX();
       for (int i = 0; i < toFixture.length; i++) {
-        toFixture[i] = DMX[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)];
+        if(DMX[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)] != DMXforCrossFixtureOld[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)]) {
+          toFixture[i] = DMX[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)];
+          //channelValuesOld[constrain(fix.channelStart + i, 1, DMX_CHAN_LENGTH)] = toFixture[i];
+        } else {
+          toFixture[constrain(i, 0, toFixture.length-1)] = fromFixture[constrain(i, 0, fromFixture.length-1)];
+        }
       }
-      fix.receiveDMX(toFixture);
+      fix.in.receiveDMX(toFixture);
       fix.DMXChanged = false;
     }
   }
   
-  
+  arrayCopy(DMX, DMXforCrossFixtureOld);
 
   { // Memory checks --->
   

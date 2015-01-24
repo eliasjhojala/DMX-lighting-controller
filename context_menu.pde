@@ -56,6 +56,7 @@ class contextMenu {
   }
   
   void declareMouseElement() {
+    mouse.removeElement("contextMenu");
     mouse.declareElement("contextMenu", 100000, x, y, x+200, y+22*options.length);
   }
   
@@ -64,7 +65,7 @@ class contextMenu {
     fixtureId = fId;
     String[] acts = {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs", "removeFixtureFromCM", "removeAllSelectedFixtures"};
     String[] labs = {"Control this", "Control all selected", "Remove this", "Remove all selected"};
-    initiate(acts, labs, mouseX, mouseY);
+    initiate(acts, labs, mouseX+2, mouseY+2);
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -/
   
@@ -81,10 +82,10 @@ class contextMenu {
         for(int i = 0; i < options.length; i++) {
           pushMatrix();
           translate(0, 22*i);
-          boolean hovered = isHoverSimple(0, 0, 200, 22);
+          boolean hovered = isHoverSimple(-2, -2, 204, 26);
           if(hovered && mousePressed && mouseButton == LEFT) {
             execute(i);
-          } else if (!hovered && mousePressed && mouseButton == LEFT) open = false;
+          } else if (!hovered && mousePressed && mouseButton == LEFT) close();
           fill(hovered ? 220 : 180);
           stroke(170); strokeWeight(1);
           rect(2, 2, 196, 18, 2);
@@ -98,6 +99,11 @@ class contextMenu {
       popMatrix();
       popStyle();
     }
+  }
+  
+  void close() {
+    open = false;
+    mouse.removeElement("contextMenu");
   }
   
   void execute(int optionId) {

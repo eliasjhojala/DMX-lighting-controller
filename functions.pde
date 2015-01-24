@@ -22,6 +22,8 @@ int indexOfMinCheck(int[] input, boolean[] checked) {
 
 int ansaWidth;
 
+int[] valueToDmxOld = new int[DMX_CHAN_LENGTH+1];
+
 boolean arduinoFinished = true;
 void arduinoSend() {
   arduinoFinished = false;
@@ -222,7 +224,7 @@ void fullOn(boolean state) {
   if(!fullOn && state) {
     //Turn on full on
     for(int ii = 0; ii < fixtures.size(); ii++) {
-       valueOfDimBeforeFullOn[ii] = fixtures.get(ii).dimmer;
+       valueOfDimBeforeFullOn[ii] = fixtures.get(ii).in.getUniDMX(DMX_DIMMER);
        fixtures.get(ii).setDimmer(255);
     }
     fullOn = true;
@@ -268,21 +270,13 @@ boolean inBoundsCircle(int cPosX, int cPosY, int cRadius, int pointerX, int poin
 
 
 void setValuesToSelected() {
-  
   if (bottomMenuAllFixtures && bottomMenuControlBoxOpen) {
     int a = 0;
     for(int i = 0; i < fixtures.size(); i++) {
       if(fixtures.get(i).selected) {
-        fixtures.get(i).setDimmer(fixtureForSelected[a].dimmer);
-        fixtures.get(i).pan = fixtureForSelected[a].pan;
-        fixtures.get(i).tilt = fixtureForSelected[a].tilt;
-        fixtures.get(i).panFine = fixtureForSelected[a].panFine;
-        fixtures.get(i).tiltFine = fixtureForSelected[a].tiltFine;
-        fixtures.get(i).colorWheel = fixtureForSelected[a].colorWheel;
-        fixtures.get(i).focus = fixtureForSelected[a].focus;
-        fixtures.get(i).prism = fixtureForSelected[a].prism;
-        fixtures.get(i).goboWheel = fixtureForSelected[a].goboWheel;
-        fixtures.get(i).shutter = fixtureForSelected[a].shutter;
+        for(int j = 0; j < fixtures.get(i).in.DMXlength; j++) {
+          fixtures.get(i).bottomMenu.setUniversalDMX(j, fixtureForSelected[a].bottomMenu.getUniversalDMX(j));
+        }
       }
     }
   }
@@ -364,9 +358,9 @@ int quickSlider(String mouseLockID, int value) {
     
     //getInvertedValue returns value inverted (0 -> 255, 255 -> 0)
     int getInvertedValue(int val, int lim_low, int lim_hi) {
-      int toReturn = 0;
-      toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);
-      return toReturn;
+      /*int toReturn = 0;
+      toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);*/
+      return lim_hi + lim_low - val;
     }
   
     
@@ -429,6 +423,13 @@ but it returns original array index numbers as sorted arrange */
    
    
 boolean isAbout(int a, int b, int accu) {
+  if(abs(a - b) <= a/overZero(accu)) {
+    return true;
+  }
+  return false;
+} 
+
+boolean isAbout(float a, float b, int accu) {
   if(abs(a - b) <= a/overZero(accu)) {
     return true;
   }
