@@ -25,8 +25,13 @@ int ansaWidth;
 int[] valueToDmxOld = new int[DMX_CHAN_LENGTH+1];
 
 boolean arduinoFinished = true;
+
+Arduino arduino1;
+
 void arduinoSend() {
   arduinoFinished = false;
+  if(arduino1 != null) { arduino1.sendUniversum(DMXforOutput); }
+  else { arduino1 = new Arduino(this, "/dev/tty.usbmodem1421", 115200); arduino1.sendUniversum(DMXforOutput); }
   for(int i = 0; i < channels; i++) {
     if(DMXforOutput[i] != valueToDmxOld[i]) {
       if(useCOM == true) {
@@ -38,6 +43,7 @@ void arduinoSend() {
   }
   arduinoFinished = true;
 }
+
 Arduino arduino;
 class Arduino {
   String portName;

@@ -5,8 +5,8 @@ boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.  
 boolean showMode = true;                                                                                                                                                  //|
                                                                                                                                                                           //| 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
-boolean useCOM = true; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                       //|
-boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                               //|
+boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                       //|
+boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                               //|
 boolean useAnotherArduino = false;                                                                                                                                        //|
                                                                                                                                                                           //|
 boolean useMaschine = false;                                                                                                                                              //|
