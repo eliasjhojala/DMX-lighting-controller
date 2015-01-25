@@ -64,6 +64,7 @@ int[] receiveDMXtoUniversal(int fT, int[] dmxChannels) {
   int[] toReturn = new int[universalDMXlength];
   for(int i = 0; i < toReturn.length; i++) { toReturn[i] = -2; }
   try {
+     if(fT < fixtureProfiles.length)
      if(fixtureProfiles[fT] != null) {
        for(int j = 0; j < fixtureProfiles[fT].channelTypes.length; j++) {
          toReturn[fixtureProfiles[fT].channelTypes[j]] = dmxChannels[j];

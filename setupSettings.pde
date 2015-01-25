@@ -83,8 +83,9 @@ class SettingsWindow {
   }
   
   void onInit() {
-    tabs = new SettingsTab[1];
-    tabs[0] = new SettingsTab("TestTab");
+    tabs = new SettingsTab[2];
+    tabs[0] = new SettingsTab("TestTab", this);
+    tabs[1] = new SettingsTab("secondTab", this);
   }
   
   int locX, locY;
@@ -98,6 +99,8 @@ class SettingsWindow {
   SettingsTab[] tabs;
   
   final int size = 500;
+  
+  int selectedTab = 0;
   
   void draw() {
     if(open) {
@@ -145,9 +148,19 @@ class SettingsWindow {
       
       {  pushMatrix();
         translate(10, 40);
-        for(SettingsTab tab : tabs) {
-          tab.drawSelector();
-        }
+        
+        pushMatrix();
+          for(int i = 0; i < tabs.length; i++) {
+            
+            //Draw all tabs, if they return true, they demand to be selected
+            if(tabs[i].drawSelector(selectedTab == i)) {
+              selectedTab = i;
+            }
+            
+          }
+        popMatrix();
+        
+        tabs[selectedTab].drawChildren();
       popMatrix();  }
       popMatrix();
       popStyle();
@@ -162,30 +175,49 @@ class SettingsTab {
   SettingController[] controllers;
   
   String text;
+  int height_;
   
-  SettingsTab(String text) {
+  SettingsTab(String text, int hght) {
     this.text = text;
+    this.height_ = hght;
   }
+  
+  //If you just give reference to the parent SettingsWindow, height of the tab will be autamatcially inherited from it
+  SettingsTab(String text, SettingsWindow parent) {
+    this.text = text;
+    this.height_ = parent.size - 60;
+  }
+  
+  int getSelectorWidth() {
+    return text.length() * 10;
+  }
+  
   //Return true if pressed
-  boolean drawSelector() {
-    int wid = text.length() * 10;
-    mouse.declareUpdateElementRelative("Settings:TabSelector:" + text, "settings", 0, 0, wid * 10, 18);
+  boolean drawSelector(boolean selected) {
+    int wid = getSelectorWidth();
+    mouse.declareUpdateElementRelative("Settings:TabSelector:" + text, "settings", 0, 0, wid, 18);
     mouse.setElementExpire("Settings:TabSelector:" + text, 2);
-    if(mouse.getElementByName("Settings:TabSelector:" + text).isHovered) {
-      //---draw hover rect
+    if(mouse.getElementByName("Settings:TabSelector:" + text).isHovered || selected) {
+      //draw hover rect
+      if(!selected) fill(255, 160);
+        else fill(200, 160);
+      noStroke();
+      rect(1, -1, wid, 20, 4, 0, 0, 0);
     }
     textAlign(LEFT);
     textSize(16);
+    fill(0);
     text(text, 3, 15);
     stroke(120);
     strokeWeight(2);
-    line(0, 18, text.length() * 10, 18);
-    translate(text.length() * 10, 0);
+    line(0, 18, wid, 18);
+    translate(wid, 0);
     line(0, 0, 0, 18);
-    return false;
+    return mouse.isCaptured("Settings:TabSelector:" + text);
   }
   
   void drawChildren() {
+    line(0, 18, 0, height_);
   }
 }
 
