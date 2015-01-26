@@ -173,7 +173,7 @@ class Switch {
   }
   
   int animationState = 0;
-  void draw() {
+  boolean draw() {
     if(state && animationState < 19) {
       animationState += 3;
     } else
@@ -211,6 +211,7 @@ class Switch {
     }
     popStyle(); popMatrix();
     
+    return state;
   }
 }
 

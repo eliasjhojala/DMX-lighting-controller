@@ -83,9 +83,13 @@ class SettingsWindow {
   }
   
   void onInit() {
-    tabs = new SettingsTab[2];
-    tabs[0] = new SettingsTab("TestTab", this);
-    tabs[1] = new SettingsTab("secondTab", this);
+    tabs = new SettingsTab[1];
+    tabs[0] = new SettingsTab("UI", this);
+    tabs[0].setControllers(
+      new SettingController[] {
+        
+      }
+    );
   }
   
   int locX, locY;
@@ -174,6 +178,10 @@ class SettingsTab {
   //A container for multiple settings
   SettingController[] controllers;
   
+  void setControllers(SettingController[] newControllers) {
+    controllers = newControllers;
+  }
+  
   String text;
   int height_;
   
@@ -218,41 +226,41 @@ class SettingsTab {
   
   void drawChildren() {
     line(0, 18, 0, height_);
+    if(controllers != null) {
+    }
   }
 }
 
 
 class SettingController {
-  BooleanSettingController booleanController;
+  Switch booleanController;
   IntSettingController intController;
-  SettingController() {
+  int mode; //0: switch, 1: numbox, 2: slider, 3: knob
+  
+  String name;
+  String description;
+  
+  SettingController(int state, int type, String name, String description, SettingsTab parent) {
+    intController = new IntSettingController(type, state);
+    mode = type+1;
+    this.name = name;
+    this.description = description;
+  }
+  
+  SettingController(boolean state, String name, String description, SettingsTab parent) {
+    mode = 0;
+    booleanController = new Switch(state, "settings:" + parent.text + ":" + name, "settings", 0, 0);
   }
 }
 
-class BooleanSettingController {
-  
-  String text;
-  Switch controller;
-  
-  boolean setting;
-  
-  
-  BooleanSettingController(String tx, boolean se) {
-    text = tx;
-    setting = se;
-    controller = new Switch(se, "settings:" + text, "settings", 0, 0);
-  }
-  
-  //Draws and returns true if boolean export changed
-  boolean changed() {
-    return false;
-  }
-}
+
 
 
 class IntSettingController {
   int mode = 0; //0: numbox, 1: slider, 2: knob
-  IntSettingController(int mode) {
+  int state;
+  IntSettingController(int mode, int state) {
     this.mode = mode;
+    this.state = state;
   }
 }
