@@ -244,14 +244,14 @@ class SettingsTab {
   void drawChildren() {
     pushMatrix();
       line(0, 18, 0, height_);
-      translate(6, 18);
+      translate(6, 20);
       if(controllers != null) {
         for(SettingController contr : controllers) {
           contr.draw();
           translate(0, contr.getDrawHeight());
           stroke(0, 100);
           strokeWeight(1.5);
-          line(0, -4, parentWindow.size - 28, -4);
+          line(0, -2, parentWindow.size - 28, -2);
         }
       }
     popMatrix();
