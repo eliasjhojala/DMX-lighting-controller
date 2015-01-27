@@ -87,7 +87,8 @@ class SettingsWindow {
     tabs[0] = new SettingsTab("UI", this);
     tabs[0].setControllers(
       new SettingController[] {
-        
+        new SettingController(false, "Text", "Yayyy longer description text right here!", tabs[0]),
+        new SettingController(true, "The other text", "A really long description. It's interesting how busy I am but for some reason I still have time to write this long text.", tabs[0])
       }
     );
   }
@@ -105,6 +106,7 @@ class SettingsWindow {
   final int size = 500;
   
   int selectedTab = 0;
+  
   
   void draw() {
     if(open) {
@@ -178,6 +180,8 @@ class SettingsTab {
   //A container for multiple settings
   SettingController[] controllers;
   
+  SettingsWindow parentWindow;
+  
   void setControllers(SettingController[] newControllers) {
     controllers = newControllers;
   }
@@ -185,15 +189,17 @@ class SettingsTab {
   String text;
   int height_;
   
-  SettingsTab(String text, int hght) {
+  SettingsTab(String text, int hght, SettingsWindow parent) {
     this.text = text;
     this.height_ = hght;
+    parentWindow = parent;
   }
   
   //If you just give reference to the parent SettingsWindow, height of the tab will be autamatcially inherited from it
   SettingsTab(String text, SettingsWindow parent) {
     this.text = text;
     this.height_ = parent.size - 60;
+    parentWindow = parent;
   }
   
   int getSelectorWidth() {
@@ -225,9 +231,19 @@ class SettingsTab {
   }
   
   void drawChildren() {
-    line(0, 18, 0, height_);
-    if(controllers != null) {
-    }
+    pushMatrix();
+      line(0, 18, 0, height_);
+      translate(6, 18);
+      if(controllers != null) {
+        for(SettingController contr : controllers) {
+          contr.draw();
+          translate(0, contr.getDrawHeight());
+          stroke(0, 100);
+          strokeWeight(1.5);
+          line(0, -4, parentWindow.size - 28, -4);
+        }
+      }
+    popMatrix();
   }
 }
 
@@ -235,7 +251,10 @@ class SettingsTab {
 class SettingController {
   Switch booleanController;
   IntSettingController intController;
-  int mode; //0: switch, 1: numbox, 2: slider, 3: knob
+  
+  SettingsTab parentTab;
+  
+  int mode; //0: switch, 1: numbox, 2: slider, 3: knob, /-4: textbox, 5: listbox-/
   
   String name;
   String description;
@@ -245,11 +264,47 @@ class SettingController {
     mode = type+1;
     this.name = name;
     this.description = description;
+    parentTab = parent;
   }
   
   SettingController(boolean state, String name, String description, SettingsTab parent) {
     mode = 0;
-    booleanController = new Switch(state, "settings:" + parent.text + ":" + name, "settings", 0, 0);
+    booleanController = new Switch(state, "settings:" + parent.text + ":" + name, "settings", parent.parentWindow.size-70, 8);
+    this.name = name;
+    this.description = description;
+    parentTab = parent;
+  }
+  
+  int getDrawHeight() {
+    //Return consumed height
+    return 52 + (description.length() * 8) / (parentTab.parentWindow.size-40) * 6;
+  }
+  
+  //Returns true if value changed
+  boolean draw() {
+    switch(mode) {
+      case 0:
+        drawText(0, 0);
+        booleanController.draw();
+      break;
+      case 1: case 2: case 3:
+        drawText(0, 0);
+      break;
+    }
+    return false;
+  }
+  
+  void drawText(int x, int y) {
+    pushMatrix();
+      translate(x, y);
+      textSize(24);
+      fill(0);
+      text(name, 0, 25);
+      textSize(12);
+      textLeading(14);
+      fill(0, 200);
+      text(description, 0, 26, parentTab.parentWindow.size-40, 40);
+    popMatrix();
   }
 }
 
