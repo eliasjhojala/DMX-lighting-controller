@@ -83,12 +83,19 @@ class SettingsWindow {
   }
   
   void onInit() {
-    tabs = new SettingsTab[1];
+    tabs = new SettingsTab[2];
     tabs[0] = new SettingsTab("UI", this);
     tabs[0].setControllers(
       new SettingController[] {
         new SettingController(false, "Text", "Yayyy longer description text right here!", tabs[0]),
         new SettingController(true, "The other text", "A really long description. It's interesting how busy I am but for some reason I still have time to write this long text.", tabs[0])
+      }
+    );
+    tabs[1] = new SettingsTab("Other Settings", this);
+    tabs[1].setControllers(
+      new SettingController[] {
+        new SettingController(false, "Text", "Yayyy longer description text right here!", tabs[1]),
+        new SettingController(true, "The other text", "A really long description. It's interesting how busy I am but for some reason I still have time to write this long text.", tabs[1])
       }
     );
   }
@@ -203,7 +210,11 @@ class SettingsTab {
   }
   
   int getSelectorWidth() {
-    return text.length() * 10;
+    pushStyle();
+    textSize(16);
+    int temp = int(textWidth(text));
+    popStyle();
+    return temp + 6;
   }
   
   //Return true if pressed
@@ -277,7 +288,11 @@ class SettingController {
   
   int getDrawHeight() {
     //Return consumed height
-    return 52 + (description.length() * 8) / (parentTab.parentWindow.size-40) * 6;
+    pushStyle();
+    textSize(12);
+    int temp = int(textWidth(description));
+    popStyle();
+    return 48 + temp / (parentTab.parentWindow.size-40) * 14;
   }
   
   //Returns true if value changed
