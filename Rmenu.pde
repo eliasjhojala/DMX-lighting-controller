@@ -5,75 +5,77 @@ memoryCreationBox memoryCreator;
 boolean savingMemory = false;
  
 void sivuValikko() {
+  if(!showMode) {
   
-  //The old code can be found in old versions
-  
-  { // Memory creator open button
-    pushStyle();
-    //Open MemoryCreator bubblebutton
-    int bubS = 250;
-    int origBubS = bubS;
-    mouse.declareUpdateElementRelative("addMemory", "main:move", width-168, 0, -bubS/2, bubS/2);
-    if (mouse.elmIsHover("addMemory")) bubS += 10;
+    //The old code can be found in old versions
     
-    
-    if (mouse.isCaptured("addMemory") && mouse.firstCaptureFrame) {
-      memoryCreator.initiatePassive();
+    { // Memory creator open button
+      pushStyle();
+      //Open MemoryCreator bubblebutton
+      int bubS = 250;
+      int origBubS = bubS;
+      mouse.declareUpdateElementRelative("addMemory", "main:move", width-168, 0, -bubS/2, bubS/2);
+      if (mouse.elmIsHover("addMemory")) bubS += 10;
+      
+      
+      if (mouse.isCaptured("addMemory") && mouse.firstCaptureFrame) {
+        memoryCreator.initiatePassive();
+      }
+      
+      //bubble shadow
+      noFill();
+      stroke(0, 120); strokeWeight(6);
+      arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
+      
+      //chaseMode button(s)
+      mouse.declareUpdateElementRelative("InMode", "main:move", width-268, bubS/2+30, 102, 30);
+      mouse.setElementExpire("InMode", 2);
+      boolean isHoverIM = mouse.elmIsHover("InMode");
+      mouse.declareUpdateElementRelative("OutMode", "main:move", width-268, bubS/2, 102, 30);
+      mouse.setElementExpire("OutMode", 2);
+      boolean isHoverOM = mouse.elmIsHover("OutMode");
+      stroke(topMenuAccent);  strokeWeight(2);
+      pushStyle();
+        pushStyle();
+          //inputMode (lower)
+          fill(isHoverIM ? topMenuTheme : topMenuTheme2);
+          rect(width-268, bubS/2+10, 102, 50, 0, 0, 0, 20);
+        popStyle();
+        pushStyle();
+          fill(255);
+          text("InM: " + getInputModeMasterDesc(), width-262+3, bubS/2+48);
+        popStyle();
+        pushStyle();
+          //outputMode (upper)
+          fill(isHoverOM ? topMenuTheme : topMenuTheme2);
+          rect(width-268, bubS/2-50, 102, 80, 0, 0, 0, 20);
+        popStyle();
+        pushStyle();
+          fill(255);
+          text("OutM: " + getOutputModeMasterDesc(), width-262+3, bubS/2+20);
+        popStyle();
+      popStyle();
+      
+      if(mouse.isCaptured("InMode") && mouse.firstCaptureFrame) { //lower
+        if(mouseButton == LEFT) inputModeMasterUp(); else if(mouseButton == RIGHT) inputModeMasterDown();
+      }
+      if(mouse.isCaptured("OutMode") && mouse.firstCaptureFrame) { //upper
+        if(mouseButton == LEFT) outputModeMasterUp(); else if(mouseButton == RIGHT) outputModeMasterDown();
+      }
+      
+      
+      
+      //bubble itself
+      fill(topMenuTheme);
+      stroke(topMenuAccent);
+      arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
+      
+      //Text
+      fill(255);
+      textSize(15);
+      text("Add memory", width-150-bubS/2, 25);
+      popStyle();
     }
-    
-    //bubble shadow
-    noFill();
-    stroke(0, 120); strokeWeight(6);
-    arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
-    
-    //chaseMode button(s)
-    mouse.declareUpdateElementRelative("InMode", "main:move", width-268, bubS/2+30, 102, 30);
-    mouse.setElementExpire("InMode", 2);
-    boolean isHoverIM = mouse.elmIsHover("InMode");
-    mouse.declareUpdateElementRelative("OutMode", "main:move", width-268, bubS/2, 102, 30);
-    mouse.setElementExpire("OutMode", 2);
-    boolean isHoverOM = mouse.elmIsHover("OutMode");
-    stroke(topMenuAccent);  strokeWeight(2);
-    pushStyle();
-      pushStyle();
-        //inputMode (lower)
-        fill(isHoverIM ? topMenuTheme : topMenuTheme2);
-        rect(width-268, bubS/2+10, 102, 50, 0, 0, 0, 20);
-      popStyle();
-      pushStyle();
-        fill(255);
-        text("InM: " + getInputModeMasterDesc(), width-262+3, bubS/2+48);
-      popStyle();
-      pushStyle();
-        //outputMode (upper)
-        fill(isHoverOM ? topMenuTheme : topMenuTheme2);
-        rect(width-268, bubS/2-50, 102, 80, 0, 0, 0, 20);
-      popStyle();
-      pushStyle();
-        fill(255);
-        text("OutM: " + getOutputModeMasterDesc(), width-262+3, bubS/2+20);
-      popStyle();
-    popStyle();
-    
-    if(mouse.isCaptured("InMode") && mouse.firstCaptureFrame) { //lower
-      if(mouseButton == LEFT) inputModeMasterUp(); else if(mouseButton == RIGHT) inputModeMasterDown();
-    }
-    if(mouse.isCaptured("OutMode") && mouse.firstCaptureFrame) { //upper
-      if(mouseButton == LEFT) outputModeMasterUp(); else if(mouseButton == RIGHT) outputModeMasterDown();
-    }
-    
-    
-    
-    //bubble itself
-    fill(topMenuTheme);
-    stroke(topMenuAccent);
-    arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
-    
-    //Text
-    fill(255);
-    textSize(15);
-    text("Add memory", width-150-bubS/2, 25);
-    popStyle();
   }
   
   //-
@@ -88,13 +90,11 @@ void sivuValikko() {
       popMatrix();
     }
   }
-  
   popMatrix();
   //-
-  
-  memoryCreator.draw();
-  
-  
+    
+    
+  if(!showMode) { memoryCreator.draw(); }
 }
 
 

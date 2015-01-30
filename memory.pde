@@ -110,7 +110,7 @@ class memory { //Begin of memory class------------------------------------------
   }
   
   void draw() {
-    if(!savingMemory && enabled) {
+    if(!savingMemory) {
       switch(type) {
         case 0: empty(); break;
         case 1: preset(); break;
@@ -124,19 +124,21 @@ class memory { //Begin of memory class------------------------------------------
   }
   
   void preset() {
-    if(type == 1) {
+    if(type == 1 && enabled) {
       loadPreset();
     }
   }
   
   boolean firstTimeAtZero;
   void chase() {
-    if(value > 0 || firstTimeAtZero) {
-       myChase.draw();
-       firstTimeAtZero = false;
-    }
-    if(value > 0) {
-      firstTimeAtZero = true;
+    if(enabled) {
+      if(value > 0 || firstTimeAtZero) {
+         myChase.draw();
+         firstTimeAtZero = false;
+      }
+      if(value > 0) {
+        firstTimeAtZero = true;
+      }
     }
   }
   void grandMaster() {
