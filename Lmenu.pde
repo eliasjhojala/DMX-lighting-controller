@@ -471,7 +471,7 @@ class Notifier {
   
   void draw(int w) {
     if(showingMessage) {
-      pushMatrix();
+      pushMatrix(); pushStyle();
         translate(0, height-18);
         noStroke();
         fill(255, 80);
@@ -482,7 +482,7 @@ class Notifier {
           else                fill(255);
         text(currentMessage, 2, 15);
         if(millis() > messageEndTime) showingMessage = false;
-      popMatrix();
+      popMatrix(); popStyle();
     }
   }
 }
