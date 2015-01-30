@@ -45,7 +45,7 @@ class memory { //Begin of memory class------------------------------------------
   //chase variables
   int value, valueOld; //memorys value
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
-  boolean enabled;
+  boolean enabled = true;
 
   
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
