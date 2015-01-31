@@ -31,7 +31,7 @@ Arduino arduino1;
 void arduinoSend() {
   arduinoFinished = false;
   if(arduino1 != null) { arduino1.sendUniversum(DMXforOutput); }
-  else { arduino1 = new Arduino(this, "/dev/ttyACM0"); arduino1.forceSendUniversum(DMXforOutput); }
+  else { arduino1 = new Arduino(this, "/dev/tty.usbmodem1421", 115200); arduino1.sendUniversum(DMXforOutput); }
   for(int i = 0; i < channels; i++) {
     if(DMXforOutput[i] != valueToDmxOld[i]) {
       if(useCOM == true) {
@@ -92,7 +92,7 @@ class Arduino {
       long curMax = 0;
       boolean found = false;
       for(int i = 1; i <= DMX_CHAN_LENGTH; i++) {
-        if(millis() - lastMessageSendTime[i] > curMax && reSendTimes[i] < 0) {
+        if(millis() - lastMessageSendTime[i] > curMax && reSendTimes[i] < 5) {
           chanToSend = i;
           curMax = lastMessageSendTime[i];
           found = true;
@@ -107,30 +107,54 @@ class Arduino {
     
   }
   
-  void forceSendUniversum(int[] newUniversum) {
-    for(int i = 1; i <= DMX_CHAN_LENGTH; i++) {
-      sendDMXmessage(i, newUniversum[i]);
-    }
-  }
-  
   void sendDMXmessage(int chan, int val) {
     if(serial != null) {
-      chan = constrain(chan, 1, currentRange) - 1;
+      chan = constrain(chan, 1, currentRange);
       val = defaultConstrain(val);
-      byte[] message = new byte[6];
+      byte[] message = new byte[3];
       
-      message[0] = (byte)(chan / 32);
-      message[1] = (byte)(chan % 32);
-      message[2] = (byte)0xFE;
-      message[3] = (byte)(val / 32);
-      message[4] = (byte)(val % 32);
-      message[5] = (byte)0xFF;
-      
+      if(chan-1 < 250) {
+        if(val < 250) {
+          //Channel and value below 250
+          message[0] = (byte)250;
+          message[1] = (byte)(chan-1);
+          message[2] = (byte)val;
+        } else {
+          //Only channel below 250
+          message[0] = (byte)251;
+          message[1] = (byte)(chan-1);
+          message[2] = (byte)(val - 250);
+        }
+      } else {
+        if(chan-1 < 262) {
+          if(val < 250) {
+            //Channel below 256 and value below 250
+            message[0] = (byte)252;
+            message[1] = (byte)(chan-1 - 250);
+            message[2] = (byte)val;
+          } else {
+            //Channel below 256 and value above 250
+            message[0] = (byte)253;
+            message[1] = (byte)(chan-1 - 250);
+            message[2] = (byte)(val - 250);
+          }
+        } else {
+          if(val < 250) {
+            //Channel above 262 and value below 250
+            message[0] = (byte)254;
+            message[1] = (byte)(chan-1 - 262);
+            message[2] = (byte)val;
+          } else {
+            //Channel above 262 and value above 250
+            message[0] = (byte)255;
+            message[1] = (byte)(chan-1 - 262);
+            message[2] = (byte)(val - 250);
+          }
+        }
+      }
       serial.write(message);
-      println(val + "|" + serial.read());
+      println(chan + "|" + serial.read());
       lastMessageSendTime[chan] = millis();
-      
-      
     } else println("Warning: Couldn't send message to Arduino: serial object is null!");
   }
   
