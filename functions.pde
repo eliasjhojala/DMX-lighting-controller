@@ -31,7 +31,7 @@ Arduino arduino1;
 void arduinoSend() {
   arduinoFinished = false;
   if(arduino1 != null) { arduino1.sendUniversum(DMXforOutput); }
-  else { arduino1 = new Arduino(this, "/dev/tty.usbmodem1421", 115200); arduino1.sendUniversum(DMXforOutput); }
+  else { arduino1 = new Arduino(this, "/dev/ttyACM0"); arduino1.sendUniversum(DMXforOutput); }
   for(int i = 0; i < channels; i++) {
     if(DMXforOutput[i] != valueToDmxOld[i]) {
       if(useCOM == true) {
@@ -62,7 +62,7 @@ class Arduino {
     this.baudRate = 115200;
     startSerial(parent);
   }
-  Arduino(PApplet parent, String portname, int baudRate) {
+  Arduino(PApplet parent, String portName, int baudRate) {
     this.portName = portName;
     this.baudRate = baudRate;
     startSerial(parent);
@@ -153,7 +153,8 @@ class Arduino {
         }
       }
       serial.write(message);
-      println(chan + "|" + serial.read());
+      delay(0);
+      //println(chan + "|" + serial.read());
       lastMessageSendTime[chan] = millis();
     } else println("Warning: Couldn't send message to Arduino: serial object is null!");
   }

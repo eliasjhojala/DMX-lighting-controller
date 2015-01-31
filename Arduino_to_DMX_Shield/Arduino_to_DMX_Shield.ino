@@ -3,6 +3,7 @@
 
 #include <DmxSimple.h>
 
+
 void setup() {
   Serial.begin(115200);
   Serial.println("SerialToDMXshield ready for commands");
@@ -56,7 +57,6 @@ void parseMessage(byte* mesg) {
 
 void execute(int channel, int data) {
   //Now you can do whatever you like with this data
-  DmxSimple.write(channel, data);
   Serial.write(channel);
 }
 
