@@ -1,6 +1,10 @@
 boolean initSettingsInSetupDone = false; 
 int initSettingsInSetupStep;
 int initSettingsInSetupSelected;
+
+
+
+
 void initSettingsInSetup() {
   if(!initSettingsInSetupDone) {
     initSettingsInSetupDone = true; 
@@ -73,6 +77,8 @@ SettingsWindow settingsWindow = new SettingsWindow(true);
 
 class SettingsWindow {
   
+  
+  
   SettingsWindow() {
     onInit();
   }
@@ -98,6 +104,30 @@ class SettingsWindow {
         new SettingController(true, "The other text", "A really long description. It's interesting how busy I am but for some reason I still have time to write this long text.", tabs[1])
       }
     );
+  }
+  
+  
+  
+  //It's stupid we do it like this, but primitives.
+  void setExternalValue(boolean b, int var) {
+    switch(var) {
+      case 0: use3D = b;          break;
+      case 1: /*use-text-window*/ break;
+      case 2: showMode = b;       break;
+      case 3: printMode = b;      break;
+      case 4: s2l.blinky = b;     break;
+    }
+  }
+  
+  boolean getExternalValue(int var) {
+    switch(var) {
+      case 0:  return use3D;
+      case 1:  return false;
+      case 2:  return showMode;
+      case 3:  return printMode;
+      case 4:  return s2l.blinky;
+      default: return false;
+    }
   }
   
   int locX, locY;
