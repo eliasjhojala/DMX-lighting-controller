@@ -89,19 +89,25 @@ class SettingsWindow {
   }
   
   void onInit() {
-    tabs = new SettingsTab[2];
-    tabs[0] = new SettingsTab("UI", this);
+    tabs = new SettingsTab[3];
+    tabs[0] = new SettingsTab("Other windows", this);
     tabs[0].setControllers(
       new SettingController[] {
-        new SettingController(false, "Text", "Yayyy longer description text right here!", tabs[0]),
-        new SettingController(true, "The other text", "A really long description. It's interesting how busy I am but for some reason I still have time to write this long text.", tabs[0])
+        new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", tabs[0]),
+        new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0])
       }
     );
-    tabs[1] = new SettingsTab("Other Settings", this);
+    tabs[1] = new SettingsTab("Visualization", this);
     tabs[1].setControllers(
       new SettingController[] {
-        new SettingController(false, "Text", "Yayyy longer description text right here!", tabs[1]),
-        new SettingController(true, "The other text", "A really long description. It's interesting how busy I am but for some reason I still have time to write this long text.", tabs[1])
+        new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", tabs[1]),
+        new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", tabs[1])
+      }
+    );
+    tabs[2] = new SettingsTab("Chase", this);
+    tabs[2].setControllers(
+      new SettingController[] {
+        new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", tabs[2])
       }
     );
   }
@@ -109,20 +115,20 @@ class SettingsWindow {
   
   
   //It's stupid we do it like this, but primitives.
-  void setExternalValue(boolean b, int var) {
+  void setExternalBoValue(boolean b, int var) {
     switch(var) {
-      case 0: use3D = b;          break;
-      case 1: /*use-text-window*/ break;
-      case 2: showMode = b;       break;
-      case 3: printMode = b;      break;
-      case 4: s2l.blinky = b;     break;
+      case 0: use3D = b;               break;
+      case 1: showOutputAsNumbers = b; break;
+      case 2: showMode = b;            break;
+      case 3: printMode = b;           break;
+      case 4: s2l.blinky = b;          break;
     }
   }
   
-  boolean getExternalValue(int var) {
+  boolean getExternalBoValue(int var) {
     switch(var) {
       case 0:  return use3D;
-      case 1:  return false;
+      case 1:  return showOutputAsNumbers;
       case 2:  return showMode;
       case 3:  return printMode;
       case 4:  return s2l.blinky;
@@ -293,26 +299,33 @@ class SettingController {
   Switch booleanController;
   IntSettingController intController;
   
+  boolean oldValueBoolean;
+  int oldValueInt;
+  
   SettingsTab parentTab;
+  
+  int var;
   
   int mode; //0: switch, 1: numbox, 2: slider, 3: knob, /-4: textbox, 5: listbox-/
   
   String name;
   String description;
   
-  SettingController(int state, int type, String name, String description, SettingsTab parent) {
-    intController = new IntSettingController(type, state);
+  SettingController(int var, int type, String name, String description, SettingsTab parent) {
+    intController = new IntSettingController(type, 0);
     mode = type+1;
     this.name = name;
     this.description = description;
+    this.var = var;
     parentTab = parent;
   }
   
-  SettingController(boolean state, String name, String description, SettingsTab parent) {
+  SettingController(int var, String name, String description, SettingsTab parent) {
     mode = 0;
-    booleanController = new Switch(state, "settings:" + parent.text + ":" + name, "settings", parent.parentWindow.size-70, 8);
+    booleanController = new Switch(false, "settings:" + parent.text + ":" + name, "settings", parent.parentWindow.size-70, 8);
     this.name = name;
     this.description = description;
+    this.var = var;
     parentTab = parent;
   }
   
@@ -325,18 +338,26 @@ class SettingController {
     return 48 + temp / (parentTab.parentWindow.size-40) * 14;
   }
   
-  //Returns true if value changed
-  boolean draw() {
+  
+  void draw() {
     switch(mode) {
       case 0:
         drawText(0, 0);
         booleanController.draw();
+        if(booleanController.state != oldValueBoolean) {
+          //Set
+          parentTab.parentWindow.setExternalBoValue(booleanController.state, var);
+          oldValueBoolean = booleanController.state;
+        } else {
+          //Get
+          booleanController.state = parentTab.parentWindow.getExternalBoValue(var);
+          oldValueBoolean = booleanController.state;
+        }
       break;
       case 1: case 2: case 3:
         drawText(0, 0);
       break;
     }
-    return false;
   }
   
   void drawText(int x, int y) {

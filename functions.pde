@@ -500,7 +500,10 @@ void keyPressed() {
   if(key == 'k') { newColorWash(); }
 
   
-  if(key==27) { key=0; } //Otetaan esc-näppäin pois käytöstä. on kumminkin huomioitava, että tämä toimii vain pääikkunassa
+  if(key==27) { key=0; 
+    //Escape from printMode
+    printMode = false;
+  } //Otetaan esc-näppäin pois käytöstä. on kumminkin huomioitava, että tämä toimii vain pääikkunassa
   if(key == 'm') {
     showMode = !showMode;
   }
