@@ -94,7 +94,8 @@ class SettingsWindow {
     tabs[0].setControllers(
       new SettingController[] {
         new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", tabs[0]),
-        new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0])
+        new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0]),
+        new SettingController(0, 0, "Test Int", "This is just a test controller to see how the int controller will work.", tabs[0])
       }
     );
     tabs[1] = new SettingsTab("Visualization", this);
@@ -312,7 +313,7 @@ class SettingController {
   String description;
   
   SettingController(int var, int type, String name, String description, SettingsTab parent) {
-    intController = new IntSettingController(type, 0);
+    intController = new IntSettingController(type, 0, parent.parentWindow.size-134, 8);
     mode = type+1;
     this.name = name;
     this.description = description;
@@ -335,7 +336,8 @@ class SettingController {
     textSize(12);
     int temp = int(textWidth(description));
     popStyle();
-    return 48 + temp / (parentTab.parentWindow.size-40) * 14;
+    //         (compute height of description text          )
+    return 48 + temp / (parentTab.parentWindow.size-40) * 14 + (mode >= 1 ? 10 : 0);
   }
   
   
@@ -356,6 +358,7 @@ class SettingController {
       break;
       case 1: case 2: case 3:
         drawText(0, 0);
+        intController.draw();
       break;
     }
   }
@@ -369,7 +372,8 @@ class SettingController {
       textSize(12);
       textLeading(14);
       fill(0, 200);
-      text(description, 0, 26, parentTab.parentWindow.size-40, 40);
+      //                         If int controller, use up 10px more
+      text(description, 0, 26 + (mode >= 1 ? 10 : 0), parentTab.parentWindow.size-40, 40);
     popMatrix();
   }
 }
@@ -380,8 +384,30 @@ class SettingController {
 class IntSettingController {
   int mode = 0; //0: numbox, 1: slider, 2: knob
   int state;
-  IntSettingController(int mode, int state) {
+  
+  int x, y;
+  
+  IntSettingController(int mode, int state, int x_offs, int y_offs) {
     this.mode = mode;
     this.state = state;
+    x = x_offs;
+    y = y_offs;
   }
+  
+  void draw() {
+    pushMatrix();
+    translate(x, y);
+    switch(mode) {
+      case 0:
+        //Numberbox
+        //Background
+        fill(45, 138, 179);
+        rect(0, 0, 100, 20);
+        //Active portion
+        fill(61, 190, 255);
+      break;
+    }
+    popMatrix();
+  }
+  
 }
