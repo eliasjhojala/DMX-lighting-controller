@@ -313,7 +313,7 @@ class SettingController {
   String description;
   
   SettingController(int var, int type, String name, String description, SettingsTab parent) {
-    intController = new IntSettingController(type, 0, parent.parentWindow.size-134, 8);
+    intController = new IntSettingController(type, 0, parent.parentWindow.size-134, 8, this);
     mode = type+1;
     this.name = name;
     this.description = description;
@@ -384,15 +384,21 @@ class SettingController {
 class IntSettingController {
   int mode = 0; //0: numbox, 1: slider, 2: knob
   int state;
+  float floatState;
+  
+  SettingController parentContainer;
   
   int x, y;
   
-  IntSettingController(int mode, int state, int x_offs, int y_offs) {
+  IntSettingController(int mode, int state, int x_offs, int y_offs, SettingController parent) {
     this.mode = mode;
     this.state = state;
     x = x_offs;
     y = y_offs;
+    parentContainer = parent;
   }
+  
+  
   
   void draw() {
     pushMatrix();
@@ -402,7 +408,19 @@ class IntSettingController {
         //Numberbox
         //Background
         fill(45, 138, 179);
+        stroke(20, 100, 130);
+        mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 100, 20);
+        mouse.setElementExpire("settings:" + parentContainer.name, 2);
+        if(mouse.isCaptured("settings:" + parentContainer.name)) {
+          floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(50, 0)) / 20 + 1);
+          state = round(floatState);
+        }
+        
         rect(0, 0, 100, 20);
+        textAlign(RIGHT);
+        fill(255);
+        textSize(14);
+        text(str(state), 2, 2, 96, 18);
         //Active portion
         fill(61, 190, 255);
       break;
