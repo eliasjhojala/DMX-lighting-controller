@@ -7,7 +7,7 @@ boolean savingMemory = false;
 void sivuValikko() {
   
   //The old code can be found in old versions
-  
+    
   { // Memory creator open button
     pushStyle();
     //Open MemoryCreator bubblebutton
@@ -18,7 +18,9 @@ void sivuValikko() {
     
     
     if (mouse.isCaptured("addMemory") && mouse.firstCaptureFrame) {
-      memoryCreator.initiatePassive();
+      if(!showMode) memoryCreator.initiatePassive();
+        else notifier.notify("Cannot use memoryCreator while showMode is enabled! (Press M to toggle)");
+      
     }
     
     //bubble shadow
@@ -76,6 +78,7 @@ void sivuValikko() {
     popStyle();
   }
   
+  
   //-
   pushMatrix();
   translate(width-168, 0);
@@ -88,13 +91,11 @@ void sivuValikko() {
       popMatrix();
     }
   }
-  
   popMatrix();
   //-
-  
-  memoryCreator.draw();
-  
-  
+    
+    
+  if(!showMode) { memoryCreator.draw(); }
 }
 
 
@@ -124,15 +125,20 @@ void drawMemoryController(int controlledMemoryId, String text) {
   fill(255, 200);
   noStroke();
   rect(65, 0, 100, 20);
-  fill(50, 50, 240);
+  if(memories[controlledMemoryId].enabled) fill(50, 50, 240);
+    else                                   fill(140);
   rect(65, 0, map(value, 0, 255, 0, 100), 20);
   fill(0);
   text(value, 68, 16);
   
   if (isHoverSimple(0, 0, 170, 20) && mouse.isCaptured("rearMenu:presetcontrols")) {
     if(mouseButton == LEFT) {
-      value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
-      memories[controlledMemoryId].setValue(value);
+      if(keyPressed && keyCode == CONTROL) {
+        if(mouse.firstCaptureFrame) memories[controlledMemoryId].toggleWithMemory(true);
+      } else {
+        value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
+        memories[controlledMemoryId].setValue(value);
+      }
     } else if(mouseButton == RIGHT) memoryCreator.initiateFromExsisting(controlledMemoryId);
   }
   noFill();
