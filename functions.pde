@@ -549,6 +549,13 @@ boolean isAbout(int a, int b, int accu) {
     return true;
   }
   return false;
+} 
+
+boolean isAbout(float a, float b, int accu) {
+  if(abs(a - b) <= a/overZero(accu)) {
+    return true;
+  }
+  return false;
 }  
 
 boolean isAbout(int a, int b) {

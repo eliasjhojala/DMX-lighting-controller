@@ -31,6 +31,7 @@ void alavalikko() {
   if(mouse.captured && !mouse.isCaptured("bottomMenu")) { mouseLocked = true; mouseLocker = "external"; }
   
   drawBottomMenuControlBox();
+  notifier.draw(width-168);
 }
 void createFixtureBox(int id) {
   drawFixtureRectangles(id); //draw fixtureboxes with buttons etc.
@@ -429,4 +430,59 @@ void drawBottomMenuChControllerButton(String text, boolean down) {
   rect(0, 0, 48, 15);
   
   textSize(12);
+}
+
+
+
+
+
+
+
+//--------------------------|||---|NOTIFICATION CLASS|---|||--------------------------//
+
+
+Notifier notifier = new Notifier();
+
+class Notifier {
+  Notifier() {
+  }
+  
+  String currentMessage;
+  boolean messageIsCritical;
+  long messageEndTime;
+  
+  boolean showingMessage = false;
+  
+  void notify(String message, long time, boolean critical) {
+    currentMessage = message;
+    messageEndTime = millis() + time;
+    messageIsCritical = critical;
+    showingMessage = true;
+    
+  }
+  
+  void notify(String message) {
+    currentMessage = message;
+    messageEndTime = millis() + 2000;
+    messageIsCritical = false;
+    showingMessage = true;
+  }
+  
+  
+  void draw(int w) {
+    if(showingMessage) {
+      pushMatrix(); pushStyle();
+        translate(0, height-18);
+        noStroke();
+        fill(255, 80);
+        rect(0, 0, w, 18);
+        textAlign(LEFT);
+        textSize(16);
+        if(messageIsCritical) fill(240, 10, 10);
+          else                fill(255);
+        text(currentMessage, 2, 15);
+        if(millis() > messageEndTime) showingMessage = false;
+      popMatrix(); popStyle();
+    }
+  }
 }

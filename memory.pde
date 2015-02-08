@@ -45,6 +45,7 @@ class memory { //Begin of memory class------------------------------------------
   //chase variables
   int value, valueOld; //memorys value
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
+  boolean enabled = true;
 
   
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
@@ -66,6 +67,16 @@ class memory { //Begin of memory class------------------------------------------
     if(down) {
       if(value > 0) { setValue(0); } else { setValue(255); }
     }
+  }
+  
+  void toggleWithMemory(boolean down) {
+    if(down) {
+      enabled = !enabled;
+    }
+  }
+  
+  void pushWithMemory(boolean down) {
+    enabled = down;
   }
   
   int valueBeforePush;
@@ -113,19 +124,21 @@ class memory { //Begin of memory class------------------------------------------
   }
   
   void preset() {
-    if(type == 1) {
+    if(type == 1 && enabled) {
       loadPreset();
     }
   }
   
   boolean firstTimeAtZero;
   void chase() {
-    if(value > 0 || firstTimeAtZero) {
-       myChase.draw();
-       firstTimeAtZero = false;
-    }
-    if(value > 0) {
-      firstTimeAtZero = true;
+    if(enabled) {
+      if(value > 0 || firstTimeAtZero) {
+         myChase.draw();
+         firstTimeAtZero = false;
+      }
+      if(value > 0) {
+        firstTimeAtZero = true;
+      }
     }
   }
   void grandMaster() {
