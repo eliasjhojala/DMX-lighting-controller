@@ -49,6 +49,7 @@ class memory { //Begin of memory class------------------------------------------
 
   
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
+  boolean[] fixturesToSave = new boolean[fixtures.size()];
   
   
   FixtureDMX[] repOfFixtures = new FixtureDMX[fixtures.size()];
@@ -180,11 +181,17 @@ class memory { //Begin of memory class------------------------------------------
     for(int i = 0; i < fixtures.size(); i++) {
         repOfFixtures[i] = new FixtureDMX();
     }
+    
+    for(int i = 0; i < fixtures.size(); i++) {
+      fixturesToSave[i] = fixtures.get(i).selected;
+    }
       
     for(int i = 0; i < fixtures.size(); i++) {
-      for(int jk = 1; jk < fixtures.get(i).in.DMXlength; jk++) {
-        if(whatToSave[jk-1])
-          repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
+      if(fixturesToSave[i]) {
+        for(int jk = 1; jk < fixtures.get(i).in.DMXlength; jk++) {
+          if(whatToSave[jk-1])
+            repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
+        }
       }
     }
     type = 1;
@@ -199,20 +206,24 @@ class memory { //Begin of memory class------------------------------------------
 
   void loadPreset() {
     if(type == 1) {
-      //if(value != valueOld) { //overwirtecheck
       valueOld = value;
       for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
-        if(whatToSave[jk-1])
-          for(int i = 0; i < fixtures.size(); i++) {
-            if(i < repOfFixtures.length) if(jk < fixtures.get(i).preset.DMXlength) {
-              int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
-              
-              fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
-              
-            } else {} else break;
-          }
+        if(whatToSave[jk-1]) {
+          for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
+            if(i < repOfFixtures.length) {
+              if(fixturesToSave[i]) {
+                if(jk < fixtures.get(i).preset.DMXlength) {
+                  int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
+                  fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
+                }
+              }
+            } 
+            else {
+              break;
+            }
+          } //End of going through all the fixtures
+        } 
       }
-      //}
     }
   }
 
