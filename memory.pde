@@ -105,6 +105,7 @@ class memory { //Begin of memory class------------------------------------------
       case 3: toReturn = "qChs"; break;
       case 4: toReturn = "mstr"; break;
       case 5: toReturn = "fade"; break;
+      case 6: toReturn = "mstrGrp"; break;
       default: toReturn = "unkn"; break;
     }
     return toReturn;
@@ -119,6 +120,7 @@ class memory { //Begin of memory class------------------------------------------
         case 2: chase(); break;
         case 4: grandMaster(); break;
         case 5: fade(); break;
+        case 7: masterGroup(); break;
         default: unknown(); break;
       }
     }
@@ -153,6 +155,10 @@ class memory { //Begin of memory class------------------------------------------
   }
   void empty() {
   }
+  void masterGroup() {
+  }
+  
+  
   void setValue(int val) {
     value = val;
     draw();
