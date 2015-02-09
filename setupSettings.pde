@@ -102,7 +102,8 @@ class SettingsWindow {
     tabs[1].setControllers(
       new SettingController[] {
         new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", tabs[1]),
-        new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", tabs[1])
+        new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", tabs[1]),
+        new SettingController(3, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[1])
       }
     );
     tabs[2] = new SettingsTab("Chase", this);
@@ -134,6 +135,26 @@ class SettingsWindow {
       case 3:  return printMode;
       case 4:  return s2l.blinky;
       default: return false;
+    }
+  }
+  
+  
+  void setExternalInValue(int v, int var) {
+    switch(var) {
+      case 0: /*defaultZoom*/   break;
+      case 1: /*defaultX*/      break;
+      case 2: /*defaultY*/      break;
+      case 3: pageRotation = v; break;
+    }
+  }
+  
+  int getExternalInValue(int var) {
+    switch(var) {
+      //case 0: return ;
+      //case 1: return ;
+      //case 2: return ;
+      case 3:  return pageRotation;
+      default: return 0;
     }
   }
   
@@ -359,6 +380,15 @@ class SettingController {
       case 1: case 2: case 3:
         drawText(0, 0);
         intController.draw();
+        if(intController.state != oldValueInt) {
+          //Set
+          parentTab.parentWindow.setExternalInValue(intController.state, var);
+          oldValueInt = intController.state;
+        } else {
+          //Get
+          intController.setState(parentTab.parentWindow.getExternalInValue(var));
+          oldValueInt = intController.state;
+        }
       break;
     }
   }
@@ -398,7 +428,12 @@ class IntSettingController {
     parentContainer = parent;
   }
   
+  void setState(int newState) {
+    state = newState;
+    floatState = newState;
+  }
   
+  long lastRMBc = 0;
   
   void draw() {
     pushMatrix();
@@ -412,8 +447,12 @@ class IntSettingController {
         mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 100, 20);
         mouse.setElementExpire("settings:" + parentContainer.name, 2);
         if(mouse.isCaptured("settings:" + parentContainer.name)) {
-          floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(50, 0)) / 20 + 1);
-          state = round(floatState);
+          if(mouseButton == LEFT) {
+            floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(50, 0)) / 20 + 1);
+            state = round(floatState);
+          } else if(mouseButton == RIGHT && mouse.firstCaptureFrame) {
+            if(lastRMBc > millis() - 1000) setState(0); else lastRMBc = millis();
+          }
         }
         
         rect(0, 0, 100, 20);
