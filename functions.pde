@@ -506,6 +506,7 @@ void keyPressed() {
   } //Otetaan esc-näppäin pois käytöstä. on kumminkin huomioitava, että tämä toimii vain pääikkunassa
   if(key == 'm') {
     showMode = !showMode;
+    notifier.notify("showMode is now " + (showMode ? "enabled" : "disabled") + ".");
   }
   if(key == 'r') { revStepPressed = true; }
   if(key == '1') { lampToMove = 1; }

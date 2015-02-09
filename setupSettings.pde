@@ -450,7 +450,10 @@ class IntSettingController {
         fill(45, 138, 179);
         stroke(20, 100, 130);
         mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 100, 20);
-        
+        if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == LEFT) {
+          floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(0, 0)) / 20 + 1);
+          state = round(floatState);
+        }
         
         rect(0, 0, 100, 20);
         textAlign(RIGHT);
@@ -466,6 +469,12 @@ class IntSettingController {
         ellipseMode(CENTER);
         translate(78, 19.5);
         mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", -25, -25, 50, 50);
+        if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == LEFT) {
+          PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
+          floatState = ((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360;
+          state = round(floatState);
+        }
+        
         fill(topMenuTheme2);
         stroke(topMenuAccent);
         //Radial visualizer
@@ -477,8 +486,6 @@ class IntSettingController {
         ellipse(0, 0, 30, 30);
         
         
-        if(state >= 360) { state = state % 360; floatState = floatState % 360; }
-        if(state < 0)    { state = 360 - abs(state) % 360; floatState = 360 - abs(floatState) % 360; }
         
         textAlign(CENTER);
         fill(255);
@@ -490,12 +497,6 @@ class IntSettingController {
     }
     
     mouse.setElementExpire("settings:" + parentContainer.name, 2);
-    if(mouse.isCaptured("settings:" + parentContainer.name)) {
-      if(mouseButton == LEFT) {
-        floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(0, 0)) / 20 + 1);
-        state = round(floatState);
-      }
-    }
     if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == RIGHT && mouse.firstCaptureFrame) {
       if(lastRMBc > millis() - 1000) setState(0); else lastRMBc = millis();
     }
