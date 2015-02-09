@@ -103,7 +103,7 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", tabs[1]),
         new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", tabs[1]),
-        new SettingController(3, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[1])
+        new SettingController(3, 2, "View Rotation", "Adjust the rotation of the visualization.", tabs[1])
       }
     );
     tabs[2] = new SettingsTab("Chase", this);
@@ -411,10 +411,15 @@ class SettingController {
 
 
 
+
+
+
 class IntSettingController {
   int mode = 0; //0: numbox, 1: slider, 2: knob
   int state;
   float floatState;
+  
+  int min, max;
   
   SettingController parentContainer;
   
@@ -433,7 +438,7 @@ class IntSettingController {
     floatState = newState;
   }
   
-  long lastRMBc = 0;
+  
   
   void draw() {
     pushMatrix();
@@ -445,15 +450,7 @@ class IntSettingController {
         fill(45, 138, 179);
         stroke(20, 100, 130);
         mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 100, 20);
-        mouse.setElementExpire("settings:" + parentContainer.name, 2);
-        if(mouse.isCaptured("settings:" + parentContainer.name)) {
-          if(mouseButton == LEFT) {
-            floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(50, 0)) / 20 + 1);
-            state = round(floatState);
-          } else if(mouseButton == RIGHT && mouse.firstCaptureFrame) {
-            if(lastRMBc > millis() - 1000) setState(0); else lastRMBc = millis();
-          }
-        }
+        
         
         rect(0, 0, 100, 20);
         textAlign(RIGHT);
@@ -463,6 +460,44 @@ class IntSettingController {
         //Active portion
         fill(61, 190, 255);
       break;
+      case 2:
+        //Knob
+        
+        ellipseMode(CENTER);
+        translate(78, 19.5);
+        mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", -25, -25, 50, 50);
+        fill(topMenuTheme2);
+        stroke(topMenuAccent);
+        //Radial visualizer
+        arc(0, 0, 50, 50, -HALF_PI, (floatState/360*TWO_PI) - HALF_PI, PIE);
+        
+        //Text container
+        fill(45, 138, 179);
+        stroke(20, 100, 130);
+        ellipse(0, 0, 30, 30);
+        
+        
+        if(state >= 360) { state = state % 360; floatState = floatState % 360; }
+        if(state < 0)    { state = 360 - abs(state) % 360; floatState = 360 - abs(floatState) % 360; }
+        
+        textAlign(CENTER);
+        fill(255);
+        textSize(14);
+        text(str(state), 0, 5);
+        //Active portion
+        fill(61, 190, 255);
+      break;
+    }
+    
+    mouse.setElementExpire("settings:" + parentContainer.name, 2);
+    if(mouse.isCaptured("settings:" + parentContainer.name)) {
+      if(mouseButton == LEFT) {
+        floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(0, 0)) / 20 + 1);
+        state = round(floatState);
+      }
+    }
+    if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == RIGHT && mouse.firstCaptureFrame) {
+      if(lastRMBc > millis() - 1000) setState(0); else lastRMBc = millis();
     }
     popMatrix();
   }

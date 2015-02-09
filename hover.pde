@@ -45,7 +45,8 @@
       //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
+long lastRMBc = 0;
+long lastLMBc = 0;
 
 Mouse mouse = new Mouse();
 //--Yes, you can assign multiple mice and assing elements to each of them seperately.
@@ -141,7 +142,7 @@ class Mouse {
       elm.isHovered = false;
       ontop[i] = isHoverAB(elm.x1, elm.y1, elm.x2, elm.y2);
     }
-    int curMax = -2147483648;
+    int curMax = Integer.MIN_VALUE;
     int maxId = 0;
     boolean found = false;
     for(int i = 0; i < elements.size(); i++) {
