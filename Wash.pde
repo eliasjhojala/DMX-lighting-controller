@@ -1,6 +1,7 @@
 void colorWashSetup() {
   createColorNames(); 
 }
+
 colorWash[] washs = new colorWash[40];
 colorWash wash;
 void newColorWash() {
