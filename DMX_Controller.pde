@@ -144,9 +144,9 @@ boolean[] presetValueChanged = new boolean[1000];
 boolean[] buttonValues = new boolean[100];
 String[] buttonText = new String[100];
 
-boolean[] chaseStepChanging = new boolean[numberOfMemories];
-boolean[] chaseStepChangingRev = new boolean[numberOfMemories];
-boolean[] fallingEdgeChaseStepChangin = new boolean[numberOfMemories];
+//boolean[] chaseStepChanging = new boolean[numberOfMemories];
+//boolean[] chaseStepChangingRev = new boolean[numberOfMemories];
+//boolean[] fallingEdgeChaseStepChangin = new boolean[numberOfMemories];
 
 int chaseSpeed = 500;
 int chaseFade = 255;
@@ -165,12 +165,12 @@ String savePath = "";
 boolean mouseLocked = false; //Onko hiiri lukittu jollekin tietylle alueelle
 String mouseLocker; //Mille alueelle hiiri on lukittu
 
-int[] valueOfMemory = new int[1000];
-int[] valueOfMemoryBeforeSolo = new int[1000];
-int[] valueOfChannelBeforeSolo = new int[1000];
+//int[] valueOfMemory = new int[1000];
+//int[] valueOfMemoryBeforeSolo = new int[1000];
+//int[] valueOfChannelBeforeSolo = new int[1000];
 
-int[] memoryType = new int[1000]; //Memoryn tyyppi (1 = preset, 2 = sound to light)
-int[] chaseModeByMemoryNumber = new int[1000];
+//int[] memoryType = new int[1000]; //Memoryn tyyppi (1 = preset, 2 = sound to light)
+//int[] chaseModeByMemoryNumber = new int[1000];
 
 long[] millisNow = new long[100]; //Nykyinen aika   --> Käytetään delayta sijaistavissa komennoissa
 long[] millisOld = new long[100]; //Edellinen aika  --> Käytetään delayta sijaistavissa komennoissa
@@ -180,17 +180,17 @@ boolean keyReleased = false; //Onko näppäin vapautettu
 
 boolean useMemories = true; //Käytetäänkö presettejä ohjelmassa
 
-int[][] memory = new int[numberOfMemories][512]; //Memory [numero][fixtuurin arvo]
-int[] memoryValue = new int[numberOfMemories]; //Tämänhetkinen memoryn arvo
+//int[][] memory = new int[numberOfMemories][512]; //Memory [numero][fixtuurin arvo]
+//int[] memoryValue = new int[numberOfMemories]; //Tämänhetkinen memoryn arvo
 
-int[][] preset = new int[numberOfMemories][512]; //Preset [numero][fixtuurin arvo]
-int[] presetValue = new int[numberOfMemories]; //Tämänhetkinen presetin arvo
-int[] presetValueOld = new int[numberOfMemories]; //Tämänhetkinen presetin arvo
+//int[][] preset = new int[numberOfMemories][512]; //Preset [numero][fixtuurin arvo]
+//int[] presetValue = new int[numberOfMemories]; //Tämänhetkinen presetin arvo
+//int[] presetValueOld = new int[numberOfMemories]; //Tämänhetkinen presetin arvo
 
 int chaseMode; //1 = s2l, 2 = manual, 3 = auto
 
-int[] soundToLightSteps = new int[numberOfMemories];
-int[][] soundToLightPresets = new int[numberOfMemories][numberOfMemories];
+//½int[] soundToLightSteps = new int[numberOfMemories];
+//int[][] soundToLightPresets = new int[numberOfMemories][numberOfMemories];
 boolean makingSoundToLightFromPreset = false; //Ollaanko tällä hetkellä tekemässä sound to light presettiä
 boolean selectingSoundToLight = false; //Ollaanko tällä hetkellä valitsemassa sound to light modea (EI KÄYTÖSSÄ)
 int soundToLightNumero = 1; //Sound to lightin järjestysnumero (EI KÄYTÖSSÄ)
@@ -210,8 +210,8 @@ boolean upper; //enttec dmx usb pro ch +12
 
 //----------------------------------------------------------------Moving headin muuttujia--------------------------------------------------------------------------------
 //--------------------------------------------------5.9.2014 nämä eivät ole käytössä-------------------------------------------------------------------------------------
-int movingHeadPan; //Moving headin pan arvo
-int movingHeadTilt; //Moving headin tilt arvo
+//int movingHeadPan; //Moving headin pan arvo
+//int movingHeadTilt; //Moving headin tilt arvo
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

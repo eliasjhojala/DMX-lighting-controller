@@ -56,8 +56,7 @@ void setDimAndMemoryValuesAtEveryDraw() {
 
   { // Memory checks --->
   
-      memoryType[1] = 4; //Ensimmäisessä memorypaikassa on grandMaster - there is grandMaster in a first memory place
-      memoryType[2] = 5; //Toisessa memorypaikassa on fade - there is fade in second memory place
+      
       
       
       

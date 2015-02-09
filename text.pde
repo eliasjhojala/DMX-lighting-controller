@@ -76,7 +76,7 @@ public class secondApplet extends PApplet {
   text("memory", 605, 10);
   int a = 0;
     for(int i = 0; i < numberOfMemories; i++) {
-      if(memoryValue[i] != 0) {
+      /*if(memoryValue[i] != 0) {
       a++;
       fill(255, 255, 255);
       text(i + ":" + memoryValue[i], 610, a*15+25);
@@ -85,7 +85,7 @@ public class secondApplet extends PApplet {
       a++;
       fill(255, 255, 255);
       text(i + ":" + valueOfMemory[i], 610, a*15+25);
-      }
+      }*/
   }
   }
   if(addr != null) { 
