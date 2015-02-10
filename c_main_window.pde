@@ -76,6 +76,8 @@ void drawMainWindow() {
          }
          else {
            mouse.capture(mouse.getElementByName("main:fixtures"));
+           oldMouseX1 = int(mouseRotated.x);
+           oldMouseY1 = int(mouseRotated.y);
            if(!showMode) {
              lampToMove = i;
              moveLamp = true;
@@ -96,8 +98,7 @@ void drawMainWindow() {
     }
     popMatrix();
     
-    oldMouseX1 = int(mouseRotated.x);
-    oldMouseY1 = int(mouseRotated.y);
+    
     
   }//Endof: draw all elements
       
