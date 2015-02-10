@@ -55,15 +55,18 @@ class FixtureDMX { //Class containig all the dmx values
     for(int i = 0; i < DMXlength; i++) {
         int newV = getUniDMX(i);
         newV = iMap(newV, 0, 255, 0, memoryMasterValue);
+        
         if (newV != DMXold[i]) {
           parent.in.setUniversalDMX(i, newV);
           parent.DMXChanged = true;
           
           
           DMXold[i] = newV;
+          
         }
         
         setUniversalDMX(i, 0);
+        
         
         
     }

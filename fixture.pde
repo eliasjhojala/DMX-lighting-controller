@@ -229,9 +229,7 @@ class fixture {
   
   void setColorForLedFromPreset(int c) {
     if(thisFixtureIsLed()) {
-      preset.setUniDMXfromPreset(DMX_RED, rRed(c));
-      preset.setUniDMXfromPreset(DMX_GREEN, rGreen(c));
-      preset.setUniDMXfromPreset(DMX_BLUE, rBlue(c));
+      setColor(c);
     }
   }
   
