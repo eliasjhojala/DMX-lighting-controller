@@ -66,11 +66,11 @@ class contextMenu {
     String[] acts;
     String[] labs;
     if(!showMode) {
-      acts = {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs", "removeFixtureFromCM", "removeAllSelectedFixtures"};
-      labs = {"Control this", "Control all selected", "Remove this", "Remove all selected"};
+      acts = new String[] {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs", "removeFixtureFromCM", "removeAllSelectedFixtures"};
+      labs = new String[] {"Control this", "Control all selected", "Remove this", "Remove all selected"};
     } else {
-      acts = {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs"};
-      labs = {"Control this", "Control all selected"};
+      acts = new String[] {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs"};
+      labs = new String[] {"Control this", "Control all selected"};
     }
     initiate(acts, labs, mouseX+2, mouseY+2);
   }
