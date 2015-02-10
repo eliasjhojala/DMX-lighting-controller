@@ -272,36 +272,36 @@ class SettingsTab {
     textSize(16);
     int temp = int(textWidth(text));
     popStyle();
-    return temp + 6;
+    return temp + 10;
   }
   
   //Return true if pressed
   boolean drawSelector(boolean selected) {
     int wid = getSelectorWidth();
-    mouse.declareUpdateElementRelative("Settings:TabSelector:" + text, "settings", 0, 0, wid, 18);
+    mouse.declareUpdateElementRelative("Settings:TabSelector:" + text, "settings", 0, 0, wid, 20);
     mouse.setElementExpire("Settings:TabSelector:" + text, 2);
     if(mouse.getElementByName("Settings:TabSelector:" + text).isHovered || selected) {
       //draw hover rect
       if(!selected) fill(255, 160);
         else fill(200, 160);
       noStroke();
-      rect(1, -1, wid, 20, 4, 0, 0, 0);
+      rect(1, -1, wid, 22, 4, 0, 0, 0);
     }
     textAlign(LEFT);
     textSize(16);
     fill(0);
-    text(text, 3, 15);
+    text(text, 5, 15);
     stroke(120);
     strokeWeight(2);
-    line(0, 18, wid, 18);
+    line(0, 20, wid, 20);
     translate(wid, 0);
-    line(0, 0, 0, 18);
+    line(0, 0, 0, 20);
     return mouse.isCaptured("Settings:TabSelector:" + text);
   }
   
   void drawChildren() {
     pushMatrix();
-      line(0, 18, 0, height_);
+      line(0, 20, 0, height_);
       translate(6, 20);
       if(controllers != null) {
         for(SettingController contr : controllers) {

@@ -302,7 +302,7 @@ public class ControlFrame extends PApplet {
       ;
     }
     
-    for (int i = 0; i < ansaX.length; i++) {
+    /*for (int i = 0; i < ansaX.length; i++) {
       createdAnsaXBoxes ++;
       cp5.addNumberbox("ansaX" + str(i))
       .setLabel("Ansa " + str(i) + " X")
@@ -326,7 +326,7 @@ public class ControlFrame extends PApplet {
       .setValue(ansaY[i])
       .moveTo("settings")
       ;
-    }
+    }*/
     
     for (int i = 0; i < ansaType.length; i++) {
       createdAnsaTypeBoxes ++;

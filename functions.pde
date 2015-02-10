@@ -39,15 +39,47 @@ void arduinoSend() {
   arduinoFinished = true;
 }
 
+int trussToMove = -1;
+boolean movingTruss = false;
 
-void ansat() {
-    fill(0, 0, 0);
+void ansat(PVector mouseRotated) {
     for(int i = 0; i < ansaY.length; i++) {
       if(ansaType[i] == 1) {
-        rect(ansaX[i], (ansaY[i]+25), ansaWidth, 5);
+        pushMatrix();
+          translate(ansaX[i], (ansaY[i]+25));
+          fill(20);
+          stroke(255);
+          rect(0, 0, ansaWidth, 5);
+          if(!showMode) {
+            fill(topMenuTheme);
+            rect(ansaWidth-5, -5, 15, 15, 3);
+            if(isHover(ansaWidth-5, -5, 15, 15) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
+              mouse.capture(mouse.getElementByName("main:fixtures"));
+              trussToMove = i;
+              movingTruss = true;
+            }
+            if(movingTruss && trussToMove == i) {
+              if(mouseButton == LEFT) {
+                ansaX[i] += (int(mouseRotated.x) - oldMouseX1) * int(100 / zoom);
+                ansaY[i] += (int(mouseRotated.y) - oldMouseY1) * int(100 / zoom);
+              } else if(mouseButton == RIGHT && mouse.firstCaptureFrame) {
+                if(lastRMBc > millis() - 1000) {
+                  ansaX[i] = 0;
+                } else lastRMBc = millis();
+              }
+            }
+            
+            if(!mousePressed && movingTruss) movingTruss = false;
+            
+          }
+        popMatrix();
       }
+      
     }
 }
+
+
+
 void kalvo(color c) {
   fill(c);
 }
@@ -101,8 +133,8 @@ void drawFixture(int i) {
 void mouseWheel(MouseEvent event) {
   if(mouseX < width-168) { //Jos hiiri ei ole sivuvalikon päällä sen skrollaus vaikuttaa visualisaation zoomaukseen
     float e = event.getCount();
-    if(e < 0) { if(zoom < 110) { zoom--; } else { zoom = zoom - int(zoom/30); } }
-    else if(e > 0) { if(zoom < 110) { zoom++; } else { zoom = zoom + int(zoom/30); }}
+    if(e < 0) { zoom -= zoom/30; }
+    else if(e > 0) { zoom += zoom/30; }
   }
   else {
     float e = event.getCount();
@@ -183,8 +215,8 @@ void movePage() {
     
     mouseReleased = false;
   }
-  x_siirto -= (pmouseX - mouseX) / (zoom/100);
-  y_siirto -= (pmouseY - mouseY) / (zoom/100);
+  x_siirto -= (pmouseX - mouseX) / (zoom/100 +0.001);
+  y_siirto -= (pmouseY - mouseY) / (zoom/100 +0.001);
 }
 
 boolean isClicked(int x1, int y1, int x2, int y2) {

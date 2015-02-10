@@ -202,9 +202,9 @@ boolean mouseReleased = false;
 int oldMouseX;
 int oldMouseY;
 
-int x_siirto = 0; //Visualisaation sijainnin muutos vaakasuunnassa
-int y_siirto = 0; //Visualisaation sijainnin muutos pystysuunnassa
-int zoom = 100; //Visualisaation zoomauksen muutos
+float x_siirto = 0; //Visualisaation sijainnin muutos vaakasuunnassa
+float y_siirto = 0; //Visualisaation sijainnin muutos pystysuunnassa
+float zoom = 100; //Visualisaation zoomauksen muutos
 
 boolean upper; //enttec dmx usb pro ch +12
 
@@ -434,7 +434,6 @@ void setup() {
     size(displayWidth, displayHeight); //Annetaan ikkunan kooksi sama kuin nykyisen näytön koko
     background(0, 0, 0);
     stroke(255, 255, 255);
-    ansat(); //Piirretään  ansat
     
     
     
