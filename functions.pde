@@ -183,8 +183,8 @@ void movePage() {
     
     mouseReleased = false;
   }
-  x_siirto = x_siirto - (pmouseX - mouseX);
-  y_siirto = y_siirto - (pmouseY - mouseY);
+  x_siirto -= (pmouseX - mouseX) / (zoom/100);
+  y_siirto -= (pmouseY - mouseY) / (zoom/100);
 }
 
 boolean isClicked(int x1, int y1, int x2, int y2) {

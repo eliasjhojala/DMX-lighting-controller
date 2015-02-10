@@ -10,8 +10,9 @@ void drawMainWindow() {
    
    
    translate(width/2, height/2);
-   translate(x_siirto, y_siirto); //Siirretään sivua oikean verran - move page
    scale(float(zoom)/100); //Skaalataan sivua oikean verran - scale page
+   translate(x_siirto, y_siirto); //Siirretään sivua oikean verran - move page
+   
    rotate(radians(pageRotation)); //Käännetään sivua oikean verran - rotate page
    translate(-width/2, -height/2); //move page back
    //translate(0, 50); //Siirretään kaikkea alaspäin ylävalikon verran - move all the objects down because top menu

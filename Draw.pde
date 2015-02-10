@@ -21,8 +21,7 @@ void draw() {
     //Move this to setDimAndMemoryValuesAtEveryDraw, maybe?
     updateMemories();
     
-    memories[1].type = 4;
-    memories[2].type = 5;
+    
     
     checkThemeMode();
     
@@ -53,6 +52,8 @@ void draw() {
 boolean memoriesFinished = true;
 void updateMemories() {
   memoriesFinished = false;
+  memories[1].type = 4;
+  memories[2].type = 5;
   for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
   memoriesFinished = true;
 }
