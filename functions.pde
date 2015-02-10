@@ -43,42 +43,52 @@ int trussToMove = -1;
 boolean movingTruss = false;
 
 void ansat(PVector mouseRotated) {
+  
     for(int i = 0; i < ansaY.length; i++) {
-      if(ansaType[i] == 1) {
-        pushMatrix();
-          translate(ansaX[i], (ansaY[i]+25));
+      pushMatrix();
+      switch(ansaType[i]) {
+        case 1:
+          translate(ansaX[i], ansaY[i]+25);
           fill(20);
           stroke(255);
           rect(0, 0, ansaWidth, 5);
-          if(!showMode) {
-            fill(topMenuTheme);
-            rect(ansaWidth-5, -5, 15, 15, 3);
-            if(isHover(ansaWidth-5, -5, 15, 15) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
-              mouse.capture(mouse.getElementByName("main:fixtures"));
-              trussToMove = i;
-              movingTruss = true;
-            }
-            if(movingTruss && trussToMove == i) {
-              if(mouseButton == LEFT) {
-                ansaX[i] += (int(mouseRotated.x) - oldMouseX1) * int(100 / zoom);
-                ansaY[i] += (int(mouseRotated.y) - oldMouseY1) * int(100 / zoom);
-              } else if(mouseButton == RIGHT && mouse.firstCaptureFrame) {
-                if(lastRMBc > millis() - 1000) {
-                  ansaX[i] = 0;
-                } else lastRMBc = millis();
-              }
-            }
-            
-            if(!mousePressed && movingTruss) movingTruss = false;
-            
-          }
-        popMatrix();
+          doTrussMoving(i, mouseRotated);
+        break;
+        case 0:
+          translate(ansaX[i], ansaY[i]);
+          doTrussMoving(i, mouseRotated);
+        break;
+        
       }
-      
+      popMatrix();
     }
 }
 
-
+void doTrussMoving(int i, PVector mouseRotated) {
+  if(!showMode) {
+    fill(topMenuTheme);
+    rect(ansaWidth-5, -5, 15, 15, 3);
+    if(isHover(ansaWidth-5, -5, 15, 15) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
+      mouse.capture(mouse.getElementByName("main:fixtures"));
+      trussToMove = i;
+      movingTruss = true;
+    }
+    if(movingTruss && trussToMove == i) {
+      if(mouseButton == LEFT) {
+        if(!(key == 'y' && keyPressed)) ansaX[i] += (int(mouseRotated.x) - oldMouseX1) * int(100 / zoom);
+        if(!(key == 'x' && keyPressed)) ansaY[i] += (int(mouseRotated.y) - oldMouseY1) * int(100 / zoom);
+      } else if(mouseButton == RIGHT && mouse.firstCaptureFrame) {
+        if(lastRMBc > millis() - 1000) {
+          if(!(key == 'y' && keyPressed)) ansaX[i] = 0;
+            else                          ansaY[i] = 0;
+          
+        } else lastRMBc = millis();
+      }
+    }
+    
+    if(!mousePressed && movingTruss) movingTruss = false;
+  }
+}
 
 void kalvo(color c) {
   fill(c);
