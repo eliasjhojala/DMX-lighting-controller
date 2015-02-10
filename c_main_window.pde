@@ -188,7 +188,7 @@ void endBoxSelect() {
         
        
     }
-  } else {
+  } else if(!showMode) {
     //open contextMwnu
     String[] acts = { "createNewFixtureAt00" };
     String[] texs = { "Create new fixture" };

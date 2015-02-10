@@ -63,8 +63,15 @@ class contextMenu {
   int fixtureId = 0;
   void initiateForFixture(int fId) {
     fixtureId = fId;
-    String[] acts = {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs", "removeFixtureFromCM", "removeAllSelectedFixtures"};
-    String[] labs = {"Control this", "Control all selected", "Remove this", "Remove all selected"};
+    String[] acts;
+    String[] labs;
+    if(!showMode) {
+      acts = {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs", "removeFixtureFromCM", "removeAllSelectedFixtures"};
+      labs = {"Control this", "Control all selected", "Remove this", "Remove all selected"};
+    } else {
+      acts = {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs"};
+      labs = {"Control this", "Control all selected"};
+    }
     initiate(acts, labs, mouseX+2, mouseY+2);
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -/
