@@ -89,7 +89,7 @@ class SettingsWindow {
   }
   
   void onInit() {
-    tabs = new SettingsTab[3];
+    tabs = new SettingsTab[5];
     tabs[0] = new SettingsTab("Other windows", this);
     tabs[0].setControllers(
       new SettingController[] {
@@ -112,6 +112,8 @@ class SettingsWindow {
         new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", tabs[2])
       }
     );
+    tabs[3] = new SettingsTab("COM", this);
+    tabs[4] = new SettingsTab("OSC", this);
   }
   
   
