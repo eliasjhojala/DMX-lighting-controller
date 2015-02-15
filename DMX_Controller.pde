@@ -432,6 +432,7 @@ void setup() {
   cf = addControlFrame("Control", 500,500);
   
     size(displayWidth, displayHeight); //Annetaan ikkunan kooksi sama kuin nykyisen näytön koko
+    frameRate(60);
     background(0, 0, 0);
     stroke(255, 255, 255);
     
