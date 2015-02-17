@@ -325,7 +325,7 @@ class SettingsTab {
       if(controllers != null) {
         PGraphics buffer = createGraphics(width_, height_-20);
         buffer.beginDraw();
-        if(controllerStackHeight > height_-20) buffer.translate(0, -scrollStatus * (controllerStackHeight - height_));
+        if(controllerStackHeight > height_-20) buffer.translate(0, -scrollStatus * (controllerStackHeight - height_+20));
         int stackHeight = 0;
         for(SettingController contr : controllers) {
           contr.draw(buffer);
