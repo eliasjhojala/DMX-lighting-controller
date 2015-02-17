@@ -314,6 +314,8 @@ class SettingsTab {
   
   int controllerStackHeight = 0;
   float scrollStatus = 0;
+  float scrollStatusTrg = 0;
+  boolean doSmoothScroll = false;
   
   void drawChildren() {
     pushMatrix();
@@ -350,14 +352,21 @@ class SettingsTab {
           scrollStatus += (mouseY - pmouseY)/(float(height_)-20);
         }
         if(mouse.elmIsHover("settings")) {
-          if(scrolledUp)   { scrollStatus += 80/(float(height_)-20);
+          if(scrolledUp)   { scrollStatusTrg += 120/(float(height_)-20);
+            doSmoothScroll = true;
             scrolledUp = false;
           }
-          if(scrolledDown) { scrollStatus -= 80/(float(height_)-20);
+          if(scrolledDown) { scrollStatusTrg -= 120/(float(height_)-20);
+            doSmoothScroll = true;
             scrolledDown = false;
           }
         }
+        if(doSmoothScroll)
+          if(abs(scrollStatusTrg - scrollStatus) > 0.001) scrollStatus += (scrollStatusTrg - scrollStatus) / 3;
+            else doSmoothScroll = false;
+          else scrollStatusTrg = scrollStatus;
         scrollStatus = constrain(scrollStatus, 0, 1);
+        scrollStatusTrg = constrain(scrollStatusTrg, 0, 1);
         if(controllerStackHeight > height_-20) {
           translate(0, scrollStatus * (height_-20 - 40));
           fill(180, 180);
