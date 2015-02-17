@@ -146,12 +146,12 @@ void drawFixture(int i) {
 }
 
 void mouseWheel(MouseEvent event) {
-  if(mouseX < width-168) { //Jos hiiri ei ole sivuvalikon päällä sen skrollaus vaikuttaa visualisaation zoomaukseen
+  if(mouse.elmIsHover("main:move")) { //Jos hiiri ei ole sivuvalikon päällä sen skrollaus vaikuttaa visualisaation zoomaukseen
     float e = event.getCount();
     if(e < 0) { zoom -= zoom/30; }
     else if(e > 0) { zoom += zoom/30; }
   }
-  else {
+  else if(mouse.elmIsHover("rearMenu:presetcontrols")) {
     float e = event.getCount();
     if(e < 0) { if(memoryMenu > 0) { memoryMenu--; } }
     else if(e > 0) { if(memoryMenu < numberOfMemories) { memoryMenu++; } }

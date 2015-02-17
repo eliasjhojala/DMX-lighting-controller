@@ -198,30 +198,31 @@ class Switch {
       
       b.translate(locX, locY);
       
-      
-      //background
-      b.fill(80, 150);
-      b.noStroke();
-      b.rect(1.5, 1.5, 30, 10, 5);
-      b.fill(multiplyColor(bg, float(constrain(animState, 15, 25)) / 19));
-      b.rect(0, 0, 30, 10, 5);
-      pushMatrix();
-        translate(b.screenX(0, 0), b.screenY(0, 0));
-        mouse.declareUpdateElementRelative(captureName, ontopofName, -3, -3, 36, 16);
-      popMatrix();
-      mouse.setElementExpire(captureName, 2);
-      if(mouse.isCaptured(captureName) && mouse.firstCaptureFrame) {
-        state = !state;
-        /*todo - capture mouse*/
+      if(b.screenY(0, 13) > 0) {
+        //background
+        b.fill(80, 150);
+        b.noStroke();
+        b.rect(1.5, 1.5, 30, 10, 5);
+        b.fill(multiplyColor(bg, float(constrain(animState, 15, 25)) / 19));
+        b.rect(0, 0, 30, 10, 5);
+        pushMatrix();
+          translate(b.screenX(0, 0), b.screenY(0, 0));
+          mouse.declareUpdateElementRelative(captureName, ontopofName, -3, -3, 36, 16);
+        popMatrix();
+        mouse.setElementExpire(captureName, 2);
+        if(mouse.isCaptured(captureName) && mouse.firstCaptureFrame) {
+          state = !state;
+        }
+        
+        //Knob
+        b.fill(80, 120);
+        b.translate(animState - 3, -3);
+        b.ellipseMode(CORNER);
+        b.ellipse(1.5, 1.5, 16, 16);
+        b.fill(fg);
+        b.ellipse(0, 0, 16, 16);
       }
       
-      //Knob
-      b.fill(80, 120);
-      b.translate(animState - 3, -3);
-      b.ellipseMode(CORNER);
-      b.ellipse(1.5, 1.5, 16, 16);
-      b.fill(fg);
-      b.ellipse(0, 0, 16, 16);
     }
     b.popStyle(); b.popMatrix();
     

@@ -95,7 +95,15 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", tabs[0]),
         new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0]),
-        new SettingController(0, 0, "Test Int", "This is just a test controller to see how the int controller will work.", tabs[0])
+        new SettingController(0, 0, "Test Int", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, "Test Int1", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, "Test Int2", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, "Test Int3", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, "Test Int4", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, "Test Int5", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, "Test Int6", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, "Test Int7", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, "Test Int8", "This is just a test controller to see how the int controller will work.", tabs[0])
       }
     );
     tabs[1] = new SettingsTab("Visualization", this);
@@ -255,10 +263,12 @@ class SettingsTab {
   
   String text;
   int height_;
+  int width_;
   
   SettingsTab(String text, int hght, SettingsWindow parent) {
     this.text = text;
     this.height_ = hght;
+    this.width_ = parent.size - 28;
     parentWindow = parent;
   }
   
@@ -266,6 +276,7 @@ class SettingsTab {
   SettingsTab(String text, SettingsWindow parent) {
     this.text = text;
     this.height_ = parent.size - 60;
+    this.width_ = parent.size - 44;
     parentWindow = parent;
   }
   
@@ -301,23 +312,47 @@ class SettingsTab {
     return mouse.isCaptured("Settings:TabSelector:" + text);
   }
   
+  int controllerStackHeight = 0;
+  float scrollStatus = 0;
+  
   void drawChildren() {
     pushMatrix();
       line(0, 20, 0, height_);
       translate(6, 20);
       
       if(controllers != null) {
-        PGraphics buffer = createGraphics(parentWindow.size - 28, height_);
+        PGraphics buffer = createGraphics(width_, height_-20);
         buffer.beginDraw();
+        if(controllerStackHeight > height_-20) buffer.translate(0, -scrollStatus * (controllerStackHeight - height_));
+        int stackHeight = 0;
         for(SettingController contr : controllers) {
           contr.draw(buffer);
           buffer.translate(0, contr.getDrawHeight());
+          stackHeight += contr.getDrawHeight();
           buffer.stroke(0, 100);
           buffer.strokeWeight(1.5);
-          buffer.line(0, -2, parentWindow.size - 28, -2);
+          buffer.line(0, -2, width_, -2);
         }
+        controllerStackHeight = stackHeight;
         buffer.endDraw();
         image(buffer, 0, 0);
+        
+        //Draw scroll slider
+        
+        //If there's nothing to scroll (everything fits in at once), always stay on top.
+        if(controllerStackHeight <= height_-20) scrollStatus = 0;
+        translate(width_+7, 2);
+        fill(180, 100); noStroke();
+        rect(0, 0, 10, height_-20);
+        mouse.declareUpdateElementRelative("settings:scroll", "settings", 0, 0, 10, height_-20);
+        mouse.setElementExpire("settings:scroll", 2);
+        if(mouse.isCaptured("settings:scroll")) {
+          scrollStatus += (mouseY - pmouseY)/(float(height_)-20);
+          scrollStatus = constrain(scrollStatus, 0, 1);
+        }
+        translate(0, scrollStatus * (height_-20 - 40));
+        fill(180, 180);
+        rect(0, 0, 10, 40);
       }
     popMatrix();
   }
@@ -341,7 +376,7 @@ class SettingController {
   String description;
   
   SettingController(int var, int type, String name, String description, SettingsTab parent) {
-    intController = new IntSettingController(type, 0, parent.parentWindow.size-134, 8, this);
+    intController = new IntSettingController(type, 0, parent.width_-106, 8, this);
     mode = type+1;
     this.name = name;
     this.description = description;
@@ -351,7 +386,7 @@ class SettingController {
   
   SettingController(int var, String name, String description, SettingsTab parent) {
     mode = 0;
-    booleanController = new Switch(false, "settings:" + parent.text + ":" + name, "settings", parent.parentWindow.size-70, 8);
+    booleanController = new Switch(false, "settings:" + parent.text + ":" + name, "settings", parent.width_-42, 8);
     this.name = name;
     this.description = description;
     this.var = var;
@@ -364,8 +399,8 @@ class SettingController {
     textSize(12);
     int temp = int(textWidth(description));
     popStyle();
-    //         (compute height of description text          )
-    return 48 + temp / (parentTab.parentWindow.size-40) * 14 + (mode >= 1 ? 10 : 0);
+    //         (compute height of description text)
+    return 48 + temp / (parentTab.width_-12) * 14 + (mode >= 1 ? 10 : 0);
   }
   
   
@@ -410,7 +445,7 @@ class SettingController {
       buffer.textLeading(14);
       buffer.fill(0, 200);
       //                                If int controller, use up 10px more
-      buffer.text(description, 0, 26 + (mode >= 1 ? 10 : 0), parentTab.parentWindow.size-40, 40);
+      buffer.text(description, 0, 26 + (mode >= 1 ? 10 : 0), parentTab.width_-12, 40);
     buffer.popMatrix();
   }
 }
@@ -451,71 +486,73 @@ class IntSettingController {
   
   
   void drawToBuffer(PGraphics b) {
-    b.pushMatrix();
+    b.pushMatrix(); b.pushStyle();
     b.translate(x, y);
-    switch(mode) {
-      case 0:
-        //Numberbox
-        //Background
-        b.fill(45, 138, 179);
-        b.stroke(20, 100, 130);
-        pushMatrix();
-          translate(b.screenX(0, 0), b.screenY(0, 0));
-          mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 100, 20);
-        popMatrix();
-        if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == LEFT) {
-          floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(0, 0)) / 20 + 1);
-          state = round(floatState);
-        }
-        
-        b.rect(0, 0, 100, 20);
-        b.textAlign(RIGHT);
-        b.fill(255);
-        b.textSize(14);
-        b.text(str(state), 2, 2, 96, 18);
-        
-      break;
-      case 2:
-        //Knob
-        
-        b.ellipseMode(CENTER);
-        b.translate(78, 19.5);
-        pushMatrix();
-          translate(b.screenX(0, 0), b.screenY(0, 0));
-          mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", -25, -25, 50, 50);
-          if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == LEFT) {
-            PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
-            floatState = ((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360;
-            state = round(floatState);
-          }
-        popMatrix();
-        
-        b.fill(topMenuTheme2);
-        b.stroke(topMenuAccent);
-        //Radial visualizer
-        b.arc(0, 0, 50, 50, -HALF_PI, (floatState/360*TWO_PI) - HALF_PI, PIE);
-        
-        //Text container
-        b.fill(45, 138, 179);
-        b.stroke(20, 100, 130);
-        b.ellipse(0, 0, 30, 30);
-        
-        
-        
-        b.textAlign(CENTER);
-        b.fill(255);
-        b.textSize(14);
-        b.text(str(state), 0, 5);
-        //Active portion
-        //b.fill(61, 190, 255);
-      break;
+    if(b.screenY(0, 50) > 0) {
+      switch(mode) {
+        case 0:
+          //Numberbox
+          //Background
+          b.fill(45, 138, 179);
+          b.stroke(20, 100, 130);
+          pushMatrix();
+            translate(b.screenX(0, 0), b.screenY(0, 0));
+            mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 100, 20);
+            if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == LEFT) {
+              floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(0, 0)) / 20 + 1);
+              state = round(floatState);
+            }
+          popMatrix();
+          
+          b.rect(0, 0, 100, 20);
+          b.textAlign(RIGHT);
+          b.fill(255);
+          b.textSize(14);
+          b.text(str(state), 2, 2, 96, 18);
+          
+        break;
+        case 2:
+          //Knob
+          
+          b.ellipseMode(CENTER);
+          b.translate(78, 19.5);
+          pushMatrix();
+            translate(b.screenX(0, 0), b.screenY(0, 0));
+            mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", -25, -25, 50, 50);
+            if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == LEFT) {
+              PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
+              floatState = ((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360;
+              state = round(floatState);
+            }
+          popMatrix();
+          
+          b.fill(topMenuTheme2);
+          b.stroke(topMenuAccent);
+          //Radial visualizer
+          b.arc(0, 0, 50, 50, -HALF_PI, (floatState/360*TWO_PI) - HALF_PI, PIE);
+          
+          //Text container
+          b.fill(45, 138, 179);
+          b.stroke(20, 100, 130);
+          b.ellipse(0, 0, 30, 30);
+          
+          
+          
+          b.textAlign(CENTER);
+          b.fill(255);
+          b.textSize(14);
+          b.text(str(state), 0, 5);
+          //Active portion
+          //b.fill(61, 190, 255);
+        break;
+      }
+      
+      mouse.setElementExpire("settings:" + parentContainer.name, 2);
+      if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == RIGHT && mouse.firstCaptureFrame) {
+        if(lastRMBc > millis() - 1000) setState(0); else lastRMBc = millis();
+      }
     }
-    
-    mouse.setElementExpire("settings:" + parentContainer.name, 2);
-    if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == RIGHT && mouse.firstCaptureFrame) {
-      if(lastRMBc > millis() - 1000) setState(0); else lastRMBc = millis();
-    }
-    b.popMatrix();
+    b.popMatrix(); b.popStyle();
   }
   
 }
