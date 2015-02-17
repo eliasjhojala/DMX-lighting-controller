@@ -348,8 +348,16 @@ class SettingsTab {
         mouse.setElementExpire("settings:scroll", 2);
         if(mouse.isCaptured("settings:scroll")) {
           scrollStatus += (mouseY - pmouseY)/(float(height_)-20);
-          scrollStatus = constrain(scrollStatus, 0, 1);
         }
+        if(mouse.elmIsHover("settings")) {
+          if(scrolledUp)   { scrollStatus += 80/(float(height_)-20);
+            scrolledUp = false;
+          }
+          if(scrolledDown) { scrollStatus -= 80/(float(height_)-20);
+            scrolledDown = false;
+          }
+        }
+        scrollStatus = constrain(scrollStatus, 0, 1);
         translate(0, scrollStatus * (height_-20 - 40));
         fill(180, 180);
         rect(0, 0, 10, 40);
