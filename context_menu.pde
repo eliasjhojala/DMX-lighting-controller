@@ -179,8 +179,12 @@ class Switch {
     this.locX = locX; this.locY = locY;
   }
   
-  int animationState = 0;
   boolean draw() {
+    return drawToBuffer(g);
+  }
+  
+  int animationState = 0;
+  boolean drawToBuffer(PGraphics b) {
     if(state && animationState < 19) {
       animationState += 3;
     } else
@@ -189,19 +193,22 @@ class Switch {
     }
     int animState = animationState;
     
-    pushStyle(); pushMatrix();
+    b.pushStyle(); b.pushMatrix();
     {
       
-      translate(locX, locY);
+      b.translate(locX, locY);
       
       
       //background
-      fill(80, 150);
-      noStroke();
-      rect(1.5, 1.5, 30, 10, 5);
-      fill(multiplyColor(bg, float(constrain(animState, 15, 25)) / 19));
-      rect(0, 0, 30, 10, 5);
-      mouse.declareUpdateElementRelative(captureName, ontopofName, -3, -3, 36, 16);
+      b.fill(80, 150);
+      b.noStroke();
+      b.rect(1.5, 1.5, 30, 10, 5);
+      b.fill(multiplyColor(bg, float(constrain(animState, 15, 25)) / 19));
+      b.rect(0, 0, 30, 10, 5);
+      pushMatrix();
+        translate(b.screenX(0, 0), b.screenY(0, 0));
+        mouse.declareUpdateElementRelative(captureName, ontopofName, -3, -3, 36, 16);
+      popMatrix();
       mouse.setElementExpire(captureName, 2);
       if(mouse.isCaptured(captureName) && mouse.firstCaptureFrame) {
         state = !state;
@@ -209,14 +216,14 @@ class Switch {
       }
       
       //Knob
-      fill(80, 120);
-      translate(animState - 3, -3);
-      ellipseMode(CORNER);
-      ellipse(1.5, 1.5, 16, 16);
-      fill(fg);
-      ellipse(0, 0, 16, 16);
+      b.fill(80, 120);
+      b.translate(animState - 3, -3);
+      b.ellipseMode(CORNER);
+      b.ellipse(1.5, 1.5, 16, 16);
+      b.fill(fg);
+      b.ellipse(0, 0, 16, 16);
     }
-    popStyle(); popMatrix();
+    b.popStyle(); b.popMatrix();
     
     return state;
   }

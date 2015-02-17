@@ -305,14 +305,19 @@ class SettingsTab {
     pushMatrix();
       line(0, 20, 0, height_);
       translate(6, 20);
+      
       if(controllers != null) {
+        PGraphics buffer = createGraphics(parentWindow.size - 28, height_);
+        buffer.beginDraw();
         for(SettingController contr : controllers) {
-          contr.draw();
-          translate(0, contr.getDrawHeight());
-          stroke(0, 100);
-          strokeWeight(1.5);
-          line(0, -2, parentWindow.size - 28, -2);
+          contr.draw(buffer);
+          buffer.translate(0, contr.getDrawHeight());
+          buffer.stroke(0, 100);
+          buffer.strokeWeight(1.5);
+          buffer.line(0, -2, parentWindow.size - 28, -2);
         }
+        buffer.endDraw();
+        image(buffer, 0, 0);
       }
     popMatrix();
   }
@@ -364,11 +369,11 @@ class SettingController {
   }
   
   
-  void draw() {
+  void draw(PGraphics buffer) {
     switch(mode) {
       case 0:
-        drawText(0, 0);
-        booleanController.draw();
+        drawText(0, 0, buffer);
+        booleanController.drawToBuffer(buffer);
         if(booleanController.state != oldValueBoolean) {
           //Set
           parentTab.parentWindow.setExternalBoValue(booleanController.state, var);
@@ -380,8 +385,8 @@ class SettingController {
         }
       break;
       case 1: case 2: case 3:
-        drawText(0, 0);
-        intController.draw();
+        drawText(0, 0, buffer);
+        intController.drawToBuffer(buffer);
         if(intController.state != oldValueInt) {
           //Set
           parentTab.parentWindow.setExternalInValue(intController.state, var);
@@ -395,18 +400,18 @@ class SettingController {
     }
   }
   
-  void drawText(int x, int y) {
-    pushMatrix();
-      translate(x, y);
-      textSize(24);
-      fill(0);
-      text(name, 0, 25);
-      textSize(12);
-      textLeading(14);
-      fill(0, 200);
-      //                         If int controller, use up 10px more
-      text(description, 0, 26 + (mode >= 1 ? 10 : 0), parentTab.parentWindow.size-40, 40);
-    popMatrix();
+  void drawText(int x, int y, PGraphics buffer) {
+    buffer.pushMatrix();
+      buffer.translate(x, y);
+      buffer.textSize(24);
+      buffer.fill(0);
+      buffer.text(name, 0, 25);
+      buffer.textSize(12);
+      buffer.textLeading(14);
+      buffer.fill(0, 200);
+      //                                If int controller, use up 10px more
+      buffer.text(description, 0, 26 + (mode >= 1 ? 10 : 0), parentTab.parentWindow.size-40, 40);
+    buffer.popMatrix();
   }
 }
 
@@ -440,61 +445,69 @@ class IntSettingController {
     floatState = newState;
   }
   
-  
-  
   void draw() {
-    pushMatrix();
-    translate(x, y);
+    drawToBuffer(g);
+  }
+  
+  
+  void drawToBuffer(PGraphics b) {
+    b.pushMatrix();
+    b.translate(x, y);
     switch(mode) {
       case 0:
         //Numberbox
         //Background
-        fill(45, 138, 179);
-        stroke(20, 100, 130);
-        mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 100, 20);
+        b.fill(45, 138, 179);
+        b.stroke(20, 100, 130);
+        pushMatrix();
+          translate(b.screenX(0, 0), b.screenY(0, 0));
+          mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 100, 20);
+        popMatrix();
         if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == LEFT) {
           floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(0, 0)) / 20 + 1);
           state = round(floatState);
         }
         
-        rect(0, 0, 100, 20);
-        textAlign(RIGHT);
-        fill(255);
-        textSize(14);
-        text(str(state), 2, 2, 96, 18);
-        //Active portion
-        fill(61, 190, 255);
+        b.rect(0, 0, 100, 20);
+        b.textAlign(RIGHT);
+        b.fill(255);
+        b.textSize(14);
+        b.text(str(state), 2, 2, 96, 18);
+        
       break;
       case 2:
         //Knob
         
-        ellipseMode(CENTER);
-        translate(78, 19.5);
-        mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", -25, -25, 50, 50);
-        if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == LEFT) {
-          PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
-          floatState = ((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360;
-          state = round(floatState);
-        }
+        b.ellipseMode(CENTER);
+        b.translate(78, 19.5);
+        pushMatrix();
+          translate(b.screenX(0, 0), b.screenY(0, 0));
+          mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", -25, -25, 50, 50);
+          if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == LEFT) {
+            PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
+            floatState = ((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360;
+            state = round(floatState);
+          }
+        popMatrix();
         
-        fill(topMenuTheme2);
-        stroke(topMenuAccent);
+        b.fill(topMenuTheme2);
+        b.stroke(topMenuAccent);
         //Radial visualizer
-        arc(0, 0, 50, 50, -HALF_PI, (floatState/360*TWO_PI) - HALF_PI, PIE);
+        b.arc(0, 0, 50, 50, -HALF_PI, (floatState/360*TWO_PI) - HALF_PI, PIE);
         
         //Text container
-        fill(45, 138, 179);
-        stroke(20, 100, 130);
-        ellipse(0, 0, 30, 30);
+        b.fill(45, 138, 179);
+        b.stroke(20, 100, 130);
+        b.ellipse(0, 0, 30, 30);
         
         
         
-        textAlign(CENTER);
-        fill(255);
-        textSize(14);
-        text(str(state), 0, 5);
+        b.textAlign(CENTER);
+        b.fill(255);
+        b.textSize(14);
+        b.text(str(state), 0, 5);
         //Active portion
-        fill(61, 190, 255);
+        //b.fill(61, 190, 255);
       break;
     }
     
@@ -502,7 +515,7 @@ class IntSettingController {
     if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == RIGHT && mouse.firstCaptureFrame) {
       if(lastRMBc > millis() - 1000) setState(0); else lastRMBc = millis();
     }
-    popMatrix();
+    b.popMatrix();
   }
   
 }
