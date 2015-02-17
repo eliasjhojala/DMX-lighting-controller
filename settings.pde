@@ -88,6 +88,7 @@ class SettingsWindow {
     onInit();
   }
   
+  //Create and configure all tabs & controllers
   void onInit() {
     tabs = new SettingsTab[5];
     tabs[0] = new SettingsTab("Other windows", this);
@@ -126,6 +127,7 @@ class SettingsWindow {
   
   
   
+  //Set & get external values (the values that the controllers control)
   //It's stupid we do it like this, but primitives.
   void setExternalBoValue(boolean b, int var) {
     switch(var) {
@@ -168,18 +170,23 @@ class SettingsWindow {
     }
   }
   
+  //X & Y location of the window (in the actual window)
   int locX, locY;
   
+  //Is the window open
   boolean open;
   
+  //Open the window
   void open() {
     open = true;
   }
   
   SettingsTab[] tabs;
   
+  //The total width and height of the window (can be un-finalized, but you should only be change it on init)
   final int size = 500;
   
+  //Currently selected tab
   int selectedTab = 0;
   
   
@@ -227,6 +234,7 @@ class SettingsWindow {
         text("Settings", 87, 24);
       }
       
+      //Draw all tabs
       {  pushMatrix();
         translate(10, 40);
         
@@ -240,7 +248,7 @@ class SettingsWindow {
             
           }
         popMatrix();
-        
+        //Draw the children of the selected tab
         tabs[selectedTab].drawChildren();
       popMatrix();  }
       popMatrix();
@@ -253,6 +261,7 @@ class SettingsWindow {
 
 class SettingsTab {
   //A container for multiple settings
+  
   SettingController[] controllers;
   
   SettingsWindow parentWindow;
@@ -260,8 +269,10 @@ class SettingsTab {
   void setControllers(SettingController[] newControllers) {
     controllers = newControllers;
   }
-  
+  //The text displayed on the tab selector
   String text;
+  
+  //Height and width of the area this tab can use for its children
   int height_;
   int width_;
   
@@ -272,7 +283,7 @@ class SettingsTab {
     parentWindow = parent;
   }
   
-  //If you just give reference to the parent SettingsWindow, height of the tab will be autamatcially inherited from it
+  //If you just give reference to the parent SettingsWindow, height of the tab will be autamatcially derived from it
   SettingsTab(String text, SettingsWindow parent) {
     this.text = text;
     this.height_ = parent.size - 60;
@@ -288,7 +299,7 @@ class SettingsTab {
     return temp + 10;
   }
   
-  //Return true if pressed
+  //Draw the tab selector --- Returns true if pressed
   boolean drawSelector(boolean selected) {
     int wid = getSelectorWidth();
     mouse.declareUpdateElementRelative("Settings:TabSelector:" + text, "settings", 0, 0, wid, 20);
@@ -312,8 +323,11 @@ class SettingsTab {
     return mouse.isCaptured("Settings:TabSelector:" + text);
   }
   
+  //Total height of all the controllers
   int controllerStackHeight = 0;
+  //Current scroll status (from 0 to 1)
   float scrollStatus = 0;
+  //scrollStatus target, used for smooth-scroll
   float scrollStatusTrg = 0;
   boolean doSmoothScroll = false;
   
@@ -323,6 +337,7 @@ class SettingsTab {
       translate(6, 20);
       
       if(controllers != null) {
+        //Draw all children in a limited container, so they don't overflow
         PGraphics buffer = createGraphics(width_, height_-20);
         buffer.beginDraw();
         if(controllerStackHeight > height_-20) buffer.translate(0, -scrollStatus * (controllerStackHeight - height_+20));

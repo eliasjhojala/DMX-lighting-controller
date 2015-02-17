@@ -6,7 +6,7 @@ boolean wasAt64 = false;
 int oldMouseX1;
 int oldMouseY1;
 
-int grandMaster = 50;
+int grandMaster = 255;
 int oldGrandMaster = 40;
 
 long totalMillis[] = new long[9];
