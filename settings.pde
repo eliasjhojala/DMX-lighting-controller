@@ -507,7 +507,7 @@ class IntSettingController {
   void drawToBuffer(PGraphics b) {
     b.pushMatrix(); b.pushStyle();
     b.translate(x, y);
-    if(b.screenY(0, 50) > 0) {
+    if(inBds1D(b.screenY(0, 0), -50, b.height)) {
       switch(mode) {
         case 0:
           //Numberbox

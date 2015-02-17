@@ -200,7 +200,7 @@ class Switch {
       
       b.translate(locX, locY);
       
-      if(b.screenY(0, 13) > 0) {
+      if(inBds2D(b.screenY(0, 0), -13, b.height)) {
         //background
         b.fill(80, 150);
         b.noStroke();

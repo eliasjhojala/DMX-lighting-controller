@@ -201,11 +201,11 @@ boolean inBdsMouseOffst(int x, int y, int w, int h) {
   return inBdsMouse(x, y, x+w, y+h);
 }
 
-boolean inBds2D(int pointerX, int pointerY, int x1, int y1, int x2, int y2){
+boolean inBds2D(float pointerX, float pointerY, float x1, float y1, float x2, float y2){
   return inBds1D(pointerX, x1, x2) && inBds1D(pointerY, y1, y2);
 }
 
-boolean inBds1D(int pointer, int x1, int x2){
+boolean inBds1D(float pointer, float x1, float x2){
   return pointer > x1 && pointer < x2;
 }
 
