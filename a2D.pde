@@ -1,3 +1,7 @@
+//Draw main/2D visualization
+
+
+
 void drawMainWindow() {
   pushMatrix(); 
     //TÄSSÄ KÄÄNNETÄÄN JA SIIRRETÄÄN NÄKYMÄ OIKEIN - DO ROTATE AND TRANSFORM RIGHT
