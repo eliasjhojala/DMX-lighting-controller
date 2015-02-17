@@ -11,13 +11,11 @@ NetAddress myRemoteLocation2;
 
 boolean loadAllDataInSetup = true;
 
-public int leveys;
-public int korkeus;
+
 void setuppi() {
    createMemoryObjects();
 
-  leveys = displayWidth;
-  korkeus = displayHeight;
+  
   loadSetupData();
   if(loadAllDataInSetup == true) {
     thread("loadAllData");
