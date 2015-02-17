@@ -358,9 +358,11 @@ class SettingsTab {
           }
         }
         scrollStatus = constrain(scrollStatus, 0, 1);
-        translate(0, scrollStatus * (height_-20 - 40));
-        fill(180, 180);
-        rect(0, 0, 10, 40);
+        if(controllerStackHeight > height_-20) {
+          translate(0, scrollStatus * (height_-20 - 40));
+          fill(180, 180);
+          rect(0, 0, 10, 40);
+        }
       }
     popMatrix();
   }
