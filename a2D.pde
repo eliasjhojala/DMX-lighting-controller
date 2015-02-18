@@ -72,14 +72,14 @@ void drawMainWindow() {
         }
         
         if(!translated) { translate(fix.x_location+ansaX[fix.parentAnsa], fix.y_location+ansaY[fix.parentAnsa]);
-                          translated = true; }
-          
+                          translated = true; }s
+        translate(fix.size.w/2, fix.size.h/2);
         if(fix.fixtureTypeId != 14) { rotate(radians(fix.rotationZ)); }
         
         
              
        //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
-       if(isHover(0, 0, fix.size.w, fix.size.h) && mousePressed && !mouse.captured && mouse.elmIsHover("main:fixtures")) {
+       if(isHover(-fix.size.w/2, -fix.size.h/2, fix.size.w, fix.size.h) && mousePressed && !mouse.captured && mouse.elmIsHover("main:fixtures")) {
         
          if(mouseButton == RIGHT) {
            toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; 

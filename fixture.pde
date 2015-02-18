@@ -451,6 +451,7 @@ class fixture {
   
   //Index is used only to display the id of the fixture
   void draw2D(int index) {
+    pushStyle();
     kalvo(this.getColor_wDim());
     boolean showFixture = true;
     int lampWidth = 30;
@@ -473,10 +474,12 @@ class fixture {
       int x1 = 0; int y1 = 0;
       this.locationOnScreenX = int(screenX(x1 + lampWidth/2, y1 + lampHeight/2));
       this.locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
-      if(fixtureTypeId == 13) { rectMode(CENTER); rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
+      rectMode(CENTER);
+      if(fixtureTypeId == 13) {  rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
       if(selected) stroke(100, 100, 255); else stroke(255);
       rect(x1, y1, lampWidth, lampHeight, 3);
-      if(fixtureTypeId == 13) { rectMode(CENTER); popMatrix(); rectMode(CORNER); }
+      if(fixtureTypeId == 13) {  popMatrix();  }
+      translate(-size.w/2, -size.h/2);
       if(zoom > 50) {
         if(printMode == false) {
           fill(255, 255, 255);
@@ -490,6 +493,7 @@ class fixture {
        text(index + "/" + this.channelStart, x1, y1 - 15);
       }
     }
+    popStyle();
   }
   
 }//Endof: fixture class
