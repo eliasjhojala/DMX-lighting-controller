@@ -103,47 +103,7 @@ void kalvo(color c) {
 
 
 
-void drawFixture(int i) {
-  kalvo(fixtures.get(i).getColor_wDim());
-  boolean showFixture = true;
-  int lampWidth = 30;
-  int lampHeight = 40;
-  
-  String fixtuuriTyyppi = getFixtureName(i);
-  
-  int fixtureTypeId = fixtures.get(i).fixtureTypeId;
-  
-  if(fixtureTypeId >= 1 && fixtureTypeId <= 13) {
-    lampWidth = fixtures.get(i).size.w;
-    lampHeight = fixtures.get(i).size.h;
-    showFixture = fixtures.get(i).size.isDrawn;
-  }
-  
-  boolean selected = fixtures.get(i).selected && showFixture;
-  
-  
-  if(showFixture == true) {
-    int x1 = 0; int y1 = 0;
-    fixtures.get(i).locationOnScreenX = int(screenX(x1 + lampWidth/2, y1 + lampHeight/2));
-    fixtures.get(i).locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
-    if(fixtureTypeId == 13) { rectMode(CENTER); rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
-    if(selected) stroke(100, 100, 255); else stroke(255);
-    rect(x1, y1, lampWidth, lampHeight, 3);
-    if(fixtureTypeId == 13) { rectMode(CENTER); popMatrix(); rectMode(CORNER); }
-    if(zoom > 50) {
-      if(printMode == false) {
-        fill(255, 255, 255);
-        text(fixtures.get(i).getDimmerWithMaster(), x1, y1 + lampHeight + 15);
-      }
-      else {
-        fill(0, 0, 0);
-        text(fixtuuriTyyppi, x1, y1 + lampHeight + 15);
-      }
-    
-     text(i + "/" + fixtures.get(i).channelStart, x1, y1 - 15);
-    }
-  }
-}
+
 
 void mouseWheel(MouseEvent event) {
   if(mouse.elmIsHover("main:move")) { //Jos hiiri ei ole sivuvalikon päällä sen skrollaus vaikuttaa visualisaation zoomaukseen

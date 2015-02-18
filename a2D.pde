@@ -59,6 +59,7 @@ void drawMainWindow() {
     
     for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) {
       pushMatrix();
+        fixture fix = fixtures.get(i);
         boolean translated = false;
         
         if(!mouse.captured || mouse.isCaptured("main:fixtures")) {
@@ -70,15 +71,15 @@ void drawMainWindow() {
           }
         }
         
-        if(!translated) { translate(fixtures.get(i).x_location+ansaX[fixtures.get(i).parentAnsa], fixtures.get(i).y_location+ansaY[fixtures.get(i).parentAnsa]);
+        if(!translated) { translate(fix.x_location+ansaX[fix.parentAnsa], fix.y_location+ansaY[fix.parentAnsa]);
                           translated = true; }
           
-        if(fixtures.get(i).fixtureTypeId != 14) { rotate(radians(fixtures.get(i).rotationZ)); }
+        if(fix.fixtureTypeId != 14) { rotate(radians(fix.rotationZ)); }
         
         
              
        //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
-       if(isHover(0, 0, fixtures.get(i).size.w, fixtures.get(i).size.h) && mousePressed && !mouse.captured && mouse.elmIsHover("main:fixtures")) {
+       if(isHover(0, 0, fix.size.w, fix.size.h) && mousePressed && !mouse.captured && mouse.elmIsHover("main:fixtures")) {
         
          if(mouseButton == RIGHT) {
            toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; 
@@ -96,14 +97,14 @@ void drawMainWindow() {
              mouseReleased = false;
            } 
            else {
-              fixtures.get(i).toggle(true);
+              fix.toggle(true);
            }
            
          }
        }
        
        
-       drawFixture(i);
+       fix.draw2D(i);
        
       popMatrix();
       
