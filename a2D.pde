@@ -72,7 +72,7 @@ void drawMainWindow() {
         }
         
         if(!translated) { translate(fix.x_location+ansaX[fix.parentAnsa], fix.y_location+ansaY[fix.parentAnsa]);
-                          translated = true; }s
+                          translated = true; }
         translate(fix.size.w/2, fix.size.h/2);
         if(fix.fixtureTypeId != 14) { rotate(radians(fix.rotationZ)); }
         
