@@ -500,51 +500,56 @@ void keyReleased() {
 
 }
 
+boolean keyCapElsewhere = false;
+boolean keyCapElseDown = false;
+
+
 void keyPressed() {
+  if(!keyCapElsewhere) {
+    if(key == 'b') { boolean b = s2l.blinky; s2l = new soundDetect(); s2l.blinky = !b; }
+    
+    if(key == 'k') { newColorWash(); }
   
-  if(key == 'b') { boolean b = s2l.blinky; s2l = new soundDetect(); s2l.blinky = !b; }
-  
-  if(key == 'k') { newColorWash(); }
-
-  
-  if(key==27) { key=0; 
-    //Escape from printMode
-    printMode = false;
-  } //Otetaan esc-näppäin pois käytöstä. on kumminkin huomioitava, että tämä toimii vain pääikkunassa
-  if(key == 'm') {
-    showMode = !showMode;
-    notifier.notify("showMode is now " + (showMode ? "enabled" : "disabled") + ".");
-  }
-  if(key == 'r') { revStepPressed = true; }
-  if(key == '1') { lampToMove = 1; }
-  if(key == 'l') { loadAllData(); }
-  if(key == 'c') {
-    for(int i = 0; i < channels; i++) {
-      valueOfDimBeforeBlackout[i] = 0;
-      valueOfDimBeforeFullOn[i] = 0;
+    
+    if(key==27) { key=0; 
+      //Escape from printMode
+      printMode = false;
+    } //Otetaan esc-näppäin pois käytöstä. on kumminkin huomioitava, että tämä toimii vain pääikkunassa
+    if(key == 'm') {
+      showMode = !showMode;
+      notifier.notify("showMode is now " + (showMode ? "enabled" : "disabled") + ".");
     }
-  }
+    if(key == 'r') { revStepPressed = true; }
+    if(key == '1') { lampToMove = 1; }
+    if(key == 'l') { loadAllData(); }
+    if(key == 'c') {
+      for(int i = 0; i < channels; i++) {
+        valueOfDimBeforeBlackout[i] = 0;
+        valueOfDimBeforeFullOn[i] = 0;
+      }
+    }
+    
+    if(keyCode == 17) { ctrlDown = true; }
+    if(keyCode == 16) { shftDown = true; println("toimii"); }
+    if(key == 'o') { fileDialogInput(); ctrlDown = false; }
+    if(key == 's') {
+      if(shftDown) {
+        fileDialogOutput();
+        shftDown = false; println("TOIMII");
+      }
+      else {
+        saveAllData();
+      }
+    }
   
-  if(keyCode == 17) { ctrlDown = true; }
-  if(keyCode == 16) { shftDown = true; println("toimii"); }
-  if(key == 'o') { fileDialogInput(); ctrlDown = false; }
-  if(key == 's') {
-    if(shftDown) {
-      fileDialogOutput();
-      shftDown = false; println("TOIMII");
-    }
-    else {
-      saveAllData();
-    }
-  }
-
-  if(key == 'u') {
-      if(upper == true) { enttecDMXplace = enttecDMXplace - 1; upper = false; }
-      else { enttecDMXplace = enttecDMXplace + 1; upper = true; }
-  } 
-  if(keyCode == RIGHT) { rightPressed = true; }
-  if(keyCode == LEFT) { leftPressed = true; }
-  if(keyCode == ENTER) { enterPressed = true; }
+    if(key == 'u') {
+        if(upper == true) { enttecDMXplace = enttecDMXplace - 1; upper = false; }
+        else { enttecDMXplace = enttecDMXplace + 1; upper = true; }
+    } 
+    if(keyCode == RIGHT) { rightPressed = true; }
+    if(keyCode == LEFT) { leftPressed = true; }
+    if(keyCode == ENTER) { enterPressed = true; }
+  } else { keyCapElseDown = true; }
 }
 
 

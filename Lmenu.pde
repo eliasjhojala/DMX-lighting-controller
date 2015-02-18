@@ -295,8 +295,12 @@ class bottomMenuChController {
       case 0:
         slider();
         buttons();
+        fill(255);
+        text(value, 32, 58);
         translate(0, 115);
+        fill(0);
         text(displayText, 0, 0);
+        
         //This is for visuals
         stroke(255, 100); strokeWeight(1);
         line(-5, 4, 50, 4);

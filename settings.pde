@@ -96,15 +96,15 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", tabs[0]),
         new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0]),
-        new SettingController(0, 0, "Test Int", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, "Test Int1", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, "Test Int2", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, "Test Int3", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, "Test Int4", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, "Test Int5", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, "Test Int6", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, "Test Int7", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, "Test Int8", "This is just a test controller to see how the int controller will work.", tabs[0])
+        new SettingController(0, 0, 0, "Test Int", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, 0, "Test Int1", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, 0, "Test Int2", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, 0, "Test Int3", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, 0, "Test Int4", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, 0, "Test Int5", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, 0, "Test Int6", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, 0, "Test Int7", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(0, 0, 0, "Test Int8", "This is just a test controller to see how the int controller will work.", tabs[0])
       }
     );
     tabs[1] = new SettingsTab("Visualization", this);
@@ -112,7 +112,8 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", tabs[1]),
         new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", tabs[1]),
-        new SettingController(3, 2, "View Rotation", "Adjust the rotation of the visualization.", tabs[1])
+        new SettingController(3, 2, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[1]),
+        new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[1])
       }
     );
     tabs[2] = new SettingsTab("Chase", this);
@@ -123,6 +124,12 @@ class SettingsWindow {
     );
     tabs[3] = new SettingsTab("COM", this);
     tabs[4] = new SettingsTab("OSC", this);
+    tabs[4].setControllers(
+      new SettingController[] {
+        new SettingController("Text here", "Test IP", "This is a test text.", tabs[4]),
+        new SettingController("Text here", "Test IP", "This is a test text.", tabs[4])
+      }
+    );
   }
   
   
@@ -157,6 +164,7 @@ class SettingsWindow {
       case 1: /*defaultX*/      break;
       case 2: /*defaultY*/      break;
       case 3: pageRotation = v; break;
+      case 4: zoom = v;         break;
     }
   }
   
@@ -166,6 +174,7 @@ class SettingsWindow {
       //case 1: return ;
       //case 2: return ;
       case 3:  return pageRotation;
+      case 4:  return int(zoom);
       default: return 0;
     }
   }
@@ -396,28 +405,32 @@ class SettingsTab {
 class SettingController {
   Switch booleanController;
   IntSettingController intController;
+  StringSettingController strController;
   
   boolean oldValueBoolean;
   int oldValueInt;
+  
+  
   
   SettingsTab parentTab;
   
   int var;
   
-  int mode; //0: switch, 1: numbox, 2: slider, 3: knob, /-4: textbox, 5: listbox-/
+  int mode; //0: switch, 1: numbox, 2: slider, 3: knob, 4: textbox, /- 5: listbox-/
   
   String name;
   String description;
   
-  SettingController(int var, int type, String name, String description, SettingsTab parent) {
-    intController = new IntSettingController(type, 0, parent.width_-106, 8, this);
+  //int
+  SettingController(int var, int type, int defVal, String name, String description, SettingsTab parent) {
+    intController = new IntSettingController(type, defVal, parent.width_-106, 8, this);
     mode = type+1;
     this.name = name;
     this.description = description;
     this.var = var;
     parentTab = parent;
   }
-  
+  //boolean
   SettingController(int var, String name, String description, SettingsTab parent) {
     mode = 0;
     booleanController = new Switch(false, "settings:" + parent.text + ":" + name, "settings", parent.width_-42, 8);
@@ -425,6 +438,16 @@ class SettingController {
     this.description = description;
     this.var = var;
     parentTab = parent;
+  }
+  
+  //STRING -- directly controls an object
+  SettingController(String CONTROLLED_OBJECT, String name, String description, SettingsTab parent) {
+    mode = 4;
+    strController = new StringSettingController(CONTROLLED_OBJECT, parent.width_-306, 8, this);
+    this.name = name;
+    this.description = description;
+    parentTab = parent;
+    
   }
   
   int getDrawHeight() {
@@ -466,6 +489,10 @@ class SettingController {
           oldValueInt = intController.state;
         }
       break;
+      case 4:
+        drawText(0, 0, buffer);
+        strController.drawToBuffer(buffer);
+      break;
     }
   }
   
@@ -495,6 +522,8 @@ class IntSettingController {
   int state;
   float floatState;
   
+  int defaultVal;
+  
   int min, max;
   
   SettingController parentContainer;
@@ -504,6 +533,7 @@ class IntSettingController {
   IntSettingController(int mode, int state, int x_offs, int y_offs, SettingController parent) {
     this.mode = mode;
     this.state = state;
+    this.defaultVal = state;
     x = x_offs;
     y = y_offs;
     parentContainer = parent;
@@ -538,6 +568,7 @@ class IntSettingController {
             }
           popMatrix();
           
+          b.strokeWeight(1.5);
           b.rect(0, 0, 100, 20);
           b.textAlign(RIGHT);
           b.fill(255);
@@ -562,6 +593,7 @@ class IntSettingController {
           
           b.fill(topMenuTheme2);
           b.stroke(topMenuAccent);
+          b.strokeWeight(1.5);
           //Radial visualizer
           b.arc(0, 0, 50, 50, -HALF_PI, (floatState/360*TWO_PI) - HALF_PI, PIE);
           
@@ -583,8 +615,66 @@ class IntSettingController {
       
       mouse.setElementExpire("settings:" + parentContainer.name, 2);
       if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == RIGHT && mouse.firstCaptureFrame) {
-        if(lastRMBc > millis() - 1000) setState(0); else lastRMBc = millis();
+        if(lastRMBc > millis() - 1000) setState(defaultVal); else lastRMBc = millis();
       }
+    }
+    b.popMatrix(); b.popStyle();
+  }
+  
+}
+
+
+
+
+class StringSettingController {
+  String CONTROLLED;
+  
+  
+  SettingController parentContainer;
+  
+  int x, y;
+  
+  StringSettingController(String CONTROLLED, int x_offs, int y_offs, SettingController parent) {
+    this.CONTROLLED = CONTROLLED;
+    x = x_offs;
+    y = y_offs;
+    parentContainer = parent;
+  }
+  
+  
+  void draw() {
+    drawToBuffer(g);
+  }
+  
+  
+  void drawToBuffer(PGraphics b) {
+    b.pushMatrix(); b.pushStyle();
+    b.translate(x, y);
+    if(inBds1D(b.screenY(0, 0), -50, b.height)) {
+      
+      //Numberbox
+      //Background
+      b.fill(45, 138, 179);
+      b.stroke(20, 100, 130);
+      pushMatrix();
+        translate(b.screenX(0, 0), b.screenY(0, 0));
+        mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 300, 20);
+        mouse.setElementExpire("settings:" + parentContainer.name, 2);
+        if(mouse.isCaptured("settings:" + parentContainer.name) && mouse.firstCaptureFrame && mouseButton == LEFT) {
+          
+        }
+      popMatrix();
+      
+      b.strokeWeight(1.5);
+      b.rect(0, 0, 300, 20);
+      b.textAlign(LEFT);
+      b.fill(255);
+      b.textSize(14);
+      b.text(CONTROLLED, 4, 2, 292, 18);
+      
+      
+      
+      
     }
     b.popMatrix(); b.popStyle();
   }
