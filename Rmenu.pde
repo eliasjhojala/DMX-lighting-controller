@@ -1,6 +1,6 @@
 //Tässä välilehdessä piirretään sivuvalikko, jossa näkyy memorit ja niiden arvot, sekä tyypit
  
-memoryCreationBox memoryCreator;
+MemoryCreationBox memoryCreator;
 
 boolean savingMemory = false;
  
@@ -156,8 +156,8 @@ String getMemoryTypeName(int numero) {
 /////////MemoryCreationBox////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-class memoryCreationBox {
-  memoryCreationBox(boolean o) {
+class MemoryCreationBox {
+  MemoryCreationBox(boolean o) {
     open = o;
     locY = 40;
     locX = width - (320 + 168);
@@ -218,6 +218,10 @@ class memoryCreationBox {
   int selectedMemoryMode = 0;
   int selectedMemorySlot = 1;
   
+  
+  int h = 600, w = 300;
+  
+  
   boolean[] selectedWhatToSave;
   
   void draw() {
@@ -225,45 +229,44 @@ class memoryCreationBox {
       pushMatrix();
       pushStyle();
       { // frame & frame controls
-        int saveBoxHeight = 600;
         translate(locX, locY);
         fill(255, 230);
         stroke(150);
         strokeWeight(3);
         //Box itself
-        rect(0, 0, 300, saveBoxHeight, 20);
-        mouse.declareUpdateElementRelative("memoryCreationBox", "addMemory", 0, 0, 300, saveBoxHeight);
-        mouse.setElementExpire("memoryCreationBox", 2);
+        rect(0, 0, w, h, 20);
+        mouse.declareUpdateElementRelative("MemoryCreationBox", "addMemory", 0, 0, w, h);
+        mouse.setElementExpire("MemoryCreationBox", 2);
         //Grabable location button
         fill(180);
         noStroke();
         rect(10, 10, 20, 20, 20, 0, 0, 4);
-        mouse.declareUpdateElementRelative("memoryCreationBox:move", "memoryCreationBox", 10, 10, 20, 20);
-        mouse.setElementExpire("memoryCreationBox:move", 2);
-        if(mouse.isCaptured("memoryCreationBox:move")) {
-          locY = constrain(mouseY - pmouseY + locY, 40, height - 340);
+        mouse.declareUpdateElementRelative("MemoryCreationBox:move", "MemoryCreationBox", 10, 10, 20, 20);
+        mouse.setElementExpire("MemoryCreationBox:move", 2);
+        if(mouse.isCaptured("MemoryCreationBox:move")) {
+          locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
           locX = constrain(mouseX - pmouseX + locX, 40, width - (320 + 168));
         }
         //Cancel button
-        mouse.declareUpdateElementRelative("memoryCreationBox:cancel", "memoryCreationBox", 30, 10, 50, 20);
-        mouse.setElementExpire("memoryCreationBox:cancel", 2);
-        boolean cancelHover = mouse.elmIsHover("memoryCreationBox:cancel");
+        mouse.declareUpdateElementRelative("MemoryCreationBox:cancel", "MemoryCreationBox", 30, 10, 50, 20);
+        mouse.setElementExpire("MemoryCreationBox:cancel", 2);
+        boolean cancelHover = mouse.elmIsHover("MemoryCreationBox:cancel");
         fill(cancelHover ? 220 : 180, 30, 30);
         //Close if Cancel is pressed
-        if(mouse.isCaptured("memoryCreationBox:cancel")) open = false;
+        if(mouse.isCaptured("MemoryCreationBox:cancel")) open = false;
         rect(30, 10, 50, 20, 0, 4, 4, 0);
         fill(230);
         textAlign(CENTER);
         text("Cancel", 55, 24);
         //Save button
-        mouse.declareUpdateElementRelative("memoryCreationBox:save", "memoryCreationBox", 290, saveBoxHeight-10, -50, -20);
-        mouse.setElementExpire("memoryCreationBox:save", 2);
-        boolean saveHover = mouse.elmIsHover("memoryCreationBox:save");
+        mouse.declareUpdateElementRelative("MemoryCreationBox:save", "MemoryCreationBox", 290, h-10, -50, -20);
+        mouse.setElementExpire("MemoryCreationBox:save", 2);
+        boolean saveHover = mouse.elmIsHover("MemoryCreationBox:save");
         fill(50, saveHover ? 240 : 220, 60);
-        rect(290, saveBoxHeight-10, -50, -20, 4, 4, 20, 4);
+        rect(290, h-10, -50, -20, 4, 4, 20, 4);
         fill(255);
-        text("Save", 265, saveBoxHeight-15);
-        if(mouse.isCaptured("memoryCreationBox:save")) {
+        text("Save", 265, h-15);
+        if(mouse.isCaptured("MemoryCreationBox:save")) {
           save();
         }
       }
@@ -287,14 +290,14 @@ class memoryCreationBox {
       stroke(150);
       fill(240);
       rect(0, 10, 100, 20, 2);
-      mouse.declareUpdateElementRelative("memoryCreationBox:type", "memoryCreationBox", 0, 10, 100, 20);
-      mouse.setElementExpire("memoryCreationBox:type", 2);
-      boolean boxIsHover = mouse.elmIsHover("memoryCreationBox:type");
+      mouse.declareUpdateElementRelative("MemoryCreationBox:type", "MemoryCreationBox", 0, 10, 100, 20);
+      mouse.setElementExpire("MemoryCreationBox:type", 2);
+      boolean boxIsHover = mouse.elmIsHover("MemoryCreationBox:type");
       fill(boxIsHover ? 200 : 180); noStroke();
       rect(82.5, 12.5, 16, 16, 2);
       fill(230);
       
-      if(mouse.isCaptured("memoryCreationBox:type") && mouse.firstCaptureFrame)
+      if(mouse.isCaptured("MemoryCreationBox:type") && mouse.firstCaptureFrame)
         { addToSelectedMemoryMode(); }
       
       fill(0);
@@ -333,9 +336,9 @@ class memoryCreationBox {
       fill(0, 186, 240);
       stroke(0, 0, 200);
       triangle(mappedSlot, 2, mappedSlot+10, 22, mappedSlot-10, 22);
-      mouse.declareUpdateElementRelative("memoryCreationBox:slot", "memoryCreationBox", int(mappedSlot-10), 0, 20, 22);
-      mouse.setElementExpire("memoryCreationBox:slot", 2);
-      if(mouse.isCaptured("memoryCreationBox:slot")) {
+      mouse.declareUpdateElementRelative("MemoryCreationBox:slot", "MemoryCreationBox", int(mappedSlot-10), 0, 20, 22);
+      mouse.setElementExpire("MemoryCreationBox:slot", 2);
+      if(mouse.isCaptured("MemoryCreationBox:slot")) {
         selectedMemorySlot = constrain(int(map(mouseX - screenX(0, 0), 0, 280, 0, numberOfMemories)), 1, numberOfMemories-1);
       }
       
@@ -359,14 +362,14 @@ class memoryCreationBox {
           for(int i = 0; i < saveOptionButtonVariables.length; i++) {
             pushMatrix();
               translate(i / rows * 120, i % rows * 30);
-              mouse.declareUpdateElementRelative("memoryCreationBox:wts" + i, "memoryCreationBox", 0, 0, 120, 25);
-              mouse.setElementExpire("memoryCreationBox:wts" + i, 2);
-              boolean boxIsHover = mouse.elmIsHover("memoryCreationBox:wts" + i);
+              mouse.declareUpdateElementRelative("MemoryCreationBox:wts" + i, "MemoryCreationBox", 0, 0, 120, 25);
+              mouse.setElementExpire("MemoryCreationBox:wts" + i, 2);
+              boolean boxIsHover = mouse.elmIsHover("MemoryCreationBox:wts" + i);
               fill(boxIsHover ? 210 : 200);
               noStroke();
               rect(0, 0, 25, 25, 4);
               
-              if(mouse.isCaptured("memoryCreationBox:wts" + i) && mouse.firstCaptureFrame) {
+              if(mouse.isCaptured("MemoryCreationBox:wts" + i) && mouse.firstCaptureFrame) {
                 selectedWhatToSave[i] = !selectedWhatToSave[i];
               }
               if(selectedWhatToSave[i]) {
@@ -385,11 +388,11 @@ class memoryCreationBox {
             text("Input Mode:", 10, 125);
             fill(0, 186, 240); noStroke();
             rect(110, 115, 12, 12, 1.5);
-            if(isHoverSimple(110, 115, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("memoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(110, 115, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.inputModeUp();
             }
             rect(124, 115, 12, 12, 1.5);
-            if(isHoverSimple(124, 115, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("memoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(124, 115, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.inputModeDown();
             }
             textSize(10);
@@ -403,11 +406,11 @@ class memoryCreationBox {
             text("Output Mode:", 10, 175);
             fill(0, 186, 240); noStroke();
             rect(110, 165, 12, 12, 1.5);
-            if(isHoverSimple(110, 165, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("memoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(110, 165, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.outputModeUp();
             }
             rect(124, 165, 12, 12, 1.5);
-            if(isHoverSimple(124, 165, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("memoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(124, 165, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.outputModeDown();
             }
             textSize(10);
@@ -421,11 +424,11 @@ class memoryCreationBox {
             text("Beat Mode:", 10, 225);
             fill(0, 186, 240); noStroke();
             rect(110, 215, 12, 12, 1.5);
-            if(isHoverSimple(110, 215, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("memoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(110, 215, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.beatModeUp();
             }
             rect(124, 215, 12, 12, 1.5);
-            if(isHoverSimple(124, 215, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("memoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(124, 215, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.beatModeDown();
             }
             textSize(10);
@@ -439,11 +442,11 @@ class memoryCreationBox {
             text("Fade Mode:", 10, 275);
             fill(0, 186, 240); noStroke();
             rect(110, 265, 12, 12, 1.5);
-            if(isHoverSimple(110, 265, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("memoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(110, 265, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.fadeModeUp();
             }
             rect(124, 265, 12, 12, 1.5);
-            if(isHoverSimple(124, 265, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("memoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(124, 265, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.fadeModeDown();
             }
             textSize(10);
@@ -463,7 +466,7 @@ class memoryCreationBox {
             text("Fade: " + memories[selectedMemorySlot].myChase.ownFade, 160, 125);
             pushMatrix();
               translate(160, 130);
-              memories[selectedMemorySlot].myChase.changeFade(quickSlider("memoryCreationBox:fade", memories[selectedMemorySlot].myChase.ownFade));
+              memories[selectedMemorySlot].myChase.changeFade(quickSlider("MemoryCreationBox:fade", memories[selectedMemorySlot].myChase.ownFade));
             popMatrix();
             
           }

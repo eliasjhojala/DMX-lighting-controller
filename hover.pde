@@ -64,6 +64,29 @@ class Mouse {
     
   }
   
+  /////////////////////////BRIDGED MODE/////
+  boolean bridgedMode = false;
+  Mouse bridgedModeParent;
+  String bridgedModeName;
+  
+  //Initialize the mouse in a bridged mode, where THIS mouse is a sub-mouse to the parent mouse specified
+  Mouse(Mouse parent, String nameInParent, int priority, int x_off, int y_off, int w, int h) {
+    initializeBridge(parent, nameInParent, priority, x_off, y_off, w, h);
+    
+  }
+  
+  Mouse(Mouse parent, String nameInParent, String onTopOf, int x_off, int y_off, int w, int h) {
+    initializeBridge(parent, nameInParent, parent.getElementByName(onTopOf).priority, x_off, y_off, w, h);
+  }
+  
+  void initializeBridge(Mouse parent, String nameInParent, int priority, int x_off, int y_off, int w, int h) {
+    bridgedMode = true;
+    bridgedModeParent = parent;
+    
+  }
+  
+  //////////////////////////////////////////
+  
   void declareElement(String name, int priority, int x1, int y1, int x2, int y2) {
     elements.add(new HoverableElement(name, priority, x1, y1, x2, y2, objectUid.incrementAndGet()));
   }
@@ -156,7 +179,7 @@ class Mouse {
       if(!doNotContinue) {
         
         
-        if(ontop[i] && elm.priority > curMax) {
+        if(ontop[i] && elm.priority > curMax && elm.enabled) {
           curMax = elm.priority;
           maxId = i;
           found = true;
@@ -180,7 +203,7 @@ class Mouse {
   
   //Use this if elements autoCapture is not on
   void capture(HoverableElement elm) {
-    if(elm.isHovered && !captured) {
+    if(elm.isHovered && !captured && elm.enabled) {
         captured = true;
         capturedElement = elm;
         firstCaptureFrame = true;
@@ -209,6 +232,8 @@ class Mouse {
     return -1;
   }
   
+  
+  
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -218,6 +243,8 @@ class HoverableElement {
   String name;        //Identifier
   int x1, y1, x2, y2; //Coordinates on screen
   int priority;       //priority
+  
+  boolean enabled;    //Is element currently visible and clickable
   
   int uid;            //unique identifier
   
@@ -234,6 +261,7 @@ class HoverableElement {
     x1 = X1; y1 = Y1;
     x2 = X2; y2 = Y2;
     uid = UID;
+    enabled = true;
   }
   
   

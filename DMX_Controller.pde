@@ -475,7 +475,7 @@ void setup() {
   thread("ylavalikkoSetup");
   colorWashSetup();
   
-  memoryCreator = new memoryCreationBox(false);
+  memoryCreator = new MemoryCreationBox(false);
   
   createFixtureProfiles();
   

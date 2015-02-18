@@ -1,6 +1,38 @@
 //This tab contains classes and functions related to the GUI
 
 
+
+class SubWindowContainer {
+  //X and Y offset
+  int x, y;
+  
+  Mouse swMouse;
+  
+  PGraphics swBuffer;
+  
+  //Contained windows
+  MemoryCreationBox memoryCreation;
+  SettingsWindow settings;
+  
+  SubWindowContainer(MemoryCreationBox memBox) {
+    memoryCreation = memBox;
+    swBuffer = createGraphics(memBox.w, memBox.h);
+    swMouse = new Mouse();
+  }
+  
+  SubWindowContainer(SettingsWindow setWin) {
+    settings = setWin;
+    swBuffer = createGraphics(setWin.size, setWin.size);
+    swMouse = new Mouse();
+  }
+  
+}
+
+class SubWindowHandler {
+  
+}
+
+
 //////////////////////////////////////////////////////////////CONTEXT//MENU///////////////////////////////////////////////////////////////////////////////////////////////////
 contextMenu contextMenu1 = new contextMenu(this); 
 
