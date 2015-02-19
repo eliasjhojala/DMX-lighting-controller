@@ -380,6 +380,9 @@ class chase { //Begin of chase class--------------------------------------------
             case 3: fade = chaseFade; break;
             default: fade = chaseFade;
           }
+          fade = round(fade/25.5);
+          fade = round(pow(fade, 4));
+          fade = fade + 1;
         }
   //End of fadeMode functions
   
