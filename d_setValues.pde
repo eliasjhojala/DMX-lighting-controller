@@ -54,32 +54,15 @@ void setDimAndMemoryValuesAtEveryDraw() {
   
   arrayCopy(DMX, DMXforCrossFixtureOld);
 
-  { // Memory checks --->
-  
-      
-      
+  { // Memory checks --->   
       
       
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       tryDmxCheck();
-      dmxToDim(); //Set input to dimInput variable
+      dmxToDim(); //Set input to dimInput variable 
       
-      
-      
-
-      
-      
-      //---------------------------------------------------------blackOut and-------------------------------------------------------
-      
-      if(blackOut == true)  { //Tarkistetaan onko blackout päällä - check if blackout is on
-         grandMaster = 0; //if blackout is on then grandMaster will be zero
-      }
-      
-       if(fullOn == true)  { //Tarkistetaan onko fullon päällä - check if fullOn is on
-         for(int i = 0; i < channels; i++) { //Käydään kaikki kanavat läpi
-           dimInput[i] = 255; //Asetetaan kanavan arvoksi nolla - set all of the channels to zero
-         }
-      }
+      //---------------------------------------------------------blackOut and blackOut-------------------------------------------------------
+        //TODO: fullOn and blackOut here if needed
   }
   dimCheckFinished = false;
 }
