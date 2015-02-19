@@ -849,10 +849,7 @@ public class ControlFrame extends PApplet {
       //Redraw backround
       background(100, 100, 100);
       
-      //update effect variables
-      if (effChaserOld != effChaser) {chase = effChaser; effChaserOld = effChaser;} else {}
-      
-      
+
       
       //set place variables
       controlP5place = int(cp5.controller("grouping1").getValue());

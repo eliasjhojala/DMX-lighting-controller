@@ -93,12 +93,6 @@ public class secondApplet extends PApplet {
   }
 
 
-  for(int id = 0; id <= 1; id++) {
-    for(int i = 0; i < mhx50_createFinalChannelValues[id].length; i++) {
-      text(mhx50_createFinalChannelValues[id][i], 800+id*200, 200+15*i);
-    }
-  }
-
 
 
 }

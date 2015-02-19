@@ -47,10 +47,6 @@ void keyPressed() {
     }
   }
 
-  if(key == 'u') {
-      if(upper == true) { enttecDMXplace = enttecDMXplace - 1; upper = false; }
-      else { enttecDMXplace = enttecDMXplace + 1; upper = true; }
-  } 
   if(keyCode == RIGHT) { rightPressed = true; }
   if(keyCode == LEFT) { leftPressed = true; }
   if(keyCode == ENTER) { enterPressed = true; }
