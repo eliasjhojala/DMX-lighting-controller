@@ -45,6 +45,10 @@ void draw() {
     invokeFixturesDraw();
     drawColorWashMenu();
     
+    subWindowHandler.draw();
+    
+    
+    
   }
   if(!freeze) initSettingsInSetup();
 }

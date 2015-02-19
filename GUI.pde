@@ -16,26 +16,30 @@ class SubWindowContainer {
   
   int mode; // 0: memBox, 1: settings, 2: fixtureProperties
   
-  SubWindowContainer(MemoryCreationBox memBox) {
+  SubWindowContainer(MemoryCreationBox memBox, String mouseName, int mousePriority) {
     memoryCreation = memBox;
-    swBuffer = createGraphics(memBox.w, memBox.h);
-    swMouse = new Mouse();
+    swBuffer = createGraphics(memBox.w+3, memBox.h+3);
+    x = memBox.locX; y = memBox.locY;
+    swMouse = new Mouse(mouse, mouseName, mousePriority, x, y, memBox.w, memBox.h);
     mode = 0;
   }
   
-  SubWindowContainer(SettingsWindow setWin) {
+  SubWindowContainer(SettingsWindow setWin, String mouseName, int mousePriority) {
     settings = setWin;
-    swBuffer = createGraphics(setWin.size, setWin.size);
-    swMouse = new Mouse();
+    swBuffer = createGraphics(setWin.size+3, setWin.size+3);
+    x = setWin.locX; y = setWin.locY;
+    swMouse = new Mouse(mouse, mouseName, mousePriority, x, y, setWin.size, setWin.size);
     mode = 1;
   }
   
-  void draw() {
+  boolean draw() {
     if(isOpen()) {
-      swMouse.bridgedModeParent.getElementByName(swMouse.bridgedModeName).enabled = true;
+      mouse.getElementByName(swMouse.bridgedModeName).enabled = true;
       swBuffer.beginDraw();
       swBuffer.clear();
-      swMouse.refreshBridged(x, y);
+      swBuffer.translate(1, 1);
+      getXY();
+      swMouse.refreshBridged(x, y, swBuffer);
       switch(mode) {
         case 0:
           memoryCreation.draw(swBuffer, swMouse, false);
@@ -48,9 +52,28 @@ class SubWindowContainer {
         break;
       }
       swBuffer.endDraw();
-    } else swMouse.bridgedModeParent.getElementByName(swMouse.bridgedModeName).enabled = false;
+      image(swBuffer, x, y);
+      if(mouse.isCaptured(swMouse.bridgedModeName)) return true;
+    } else { swMouse.bridgedModeParent.getElementByName(swMouse.bridgedModeName).enabled = false; swMouse.captured = false; }
+    return false;
   }
   
+  
+  void getXY() {
+    switch(mode) {
+      case 0:
+        x = memoryCreation.locX;
+        y = memoryCreation.locY;
+      break;
+      case 1:
+        x = settings.locX;
+        y = settings.locY;
+      break;
+      case 2:
+        
+      break;
+    }
+  }
   
   boolean isOpen() {
     switch(mode) {
@@ -60,9 +83,47 @@ class SubWindowContainer {
       default: return false;
     }
   }
+  
 }
 
+SubWindowHandler subWindowHandler;
+
 class SubWindowHandler {
+  
+  SubWindowHandler() {
+    subWindows = new ArrayList<SubWindowContainer>();
+    createDefaultWindows();
+  }
+  
+  void createDefaultWindows() {
+    subWindows.add(new SubWindowContainer(memoryCreator, "MemoryCreator", 1000));
+  }
+  
+  ArrayList<SubWindowContainer> subWindows;
+  
+  void draw() {
+    for(int i = subWindows.size()-1; i >= 0; i--) {
+      SubWindowContainer sw = subWindows.get(i);
+      setPriority(5100 - i, sw);
+      if(sw.draw()) {
+        putOnTop(i);
+      }
+      
+    }
+  }
+  
+  void setPriority(int newPriority, SubWindowContainer sw) {
+    mouse.getElementByName(sw.swMouse.bridgedModeName).priority = newPriority;
+  }
+  
+  void putOnTop(int i) {
+    ArrayList<SubWindowContainer> temp = new ArrayList<SubWindowContainer>(subWindows);
+    for(int i_ = 0; i_ < i; i_++) {
+      subWindows.set(i_+1, temp.get(i_));
+    }
+    subWindows.set(0, temp.get(i));
+  }
+  
   
 }
 

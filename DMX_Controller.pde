@@ -479,6 +479,8 @@ void setup() {
   
   createFixtureProfiles();
   
+  subWindowHandler = new SubWindowHandler();
+  
 }
 
 

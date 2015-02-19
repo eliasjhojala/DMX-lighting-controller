@@ -86,20 +86,21 @@ class Mouse {
     bridgedModeParent = parent;
     bridgedX = x_off; bridgedY = y_off;
     bridgedW = w;     bridgedH = h;
+    bridgedModeName = nameInParent;
     parent.declareElement(nameInParent, priority, x_off, y_off, x_off+w, y_off+h);
     
   }
   
-  void refreshBridged(int newX, int newY) {
+  void refreshBridged(int newX, int newY, PGraphics g) {
     bridgedX = newX;
     bridgedY = newY;
     bridgedModeParent.updateElement(bridgedModeName, newX, newY, newX+bridgedW, newY+bridgedH);
     firstCaptureFrame = bridgedModeParent.firstCaptureFrame;
-    if(bridgedMode) refresh(mouseX + bridgedX, mouseY + bridgedY);
+    if(bridgedMode) refresh(mouseX - bridgedX, mouseY - bridgedY, g);
   }
   
-  void refreshBridged() {
-    refreshBridged(bridgedX, bridgedY);
+  void refreshBridged(PGraphics g) {
+    refreshBridged(bridgedX, bridgedY, g);
   }
   
   //////////////////////////////////////////
@@ -181,17 +182,17 @@ class Mouse {
   }
   
   void refresh() {
-    refresh(mouseX, mouseY);
+    refresh(mouseX, mouseY, g);
   }
   
   //Should be called every draw. Picks one element to assing a capture to.
-  void refresh(float mouseX, float mouseY) {
+  void refresh(float mouseX, float mouseY, PGraphics g) {
     firstCaptureFrame = false;
     boolean[] ontop = new boolean[elements.size()];
     for(int i = 0; i < ontop.length; i++) {
       HoverableElement elm = elements.get(i);
       elm.isHovered = false;
-      ontop[i] = isHoverAB(elm.x1, elm.y1, elm.x2, elm.y2);
+      ontop[i] = isHoverAB(elm.x1, elm.y1, elm.x2, elm.y2, mouseX, mouseY, g);
     }
     int curMax = Integer.MIN_VALUE;
     int maxId = 0;
@@ -225,7 +226,7 @@ class Mouse {
           elements.get(i).isHovered = true;
           //If Mouse is on top of the element and it has the same priority as the other highest-priority elements currently Moused over, select it
     }
-    if(mousePressed) {
+    if(mousePressed && maxId < elements.size()) {
       if(elements.get(maxId).autoCapture) capture(elements.get(maxId));
       
       
@@ -239,9 +240,9 @@ class Mouse {
       bridgedPass = bridgedModeParent.isCaptured(bridgedModeName);
     }
     if(elm.isHovered && !captured && elm.enabled && bridgedPass) {
-        captured = true;
-        capturedElement = elm;
-        firstCaptureFrame = true;
+      captured = true;
+      capturedElement = elm;
+      firstCaptureFrame = true;
     }
   }
   

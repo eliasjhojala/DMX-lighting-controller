@@ -129,21 +129,25 @@ boolean isHover(int offsetX, int offsetY, int w, int h) {
   return isHoverAB(offsetX, offsetY, offsetX + w, offsetY + h);
 }
 
-boolean isHoverAB(int obj1X, int obj1Y, int obj2X, int obj2Y){
+boolean isHoverAB(int obj1X, int obj1Y, int obj2X, int obj2Y) {
+  return isHoverAB(obj1X, obj1Y, obj2X, obj2Y, mouseX, mouseY, g);
+}
+
+boolean isHoverAB(int obj1X, int obj1Y, int obj2X, int obj2Y, float moX, float moY, PGraphics g){
   //The x and y coordinates of all the dots in the simulated rectangle
   int[] x = new int[4];
   int[] y = new int[4];
   
-  x[0] = int(screenX(obj1X, obj1Y));
-  y[0] = int(screenY(obj1X, obj1Y));
-  x[1] = int(screenX(obj2X, obj1Y));
-  y[1] = int(screenY(obj2X, obj1Y));
-  x[2] = int(screenX(obj1X, obj2Y));
-  y[2] = int(screenY(obj1X, obj2Y));
-  x[3] = int(screenX(obj2X, obj2Y));
-  y[3] = int(screenY(obj2X, obj2Y));
+  x[0] = iScreenX(obj1X, obj1Y, g);
+  y[0] = iScreenY(obj1X, obj1Y, g);
+  x[1] = iScreenX(obj2X, obj1Y, g);
+  y[1] = iScreenY(obj2X, obj1Y, g);
+  x[2] = iScreenX(obj1X, obj2Y, g);
+  y[2] = iScreenY(obj1X, obj2Y, g);
+  x[3] = iScreenX(obj2X, obj2Y, g);
+  y[3] = iScreenY(obj2X, obj2Y, g);
   
-  return inBds2D(mouseX, mouseY, min(x), min(y), max(x), max(y));
+  return inBds2D(moX, moY, min(x), min(y), max(x), max(y));
 }
 
 

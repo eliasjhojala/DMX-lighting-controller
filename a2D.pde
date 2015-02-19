@@ -42,14 +42,14 @@ void drawMainWindow() {
     
     if(!mousePressed && moveLamp == true) {
       if(lampToMove < fixtures.size()) {
-        fixtures.get(lampToMove).x_location += (int(mouseRotated.x) - oldMouseX1) * int(100 / zoom);
-        fixtures.get(lampToMove).y_location += (int(mouseRotated.y) - oldMouseY1) * int(100 / zoom);
+        fixtures.get(lampToMove).x_location += int((mouseRotated.x - oldMouseX1) * 100 / zoom);
+        fixtures.get(lampToMove).y_location += int((mouseRotated.y - oldMouseY1) * 100 / zoom);
       }
       if(fixtures.get(lampToMove).selected) {
         for(int i = 0; i < fixtures.size(); i++) {
           if(fixtures.get(i).selected && i != lampToMove) {
-            fixtures.get(i).x_location += (int(mouseRotated.x) - oldMouseX1) * int(100 / zoom);
-            fixtures.get(i).y_location += (int(mouseRotated.y) - oldMouseY1) * int(100 / zoom);
+            fixtures.get(i).x_location += int((mouseRotated.x - oldMouseX1) * 100 / zoom);
+            fixtures.get(i).y_location += int((mouseRotated.y - oldMouseY1) * 100 / zoom);
           }
         }
       }

@@ -95,7 +95,7 @@ void sivuValikko() {
   //-
     
     
-  if(!showMode) { memoryCreator.draw(); }
+  //if(!showMode) { memoryCreator.draw(); }
 }
 
 
@@ -239,7 +239,7 @@ class MemoryCreationBox {
         g.strokeWeight(3);
         //Box itself
         g.rect(0, 0, w, h, 20);
-        mouse.declareUpdateElementRelative("MemoryCreationBox", "addMemory", 0, 0, w, h, g);
+        mouse.declareUpdateElementRelative("MemoryCreationBox", 1, 0, 0, w, h, g);
         mouse.setElementExpire("MemoryCreationBox", 2);
         //Grabable location button
         g.fill(180);
@@ -276,16 +276,16 @@ class MemoryCreationBox {
       }
       
       { //Preset creation options
-        drawModeSelection(g);
-        drawSlotSelector(g);
-        drawTypeSpecificOptions(g);
+        drawModeSelection(g, mouse);
+        drawSlotSelector(g, mouse);
+        drawTypeSpecificOptions(g, mouse);
       }
-      popMatrix();
-      popStyle();
+      g.popMatrix();
+      g.popStyle();
     }
   }
   
-  void drawModeSelection(PGraphics g) {
+  void drawModeSelection(PGraphics g, Mouse mouse) {
     g.pushMatrix();
     {
       
@@ -297,7 +297,7 @@ class MemoryCreationBox {
       mouse.declareUpdateElementRelative("MemoryCreationBox:type", "MemoryCreationBox", 0, 10, 100, 20, g);
       mouse.setElementExpire("MemoryCreationBox:type", 2);
       boolean boxIsHover = mouse.elmIsHover("MemoryCreationBox:type");
-      g.fill(boxIsHover ? 200 : 180); noStroke();
+      g.fill(boxIsHover ? 200 : 180); g.noStroke();
       g.rect(82.5, 12.5, 16, 16, 2);
       g.fill(230);
       
@@ -322,7 +322,7 @@ class MemoryCreationBox {
     g.popMatrix();
   }
   
-  void drawSlotSelector(PGraphics g) {
+  void drawSlotSelector(PGraphics g, Mouse mouse) {
     g.pushMatrix();
     {
       g.textAlign(CENTER);
@@ -352,7 +352,7 @@ class MemoryCreationBox {
     g.popMatrix();
   }
   
-  void drawTypeSpecificOptions(PGraphics g) {
+  void drawTypeSpecificOptions(PGraphics g, Mouse mouse) {
     g.pushMatrix();
     {
       switch(selectedMemoryMode) {
@@ -390,7 +390,7 @@ class MemoryCreationBox {
           g.textAlign(LEFT);
           { //Chase Input
             g.text("Input Mode:", 10, 125);
-            g.fill(0, 186, 240); noStroke();
+            g.fill(0, 186, 240); g.noStroke();
             g.rect(110, 115, 12, 12, 1.5);
             if(isHoverSimple(110, 115, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.inputModeUp();
@@ -408,7 +408,7 @@ class MemoryCreationBox {
           { //Chase Output
             g.textSize(12);
             g.text("Output Mode:", 10, 175);
-            g.fill(0, 186, 240); noStroke();
+            g.fill(0, 186, 240); g.noStroke();
             g.rect(110, 165, 12, 12, 1.5);
             if(isHoverSimple(110, 165, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.outputModeUp();
@@ -426,7 +426,7 @@ class MemoryCreationBox {
           { //Beat Mode
             g.textSize(12);
             g.text("Beat Mode:", 10, 225);
-            g.fill(0, 186, 240); noStroke();
+            g.fill(0, 186, 240); g.noStroke();
             g.rect(110, 215, 12, 12, 1.5);
             if(isHoverSimple(110, 215, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.beatModeUp();
@@ -444,7 +444,7 @@ class MemoryCreationBox {
           { //Fade Mode
             g.textSize(12);
             g.text("Fade Mode:", 10, 275);
-            g.fill(0, 186, 240); noStroke();
+            g.fill(0, 186, 240); g.noStroke();
             g.rect(110, 265, 12, 12, 1.5);
             if(isHoverSimple(110, 265, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.fadeModeUp();
