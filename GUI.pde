@@ -45,7 +45,7 @@ class SubWindowContainer {
           memoryCreation.draw(swBuffer, swMouse, false);
         break;
         case 1:
-          //settings.draw(swBuffer, swMouse);
+          settings.draw(swBuffer, swMouse, false);
         break;
         case 2:
           
@@ -96,20 +96,24 @@ class SubWindowHandler {
   }
   
   void createDefaultWindows() {
-    subWindows.add(new SubWindowContainer(memoryCreator, "MemoryCreator", 1000));
+    subWindows.add(new SubWindowContainer(memoryCreator, "MemoryCreator", 1002));
+    subWindows.add(new SubWindowContainer(settingsWindow, "SettingsWindow", 1001));
   }
   
   ArrayList<SubWindowContainer> subWindows;
   
   void draw() {
+    int toPutOnTop = -1;
     for(int i = subWindows.size()-1; i >= 0; i--) {
       SubWindowContainer sw = subWindows.get(i);
       setPriority(5100 - i, sw);
       if(sw.draw()) {
-        putOnTop(i);
+        toPutOnTop = i;
       }
       
     }
+    
+    if(toPutOnTop != -1) putOnTop(toPutOnTop);
   }
   
   void setPriority(int newPriority, SubWindowContainer sw) {
@@ -334,10 +338,8 @@ class Switch {
         b.rect(1.5, 1.5, 30, 10, 5);
         b.fill(multiplyColor(bg, float(constrain(animState, 15, 25)) / 19));
         b.rect(0, 0, 30, 10, 5);
-        pushMatrix();
-          translate(b.screenX(0, 0), b.screenY(0, 0));
-          mouse.declareUpdateElementRelative(captureName, ontopofName, -3, -3, 36, 16);
-        popMatrix();
+        
+        mouse.declareUpdateElementRelative(captureName, ontopofName, -3, -3, 36, 16, b);
         mouse.setElementExpire(captureName, 2);
         if(mouse.isCaptured(captureName) && mouse.firstCaptureFrame) {
           state = !state;

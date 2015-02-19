@@ -105,7 +105,7 @@ void ylavalikko() {
     } //End of wash button
   
   } //End of buttons placed to left side
-  settingsWindow.draw();
+  //settingsWindow.draw();
   popStyle();
   
 }

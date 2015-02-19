@@ -199,69 +199,71 @@ class SettingsWindow {
   int selectedTab = 0;
   
   
-  void draw() {
+  void draw(PGraphics g, Mouse mouse, boolean translate) {
     if(open) {
-      pushMatrix();
-      pushStyle();
+      g.pushMatrix();
+      g.pushStyle();
       { // frame & frame controls
-        translate(locX, locY);
-        fill(255, 230);
-        stroke(150);
-        strokeWeight(3);
+        if(translate) g.translate(locX, locY);
+        g.fill(255, 230);
+        g.stroke(150);
+        g.strokeWeight(3);
         
         //Box itself
-        rect(0, 0, size, size, 20);
-        mouse.declareUpdateElementRelative("settings", "main:move", 0, 0, size, size);
+        g.rect(0, 0, size, size, 20);
+        mouse.declareUpdateElementRelative("settings", 1, 0, 0, size, size, g);
         mouse.setElementExpire("settings", 2);
         
         //Grabable location button
-        fill(180);
-        noStroke();
-        rect(10, 10, 20, 20, 20, 0, 0, 4);
-        mouse.declareUpdateElementRelative("settings:move", "settings", 10, 10, 20, 20);
+        g.fill(180);
+        g.noStroke();
+        g.rect(10, 10, 20, 20, 20, 0, 0, 4);
+        mouse.declareUpdateElementRelative("settings:move", "settings", 10, 10, 20, 20, g);
         mouse.setElementExpire("settings:move", 2);
         if(mouse.isCaptured("settings:move")) {
           locY = constrain(mouseY - pmouseY + locY, 40, height - (size+40));
           locX = constrain(mouseX - pmouseX + locX, 40, width - (size + 20 + 168));
         }
         
+        g.textSize(12);
+        
         //Close button 
-        mouse.declareUpdateElementRelative("settings:close", "settings", 30, 10, 50, 20);
+        mouse.declareUpdateElementRelative("settings:close", "settings", 30, 10, 50, 20, g);
         mouse.setElementExpire("settings:close", 2);
         boolean cancelHover = mouse.elmIsHover("settings:close");
-        fill(cancelHover ? 220 : 180, 30, 30);
+        g.fill(cancelHover ? 220 : 180, 30, 30);
         //Close if close is pressed
         if(mouse.isCaptured("settings:close")) open = false;
-        rect(30, 10, 50, 20, 0, 4, 4, 0);
-        fill(230);
-        textAlign(CENTER);
-        text("Close", 55, 24);
+        g.rect(30, 10, 50, 20, 0, 4, 4, 0);
+        g.fill(230);
+        g.textAlign(CENTER);
+        g.text("Close", 55, 24);
         
         //Window title text
-        fill(0, 220);
-        textAlign(LEFT);
-        text("Settings", 87, 24);
+        g.fill(0, 220);
+        g.textAlign(LEFT);
+        g.text("Settings", 87, 24);
       }
       
       //Draw all tabs
-      {  pushMatrix();
-        translate(10, 40);
+      {  g.pushMatrix();
+        g.translate(10, 40);
         
-        pushMatrix();
+        g.pushMatrix();
           for(int i = 0; i < tabs.length; i++) {
             
             //Draw all tabs, if they return true, they demand to be selected
-            if(tabs[i].drawSelector(selectedTab == i)) {
+            if(tabs[i].drawSelector(selectedTab == i, g, mouse)) {
               selectedTab = i;
             }
             
           }
-        popMatrix();
+        g.popMatrix();
         //Draw the children of the selected tab
-        tabs[selectedTab].drawChildren();
-      popMatrix();  }
-      popMatrix();
-      popStyle();
+        tabs[selectedTab].drawChildren(g, mouse);
+      g.popMatrix();  }
+      g.popMatrix();
+      g.popStyle();
     }
   }
   
@@ -309,26 +311,26 @@ class SettingsTab {
   }
   
   //Draw the tab selector --- Returns true if pressed
-  boolean drawSelector(boolean selected) {
+  boolean drawSelector(boolean selected, PGraphics g, Mouse mouse) {
     int wid = getSelectorWidth();
-    mouse.declareUpdateElementRelative("Settings:TabSelector:" + text, "settings", 0, 0, wid, 20);
+    mouse.declareUpdateElementRelative("Settings:TabSelector:" + text, "settings", 0, 0, wid, 20, g);
     mouse.setElementExpire("Settings:TabSelector:" + text, 2);
-    if(mouse.getElementByName("Settings:TabSelector:" + text).isHovered || selected) {
+    if(mouse.elmIsHover("Settings:TabSelector:" + text) || selected) {
       //draw hover rect
-      if(!selected) fill(255, 160);
-        else fill(200, 160);
-      noStroke();
-      rect(1, -1, wid, 22, 4, 0, 0, 0);
+      if(!selected) g.fill(255, 160);
+        else g.fill(200, 160);
+      g.noStroke();
+      g.rect(1, -1, wid, 22, 4, 0, 0, 0);
     }
-    textAlign(LEFT);
-    textSize(16);
-    fill(0);
-    text(text, 5, 15);
-    stroke(120);
-    strokeWeight(2);
-    line(0, 20, wid, 20);
-    translate(wid, 0);
-    line(0, 0, 0, 20);
+    g.textAlign(LEFT);
+    g.textSize(16);
+    g.fill(0);
+    g.text(text, 5, 15);
+    g.stroke(120);
+    g.strokeWeight(2);
+    g.line(0, 20, wid, 20);
+    g.translate(wid, 0);
+    g.line(0, 0, 0, 20);
     return mouse.isCaptured("Settings:TabSelector:" + text);
   }
   
@@ -340,10 +342,10 @@ class SettingsTab {
   float scrollStatusTrg = 0;
   boolean doSmoothScroll = false;
   
-  void drawChildren() {
-    pushMatrix();
-      line(0, 20, 0, height_);
-      translate(6, 20);
+  void drawChildren(PGraphics g, Mouse mouse) {
+    g.pushMatrix();
+      g.line(0, 20, 0, height_);
+      g.translate(6, 20);
       
       if(controllers != null) {
         //Draw all children in a limited container, so they don't overflow
@@ -352,7 +354,7 @@ class SettingsTab {
         if(controllerStackHeight > height_-20) buffer.translate(0, -scrollStatus * (controllerStackHeight - height_+20));
         int stackHeight = 0;
         for(SettingController contr : controllers) {
-          contr.draw(buffer);
+          contr.draw(buffer, mouse);
           buffer.translate(0, contr.getDrawHeight());
           stackHeight += contr.getDrawHeight();
           buffer.stroke(0, 100);
@@ -361,16 +363,16 @@ class SettingsTab {
         }
         controllerStackHeight = stackHeight;
         buffer.endDraw();
-        image(buffer, 0, 0);
+        g.image(buffer, 0, 0);
         
         //Draw scroll slider
         
         //If there's nothing to scroll (everything fits in at once), always stay on top.
         if(controllerStackHeight <= height_-20) scrollStatus = 0;
-        translate(width_+7, 2);
-        fill(180, 100); noStroke();
-        rect(0, 0, 10, height_-20);
-        mouse.declareUpdateElementRelative("settings:scroll", "settings", 0, 0, 10, height_-20);
+        g.translate(width_+7, 2);
+        g.fill(180, 100); g.noStroke();
+        g.rect(0, 0, 10, height_-20);
+        mouse.declareUpdateElementRelative("settings:scroll", "settings", 0, 0, 10, height_-20, g);
         mouse.setElementExpire("settings:scroll", 2);
         if(mouse.isCaptured("settings:scroll")) {
           scrollStatus += (mouseY - pmouseY)/(float(height_)-20);
@@ -392,12 +394,12 @@ class SettingsTab {
         scrollStatus = constrain(scrollStatus, 0, 1);
         scrollStatusTrg = constrain(scrollStatusTrg, 0, 1);
         if(controllerStackHeight > height_-20) {
-          translate(0, scrollStatus * (height_-20 - 40));
-          fill(180, 180);
-          rect(0, 0, 10, 40);
+          g.translate(0, scrollStatus * (height_-20 - 40));
+          g.fill(180, 180);
+          g.rect(0, 0, 10, 40);
         }
       }
-    popMatrix();
+    g.popMatrix();
   }
 }
 
@@ -461,7 +463,7 @@ class SettingController {
   }
   
   
-  void draw(PGraphics buffer) {
+  void draw(PGraphics buffer, Mouse mouse) {
     switch(mode) {
       case 0:
         drawText(0, 0, buffer);

@@ -322,12 +322,11 @@ int iScreenY(float x, float y) {
 
 
 //returns new value
-int quickSlider(String mouseLockID, int value) {
+int quickSlider(String mouseLockID, int mousePriority, int value, PGraphics g, Mouse mouse) {
     //Draw slider
-    drawBottomMenuChControllerSlider(value);
+    drawBottomMenuChControllerSlider(value, g);
     //Handle mouse
-    //todo get priority more intelligently
-    mouse.declareUpdateElement(mouseLockID, 1000, iScreenX(0, 0), iScreenY(0, 0), iScreenX(20, 100), iScreenY(20, 100));
+    mouse.declareUpdateElementRelative(mouseLockID, mousePriority, 0, 0, 20, 100, g);
     mouse.getElementByName(mouseLockID).expires = 2;
     
     //Check for drag

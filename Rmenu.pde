@@ -186,17 +186,9 @@ class MemoryCreationBox {
       case 0:
         selectedMemoryMode = 0;
       break;
-      case 1:
-        selectedMemoryMode = 0;
+      default:
+        selectedMemoryMode = memories[memory].type - 1;
       break;
-      case 2:
-        selectedMemoryMode = 1;
-      break;
-      case 3:
-        selectedMemoryMode = 2;
-      break;
-      
-      default: return;
     }
     open = true;
     selectedMemorySlot = memory;
@@ -343,7 +335,7 @@ class MemoryCreationBox {
       mouse.declareUpdateElementRelative("MemoryCreationBox:slot", "MemoryCreationBox", int(mappedSlot-10), 0, 20, 22, g);
       mouse.setElementExpire("MemoryCreationBox:slot", 2);
       if(mouse.isCaptured("MemoryCreationBox:slot")) {
-        selectedMemorySlot = constrain(int(map(mouseX - screenX(0, 0), 0, 280, 0, numberOfMemories)), 1, numberOfMemories-1);
+        selectedMemorySlot = constrain(int(map(mouseX - locX - g.screenX(0, 0), 0, 280, 0, numberOfMemories)), 1, numberOfMemories-1);
       }
       
       g.fill(0);
@@ -464,13 +456,14 @@ class MemoryCreationBox {
           g.fill(120);
           g.strokeWeight(2);
           g.line(150, 110, 150, 260);
+          
           { //fade
             g.textSize(12);
             g.fill(0);
             g.text("Fade: " + memories[selectedMemorySlot].myChase.ownFade, 160, 125);
             g.pushMatrix();
               g.translate(160, 130);
-              memories[selectedMemorySlot].myChase.changeFade(quickSlider("MemoryCreationBox:fade", memories[selectedMemorySlot].myChase.ownFade));
+              memories[selectedMemorySlot].myChase.changeFade(quickSlider("MemoryCreationBox:fade", 10, memories[selectedMemorySlot].myChase.ownFade, g, mouse));
             g.popMatrix();
             
           }
