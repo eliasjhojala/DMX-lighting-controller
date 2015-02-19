@@ -1,19 +1,4 @@
 
-/*void saveFixtureMemory(int number) {
-  memories[number] = new memory();
-  memories[number].savePreset(); 
-}*/
-
-void loadFixtureMemory(int number, int value) {
-  try {
-    memories[number].value = value;
-    memories[number].loadPreset();
-  }
-  catch(Exception e) {
-    println("Can't load memory");
-  }
-}
-
   soundDetect s2l;
   memory[] memories = new memory[1000];
 void createMemoryObjects() {
@@ -896,19 +881,7 @@ class soundDetect { //----------------------------------------------------------
 
 
 
-
-//★★CLICK★THE★↑↓LIKE★WORD↑↓★★★★★★★★
-//░█░░░█░█░▄▀░█▀▀░░░░▀█▀░█░█░█░▄▀▀░
-//░█░░░█░█▀░░░█▀░░▄▄░░█░░█▀█░█░░▀▄ 
-//░█▄▄░█░█░▀▄░█▄▄░░░░░█░░█░█░█░▄▄▀░
-//★★CLICK★THE★↑↓LIKE★WORD↑↓★★★★★★★★
-
-  
-
 //Single Sine class
-
-
-
 
 class sine {
   int kerroin = 2;
