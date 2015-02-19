@@ -354,7 +354,7 @@ class SettingsTab {
         if(controllerStackHeight > height_-20) buffer.translate(0, -scrollStatus * (controllerStackHeight - height_+20));
         int stackHeight = 0;
         for(SettingController contr : controllers) {
-          contr.draw(buffer, mouse);
+          contr.draw(buffer, g, mouse);
           buffer.translate(0, contr.getDrawHeight());
           stackHeight += contr.getDrawHeight();
           buffer.stroke(0, 100);
@@ -463,11 +463,11 @@ class SettingController {
   }
   
   
-  void draw(PGraphics buffer, Mouse mouse) {
+  void draw(PGraphics buffer, PGraphics g, Mouse mouse) {
     switch(mode) {
       case 0:
         drawText(0, 0, buffer);
-        booleanController.drawToBuffer(buffer);
+        booleanController.drawToBuffer(buffer, g, mouse);
         if(booleanController.state != oldValueBoolean) {
           //Set
           parentTab.parentWindow.setExternalBoValue(booleanController.state, var);
@@ -480,7 +480,7 @@ class SettingController {
       break;
       case 1: case 2: case 3:
         drawText(0, 0, buffer);
-        intController.drawToBuffer(buffer);
+        intController.drawToBuffer(buffer, g, mouse);
         if(intController.state != oldValueInt) {
           //Set
           parentTab.parentWindow.setExternalInValue(intController.state, var);
@@ -493,7 +493,7 @@ class SettingController {
       break;
       case 4:
         drawText(0, 0, buffer);
-        strController.drawToBuffer(buffer);
+        strController.drawToBuffer(buffer, mouse);
       break;
     }
   }
@@ -547,11 +547,11 @@ class IntSettingController {
   }
   
   void draw() {
-    drawToBuffer(g);
+    drawToBuffer(g, g, mouse);
   }
   
   
-  void drawToBuffer(PGraphics b) {
+  void drawToBuffer(PGraphics b, PGraphics g, Mouse mouse) {
     b.pushMatrix(); b.pushStyle();
     b.translate(x, y);
     if(inBds1D(b.screenY(0, 0), -50, b.height)) {
@@ -561,14 +561,16 @@ class IntSettingController {
           //Background
           b.fill(45, 138, 179);
           b.stroke(20, 100, 130);
-          pushMatrix();
-            translate(b.screenX(0, 0), b.screenY(0, 0));
-            mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 100, 20);
+          g.pushMatrix(); pushMatrix();
+            g.translate(b.screenX(0, 0), b.screenY(0, 0));
+            translate(g.screenX(0, 0), g.screenY(0, 0));
+            translate(parentContainer.parentTab.parentWindow.locX, parentContainer.parentTab.parentWindow.locY);
+            mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 100, 20, g);
             if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == LEFT) {
               floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(0, 0)) / 20 + 1);
               state = round(floatState);
             }
-          popMatrix();
+          g.popMatrix(); popMatrix();
           
           b.strokeWeight(1.5);
           b.rect(0, 0, 100, 20);
@@ -583,15 +585,17 @@ class IntSettingController {
           
           b.ellipseMode(CENTER);
           b.translate(78, 19.5);
-          pushMatrix();
-            translate(b.screenX(0, 0), b.screenY(0, 0));
-            mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", -25, -25, 50, 50);
+          g.pushMatrix(); pushMatrix();
+            g.translate(b.screenX(0, 0), b.screenY(0, 0));
+            translate(g.screenX(0, 0), g.screenY(0, 0));
+            translate(parentContainer.parentTab.parentWindow.locX, parentContainer.parentTab.parentWindow.locY);
+            mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", -25, -25, 50, 50, g);
             if(mouse.isCaptured("settings:" + parentContainer.name) && mouseButton == LEFT) {
               PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
               floatState = ((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360;
               state = round(floatState);
             }
-          popMatrix();
+          g.popMatrix(); popMatrix();
           
           b.fill(topMenuTheme2);
           b.stroke(topMenuAccent);
@@ -645,11 +649,11 @@ class StringSettingController {
   
   
   void draw() {
-    drawToBuffer(g);
+    drawToBuffer(g, mouse);
   }
   
   
-  void drawToBuffer(PGraphics b) {
+  void drawToBuffer(PGraphics b, Mouse mouse) {
     b.pushMatrix(); b.pushStyle();
     b.translate(x, y);
     if(inBds1D(b.screenY(0, 0), -50, b.height)) {
@@ -660,7 +664,7 @@ class StringSettingController {
       b.stroke(20, 100, 130);
       pushMatrix();
         translate(b.screenX(0, 0), b.screenY(0, 0));
-        mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 300, 20);
+        mouse.declareUpdateElementRelative("settings:" + parentContainer.name, "settings", 0, 0, 300, 20, b);
         mouse.setElementExpire("settings:" + parentContainer.name, 2);
         if(mouse.isCaptured("settings:" + parentContainer.name) && mouse.firstCaptureFrame && mouseButton == LEFT) {
           

@@ -313,11 +313,11 @@ class Switch {
   }
   
   boolean draw() {
-    return drawToBuffer(g);
+    return drawToBuffer(g, g, mouse);
   }
   
   int animationState = 0;
-  boolean drawToBuffer(PGraphics b) {
+  boolean drawToBuffer(PGraphics b, PGraphics g, Mouse mouse) {
     if(state && animationState < 19) {
       animationState += 3;
     } else
@@ -338,8 +338,10 @@ class Switch {
         b.rect(1.5, 1.5, 30, 10, 5);
         b.fill(multiplyColor(bg, float(constrain(animState, 15, 25)) / 19));
         b.rect(0, 0, 30, 10, 5);
-        
-        mouse.declareUpdateElementRelative(captureName, ontopofName, -3, -3, 36, 16, b);
+        g.pushMatrix();
+          g.translate(b.screenX(0, 0), b.screenY(0, 0));
+          mouse.declareUpdateElementRelative(captureName, ontopofName, -3, -3, 36, 16, g);
+        g.popMatrix();
         mouse.setElementExpire(captureName, 2);
         if(mouse.isCaptured(captureName) && mouse.firstCaptureFrame) {
           state = !state;

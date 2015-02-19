@@ -80,8 +80,8 @@ void doTrussMoving(int i, PVector mouseRotated) {
     }
     if(movingTruss && trussToMove == i) {
       if(mouseButton == LEFT) {
-        if(!(key == 'y' && keyPressed)) ansaX[i] += (int(mouseRotated.x) - oldMouseXtr) * int(100 / zoom);
-        if(!(key == 'x' && keyPressed)) ansaY[i] += (int(mouseRotated.y) - oldMouseYtr) * int(100 / zoom);
+        if(!(key == 'y' && keyPressed)) ansaX[i] += int((mouseRotated.x - oldMouseXtr) * 100 / zoom);
+        if(!(key == 'x' && keyPressed)) ansaY[i] += int((mouseRotated.y - oldMouseYtr) * 100 / zoom);
       } else if(mouseButton == RIGHT && mouse.firstCaptureFrame) {
         if(lastRMBc > millis() - 1000) {
           if(!(key == 'y' && keyPressed)) ansaX[i] = 0;
