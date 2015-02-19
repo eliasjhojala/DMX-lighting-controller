@@ -14,18 +14,52 @@ class SubWindowContainer {
   MemoryCreationBox memoryCreation;
   SettingsWindow settings;
   
+  int mode; // 0: memBox, 1: settings, 2: fixtureProperties
+  
   SubWindowContainer(MemoryCreationBox memBox) {
     memoryCreation = memBox;
     swBuffer = createGraphics(memBox.w, memBox.h);
     swMouse = new Mouse();
+    mode = 0;
   }
   
   SubWindowContainer(SettingsWindow setWin) {
     settings = setWin;
     swBuffer = createGraphics(setWin.size, setWin.size);
     swMouse = new Mouse();
+    mode = 1;
   }
   
+  void draw() {
+    if(isOpen()) {
+      swMouse.bridgedModeParent.getElementByName(swMouse.bridgedModeName).enabled = true;
+      swBuffer.beginDraw();
+      swBuffer.clear();
+      swMouse.refreshBridged(x, y);
+      switch(mode) {
+        case 0:
+          memoryCreation.draw(swBuffer, swMouse, false);
+        break;
+        case 1:
+          //settings.draw(swBuffer, swMouse);
+        break;
+        case 2:
+          
+        break;
+      }
+      swBuffer.endDraw();
+    } else swMouse.bridgedModeParent.getElementByName(swMouse.bridgedModeName).enabled = false;
+  }
+  
+  
+  boolean isOpen() {
+    switch(mode) {
+      case 0: return memoryCreation.open;
+      case 1: return settings.open;
+      case 2: return false;
+      default: return false;
+    }
+  }
 }
 
 class SubWindowHandler {

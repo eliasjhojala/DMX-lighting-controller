@@ -1,5 +1,5 @@
 //Tässä välilehdessä piirretään ylävalikko, ja käsitellään sen nappuloiden komentoja 
-  
+
 color topMenuTheme = color(222, 0, 0);
 color topMenuTheme2 = color(200, 0, 0);
 color topMenuAccent = color(150, 0, 0);
@@ -29,7 +29,7 @@ void ylavalikko() {
   //Settings button
   
   //Hover
-  mouse.declareUpdateElementRelative("uppMenu:openSettings", "main:move", bubS/2, 0, 60, 60);
+  mouse.declareUpdateElementRelative("uppMenu:openSettings", "main:move", bubS/2, 0, 60, 60, g);
   boolean settingsHover = mouse.getElementByName("uppMenu:openSettings").isHovered;
   
   if(mouse.isCaptured("uppMenu:openSettings")) {

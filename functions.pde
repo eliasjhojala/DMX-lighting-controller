@@ -299,13 +299,23 @@ void changeCrossFadeValue(int val) {
 
 
 //Get ScreenX (or Y) and convert to int
+int iScreenX(float x, float y, PGraphics g) {
+  return int(g.screenX(x, y));
+}
+
+int iScreenY(float x, float y, PGraphics g) {
+  return int(g.screenY(x, y));
+}
+
 int iScreenX(float x, float y) {
-  return int(screenX(x, y));
+  return iScreenX(x, y, g);
 }
 
 int iScreenY(float x, float y) {
-  return int(screenY(x, y));
+  return iScreenY(x, y, g);
 }
+
+
 
 //returns new value
 int quickSlider(String mouseLockID, int value) {

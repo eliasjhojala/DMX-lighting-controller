@@ -64,38 +64,55 @@ class Mouse {
     
   }
   
-  /////////////////////////BRIDGED MODE/////
+  /////////////////////////BRIDGED MODE////
   boolean bridgedMode = false;
   Mouse bridgedModeParent;
   String bridgedModeName;
   
+  int bridgedX, bridgedY; //Offset in parent
+  int bridgedW, bridgedH; //Height and width in parent
+  
   //Initialize the mouse in a bridged mode, where THIS mouse is a sub-mouse to the parent mouse specified
   Mouse(Mouse parent, String nameInParent, int priority, int x_off, int y_off, int w, int h) {
     initializeBridge(parent, nameInParent, priority, x_off, y_off, w, h);
-    
   }
   
   Mouse(Mouse parent, String nameInParent, String onTopOf, int x_off, int y_off, int w, int h) {
-    initializeBridge(parent, nameInParent, parent.getElementByName(onTopOf).priority, x_off, y_off, w, h);
+    initializeBridge(parent, nameInParent, parent.getElementByName(onTopOf).priority+1, x_off, y_off, w, h);
   }
   
   void initializeBridge(Mouse parent, String nameInParent, int priority, int x_off, int y_off, int w, int h) {
     bridgedMode = true;
     bridgedModeParent = parent;
+    bridgedX = x_off; bridgedY = y_off;
+    bridgedW = w;     bridgedH = h;
+    parent.declareElement(nameInParent, priority, x_off, y_off, x_off+w, y_off+h);
     
+  }
+  
+  void refreshBridged(int newX, int newY) {
+    bridgedX = newX;
+    bridgedY = newY;
+    bridgedModeParent.updateElement(bridgedModeName, newX, newY, newX+bridgedW, newY+bridgedH);
+    firstCaptureFrame = bridgedModeParent.firstCaptureFrame;
+    if(bridgedMode) refresh(mouseX + bridgedX, mouseY + bridgedY);
+  }
+  
+  void refreshBridged() {
+    refreshBridged(bridgedX, bridgedY);
   }
   
   //////////////////////////////////////////
   
   void declareElement(String name, int priority, int x1, int y1, int x2, int y2) {
-    elements.add(new HoverableElement(name, priority, x1, y1, x2, y2, objectUid.incrementAndGet()));
+    elements.add(new HoverableElement(name, priority, x1, y1, x2, y2));
   }
   
   //Add on top of an existing element, returns true if successful
   boolean declareElement(String name, String ontopof, int x1, int y1, int x2, int y2) {
     HoverableElement elm = getElementByName(ontopof);
     if(elm != null) {
-      elements.add(new HoverableElement(name, elm.priority + 1, x1, y1, x2, y2, objectUid.incrementAndGet()));
+      elements.add(new HoverableElement(name, elm.priority + 1, x1, y1, x2, y2));
       return true;
     }
     return false;
@@ -107,8 +124,8 @@ class Mouse {
     if(elm != null) declareUpdateElement(name, elm.priority+1, x1, y1, x2, y2); else return false;
     return true;
   }
-  boolean declareUpdateElementRelative(String name, String ontopof, int x1, int y1, int x2, int y2) {
-    return declareUpdateElement(name, ontopof, iScreenX(x1, y1), iScreenY(x1, y1), iScreenX(x1 + x2, y1 + y2), iScreenY(x1 + x2, y1 + y2));
+  boolean declareUpdateElementRelative(String name, String ontopof, int x1, int y1, int x2, int y2, PGraphics g) {
+    return declareUpdateElement(name, ontopof, iScreenX(x1, y1, g), iScreenY(x1, y1, g), iScreenX(x1 + x2, y1 + y2, g), iScreenY(x1 + x2, y1 + y2, g));
   }
   
   void declareUpdateElement(String name, int priority, int x1, int y1, int x2, int y2) {
@@ -117,8 +134,15 @@ class Mouse {
       
     }
   }
+  void declareUpdateElementRelative(String name, int priority, int x1, int y1, int x2, int y2, PGraphics g) {
+    declareUpdateElement(name, priority, iScreenX(x1, y1, g), iScreenY(x1, y1, g), iScreenX(x1 + x2, y1 + y2, g), iScreenY(x1 + x2, y1 + y2, g));
+  }
+  
+  boolean declareUpdateElementRelative(String name, String ontopof, int x1, int y1, int x2, int y2) {
+    return declareUpdateElementRelative(name, ontopof, x1, y1, x2, y2, g);
+  }
   void declareUpdateElementRelative(String name, int priority, int x1, int y1, int x2, int y2) {
-    declareUpdateElement(name, priority, iScreenX(x1, y1), iScreenY(x1, y1), iScreenX(x1 + x2, y1 + y2), iScreenY(x1 + x2, y1 + y2));
+    declareUpdateElementRelative(name, priority, x1, y1, x2, y2, g);
   }
   
   
@@ -156,8 +180,12 @@ class Mouse {
     if(targetElement != null) return targetElement.isHovered; else return false;
   }
   
-  //Should be called every draw. Picks one element to assing a capture to.
   void refresh() {
+    refresh(mouseX, mouseY);
+  }
+  
+  //Should be called every draw. Picks one element to assing a capture to.
+  void refresh(float mouseX, float mouseY) {
     firstCaptureFrame = false;
     boolean[] ontop = new boolean[elements.size()];
     for(int i = 0; i < ontop.length; i++) {
@@ -177,9 +205,12 @@ class Mouse {
         if(elm.expires > 0)  elm.expires--; else { elements.remove(i); doNotContinue = true; }
       
       if(!doNotContinue) {
+        boolean bridgedPass = true;
+        if(bridgedMode) {
+          bridgedPass = bridgedModeParent.elmIsHover(bridgedModeName);
+        }
         
-        
-        if(ontop[i] && elm.priority > curMax && elm.enabled) {
+        if(ontop[i] && elm.priority > curMax && elm.enabled && bridgedPass) {
           curMax = elm.priority;
           maxId = i;
           found = true;
@@ -203,7 +234,11 @@ class Mouse {
   
   //Use this if elements autoCapture is not on
   void capture(HoverableElement elm) {
-    if(elm.isHovered && !captured && elm.enabled) {
+    boolean bridgedPass = true;
+    if(bridgedMode) {
+      bridgedPass = bridgedModeParent.isCaptured(bridgedModeName);
+    }
+    if(elm.isHovered && !captured && elm.enabled && bridgedPass) {
         captured = true;
         capturedElement = elm;
         firstCaptureFrame = true;
@@ -246,8 +281,6 @@ class HoverableElement {
   
   boolean enabled;    //Is element currently visible and clickable
   
-  int uid;            //unique identifier
-  
   int expires = -1;
   
   boolean isHovered;  //Is element selected as the one to be hovered (not direct indication of capture)
@@ -255,12 +288,11 @@ class HoverableElement {
   //You have to modify this manually
   boolean autoCapture = true;    //Is element automatically captured during refresh if it is selected or can an external source decide whether it should capture?
   
-  HoverableElement(String N, int P, int X1, int Y1, int X2, int Y2, int UID) {
+  HoverableElement(String N, int P, int X1, int Y1, int X2, int Y2) {
     name = N;
     priority = P;
     x1 = X1; y1 = Y1;
     x2 = X2; y2 = Y2;
-    uid = UID;
     enabled = true;
   }
   

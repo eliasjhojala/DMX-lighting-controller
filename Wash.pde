@@ -766,3 +766,4 @@ class CMYK_Colour {
     yellow = ( yellow - black ) / ( 255 - black ); 
   }
 }   
+
