@@ -473,7 +473,7 @@ class fixture {
       this.locationOnScreenX = int(screenX(x1 + lampWidth/2, y1 + lampHeight/2));
       this.locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
       rectMode(CENTER);
-      if(fixtureTypeId == 13) {  rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
+      if(fixtureTypeId == 13) {  rotate(radians(map(rotationZ, 0, 255, 0, 180))); pushMatrix();}
       if(selected) stroke(100, 100, 255); else stroke(255);
       rect(x1, y1, lampWidth, lampHeight, 3);
       if(fixtureTypeId == 13) {  popMatrix();  }
