@@ -365,7 +365,7 @@ class chase { //Begin of chase class--------------------------------------------
             case 3: fade = chaseFade; break;
             default: fade = chaseFade;
           }
-          fade = round(map((pow(round(fade/25.5), 4)+1), (pow(round(0/25.5), 4)+1), (pow(round(255/25.5), 4)+1), 0, 255));
+          fade = constrain(round(map((pow(round(fade/25.5), 4)+1), (pow(round(0/25.5), 4)+1), (pow(round(255/25.5), 4)+1), 0, 255)), 0, 255);
         }
   //End of fadeMode functions
   
