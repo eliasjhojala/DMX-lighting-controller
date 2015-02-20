@@ -66,7 +66,7 @@ void noteOn(int channel, int pitch, int velocity) {
   if (channel != 10 && !useMaschine) {
     noteOn[pitch] = true;
     if(pitch < midiNotesWithoutBlacks.length) {
-      dimInput[midiNotesWithoutBlacks[pitch]] = constrain(int(velocity*2.3), 0, 255);
+     // dimInput[midiNotesWithoutBlacks[pitch]] = constrain(int(velocity*2.3), 0, 255);
     }
   } else {
     //Coming from Maschine
@@ -80,7 +80,7 @@ void noteOff(int channel, int pitch, int velocity) {
    if (channel != 10 && !useMaschine) {
      noteOn[pitch] = false;
      if(pitch < midiNotesWithoutBlacks.length) {
-       dimInput[midiNotesWithoutBlacks[pitch]] = 0;
+      // dimInput[midiNotesWithoutBlacks[pitch]] = 0;
      }
    } else {
      //Coming from Maschine

@@ -1,19 +1,4 @@
 
-/*void saveFixtureMemory(int number) {
-  memories[number] = new memory();
-  memories[number].savePreset(); 
-}*/
-
-void loadFixtureMemory(int number, int value) {
-  try {
-    memories[number].value = value;
-    memories[number].loadPreset();
-  }
-  catch(Exception e) {
-    println("Can't load memory");
-  }
-}
-
   soundDetect s2l;
   memory[] memories = new memory[1000];
 void createMemoryObjects() {
@@ -49,6 +34,7 @@ class memory { //Begin of memory class------------------------------------------
 
   
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
+  boolean[] fixturesToSave = new boolean[fixtures.size()];
   
   
   FixtureDMX[] repOfFixtures = new FixtureDMX[fixtures.size()];
@@ -104,6 +90,7 @@ class memory { //Begin of memory class------------------------------------------
       case 3: toReturn = "qChs"; break;
       case 4: toReturn = "mstr"; break;
       case 5: toReturn = "fade"; break;
+      case 6: toReturn = "mstrGrp"; break;
       default: toReturn = "unkn"; break;
     }
     return toReturn;
@@ -118,6 +105,7 @@ class memory { //Begin of memory class------------------------------------------
         case 2: chase(); break;
         case 4: grandMaster(); break;
         case 5: fade(); break;
+        case 7: masterGroup(); break;
         default: unknown(); break;
       }
     }
@@ -152,6 +140,10 @@ class memory { //Begin of memory class------------------------------------------
   }
   void empty() {
   }
+  void masterGroup() {
+  }
+  
+  
   void setValue(int val) {
     value = val;
     draw();
@@ -180,11 +172,17 @@ class memory { //Begin of memory class------------------------------------------
     for(int i = 0; i < fixtures.size(); i++) {
         repOfFixtures[i] = new FixtureDMX();
     }
+    
+    for(int i = 0; i < fixtures.size(); i++) {
+      fixturesToSave[i] = fixtures.get(i).selected;
+    }
       
     for(int i = 0; i < fixtures.size(); i++) {
-      for(int jk = 1; jk < fixtures.get(i).in.DMXlength; jk++) {
-        if(whatToSave[jk-1])
-          repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
+      if(fixturesToSave[i]) {
+        for(int jk = 1; jk < fixtures.get(i).in.DMXlength; jk++) {
+          if(whatToSave[jk-1])
+            repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
+        }
       }
     }
     type = 1;
@@ -199,20 +197,24 @@ class memory { //Begin of memory class------------------------------------------
 
   void loadPreset() {
     if(type == 1) {
-      //if(value != valueOld) { //overwirtecheck
       valueOld = value;
       for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
-        if(whatToSave[jk-1])
-          for(int i = 0; i < fixtures.size(); i++) {
-            if(i < repOfFixtures.length) if(jk < fixtures.get(i).preset.DMXlength) {
-              int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
-              
-              fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
-              
-            } else {} else break;
-          }
+        if(whatToSave[jk-1]) {
+          for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
+            if(i < repOfFixtures.length) {
+              if(fixturesToSave[i]) {
+                if(jk < fixtures.get(i).preset.DMXlength) {
+                  int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
+                  fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
+                }
+              }
+            } 
+            else {
+              break;
+            }
+          } //End of going through all the fixtures
+        } 
       }
-      //}
     }
   }
 
@@ -363,6 +365,9 @@ class chase { //Begin of chase class--------------------------------------------
             case 3: fade = chaseFade; break;
             default: fade = chaseFade;
           }
+          fade = round(fade/25.5);
+          fade = round(pow(fade, 4));
+          fade = fade + 1;
         }
   //End of fadeMode functions
   
@@ -876,15 +881,7 @@ class soundDetect { //----------------------------------------------------------
 
 
 
-
-
-
-  
-
 //Single Sine class
-
-
-
 
 class sine {
   int kerroin = 2;
