@@ -1,3 +1,7 @@
+//Draw main/2D visualization
+
+
+
 void drawMainWindow() {
   pushMatrix(); 
     //TÄSSÄ KÄÄNNETÄÄN JA SIIRRETÄÄN NÄKYMÄ OIKEIN - DO ROTATE AND TRANSFORM RIGHT
@@ -10,8 +14,9 @@ void drawMainWindow() {
    
    
    translate(width/2, height/2);
+   scale(zoom/100); //Skaalataan sivua oikean verran - scale page
    translate(x_siirto, y_siirto); //Siirretään sivua oikean verran - move page
-   scale(float(zoom)/100); //Skaalataan sivua oikean verran - scale page
+   
    rotate(radians(pageRotation)); //Käännetään sivua oikean verran - rotate page
    translate(-width/2, -height/2); //move page back
    //translate(0, 50); //Siirretään kaikkea alaspäin ylävalikon verran - move all the objects down because top menu
@@ -19,44 +24,62 @@ void drawMainWindow() {
    
    
    {//begin drawing all elements (fixtures & other non-HUD objects)
-     //TÄSSÄ PIIRRETÄÄN ANSAT - DRAW TRUSSES
-    ansat();
+    
+    
     
     //Just using the rotation of PVectors, it already exists, so why not use it?
     PVector mouseRotated = new PVector(mouseX, mouseY);
     mouseRotated.rotate(radians(-pageRotation));
+    
+    //TÄSSÄ PIIRRETÄÄN ANSAT - DRAW TRUSSES
+    ansat(mouseRotated);
     
     /*if(moveLamp) {
       mouseLocked = true;
       mouseLocker = "main:fixMove";
     }*/
     
-   for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) {
-     pushMatrix();
-        if(!mouse.captured || mouse.isCaptured("main:fixtures")) {
-          if(!mousePressed && moveLamp == true) {
-            if(lampToMove < fixtures.size()) {
-             fixtures.get(lampToMove).x_location = fixtures.get(lampToMove).x_location + (int(mouseRotated.x) - oldMouseX1) * 100 / zoom;
-             fixtures.get(lampToMove).y_location = fixtures.get(lampToMove).y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom;
-            }
-     
-           moveLamp = false; 
+    
+    if(!mousePressed && moveLamp == true) {
+      if(lampToMove < fixtures.size()) {
+        fixtures.get(lampToMove).x_location += int((mouseRotated.x - oldMouseX1) * 100 / zoom);
+        fixtures.get(lampToMove).y_location += int((mouseRotated.y - oldMouseY1) * 100 / zoom);
+      }
+      if(fixtures.get(lampToMove).selected) {
+        for(int i = 0; i < fixtures.size(); i++) {
+          if(fixtures.get(i).selected && i != lampToMove) {
+            fixtures.get(i).x_location += int((mouseRotated.x - oldMouseX1) * 100 / zoom);
+            fixtures.get(i).y_location += int((mouseRotated.y - oldMouseY1) * 100 / zoom);
           }
+        }
+      }
+      
+      moveLamp = false; 
+    }
+    
+    for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) {
+      pushMatrix();
+        fixture fix = fixtures.get(i);
+        boolean translated = false;
+        
+        if(!mouse.captured || mouse.isCaptured("main:fixtures")) {
     
           if(moveLamp == true) {
             //mouse.capture(mouse.getElementByName("main:fixtures"));
-            if(i == lampToMove) { translate(fixtures.get(lampToMove).x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom)  + ansaX[fixtures.get(lampToMove).parentAnsa], fixtures.get(lampToMove).y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures.get(lampToMove).parentAnsa]); }
-              else { translate(fixtures.get(i).x_location+ansaX[fixtures.get(i).parentAnsa], fixtures.get(i).y_location+ansaY[fixtures.get(i).parentAnsa]); }
-          } else { translate(fixtures.get(i).x_location+ansaX[fixtures.get(i).parentAnsa], fixtures.get(i).y_location+ansaY[fixtures.get(i).parentAnsa]); }
-        } else { translate(fixtures.get(i).x_location+ansaX[fixtures.get(i).parentAnsa], fixtures.get(i).y_location+ansaY[fixtures.get(i).parentAnsa]); }
+            if(i == lampToMove) { translate(fixtures.get(lampToMove).x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom)  + ansaX[fixtures.get(lampToMove).parentAnsa], fixtures.get(lampToMove).y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures.get(lampToMove).parentAnsa]); 
+                                  translated = true; }
+          }
+        }
         
-          
-        if(fixtures.get(i).fixtureTypeId != 14) { rotate(radians(fixtures.get(i).rotationZ)); }
+        if(!translated) { translate(fix.x_location+ansaX[fix.parentAnsa], fix.y_location+ansaY[fix.parentAnsa]);
+                          translated = true; }
+        translate(fix.size.w/2, fix.size.h/2);
+        if(fix.fixtureTypeId != 14) { rotate(radians(fix.rotationZ)); }
         
         
              
        //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
-       if(isHover(0, 0, fixtures.get(i).size.w, fixtures.get(i).size.h) && mousePressed && !mouse.captured) {
+       if(isHover(-fix.size.w/2, -fix.size.h/2, fix.size.w, fix.size.h) && mousePressed && !mouse.captured && mouse.elmIsHover("main:fixtures")) {
         
          if(mouseButton == RIGHT) {
            toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; 
@@ -66,25 +89,23 @@ void drawMainWindow() {
          }
          else {
            mouse.capture(mouse.getElementByName("main:fixtures"));
+           oldMouseX1 = int(mouseRotated.x);
+           oldMouseY1 = int(mouseRotated.y);
            if(!showMode) {
-             oldMouseX1 = int(mouseRotated.x);
-             oldMouseY1 = int(mouseRotated.y);
              lampToMove = i;
              moveLamp = true;
              mouseReleased = false;
            } 
            else {
-              fixtures.get(i).toggle(true);
+              fix.toggle(true);
            }
            
          }
        }
-           
        
        
+       fix.draw2D(i);
        
-       drawFixture(i);
-          //
       popMatrix();
       
     }
@@ -172,7 +193,7 @@ void endBoxSelect() {
         
        
     }
-  } else {
+  } else if(!showMode) {
     //open contextMwnu
     String[] acts = { "createNewFixtureAt00" };
     String[] texs = { "Create new fixture" };

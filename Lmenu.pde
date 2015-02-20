@@ -295,8 +295,12 @@ class bottomMenuChController {
       case 0:
         slider();
         buttons();
+        fill(255);
+        text(value, 32, 58);
         translate(0, 115);
+        fill(0);
         text(displayText, 0, 0);
+        
         //This is for visuals
         stroke(255, 100); strokeWeight(1);
         line(-5, 4, 50, 4);
@@ -386,30 +390,31 @@ class bottomMenuChController {
 
 //Interface drawing
 
-//values go from 0 to 255
 void drawBottomMenuChControllerSlider(int value) {
-  rectMode(CORNERS);
-  //Draw background
-  noStroke();
-  fill(50);
-  rect(0, 0, 20, 100);
-  //Draw active portion of slider
-  fill(0, 200, 0);
-  float activeY = map(value, 0, 255, 0, 100);
-  rect(0, 100 - activeY, 20, 100);
-  //Draw decorative "frame" around the slider
-  noFill();
-  stroke(0, 50); strokeWeight(2);
-  rect(0, 0, 20, 100);
-  //Draw value indication bar
-  stroke(0, 255, 0); strokeWeight(2);
-  line(-1, 100 - activeY, 21, 100 - activeY);
+  drawBottomMenuChControllerSlider(value, g);
+}
+//values go from 0 to 255
+void drawBottomMenuChControllerSlider(int value, PGraphics g) {
+  g.pushStyle();
   
-  //Reset draw modifiers
-  strokeWeight(1);
-  stroke(255, 255, 255);
-  fill(0, 0, 0);
-  rectMode(CORNER);
+  g.rectMode(CORNERS);
+  //Draw background
+  g.noStroke();
+  g.fill(50);
+  g.rect(0, 0, 20, 100);
+  //Draw active portion of slider
+  g.fill(0, 200, 0);
+  float activeY = map(value, 0, 255, 0, 100);
+  g.rect(0, 100 - activeY, 20, 100);
+  //Draw decorative "frame" around the slider
+  g.noFill();
+  g.stroke(0, 50); g.strokeWeight(2);
+  g.rect(0, 0, 20, 100);
+  //Draw value indication bar
+  g.stroke(0, 255, 0); g.strokeWeight(2);
+  g.line(-1, 100 - activeY, 21, 100 - activeY);
+  
+  g.popStyle();
   
 }
 

@@ -1,5 +1,5 @@
 //Tässä välilehdessä piirretään ylävalikko, ja käsitellään sen nappuloiden komentoja 
-  
+
 color topMenuTheme = color(222, 0, 0);
 color topMenuTheme2 = color(200, 0, 0);
 color topMenuAccent = color(150, 0, 0);
@@ -16,6 +16,7 @@ int avgFrameRate = 0;
 void ylavalikko() {
   pushStyle();
   
+  
   //Main bubble size
   int bubS = 250;
   if (inBoundsCircle(0, 0, bubS/2, mouseX, mouseY)) bubS += 10;
@@ -28,7 +29,12 @@ void ylavalikko() {
   //Settings button
   
   //Hover
-  boolean settingsHover = isHoverSimple(bubS/2, 0, 60, 60);
+  mouse.declareUpdateElementRelative("uppMenu:openSettings", "main:move", bubS/2, 0, 60, 60, g);
+  boolean settingsHover = mouse.getElementByName("uppMenu:openSettings").isHovered;
+  
+  if(mouse.isCaptured("uppMenu:openSettings")) {
+    settingsWindow.open();
+  }
   
   noFill();
   stroke(0, 120); strokeWeight(6);
@@ -39,12 +45,12 @@ void ylavalikko() {
   
   
   pushMatrix();
-  strokeWeight(10);
-  if(settingsHover) stroke(250); else stroke(topMenuTheme);
-  if(settingsHover) fill(250); else fill(topMenuTheme);
-  translate(bubS/2 + 4, 4);
-  scale(0.08);
-  if (settingsIcon != null) shape(settingsIcon); // The asset might have not loaded yet
+    strokeWeight(10);
+    if(settingsHover) stroke(250); else stroke(topMenuTheme);
+    if(settingsHover) fill(250); else fill(topMenuTheme);
+    translate(bubS/2 + 4, 4);
+    scale(0.08);
+    if (settingsIcon != null) shape(settingsIcon); // The asset might have not loaded yet
   popMatrix();
   
   
@@ -68,7 +74,6 @@ void ylavalikko() {
   text(avgFrameRate + " fps", 3, 28, 125, 125);
   avgFrameRate = (avgFrameRate + int(frameRate)) / 2;
   
-  
   { //Here you can place buttons to left side
     { //Wash button
       pushMatrix();
@@ -77,7 +82,7 @@ void ylavalikko() {
         pushStyle();
           fill(topMenuTheme2);
           rect(0, 0, 40, 100, 0, round, round, 0);
-          mouse.declareUpdateElementRelative("washButton", 10000000, 0, 0, 40, 100);
+          mouse.declareUpdateElementRelative("washButton", "main:move", 0, 0, 40, 100);
           boolean isHovered = isHover(0, 0, 40, 100);
           boolean isClicked = mouse.isCaptured("washButton") && mouse.firstCaptureFrame;
           if(isClicked) { colorWashMenuOpen = !colorWashMenuOpen; }
@@ -100,7 +105,7 @@ void ylavalikko() {
     } //End of wash button
   
   } //End of buttons placed to left side
-  
+  //settingsWindow.draw();
   popStyle();
   
 }

@@ -6,13 +6,14 @@ boolean wasAt64 = false;
 int oldMouseX1;
 int oldMouseY1;
 
-int grandMaster = 50;
+int grandMaster = 255;
 int oldGrandMaster = 40;
 
 long totalMillis[] = new long[9];
 
 void draw() {
   if(programReadyToRun && !freeze) {
+    
     textSize(12);
     
     mouse.refresh();
@@ -20,8 +21,7 @@ void draw() {
     //Move this to setDimAndMemoryValuesAtEveryDraw, maybe?
     updateMemories();
     
-    memories[1].type = 4;
-    memories[2].type = 5;
+    
     
     checkThemeMode();
     
@@ -45,6 +45,10 @@ void draw() {
     invokeFixturesDraw();
     drawColorWashMenu();
     
+    subWindowHandler.draw();
+    
+    
+    
   }
   if(!freeze) initSettingsInSetup();
 }
@@ -52,6 +56,8 @@ void draw() {
 boolean memoriesFinished = true;
 void updateMemories() {
   memoriesFinished = false;
+  memories[1].type = 4;
+  memories[2].type = 5;
   for(int i = 0; i < memories.length; i++) { memories[i].draw(); }
   memoriesFinished = true;
 }

@@ -447,7 +447,54 @@ class fixture {
     }
   }
   
-}
+  //Index is used only to display the id of the fixture
+  void draw2D(int index) {
+    pushStyle();
+    kalvo(this.getColor_wDim());
+    boolean showFixture = true;
+    int lampWidth = 30;
+    int lampHeight = 40;
+    
+    String fixtuuriTyyppi = getFixtureNameByType(fixtureTypeId);
+    
+    
+    
+    if(fixtureTypeId >= 1 && fixtureTypeId <= 13) {
+      lampWidth = this.size.w;
+      lampHeight = this.size.h;
+      showFixture = this.size.isDrawn;
+    }
+    
+    boolean selected = this.selected && showFixture;
+    
+    
+    if(showFixture == true) {
+      int x1 = 0; int y1 = 0;
+      this.locationOnScreenX = int(screenX(x1 + lampWidth/2, y1 + lampHeight/2));
+      this.locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
+      rectMode(CENTER);
+      if(fixtureTypeId == 13) {  rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
+      if(selected) stroke(100, 100, 255); else stroke(255);
+      rect(x1, y1, lampWidth, lampHeight, 3);
+      if(fixtureTypeId == 13) {  popMatrix();  }
+      translate(-size.w/2, -size.h/2);
+      if(zoom > 50) {
+        if(printMode == false) {
+          fill(255, 255, 255);
+          text(this.getDimmerWithMaster(), x1, y1 + lampHeight + 15);
+        }
+        else {
+          fill(0, 0, 0);
+          text(fixtuuriTyyppi, x1, y1 + lampHeight + 15);
+        }
+      
+       text(index + "/" + this.channelStart, x1, y1 - 15);
+      }
+    }
+    popStyle();
+  }
+  
+}//Endof: fixture class
 
 void removeFixtureFromCM() {
   fixtures.remove(contextMenu1.fixtureId);
