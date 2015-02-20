@@ -1,5 +1,18 @@
 //Tässä välilehdessä on paljon lyhyitä voideja
   
+int[] newIncrementingIntArray(int length, int start) {
+  int[] toReturn = new int[length];
+  incrementingIntArray(toReturn, start);
+  return toReturn;
+}
+void incrementingIntArray(int[] array, int start) {
+  
+  
+  for(int i = 0, c = start; i < array.length; i++, c++) {
+    array[i] = c;
+  }
+  
+}
 
 boolean scrolledDown = false;
 boolean scrolledUp = false;

@@ -2,6 +2,10 @@
  
 MemoryCreationBox memoryCreator;
 
+int[] memoryControllerLookupTable = newIncrementingIntArray(numberOfMemories, 0);
+
+
+
 boolean savingMemory = false;
  
 void sivuValikko() {
@@ -84,10 +88,11 @@ void sivuValikko() {
   translate(width-168, 0);
   mouse.declareUpdateElement("rearMenu:presetcontrols", "main:move", width-168, 0, width, height);
   for(int i = 1; i <= height/20+1; i++) {
-    if(memoryMenu+i < numberOfMemories) {
+    int ai = memoryControllerLookupTable[i] + memoryMenu;
+    if(ai < numberOfMemories) {
       pushMatrix();
         translate(0, 20*(i-1));
-        drawMemoryController(i+memoryMenu, memories[i+memoryMenu].getText());
+        drawMemoryController(ai, memories[ai].getText());
       popMatrix();
     }
   }
