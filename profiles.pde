@@ -76,8 +76,5 @@ void loadFixtureProfiles() {
 }
 
 void createFixtureProfiles() {
-
-    
-//  saveFixtureProfiles();
   loadFixtureProfiles();
 }
