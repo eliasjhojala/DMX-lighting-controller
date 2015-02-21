@@ -2,11 +2,10 @@ FixtureProfile[] fixtureProfiles = new FixtureProfile[19];
 
 void saveFixtureProfiles() {
   
-  XML xml = loadXML("fixtureProfiles.xml");
-  if(xml == null) {
-    String data = "<fixtureProfiles></fixtureProfiles>";
-    xml = parseXML(data);
-  }
+  XML xml;
+  String data = "<fixtureProfiles></fixtureProfiles>";
+  xml = parseXML(data);
+  
   XML profiles = xml.addChild("profiles");
   for(int i = 0; i < fixtureProfiles.length; i++) {
     XML profile = profiles.addChild("profile");
