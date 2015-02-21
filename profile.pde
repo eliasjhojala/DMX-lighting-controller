@@ -8,6 +8,12 @@ class FixtureProfile {
   int[] channelTypes;
   fixtureSize size;
   
+  FixtureProfile() {
+    String[] empty = { "" };
+    int[] emptyy = { 0 };
+    setBasicData("", empty, emptyy);
+  }
+  
   FixtureProfile(String fN, String fln, String[] cN, int[] cT, fixtureSize s) {
     setBasicData(fN, cN, cT, s);
     fixtureLongName = fln;
