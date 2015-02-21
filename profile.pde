@@ -46,9 +46,6 @@ channelName        | channelTypeNumber
 "Special ch 3"     | DMX_SPECIAL3
 "Special ch 4"     | DMX_SPECIAL4
 
-
-
-
 */
 
 class FixtureProfile {
