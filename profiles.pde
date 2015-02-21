@@ -50,6 +50,28 @@ void loadFixtureProfiles() {
       for (int i = 0; i < profile.length; i++) {
         fixtureProfiles[profile[i].getInt("id")] = new FixtureProfile();
         fixtureProfiles[profile[i].getInt("id")].fixtureName = profile[i].getString("fixtureName");
+        
+        XML channelNames = profile[i].getChild("channelNames");
+        XML[] channelName = channelNames.getChildren("channelName");
+        fixtureProfiles[i].channelNames = new String[channelName.length];
+        for(int j = 0; j < channelName.length; j++) {
+          fixtureProfiles[i].channelNames[j] = channelName[j].getContent();
+        }
+        
+        XML channelTypes = profile[i].getChild("channelTypes");
+        XML[] channelType = channelTypes.getChildren("channelType");
+        fixtureProfiles[i].channelTypes = new int[channelType.length];
+        for(int j = 0; j < channelType.length; j++) {
+          fixtureProfiles[i].channelTypes[j] = int(channelType[j].getContent());
+        }
+        
+        XML fixtureSize = profile[i].getChild("fixtureSize");
+        XML w = fixtureSize.getChild("width");
+        fixtureProfiles[i].size.w = int(w.getContent());
+        XML h = fixtureSize.getChild("height");
+        fixtureProfiles[i].size.h = int(h.getContent());
+        XML isDrawn = fixtureSize.getChild("isDrawn");
+        fixtureProfiles[i].size.isDrawn = boolean(isDrawn.getContent());
       }
 }
 
