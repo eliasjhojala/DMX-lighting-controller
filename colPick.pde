@@ -4,11 +4,12 @@ class HSBColorPicker {
   HSBColorPicker() {
   }
 
-int hue = 0;
-int saturation = 255*2;
-int brightness = 255*2;
-boolean colorSelectorOpen = true;
-PVector offset = new PVector(0, 0);
+  int hue = 0;
+  int saturation = 255*2;
+  int brightness = 255*2;
+  boolean colorSelectorOpen = true;
+  PVector offset = new PVector(0, 0);
+  
   void showColorSelector() {
     pushMatrix();
       pushStyle();
@@ -112,9 +113,8 @@ PVector offset = new PVector(0, 0);
     pushStyle();
       colorMode(HSB);
       color c = color(hue/2, saturation/2, brightness/2); //Divide all the values with two because they are 0-255*2
-      popStyle();
-      return c;
-    
+    popStyle();
+    return c;
   }
   
   boolean changed() {
