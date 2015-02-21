@@ -1,5 +1,7 @@
 FixtureProfile[] fixtureProfiles = new FixtureProfile[19]; 
 
+String nameOfProfileFile = "fixtureProfiles.xml"; //Name of xml file where all the fixtureProfile data is located
+
 void saveFixtureProfiles() {
   //This function saves all the fixtureProfiles to xml file
   //This will be useful when qui for adding fixtureProfiles is ready
@@ -9,12 +11,16 @@ void saveFixtureProfiles() {
   xml = parseXML(data); //parse xml base to xml variable
   
   XML profiles = xml.addChild("profiles"); //add profiles parent for all the profiles
+  
   for(int i = 0; i < fixtureProfiles.length; i++) { //Go through all the fixtureProfiles
     XML profile = profiles.addChild("profile"); //child for single profile
     profile.setInt("id", i);
-    profile.setString("fixtureName", fixtureProfiles[i].fixtureName);
-    profile.setString("fixtureLongName", fixtureProfiles[i].fixtureLongName);
-    profile.setString("fixtureBrand", fixtureProfiles[i].fixtureBrand);
+    
+    { //Save profile's nameData
+      profile.setString("fixtureName", fixtureProfiles[i].fixtureName); //Save fixtureName
+      profile.setString("fixtureLongName", fixtureProfiles[i].fixtureLongName); //Save fixtureLongName
+      profile.setString("fixtureBrand", fixtureProfiles[i].fixtureBrand); //Save fixtureBrand
+    } //End of saving profile's nameData
     
     { //Save channelNames
       XML channelNames = profile.addChild("channelNames");
@@ -43,8 +49,8 @@ void saveFixtureProfiles() {
       XML isDrawn = fixtureSize.addChild("isDrawn");
       isDrawn.setContent(str(fixtureProfiles[i].size.isDrawn));
     } //end of saving fixtureSize
-  }
-  saveXML(xml, "fixtureProfiles.xml");
+  } //End of going through all the profiles
+  saveXML(xml, nameOfProfileFile); //Finally save xml which we have created
 } //End of saving all the fixtureProfiles to xml
 
 void loadFixtureProfiles() {
@@ -52,7 +58,7 @@ void loadFixtureProfiles() {
   
   XML xml; //Define xml variable
 
-  xml = loadXML("fixtureProfiles.xml"); //load XML from file
+  xml = loadXML(nameOfProfileFile); //load XML from file
   XML profiles = xml.getChild("profiles"); //parent of all the profiles
   XML[] profile = profiles.getChildren("profile"); //single profiles
 
@@ -61,9 +67,12 @@ void loadFixtureProfiles() {
   for (int i = 0; i < profile.length; i++) { //Go through all the profiles
     int id = profile[i].getInt("id"); //Get profile id
     fixtureProfiles[id] = new FixtureProfile(); //Create new fixtureProfile with no data
-    fixtureProfiles[id].fixtureName = profile[i].getString("fixtureName"); //Set fixtureName for profile
-    fixtureProfiles[id].fixtureLongName = profile[i].getString("fixtureLongName"); //Set fixtureLongName for profile
-    fixtureProfiles[id].fixtureBrand = profile[i].getString("fixtureBrand"); //Set fixtureBrand for profile
+    
+    { //Load profile's nameData
+      fixtureProfiles[id].fixtureName = profile[i].getString("fixtureName"); //Set fixtureName for profile
+      fixtureProfiles[id].fixtureLongName = profile[i].getString("fixtureLongName"); //Set fixtureLongName for profile
+      fixtureProfiles[id].fixtureBrand = profile[i].getString("fixtureBrand"); //Set fixtureBrand for profile
+    } //End of loading profile's nameData
     
     { //load channelNames
       XML channelNames = profile[i].getChild("channelNames"); //parent of all the channelNames
