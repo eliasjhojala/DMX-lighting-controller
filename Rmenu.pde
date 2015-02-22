@@ -192,8 +192,10 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
       if(keyPressed && keyCode == CONTROL) {
         if(mouse.firstCaptureFrame) memories[controlledMemoryId].toggleWithMemory(true);
       } else if(keyPressed && keyCode == SHIFT) {
-        draggingMemoryId = controlledMemoryId;
-        draggingMemory = true;
+        if(!showMode) {
+          draggingMemoryId = controlledMemoryId;
+          draggingMemory = true;
+        }
       } else {
         value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
         memories[controlledMemoryId].setValue(value);
