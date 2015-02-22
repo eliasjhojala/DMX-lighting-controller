@@ -1,9 +1,8 @@
 //Tässä välilehdessä piirretään sivuvalikko, jossa näkyy memorit ja niiden arvot, sekä tyypit
-
+ 
 MemoryCreationBox memoryCreator;
 
 int[] memoryControllerLookupTable = newIncrementingIntArray(numberOfMemories, 0);
-
 
 
 boolean draggingMemory = false;
@@ -11,11 +10,11 @@ int     draggingMemoryId;
 
 
 boolean savingMemory = false;
-
+ 
 void sivuValikko() {
-
+  
   //The old code can be found in old versions
-
+    
   { // Memory creator open button
     pushStyle();
     //Open MemoryCreator bubblebutton
@@ -23,19 +22,19 @@ void sivuValikko() {
     int origBubS = bubS;
     mouse.declareUpdateElementRelative("addMemory", "main:move", width-168, 0, -bubS/2, bubS/2);
     if (mouse.elmIsHover("addMemory")) bubS += 10;
-
-
+    
+    
     if (mouse.isCaptured("addMemory") && mouse.firstCaptureFrame) {
       if(!showMode) memoryCreator.initiatePassive();
         else notifier.notify("Cannot use memoryCreator while showMode is enabled! (Press M to toggle)");
-
+      
     }
-
+    
     //bubble shadow
     noFill();
     stroke(0, 120); strokeWeight(6);
     arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
-
+    
     //chaseMode button(s)
     mouse.declareUpdateElementRelative("InMode", "main:move", width-268, bubS/2+30, 102, 30);
     mouse.setElementExpire("InMode", 2);
@@ -64,29 +63,29 @@ void sivuValikko() {
         text("OutM: " + getOutputModeMasterDesc(), width-262+3, bubS/2+20);
       popStyle();
     popStyle();
-
+    
     if(mouse.isCaptured("InMode") && mouse.firstCaptureFrame) { //lower
       if(mouseButton == LEFT) inputModeMasterUp(); else if(mouseButton == RIGHT) inputModeMasterDown();
     }
     if(mouse.isCaptured("OutMode") && mouse.firstCaptureFrame) { //upper
       if(mouseButton == LEFT) outputModeMasterUp(); else if(mouseButton == RIGHT) outputModeMasterDown();
     }
-
-
-
+    
+    
+    
     //bubble itself
     fill(topMenuTheme);
     stroke(topMenuAccent);
     arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
-
+    
     //Text
     fill(255);
     textSize(15);
     text("Add memory", width-150-bubS/2, 25);
     popStyle();
   }
-
-
+  
+  
   //-
   pushMatrix();
   translate(width-168, 0);
@@ -100,32 +99,33 @@ void sivuValikko() {
       popMatrix();
     }
   }
-
+  
   if(draggingMemory) { pushStyle();
     translate(0, mouseY);
     PGraphics temp = createGraphics(170, 22);
     temp.beginDraw();
     temp.translate(1, 1);
-    drawMemoryControllerToBuffer(draggingMemoryId, memories[draggingMemoryId].getText(), temp);
+    drawMemoryControllerToBuffer(draggingMemoryId, memories[draggingMemoryId].getText(), temp, false, true);
     temp.endDraw();
     tint(255, 140);
     image(temp, -1, -1);
   popStyle(); }
-
+  
   popMatrix();
   //-
-
-
+    
+    
   //if(!showMode) { memoryCreator.draw(); }
 }
 
 void reorderMemoryController(int from, int to) {
   int valFrom = from;
   int valTo   = to  ;
-  from = java.util.Arrays.asList(memoryControllerLookupTable).indexOf(from);
-  to   = java.util.Arrays.asList(memoryControllerLookupTable).indexOf(to  );
-
-
+  from = indexOf(memoryControllerLookupTable, from);
+  to   = indexOf(memoryControllerLookupTable, to  );
+  
+  
+  
   if(from > to) { //If from is lower than to (drawn)
     for(int i = from; i > to; i--) {
       if(i - 1 >= 0) memoryControllerLookupTable[i] = memoryControllerLookupTable[i - 1];
@@ -133,22 +133,25 @@ void reorderMemoryController(int from, int to) {
     memoryControllerLookupTable[to] = valFrom;
     return;
   } else if(from < to) { //If from is higher than to (drawn)
-
+    for(int i = from; i < to; i++) {
+      if(i + 1 >= 0) memoryControllerLookupTable[i] = memoryControllerLookupTable[i + 1];
+    }
+    memoryControllerLookupTable[to] = valFrom;
   } else if(from == to) {
     return;
   }
 }
 
 void drawMemoryController(int cMId, String text) {
-  drawMemoryControllerToBuffer(cMId, text, g);
+  drawMemoryControllerToBuffer(cMId, text, g, true, false);
 }
 
-void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics g) {
+void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics g, boolean checkMouse, boolean bypassDrawBlock) {
   int value = memories[controlledMemoryId].getValue();
-
+  
   g.pushStyle();
-
-  if(!(draggingMemory && draggingMemoryId == controlledMemoryId)) {
+  
+  if(!(draggingMemory && draggingMemoryId == controlledMemoryId) || bypassDrawBlock) {
     g.textSize(12);
     g.textAlign(CENTER);
     //Draw controller
@@ -165,7 +168,7 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
     g.fill(20);
     g.textAlign(LEFT);
     g.text(text, 30, 15);
-
+    
     //Controller box
     g.fill(255, 200);
     g.noStroke();
@@ -175,7 +178,7 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
     g.rect(65, 0, map(value, 0, 255, 0, 100), 20);
     g.fill(0);
     g.text(value, 68, 16);
-
+    
     //Borders
     g.noFill();
     g.stroke(100);
@@ -184,7 +187,7 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
   }
 
 
-  if (isHoverSimple(0, 0, 170, 20) && mouse.isCaptured("rearMenu:presetcontrols") && !draggingMemory) {
+  if (isHoverSimple(0, 0, 170, 20) && mouse.isCaptured("rearMenu:presetcontrols") && !draggingMemory && checkMouse) {
     if(mouseButton == LEFT) {
       if(keyPressed && keyCode == CONTROL) {
         if(mouse.firstCaptureFrame) memories[controlledMemoryId].toggleWithMemory(true);
@@ -196,17 +199,18 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
         memories[controlledMemoryId].setValue(value);
       }
     } else if(mouseButton == RIGHT) memoryCreator.initiateFromExsisting(controlledMemoryId);
-  } else if(draggingMemory && isHoverSimple(0, 0, 170, 20)) {
+  } else if(draggingMemory && isHoverSimple(0, 0, 170, 20) && checkMouse) {
     g.fill(20, 255, 20, 180); g.noStroke();
     g.rect(0, 0, 168, 20);
     if(!mousePressed) {
       reorderMemoryController(draggingMemoryId, controlledMemoryId);
+      draggingMemory = false;
     }
   }
-
-
-
-
+  
+  
+  
+  
   g.popStyle();
 }
 
@@ -225,25 +229,25 @@ class MemoryCreationBox {
     locX = width - (320 + 168);
     selectedWhatToSave = new boolean[saveOptionButtonVariables.length];
   }
-
+  
   void initiate(int slot, int lY, int lX) {
     open = true;
     locY = lY;
     locX = lX;
     selectedMemorySlot = slot;
   }
-
+  
   //Initiate with last configuration
   void initiatePassive() {
     open = true;
     locY = 40;
     locX = width - (320 + 168);
   }
-
+  
   //Initiate with configuration from an existing memory
   void initiateFromExsisting(int memory) {
-
-
+    
+    
     switch(memories[memory].type) {
       case 0:
         selectedMemoryMode = 0;
@@ -258,30 +262,30 @@ class MemoryCreationBox {
     boolean[] defaultWhatToSave = new boolean[memories[memory].whatToSave.length];
     defaultWhatToSave[0] = true;
     arrayCopy(memories[memory].whatToSave, selectedWhatToSave);
-
+    
     if(memories[memory].type == 0) {
       arrayCopy(defaultWhatToSave, selectedWhatToSave);
     }
-
+    
   }
-
+  
   boolean open;
   int locY;
   int locX;
-
+  
   int selectedMemoryMode = 0;
   int selectedMemorySlot = 1;
-
-
+  
+  
   int h = 600, w = 300;
-
-
+  
+  
   boolean[] selectedWhatToSave;
-
+  
   void draw() {
     draw(g, mouse, true);
   }
-
+  
   void draw(PGraphics g, Mouse mouse, boolean translate) {
     if(open) {
       g.pushMatrix();
@@ -328,7 +332,7 @@ class MemoryCreationBox {
           save();
         }
       }
-
+      
       { //Preset creation options
         drawModeSelection(g, mouse);
         drawSlotSelector(g, mouse);
@@ -338,11 +342,11 @@ class MemoryCreationBox {
       g.popStyle();
     }
   }
-
+  
   void drawModeSelection(PGraphics g, Mouse mouse) {
     g.pushMatrix();
     {
-
+      
       g.translate(10, 40);
       g.strokeWeight(1);
       g.stroke(150);
@@ -354,10 +358,10 @@ class MemoryCreationBox {
       g.fill(boxIsHover ? 200 : 180); g.noStroke();
       g.rect(82.5, 12.5, 16, 16, 2);
       g.fill(230);
-
+      
       if(mouse.isCaptured("MemoryCreationBox:type") && mouse.firstCaptureFrame)
         { addToSelectedMemoryMode(); }
-
+      
       g.fill(0);
       g.textAlign(LEFT);
       g.text("Memory type:", 0, 5);
@@ -375,12 +379,12 @@ class MemoryCreationBox {
     }
     g.popMatrix();
   }
-
+  
   void drawSlotSelector(PGraphics g, Mouse mouse) {
     g.pushMatrix();
     {
       g.textAlign(CENTER);
-
+      
       //Area bar
       g.translate(10, 75);
       g.stroke(120);
@@ -388,7 +392,7 @@ class MemoryCreationBox {
       g.strokeWeight(2);
       g.line(0, 0, 280, 0);
       g.text("SLOT", 140, 16);
-
+      
       //Selection indicator
       float mappedSlot = map(selectedMemorySlot, 1, numberOfMemories-1, 0, 280);
       g.fill(0, 186, 240);
@@ -399,13 +403,13 @@ class MemoryCreationBox {
       if(mouse.isCaptured("MemoryCreationBox:slot")) {
         selectedMemorySlot = constrain(int(map(mouseX - locX - g.screenX(0, 0), 0, 280, 0, numberOfMemories)), 1, numberOfMemories-1);
       }
-
+      
       g.fill(0);
       g.text(selectedMemorySlot, mappedSlot, 34);
     }
     g.popMatrix();
   }
-
+  
   void drawTypeSpecificOptions(PGraphics g, Mouse mouse) {
     g.pushMatrix();
     {
@@ -426,7 +430,7 @@ class MemoryCreationBox {
               g.fill(boxIsHover ? 210 : 200);
               g.noStroke();
               g.rect(0, 0, 25, 25, 4);
-
+              
               if(mouse.isCaptured("MemoryCreationBox:wts" + i) && mouse.firstCaptureFrame) {
                 selectedWhatToSave[i] = !selectedWhatToSave[i];
               }
@@ -518,7 +522,7 @@ class MemoryCreationBox {
           g.fill(120);
           g.strokeWeight(2);
           g.line(150, 110, 150, 260);
-
+          
           { //fade
             g.textSize(12);
             g.fill(0);
@@ -527,7 +531,7 @@ class MemoryCreationBox {
               g.translate(160, 130);
               memories[selectedMemorySlot].myChase.changeFade(quickSlider("MemoryCreationBox:fade", 10, memories[selectedMemorySlot].myChase.ownFade, g, mouse));
             g.popMatrix();
-
+            
           }
           }
         break;
@@ -535,7 +539,7 @@ class MemoryCreationBox {
     }
     g.popMatrix();
   }
-
+  
   void save() {
     savingMemory = true;
     switch(selectedMemoryMode) {
@@ -552,14 +556,18 @@ class MemoryCreationBox {
     open = false;
     savingMemory = false;
   }
-
+  
   //Returns whether box is hovered on
   boolean isMouseOver() {
     return isHoverSimple(width - (320 + 168), locY, 300, 300) && open;
   }
-
+  
   void addToSelectedMemoryMode() {
     if(selectedMemoryMode < 2) selectedMemoryMode++;
     else selectedMemoryMode = 0;
   }
 }
+
+
+
+
