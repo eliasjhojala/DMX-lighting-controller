@@ -35,7 +35,7 @@ class FixtureArray {
         idLookupTable.set(newIndex, newId);
       } else idLookupTable.add(newId);
     }
-    println(idLookupTable.toArray());
+    
   }
   
   
@@ -43,17 +43,11 @@ class FixtureArray {
     int idi = getArrayId(id);
     array.remove(idi);
     for(int i = 0; i < idLookupTable.size(); i++) {
-      if(idLookupTable.get(i) == idi) {
-        idLookupTable.set(i, -1);
-      }
-    }
-    for(int i = 0; i < idLookupTable.size(); i++) {
       if(getArrayId(i) > idi) {
         idLookupTable.set(i, getArrayId(i)-1);
       }
     }
-    
-    if(currentBottomMenuControlBoxOwner == id) bottomMenuControlBoxOpen = false;
+    idLookupTable.set(id, -1);
   }
   
   
@@ -92,7 +86,7 @@ class FixtureArray {
 
 
 void createNewFixtureAt00() {
-  fixtures.add(new fixture(0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 1));
+  fixtures.add(new fixture(0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 }
 
  
@@ -135,68 +129,68 @@ class fixture {
 
   //End of initing variables
   
-  void saveFixtureDMXDataToXML() {
-    manageXML.addBlockAndIncrease("FixtureDMXdata");
-      if(in != null) { in.saveToXML("in"); }
-      if(process != null) { process.saveToXML("process"); }
-      if(out != null) { out.saveToXML("out"); }
-      if(preset != null) { preset.saveToXML("preset"); }
-      if(bottomMenu != null) { bottomMenu.saveToXML("bottomMenu"); }
-      if(fade != null) { fade.saveToXML("fade"); }
-    manageXML.goBack();
+  void saveFixtureDMXDataToXML(ManageXML XMLObject) {
+    XMLObject.addBlockAndIncrease("FixtureDMXdata");
+      if(in != null) { in.saveToXML("in", XMLObject); }
+      if(process != null) { process.saveToXML("process", XMLObject); }
+      if(out != null) { out.saveToXML("out", XMLObject); }
+      if(preset != null) { preset.saveToXML("preset", XMLObject); }
+      if(bottomMenu != null) { bottomMenu.saveToXML("bottomMenu", XMLObject); }
+      if(fade != null) { fade.saveToXML("fade", XMLObject); }
+    XMLObject.goBack();
   }
   
-  void saveFixtureDataToXML() {
-    manageXML.addBlock("StartChannel", channelStart);
-    manageXML.addBlock("fixtureTypeId", fixtureTypeId);
-    manageXML.addBlockAndIncrease("Location");
-      manageXML.addData("x", x_location);
-      manageXML.addData("y", y_location);
-      manageXML.addData("z", z_location);
-      manageXML.addBlockAndIncrease("OnScreen");
-        manageXML.addData("x", locationOnScreenX);
-        manageXML.addData("y", locationOnScreenY);
-      manageXML.goBack();
-      manageXML.addBlockAndIncrease("Rotation");
-        manageXML.addData("x", rotationX);
-        manageXML.addData("z", rotationZ);
-    manageXML.goBack(2);
-    manageXML.addBlock("parameter", parameter);
-    manageXML.addBlock("preFadeSpeed", preFadeSpeed);
-    manageXML.addBlock("postFadeSpeed", postFadeSpeed);
-    manageXML.addBlockAndIncrease("Color");
-      manageXML.addData("r", red);
-      manageXML.addData("g", green);
-      manageXML.addData("b", blue);
-    manageXML.goBack();
-    manageXML.addBlock("parentAnsa", parentAnsa);
-    saveFixtureDMXDataToXML();
+  void saveFixtureDataToXML(ManageXML XMLObject) {
+    XMLObject.addBlock("StartChannel", channelStart);
+    XMLObject.addBlock("fixtureTypeId", fixtureTypeId);
+    XMLObject.addBlockAndIncrease("Location");
+      XMLObject.addData("x", x_location);
+      XMLObject.addData("y", y_location);
+      XMLObject.addData("z", z_location);
+      XMLObject.addBlockAndIncrease("OnScreen");
+        XMLObject.addData("x", locationOnScreenX);
+        XMLObject.addData("y", locationOnScreenY);
+      XMLObject.goBack();
+      XMLObject.addBlockAndIncrease("Rotation");
+        XMLObject.addData("x", rotationX);
+        XMLObject.addData("z", rotationZ);
+    XMLObject.goBack(2);
+    XMLObject.addBlock("parameter", parameter);
+    XMLObject.addBlock("preFadeSpeed", preFadeSpeed);
+    XMLObject.addBlock("postFadeSpeed", postFadeSpeed);
+    XMLObject.addBlockAndIncrease("Color");
+      XMLObject.addData("r", red);
+      XMLObject.addData("g", green);
+      XMLObject.addData("b", blue);
+    XMLObject.goBack();
+    XMLObject.addBlock("parentAnsa", parentAnsa);
+    saveFixtureDMXDataToXML(XMLObject);
   }
   
-  void loadFixtureData() {
-    channelStart = int(manageXML.getBlock("StartChannel"));
-    fixtureTypeId = int(manageXML.getBlock("fixtureTypeId"));
-    manageXML.goToChild("Location");
-      x_location = manageXML.getDataInt("x");
-      y_location = manageXML.getDataInt("y");
-      z_location = manageXML.getDataInt("z");
-      manageXML.goToChild("OnScreen");
-        locationOnScreenX = manageXML.getDataInt("x");
-        locationOnScreenY = manageXML.getDataInt("y");
-      manageXML.goBack();
-      manageXML.goToChild("Rotation");
-        rotationX = manageXML.getDataInt("x");
-        rotationZ = manageXML.getDataInt("z");
-    manageXML.goBack(2);
-    parameter = int(manageXML.getBlock("parameter"));
-    preFadeSpeed = int(manageXML.getBlock("preFadeSpeed"));
-    postFadeSpeed = int(manageXML.getBlock("postFadeSpeed"));
-    manageXML.goToChild("Color");
-      red = manageXML.getDataInt("r");
-      green = manageXML.getDataInt("g");
-      blue = manageXML.getDataInt("b");
-    manageXML.goBack();
-    parentAnsa = int(manageXML.getBlock("parentAnsa"));
+  void loadFixtureData(ManageXML XMLObject) {
+    channelStart = int(XMLObject.getBlock("StartChannel"));
+    fixtureTypeId = int(XMLObject.getBlock("fixtureTypeId"));
+    XMLObject.goToChild("Location");
+      x_location = XMLObject.getDataInt("x");
+      y_location = XMLObject.getDataInt("y");
+      z_location = XMLObject.getDataInt("z");
+      XMLObject.goToChild("OnScreen");
+        locationOnScreenX = XMLObject.getDataInt("x");
+        locationOnScreenY = XMLObject.getDataInt("y");
+      XMLObject.goBack();
+      XMLObject.goToChild("Rotation");
+        rotationX = XMLObject.getDataInt("x");
+        rotationZ = XMLObject.getDataInt("z");
+    XMLObject.goBack(2);
+    parameter = int(XMLObject.getBlock("parameter"));
+    preFadeSpeed = int(XMLObject.getBlock("preFadeSpeed"));
+    postFadeSpeed = int(XMLObject.getBlock("postFadeSpeed"));
+    XMLObject.goToChild("Color");
+      red = XMLObject.getDataInt("r");
+      green = XMLObject.getDataInt("g");
+      blue = XMLObject.getDataInt("b");
+    XMLObject.goBack();
+    parentAnsa = int(XMLObject.getBlock("parentAnsa"));
   }
  
   void setDimmer(int val) { 

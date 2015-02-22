@@ -1,43 +1,64 @@
+
+ManageXML fixtureXML = new ManageXML("XML/fixtures.xml");
+ManageXML memoryXML = new ManageXML("XML/memories.xml");
+
 void saveTestXML() {
-  manageXML.addBlockAndIncrease("fixtures");
+  ManageXML XMLObject = fixtureXML;
+  XMLObject.addBlockAndIncrease("fixtures");
   for(int i = 0; i < fixtures.size(); i++) {
-    manageXML.addBlockAndIncrease("Fixture");
-    manageXML.addData("id", i);
+    XMLObject.addBlockAndIncrease("Fixture");
+    XMLObject.addData("id", i);
       
-      fixtures.get(i).saveFixtureDataToXML();
-    manageXML.goBack();
+      fixtures.get(i).saveFixtureDataToXML(XMLObject);
+    XMLObject.goBack();
   }
-  manageXML.saveData();
+//  XMLObject.saveData();
   loadTestXML();
   saveMemoriesToXML();
+//  loadMemoriesFromXML();
 }
 
 void loadTestXML() {
-  if(manageXML.loadData()) {
-    manageXML.goToChild("fixtures");
+  ManageXML XMLObject = fixtureXML;
+  ManageXML SingleFixture;
+  if(XMLObject.loadData()) {
+    XMLObject.goToChild("fixtures");
+    XML[] allTheFixtures = XMLObject.currentBlock.getChildren();
       for(int i = 0; i < fixtures.size(); i++) {
-        manageXML.goToChild("Fixture");
-          fixtures.get(manageXML.getDataInt("id")).loadFixtureData();
-        manageXML.goBack();
+        SingleFixture = new ManageXML(allTheFixtures[i]);
+
+        println(SingleFixture.currentBlock);
+        if(SingleFixture.currentBlock != null) {
+        println(SingleFixture.getBlock("Color"));
+        }
+        //fixtures.get(SingleFixture.getDataInt("id")).loadFixtureData(fixtureXML);
+        //SingleFixture.goBack();
       }
-    manageXML.goBack();
+    XMLObject.goBack();
   }
 }
 
 
-ManageXML manageXML = new ManageXML();  
+ManageXML manageXML = new ManageXML("XML/DMX_Controller.xml");  
 class ManageXML {
   XML currentBlock;
   XML xml;
-  ManageXML() {
+  String path = "new.xml";
+  ManageXML(String p) {
     String data = "<DMX_Controller></DMX_Controller>";
     xml = parseXML(data);
     currentBlock = xml.addChild("content");
+    path = p;
+  }
+  
+  ManageXML(XML newBlock) {
+    xml = newBlock;
+    currentBlock = xml;
   }
   
   //LOAD FROM XML
   boolean loadData() {
-    xml = loadXML("DMX_Controller.xml");
+    xml = loadXML(path);
     currentBlock = xml.getChild("content");
     if(currentBlock != null) { return true; }
     return false;
@@ -49,9 +70,8 @@ class ManageXML {
   }
   String getBlock(String name) {
     String toReturn = "";
-    currentBlock = currentBlock.getChild(name);
-    toReturn = currentBlock.getContent();
-    currentBlock = currentBlock.getParent();
+    XML newBlock = currentBlock.getChild(name);
+    toReturn = newBlock.getContent();
     return toReturn;
   }
   String getBlockAndIncrease(String name) {
@@ -69,6 +89,25 @@ class ManageXML {
   float getDataFloat(String name) {
     return currentBlock.getFloat(name);
   }
+  int[] getArray(String name) {
+    int[] data = { };
+    if(goToChild(name)) {
+      XML[] dataFromXML = currentBlock.getChildren();
+      int[] id = new int[dataFromXML.length];
+      int[] rawData = new int[dataFromXML.length];
+      for(int i = 0; i < dataFromXML.length; i++) {
+        id[i] = dataFromXML[i].getInt("id");
+        rawData[i] = dataFromXML[i].getInt("val");
+      }
+      data = new int[max(id)+1];
+      for(int i = 0; i < rawData.length; i++) {
+        data[id[i]] = rawData[i];
+      }
+    }
+    goBack();
+    return data;
+  }
+
   
   
   //SAVE TO XML
@@ -81,12 +120,18 @@ class ManageXML {
   void addData(String name, float data) {
     currentBlock.setFloat(name, data);
   }
+  void addData(String name, boolean data) {
+    addData(name, int(data));
+  }
   void addBlock(String name, int content) {
     addBlock(name, str(content));
   }
   void addBlock(String name, String content) {
     XML newBlock = currentBlock.addChild(name);
     newBlock.setContent(content);
+  }
+  void addBlock(String name, boolean content) {
+    addBlock(name, int(content)); 
   }
   void addBlockAndIncrease(String name, String content) {
     currentBlock = currentBlock.addChild(name);
@@ -97,6 +142,22 @@ class ManageXML {
   }
   void addBlockAndIncrease(String name) {
     currentBlock = currentBlock.addChild(name);
+  }
+  void addArray(String name, int[] data) {
+    if(data != null) {
+      addBlockAndIncrease(name);
+        if(max(data) > 0 || min(data) < 0) {
+          for(int i = 0; i < data.length; i++) {
+            if(data[i] != 0) {
+              addBlockAndIncrease("int");
+                addData("id", i);
+                addData("val", data[i]);
+              goBack();
+            }
+          }
+        }
+      goBack();
+    }
   }
   
   //Functions for save and load
@@ -112,7 +173,7 @@ class ManageXML {
     currentBlock = xml.getChild("content");
   }
   void saveData() {
-    saveXML(xml, "DMX_Controller.xml");
+    saveXML(xml, path);
   }
   
 }

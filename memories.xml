@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DMX_Controller>
+  <content>
+    <Memories>
+      <Memory enabled="true" id="1" type="4" value="255" valueOld="0">
+        <WhatToSave/>
+        <fixturesToSave/>
+        <repOfFixtures/>
+      </Memory>
+      <Memory enabled="true" id="2" type="5" value="10" valueOld="0">
+        <WhatToSave/>
+        <fixturesToSave/>
+        <repOfFixtures/>
+      </Memory>
+      <Memory enabled="true" id="4" type="1" value="0" valueOld="0">
+        <WhatToSave>
+          <WhatToSave boolean="1" id="0"/>
+        </WhatToSave>
+        <fixturesToSave/>
+        <repOfFixtures/>
+      </Memory>
+      <Memory enabled="true" id="5" type="2" value="0" valueOld="0">
+        <WhatToSave/>
+        <fixturesToSave/>
+        <repOfFixtures/>
+        <myChase>
+          <Chase>
+            <BasicData>
+              <value>0</value>
+              <StepData brightness="0" brightness1="0" fade="0" ownFade="0" step="0" stepHasChanged="0"/>
+            </BasicData>
+            <ModeData>
+              <inputMode>1</inputMode>
+              <outputMode>1</outputMode>
+              <beatModeId>1</beatModeId>
+              <beatMode>kick</beatMode>
+              <fadeMode>0</fadeMode>
+            </ModeData>
+            <contentData>
+              <presets>
+                <int id="0" val="4"/>
+              </presets>
+            </contentData>
+          </Chase>
+        </myChase>
+      </Memory>
+      <Memory enabled="true" id="9" type="1" value="0" valueOld="0">
+        <WhatToSave>
+          <WhatToSave boolean="1" id="0"/>
+        </WhatToSave>
+        <fixturesToSave/>
+        <repOfFixtures/>
+      </Memory>
+      <Memory enabled="true" id="10" type="1" value="0" valueOld="0">
+        <WhatToSave>
+          <WhatToSave boolean="1" id="0"/>
+        </WhatToSave>
+        <fixturesToSave/>
+        <repOfFixtures/>
+      </Memory>
+      <Memory enabled="true" id="11" type="1" value="0" valueOld="0">
+        <WhatToSave>
+          <WhatToSave boolean="1" id="0"/>
+        </WhatToSave>
+        <fixturesToSave/>
+        <repOfFixtures/>
+      </Memory>
+      <Memory enabled="true" id="12" type="1" value="0" valueOld="0">
+        <WhatToSave>
+          <WhatToSave boolean="1" id="0"/>
+        </WhatToSave>
+        <fixturesToSave/>
+        <repOfFixtures/>
+      </Memory>
+      <Memory enabled="true" id="13" type="1" value="0" valueOld="0">
+        <WhatToSave>
+          <WhatToSave boolean="1" id="0"/>
+        </WhatToSave>
+        <fixturesToSave/>
+        <repOfFixtures/>
+      </Memory>
+      <Memory enabled="true" id="14" type="1" value="0" valueOld="0">
+        <WhatToSave>
+          <WhatToSave boolean="1" id="0"/>
+        </WhatToSave>
+        <fixturesToSave/>
+        <repOfFixtures/>
+      </Memory>
+      <Memory enabled="true" id="15" type="1" value="0" valueOld="0">
+        <WhatToSave>
+          <WhatToSave boolean="1" id="0"/>
+        </WhatToSave>
+        <fixturesToSave/>
+        <repOfFixtures/>
+      </Memory>
+      <Memory enabled="true" id="16" type="2" value="0" valueOld="0">
+        <WhatToSave/>
+        <fixturesToSave/>
+        <repOfFixtures/>
+        <myChase>
+          <Chase>
+            <BasicData>
+              <value>0</value>
+              <StepData brightness="0" brightness1="0" fade="0" ownFade="0" step="0" stepHasChanged="0"/>
+            </BasicData>
+            <ModeData>
+              <inputMode>2</inputMode>
+              <outputMode>1</outputMode>
+              <beatModeId>1</beatModeId>
+              <beatMode>kick</beatMode>
+              <fadeMode>0</fadeMode>
+            </ModeData>
+            <contentData>
+              <presets>
+                <int id="0" val="10"/>
+                <int id="1" val="11"/>
+                <int id="2" val="12"/>
+                <int id="3" val="13"/>
+                <int id="4" val="14"/>
+                <int id="5" val="15"/>
+              </presets>
+            </contentData>
+          </Chase>
+        </myChase>
+      </Memory>
+      <Memory enabled="true" id="20" type="3" value="0" valueOld="0">
+        <WhatToSave/>
+        <fixturesToSave/>
+        <repOfFixtures/>
+        <myChase>
+          <Chase>
+            <BasicData>
+              <value>0</value>
+              <StepData brightness="0" brightness1="0" fade="0" ownFade="0" step="0" stepHasChanged="0"/>
+            </BasicData>
+            <ModeData>
+              <inputMode>1</inputMode>
+              <outputMode>6</outputMode>
+              <beatModeId>2</beatModeId>
+              <beatMode>kick</beatMode>
+              <fadeMode>0</fadeMode>
+            </ModeData>
+            <contentData>
+              <content>
+                <int id="0" val="33"/>
+                <int id="1" val="34"/>
+                <int id="2" val="35"/>
+                <int id="3" val="36"/>
+                <int id="4" val="37"/>
+                <int id="5" val="38"/>
+              </content>
+            </contentData>
+          </Chase>
+        </myChase>
+      </Memory>
+      <Memory enabled="true" id="21" type="3" value="0" valueOld="0">
+        <WhatToSave/>
+        <fixturesToSave/>
+        <repOfFixtures/>
+        <myChase>
+          <Chase>
+            <BasicData>
+              <value>0</value>
+              <StepData brightness="0" brightness1="0" fade="0" ownFade="0" step="0" stepHasChanged="0"/>
+            </BasicData>
+            <ModeData>
+              <inputMode>2</inputMode>
+              <outputMode>1</outputMode>
+              <beatModeId>4</beatModeId>
+              <beatMode>hat</beatMode>
+              <fadeMode>0</fadeMode>
+            </ModeData>
+            <contentData>
+              <content>
+                <int id="0" val="33"/>
+                <int id="1" val="34"/>
+                <int id="2" val="35"/>
+                <int id="3" val="36"/>
+                <int id="4" val="37"/>
+                <int id="5" val="38"/>
+              </content>
+            </contentData>
+          </Chase>
+        </myChase>
+      </Memory>
+      <Memory enabled="true" id="25" type="1" value="0" valueOld="0">
+        <WhatToSave/>
+        <fixturesToSave/>
+        <repOfFixtures/>
+      </Memory>
+    </Memories>
+  </content>
+</DMX_Controller>

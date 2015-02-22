@@ -9,38 +9,57 @@ void createMemoryObjects() {
   }
 }
 
+
 void saveMemoriesToXML() {
-  manageXML.addBlockAndIncrease("Memories");
+  memoryXML.addBlockAndIncrease("Memories");
     for(int i = 0; i < memories.length; i++) {
-      manageXML.addBlockAndIncrease("Memory");
-        manageXML.addData("id", i);
-        manageXML.addData("type", memories[i].type);
-        manageXML.addData("value", memories[i].value);
-        manageXML.addData("valueOld", memories[i].valueOld);
-        manageXML.addData("enabled", str(memories[i].enabled));
-        
-        manageXML.addBlockAndIncrease("WhatToSave");
-          for(int j = 0; j < memories[i].whatToSave.length; j++) {
-            manageXML.addBlockAndIncrease("WhatToSave");
-              manageXML.addData("id", j);
-              manageXML.addData("boolean", int(memories[i].whatToSave[j]));
-            manageXML.goBack();
+      if(memories[i].type != 0) {
+        memoryXML.addBlockAndIncrease("Memory");
+          memoryXML.addData("id", i);
+          memoryXML.addData("type", memories[i].type);
+          memoryXML.addData("value", memories[i].value);
+          memoryXML.addData("valueOld", memories[i].valueOld);
+          memoryXML.addData("enabled", str(memories[i].enabled));
+          
+          memoryXML.addBlockAndIncrease("WhatToSave");
+            for(int j = 0; j < memories[i].whatToSave.length; j++) {
+              if(memories[i].whatToSave[j] != false) {
+                memoryXML.addBlockAndIncrease("WhatToSave");
+                  memoryXML.addData("id", j);
+                  memoryXML.addData("boolean", int(memories[i].whatToSave[j]));
+                memoryXML.goBack();
+              }
+            }
+          memoryXML.goBack();
+          
+          memoryXML.addBlockAndIncrease("fixturesToSave");
+            for(int j = 0; j < memories[i].fixturesToSave.length; j++) {
+              if(memories[i].fixturesToSave[j] != false) {
+                memoryXML.addBlockAndIncrease("fixturesToSave");
+                  memoryXML.addData("id", j);
+                  memoryXML.addData("boolean", int(memories[i].fixturesToSave[j]));
+                memoryXML.goBack();
+              }
+            }
+          memoryXML.goBack();
+          
+          memoryXML.addBlockAndIncrease("repOfFixtures");
+            for(int j = 0; j < memories[i].repOfFixtures.length; j++) {
+              memories[i].repOfFixtures[j].saveToXML("fixture" + str(j), memoryXML);
+            }
+          memoryXML.goBack();
+          
+          if(memories[i].type == 2 || memories[i].type == 3) {
+            memoryXML.addBlockAndIncrease("myChase");
+              memories[i].myChase.saveChasetToXML();
+            memoryXML.goBack();
           }
-        manageXML.goBack();
-        
-        manageXML.addBlockAndIncrease("fixturesToSave");
-          for(int j = 0; j < memories[i].fixturesToSave.length; j++) {
-            manageXML.addBlockAndIncrease("fixturesToSave");
-              manageXML.addData("id", j);
-              manageXML.addData("boolean", int(memories[i].fixturesToSave[j]));
-            manageXML.goBack();
-          }
-        manageXML.goBack();
-        
-      manageXML.goBack();
+          
+        memoryXML.goBack();
+      }
     }
-  manageXML.goBack();
-  manageXML.saveData();
+  memoryXML.goBack();
+  memoryXML.saveData();
 }
 
 
@@ -351,6 +370,33 @@ class chase { //Begin of chase class--------------------------------------------
   
   //----------------------end declaring variables--------------------------------
   
+  
+  void saveChasetToXML() {
+    memoryXML.addBlockAndIncrease("Chase");
+      memoryXML.addBlockAndIncrease("BasicData");
+        memoryXML.addBlock("value", value);
+        memoryXML.addBlockAndIncrease("StepData");
+          memoryXML.addData("step", step);
+          memoryXML.addData("brightness", brightness);
+          memoryXML.addData("brightness1", brightness1);
+          memoryXML.addData("stepHasChanged", stepHasChanged);
+          memoryXML.addData("fade", fade);
+          memoryXML.addData("ownFade", ownFade);
+        memoryXML.goBack();
+      memoryXML.goBack();
+      memoryXML.addBlockAndIncrease("ModeData");
+        memoryXML.addBlock("inputMode", inputMode);
+        memoryXML.addBlock("outputMode", outputMode);
+        memoryXML.addBlock("beatModeId", beatModeId);
+        memoryXML.addBlock("beatMode", beatMode);
+        memoryXML.addBlock("fadeMode", fadeMode);
+      memoryXML.goBack();
+      memoryXML.addBlockAndIncrease("contentData");
+        memoryXML.addArray("presets", presets);
+        memoryXML.addArray("content", content);
+      memoryXML.goBack();
+    memoryXML.goBack();
+  }
   
   
   memory parent;
