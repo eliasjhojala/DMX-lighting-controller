@@ -23,16 +23,14 @@ void loadTestXML() {
   ManageXML SingleFixture;
   if(XMLObject.loadData()) {
     XMLObject.goToChild("fixtures");
-    XML[] allTheFixtures = XMLObject.currentBlock.getChildren();
-      for(int i = 0; i < fixtures.size(); i++) {
-        SingleFixture = new ManageXML(allTheFixtures[i]);
-
-        println(SingleFixture.currentBlock);
-        if(SingleFixture.currentBlock != null) {
-        println(SingleFixture.getBlock("Color"));
+      XML[] allTheFixtures = XMLObject.currentBlock.getChildren();
+      for(int i = 0; i < allTheFixtures.length; i++) {
+        if(!trim(allTheFixtures[i].toString()).equals("")) {
+          SingleFixture = new ManageXML(allTheFixtures[i]);
+          int id = SingleFixture.getDataInt("id");
+          fixtures.array.add(id, new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+          fixtures.get(id).loadFixtureData(SingleFixture);
         }
-        //fixtures.get(SingleFixture.getDataInt("id")).loadFixtureData(fixtureXML);
-        //SingleFixture.goBack();
       }
     XMLObject.goBack();
   }
@@ -84,7 +82,8 @@ class ManageXML {
     return currentBlock.getString(name);
   }
   int getDataInt(String name) {
-    return currentBlock.getInt(name);
+    if(currentBlock != null) return currentBlock.getInt(name);
+    return 0;
   }
   float getDataFloat(String name) {
     return currentBlock.getFloat(name);
