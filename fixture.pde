@@ -297,23 +297,6 @@ class fixture {
   }
   
   
-  //Moving head--------------------------------------------------------------------------------
-//  void visualisationSettingsFromMovingHeadData() {
-//    if(fixtureTypeId == 16 || fixtureTypeId == 17) {
-//      slowRotationForMovingHead();
-//    }
-//  }
-
-//  void slowRotationForMovingHead() {
-//    if(rotationZ < round(map(pan, 0, 255, 0, 540))) { rotationZ += constrain(round((map(float(pan), 0, 255, 0, 540) - float(rotationZ))/20+0.6), 1, 10); }
-//    if(rotationZ > round(map(pan, 0, 255, 0, 540))) { rotationZ -= constrain(round((float(rotationZ) - map(float(pan), 0, 255, 0, 540))/20+0.6), 1, 10); }
-//    if(rotationX < round(map(tilt, 0, 255, 45, 270+45))) { rotationX += constrain(round((map(float(tilt), 0, 255, 45, 270+45) - float(rotationX))/20+0.6), 1, 10); }
-//    if(rotationX > round(map(tilt, 0, 255, 45, 270+45))) { rotationX -= constrain(round((float(rotationX) - map(float(tilt), 0, 255, 45, 270+45))/20+0.6), 1, 10); }
-//  }
-
-
-
-  
   //Query-------------------------------------------------------------------------------------
   
   //Returns raw fixture color in type color
