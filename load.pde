@@ -34,12 +34,11 @@ void loadAllData1() {
     for(TableRow row : table.findRows("idLookupTable", "variable_name")) {
       idLookupTable.add(int(row.getString("value")));
     }
-    //ROOPE LAITA TÄMÄ JUTTU TÄSSÄ TÄMÄN YLÄPUOLELLA XML:ÄÄN EN YMMÄRRÄ TÄSTÄ MITÄÄÄNN!!
+    
   
     
     //fixtures.array.ensureCapacity(int(table.findRow("fixtures.size", "variable_name").getString("value")));
-
-  
+    
     for (TableRow row : table.findRows("fixtureType1", "variable_name")) 
         { 
           fixtures.array.add(int(row.getString("1D")), new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, int(row.getString("value"))));
@@ -77,7 +76,6 @@ void loadAllData1() {
     
     for (TableRow row : table.findRows("ansaParent", "variable_name")) if(fixtures.array.size() > int(row.getString("1D"))) 
         { fixtures.array.get(int(row.getString("1D"))).parentAnsa           = int(row.getString("value")); }
-   
     
     //--------------------------------------------------------------------------------------------------------------------------------------
     // whatToSave titles: { "dimmer", "colorWheel", "gobo", "goboRotation", "shutter", "pan", "tilt" }

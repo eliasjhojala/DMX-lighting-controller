@@ -10,59 +10,6 @@ void createMemoryObjects() {
 }
 
 
-void saveMemoriesToXML() {
-  memoryXML.addBlockAndIncrease("Memories");
-    for(int i = 0; i < memories.length; i++) {
-      if(memories[i].type != 0) {
-        memoryXML.addBlockAndIncrease("Memory");
-          memoryXML.addData("id", i);
-          memoryXML.addData("type", memories[i].type);
-          memoryXML.addData("value", memories[i].value);
-          memoryXML.addData("valueOld", memories[i].valueOld);
-          memoryXML.addData("enabled", str(memories[i].enabled));
-          
-          memoryXML.addBlockAndIncrease("WhatToSave");
-            for(int j = 0; j < memories[i].whatToSave.length; j++) {
-              if(memories[i].whatToSave[j] != false) {
-                memoryXML.addBlockAndIncrease("WhatToSave");
-                  memoryXML.addData("id", j);
-                  memoryXML.addData("boolean", int(memories[i].whatToSave[j]));
-                memoryXML.goBack();
-              }
-            }
-          memoryXML.goBack();
-          
-          memoryXML.addBlockAndIncrease("fixturesToSave");
-            for(int j = 0; j < memories[i].fixturesToSave.length; j++) {
-              if(memories[i].fixturesToSave[j] != false) {
-                memoryXML.addBlockAndIncrease("fixturesToSave");
-                  memoryXML.addData("id", j);
-                  memoryXML.addData("boolean", int(memories[i].fixturesToSave[j]));
-                memoryXML.goBack();
-              }
-            }
-          memoryXML.goBack();
-          
-          memoryXML.addBlockAndIncrease("repOfFixtures");
-            for(int j = 0; j < memories[i].repOfFixtures.length; j++) {
-              memories[i].repOfFixtures[j].saveToXML("fixture" + str(j), memoryXML);
-            }
-          memoryXML.goBack();
-          
-          if(memories[i].type == 2 || memories[i].type == 3) {
-            memoryXML.addBlockAndIncrease("myChase");
-              memories[i].myChase.saveChasetToXML();
-            memoryXML.goBack();
-          }
-          
-        memoryXML.goBack();
-      }
-    }
-  memoryXML.goBack();
-  memoryXML.saveData();
-}
-
-
 class memory { //Begin of memory class--------------------------------------------------------------------------------------------------------------------------------------
   
   //-----------CODER MANUAL----------------//|
@@ -370,33 +317,6 @@ class chase { //Begin of chase class--------------------------------------------
   
   //----------------------end declaring variables--------------------------------
   
-  
-  void saveChasetToXML() {
-    memoryXML.addBlockAndIncrease("Chase");
-      memoryXML.addBlockAndIncrease("BasicData");
-        memoryXML.addBlock("value", value);
-        memoryXML.addBlockAndIncrease("StepData");
-          memoryXML.addData("step", step);
-          memoryXML.addData("brightness", brightness);
-          memoryXML.addData("brightness1", brightness1);
-          memoryXML.addData("stepHasChanged", stepHasChanged);
-          memoryXML.addData("fade", fade);
-          memoryXML.addData("ownFade", ownFade);
-        memoryXML.goBack();
-      memoryXML.goBack();
-      memoryXML.addBlockAndIncrease("ModeData");
-        memoryXML.addBlock("inputMode", inputMode);
-        memoryXML.addBlock("outputMode", outputMode);
-        memoryXML.addBlock("beatModeId", beatModeId);
-        memoryXML.addBlock("beatMode", beatMode);
-        memoryXML.addBlock("fadeMode", fadeMode);
-      memoryXML.goBack();
-      memoryXML.addBlockAndIncrease("contentData");
-        memoryXML.addArray("presets", presets);
-        memoryXML.addArray("content", content);
-      memoryXML.goBack();
-    memoryXML.goBack();
-  }
   
   
   memory parent;

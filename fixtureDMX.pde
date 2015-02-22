@@ -51,26 +51,6 @@ class FixtureDMX { //Class containig all the dmx values
   
   Fade[] fades;
   
-  void saveToXML(String name, ManageXML XMLObject) {
-    if(max(DMX) > 0) {
-      XMLObject.addBlockAndIncrease("FixtureDMX");
-        XMLObject.addBlockAndIncrease("name", name);
-          XMLObject.addArray("DMX", DMX);
-        XMLObject.goBack();
-      XMLObject.goBack();
-    }
-  }
-  
-  void loadFromXML(String name, ManageXML XMLObject) {
-    if(max(DMX) > 0) {
-      XMLObject.goToChild("FixtureDMX");
-        name = XMLObject.getBlockAndIncrease("name");
-          arrayCopy(XMLObject.getArray("DMX"), DMX);
-        XMLObject.goBack();
-      XMLObject.goBack();
-    }
-  }
-  
   void presetProcess() {
     for(int i = 0; i < DMXlength; i++) {
         int newV = getUniDMX(i);

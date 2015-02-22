@@ -35,7 +35,7 @@ class FixtureArray {
         idLookupTable.set(newIndex, newId);
       } else idLookupTable.add(newId);
     }
-    println(idLookupTable.toArray());
+    
   }
   
   
@@ -43,17 +43,11 @@ class FixtureArray {
     int idi = getArrayId(id);
     array.remove(idi);
     for(int i = 0; i < idLookupTable.size(); i++) {
-      if(idLookupTable.get(i) == idi) {
-        idLookupTable.set(i, -1);
-      }
-    }
-    for(int i = 0; i < idLookupTable.size(); i++) {
       if(getArrayId(i) > idi) {
         idLookupTable.set(i, getArrayId(i)-1);
       }
     }
-    
-    if(currentBottomMenuControlBoxOwner == id) bottomMenuControlBoxOpen = false;
+    idLookupTable.set(id, -1);
   }
   
   
@@ -92,7 +86,7 @@ class FixtureArray {
 
 
 void createNewFixtureAt00() {
-  fixtures.add(new fixture(0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 1));
+  fixtures.add(new fixture(0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 }
 
  
@@ -135,69 +129,6 @@ class fixture {
 
   //End of initing variables
   
-  void saveFixtureDMXDataToXML(ManageXML XMLObject) {
-    XMLObject.addBlockAndIncrease("FixtureDMXdata");
-      if(in != null) { in.saveToXML("in", XMLObject); }
-      if(process != null) { process.saveToXML("process", XMLObject); }
-      if(out != null) { out.saveToXML("out", XMLObject); }
-      if(preset != null) { preset.saveToXML("preset", XMLObject); }
-      if(bottomMenu != null) { bottomMenu.saveToXML("bottomMenu", XMLObject); }
-      if(fade != null) { fade.saveToXML("fade", XMLObject); }
-    XMLObject.goBack();
-  }
-  
-  void saveFixtureDataToXML(ManageXML XMLObject) {
-    XMLObject.addBlock("StartChannel", channelStart);
-    XMLObject.addBlock("fixtureTypeId", fixtureTypeId);
-    XMLObject.addBlockAndIncrease("Location");
-      XMLObject.addData("x", x_location);
-      XMLObject.addData("y", y_location);
-      XMLObject.addData("z", z_location);
-      XMLObject.addBlockAndIncrease("OnScreen");
-        XMLObject.addData("x", locationOnScreenX);
-        XMLObject.addData("y", locationOnScreenY);
-      XMLObject.goBack();
-      XMLObject.addBlockAndIncrease("Rotation");
-        XMLObject.addData("x", rotationX);
-        XMLObject.addData("z", rotationZ);
-    XMLObject.goBack(2);
-    XMLObject.addBlock("parameter", parameter);
-    XMLObject.addBlock("preFadeSpeed", preFadeSpeed);
-    XMLObject.addBlock("postFadeSpeed", postFadeSpeed);
-    XMLObject.addBlockAndIncrease("Color");
-      XMLObject.addData("r", red);
-      XMLObject.addData("g", green);
-      XMLObject.addData("b", blue);
-    XMLObject.goBack();
-    XMLObject.addBlock("parentAnsa", parentAnsa);
-    saveFixtureDMXDataToXML(XMLObject);
-  }
-  
-  void loadFixtureData(ManageXML XMLObject) {
-    channelStart = int(XMLObject.getBlock("StartChannel"));
-    fixtureTypeId = int(XMLObject.getBlock("fixtureTypeId"));
-    XMLObject.goToChild("Location");
-      x_location = XMLObject.getDataInt("x");
-      y_location = XMLObject.getDataInt("y");
-      z_location = XMLObject.getDataInt("z");
-      XMLObject.goToChild("OnScreen");
-        locationOnScreenX = XMLObject.getDataInt("x");
-        locationOnScreenY = XMLObject.getDataInt("y");
-      XMLObject.goBack();
-      XMLObject.goToChild("Rotation");
-        rotationX = XMLObject.getDataInt("x");
-        rotationZ = XMLObject.getDataInt("z");
-    XMLObject.goBack(2);
-    parameter = int(XMLObject.getBlock("parameter"));
-    preFadeSpeed = int(XMLObject.getBlock("preFadeSpeed"));
-    postFadeSpeed = int(XMLObject.getBlock("postFadeSpeed"));
-    XMLObject.goToChild("Color");
-      red = XMLObject.getDataInt("r");
-      green = XMLObject.getDataInt("g");
-      blue = XMLObject.getDataInt("b");
-    XMLObject.goBack();
-    parentAnsa = int(XMLObject.getBlock("parentAnsa"));
-  }
  
   void setDimmer(int val) { 
     in.setDimmer(val);
@@ -365,6 +296,23 @@ class fixture {
    fixtureTypeId = fixtTypeId;
   }
   
+  
+  //Moving head--------------------------------------------------------------------------------
+//  void visualisationSettingsFromMovingHeadData() {
+//    if(fixtureTypeId == 16 || fixtureTypeId == 17) {
+//      slowRotationForMovingHead();
+//    }
+//  }
+
+//  void slowRotationForMovingHead() {
+//    if(rotationZ < round(map(pan, 0, 255, 0, 540))) { rotationZ += constrain(round((map(float(pan), 0, 255, 0, 540) - float(rotationZ))/20+0.6), 1, 10); }
+//    if(rotationZ > round(map(pan, 0, 255, 0, 540))) { rotationZ -= constrain(round((float(rotationZ) - map(float(pan), 0, 255, 0, 540))/20+0.6), 1, 10); }
+//    if(rotationX < round(map(tilt, 0, 255, 45, 270+45))) { rotationX += constrain(round((map(float(tilt), 0, 255, 45, 270+45) - float(rotationX))/20+0.6), 1, 10); }
+//    if(rotationX > round(map(tilt, 0, 255, 45, 270+45))) { rotationX -= constrain(round((float(rotationX) - map(float(tilt), 0, 255, 45, 270+45))/20+0.6), 1, 10); }
+//  }
+
+
+
   
   //Query-------------------------------------------------------------------------------------
   

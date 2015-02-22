@@ -106,5 +106,4 @@ void loadFixtureProfiles() {
 
 void createFixtureProfiles() {
   loadFixtureProfiles();
-  saveTestXML();
 }
