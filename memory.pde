@@ -9,6 +9,40 @@ void createMemoryObjects() {
   }
 }
 
+void saveMemoriesToXML() {
+  manageXML.addBlockAndIncrease("Memories");
+    for(int i = 0; i < memories.length; i++) {
+      manageXML.addBlockAndIncrease("Memory");
+        manageXML.addData("id", i);
+        manageXML.addData("type", memories[i].type);
+        manageXML.addData("value", memories[i].value);
+        manageXML.addData("valueOld", memories[i].valueOld);
+        manageXML.addData("enabled", str(memories[i].enabled));
+        
+        manageXML.addBlockAndIncrease("WhatToSave");
+          for(int j = 0; j < memories[i].whatToSave.length; j++) {
+            manageXML.addBlockAndIncrease("WhatToSave");
+              manageXML.addData("id", j);
+              manageXML.addData("boolean", int(memories[i].whatToSave[j]));
+            manageXML.goBack();
+          }
+        manageXML.goBack();
+        
+        manageXML.addBlockAndIncrease("fixturesToSave");
+          for(int j = 0; j < memories[i].fixturesToSave.length; j++) {
+            manageXML.addBlockAndIncrease("fixturesToSave");
+              manageXML.addData("id", j);
+              manageXML.addData("boolean", int(memories[i].fixturesToSave[j]));
+            manageXML.goBack();
+          }
+        manageXML.goBack();
+        
+      manageXML.goBack();
+    }
+  manageXML.goBack();
+  manageXML.saveData();
+}
+
 
 class memory { //Begin of memory class--------------------------------------------------------------------------------------------------------------------------------------
   

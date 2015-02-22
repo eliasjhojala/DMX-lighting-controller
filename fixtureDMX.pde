@@ -51,6 +51,20 @@ class FixtureDMX { //Class containig all the dmx values
   
   Fade[] fades;
   
+  void saveToXML(String name) {
+    manageXML.addBlockAndIncrease("FixtureDMX");
+      manageXML.addData("name", name);
+      manageXML.addBlockAndIncrease("DMX");
+        for(int i = 0; i < DMX.length; i++) {
+          manageXML.addBlockAndIncrease("DMX");
+            manageXML.addData("id", i);
+            manageXML.addData("val", DMX[i]);
+          manageXML.goBack();
+        }
+      manageXML.goBack();
+    manageXML.goBack();
+  }
+  
   void presetProcess() {
     for(int i = 0; i < DMXlength; i++) {
         int newV = getUniDMX(i);

@@ -9,6 +9,7 @@ void saveTestXML() {
   }
   manageXML.saveData();
   loadTestXML();
+  saveMemoriesToXML();
 }
 
 void loadTestXML() {

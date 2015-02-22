@@ -129,6 +129,16 @@ class fixture {
 
   //End of initing variables
   
+  void saveFixtureDMXDataToXML() {
+    manageXML.addBlockAndIncrease("FixtureDMXdata");
+      if(in != null) { in.saveToXML("in"); }
+      if(process != null) { process.saveToXML("process"); }
+      if(out != null) { out.saveToXML("out"); }
+      if(preset != null) { preset.saveToXML("preset"); }
+      if(bottomMenu != null) { bottomMenu.saveToXML("bottomMenu"); }
+      if(fade != null) { fade.saveToXML("fade"); }
+    manageXML.goBack();
+  }
   
   void saveFixtureDataToXML() {
     manageXML.addBlock("StartChannel", channelStart);
@@ -154,6 +164,7 @@ class fixture {
       manageXML.addData("b", blue);
     manageXML.goBack();
     manageXML.addBlock("parentAnsa", parentAnsa);
+    saveFixtureDMXDataToXML();
   }
   
   void loadFixtureData() {
