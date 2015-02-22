@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DMX_Controller>
+  <content>
+    <fixtures>
+      <Fixture id="0">
+        <StartChannel>1</StartChannel>
+        <fixtureTypeId>6</fixtureTypeId>
+        <fixtureType>linssi</fixtureType>
+      </Fixture>
+      <Fixture id="1">
+        <StartChannel>3</StartChannel>
+        <fixtureTypeId>3</fixtureTypeId>
+        <fixtureType>k.fresu</fixtureType>
+      </Fixture>
+      <Fixture id="2">
+        <StartChannel>4</StartChannel>
+        <fixtureTypeId>4</fixtureTypeId>
+        <fixtureType>i.fresu</fixtureType>
+      </Fixture>
+      <Fixture id="3">
+        <StartChannel>5</StartChannel>
+        <fixtureTypeId>4</fixtureTypeId>
+        <fixtureType>i.fresu</fixtureType>
+      </Fixture>
+      <Fixture id="4">
+        <StartChannel>6</StartChannel>
+        <fixtureTypeId>3</fixtureTypeId>
+        <fixtureType>k.fresu</fixtureType>
+      </Fixture>
+      <Fixture id="5">
+        <StartChannel>2</StartChannel>
+        <fixtureTypeId>6</fixtureTypeId>
+        <fixtureType>linssi</fixtureType>
+      </Fixture>
+      <Fixture id="6">
+        <StartChannel>8</StartChannel>
+        <fixtureTypeId>3</fixtureTypeId>
+        <fixtureType>k.fresu</fixtureType>
+      </Fixture>
+      <Fixture id="7">
+        <StartChannel>14</StartChannel>
+        <fixtureTypeId>2</fixtureTypeId>
+        <fixtureType>p.fresu</fixtureType>
+      </Fixture>
+      <Fixture id="8">
+        <StartChannel>13</StartChannel>
+        <fixtureTypeId>2</fixtureTypeId>
+        <fixtureType>p.fresu</fixtureType>
+      </Fixture>
+      <Fixture id="9">
+        <StartChannel>7</StartChannel>
+        <fixtureTypeId>3</fixtureTypeId>
+        <fixtureType>k.fresu</fixtureType>
+      </Fixture>
+      <Fixture id="10">
+        <StartChannel>9</StartChannel>
+        <fixtureTypeId>3</fixtureTypeId>
+        <fixtureType>k.fresu</fixtureType>
+      </Fixture>
+      <Fixture id="11">
+        <StartChannel>14</StartChannel>
+        <fixtureTypeId>2</fixtureTypeId>
+        <fixtureType>p.fresu</fixtureType>
+      </Fixture>
+      <Fixture id="12">
+        <StartChannel>12</StartChannel>
+        <fixtureTypeId>5</fixtureTypeId>
+        <fixtureType>flood</fixtureType>
+      </Fixture>
+      <Fixture id="13">
+        <StartChannel>10</StartChannel>
+        <fixtureTypeId>5</fixtureTypeId>
+        <fixtureType>flood</fixtureType>
+      </Fixture>
+      <Fixture id="14">
+        <StartChannel>15</StartChannel>
+        <fixtureTypeId>1</fixtureTypeId>
+        <fixtureType>par64</fixtureType>
+      </Fixture>
+      <Fixture id="15">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="16">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="17">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="18">
+        <StartChannel>16</StartChannel>
+        <fixtureTypeId>1</fixtureTypeId>
+        <fixtureType>par64</fixtureType>
+      </Fixture>
+      <Fixture id="19">
+        <StartChannel>15</StartChannel>
+        <fixtureTypeId>1</fixtureTypeId>
+        <fixtureType>par64</fixtureType>
+      </Fixture>
+      <Fixture id="20">
+        <StartChannel>15</StartChannel>
+        <fixtureTypeId>1</fixtureTypeId>
+        <fixtureType>par64</fixtureType>
+      </Fixture>
+      <Fixture id="21">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="22">
+        <StartChannel>16</StartChannel>
+        <fixtureTypeId>1</fixtureTypeId>
+        <fixtureType>par64</fixtureType>
+      </Fixture>
+      <Fixture id="23">
+        <StartChannel>17</StartChannel>
+        <fixtureTypeId>1</fixtureTypeId>
+        <fixtureType>par64</fixtureType>
+      </Fixture>
+      <Fixture id="24">
+        <StartChannel>18</StartChannel>
+        <fixtureTypeId>1</fixtureTypeId>
+        <fixtureType>par64</fixtureType>
+      </Fixture>
+      <Fixture id="25">
+        <StartChannel>10</StartChannel>
+        <fixtureTypeId>5</fixtureTypeId>
+        <fixtureType>flood</fixtureType>
+      </Fixture>
+      <Fixture id="26">
+        <StartChannel>12</StartChannel>
+        <fixtureTypeId>5</fixtureTypeId>
+        <fixtureType>flood</fixtureType>
+      </Fixture>
+      <Fixture id="27">
+        <StartChannel>13</StartChannel>
+        <fixtureTypeId>2</fixtureTypeId>
+        <fixtureType>p.fresu</fixtureType>
+      </Fixture>
+      <Fixture id="28">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="29">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="30">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="31">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="32">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="33">
+        <StartChannel>100</StartChannel>
+        <fixtureTypeId>16</fixtureTypeId>
+        <fixtureType>RGBW</fixtureType>
+      </Fixture>
+      <Fixture id="34">
+        <StartChannel>110</StartChannel>
+        <fixtureTypeId>16</fixtureTypeId>
+        <fixtureType>RGBW</fixtureType>
+      </Fixture>
+      <Fixture id="35">
+        <StartChannel>120</StartChannel>
+        <fixtureTypeId>16</fixtureTypeId>
+        <fixtureType>RGBW</fixtureType>
+      </Fixture>
+      <Fixture id="36">
+        <StartChannel>130</StartChannel>
+        <fixtureTypeId>16</fixtureTypeId>
+        <fixtureType>RGBW</fixtureType>
+      </Fixture>
+      <Fixture id="37">
+        <StartChannel>140</StartChannel>
+        <fixtureTypeId>16</fixtureTypeId>
+        <fixtureType>RGBW</fixtureType>
+      </Fixture>
+      <Fixture id="38">
+        <StartChannel>150</StartChannel>
+        <fixtureTypeId>16</fixtureTypeId>
+        <fixtureType>RGBW</fixtureType>
+      </Fixture>
+      <Fixture id="39">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="40">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="41">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="42">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="43">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="44">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="45">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="46">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="47">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="48">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="49">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="50">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="51">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="52">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="53">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="54">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="55">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="56">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="57">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="58">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="59">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="60">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="61">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="62">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="63">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="64">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="65">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="66">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="67">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="68">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="69">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="70">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="71">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="72">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="73">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="74">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="75">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="76">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="77">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="78">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="79">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="80">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="81">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="82">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="83">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="84">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="85">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="86">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="87">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+      <Fixture id="88">
+        <StartChannel>0</StartChannel>
+        <fixtureTypeId>0</fixtureTypeId>
+        <fixtureType/>
+      </Fixture>
+    </fixtures>
+  </content>
+</DMX_Controller>
