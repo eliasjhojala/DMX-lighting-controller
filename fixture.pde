@@ -129,6 +129,58 @@ class fixture {
 
   //End of initing variables
   
+  
+  void saveFixtureDataToXML() {
+    manageXML.addBlock("StartChannel", channelStart);
+    manageXML.addBlock("fixtureTypeId", fixtureTypeId);
+    manageXML.addBlockAndIncrease("Location");
+      manageXML.addData("x", x_location);
+      manageXML.addData("y", y_location);
+      manageXML.addData("z", z_location);
+      manageXML.addBlockAndIncrease("OnScreen");
+        manageXML.addData("x", locationOnScreenX);
+        manageXML.addData("y", locationOnScreenY);
+      manageXML.goBack();
+      manageXML.addBlockAndIncrease("Rotation");
+        manageXML.addData("x", rotationX);
+        manageXML.addData("z", rotationZ);
+    manageXML.goBack(2);
+    manageXML.addBlock("parameter", parameter);
+    manageXML.addBlock("preFadeSpeed", preFadeSpeed);
+    manageXML.addBlock("postFadeSpeed", postFadeSpeed);
+    manageXML.addBlockAndIncrease("Color");
+      manageXML.addData("r", red);
+      manageXML.addData("g", green);
+      manageXML.addData("b", blue);
+    manageXML.goBack();
+    manageXML.addBlock("parentAnsa", parentAnsa);
+  }
+  
+  void loadFixtureData() {
+    channelStart = int(manageXML.getBlock("StartChannel"));
+    fixtureTypeId = int(manageXML.getBlock("fixtureTypeId"));
+    manageXML.goToChild("Location");
+      x_location = manageXML.getDataInt("x");
+      y_location = manageXML.getDataInt("y");
+      z_location = manageXML.getDataInt("z");
+      manageXML.goToChild("OnScreen");
+        locationOnScreenX = manageXML.getDataInt("x");
+        locationOnScreenY = manageXML.getDataInt("y");
+      manageXML.goBack();
+      manageXML.goToChild("Rotation");
+        rotationX = manageXML.getDataInt("x");
+        rotationZ = manageXML.getDataInt("z");
+    manageXML.goBack(2);
+    parameter = int(manageXML.getBlock("parameter"));
+    preFadeSpeed = int(manageXML.getBlock("preFadeSpeed"));
+    postFadeSpeed = int(manageXML.getBlock("postFadeSpeed"));
+    manageXML.goToChild("Color");
+      red = manageXML.getDataInt("r");
+      green = manageXML.getDataInt("g");
+      blue = manageXML.getDataInt("b");
+    manageXML.goBack();
+    parentAnsa = int(manageXML.getBlock("parentAnsa"));
+  }
  
   void setDimmer(int val) { 
     in.setDimmer(val);
