@@ -4,17 +4,23 @@ ManageXML memoryXML = new ManageXML("XML/memories.xml");
 
 void saveTestXML() {
   ManageXML XMLObject = fixtureXML;
-  XMLObject.addBlockAndIncrease("fixtures");
-  for(int i = 0; i < fixtures.size(); i++) {
-    XMLObject.addBlockAndIncrease("Fixture");
-    XMLObject.addData("id", i);
-      
-      fixtures.get(i).saveFixtureDataToXML(XMLObject);
-    XMLObject.goBack();
-  }
+  
+  //IDLOOKUPTABLE TÄHÄN ROOPE TEEEE
+  
+//  XMLObject.addBlockAndIncrease("fixtures");
+//
+//  for(int i = 0; i < fixtures.size(); i++) {
+//    XMLObject.addBlockAndIncrease("Fixture");
+//    XMLObject.addData("id", i);
+//      
+//      fixtures.get(i).saveFixtureDataToXML(XMLObject);
+//    XMLObject.goBack();
+//  }
+  
+  
 //  XMLObject.saveData();
-  loadTestXML();
-  saveMemoriesToXML();
+//  loadTestXML();
+//  saveMemoriesToXML();
 //  loadMemoriesFromXML();
 }
 
@@ -22,6 +28,9 @@ void loadTestXML() {
   ManageXML XMLObject = fixtureXML;
   ManageXML SingleFixture;
   if(XMLObject.loadData()) {
+    
+    //IDLOOKUPTABLE TÄHÄN ROOPE TEEEE
+    
     XMLObject.goToChild("fixtures");
       XML[] allTheFixtures = XMLObject.currentBlock.getChildren();
       for(int i = 0; i < allTheFixtures.length; i++) {
