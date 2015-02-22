@@ -35,7 +35,7 @@ class FixtureArray {
         idLookupTable.set(newIndex, newId);
       } else idLookupTable.add(newId);
     }
-    
+    println(idLookupTable.toArray());
   }
   
   
@@ -43,11 +43,17 @@ class FixtureArray {
     int idi = getArrayId(id);
     array.remove(idi);
     for(int i = 0; i < idLookupTable.size(); i++) {
+      if(idLookupTable.get(i) == idi) {
+        idLookupTable.set(i, -1);
+      }
+    }
+    for(int i = 0; i < idLookupTable.size(); i++) {
       if(getArrayId(i) > idi) {
         idLookupTable.set(i, getArrayId(i)-1);
       }
     }
-    idLookupTable.set(id, -1);
+    
+    if(currentBottomMenuControlBoxOwner == id) bottomMenuControlBoxOpen = false;
   }
   
   
@@ -86,7 +92,7 @@ class FixtureArray {
 
 
 void createNewFixtureAt00() {
-  fixtures.add(new fixture(0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+  fixtures.add(new fixture(0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 1));
 }
 
  

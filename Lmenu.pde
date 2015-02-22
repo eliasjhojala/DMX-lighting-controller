@@ -128,6 +128,8 @@ void checkFixtureBoxRightClick(int id) {
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //bottomMenuControlBox---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+//Todo: move this to a class and make it movable and make it use the new subwindow handler
+
 //Variables----------------------------------------------//|
 int currentBottomMenuControlBoxOwner;                    //|
 boolean bottomMenuControlBoxOpen = false;                //|
@@ -246,7 +248,7 @@ void bottomMenuDMXUpdate() {
     if (changed) { 
       tempDMX[arrayIndex] = bottomMenuControlBoxDMXValues[arrayIndex];
       changd = true;
-    } else bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
+    } else if(arrayIndex < tempDMX.length) bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
     arrayIndex++;
   }
   bottomMenuControlBoxDMXValueChanged = new boolean[tempDMX.length];
