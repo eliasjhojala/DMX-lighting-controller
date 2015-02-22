@@ -556,16 +556,13 @@ void keyPressed() {
     }
     
     if(keyCode == 17) { ctrlDown = true; }
-    if(keyCode == 16) { shftDown = true; println("toimii"); }
+    if(keyCode == 16) { shftDown = true; }
     if(key == 'o') { fileDialogInput(); ctrlDown = false; }
     if(key == 's') {
-      if(shftDown) {
-        fileDialogOutput();
-        shftDown = false; println("TOIMII");
-      }
-      else {
-        saveAllData();
-      }
+      saveAllData();
+    }
+    if(key == 'S') {
+      fileDialogOutput();
     }
   
     if(key == 'u') {

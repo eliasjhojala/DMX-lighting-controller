@@ -220,13 +220,19 @@ void saveAllData() {
 
   //Asetetaan oikeat tallennuspolut käyttäjän mukaan
   println(savePath);
-  saveTable(table, savePath, "csv");
+  try {
+    saveTable(table, savePath, "csv");
+  } catch (Exception e) {
+    e.printStackTrace();
+    notifier.notify("Save failed! Try again by saving to another location by pressing SHIFT + S", true);
+  }
   
   
   println(); println(); println(); 
   println("SAVE READY");
   long takedTime = millis() - saveDataBeginMillis;
-  println("It taked " + str(takedTime) + " ms");
+  println("It took " + str(takedTime) + " ms");
+  notifier.notify("Save complete. (" + str(takedTime) + "ms)");
   println();
   
 }

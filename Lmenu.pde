@@ -476,6 +476,11 @@ class Notifier {
   }
   
   
+  void notify(String message, boolean critical) {
+    notify(message, 2000, critical);
+  }
+  
+  
   void draw(int w) {
     if(showingMessage) {
       pushMatrix(); pushStyle();
