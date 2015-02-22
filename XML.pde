@@ -71,7 +71,7 @@ class ManageXML {
   String getBlock(String name) {
     String toReturn = "";
     XML newBlock = currentBlock.getChild(name);
-    toReturn = newBlock.getContent();
+    if(newBlock != null) toReturn = newBlock.getContent();
     return toReturn;
   }
   String getBlockAndIncrease(String name) {
