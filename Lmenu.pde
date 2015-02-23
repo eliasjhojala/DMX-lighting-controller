@@ -8,6 +8,7 @@ int oldMouseX2;
 int oldMouseY2;
  
 void alavalikko() {
+  /*
   //The boolean is set to true on a spot that has been checked. It should not be drawn again.
   boolean[] drawn = new boolean[bottomMenuOrder.length];
   
@@ -32,7 +33,10 @@ void alavalikko() {
   
   drawBottomMenuControlBox();
   notifier.draw(width-168);
+  */
 }
+
+/*
 void createFixtureBox(int id) {
   drawFixtureRectangles(id); //draw fixtureboxes with buttons etc.
   checkFixtureBoxGo(id); //Check if you pressed go button button to set fixture on until jo release mouse
@@ -122,7 +126,7 @@ void checkFixtureBoxRightClick(int id) {
     keyReleased = false;
   }
 }
-
+*/
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
