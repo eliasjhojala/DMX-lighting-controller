@@ -17,7 +17,7 @@ void oscEvent(OscMessage theOscMessage) {
   
   float val = theOscMessage.get(0).floatValue(); //Luetaan touchOSCin elementin arvo
 
-  int digitalValue = int(val); //muutetaan float intiksi
+  int digitalValue = round(val); //round original val to place it into int
   int digitalValue2 = 0;
   if(addr.equals("/7/xy1") || addr.equals("/7/xy2") || addr.equals("/8/xy1") || addr.equals("/8/xy2")) {
     digitalValue2 = int(theOscMessage.get(1).floatValue());
@@ -104,14 +104,6 @@ void oscEvent(OscMessage theOscMessage) {
          revStepPressed = false;
        }
      }
-     
-     
-     
-     
-     if(addr.equals("/6/waveLength")) {
-       cf.waveLength = digitalValue;
-     }
-     
      
      
      if(addr.equals("/chaseModeUp")) {

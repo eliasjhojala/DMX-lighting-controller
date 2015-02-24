@@ -1,4 +1,8 @@
 //Tässä välilehdessä on paljon lyhyitä voideja
+
+/* If you are wondering why on earth all the saveToXML 
+functions are commented the reason is that I realized 
+that in this branch there is no XML class yet */
   
 
 boolean scrolledDown = false;
@@ -518,10 +522,7 @@ boolean keyCapElseDown = false;
 void keyPressed() {
   if(!keyCapElsewhere) {
     if(key == 'b') { boolean b = s2l.blinky; s2l = new soundDetect(); s2l.blinky = !b; }
-    
-    if(key == 'k') { newColorWash(); }
-  
-    
+
     if(key==27) { key=0; 
       //Escape from printMode
       printMode = false;
@@ -531,15 +532,8 @@ void keyPressed() {
       notifier.notify("showMode is now " + (showMode ? "enabled" : "disabled") + ".");
     }
     if(key == 'r') { revStepPressed = true; }
-    if(key == '1') { lampToMove = 1; }
     if(key == 'l') { loadAllData(); }
-    if(key == 'c') {
-      for(int i = 0; i < channels; i++) {
-        valueOfDimBeforeBlackout[i] = 0;
-        valueOfDimBeforeFullOn[i] = 0;
-      }
-    }
-    
+ 
     if(keyCode == 17) { ctrlDown = true; }
     if(keyCode == 16) { shftDown = true; println("toimii"); }
     if(key == 'o') { fileDialogInput(); ctrlDown = false; }
@@ -552,11 +546,7 @@ void keyPressed() {
         saveAllData();
       }
     }
-  
-    if(key == 'u') {
-        if(upper == true) { enttecDMXplace = enttecDMXplace - 1; upper = false; }
-        else { enttecDMXplace = enttecDMXplace + 1; upper = true; }
-    } 
+
     if(keyCode == RIGHT) { rightPressed = true; }
     if(keyCode == LEFT) { leftPressed = true; }
     if(keyCode == ENTER) { enterPressed = true; }
@@ -573,26 +563,118 @@ void mouseReleased() {
 }
 
 
-int rRed(color c) {
-  return round(red(c));
-}
-int rGreen(color c) {
-  return round(green(c));
-}
-int rBlue(color c) {
-  return round(blue(c));
-}
+/* Functions to return red, green and blue values 
+   from color object as int instead of float */
+int rRed(color c) { return round(red(c)); }
+int rGreen(color c) { return round(green(c)); }
+int rBlue(color c) { return round(blue(c)); }
 
 
 
 void checkThemeMode() {
   fill(0, 0, 0);
-  if(printMode == true) { //Tarkistetaan onko tulostusmode päällä - check if printmode is on 
-    background(255, 255, 255); //Jos tulostusmode on päällä taustaväri on valkoinen - if printmode is on then background is white
-    stroke(0, 0, 0); //Jos tulostusmode on päällä kuvioiden reunat ovat mustia - if printmode is on then strokes are black 
+  if(printMode == true) { //Check if printmode is on 
+    background(255, 255, 255); //If printmode is on then background is white
+    stroke(0, 0, 0); //If printmode is on then strokes are black 
   }
   else { 
-    background(0); //Jos tulostusmode on pois päältä taustaväri on musta - if printmode is off then background is black
-    stroke(255, 255, 255); //Jos tulostusmode on pois päältä kuvoiden reunat ovat valkoisia - if printmode is off then strokes are white
+    background(0); //If printmode is off then background is black
+    stroke(255, 255, 255); //If printmode is off then strokes are white
   }
 } 
+
+
+class LocationData {
+  /*
+    This class is made to handle 3D object's rotation and location data
+    at the same time, so functions which uses both of them could have
+    one LocationData variable instead of two seperate PVectors
+  */
+  
+  PVector location, rotation; //Location and rotation as PVectors
+  
+  LocationData(PVector loc, PVector rot) {
+    /*
+      Init function get location and rotation PVectors as input
+      and simply saves them to class 
+    */
+    
+    location = loc;
+    rotation = rot;
+  }
+  
+  PVector getLocation() { return location; } //Get location as PVector
+  PVector getRotation() { return rotation; } //Get location as PVector
+  
+//  void saveToXML(ManageXML xml) {
+//    xml.addBlockAndIncrease("LocationData");
+//      savePVectorToXML(xml, "location", location);
+//      savePVectorToXML(xml, "rotation", rotation);
+//    xml.goBack();
+//  }
+}
+
+
+//void savePVectorToXML(ManageXML xml, String name, PVector pv) {
+//  xml.addBlockAndIncrease(name);
+//    xml.addData("x", pv.x);
+//    xml.addData("y", pv.y);
+//    xml.addData("z", pv.z);
+//  xml.goBack();
+//}
+
+class RGBWD {
+  /*
+    This class is made to handle fixture color (RGB) data and dimmer (D) data
+    and the mix of them (RGBWD), so functions using both of them could have
+    only one RGBWD variable instead two seperate variables
+  */
+  color rawColor; //Color without dim
+  int dimmer; //dimmer value
+  color colorWithDim; //color mapped with dim value
+  
+  RGBWD(color col, int dim) {
+    /* 
+      Init function get rawColor and dim value as input
+      and counts also colorWithDim value from them 
+    */
+       
+    rawColor = col;
+    dimmer = dim;
+    colorWithDim = color(MCWD(red(col), dim), MCWD(green(col), dim), MCWD(blue(col), dim));
+  }
+  
+  color getCol() { return rawColor; } //Get original color
+  color getColWithDim() { return colorWithDim; } //Get color mapped with dimmer value
+  int getDim() { return dimmer; } //Get dimmer value
+  
+  int MCWD(float c, float d) { //Map Color With Dimmer (color, dimmer)
+    return round(map(c, 0, 255, 0, d));
+  }
+  
+//  void saveToXML(ManagexML xml) {
+//    xml.addBlockAndIncrease("RGBWD data");
+//      saveColorToXML(xml, "rawColor", rawColor);
+//      saveColorToXML(xml, "colorWithDim", colorWithDim);
+//      xml.addBlockAndIncrease("dimmer");
+//        xml.addData("val", dimmer);
+//      xml.goBack();
+//    xml.goBack();
+//  }
+  
+}
+
+
+//void saveColorToXML(ManagexML xml, String name, color c) {
+//  xml.addBlockAndIncrease(name);
+//    xml.addData("r", red(c));
+//    xml.addData("g", green(c));
+//    xml.addData("b", blue(c));
+//  xml.goBack();
+//}
+
+//color getColorFromXML(ManagexML xml, String name) {
+//  int r, g, b;
+//  
+//  return color(r, g, b);
+//}

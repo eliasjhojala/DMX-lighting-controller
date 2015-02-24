@@ -183,13 +183,8 @@ void saveAllData() {
   save1Darray(ansaX, "ansaX");
   save1Darray(ansaY, "ansaY");
   save1Darray(ansaType, "ansaType");
-  //save1Darray(memoryType, "memoryType");
-  //save1Darray(soundToLightSteps, "soundToLightSteps");
   save1Darray(ansaX, "ansaX");
-  //save1Darray(chaseModeByMemoryNumber, "chaseModeByMemoryNumber"); 
-  //save1Darray(valueOfMemory, "valueOfMemory"); 
-  //save1Darray(memoryValue, "memoryValue"); 
-  
+
   save1Darray(bottomMenuOrder, "bottomMenuOrder");
   
   
@@ -202,15 +197,10 @@ void saveAllData() {
         
   save1Darray(grouping, "grouping"); 
   
-  //save2Darray(memory, "memory");
-  //save2Darray(soundToLightPresets, "soundToLightPresets");
-  //save2Darray(preset, "preset");
 
-
-  
-  saveVariable(int(camX), "camX");
-  saveVariable(int(camY), "camY");
-  saveVariable(int(camZ), "camZ");
+  saveVariable(int(cam.x), "camX");
+  saveVariable(int(cam.y), "camY");
+  saveVariable(int(cam.z), "camZ");
   saveVariable(int(centerX), "centerX");
   saveVariable(int(centerY), "centerY");
   saveVariable(chaseMode, "chaseMode");

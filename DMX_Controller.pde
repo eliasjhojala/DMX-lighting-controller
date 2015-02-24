@@ -1,7 +1,4 @@
 
-int userId = 3; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
-boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                               //|
-                                                                                                                                                                          //|
 boolean showMode = true;                                                                                                                                                  //|
                                                                                                                                                                           //| 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
@@ -35,9 +32,6 @@ void setAllowedChannels() {
     }
   }
 }
-
-fixtureInput[] fixtureInputs = new fixtureInput[2];
-
 
 
 boolean nextStepPressed = false;
@@ -98,7 +92,7 @@ import javax.swing.JFrame; //Käytetään frame-kirjastoa, jonka avulla voidaan 
 PFrame f1 = new PFrame(); //Luodaan uusi ikkuna
 secondApplet1 s1;
 
-PFrame1 f = new PFrame1(this); //Luodaan toinenkin uusi ikkuna
+PFrame1 f = new PFrame1(this, 500, 500); //Luodaan toinenkin uusi ikkuna
 secondApplet s;
 
 
@@ -341,6 +335,8 @@ String fileSeparator = java.io.File.separator;
 String actualSketchPath;
 
 void setup() {
+  
+  s1.noLoop();
 
   loadCoreData();
   actualSketchPath = sketchPath("");
@@ -412,6 +408,9 @@ void setup() {
   createFixtureProfiles();
   
   subWindowHandler = new SubWindowHandler();
+  
+  f.setBounds(0, 0, displayWidth, displayHeight);
+  s1.loop();
   
 }
 

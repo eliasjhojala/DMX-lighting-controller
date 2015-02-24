@@ -49,6 +49,9 @@ channelName        | channelTypeNumber
 */
 
 class FixtureProfile {
+  String modelPath = "par64.obj";
+  PShape model = s1.loadShape(dataPath(modelPath));
+  
   String fixtureName;
   String fixtureLongName;
   String fixtureBrand;
@@ -112,5 +115,14 @@ class FixtureProfile {
   void setFixtureNameData(String fln, String fB) {
     fixtureLongName = fln;
     fixtureBrand = fB;
+  }
+  
+  void setModel(String path) {
+    modelPath = path;
+    model = s1.loadShape(dataPath(modelPath));
+  }
+  
+  PShape getModel() {
+    return model;
   }
 }

@@ -16,6 +16,14 @@ int[] getFixtureSizeByType(int type) {
   
 }
 
+int[] getFixtureSizeById(int id) {
+  return getFixtureSizeByType(fixtures.get(id).fixtureTypeId);
+}
+
+boolean fixtureIsDrawnById(int id) {
+  return boolean(getFixtureSizeById(id)[2]);
+}
+
 int[] getFixtureSize(int id) {
   return getFixtureSizeByType(fixtures.get(id).fixtureTypeId);
 }
@@ -98,3 +106,10 @@ fixtureSize toFixtureSize(int w, int h) {
   return fS;
 }
 
+PShape getFixtureModelByType(int type) {
+  return fixtureProfiles[type].getModel();
+}
+
+PShape getFixtureModelById(int id) {
+  return getFixtureModelByType(fixtures.get(id).fixtureTypeId);
+}

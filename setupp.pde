@@ -33,12 +33,7 @@ void setuppi() {
   
   ansaWidth = int(width*0.6);
   
-  fixtureInputs = new fixtureInput[2];
-  
-  for(int i = 0; i < fixtureInputs.length; i++) {
-    fixtureInputs[i] = new fixtureInput();
-  }
-  
+ 
     fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
   
