@@ -106,14 +106,6 @@ void oscEvent(OscMessage theOscMessage) {
      }
      
      
-     
-     
-     if(addr.equals("/6/waveLength")) {
-       cf.waveLength = digitalValue;
-     }
-     
-     
-     
      if(addr.equals("/chaseModeUp")) {
        if(digitalValue == 1) {
            nextChaseMode();
