@@ -629,7 +629,7 @@ class RGBWD {
   int getDim() { return dimmer; } //Get dimmer value
   
   int MCWD(float c, float d) { //Map Color With Dimmer (color, dimmer)
-    return round(map(c, 0, 255, 0, d));;
+    return round(map(c, 0, 255, 0, d));
   }
 }
 
