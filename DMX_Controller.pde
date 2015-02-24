@@ -33,9 +33,6 @@ void setAllowedChannels() {
   }
 }
 
-fixtureInput[] fixtureInputs = new fixtureInput[2];
-
-
 
 boolean nextStepPressed = false;
 boolean revStepPressed = false;

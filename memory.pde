@@ -1,3 +1,6 @@
+String[] saveOptionButtonVariables = { "dimmer", "red", "green", "blue", "white", "amber", "pan", "tilt", "panFine", "tiltFine", 
+"colorWheel", "goboWheel", "goboRotation", "prism", "focus", "shutter", "strobe", "frequency", "responseSpeed", 
+"autoPrograms", "specialFunctions", "haze", "fan", "fog", "special1", "special2", "special3", "special4" };
 
   soundDetect s2l;
   memory[] memories = new memory[1000];
