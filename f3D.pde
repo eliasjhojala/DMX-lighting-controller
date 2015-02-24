@@ -5,22 +5,12 @@
  
 int coneScale = 500;
 
-int[] tablex = {  };
-int[] tabley = {  };
-int[] tablez = {  };
-int[] tablePositionsLength = new int[3];
-
-boolean rotateZopposite = true;
-
 boolean use3D = true;
 
-int userOneFrameRate = 30;
-int userTwoFrameRate = 30;
 
 int centerX;
 int centerY;
 
-String assetPath;
 
 //0 = None, 1 = ansa 0, 2 = ansa 1
 int numberOfAnsas = 6;
@@ -29,7 +19,7 @@ int[] ansaX = new int[numberOfAnsas];
 int[] ansaY = new int[numberOfAnsas];
 int[] ansaType = new int[numberOfAnsas];
 
-float camX = s1.width/2.0, camY = s1.height/2.0 + 4000, camZ = 1000;
+PVector cam = new PVector(s1.width/2.0, s1.height/2.0 + 4000, 1000);
 
 public class PFrame extends JFrame {
   public PFrame() {
@@ -111,7 +101,7 @@ public class secondApplet1 extends PApplet {
   
   void setCamera() {
     //Camera
-    camera(camX, camY, camZ, width/2.0+centerX, height/2.0 + 1500+centerY, -1000, 0, 0, -1);
+    camera(cam.x, cam.y, cam.z, width/2.0+centerX, height/2.0 + 1500+centerY, -1000, 0, 0, -1);
   }
   
   void drawFloor() {
@@ -224,8 +214,8 @@ public class secondApplet1 extends PApplet {
       }
       
       else {
-        camX += (mouseX - pmouseX) * 5;
-        camY += (mouseY - pmouseY) * 10;
+        cam.x += (mouseX - pmouseX) * 5;
+        cam.y += (mouseY - pmouseY) * 10;
       }
   }
    
@@ -238,8 +228,8 @@ public class secondApplet1 extends PApplet {
    
   void keyPressed()
   {
-    if (keyCode == UP) { camZ += 100; } 
-    else if (keyCode == DOWN) { camZ -= 100; }
+    if (keyCode == UP) { cam.z += 100; } 
+    else if (keyCode == DOWN) { cam.z -= 100; }
   }
   
 

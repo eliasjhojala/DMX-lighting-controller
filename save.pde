@@ -208,9 +208,9 @@ void saveAllData() {
 
 
   
-  saveVariable(int(camX), "camX");
-  saveVariable(int(camY), "camY");
-  saveVariable(int(camZ), "camZ");
+  saveVariable(int(cam.x), "camX");
+  saveVariable(int(cam.y), "camY");
+  saveVariable(int(cam.z), "camZ");
   saveVariable(int(centerX), "centerX");
   saveVariable(int(centerY), "centerY");
   saveVariable(chaseMode, "chaseMode");

@@ -302,9 +302,9 @@ for (TableRow row : table.findRows("memories[i].value", "variable_name")) {
     //for (TableRow row : table.findRows("preset", "variable_name")) if(preset.length > int(row.getString("1D")) && preset[0].length > int(row.getString("2D")))
     //        { preset[int(row.getString("1D"))][int(row.getString("2D"))] = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("camX", "variable_name"))              { camX = int(row.getString("value")); }
-    for (TableRow row : table.findRows("camY", "variable_name"))              { camY = int(row.getString("value")); }
-    for (TableRow row : table.findRows("camZ", "variable_name"))              { camZ = int(row.getString("value")); }
+    for (TableRow row : table.findRows("camX", "variable_name"))              { cam.x = int(row.getString("value")); }
+    for (TableRow row : table.findRows("camY", "variable_name"))              { cam.y = int(row.getString("value")); }
+    for (TableRow row : table.findRows("camZ", "variable_name"))              { cam.z = int(row.getString("value")); }
     
     for (TableRow row : table.findRows("bottomMenuOrder", "variable_name")) if(int(row.getString("1D")) < bottomMenuOrder.length) bottomMenuOrder[int(row.getString("1D"))] = int(row.getString("value"));
     
