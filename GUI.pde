@@ -78,7 +78,7 @@ class SubWindowContainer {
       } catch(Exception e) {
         e.printStackTrace();
       }
-      s
+      
       swBuffer.endDraw();
       image(swBuffer, x, y);
       if(mouse.isCaptured(swMouse.bridgedModeName)) return true;
