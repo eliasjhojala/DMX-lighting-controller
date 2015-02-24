@@ -194,6 +194,7 @@ class SettingsWindow {
   
   //The total width and height of the window (can be un-finalized, but you should only be change it on init)
   final int size = 500;
+  final int w = 500, h = 500;
   
   //Currently selected tab
   int selectedTab = 0;

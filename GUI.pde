@@ -11,26 +11,56 @@ class SubWindowContainer {
   PGraphics swBuffer;
   
   //Contained windows
-  MemoryCreationBox memoryCreation;
-  SettingsWindow settings;
+  //MemoryCreationBox memoryCreation;
+  //SettingsWindow settings;
+  //LowerMenu lowerm;
+  java.lang.Object window;
+  Class windowClass;
   
-  int mode; // 0: memBox, 1: settings, 2: fixtureProperties
+  //int mode; // 0: memBox, 1: settings, 2: fixtureProperties, 3: lowerMenu/fixtureValues
   
-  SubWindowContainer(MemoryCreationBox memBox, String mouseName, int mousePriority) {
-    memoryCreation = memBox;
-    swBuffer = createGraphics(memBox.w+3, memBox.h+3);
-    x = memBox.locX; y = memBox.locY;
-    swMouse = new Mouse(mouse, mouseName, mousePriority, x, y, memBox.w, memBox.h);
-    mode = 0;
+  SubWindowContainer(java.lang.Object window, String mouseName, int mousePriority) {
+    this.window = window;
+    windowClass = window.getClass();
+    
+    int w = 0;
+    int h = 0;
+    int locX = 0;
+    int locY = 0;
+    try {
+      w = (int) windowClass.getDeclaredField("w").getInt(window);
+      h = (int) windowClass.getDeclaredField("h").getInt(window);
+      
+      locX = (int) windowClass.getDeclaredField("locX").getInt(window);
+      locY = (int) windowClass.getDeclaredField("locY").getInt(window);
+    } catch(Exception e) {
+      println("Error while creating SubWindowContainer " + this.toString() + ". Probably passed an incapable object as the window parameter!\n");
+      e.printStackTrace();
+    }
+    
+    swBuffer = createGraphics(w+3, h+3);
+    
+    
+    x = locX; y = locY;
+    swMouse = new Mouse(mouse, mouseName, mousePriority, x, y, w, h);
+    
   }
   
-  SubWindowContainer(SettingsWindow setWin, String mouseName, int mousePriority) {
+  /*SubWindowContainer(SettingsWindow setWin, String mouseName, int mousePriority) {
     settings = setWin;
     swBuffer = createGraphics(setWin.size+3, setWin.size+3);
     x = setWin.locX; y = setWin.locY;
     swMouse = new Mouse(mouse, mouseName, mousePriority, x, y, setWin.size, setWin.size);
     mode = 1;
   }
+  
+ SubWindowContainer(LowerMenu lm, String mouseName, int mousePriority) {
+    lowerm = lm;
+    swBuffer = createGraphics(lm.w+3, lm.h+3);
+    x = lm.locX; y = lm.locY;
+    swMouse = new Mouse(mouse, mouseName, mousePriority, x, y, lm.w, lm.h);
+    mode = 3;
+  }*/
   
   boolean draw() {
     if(isOpen()) {
@@ -40,17 +70,15 @@ class SubWindowContainer {
       swBuffer.translate(1, 1);
       getXY();
       swMouse.refreshBridged(x, y, swBuffer);
-      switch(mode) {
-        case 0:
-          memoryCreation.draw(swBuffer, swMouse, false);
-        break;
-        case 1:
-          settings.draw(swBuffer, swMouse, false);
-        break;
-        case 2:
-          
-        break;
+      
+      //memoryCreation.draw(swBuffer, swMouse, false);
+      try {
+        windowClass.getDeclaredMethod("draw", PGraphics.class, swMouse.getClass(), boolean.class)
+          .invoke(window, swBuffer, swMouse, false);
+      } catch(Exception e) {
+        e.printStackTrace();
       }
+      s
       swBuffer.endDraw();
       image(swBuffer, x, y);
       if(mouse.isCaptured(swMouse.bridgedModeName)) return true;
@@ -60,28 +88,22 @@ class SubWindowContainer {
   
   
   void getXY() {
-    switch(mode) {
-      case 0:
-        x = memoryCreation.locX;
-        y = memoryCreation.locY;
-      break;
-      case 1:
-        x = settings.locX;
-        y = settings.locY;
-      break;
-      case 2:
-        
-      break;
+    try {
+      x = (int) windowClass.getDeclaredField("locX").getInt(window);
+      y = (int) windowClass.getDeclaredField("locY").getInt(window);
+    } catch(Exception e) {
+      e.printStackTrace();
     }
   }
   
   boolean isOpen() {
-    switch(mode) {
-      case 0: return memoryCreation.open;
-      case 1: return settings.open;
-      case 2: return false;
-      default: return false;
+    try {
+      return (boolean) windowClass.getDeclaredField("open").getBoolean(window);
+    } catch(Exception e) {
+      e.printStackTrace();
+      return false;
     }
+    
   }
   
 }

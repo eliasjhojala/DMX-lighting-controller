@@ -1,7 +1,8 @@
-//Tässä välilehdessä piirretään alavalikko, jossa näkyy mm. fixtuurien nykyiset arvot 
-//Alavalikko toimii nyt hyvin ja fixture(i) voidia voi käyttää missä vain ohjelmassa
-/*Jostain syystä id:n vaihtamisen kanssa on välillä pieniä ongelmia
-se pitäisi selvittää*/
+
+//This is a really old comment by eliasjhojala(@github.com), I'm keeping it here for the memories :)
+    //Tässä välilehdessä piirretään alavalikko, jossa näkyy mm. fixtuurien nykyiset arvot 
+    //Alavalikko toimii nyt hyvin ja fixture(i) voidia voi käyttää missä vain ohjelmassa
+
  
 //Create variables for old mouse locations
 int oldMouseX2;
@@ -30,10 +31,75 @@ void alavalikko() {
     
   if(!mousePressed) { mouseLocked = false; }
   if(mouse.captured && !mouse.isCaptured("bottomMenu")) { mouseLocked = true; mouseLocker = "external"; }
-  
+  */
   drawBottomMenuControlBox();
   notifier.draw(width-168);
-  */
+  
+  
+}
+
+
+
+
+class LowerMenu {
+  LowerMenu() {
+    open = true;
+    locX = 0;
+    locY = 0;
+    w = 500;
+    h = 500;
+  }
+  
+  boolean open;
+  
+  int locX, locY;
+  
+  int w, h;
+  
+  void draw(PGraphics g, Mouse mouse, boolean translate) {
+    if(open) {
+      g.pushMatrix();
+      g.pushStyle();
+      { // frame & frame controls
+        if(translate) g.translate(locX, locY);
+        g.fill(0, 23, 74, 230);
+        g.stroke(0, 16, 40);
+        g.strokeWeight(3);
+        //Box itself
+        g.rect(0, 0, w, h, 20);
+        mouse.declareUpdateElementRelative("LowerMenu", 1, 0, 0, w, h, g);
+        mouse.setElementExpire("LowerMenu", 2);
+        //Grabable location button
+        g.fill(180);
+        g.noStroke();
+        g.rect(10, 10, 20, 20, 20, 0, 0, 4);
+        mouse.declareUpdateElementRelative("LowerMenu:move", "LowerMenu", 10, 10, 20, 20, g);
+        mouse.setElementExpire("LowerMenu:move", 2);
+        if(mouse.isCaptured("LowerMenu:move")) {
+          locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
+          locX = constrain(mouseX - pmouseX + locX, 40, width - (320 + 168));
+        }
+        //Cancel button
+        mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, 10, 50, 20, g);
+        mouse.setElementExpire("LowerMenu:cancel", 2);
+        boolean cancelHover = mouse.elmIsHover("LowerMenu:cancel");
+        g.fill(cancelHover ? 220 : 180, 30, 30);
+        //Close if Cancel is pressed
+        if(mouse.isCaptured("LowerMenu:cancel")) open = false;
+        g.rect(30, 10, 50, 20, 0, 4, 4, 0);
+        g.fill(230);
+        g.textAlign(CENTER);
+        g.text("Close", 55, 24);
+        
+      }
+              
+      {
+        
+      }
+      g.popMatrix();
+      g.popStyle();
+    }
+  }
 }
 
 /*
