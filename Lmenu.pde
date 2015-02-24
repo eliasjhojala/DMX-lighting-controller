@@ -83,16 +83,16 @@ class LowerMenu {
         }
         
         //Close button
-        mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, 10, 50, 20, g);
+        mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, h-10, 50, -20, g);
         mouse.setElementExpire("LowerMenu:cancel", 2);
         boolean cancelHover = mouse.elmIsHover("LowerMenu:cancel");
-        g.fill(cancelHover ? 220 : 180, 30, 30);
+        g.fill(cancelHover ? 160 : 140);
         //Close if Cancel is pressed
         if(mouse.isCaptured("LowerMenu:cancel")) open = false;
-        g.rect(30, 10, 50, 20, 0, 4, 4, 0);
+        g.rect(30, h-10, 50, -20, 0, 4, 4, 0);
         g.fill(230);
         g.textAlign(CENTER);
-        g.text("Close", 55, 24);
+        g.text("Close", 55, h-16);
         
       }
               

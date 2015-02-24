@@ -75,20 +75,21 @@ void ylavalikko() {
   avgFrameRate = (avgFrameRate + int(frameRate)) / 2;
   
   { //Here you can place buttons to left side
+    int round = 20;
     { //Wash button
       pushMatrix();
-        int round = 20;
+        
         translate(-2, 150);
         pushStyle();
           fill(topMenuTheme2);
           rect(0, 0, 40, 100, 0, round, round, 0);
-          mouse.declareUpdateElementRelative("washButton", "main:move", 0, 0, 40, 100);
+          mouse.declareUpdateElementRelative("UpperMenu:washButton", "main:move", 0, 0, 40, 100);
           boolean isHovered = isHover(0, 0, 40, 100);
-          boolean isClicked = mouse.isCaptured("washButton") && mouse.firstCaptureFrame;
+          boolean isClicked = mouse.isCaptured("UpperMenu:washButton") && mouse.firstCaptureFrame;
           if(isClicked) { colorWashMenuOpen = !colorWashMenuOpen; }
         popStyle();
         pushMatrix();
-          translate(13, 27);
+          translate(13, 50);
           rotate(radians(90));
           pushStyle();
             if(isHovered) {
@@ -98,12 +99,41 @@ void ylavalikko() {
               fill(topMenuTheme);
             }
             textSize(20);
+            textAlign(CENTER);
             text("Wash", 0, 0);
           popStyle();
         popMatrix();
       popMatrix();
     } //End of wash button
-  
+    { //Fixture Values
+      pushMatrix();
+        
+        translate(-2, 270);
+        pushStyle();
+          fill(topMenuTheme2);
+          rect(0, 0, 40, 100, 0, round, round, 0);
+          mouse.declareUpdateElementRelative("UpperMenu:fixvalButton", "main:move", 0, 0, 40, 100);
+          boolean isHovered = isHover(0, 0, 40, 100);
+          boolean isClicked = mouse.isCaptured("UpperMenu:fixvalButton") && mouse.firstCaptureFrame;
+          if(isClicked) { lowerMenu.open = ! lowerMenu.open; }
+        popStyle();
+        pushMatrix();
+          translate(13, 50);
+          rotate(radians(90));
+          pushStyle();
+            if(isHovered) {
+              fill(250);
+            }
+            else {
+              fill(topMenuTheme);
+            }
+            textSize(20);
+            textAlign(CENTER);
+            text("Control", 0, 0);
+          popStyle();
+        popMatrix();
+      popMatrix();
+    } //End of wash button
   } //End of buttons placed to left side
   //settingsWindow.draw();
   popStyle();
