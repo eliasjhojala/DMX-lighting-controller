@@ -384,11 +384,11 @@ class MemoryCreationBox {
             g.text("Input Mode:", 10, 125);
             g.fill(0, 186, 240); g.noStroke();
             g.rect(110, 115, 12, 12, 1.5);
-            if(isHoverSimple(110, 115, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(110, 115, 12, 12, g, mouse) && mouse.isCaptured("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.inputModeUp();
             }
             g.rect(124, 115, 12, 12, 1.5);
-            if(isHoverSimple(124, 115, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(124, 115, 12, 12, g, mouse) && mouse.isCaptured("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.inputModeDown();
             }
             g.textSize(10);
@@ -402,11 +402,11 @@ class MemoryCreationBox {
             g.text("Output Mode:", 10, 175);
             g.fill(0, 186, 240); g.noStroke();
             g.rect(110, 165, 12, 12, 1.5);
-            if(isHoverSimple(110, 165, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(110, 165, 12, 12, g, mouse) && mouse.isCaptured("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.outputModeUp();
             }
             g.rect(124, 165, 12, 12, 1.5);
-            if(isHoverSimple(124, 165, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(124, 165, 12, 12, g, mouse) && mouse.isCaptured("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.outputModeDown();
             }
             g.textSize(10);
@@ -420,11 +420,11 @@ class MemoryCreationBox {
             g.text("Beat Mode:", 10, 225);
             g.fill(0, 186, 240); g.noStroke();
             g.rect(110, 215, 12, 12, 1.5);
-            if(isHoverSimple(110, 215, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(110, 215, 12, 12, g, mouse) && mouse.isCaptured("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.beatModeUp();
             }
             g.rect(124, 215, 12, 12, 1.5);
-            if(isHoverSimple(124, 215, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(124, 215, 12, 12, g, mouse) && mouse.isCaptured("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.beatModeDown();
             }
             g.textSize(10);
@@ -438,11 +438,11 @@ class MemoryCreationBox {
             g.text("Fade Mode:", 10, 275);
             g.fill(0, 186, 240); g.noStroke();
             g.rect(110, 265, 12, 12, 1.5);
-            if(isHoverSimple(110, 265, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(110, 265, 12, 12, g, mouse) && mouse.isCaptured("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.fadeModeUp();
             }
             g.rect(124, 265, 12, 12, 1.5);
-            if(isHoverSimple(124, 265, 12, 12) && mousePressed && mouse.capturedElement == mouse.getElementByName("MemoryCreationBox") && mouse.firstCaptureFrame) {
+            if(isHoverSimple(124, 265, 12, 12, g, mouse) && mouse.isCaptured("MemoryCreationBox") && mouse.firstCaptureFrame) {
               memories[selectedMemorySlot].myChase.fadeModeDown();
             }
             g.textSize(10);

@@ -99,6 +99,12 @@ class Mouse {
     if(bridgedMode) refresh(mouseX - bridgedX, mouseY - bridgedY, g);
   }
   
+  int getBridgedMouseX() {
+    return mouseX - bridgedX;
+  }
+  int getBridgedMouseY() {
+    return mouseY - bridgedY;
+  }
   void refreshBridged(PGraphics g) {
     refreshBridged(bridgedX, bridgedY, g);
   }

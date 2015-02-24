@@ -14,14 +14,37 @@ class SubWindowContainer {
   MemoryCreationBox memoryCreation;
   SettingsWindow settings;
   
-  int mode; // 0: memBox, 1: settings, 2: fixtureProperties
   
-  SubWindowContainer(MemoryCreationBox memBox, String mouseName, int mousePriority) {
-    memoryCreation = memBox;
-    swBuffer = createGraphics(memBox.w+3, memBox.h+3);
-    x = memBox.locX; y = memBox.locY;
-    swMouse = new Mouse(mouse, mouseName, mousePriority, x, y, memBox.w, memBox.h);
-    mode = 0;
+  boolean reflectionCapable = true;
+  
+  //int mode; // 0: memBox, 1: settings, 2: fixtureProperties, 3: lowerMenu/fixtureValues
+  
+  SubWindowContainer(java.lang.Object window, String mouseName, int mousePriority) {
+    this.window = window;
+    windowClass = window.getClass();
+    
+    int w = 0;
+    int h = 0;
+    int locX = 0;
+    int locY = 0;
+    try {
+      w = (int) windowClass.getDeclaredField("w").getInt(window);
+      h = (int) windowClass.getDeclaredField("h").getInt(window);
+      
+      locX = (int) windowClass.getDeclaredField("locX").getInt(window);
+      locY = (int) windowClass.getDeclaredField("locY").getInt(window);
+    } catch(Exception e) {
+      reflectionCapable = false;
+      println("Error while creating SubWindowContainer " + this.toString() + ". Probably passed an incapable object as the window parameter!\n");
+      e.printStackTrace();
+    }
+    
+    swBuffer = createGraphics(w+3, h+3);
+    
+    
+    x = locX; y = locY;
+    swMouse = new Mouse(mouse, mouseName, mousePriority, x, y, w, h);
+    
   }
   
   SubWindowContainer(SettingsWindow setWin, String mouseName, int mousePriority) {
@@ -33,23 +56,22 @@ class SubWindowContainer {
   }
   
   boolean draw() {
-    if(isOpen()) {
+    if(isOpen() && reflectionCapable) {
       mouse.getElementByName(swMouse.bridgedModeName).enabled = true;
       swBuffer.beginDraw();
       swBuffer.clear();
       swBuffer.translate(1, 1);
       getXY();
       swMouse.refreshBridged(x, y, swBuffer);
-      switch(mode) {
-        case 0:
-          memoryCreation.draw(swBuffer, swMouse, false);
-        break;
-        case 1:
-          settings.draw(swBuffer, swMouse, false);
-        break;
-        case 2:
-          
-        break;
+      
+      //memoryCreation.draw(swBuffer, swMouse, false);
+      try {
+        windowClass.getDeclaredMethod("draw", PGraphics.class, swMouse.getClass(), boolean.class)
+          .invoke(window, swBuffer, swMouse, false);
+      } catch(Exception e) {
+        e.printStackTrace();
+        reflectionCapable = false;
+        println("Error while creating SubWindowContainer " + this.toString() + ". Probably passed an incapable object as the window parameter!\n");
       }
       swBuffer.endDraw();
       image(swBuffer, x, y);
@@ -60,27 +82,28 @@ class SubWindowContainer {
   
   
   void getXY() {
-    switch(mode) {
-      case 0:
-        x = memoryCreation.locX;
-        y = memoryCreation.locY;
-      break;
-      case 1:
-        x = settings.locX;
-        y = settings.locY;
-      break;
-      case 2:
-        
-      break;
+    try {
+      x = (int) windowClass.getDeclaredField("locX").getInt(window);
+      y = (int) windowClass.getDeclaredField("locY").getInt(window);
+    } catch(Exception e) {
+      
+      reflectionCapable = false;
+      println("Error while creating SubWindowContainer " + this.toString() + ". Probably passed an incapable object as the window parameter!\n");
+      
+      e.printStackTrace();
     }
   }
   
   boolean isOpen() {
-    switch(mode) {
-      case 0: return memoryCreation.open;
-      case 1: return settings.open;
-      case 2: return false;
-      default: return false;
+    try {
+      return (boolean) windowClass.getDeclaredField("open").getBoolean(window);
+    } catch(Exception e) {
+      
+      reflectionCapable = false;
+      println("Error while creating SubWindowContainer " + this.toString() + ". Probably passed an incapable object as the window parameter!\n");
+      
+      e.printStackTrace();
+      return false;
     }
   }
   
@@ -96,8 +119,9 @@ class SubWindowHandler {
   }
   
   void createDefaultWindows() {
-    subWindows.add(new SubWindowContainer(memoryCreator, "MemoryCreator", 1002));
-    subWindows.add(new SubWindowContainer(settingsWindow, "SettingsWindow", 1001));
+    subWindows.add(new SubWindowContainer(memoryCreator, "MemoryCreator", 1000));
+    subWindows.add(new SubWindowContainer(settingsWindow, "SettingsWindow", 1000));
+    subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
   }
   
   ArrayList<SubWindowContainer> subWindows;
