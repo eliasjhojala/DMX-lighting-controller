@@ -22,6 +22,7 @@
         <height>50</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <fixtureModelPath>par64.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="Pieni fresu" fixtureName="p.fresu" id="2">
       <channelNames>
@@ -35,6 +36,7 @@
         <height>30</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <fixtureModelPath>kFresu.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="Keskikokoinen fresu" fixtureName="k.fresu" id="3">
       <channelNames>
@@ -62,6 +64,7 @@
         <height>50</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <fixtureModelPath>iFresu.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="flood" id="5">
       <channelNames>
@@ -75,6 +78,7 @@
         <height>20</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <fixtureModelPath>flood.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="linssi" id="6">
       <channelNames>
@@ -88,6 +92,7 @@
         <height>60</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <fixtureModelPath>linssi.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="Strobe" id="7">
       <channelNames>
@@ -103,6 +108,7 @@
         <height>25</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <fixtureModelPath>strobo.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="Hazer" id="8">
       <channelNames>

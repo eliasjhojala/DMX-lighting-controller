@@ -50,7 +50,7 @@ channelName        | channelTypeNumber
 
 class FixtureProfile {
   String modelPath = "par64.obj";
-  PShape model = loadShape(dataPath(modelPath));
+  PShape model = s1.loadShape(dataPath(modelPath));
   
   String fixtureName;
   String fixtureLongName;
@@ -119,7 +119,7 @@ class FixtureProfile {
   
   void setModel(String path) {
     modelPath = path;
-    model = loadShape(dataPath(modelPath));
+    model = s1.loadShape(dataPath(modelPath));
   }
   
   PShape getModel() {

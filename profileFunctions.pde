@@ -16,6 +16,14 @@ int[] getFixtureSizeByType(int type) {
   
 }
 
+int[] getFixtureSizeById(int id) {
+  return getFixtureSizeByType(fixtures.get(id).fixtureTypeId);
+}
+
+boolean fixtureIsDrawnById(int id) {
+  return boolean(getFixtureSizeById(id)[2]);
+}
+
 int[] getFixtureSize(int id) {
   return getFixtureSizeByType(fixtures.get(id).fixtureTypeId);
 }

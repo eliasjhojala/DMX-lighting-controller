@@ -213,15 +213,9 @@ void draw() {
              
               //Draw lights
               for (int i = 0; i < fixtures.size(); i++) {
+                if(fixtureIsDrawnById(i)) {
                   PShape model = par64Model;
-                  try {
-                    if(getFixtureModelById(i) != null) {
-                      model = getFixtureModelById(i);
-                    }
-                  }
-                  catch (Exception e) {
-                       println("ERROR");
-                  }
+                  try { model = getFixtureModelById(i); } catch (Exception e) { e.printStackTrace(); }
                   int x_loc = fixtures.get(i).x_location;
                   int y_loc = fixtures.get(i).y_location;
                   int z_loc = fixtures.get(i).z_location;
@@ -244,12 +238,8 @@ void draw() {
                             -60, 
                             parentAnsa, 
                             model);
-
-              }
-              
-              
-              
-              
+                }
+              }            
 }
 }
 
@@ -264,198 +254,40 @@ void drawLight(int posX, int posY, int posZ, int rotZ, int rotX, int scale, floa
       }
       //Draw p64 holder
       pushMatrix();
-      translate(posX * 5 - 1000, posY * 5, posZ);
-      rotateZ(radians(rotZ));
-      rotateX(radians(90));
-      noStroke();
-      scale(scale);
-      shape(par64Holder);
+        translate(posX * 5 - 1000, posY * 5, posZ);
+        rotateZ(radians(rotZ));
+        rotateX(radians(90));
+        noStroke();
+        scale(scale);
+        shape(par64Holder);
       popMatrix();
       
       //Draw light itself
       pushMatrix();
-      translate(posX * 5 - 1000, posY * 5, posZ);
-      rotateZ(radians(rotZ));
-      rotateX(radians(rotX));
-      noStroke();
-      scale(scale);
-      shape(lightModel);
+        translate(posX * 5 - 1000, posY * 5, posZ);
+        rotateZ(radians(rotZ));
+        rotateX(radians(rotX));
+        noStroke();
+        scale(scale);
+        shape(lightModel);
       popMatrix();
       
-      //Draw light cone
+       //Draw light cone
       if(conedim > 0) {
         pushMatrix();
-        translate(posX * 5 - 1000, posY * 5, posZ);
-        rotateZ(radians(rotZ));
-        rotateX(radians(rotX));
-        //Cone offset
-        translate(0, 0, coneZOffset);
-        scale(scale * coneScale * coneDiam, scale * coneScale  * coneDiam, scale * coneScale);
-        //fill(255, 0, 0, 128);
-        fill(coneColor, conedim / 2);
-        shape(cone);
+          translate(posX * 5 - 1000, posY * 5, posZ);
+          rotateZ(radians(rotZ));
+          rotateX(radians(rotX));
+          //Cone offset
+          translate(0, 0, coneZOffset);
+          scale(scale * coneScale * coneDiam, scale * coneScale  * coneDiam, scale * coneScale);
+          //fill(255, 0, 0, 128);
+          fill(coneColor, conedim / 2);
+          shape(cone);
         popMatrix();
       }
 }
 
-
-void drawFlood(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, color coneColor, int conedim, int coneZOffset, int parentAnsa, PShape lightModel, int LightParam) {
-      //If light is parented to an ansa, offset Z height by ansas height
-      if (parentAnsa != 0) {
-        posZ += ansaZ[parentAnsa];
-        posX += ansaX[parentAnsa];
-        posY += ansaY[parentAnsa];
-      }
-      posY -= 20;
-      //Draw p64 holder
-      pushMatrix();
-      translate(posX * 5 - 1000, posY * 5, posZ);
-      rotateZ(radians(rotZ));
-      rotateX(radians(90));
-      noStroke();
-      scale(scale);
-      shape(par64Holder);
-      popMatrix();
-      
-      //Draw light itself
-      pushMatrix();
-      translate(posX * 5 - 1000, posY * 5, posZ);
-      rotateZ(radians(rotZ));
-      rotateX(radians(rotX));
-      noStroke();
-      scale(scale);
-      shape(lightModel);
-      popMatrix();
-      
-      //Draw light "flaps"
-      pushMatrix();
-      translate(posX * 5 - 1000, posY * 5, posZ);
-      rotateZ(radians(rotZ));
-      rotateX(radians(rotX));
-      translate(0, 12, 18);
-      rotateX(radians(-LightParam));
-      scale(scale);
-      shape(floodCover);
-      popMatrix();
-      
-      pushMatrix();
-      translate(posX * 5 - 1000, posY * 5, posZ);
-      rotateZ(radians(rotZ));
-      rotateX(radians(rotX));
-      translate(0, -30, 18);
-      rotateX(radians(LightParam));
-      scale(scale, scale * -1, scale);
-      shape(floodCover);
-      popMatrix();
-      
-      //Draw light cone
-      if(conedim > 0) {
-        pushMatrix();
-        translate(posX * 5 - 1000, posY * 5, posZ);
-        rotateZ(radians(rotZ));
-        rotateX(radians(rotX));
-        //Cone offset
-        translate(0, 0, coneZOffset);
-        scale(scale * coneScale * coneDiam * 2, scale * coneScale  * coneDiam * map(LightParam, 45, -42, 1, 0), scale * coneScale);
-        //fill(255, 0, 0, 128);
-        fill(coneColor, conedim / 2);
-        shape(cone);
-        popMatrix();
-      }
-}
-
-void drawStrobo(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, color coneColor, int conedim, int coneZOffset, int parentAnsa, PShape lightModel, boolean stroboIsOn) {
-      //If light is parented to an ansa, offset Z height by ansas height
-      if (parentAnsa != 0) {
-        posZ += ansaZ[parentAnsa];
-        posX += ansaX[parentAnsa];
-        posY += ansaY[parentAnsa];
-      }
-      
-      //Draw light itself
-      pushMatrix();
-      translate(posX * 5 - 1000, posY * 5, posZ);
-      rotateZ(radians(rotZ));
-      rotateX(radians(rotX));
-      noStroke();
-      scale(scale);
-      shape(lightModel);
-      popMatrix();
- 
-      
-      //Draw light cone
-      if(conedim > 0 && stroboIsOn) {
-        pushMatrix();
-        translate(posX * 5 - 1000, posY * 5, posZ);
-        rotateZ(radians(rotZ));
-        rotateX(radians(rotX));
-        //Cone offset
-        translate(0, 0, coneZOffset);
-        scale(scale * coneScale * coneDiam * 2, scale * coneScale  * coneDiam, scale * coneScale);
-        //fill(255, 0, 0, 128);
-        fill(coneColor, conedim / 2);
-        shape(cone);
-        popMatrix();
-      }
-}
-
-void drawMHX(int posX, int posY, int posZ, int rotZ, int rotX, int scale, float coneDiam, color coneColor, int conedim, int coneZOffset, int parentAnsa, PShape lightModel) {
-      //If light is parented to an ansa, offset Z height by ansas height
-      if (parentAnsa != 0) {
-        posZ += ansaZ[parentAnsa];
-        posX += ansaX[parentAnsa];
-        posY += ansaY[parentAnsa];
-      }
-      
-      //Draw MHX base
-      pushMatrix();
-      translate(posX * 5 - 1000, posY * 5, posZ);
-      rotateX(radians(270));
-      noStroke();
-      scale(scale);
-      shape(mhBase);
-      popMatrix();
-      
-      //Draw MHX holder
-      pushMatrix();
-      translate(posX * 5 - 1000, posY * 5, posZ);
-      rotateZ(radians(rotZ));
-      rotateX(radians(270));
-      noStroke();
-      scale(scale);
-      shape(mhHolder);
-      popMatrix();
-      
-      //Draw light itself
-      pushMatrix();
-      translate(posX * 5 - 1000, posY * 5, posZ);
-      rotateZ(radians(rotZ));
-      rotateX(radians(rotX));
-      noStroke();
-      scale(scale);
-      shape(lightModel);
-      popMatrix();
-      
-      //Draw light cone
-      if(conedim > 0) {
-        pushMatrix();
-        translate(posX * 5 - 1000, posY * 5, posZ);
-        rotateZ(radians(rotZ));
-        rotateX(radians(rotX));
-        //Cone offset
-        translate(0, 0, coneZOffset);
-        scale(scale * coneScale * coneDiam, scale * coneScale  * coneDiam, scale * coneScale);
-        //fill(255, 0, 0, 128);
-        fill(coneColor, conedim / 2);
-        shape(cone);
-        popMatrix();
-      }
-}
-
-
-
-
- 
 
 void mouseDragged() {
     if(mouseButton == RIGHT) {
