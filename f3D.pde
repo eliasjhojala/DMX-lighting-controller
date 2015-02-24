@@ -12,7 +12,7 @@ int[] tablePositionsLength = new int[3];
 
 boolean rotateZopposite = true;
 
-boolean use3D = false;
+boolean use3D = true;
 
 int userOneFrameRate = 30;
 int userTwoFrameRate = 30;
@@ -107,35 +107,32 @@ void setup() {
   }
   
   try {
-  par64Model = loadShape(parent.dataPath("par64.obj"));
-  par64Holder = loadShape(parent.dataPath( "par64_holder.obj"));
-  kFresu = loadShape(parent.dataPath( "kFresu.obj"));
-  iFresu = loadShape(parent.dataPath( "iFresu.obj"));
-  linssi = loadShape(parent.dataPath( "linssi.obj"));
-  flood = loadShape(parent.dataPath( "flood.obj"));
-  floodCover = loadShape(parent.dataPath( "floodCover.obj"));
-  strobo = loadShape(parent.dataPath( "strobo.obj"));
-  mhMain = loadShape(parent.dataPath( "mhMain.obj"));
-  mhHolder = loadShape(parent.dataPath( "mhHolder.obj"));
-  mhBase = loadShape(parent.dataPath( "mhBase.obj")); 
-  base = loadShape(parent.dataPath( "base.obj"));
-  cone = loadShape(parent.dataPath( "cone.obj"));
-  table = loadShape(parent.dataPath( "table.obj"));
-  table.disableStyle();
+    par64Model = loadShape(parent.dataPath("par64.obj"));
+    par64Holder = loadShape(parent.dataPath( "par64_holder.obj"));
+    kFresu = loadShape(parent.dataPath( "kFresu.obj"));
+    iFresu = loadShape(parent.dataPath( "iFresu.obj"));
+    linssi = loadShape(parent.dataPath( "linssi.obj"));
+    flood = loadShape(parent.dataPath( "flood.obj"));
+    floodCover = loadShape(parent.dataPath( "floodCover.obj"));
+    strobo = loadShape(parent.dataPath( "strobo.obj"));
+    mhMain = loadShape(parent.dataPath( "mhMain.obj"));
+    mhHolder = loadShape(parent.dataPath( "mhHolder.obj"));
+    mhBase = loadShape(parent.dataPath( "mhBase.obj")); 
+    base = loadShape(parent.dataPath( "base.obj"));
+    cone = loadShape(parent.dataPath( "cone.obj"));
+    table = loadShape(parent.dataPath( "table.obj"));
+    table.disableStyle();
   }
   catch (Exception e) {
-    use3D = false;
+   // use3D = false;
   }
   cone.disableStyle();
   base.disableStyle();
   
-  if(userId == 1) {frameRate(1);} else {frameRate(userTwoFrameRate);} 
-  //frameRate(15);
+  //if(userId == 1) {frameRate(1);} else {frameRate(userTwoFrameRate);} 
+  frameRate(60);
   
-  noLoop();
-  if (frame != null) {
-    frame.setResizable(false);
-  }
+
   
 }
 
@@ -146,19 +143,22 @@ int valoScale = 20;
 
 void draw() {
 
-  if(!use3D) {   
-    textSize(26);
-    background(0); 
-    fill(255);
-    text("3D not in use", 10, 100); 
-  }
-  if(use3D == true && dataLoaded) {
- 
+//  if(!use3D) {   
+//    textSize(26);
+//    background(0); 
+//    fill(255);
+//    text("3D not in use", 10, 100); 
+//  }
+ // if(use3D == true && dataLoaded) {
+ if(true) {
+               float cameraZ = ((height/2.0) / tan(PI*60.0/360.0));
+              perspective(1, float(width)/height, cameraZ/10.0/10, cameraZ*10.0*10);
               background(0);
               lights();
               
               //Camera
               camera(camX, camY, camZ, width/2.0+centerX, height/2.0 + 1500+centerY, -1000, 0, 0, -1);
+              
               
               
               
@@ -210,52 +210,44 @@ void draw() {
               }
 
               
-            /*  
+             
               //Draw lights
-              for (int i = 0; i < ansaTaka; i++) {
-                //If light is of type par64 OR moving head dim
-                if(fixtures.get(i).fixtureTypeId == 1 || fixtures.get(i).fixtureTypeId == 13){
-                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, par64ConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, -60, fixtures.get(i).parentAnsa, par64Model);
-                } else 
-                //If light is of type p. fresu ("small" F.A.L. fresnel)
-                if(fixtures.get(i).fixtureTypeId == 2) {
-                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location + 40, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, int(valoScale * 0.6), pFresuConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 0, fixtures.get(i).parentAnsa, iFresu);
-                } else 
-                //If light is of type k. fresu (F.A.L. fresnel)
-                if(fixtures.get(i).fixtureTypeId == 3) {
-                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, kFresuConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 0, fixtures.get(i).parentAnsa, kFresu);
-                } else 
-                //If light is of type i. fresu ("big" F.A.L. fresnel)
-                if(fixtures.get(i).fixtureTypeId == 4) {
-                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, iFresuConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 0, fixtures.get(i).parentAnsa, iFresu);
-                } else
-                //If light is of type flood
-                if(fixtures.get(i).fixtureTypeId == 5) {
-                  pushMatrix();
-                  translate(0, 15, 0);
-                  drawFlood(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, floodConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 0, fixtures.get(i).parentAnsa, flood, fixParam[i]);
-                  popMatrix();
-                } else
-                //If light is of type linssi (linssi = lens)
-                if(fixtures.get(i).fixtureTypeId == 6) {
-                  drawLight(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, linssiConeDiameter * map(fixParam[i], 45, -42, 2, 1), fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 120, fixtures.get(i).parentAnsa, linssi);
-                } else
-                //If light is of type strobo brightness
-                if(fixtures.get(i).fixtureTypeId == 9) {
-                  boolean stroboOnTemp = !stroboOn[i];
-                  drawStrobo(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, int(valoScale * 1.2), stroboConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, 0, fixtures.get(i).parentAnsa, strobo, stroboOnTemp);
-                  stroboOn[i] = stroboOnTemp;
-                }
-                //If light is of type Stairville MHX50 (moving head)
-                if(fixtures.get(i).fixtureTypeId == 16 || fixtures.get(i).fixtureTypeId == 17) {
-                  pushMatrix();
-                  translate(0, -50, 0);
-                  drawMHX(fixtures.get(i).x_location, fixtures.get(i).y_location, fixtures.get(i).z_location, fixtures.get(i).rotationZ, fixtures.get(i).rotationX, valoScale, mhxConeDiameter, fixtures.get(i).getRawColor(), fixtures.get(i).dimmer, -30, fixtures.get(i).parentAnsa, mhMain);
-                  popMatrix();
-                }
+              for (int i = 0; i < fixtures.size(); i++) {
+                  PShape model = par64Model;
+                  try {
+                    if(getFixtureModelById(i) != null) {
+                      model = getFixtureModelById(i);
+                    }
+                  }
+                  catch (Exception e) {
+                       println("ERROR");
+                  }
+                  int x_loc = fixtures.get(i).x_location;
+                  int y_loc = fixtures.get(i).y_location;
+                  int z_loc = fixtures.get(i).z_location;
+                  PVector location = new PVector(x_loc, y_loc, z_loc);
+                  int rotaZ = fixtures.get(i).rotationZ;
+                  int rotaX = fixtures.get(i).rotationX;
+                  color rawColor = fixtures.get(i).getRawColor();
+                  int dimmer = fixtures.get(i).out.getUniversalDMX(DMX_DIMMER);
+                  int parentAnsa = fixtures.get(i).parentAnsa;
+                  drawLight(
+                            x_loc, 
+                            y_loc, 
+                            z_loc, 
+                            rotaZ, 
+                            rotaX, 
+                            valoScale, 
+                            par64ConeDiameter, 
+                            rawColor, 
+                            dimmer, 
+                            -60, 
+                            parentAnsa, 
+                            model);
+
               }
               
-              */
+              
               
               
 }

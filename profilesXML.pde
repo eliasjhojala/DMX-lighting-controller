@@ -49,6 +49,13 @@ void saveFixtureProfiles() {
       XML isDrawn = fixtureSize.addChild("isDrawn");
       isDrawn.setContent(str(fixtureProfiles[i].size.isDrawn));
     } //end of saving fixtureSize
+  
+  
+    { //load fixture model PShape
+      XML fixtureModelPath = profile.addChild("fixtureModelPath");
+      fixtureModelPath.setContent(fixtureProfiles[i].modelPath);
+    } //end of loading fixture model PShape
+    
   } //End of going through all the profiles
   saveXML(xml, nameOfProfileFile); //Finally save xml which we have created
 } //End of saving all the fixtureProfiles to xml
@@ -101,6 +108,13 @@ void loadFixtureProfiles() {
       XML isDrawn = fixtureSize.getChild("isDrawn");
       fixtureProfiles[id].size.isDrawn = boolean(isDrawn.getContent());
     } //end of loading fixtureSize
+    
+     { //load fixture model PShape
+      XML fixtureModelPath = profile[i].getChild("fixtureModelPath");
+      if(fixtureModelPath != null) {
+        fixtureProfiles[id].setModel(fixtureModelPath.getContent());
+      }
+    } //end of loading fixture model PShape
   } //End of going through all the profiles
 } //End of loading fixtureProfiles from xml
 

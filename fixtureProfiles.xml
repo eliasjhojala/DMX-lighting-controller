@@ -48,6 +48,7 @@
         <height>40</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <fixtureModelPath>kFresu.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="Iso fresu" fixtureName="i.fresu" id="4">
       <channelNames>

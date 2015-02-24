@@ -98,3 +98,10 @@ fixtureSize toFixtureSize(int w, int h) {
   return fS;
 }
 
+PShape getFixtureModelByType(int type) {
+  return fixtureProfiles[type].getModel();
+}
+
+PShape getFixtureModelById(int id) {
+  return getFixtureModelByType(fixtures.get(id).fixtureTypeId);
+}
