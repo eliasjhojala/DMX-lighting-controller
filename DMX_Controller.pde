@@ -1,4 +1,4 @@
-
+//I COUNT: THERE ARE 9 714 LINES CODE IN THIS SOFTWARE
 boolean showMode = true;                                                                                                                                                  //|
                                                                                                                                                                           //| 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
