@@ -1,7 +1,4 @@
 
-int userId = 3; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
-boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                               //|
-                                                                                                                                                                          //|
 boolean showMode = true;                                                                                                                                                  //|
                                                                                                                                                                           //| 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|

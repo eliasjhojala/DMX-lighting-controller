@@ -2,7 +2,6 @@
 boolean dataLoaded = false;
 boolean programReadyToRun = false; 
 void loadSetupData() {
-  use3D = !(userId == 3);
   showOutputAsNumbers = true;
 }
 
