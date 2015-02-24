@@ -65,21 +65,24 @@ class LowerMenu {
         g.fill(0, 30, 60, 130);
         g.stroke(0, 61, 100);
         g.strokeWeight(3);
+        
         //Box itself
         g.rect(0, 0, w, h, 20);
         mouse.declareUpdateElementRelative("LowerMenu", 1, 0, 0, w, h, g);
         mouse.setElementExpire("LowerMenu", 2);
+        
         //Grabable location button
         g.fill(180);
         g.noStroke();
-        g.rect(10, 10, 20, 20, 20, 0, 0, 4);
-        mouse.declareUpdateElementRelative("LowerMenu:move", "LowerMenu", 10, 10, 20, 20, g);
+        g.rect(10, h-10, 20, -20, 4, 0, 0, 20);
+        mouse.declareUpdateElementRelative("LowerMenu:move", "LowerMenu", 10, h-10, 20, -20, g);
         mouse.setElementExpire("LowerMenu:move", 2);
         if(mouse.isCaptured("LowerMenu:move")) {
           locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
           locX = constrain(mouseX - pmouseX + locX, 40, width - (320 + 168));
         }
-        //Cancel button
+        
+        //Close button
         mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, 10, 50, 20, g);
         mouse.setElementExpire("LowerMenu:cancel", 2);
         boolean cancelHover = mouse.elmIsHover("LowerMenu:cancel");
