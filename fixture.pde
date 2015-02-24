@@ -114,6 +114,9 @@ class fixture {
   PVector getRotation() {
     return new PVector(rotationX, 0, rotationZ);
   }
+  LocationData getLocationData() {
+    return new LocationData(getLocation(), getRotation());
+  }
   
   int x_location, y_location, z_location; //location in visualisation
   int locationOnScreenX, locationOnScreenY;

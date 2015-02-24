@@ -150,18 +150,19 @@ public class secondApplet1 extends PApplet {
     if(fixtureIsDrawnById(i)) {
       PShape model = par64Model;
       try { model = getFixtureModelById(i); } catch (Exception e) { e.printStackTrace(); }
-      PVector location = fixtures.get(i).getLocation();
-      PVector rotation = fixtures.get(i).getRotation();
+      LocationData locationData = fixtures.get(i).getLocationData();
       color rawColor = fixtures.get(i).getRawColor();
       int dimmer = fixtures.get(i).out.getUniversalDMX(DMX_DIMMER);
       int parentAnsa = fixtures.get(i).parentAnsa;
-      drawLight(location, rotation, valoScale, 0.4, rawColor, dimmer, -60, parentAnsa, model);
+      drawLight(locationData, valoScale, 0.4, rawColor, dimmer, -60, parentAnsa, model);
     }
   }
   
   
   
-  void drawLight(PVector location, PVector rotation, int scale, float coneDiam, color coneColor, int conedim, int coneZOffset, int parentAnsa, PShape lightModel) {
+  void drawLight(LocationData locationData, int scale, float coneDiam, color coneColor, int conedim, int coneZOffset, int parentAnsa, PShape lightModel) {
+        PVector location = locationData.getLocation();
+        PVector rotation = locationData.getRotation();
         float posX = location.x;
         float posY = location.y;
         float posZ = location.z;
@@ -256,3 +257,19 @@ public class PFrame1 extends JFrame {
   }
 }
 
+
+class LocationData {
+  PVector location, rotation;
+  
+  LocationData(PVector loc, PVector rot) {
+    location = loc;
+    rotation = rot;
+  }
+  
+  PVector getLocation() {
+    return location;
+  }
+  PVector getRotation() {
+    return rotation;
+  }
+}
