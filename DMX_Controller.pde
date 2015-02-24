@@ -98,7 +98,7 @@ import javax.swing.JFrame; //Käytetään frame-kirjastoa, jonka avulla voidaan 
 PFrame f1 = new PFrame(); //Luodaan uusi ikkuna
 secondApplet1 s1;
 
-PFrame1 f = new PFrame1(this); //Luodaan toinenkin uusi ikkuna
+PFrame1 f = new PFrame1(this, 500, 500); //Luodaan toinenkin uusi ikkuna
 secondApplet s;
 
 
@@ -341,6 +341,8 @@ String fileSeparator = java.io.File.separator;
 String actualSketchPath;
 
 void setup() {
+  
+  s1.noLoop();
 
   loadCoreData();
   actualSketchPath = sketchPath("");
@@ -412,6 +414,9 @@ void setup() {
   createFixtureProfiles();
   
   subWindowHandler = new SubWindowHandler();
+  
+  f.setBounds(0, 0, displayWidth, displayHeight);
+  s1.loop();
   
 }
 

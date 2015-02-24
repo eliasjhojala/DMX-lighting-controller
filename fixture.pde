@@ -105,6 +105,15 @@ class fixture {
   //int dimmer;
   
 
+  PVector getLocation() {
+    return new PVector(x_location, y_location, z_location);
+  }
+  PVector getLocationOnScreen() {
+    return new PVector(locationOnScreenX, locationOnScreenY, 0);
+  }
+  PVector getRotation() {
+    return new PVector(rotationX, 0, rotationZ);
+  }
   
   int x_location, y_location, z_location; //location in visualisation
   int locationOnScreenX, locationOnScreenY;
