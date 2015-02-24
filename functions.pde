@@ -1,4 +1,8 @@
 //Tässä välilehdessä on paljon lyhyitä voideja
+
+/* If you are wondering why on earth all the saveToXML 
+functions are commented the reason is that I realized 
+that in this branch there is no XML class yet */
   
 
 boolean scrolledDown = false;
@@ -602,22 +606,22 @@ class LocationData {
   PVector getLocation() { return location; } //Get location as PVector
   PVector getRotation() { return rotation; } //Get location as PVector
   
-  void saveToXML(ManageXML xml) {
-    xml.addBlockAndIncrease("LocationData");
-      savePVectorToXML(xml, "location", location);
-      savePVectorToXML(xml, "rotation", rotation);
-    xml.goBack();
-  }
+//  void saveToXML(ManageXML xml) {
+//    xml.addBlockAndIncrease("LocationData");
+//      savePVectorToXML(xml, "location", location);
+//      savePVectorToXML(xml, "rotation", rotation);
+//    xml.goBack();
+//  }
 }
 
 
-void savePVectorToXML(ManageXML xml, String name, PVector pv) {
-  xml.addBlockAndIncrease(name);
-    xml.addData("x", pv.x);
-    xml.addData("y", pv.y);
-    xml.addData("z", pv.z);
-  xml.goBack();
-}
+//void savePVectorToXML(ManageXML xml, String name, PVector pv) {
+//  xml.addBlockAndIncrease(name);
+//    xml.addData("x", pv.x);
+//    xml.addData("y", pv.y);
+//    xml.addData("z", pv.z);
+//  xml.goBack();
+//}
 
 class RGBWD {
   /*
@@ -648,23 +652,29 @@ class RGBWD {
     return round(map(c, 0, 255, 0, d));
   }
   
-  void saveToXML(ManagexML xml) {
-    xml.addBlockAndIncrease("RGBWD data");
-      saveColorToXML(xml, "rawColor", rawColor);
-      saveColorToXML(xml, "colorWithDim", colorWithDim);
-      xml.addBlockAndIncrease("dimmer");
-        xml.addData("val", dimmer);
-      xml.goBack();
-    xml.goBack();
-  }
+//  void saveToXML(ManagexML xml) {
+//    xml.addBlockAndIncrease("RGBWD data");
+//      saveColorToXML(xml, "rawColor", rawColor);
+//      saveColorToXML(xml, "colorWithDim", colorWithDim);
+//      xml.addBlockAndIncrease("dimmer");
+//        xml.addData("val", dimmer);
+//      xml.goBack();
+//    xml.goBack();
+//  }
   
 }
 
 
-void saveColorToXML(ManagexML xml, name, color c) {
-  xml.addBlockAndIncrease(name);
-    xml.addData("r", red(c));
-    xml.addData("g", green(c));
-    xml.addData("b", blue(c));
-  xml.goBack();
-}
+//void saveColorToXML(ManagexML xml, String name, color c) {
+//  xml.addBlockAndIncrease(name);
+//    xml.addData("r", red(c));
+//    xml.addData("g", green(c));
+//    xml.addData("b", blue(c));
+//  xml.goBack();
+//}
+
+//color getColorFromXML(ManagexML xml, String name) {
+//  int r, g, b;
+//  
+//  return color(r, g, b);
+//}
