@@ -142,105 +142,89 @@ int valoScale = 20;
 
 
 void draw() {
-
-//  if(!use3D) {   
-//    textSize(26);
-//    background(0); 
-//    fill(255);
-//    text("3D not in use", 10, 100); 
-//  }
- // if(use3D == true && dataLoaded) {
- if(true) {
-               float cameraZ = ((height/2.0) / tan(PI*60.0/360.0));
-              perspective(1, float(width)/height, cameraZ/10.0/10, cameraZ*10.0*10);
-              background(0);
-              lights();
-              
-              //Camera
-              camera(camX, camY, camZ, width/2.0+centerX, height/2.0 + 1500+centerY, -1000, 0, 0, -1);
-              
-              
-              
-              
-              //Draw floor
-              pushMatrix();
-                translate(width/2, height/2+4000, -1000);
-                noStroke();
-                rotateX(radians(90));
-                fill(50);
-                scale(400, 400, 400);
-                shape(base);
-              popMatrix();
-              
-              
-              //Draw ansas
-              int[] ij = { ansaY.length, ansaX.length, ansaZ.length };
-              for(int i = 0; i < min(ij); i++) {
-                if(ansaType[i] == 1) {
-                  pushMatrix();
-                  translate(0, ansaY[i] * 5, ansaZ[i] + 82);
-                  box(10000, 10, 10);
-                  popMatrix();
-                }
-              }
-              
-              //Draw stage (lava)
-              if(lava) {
-                pushMatrix();
-                translate(lavaX * 5 - 1000, lavaY * 5, -990 + lavaH);
-                fill(70);
-                box(lavaSizX * 5, lavaSizY * 5, lavaH * 2);
-                shape(table);
-                popMatrix();
-              }
-              
-              
-              //Draw tables
-              tablePositionsLength[0] = tablex.length;
-              tablePositionsLength[1] = tabley.length;
-              tablePositionsLength[2] = tablez.length;
-              
-              for(int i = 0; i < min(tablePositionsLength); i++) {
-                pushMatrix();
-                translate(tablex[i], tabley[i], tablez[i]);
-                scale(100, 100, 100);
-                rotateX(radians(90));
-                shape(table);
-                popMatrix();
-              }
-
-              
-             
-              //Draw lights
-              for (int i = 0; i < fixtures.size(); i++) {
-                if(fixtureIsDrawnById(i)) {
-                  PShape model = par64Model;
-                  try { model = getFixtureModelById(i); } catch (Exception e) { e.printStackTrace(); }
-                  int x_loc = fixtures.get(i).x_location;
-                  int y_loc = fixtures.get(i).y_location;
-                  int z_loc = fixtures.get(i).z_location;
-                  PVector location = new PVector(x_loc, y_loc, z_loc);
-                  int rotaZ = fixtures.get(i).rotationZ;
-                  int rotaX = fixtures.get(i).rotationX;
-                  color rawColor = fixtures.get(i).getRawColor();
-                  int dimmer = fixtures.get(i).out.getUniversalDMX(DMX_DIMMER);
-                  int parentAnsa = fixtures.get(i).parentAnsa;
-                  drawLight(
-                            x_loc, 
-                            y_loc, 
-                            z_loc, 
-                            rotaZ, 
-                            rotaX, 
-                            valoScale, 
-                            par64ConeDiameter, 
-                            rawColor, 
-                            dimmer, 
-                            -60, 
-                            parentAnsa, 
-                            model);
-                }
-              }            
+  if(!use3D) {   
+    drawText("3D not in use");
+  }
+  if(use3D == true && dataLoaded) { }
+  if(true) {
+   setMainSettings();
+   drawFloor();
+   drawTrusses();
+   drawLights();          
+  }
 }
+
+void drawText(String text) {
+  textSize(26);
+  background(0); 
+  fill(255);
+  text(text, 10, 100); 
+}
+
+void setMainSettings() {
+  background(0);
+  lights();
+  setPerspective();
+  setCamera();
+}
+
+void setPerspective() {
+  float cameraZ = ((height/2.0) / tan(PI*60.0/360.0));
+  perspective(1, float(width)/height, cameraZ/10.0/10, cameraZ*10.0*10);
+}
+
+void setCamera() {
+  //Camera
+  camera(camX, camY, camZ, width/2.0+centerX, height/2.0 + 1500+centerY, -1000, 0, 0, -1);
+}
+
+void drawFloor() {
+  //Draw floor
+  pushMatrix();
+    translate(width/2, height/2+4000, -1000);
+    noStroke();
+    rotateX(radians(90));
+    fill(50);
+    scale(400, 400, 400);
+    shape(base);
+  popMatrix();
+}
+
+void drawTrusses() {
+  //Draw trusses etc.
+  int[] ij = { ansaY.length, ansaX.length, ansaZ.length };
+  for(int i = 0; i < min(ij); i++) {
+    if(ansaType[i] == 1) {
+      pushMatrix();
+      translate(0, ansaY[i] * 5, ansaZ[i] + 82);
+      box(10000, 10, 10);
+      popMatrix();
+    }
+  }
+}
+
+void drawLights() {
+  //Draw lights
+  for (int i = 0; i < fixtures.size(); i++) {
+    drawSingleLight(i);
+  } 
+}
+
+void drawSingleLight(int i) {
+  if(fixtureIsDrawnById(i)) {
+    PShape model = par64Model;
+    try { model = getFixtureModelById(i); } catch (Exception e) { e.printStackTrace(); }
+    int x_loc = fixtures.get(i).x_location;
+    int y_loc = fixtures.get(i).y_location;
+    int z_loc = fixtures.get(i).z_location;
+    PVector location = new PVector(x_loc, y_loc, z_loc);
+    int rotaZ = fixtures.get(i).rotationZ;
+    int rotaX = fixtures.get(i).rotationX;
+    color rawColor = fixtures.get(i).getRawColor();
+    int dimmer = fixtures.get(i).out.getUniversalDMX(DMX_DIMMER);
+    int parentAnsa = fixtures.get(i).parentAnsa;
+    drawLight(x_loc, y_loc, z_loc, rotaZ, rotaX, valoScale, par64ConeDiameter, rawColor, dimmer, -60, parentAnsa, model);
+  }
 }
 
 
