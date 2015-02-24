@@ -160,56 +160,55 @@ public class secondApplet1 extends PApplet {
   
   
   void drawLight(LocationData locationData, int scale, float coneDiam, RGBWD rgbwd, int coneZOffset, int parentAnsa, PShape lightModel) {
-        PVector location = locationData.getLocation();
-        PVector rotation = locationData.getRotation();
-        float posX = location.x;
-        float posY = location.y;
-        float posZ = location.z;
-        float rotZ = rotation.z;
-        float rotX = rotation.x;
-        
-        color coneColor = rgbwd.getCol();
-        int conedim = rgbwd.getDim();
-        //If light is parented to an ansa, offset Z height by ansas height
-        if (parentAnsa != 0) {
-          posZ += ansaZ[parentAnsa];
-          posX += ansaX[parentAnsa];
-          posY += ansaY[parentAnsa];
-        }
-        //Draw p64 holder
-        pushMatrix();
-          translate(posX * 5 - 1000, posY * 5, posZ);
-          rotateZ(radians(rotZ));
-          rotateX(radians(90));
-          noStroke();
-          scale(scale);
-          shape(par64Holder);
-        popMatrix();
-        
-        //Draw light itself
-        pushMatrix();
-          translate(posX * 5 - 1000, posY * 5, posZ);
-          rotateZ(radians(rotZ));
-          rotateX(radians(rotX));
-          noStroke();
-          scale(scale);
-          shape(lightModel);
-        popMatrix();
-        
-         //Draw light cone
-        if(conedim > 0) {
-          pushMatrix();
-            translate(posX * 5 - 1000, posY * 5, posZ);
-            rotateZ(radians(rotZ));
-            rotateX(radians(rotX));
-            //Cone offset
-            translate(0, 0, coneZOffset);
-            scale(scale * coneScale * coneDiam, scale * coneScale  * coneDiam, scale * coneScale);
-            //fill(255, 0, 0, 128);
-            fill(coneColor, conedim / 2);
-            shape(cone);
-          popMatrix();
-        }
+    PVector location = locationData.getLocation();
+    PVector rotation = locationData.getRotation();
+    float posX = location.x;
+    float posY = location.y;
+    float posZ = location.z;
+    float rotZ = rotation.z;
+    float rotX = rotation.x;
+    
+    color coneColor = rgbwd.getCol();
+    int conedim = rgbwd.getDim();
+    //If light is parented to an ansa, offset Z height by ansas height
+    if (parentAnsa != 0) {
+      posZ += ansaZ[parentAnsa];
+      posX += ansaX[parentAnsa];
+      posY += ansaY[parentAnsa];
+    }
+    //Draw p64 holder
+    pushMatrix();
+      translate(posX * 5 - 1000, posY * 5, posZ);
+      rotateZ(radians(rotZ));
+      rotateX(radians(90));
+      noStroke();
+      scale(scale);
+      shape(par64Holder);
+    popMatrix();
+    
+    //Draw light itself
+    pushMatrix();
+      translate(posX * 5 - 1000, posY * 5, posZ);
+      rotateZ(radians(rotZ));
+      rotateX(radians(rotX));
+      noStroke();
+      scale(scale);
+      shape(lightModel);
+    popMatrix();
+    
+     //Draw light cone
+    if(conedim > 0) {
+      pushMatrix();
+        translate(posX * 5 - 1000, posY * 5, posZ);
+        rotateZ(radians(rotZ));
+        rotateX(radians(rotX));
+        //Cone offset
+        translate(0, 0, coneZOffset);
+        scale(scale * coneScale * coneDiam, scale * coneScale  * coneDiam, scale * coneScale);
+        fill(coneColor, conedim / 2);
+        shape(cone);
+      popMatrix();
+    }
   }
   
   
