@@ -172,9 +172,17 @@ boolean isHoverAB(int obj1X, int obj1Y, int obj2X, int obj2Y, float moX, float m
 }
 
 
+boolean isHoverSimple(int offsetX, int offsetY, int w, int h) {
+  return isHoverSimple(offsetX, offsetY, w, h, mouseX, mouseY, g);
+} 
+
+boolean isHoverSimple(int ofX, int ofY, int w, int h, PGraphics g, Mouse mouse) {
+  return isHoverSimple(ofX, ofY, w, h, mouse.getBridgedMouseX(), mouse.getBridgedMouseY(), g);
+}
+
 //A simpler version of isHover. Doesn't make a bounding box, only regards the two corners and checks a rectangle between them. (Useful with non-rotated scenarios)
-boolean isHoverSimple(int offsetX, int offsetY, int w, int h){
-  return inBds2D(mouseX, mouseY, int(screenX(offsetX, offsetY)), int(screenY(offsetX, offsetY)), int(screenX(offsetX + w, offsetY + h)), int(screenY(offsetX + w, offsetY + h)));
+boolean isHoverSimple(int offsetX, int offsetY, int w, int h, int moX, int moY, PGraphics g){
+  return inBds2D(moX, moY, int(g.screenX(offsetX, offsetY)), int(g.screenY(offsetX, offsetY)), int(g.screenX(offsetX + w, offsetY + h)), int(g.screenY(offsetX + w, offsetY + h)));
 }
 
 //Automatically takes mouseX and mouseY as pointer

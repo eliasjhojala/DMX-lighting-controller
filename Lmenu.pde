@@ -39,7 +39,7 @@ void alavalikko() {
 }
 
 
-
+LowerMenu lowerMenu = new LowerMenu();
 
 class LowerMenu {
   LowerMenu() {
@@ -62,8 +62,8 @@ class LowerMenu {
       g.pushStyle();
       { // frame & frame controls
         if(translate) g.translate(locX, locY);
-        g.fill(0, 23, 74, 230);
-        g.stroke(0, 16, 40);
+        g.fill(0, 30, 60, 130);
+        g.stroke(0, 61, 100);
         g.strokeWeight(3);
         //Box itself
         g.rect(0, 0, w, h, 20);

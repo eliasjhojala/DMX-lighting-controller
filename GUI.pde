@@ -17,6 +17,9 @@ class SubWindowContainer {
   java.lang.Object window;
   Class windowClass;
   
+  
+  boolean reflectionCapable = true;
+  
   //int mode; // 0: memBox, 1: settings, 2: fixtureProperties, 3: lowerMenu/fixtureValues
   
   SubWindowContainer(java.lang.Object window, String mouseName, int mousePriority) {
@@ -34,6 +37,7 @@ class SubWindowContainer {
       locX = (int) windowClass.getDeclaredField("locX").getInt(window);
       locY = (int) windowClass.getDeclaredField("locY").getInt(window);
     } catch(Exception e) {
+      reflectionCapable = false;
       println("Error while creating SubWindowContainer " + this.toString() + ". Probably passed an incapable object as the window parameter!\n");
       e.printStackTrace();
     }
@@ -63,7 +67,7 @@ class SubWindowContainer {
   }*/
   
   boolean draw() {
-    if(isOpen()) {
+    if(isOpen() && reflectionCapable) {
       mouse.getElementByName(swMouse.bridgedModeName).enabled = true;
       swBuffer.beginDraw();
       swBuffer.clear();
@@ -77,6 +81,8 @@ class SubWindowContainer {
           .invoke(window, swBuffer, swMouse, false);
       } catch(Exception e) {
         e.printStackTrace();
+        reflectionCapable = false;
+        println("Error while creating SubWindowContainer " + this.toString() + ". Probably passed an incapable object as the window parameter!\n");
       }
       
       swBuffer.endDraw();
@@ -92,6 +98,10 @@ class SubWindowContainer {
       x = (int) windowClass.getDeclaredField("locX").getInt(window);
       y = (int) windowClass.getDeclaredField("locY").getInt(window);
     } catch(Exception e) {
+      
+      reflectionCapable = false;
+      println("Error while creating SubWindowContainer " + this.toString() + ". Probably passed an incapable object as the window parameter!\n");
+      
       e.printStackTrace();
     }
   }
@@ -100,6 +110,10 @@ class SubWindowContainer {
     try {
       return (boolean) windowClass.getDeclaredField("open").getBoolean(window);
     } catch(Exception e) {
+      
+      reflectionCapable = false;
+      println("Error while creating SubWindowContainer " + this.toString() + ". Probably passed an incapable object as the window parameter!\n");
+      
       e.printStackTrace();
       return false;
     }
@@ -118,8 +132,9 @@ class SubWindowHandler {
   }
   
   void createDefaultWindows() {
-    subWindows.add(new SubWindowContainer(memoryCreator, "MemoryCreator", 1002));
-    subWindows.add(new SubWindowContainer(settingsWindow, "SettingsWindow", 1001));
+    subWindows.add(new SubWindowContainer(memoryCreator, "MemoryCreator", 1000));
+    subWindows.add(new SubWindowContainer(settingsWindow, "SettingsWindow", 1000));
+    subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
   }
   
   ArrayList<SubWindowContainer> subWindows;
