@@ -151,16 +151,15 @@ public class secondApplet1 extends PApplet {
       PShape model = par64Model;
       try { model = getFixtureModelById(i); } catch (Exception e) { e.printStackTrace(); }
       LocationData locationData = fixtures.get(i).getLocationData();
-      color rawColor = fixtures.get(i).getRawColor();
-      int dimmer = fixtures.get(i).out.getUniversalDMX(DMX_DIMMER);
+      RGBWD rgbwd = fixtures.get(i).getRGBWD();
       int parentAnsa = fixtures.get(i).parentAnsa;
-      drawLight(locationData, valoScale, 0.4, rawColor, dimmer, -60, parentAnsa, model);
+      drawLight(locationData, valoScale, 0.4, rgbwd, -60, parentAnsa, model);
     }
   }
   
   
   
-  void drawLight(LocationData locationData, int scale, float coneDiam, color coneColor, int conedim, int coneZOffset, int parentAnsa, PShape lightModel) {
+  void drawLight(LocationData locationData, int scale, float coneDiam, RGBWD rgbwd, int coneZOffset, int parentAnsa, PShape lightModel) {
         PVector location = locationData.getLocation();
         PVector rotation = locationData.getRotation();
         float posX = location.x;
@@ -168,6 +167,9 @@ public class secondApplet1 extends PApplet {
         float posZ = location.z;
         float rotZ = rotation.z;
         float rotX = rotation.x;
+        
+        color coneColor = rgbwd.getCol();
+        int conedim = rgbwd.getDim();
         //If light is parented to an ansa, offset Z height by ansas height
         if (parentAnsa != 0) {
           posZ += ansaZ[parentAnsa];
@@ -273,3 +275,32 @@ class LocationData {
     return rotation;
   }
 }
+
+class RGBWD {
+  color rawColor;
+  int dimmer;
+  color colorWithDim;
+  RGBWD(color col, int dim) {
+    rawColor = col;
+    dimmer = dim;
+    colorWithDim = color(MCWD(red(col), dim), MCWD(green(col), dim), MCWD(blue(col), dim));
+  }
+  
+  color getCol() {
+    return rawColor;
+  }
+  color getColWithDim() {
+    return colorWithDim;
+  }
+  int getDim() {
+    return dimmer;
+  }
+  
+  int MCWD(float c, float d) { //Map Color With Dimmer (color, dimmer)
+    int CWD; //Color with dimmer
+    CWD = round(map(c, 0, 255, 0, d));
+    return CWD;
+  }
+}
+
+

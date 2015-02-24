@@ -117,6 +117,9 @@ class fixture {
   LocationData getLocationData() {
     return new LocationData(getLocation(), getRotation());
   }
+  RGBWD getRGBWD() {
+    return new RGBWD(getRawColor(), out.getUniversalDMX(DMX_DIMMER));
+  }
   
   int x_location, y_location, z_location; //location in visualisation
   int locationOnScreenX, locationOnScreenY;
