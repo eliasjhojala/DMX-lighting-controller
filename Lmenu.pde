@@ -47,7 +47,7 @@ class LowerMenu {
     locX = 0;
     locY = 0;
     w = 500;
-    h = 500;
+    h = 300;
   }
   
   boolean open;
@@ -79,20 +79,21 @@ class LowerMenu {
         mouse.setElementExpire("LowerMenu:move", 2);
         if(mouse.isCaptured("LowerMenu:move")) {
           locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
-          locX = constrain(mouseX - pmouseX + locX, 40, width - (320 + 168));
+          locX = constrain(mouseX - pmouseX + locX, 40, width - w-(20 + 168));
         }
+        w = width - 40 - 20 - 168;
         
         //Close button
-        mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, h-10, 50, -20, g);
+        mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, h-10, 30, -20, g);
         mouse.setElementExpire("LowerMenu:cancel", 2);
         boolean cancelHover = mouse.elmIsHover("LowerMenu:cancel");
         g.fill(cancelHover ? 160 : 140);
         //Close if Cancel is pressed
         if(mouse.isCaptured("LowerMenu:cancel")) open = false;
-        g.rect(30, h-10, 50, -20, 0, 4, 4, 0);
+        g.rect(30, h-10, 30, -20, 0, 4, 4, 0);
         g.fill(230);
         g.textAlign(CENTER);
-        g.text("Close", 55, h-16);
+        g.text("X", 45, h-16);
         
       }
               

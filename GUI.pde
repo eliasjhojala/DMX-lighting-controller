@@ -5,6 +5,7 @@
 class SubWindowContainer {
   //X and Y offset
   int x, y;
+  int h, w;
   
   Mouse swMouse;
   
@@ -26,8 +27,8 @@ class SubWindowContainer {
     this.window = window;
     windowClass = window.getClass();
     
-    int w = 0;
-    int h = 0;
+    w = 0;
+    h = 0;
     int locX = 0;
     int locY = 0;
     try {
@@ -50,30 +51,17 @@ class SubWindowContainer {
     
   }
   
-  /*SubWindowContainer(SettingsWindow setWin, String mouseName, int mousePriority) {
-    settings = setWin;
-    swBuffer = createGraphics(setWin.size+3, setWin.size+3);
-    x = setWin.locX; y = setWin.locY;
-    swMouse = new Mouse(mouse, mouseName, mousePriority, x, y, setWin.size, setWin.size);
-    mode = 1;
-  }
-  
- SubWindowContainer(LowerMenu lm, String mouseName, int mousePriority) {
-    lowerm = lm;
-    swBuffer = createGraphics(lm.w+3, lm.h+3);
-    x = lm.locX; y = lm.locY;
-    swMouse = new Mouse(mouse, mouseName, mousePriority, x, y, lm.w, lm.h);
-    mode = 3;
-  }*/
   
   boolean draw() {
     if(isOpen() && reflectionCapable) {
       mouse.getElementByName(swMouse.bridgedModeName).enabled = true;
+      getXY();
+      
       swBuffer.beginDraw();
       swBuffer.clear();
       swBuffer.translate(1, 1);
-      getXY();
-      swMouse.refreshBridged(x, y, swBuffer);
+      
+      swMouse.refreshBridged(x, y, w, h, swBuffer);
       
       //memoryCreation.draw(swBuffer, swMouse, false);
       try {
@@ -97,6 +85,16 @@ class SubWindowContainer {
     try {
       x = (int) windowClass.getDeclaredField("locX").getInt(window);
       y = (int) windowClass.getDeclaredField("locY").getInt(window);
+      int tempW, tempH;
+      tempW = (int) windowClass.getDeclaredField("w").getInt(window);
+      tempH = (int) windowClass.getDeclaredField("h").getInt(window);
+      if(w != tempW || h != tempH) { //size changed
+        w = tempW;
+        h = tempH;
+        swBuffer = createGraphics(w+3, h+3);
+      }
+      
+      
     } catch(Exception e) {
       
       reflectionCapable = false;
