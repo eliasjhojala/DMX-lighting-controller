@@ -1,4 +1,4 @@
-//Tässä välilehdessä tulostetaan mustalle taustalle valkoisin tekstein dim-arvot, sekä muutamien muiden muuuttujien arvoja
+//Window to show values of some variables for debugging
 
 boolean showOutputAsNumbers; 
  
@@ -8,6 +8,7 @@ public class secondApplet extends PApplet {
 
   public void setup() {
     size(600, 900);
+    frameRate(4);
   }
   public void draw() {
     translate(offset.x, offset.y);
@@ -40,41 +41,18 @@ public class secondApplet extends PApplet {
       fill(255, 255, 255);
       text(i + ":" + touchOSCchannel[i], 110, i*15+25);
   }
-  
-  
-  
+
     
-  translate(100, 0);
+  translate(130, 0);
   fill(255, 255, 255);
   
-  
-    text("allChannels[1]", 105, 10);
+  for(int j = 1; j <= 5; j++) {
+    text("allChannels[" + str(j) + "]", j*100+5, 10);
     for(int i = 0; i < 24; i++) {
       fill(255, 255, 255);
-      text(i + ":" + allChannels[1][i], 110, i*15+25);
+      text(i + ":" + allChannels[1][i], 100*j+10, i*15+25);
+    }
   }
-    text("allChannels[2]", 205, 10);
-    for(int i = 0; i < 24; i++) {
-      fill(255, 255, 255);
-      text(i + ":" + allChannels[2][i], 210, i*15+25);
-  }
-    text("allChannels[3]", 305, 10);
-    for(int i = 0; i < 24; i++) {
-      fill(255, 255, 255);
-      text(i + ":" + allChannels[3][i], 310, i*15+25);
-  }
-  text("allChannels[4]", 405, 10);
-    for(int i = 0; i < 24; i++) {
-      fill(255, 255, 255);
-      text(i + ":" + allChannels[4][i], 410, i*15+25);
-  }
-  text("allChannels[5]", 505, 10);
-    for(int i = 0; i < 24; i++) {
-      fill(255, 255, 255);
-      text(i + ":" + allChannels[5][i], 510, i*15+25);
-  }
-  text("memory", 605, 10);
-  int a = 0;
 
   }
 }
@@ -85,8 +63,12 @@ public class secondApplet extends PApplet {
    */
    
   void mouseDragged() {
+    frameRate(10);
     offset.y += mouseY-pmouseY;
     offset.x += mouseX-pmouseX;
+  }
+  void mouseReleased() {
+    frameRate(4);
   }
   void keyPressed() {
     if(keyCode == DOWN) { offset.y += 100; }
