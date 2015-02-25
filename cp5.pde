@@ -872,6 +872,8 @@ public class ControlFrame extends PApplet {
   int presetTypingDelay = 10;
   int presetTypingCurrent = 0;
   void keyPressed() {
+    if(key==27) { key=0; }
+    
     //If key is Enter (or return for macosx)
     if (keyCode == ENTER || keyCode == RETURN){
       if(typingPreset) {

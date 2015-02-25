@@ -94,6 +94,7 @@ public class secondApplet extends PApplet {
     if(keyCode == LEFT) { offset.x -= 100; }
     if(keyCode == RIGHT) { offset.x += 100; }
     if(key == 'r') { offset = new PVector(0, 0); }
+    if(key==27) { key=0; }
   }
 }
 

@@ -27,9 +27,12 @@ class HSBColorPicker {
             offset.y += mouseY-pmouseY;
           }
           
+          //Count values by mouse dragging
           countHue();
           countSaturation();
           countBrightness();
+          
+          //Show bars
           showHue();
           showBrightness();
           showSaturation();
@@ -40,6 +43,7 @@ class HSBColorPicker {
   }
 
   void countHue() {
+    //Edit hue if dragged
     mouse.declareUpdateElementRelative("HSBP:hue", "HSBP", 0, 0, 255*3, 30);
     mouse.setElementExpire("HSBP:hue", 2);
     if(mouse.isCaptured("HSBP:hue")) {
@@ -48,6 +52,7 @@ class HSBColorPicker {
     }
   }
   void countBrightness() {
+    //Edit brightness if dragged
     mouse.declareUpdateElementRelative("HSBP:brightness", "HSBP", 0, 50, 255*3, 30);
     mouse.setElementExpire("HSBP:brightness", 2);
     if(mouse.isCaptured("HSBP:brightness")) {
@@ -56,6 +61,7 @@ class HSBColorPicker {
     }
   }
   void countSaturation() {
+    //Edit saturation if dragged
     mouse.declareUpdateElementRelative("HSBP:saturation", "HSBP", 0, 100, 255*3, 30);
     mouse.setElementExpire("HSBP:saturation", 2);
     if(mouse.isCaptured("HSBP:saturation")) {
@@ -65,6 +71,7 @@ class HSBColorPicker {
   }
   
   void showHue() {
+    //Show hue bar
     for(int i = 0; i < 255; i++) {
       pushStyle();
         colorMode(HSB);
@@ -78,6 +85,7 @@ class HSBColorPicker {
   }
   
   void showBrightness() {
+    //Show brightness bar
     pushMatrix();
       translate(0, 50);
       for(int i = 0; i < 255; i++) {
@@ -94,6 +102,7 @@ class HSBColorPicker {
   }
 
   void showSaturation() {
+    //Show saturation bar
     pushMatrix();
       translate(0, 100);
       for(int i = 0; i < 255; i++) {

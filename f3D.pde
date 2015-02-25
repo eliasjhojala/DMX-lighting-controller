@@ -218,18 +218,12 @@ public class secondApplet1 extends PApplet {
         cam.y += (mouseY - pmouseY) * 10;
       }
   }
-   
-  void mousePressed() {
-    if(use3D) {
-      loop();
-      frameRate(60);
-    }
-  }
-   
+  
   void keyPressed()
   {
     if (keyCode == UP) { cam.z += 100; } 
     else if (keyCode == DOWN) { cam.z -= 100; }
+    if(key==27) { key=0; }
   }
   
 
