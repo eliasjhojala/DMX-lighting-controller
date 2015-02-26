@@ -29,5 +29,6 @@ void setuppi() {
  
     fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-  
+  createSockets();
+ 
 }

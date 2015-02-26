@@ -21,8 +21,6 @@ void draw() {
     //Move this to setDimAndMemoryValuesAtEveryDraw, maybe?
     updateMemories();
     
-    
-    
     checkThemeMode();
     
     setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
