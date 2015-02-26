@@ -33,7 +33,6 @@ void drawMainWindow() {
     
     //TÄSSÄ PIIRRETÄÄN ANSAT - DRAW TRUSSES
     ansat(mouseRotated);
-    drawSockets(mouseRotated);
     
     /*if(moveLamp) {
       mouseLocked = true;

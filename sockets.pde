@@ -71,27 +71,27 @@ int[] getListOfSocketsInTruss(int truss) {
 int[] findNearestSocket(int truss) {
   int[] fixturesInTruss = getListOfFixturesInTruss(truss);
   int[] socketsInTruss = getListOfSocketsInTruss(truss);
+  int[] nearestFoundDistance = new int[fixturesInTruss.length];
   int[] nearestFoundSocket = new int[fixturesInTruss.length];
   
+  for(int i = 0; i < nearestFoundSocket.length; i++) {
+    nearestFoundDistance[i] = -1;
+    nearestFoundSocket[i] = -1;
+  }
   
   for(int i = 0; i < fixturesInTruss.length; i++) {
-    int nearestFoundDistance = Integer.MAX_VALUE;
-    nearestFoundSocket[i] = -1;
-    fixture fix = fixtures.get(fixturesInTruss[i]);
     for(int j = 0; j < socketsInTruss.length; j++) {
-      if(sockets[socketsInTruss[j]] != null) {
-        Socket socket = sockets[socketsInTruss[j]];
-        if((!socket.isInUse) || (socket.channel == fix.channelStart)) {
-          if(abs(socket.x_location - fix.x_location) <= nearestFoundDistance) {
-            nearestFoundDistance = abs(socket.x_location - fix.x_location);
+      if(sockets[j] != null) {
+        if((!sockets[j].isInUse) || (sockets[j].channel == fixtures.get(i).channelStart)) {
+          if(abs(sockets[j].x_location - fixtures.get(i).x_location) <= nearestFoundDistance[i]) {
+            nearestFoundDistance[i] = abs(sockets[j].x_location - fixtures.get(i).x_location);
             nearestFoundSocket[i] = j;
           }
         }
-        
+        if(nearestFoundSocket[i] >= 0) {
+          sockets[nearestFoundSocket[i]].isInUse = true;
+        }
       }
-    }
-    if(nearestFoundSocket[i] >= 0) {
-      sockets[socketsInTruss[nearestFoundSocket[i]]].isInUse = true;
     }
  }
   
