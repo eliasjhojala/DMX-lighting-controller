@@ -38,24 +38,24 @@ void saveFixturesToXML() {
 }
 
 void loadTestXML() {
-  ManageXML XMLObject = fixtureXML;
-  ManageXML SingleFixture;
-  if(XMLObject.loadData()) {
-    
-    //IDLOOKUPTABLE TÄHÄN ROOPE TEEEE
-    
-    XMLObject.goToChild("fixtures");
-      XML[] allTheFixtures = XMLObject.currentBlock.getChildren();
-      for(int i = 0; i < allTheFixtures.length; i++) {
-        if(!trim(allTheFixtures[i].toString()).equals("")) {
-          SingleFixture = new ManageXML(allTheFixtures[i]);
-          int id = SingleFixture.getDataInt("id");
-          fixtures.array.add(id, new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-          fixtures.get(id).loadFixtureData(SingleFixture);
-        }
-      }
-    XMLObject.goBack();
-  }
+//  ManageXML XMLObject = fixtureXML;
+//  ManageXML SingleFixture;
+//  if(XMLObject.loadData()) {
+//    
+//    //IDLOOKUPTABLE TÄHÄN ROOPE TEEEE
+//    
+//    XMLObject.goToChild("fixtures");
+//      XML[] allTheFixtures = XMLObject.currentBlock.getChildren();
+//      for(int i = 0; i < allTheFixtures.length; i++) {
+//        if(!trim(allTheFixtures[i].toString()).equals("")) {
+//          SingleFixture = new ManageXML(allTheFixtures[i]);
+//          int id = SingleFixture.getDataInt("id");
+//          fixtures.array.add(id, new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+//          fixtures.get(id).loadFixtureData(SingleFixture);
+//        }
+//      }
+//    XMLObject.goBack();
+//  }
 }
 
 

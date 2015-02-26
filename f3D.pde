@@ -13,7 +13,7 @@ int centerY;
 
 
 //0 = None, 1 = ansa 0, 2 = ansa 1
-int numberOfAnsas = 6;
+int numberOfAnsas = 10;
 int[] ansaZ = new int[numberOfAnsas];
 int[] ansaX = new int[numberOfAnsas];
 int[] ansaY = new int[numberOfAnsas];
@@ -170,11 +170,9 @@ public class secondApplet1 extends PApplet {
     color coneColor = rgbwd.getCol();
     int conedim = rgbwd.getDim();
     //If light is parented to an ansa, offset Z height by ansas height
-    if (parentAnsa != 0) {
       posZ += ansaZ[parentAnsa];
       posX += ansaX[parentAnsa];
       posY += ansaY[parentAnsa];
-    }
     //Draw p64 holder
     pushMatrix();
       translate(posX * 5 - 1000, posY * 5, posZ);

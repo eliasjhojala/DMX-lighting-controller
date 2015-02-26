@@ -184,11 +184,15 @@ void oscEvent(OscMessage theOscMessage) {
      
      if(addr.equals("/trussSettings/down") && digitalValue == 1) {
        selectedTruss--;
+       selectedTruss = constrain(selectedTruss, 0, numberOfAnsas);
        oscHandler.sendMessage("/trussSettings/selected", selectedTruss);
+       oscHandler.sendMessage("/trussSettings/type", ansaType[constrain(selectedTruss, 0, ansaType.length-1)]);
      }
      if(addr.equals("/trussSettings/up") && digitalValue == 1) {
        selectedTruss++;
+       selectedTruss = constrain(selectedTruss, 0, numberOfAnsas);
        oscHandler.sendMessage("/trussSettings/selected", selectedTruss);
+       oscHandler.sendMessage("/trussSettings/type", ansaType[constrain(selectedTruss, 0, ansaType.length-1)]);
      }
      if(addr.equals("/trussSettings/z")) {
        ansaZ[constrain(selectedTruss, 0, ansaZ.length-1)] = digitalValue*10;
@@ -196,7 +200,43 @@ void oscEvent(OscMessage theOscMessage) {
      if(addr.equals("/trussSettings/y")) {
        ansaY[constrain(selectedTruss, 0, ansaY.length-1)] = digitalValue*10;
      }
+     
+     
+     if(digitalValue == 1) {
+     if(addr.equals("/trussSettings/typeUp")) {
+       ansaType[constrain(selectedTruss, 0, ansaType.length-1)]++;
+       oscHandler.sendMessage("/trussSettings/type", ansaType[constrain(selectedTruss, 0, ansaType.length-1)]);
+     }
+     if(addr.equals("/trussSettings/typeDown")) {
+       ansaType[constrain(selectedTruss, 0, ansaType.length-1)]--;
+       oscHandler.sendMessage("/trussSettings/type", ansaType[constrain(selectedTruss, 0, ansaType.length-1)]);
+     }
+     }
+     
+     if(addr.equals("/trussSettings/parentFixtures") && digitalValue == 1) {
+        for(int i = 0; i < fixtures.size(); i++) {
+         if(fixtures.get(i).selected) {
+           fixtures.get(i).parentAnsa = selectedTruss;
+         }
+       }
+     }
+     
+     if(addr.equals("/fixtureSettings/chUp") && digitalValue == 1) {
+       activeChannel++;
+       oscHandler.sendMessage("/fixtureSettings/channel", activeChannel);
+     }
+     if(addr.equals("/fixtureSettings/chDown") && digitalValue == 1) {
+       activeChannel--;
+       oscHandler.sendMessage("/fixtureSettings/channel", activeChannel);
+     }
+     if(addr.equals("/fixtureSettings/chSet") && digitalValue == 1) {
+       for(int i = 0; i < fixtures.size(); i++) {
+         if(fixtures.get(i).selected) {
+           fixtures.get(i).channelStart = activeChannel;
+         }
+       }
+     }
 }
 int selectedTruss = 0;
-
+int activeChannel = 0;
 
