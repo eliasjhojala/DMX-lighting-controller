@@ -60,8 +60,7 @@ void ansat(PVector mouseRotated) {
       }
       popMatrix();
     }
-    oldMouseXtr = int(mouseRotated.x);
-    oldMouseYtr = int(mouseRotated.y);
+
 }
 
 int oldMouseXtr = 0;
@@ -93,6 +92,55 @@ void doTrussMoving(int i, PVector mouseRotated) {
   }
 }
 
+int socketToMove = -1;
+boolean movingSocket = false;
+
+void drawSockets(PVector mouseRotated) {
+  for(int i = 0; i < sockets.length; i++) {
+    Socket socket = sockets[i];
+    if(socket != null) {
+      pushMatrix();
+
+          translate(socket.x_location, ansaY[constrain(socket.truss, 0, ansaY.length-1)]);
+          fill(20);
+          stroke(0, 0, 255);
+          PVector point1 = new PVector(0, 0);
+          PVector point2 = new PVector(25, 50);
+          rect(point1.x, point1.y, point2.x, point2.y);
+          fill(255);
+          text(str(socket.id), point1.x + 10, point1.y + 10);
+          doSocketMoving(i, mouseRotated, point1, point2);
+
+        
+      popMatrix();
+    }
+  }
+      oldMouseXtr = int(mouseRotated.x);
+    oldMouseYtr = int(mouseRotated.y);
+}
+
+void doSocketMoving(int i, PVector mouseRotated, PVector point1, PVector point2) {
+  Socket socket = sockets[i];
+  if(!showMode) {
+    fill(topMenuTheme);
+    if(isHover(round(point1.x), round(point1.y), round(point2.x), round(point2.y)) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
+      println(i);
+      mouse.capture(mouse.getElementByName("main:fixtures"));
+      socketToMove = i;
+      movingSocket = true;
+    }
+    if(movingSocket && socketToMove == i) {
+      if(mouseButton == LEFT) {
+         socket.x_location += int((mouseRotated.x - oldMouseXtr) * 100 / zoom);
+         if(keyPressed && keyCode == UP) { socket.truss += 1; socket.truss = constrain(socket.truss, 0, ansaY.length-1); }
+         if(keyPressed && keyCode == DOWN) { socket.truss -= 1; socket.truss = constrain(socket.truss, 0, ansaY.length-1); }
+      }
+    }
+    
+    if(!mousePressed && movingSocket) movingSocket = false;
+  }
+}
+
 void kalvo(color c) {
   fill(c);
 }
@@ -117,6 +165,20 @@ void mouseWheel(MouseEvent event) {
   if(e > 0) { scrolledUp = true; }
 }
 
+
+
+boolean isHoverSimple(int offsetX, int offsetY, int w, int h) {
+  return isHoverSimple(offsetX, offsetY, w, h, mouseX, mouseY, g);
+} 
+
+boolean isHoverSimple(int ofX, int ofY, int w, int h, PGraphics g, Mouse mouse) {
+  return isHoverSimple(ofX, ofY, w, h, mouse.getBridgedMouseX(), mouse.getBridgedMouseY(), g);
+}
+
+//A simpler version of isHover. Doesn't make a bounding box, only regards the two corners and checks a rectangle between them. (Useful with non-rotated scenarios)
+boolean isHoverSimple(int offsetX, int offsetY, int w, int h, int moX, int moY, PGraphics g){
+  return inBds2D(moX, moY, int(g.screenX(offsetX, offsetY)), int(g.screenY(offsetX, offsetY)), int(g.screenX(offsetX + w, offsetY + h)), int(g.screenY(offsetX + w, offsetY + h)));
+}
 
 
 
@@ -146,19 +208,17 @@ boolean isHoverAB(int obj1X, int obj1Y, int obj2X, int obj2Y, float moX, float m
   return inBds2D(moX, moY, min(x), min(y), max(x), max(y));
 }
 
-
 boolean isHoverSimple(int offsetX, int offsetY, int w, int h) {
   return isHoverSimple(offsetX, offsetY, w, h, mouseX, mouseY, g);
 } 
-
-boolean isHoverSimple(int ofX, int ofY, int w, int h, PGraphics g, Mouse mouse) {
-  return isHoverSimple(ofX, ofY, w, h, mouse.getBridgedMouseX(), mouse.getBridgedMouseY(), g);
-}
 
 //A simpler version of isHover. Doesn't make a bounding box, only regards the two corners and checks a rectangle between them. (Useful with non-rotated scenarios)
 boolean isHoverSimple(int offsetX, int offsetY, int w, int h, int moX, int moY, PGraphics g){
   return inBds2D(moX, moY, int(g.screenX(offsetX, offsetY)), int(g.screenY(offsetX, offsetY)), int(g.screenX(offsetX + w, offsetY + h)), int(g.screenY(offsetX + w, offsetY + h)));
 }
+
+
+
 
 //Automatically takes mouseX and mouseY as pointer
 boolean inBdsMouse(int x1, int y1, int x2, int y2) {
