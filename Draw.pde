@@ -50,7 +50,6 @@ void draw() {
     
     
   }
-  if(!freeze) initSettingsInSetup();
 }
 
 boolean memoriesFinished = true;

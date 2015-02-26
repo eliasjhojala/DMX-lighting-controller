@@ -548,13 +548,16 @@ class chase { //Begin of chase class--------------------------------------------
           return toReturn;
         }
         
+        boolean nextStepPressedWasDown;
+        boolean beatWasTrue;
+        
           boolean trigger() {
             boolean toReturn = false;
             int iM = 0;
             if(inputMode > 0) { iM = inputMode; } else { iM = inputModeMaster; }
             switch(iM) {
-              case 1: toReturn = s2l.beat(constrain(getBeatModeId(), beatModeLimit[0], beatModeLimit[1])); break;
-              case 2: toReturn = (nextStepPressed || (keyPressed && key == ' ')); break;
+              case 1: toReturn = !beatWasTrue && s2l.beat(constrain(getBeatModeId(), beatModeLimit[0], beatModeLimit[1])); if(toReturn) { beatWasTrue = true; } else { beatWasTrue = false; } break;
+              case 2: toReturn = ((!nextStepPressedWasDown && nextStepPressed) || (keyPressed && key == ' ')); if(nextStepPressed) { nextStepPressedWasDown = true; } else { nextStepPressedWasDown = false; } break;
               case 3: toReturn = true; break;
             }
             return toReturn;

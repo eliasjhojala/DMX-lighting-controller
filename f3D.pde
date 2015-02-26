@@ -20,6 +20,7 @@ int[] ansaY = new int[numberOfAnsas];
 int[] ansaType = new int[numberOfAnsas];
 
 PVector cam = new PVector(s1.width/2.0, s1.height/2.0 + 4000, 1000);
+PVector rotation = new PVector(0, 0, 0);
 
 public class PFrame extends JFrame {
   public PFrame() {
@@ -72,6 +73,7 @@ public class secondApplet1 extends PApplet {
       drawText("3D not in use");
     }
     if(use3D == true && dataLoaded) { }
+    
     if(true) {
      setMainSettings();
      drawFloor();
@@ -92,6 +94,7 @@ public class secondApplet1 extends PApplet {
     lights();
     setPerspective();
     setCamera();
+    setRotation();
   }
   
   void setPerspective() {
@@ -102,6 +105,12 @@ public class secondApplet1 extends PApplet {
   void setCamera() {
     //Camera
     camera(cam.x, cam.y, cam.z, width/2.0+centerX, height/2.0 + 1500+centerY, -1000, 0, 0, -1);
+  }
+  
+  void setRotation() {
+    rotateZ(rotation.z/100);
+    rotateX(rotation.x/100);
+    rotateY(rotation.y/100);
   }
   
   void drawFloor() {
@@ -214,8 +223,8 @@ public class secondApplet1 extends PApplet {
       }
       
       else {
-        cam.x += (mouseX - pmouseX) * 5;
-        cam.y += (mouseY - pmouseY) * 10;
+        rotation.z -= (mouseX - pmouseX);
+        cam.y += (mouseY - pmouseY) * 30;
       }
   }
   

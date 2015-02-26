@@ -1,5 +1,7 @@
 //Tässä välilehdessä luetaan iPadilta touchOSC-ohjelman inputti
  
+ int sensity;
+ 
 int multixy1_value;
 int multixy1_value_old; 
 int multixy1_value_offset;
@@ -120,6 +122,62 @@ void oscEvent(OscMessage theOscMessage) {
 
   
      if(addr.equals("/fullon")) {
-       fullOn(boolean(digitalValue));
      }
+     
+     
+     { //Functions to move fixtures in visualisatioon
+     
+           
+           if(addr.equals("/fixtureSettings/a")) {
+             for(int i = 0; i < fixtures.size(); i++) {
+               if(fixtures.get(i).selected) {
+                 fixtures.get(i).rotationX += round(map(digitalValue, 0, 1, -sensity, sensity));
+                 fixtures.get(i).in.setUniversalDMX(1, 255);
+               }
+             }
+           }
+      
+           if(addr.equals("/fixtureSettings/c")) {
+             for(int i = 0; i < fixtures.size(); i++) {
+               if(fixtures.get(i).selected) {
+                 fixtures.get(i).rotationZ += round(map(digitalValue, 0, 1, -sensity, sensity));
+                 fixtures.get(i).in.setUniversalDMX(1, 255);
+               }
+             }
+           }
+           
+           if(addr.equals("/fixtureSettings/d")) {
+             for(int i = 0; i < fixtures.size(); i++) {
+               if(fixtures.get(i).selected) {
+                 fixtures.get(i).x_location += round(map(digitalValue, 0, 1, -sensity, sensity));
+                 fixtures.get(i).in.setUniversalDMX(1, 255);
+               }
+             }
+           }
+           
+           if(addr.equals("/fixtureSettings/e")) {
+             for(int i = 0; i < fixtures.size(); i++) {
+               if(fixtures.get(i).selected) {
+                 fixtures.get(i).y_location += round(map(digitalValue, 0, 1, -sensity, sensity));
+                 fixtures.get(i).in.setUniversalDMX(1, 255);
+               }
+             }
+           }
+           
+           if(addr.equals("/fixtureSettings/f")) {
+             for(int i = 0; i < fixtures.size(); i++) {
+               if(fixtures.get(i).selected) {
+                 fixtures.get(i).z_location += round(map(digitalValue, 0, 1, -sensity, sensity));
+                 fixtures.get(i).in.setUniversalDMX(1, 255);
+               }
+             }
+           }
+           
+           if(addr.equals("/fixtureSettings/fader1")) {
+             sensity = digitalValue;
+           }
+     
+     } //End of functions to move fixtures in visualisation
 }
+
+
