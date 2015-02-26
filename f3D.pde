@@ -252,3 +252,11 @@ public class PFrame1 extends JFrame {
 }
 
 
+class Truss {
+  PVector location;
+  int type;
+  Truss(PVector loc, int t) {
+    location = loc;
+    type = t;
+  }
+}
