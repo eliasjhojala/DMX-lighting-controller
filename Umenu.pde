@@ -117,7 +117,7 @@ void nextChaseMode() {
   if(chaseMode > 8) {
     chaseMode = 1;
   }
-  sendDataToIpad("/chaseMode", chaseMode);
+  oscHandler.sendMessage("/chaseMode", chaseMode);
 }
 
 void reverseChaseMode() {
@@ -125,7 +125,7 @@ void reverseChaseMode() {
   if(chaseMode < 1) {
     chaseMode = 8;
   }
-  sendDataToIpad("/chaseMode", chaseMode);
+  oscHandler.sendMessage("/chaseMode", chaseMode);
 }
 
 String getTimeAsString() {

@@ -203,7 +203,6 @@ import controlP5.*;
 
 private ControlP5 cp5;
 
-ControlFrame cf;
 
 int def;
 
@@ -354,10 +353,6 @@ void setup() {
   
   cp5 = new ControlP5(this); //luodaan controlFrame-ikkuna
   
-  // by calling function addControlFrame() a
-  // new frame is created and an instance of class
-  // ControlFrame is instanziated.
-  cf = addControlFrame("Control", 500,500);
   
     size(displayWidth, displayHeight); //Annetaan ikkunan kooksi sama kuin nykyisen näytön koko
     frameRate(60);

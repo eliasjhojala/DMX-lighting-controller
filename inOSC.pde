@@ -25,6 +25,8 @@ void oscEvent(OscMessage theOscMessage) {
     digitalValue2 = int(theOscMessage.get(1).floatValue());
   }
   
+  oscHandler.sendMessage(addr, digitalValue);
+  
   
  // fixtureInputs[0].receiveOSC(digitalValue, digitalValue2, addr);
   
@@ -178,6 +180,23 @@ void oscEvent(OscMessage theOscMessage) {
            }
      
      } //End of functions to move fixtures in visualisation
+     
+     
+     if(addr.equals("/trussSettings/down") && digitalValue == 1) {
+       selectedTruss--;
+       oscHandler.sendMessage("/trussSettings/selected", selectedTruss);
+     }
+     if(addr.equals("/trussSettings/up") && digitalValue == 1) {
+       selectedTruss++;
+       oscHandler.sendMessage("/trussSettings/selected", selectedTruss);
+     }
+     if(addr.equals("/trussSettings/z")) {
+       ansaZ[constrain(selectedTruss, 0, ansaZ.length-1)] = digitalValue*10;
+     }
+     if(addr.equals("/trussSettings/y")) {
+       ansaY[constrain(selectedTruss, 0, ansaY.length-1)] = digitalValue*10;
+     }
 }
+int selectedTruss = 0;
 
 

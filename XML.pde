@@ -24,6 +24,19 @@ void saveTestXML() {
 //  loadMemoriesFromXML();
 }
 
+void saveFixturesToXML() {
+  ManageXML XMLObject = fixtureXML;
+  XMLObject.addBlockAndIncrease("fixtures");
+
+  for(int i = 0; i < fixtures.size(); i++) {
+    XMLObject.addBlockAndIncrease("Fixture");
+    XMLObject.addData("id", i);
+      
+      fixtures.get(i).saveFixtureDataToXML(XMLObject);
+    XMLObject.goBack();
+  }
+}
+
 void loadTestXML() {
   ManageXML XMLObject = fixtureXML;
   ManageXML SingleFixture;

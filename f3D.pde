@@ -259,4 +259,5 @@ class Truss {
     location = loc;
     type = t;
   }
+  
 }
