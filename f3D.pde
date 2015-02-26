@@ -143,6 +143,10 @@ public class secondApplet1 extends PApplet {
     for (int i = 0; i < fixtures.size(); i++) {
       drawSingleLight(i);
     } 
+    
+    for (int i = 0; i < fixtures.size(); i++) {
+      drawSingleCone(i);
+    }
   }
   
   void drawSingleLight(int i) {
@@ -153,6 +157,16 @@ public class secondApplet1 extends PApplet {
       RGBWD rgbwd = fixtures.get(i).getRGBWD();
       int parentAnsa = fixtures.get(i).parentAnsa;
       drawLight(locationData, valoScale, 0.4, rgbwd, -60, parentAnsa, model);
+    }
+  }
+  void drawSingleCone(int i) {
+    if(fixtureIsDrawnById(i)) {
+      PShape model = par64Model;
+      try { model = getFixtureModelById(i); } catch (Exception e) { e.printStackTrace(); }
+      LocationData locationData = fixtures.get(i).getLocationData();
+      RGBWD rgbwd = fixtures.get(i).getRGBWD();
+      int parentAnsa = fixtures.get(i).parentAnsa;
+      drawCone(locationData, valoScale, 0.4, rgbwd, -60, parentAnsa, model);
     }
   }
   
@@ -193,6 +207,38 @@ public class secondApplet1 extends PApplet {
       shape(lightModel);
     popMatrix();
     
+//     //Draw light cone
+//    if(conedim > 0) {
+//      pushMatrix();
+//        translate(posX * 5 - 1000, posY * 5, posZ);
+//        rotateZ(radians(rotZ));
+//        rotateX(radians(rotX));
+//        //Cone offset
+//        translate(0, 0, coneZOffset);
+//        scale(scale * coneScale * coneDiam, scale * coneScale  * coneDiam, scale * coneScale);
+//        fill(coneColor, conedim / 2);
+//        shape(cone);
+//      popMatrix();
+//    }
+  }
+  
+    
+  void drawCone(LocationData locationData, int scale, float coneDiam, RGBWD rgbwd, int coneZOffset, int parentAnsa, PShape lightModel) {
+    PVector location = locationData.getLocation();
+    PVector rotation = locationData.getRotation();
+    float posX = location.x;
+    float posY = location.y;
+    float posZ = location.z;
+    float rotZ = rotation.z;
+    float rotX = rotation.x;
+    
+    color coneColor = rgbwd.getCol();
+    int conedim = rgbwd.getDim();
+    //If light is parented to an ansa, offset Z height by ansas height
+      posZ += ansaZ[parentAnsa];
+      posX += ansaX[parentAnsa];
+      posY += ansaY[parentAnsa];
+
      //Draw light cone
     if(conedim > 0) {
       pushMatrix();
