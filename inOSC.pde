@@ -236,6 +236,30 @@ void oscEvent(OscMessage theOscMessage) {
          }
        }
      }
+     
+     if(addr.equals("/fixtureSettings/r")) {
+       for(int i = 0; i < fixtures.size(); i++) {
+         if(fixtures.get(i).selected) {
+           fixtures.get(i).red = digitalValue;
+         }
+       }
+     }
+     if(addr.equals("/fixtureSettings/g")) {
+       for(int i = 0; i < fixtures.size(); i++) {
+         if(fixtures.get(i).selected) {
+           fixtures.get(i).green = digitalValue;
+         }
+       }
+     }
+     if(addr.equals("/fixtureSettings/b")) {
+       for(int i = 0; i < fixtures.size(); i++) {
+         if(fixtures.get(i).selected) {
+           fixtures.get(i).blue = digitalValue;
+         }
+       }
+     }
+     
+     
 }
 int selectedTruss = 0;
 int activeChannel = 0;
