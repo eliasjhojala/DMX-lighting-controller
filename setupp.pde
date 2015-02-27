@@ -24,11 +24,10 @@ void setuppi() {
 
   oscP52 = new OscP5(this, 5001);
   
-  ansaWidth = int(width*0.6);
+  ansaWidth = 1000;
   
  
     fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
   createSockets();
- println(findNearestSocket(2));
 }

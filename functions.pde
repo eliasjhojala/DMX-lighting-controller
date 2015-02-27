@@ -121,17 +121,17 @@ boolean movingSocket = false;
 void drawSockets(PVector mouseRotated) {
   for(int i = 0; i < sockets.length; i++) {
     Socket socket = sockets[i];
-    if(socket != null) {
+    if(socket != null) if(socket.exist) {
       pushMatrix();
 
           translate(socket.x_location, ansaY[constrain(socket.truss, 0, ansaY.length-1)]);
           fill(20);
           stroke(0, 0, 255);
           PVector point1 = new PVector(0, 0);
-          PVector point2 = new PVector(25, 50);
+          PVector point2 = new PVector(20, 30);
           rect(point1.x, point1.y, point2.x, point2.y);
           fill(255);
-          text(str(socket.id), point1.x + 10, point1.y + 10);
+          text("H" + str(socket.id), point1.x + 2, point1.y + 20);
           doSocketMoving(i, mouseRotated, point1, point2);
 
         
@@ -155,8 +155,14 @@ void doSocketMoving(int i, PVector mouseRotated, PVector point1, PVector point2)
     if(movingSocket && socketToMove == i) {
       if(mouseButton == LEFT) {
          socket.x_location += int((mouseRotated.x - oldMouseXtr) * 100 / zoom);
-         if(keyPressed && keyCode == UP) { socket.truss += 1; socket.truss = constrain(socket.truss, 0, ansaY.length-1); }
-         if(keyPressed && keyCode == DOWN) { socket.truss -= 1; socket.truss = constrain(socket.truss, 0, ansaY.length-1); }
+         if(keyPressed && keyReleased) {
+           if(keyCode == UP) { socket.truss += 1; socket.truss = constrain(socket.truss, 0, ansaY.length-1); }
+           if(keyCode == DOWN) { socket.truss -= 1; socket.truss = constrain(socket.truss, 0, ansaY.length-1); }
+           if(keyCode == RIGHT) { socket.id++; }
+           if(keyCode == LEFT) { socket.id--; }
+           if(key == 'x') { socket.exist = false; }
+           keyReleased = false;
+         }
       }
     }
     
@@ -619,7 +625,14 @@ void keyPressed() {
       saveAllData();
     }
     if(key == 'S') {
-      fileDialogOutput();
+      //fileDialogOutput();
+      saveSocketsToXML();
+    }
+    
+    if(key == 'L') {
+      loadSocketsFromXML();
+      saveNearestSocketsToXML();
+      println(findNearestSocket(2));
     }
 
     if(keyCode == RIGHT) { rightPressed = true; }

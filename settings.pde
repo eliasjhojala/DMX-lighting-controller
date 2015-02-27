@@ -25,7 +25,7 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", tabs[0]),
         new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int", "This is just a test controller to see how the int controller will work.", tabs[0]),
+        new SettingController(10, "Show sockets", "If you want to edit socket places use this", tabs[0]),
         new SettingController(0, 0, 0, "Test Int1", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int2", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int3", "This is just a test controller to see how the int controller will work.", tabs[0]),
@@ -72,6 +72,7 @@ class SettingsWindow {
       case 2: showMode = b;            break;
       case 3: printMode = b;           break;
       case 4: s2l.blinky = b;          break;
+      case 10: showSockets = b;          break;
     }
   }
   
@@ -82,6 +83,7 @@ class SettingsWindow {
       case 2:  return showMode;
       case 3:  return printMode;
       case 4:  return s2l.blinky;
+      case 10: return showSockets;
       default: return false;
     }
   }

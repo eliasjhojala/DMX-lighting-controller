@@ -5,7 +5,7 @@
  
 int coneScale = 500;
 
-boolean use3D = true;
+
 
 
 int centerX;
@@ -74,7 +74,7 @@ public class secondApplet1 extends PApplet {
     }
     if(use3D == true && dataLoaded) { }
     
-    if(true) {
+    if(use3D) {
      setMainSettings();
      drawFloor();
      drawTrusses();

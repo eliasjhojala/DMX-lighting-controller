@@ -33,7 +33,9 @@ void drawMainWindow() {
     
     //TÄSSÄ PIIRRETÄÄN ANSAT - DRAW TRUSSES
     ansat(mouseRotated);
+    if(showSockets) {
     drawSockets(mouseRotated);
+    }
     
     /*if(moveLamp) {
       mouseLocked = true;
@@ -58,7 +60,7 @@ void drawMainWindow() {
       moveLamp = false; 
     }
     
-    for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) {
+    if(!showSockets) for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) {
       pushMatrix();
         fixture fix = fixtures.get(i);
         boolean translated = false;
