@@ -186,30 +186,30 @@ void oscEvent(OscMessage theOscMessage) {
        selectedTruss--;
        selectedTruss = constrain(selectedTruss, 0, numberOfAnsas);
        oscHandler.sendMessage("/trussSettings/selected", selectedTruss);
-       oscHandler.sendMessage("/trussSettings/type", ansaType[constrain(selectedTruss, 0, ansaType.length-1)]);
+       oscHandler.sendMessage("/trussSettings/type", trusses[constrain(selectedTruss, 0, trusses.length-1)].type);
      }
      if(addr.equals("/trussSettings/up") && digitalValue == 1) {
        selectedTruss++;
        selectedTruss = constrain(selectedTruss, 0, numberOfAnsas);
        oscHandler.sendMessage("/trussSettings/selected", selectedTruss);
-       oscHandler.sendMessage("/trussSettings/type", ansaType[constrain(selectedTruss, 0, ansaType.length-1)]);
+       oscHandler.sendMessage("/trussSettings/type", trusses[constrain(selectedTruss, 0, trusses.length-1)].type);
      }
      if(addr.equals("/trussSettings/z")) {
-       ansaZ[constrain(selectedTruss, 0, ansaZ.length-1)] = digitalValue*10;
+       trusses[constrain(selectedTruss, 0, trusses.length-1)].location.z = digitalValue*10;
      }
      if(addr.equals("/trussSettings/y")) {
-       ansaY[constrain(selectedTruss, 0, ansaY.length-1)] = digitalValue*10;
+       trusses[constrain(selectedTruss, 0, trusses.length-1)].location.y = digitalValue*10;
      }
      
      
      if(digitalValue == 1) {
      if(addr.equals("/trussSettings/typeUp")) {
-       ansaType[constrain(selectedTruss, 0, ansaType.length-1)]++;
-       oscHandler.sendMessage("/trussSettings/type", ansaType[constrain(selectedTruss, 0, ansaType.length-1)]);
+       trusses[constrain(selectedTruss, 0, trusses.length-1)].type++;
+       oscHandler.sendMessage("/trussSettings/type", trusses[constrain(selectedTruss, 0, trusses.length-1)].type);
      }
      if(addr.equals("/trussSettings/typeDown")) {
-       ansaType[constrain(selectedTruss, 0, ansaType.length-1)]--;
-       oscHandler.sendMessage("/trussSettings/type", ansaType[constrain(selectedTruss, 0, ansaType.length-1)]);
+       trusses[constrain(selectedTruss, 0, trusses.length-1)].type--;
+       oscHandler.sendMessage("/trussSettings/type", trusses[constrain(selectedTruss, 0, trusses.length-1)].type);
      }
      }
      

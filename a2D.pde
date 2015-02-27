@@ -69,12 +69,12 @@ void drawMainWindow() {
     
           if(moveLamp == true) {
             //mouse.capture(mouse.getElementByName("main:fixtures"));
-            if(i == lampToMove) { translate(fixtures.get(lampToMove).x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom)  + ansaX[fixtures.get(lampToMove).parentAnsa], fixtures.get(lampToMove).y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + ansaY[fixtures.get(lampToMove).parentAnsa]); 
+            if(i == lampToMove) { translate(fixtures.get(lampToMove).x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom)  + trusses[fixtures.get(lampToMove).parentAnsa].location.x, fixtures.get(lampToMove).y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + trusses[fixtures.get(lampToMove).parentAnsa].location.y); 
                                   translated = true; }
           }
         }
         
-        if(!translated) { translate(fix.x_location+ansaX[fix.parentAnsa], fix.y_location+ansaY[fix.parentAnsa]);
+        if(!translated) { translate(fix.x_location+trusses[fix.parentAnsa].location.x, fix.y_location+trusses[fix.parentAnsa].location.y);
                           translated = true; }
         translate(fix.size.w/2, fix.size.h/2);
         if(fix.fixtureTypeId != 14) { rotate(radians(fix.rotationZ)); }

@@ -65,18 +65,18 @@ boolean movingTruss = false;
 
 void ansat(PVector mouseRotated) {
   
-    for(int i = 0; i < ansaY.length; i++) {
+    for(int i = 0; i < trusses.length; i++) {
       pushMatrix();
-      switch(ansaType[i]) {
+      switch(trusses[i].type) {
         case 1:
-          translate(ansaX[i], ansaY[i]+25);
+          translate(trusses[i].location.x, trusses[i].location.y+25);
           fill(20);
           stroke(255);
           rect(0, 0, ansaWidth, 5);
           doTrussMoving(i, mouseRotated);
         break;
         case 0:
-          translate(ansaX[i], ansaY[i]);
+          translate(trusses[i].location.x, trusses[i].location.y);
           doTrussMoving(i, mouseRotated);
         break;
         
@@ -100,12 +100,12 @@ void doTrussMoving(int i, PVector mouseRotated) {
     }
     if(movingTruss && trussToMove == i) {
       if(mouseButton == LEFT) {
-        if(!(key == 'y' && keyPressed)) ansaX[i] += int((mouseRotated.x - oldMouseXtr) * 100 / zoom);
-        if(!(key == 'x' && keyPressed)) ansaY[i] += int((mouseRotated.y - oldMouseYtr) * 100 / zoom);
+        if(!(key == 'y' && keyPressed)) trusses[i].location.x += int((mouseRotated.x - oldMouseXtr) * 100 / zoom);
+        if(!(key == 'x' && keyPressed)) trusses[i].location.y += int((mouseRotated.y - oldMouseYtr) * 100 / zoom);
       } else if(mouseButton == RIGHT && mouse.firstCaptureFrame) {
         if(lastRMBc > millis() - 1000) {
-          if(!(key == 'y' && keyPressed)) ansaX[i] = 0;
-            else                          ansaY[i] = 0;
+          if(!(key == 'y' && keyPressed)) trusses[i].location.x = 0;
+            else                          trusses[i].location.y = 0;
           
         } else lastRMBc = millis();
       }
@@ -124,7 +124,7 @@ void drawSockets(PVector mouseRotated) {
     if(socket != null) if(socket.exist) {
       pushMatrix();
 
-          translate(socket.x_location, ansaY[constrain(socket.truss, 0, ansaY.length-1)]);
+          translate(socket.x_location, trusses[constrain(socket.truss, 0, trusses.length-1)].location.y);
           fill(20);
           stroke(0, 0, 255);
           PVector point1 = new PVector(0, 0);
@@ -156,8 +156,8 @@ void doSocketMoving(int i, PVector mouseRotated, PVector point1, PVector point2)
       if(mouseButton == LEFT) {
          socket.x_location += int((mouseRotated.x - oldMouseXtr) * 100 / zoom);
          if(keyPressed && keyReleased) {
-           if(keyCode == UP) { socket.truss += 1; socket.truss = constrain(socket.truss, 0, ansaY.length-1); }
-           if(keyCode == DOWN) { socket.truss -= 1; socket.truss = constrain(socket.truss, 0, ansaY.length-1); }
+           if(keyCode == UP) { socket.truss += 1; socket.truss = constrain(socket.truss, 0, trusses.length-1); }
+           if(keyCode == DOWN) { socket.truss -= 1; socket.truss = constrain(socket.truss, 0, trusses.length-1); }
            if(keyCode == RIGHT) { socket.id++; }
            if(keyCode == LEFT) { socket.id--; }
            if(key == 'x') { socket.exist = false; }
@@ -627,12 +627,12 @@ void keyPressed() {
     if(key == 'S') {
       //fileDialogOutput();
       saveSocketsToXML();
+      saveTrussesAsXML();
     }
     
     if(key == 'L') {
       loadSocketsFromXML();
       saveNearestSocketsToXML();
-      println(findNearestSocket(2));
     }
 
     if(keyCode == RIGHT) { rightPressed = true; }

@@ -5,21 +5,15 @@
  
 int coneScale = 500;
 
-
-
-
-int centerX;
-int centerY;
-
-
 //0 = None, 1 = ansa 0, 2 = ansa 1
 int numberOfAnsas = 10;
-int[] ansaZ = new int[numberOfAnsas];
-int[] ansaX = new int[numberOfAnsas];
-int[] ansaY = new int[numberOfAnsas];
-int[] ansaType = new int[numberOfAnsas];
+//int[] ansaZ = new int[numberOfAnsas];
+//int[] ansaX = new int[numberOfAnsas];
+//int[] ansaY = new int[numberOfAnsas];
+//int[] ansaType = new int[numberOfAnsas];
 
 PVector cam = new PVector(s1.width/2.0, s1.height/2.0 + 4000, 1000);
+PVector center = new PVector(0, 0, 0);
 PVector rotation = new PVector(0, 0, 0);
 
 public class PFrame extends JFrame {
@@ -39,46 +33,40 @@ public class secondApplet1 extends PApplet {
     this.parent = parent;
   }
   
-  PShape par64Model, par64Holder, base, cone;
+  PShape par64Model, par64Holder, base, cone; //Define 3D model objects
   
   void setup() {
     size(500, 500, P3D);
 
     
-    try {
-      par64Model = loadShape(parent.dataPath("par64.obj"));
-      par64Holder = loadShape(parent.dataPath( "par64_holder.obj"));
-      base = loadShape(parent.dataPath( "base.obj"));
-      cone = loadShape(parent.dataPath( "cone.obj"));
-      cone.disableStyle();
-      base.disableStyle();
-    }
-    catch (Exception e) {
-     // use3D = false;
-    }
+    { //Try to load 3D models from file. If not succeed then don't use 3D.
+      try { //Load 3D models 
+        par64Model = loadShape(parent.dataPath("par64.obj")); //Load par64 3D model from file 
+        par64Holder = loadShape(parent.dataPath( "par64_holder.obj")); //Load par64 holder 3D model from file
+        base = loadShape(parent.dataPath( "base.obj")); //Load base (floor) 3D model from file
+        cone = loadShape(parent.dataPath( "cone.obj")); //Load light cone 3D model from file
+        cone.disableStyle();
+        base.disableStyle();
+      } //End of loadin 3D models
+      catch (Exception e) { //What to do if not succeed
+        use3D = false;
+      } //End of catch
+    } //End of trying to load 3D models
 
-    frameRate(60);
-    
-  
-    
+    frameRate(60); //Set fps to most usual display fps
   }
   
-  int[] valoY = {100 + 70, 100 +140, 100 + 210, 100 + 280, 100 + 350, 100 + 420};
   int valoScale = 20;
   
-  
-  
   void draw() {
-    if(!use3D) {   
-      drawText("3D not in use");
-    }
-    if(use3D == true && dataLoaded) { }
-    
     if(use3D) {
-     setMainSettings();
-     drawFloor();
-     drawTrusses();
-     drawLights();          
+     setMainSettings(); //Set settings for beginning (camera, perspective etc)
+     drawFloor(); //Draw floor
+     drawTrusses(); //Draw all the trusses
+     drawLights(); //Draw all the lights
+    }
+    else {
+      drawText("3D not in use");
     }
   }
   
@@ -104,7 +92,7 @@ public class secondApplet1 extends PApplet {
   
   void setCamera() {
     //Camera
-    camera(cam.x, cam.y, cam.z, width/2.0+centerX, height/2.0 + 1500+centerY, -1000, 0, 0, -1);
+    camera(cam.x, cam.y, cam.z, width/2.0+center.x, height/2.0 + 1500+center.y, -1000, 0, 0, -1);
   }
   
   void setRotation() {
@@ -127,11 +115,10 @@ public class secondApplet1 extends PApplet {
   
   void drawTrusses() {
     //Draw trusses etc.
-    int[] ij = { ansaY.length, ansaX.length, ansaZ.length };
-    for(int i = 0; i < min(ij); i++) {
-      if(ansaType[i] == 1) {
+    for(int i = 0; i < trusses.length; i++) {
+      if(trusses[i].type == 1) {
         pushMatrix();
-        translate(0, ansaY[i] * 5, ansaZ[i] + 82);
+        translate(0, trusses[i].location.x * 5, trusses[i].location.y + 82);
         box(10000, 10, 10);
         popMatrix();
       }
@@ -184,9 +171,9 @@ public class secondApplet1 extends PApplet {
     color coneColor = rgbwd.getCol();
     int conedim = rgbwd.getDim();
     //If light is parented to an ansa, offset Z height by ansas height
-      posZ += ansaZ[parentAnsa];
-      posX += ansaX[parentAnsa];
-      posY += ansaY[parentAnsa];
+      posZ += trusses[parentAnsa].location.z;
+      posX += trusses[parentAnsa].location.x;
+      posY += trusses[parentAnsa].location.y;
     //Draw p64 holder
     pushMatrix();
       translate(posX * 5 - 1000, posY * 5, posZ);
@@ -235,9 +222,9 @@ public class secondApplet1 extends PApplet {
     color coneColor = rgbwd.getCol();
     int conedim = rgbwd.getDim();
     //If light is parented to an ansa, offset Z height by ansas height
-      posZ += ansaZ[parentAnsa];
-      posX += ansaX[parentAnsa];
-      posY += ansaY[parentAnsa];
+      posZ += trusses[parentAnsa].location.z;
+      posX += trusses[parentAnsa].location.x;
+      posY += trusses[parentAnsa].location.y;
 
      //Draw light cone
     if(conedim > 0) {
@@ -257,13 +244,13 @@ public class secondApplet1 extends PApplet {
   
   void mouseDragged() {
       if(mouseButton == RIGHT) {
-        centerX += (mouseX - pmouseX) * 5;
-        centerY += (mouseY - pmouseY) * 10;
+        center.x += (mouseX - pmouseX) * 5;
+        center.y += (mouseY - pmouseY) * 10;
         
-        translate(width/2.0+centerX, height/2.0 + 1500+centerY, 0); 
+        translate(width/2.0+center.x, height/2.0 + 1500+center.y, 0); 
         fill(255, 255, 0);
         box(50);
-        translate((width/2.0+centerX)*(-1), (height/2.0 + 1500+centerY)*(-1), 0); 
+        translate((width/2.0+center.x)*(-1), (height/2.0 + 1500+center.y)*(-1), 0); 
       }
       
       else {
@@ -295,13 +282,92 @@ public class PFrame1 extends JFrame {
   }
 }
 
+Truss[] trusses = new Truss[numberOfAnsas];
 
 class Truss {
   PVector location;
   int type;
-  Truss(PVector loc, int t) {
+  int lng;
+  Truss(PVector loc, int len, int t) {
     location = loc;
     type = t;
+    lng = len;
   }
   
+  void truss(PVector loc, int len, int t) {
+    location = loc;
+    type = t;
+    lng = len;
+  }
+  Truss() {
+    if(location == null) {
+      location = new PVector(0, 0);
+    }
+    type = 0;
+    lng = 0;
+  }
+  
+  XML getAsXML() {
+    String data = "<Truss></Truss>";
+    XML xml = parseXML(data);
+    xml.addChild(vectorAsXML(location, "location"));
+    xml.setInt("type", type);
+    xml.setInt("length", lng);
+    return xml;
+  }
+  
+  void XMLtoObject(XML xml) {
+    truss(XMLtoVector(xml, "location"), xml.getInt("length"), xml.getInt("type"));
+  }
+}
+
+XML getTrussesAsXML() {
+  String data = "<Trusses></Trusses>";
+  XML xml = parseXML(data);
+  for(int i = 0; i < trusses.length; i++) {
+    xml.addChild(trusses[i].getAsXML());
+    xml.setInt("id", i);
+  }
+  return xml;
+}
+
+void XMLtoTrusses(XML xml) {
+  XML[] XMLtrusses = xml.getChildren();
+  int a = 0;
+  for(int i = 0; i < XMLtrusses.length; i++) {
+    if(XMLtrusses[i] != null) if(!trim(XMLtrusses[i].toString()).equals("")) {
+      if(a < trusses.length) {
+        trusses[a] = new Truss();
+        trusses[a].XMLtoObject(XMLtrusses[i]);
+      }
+      a++;
+    }
+  }
+}
+
+void loadXmlToTrusses() {
+  XMLtoTrusses(loadXML("XML/trusses"));
+}
+
+void saveTrussesAsXML() {
+  saveXML(getTrussesAsXML(), "XML/trusses");
+}
+
+XML vectorAsXML(PVector vector, String name) {
+  String data = "<"+name+"></"+name+">";
+  XML xml = parseXML(data);
+  xml.setFloat("x", vector.x);
+  xml.setFloat("y", vector.y);
+  xml.setFloat("z", vector.z);
+  return xml;
+}
+
+PVector XMLtoVector(XML xml, String name) {
+  PVector toReturn = new PVector(0, 0, 0);
+  xml = xml.getChild(name);
+  toReturn.x = xml.getFloat("x");
+  toReturn.y = xml.getFloat("y");
+  toReturn.z = xml.getFloat("z");
+  xml = xml.getParent();
+  return toReturn;
 }

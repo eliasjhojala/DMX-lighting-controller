@@ -24,9 +24,13 @@ void createSockets() {
 }
 
 void saveNearestSocketsToXML() {
+  saveXML(getNearestSocketsAsXML(), "XML/nearestSockets.xml");
+}
+
+XML getNearestSocketsAsXML() {
   String data = "<NearestSockets></NearestSockets>";
   XML xml = parseXML(data);
-  for(int truss = 0; truss < ansaX.length; truss++) {
+  for(int truss = 0; truss < trusses.length; truss++) {
     xml = xml.addChild("truss");
     xml.setInt("id", truss);
     int[] fixturesInTruss = getListOfFixturesInTruss(truss);
@@ -42,7 +46,7 @@ void saveNearestSocketsToXML() {
     }
     xml = xml.getParent();
   }
-  saveXML(xml, "XML/nearestSockets.xml");
+  return xml; 
 }
 
 void saveSocketsToXML() {

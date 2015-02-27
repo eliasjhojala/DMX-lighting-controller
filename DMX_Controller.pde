@@ -336,6 +336,10 @@ String actualSketchPath;
 
 void setup() {
   
+  for(int i = 0; i < trusses.length; i++) {
+    trusses[i] = new Truss();
+  }
+  
   s1.noLoop();
 
   loadCoreData();

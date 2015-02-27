@@ -234,15 +234,18 @@ for (TableRow row : table.findRows("memories[i].value", "variable_name")) {
     
     for (TableRow row : table.findRows("bottomMenuOrder", "variable_name")) if(int(row.getString("1D")) < bottomMenuOrder.length) bottomMenuOrder[int(row.getString("1D"))] = int(row.getString("value"));
     
-    for (TableRow row : table.findRows("ansaZ", "variable_name"))         { if((int(row.getString("1D")) < ansaZ.length)) { ansaZ[int(row.getString("1D"))] = int(row.getString("value")); } }
-    for (TableRow row : table.findRows("ansaX", "variable_name"))         { if((int(row.getString("1D")) < ansaX.length)) { ansaX[int(row.getString("1D"))] = int(row.getString("value")); } }
-    for (TableRow row : table.findRows("ansaY", "variable_name"))         { if((int(row.getString("1D")) < ansaY.length)) { ansaY[int(row.getString("1D"))] = int(row.getString("value")); } }
-    for (TableRow row : table.findRows("ansaType", "variable_name"))    { if((int(row.getString("1D")) < ansaType.length)) { ansaType[int(row.getString("1D"))] = int(row.getString("value")); } }
+//    for (TableRow row : table.findRows("ansaZ", "variable_name"))         { if((int(row.getString("1D")) < trusses.length)) { trusses[int(row.getString("1D"))] = new Truss(); trusses[int(row.getString("1D"))].location.z = int(row.getString("value")); } }
+//    for (TableRow row : table.findRows("ansaX", "variable_name"))         { if((int(row.getString("1D")) < trusses.length)) { trusses[int(row.getString("1D"))].location.x = int(row.getString("value")); } }
+//    for (TableRow row : table.findRows("ansaY", "variable_name"))         { if((int(row.getString("1D")) < trusses.length)) { trusses[int(row.getString("1D"))].location.y = int(row.getString("value")); } }
+//    for (TableRow row : table.findRows("ansaType", "variable_name"))    { if((int(row.getString("1D")) < trusses.length)) { trusses[int(row.getString("1D"))].type = int(row.getString("value")); } }
+    
+    
+    
     
     for (TableRow row : table.findRows("chaseMode", "variable_name"))              { chaseMode = int(row.getString("value")); }
     
-    for (TableRow row : table.findRows("centerX", "variable_name"))              { centerX = int(row.getString("value")); }
-    for (TableRow row : table.findRows("centerY", "variable_name"))              { centerY = int(row.getString("value")); }
+    for (TableRow row : table.findRows("centerX", "variable_name"))              { center.x = int(row.getString("value")); }
+    for (TableRow row : table.findRows("centerY", "variable_name"))              { center.y = int(row.getString("value")); }
     
   
     

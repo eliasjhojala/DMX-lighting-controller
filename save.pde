@@ -179,11 +179,11 @@ void saveAllData() {
   
   //INSIDE VOID SAVE
 
-  save1Darray(ansaZ, "ansaZ");
-  save1Darray(ansaX, "ansaX");
-  save1Darray(ansaY, "ansaY");
-  save1Darray(ansaType, "ansaType");
-  save1Darray(ansaX, "ansaX");
+
+//  save1Darray(trusses.location.z, "ansaZ");
+//  save1Darray(trusses.location.x, "ansaX");
+//  save1Darray(trusses.location.y, "ansaY");
+//  save1Darray(trusses.type, "ansaType");
 
   save1Darray(bottomMenuOrder, "bottomMenuOrder");
   
@@ -201,8 +201,8 @@ void saveAllData() {
   saveVariable(int(cam.x), "camX");
   saveVariable(int(cam.y), "camY");
   saveVariable(int(cam.z), "camZ");
-  saveVariable(int(centerX), "centerX");
-  saveVariable(int(centerY), "centerY");
+  saveVariable(int(center.x), "centerX");
+  saveVariable(int(center.y), "centerY");
   saveVariable(chaseMode, "chaseMode");
   
   saveDataMainCommands(loadPath, "loadPath", "0", "-", "-");
