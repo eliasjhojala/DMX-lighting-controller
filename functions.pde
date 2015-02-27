@@ -192,7 +192,7 @@ void mouseWheel(MouseEvent event) {
 
 boolean isHoverSimple(int offsetX, int offsetY, int w, int h) {
   return isHoverSimple(offsetX, offsetY, w, h, mouseX, mouseY, g);
-} 
+}
 
 boolean isHoverSimple(int ofX, int ofY, int w, int h, PGraphics g, Mouse mouse) {
   return isHoverSimple(ofX, ofY, w, h, mouse.getBridgedMouseX(), mouse.getBridgedMouseY(), g);
@@ -231,22 +231,7 @@ boolean isHoverAB(int obj1X, int obj1Y, int obj2X, int obj2Y, float moX, float m
   return inBds2D(moX, moY, min(x), min(y), max(x), max(y));
 }
 
-boolean isHoverSimple(int offsetX, int offsetY, int w, int h) {
-  return isHoverSimple(offsetX, offsetY, w, h, mouseX, mouseY, g);
-} 
 
-boolean isHoverSimple(int offsetX, int offsetY, int w, int h) {
-  return isHoverSimple(offsetX, offsetY, w, h, mouseX, mouseY, g);
-} 
-
-boolean isHoverSimple(int ofX, int ofY, int w, int h, PGraphics g, Mouse mouse) {
-  return isHoverSimple(ofX, ofY, w, h, mouse.getBridgedMouseX(), mouse.getBridgedMouseY(), g);
-}
-
-//A simpler version of isHover. Doesn't make a bounding box, only regards the two corners and checks a rectangle between them. (Useful with non-rotated scenarios)
-boolean isHoverSimple(int offsetX, int offsetY, int w, int h, int moX, int moY, PGraphics g){
-  return inBds2D(moX, moY, int(g.screenX(offsetX, offsetY)), int(g.screenY(offsetX, offsetY)), int(g.screenX(offsetX + w, offsetY + h)), int(g.screenY(offsetX + w, offsetY + h)));
-}
 
 
 

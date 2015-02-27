@@ -62,7 +62,7 @@ class SubWindowContainer {
       swBuffer.translate(1, 1);
       
       getXY();
-      swMouse.refreshBridged(x, y, swBuffer);
+      
       
       swMouse.refreshBridged(x, y, w, h, swBuffer);
       
@@ -136,7 +136,7 @@ class SubWindowHandler {
   void createDefaultWindows() {
     subWindows.add(new SubWindowContainer(memoryCreator, "MemoryCreator", 1000));
     subWindows.add(new SubWindowContainer(settingsWindow, "SettingsWindow", 1000));
-    subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
+    //subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
   }
   
   ArrayList<SubWindowContainer> subWindows;

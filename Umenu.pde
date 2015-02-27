@@ -79,7 +79,7 @@ void ylavalikko() {
     int round = 20;
     if(drawLeftSideButton(round, "Wash")) colorWashMenuOpen = !colorWashMenuOpen;
     translate(0, 120);
-    if(drawLeftSideButton(round, "Control")) lowerMenu.open = !lowerMenu.open;
+    //if(drawLeftSideButton(round, "Control")) lowerMenu.open = !lowerMenu.open;
   popMatrix();
   } //End of buttons placed to left side       
   //settingsWindow.draw();
