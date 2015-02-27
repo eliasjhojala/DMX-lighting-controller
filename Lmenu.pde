@@ -1,13 +1,15 @@
-//Tässä välilehdessä piirretään alavalikko, jossa näkyy mm. fixtuurien nykyiset arvot 
-//Alavalikko toimii nyt hyvin ja fixture(i) voidia voi käyttää missä vain ohjelmassa
-/*Jostain syystä id:n vaihtamisen kanssa on välillä pieniä ongelmia
-se pitäisi selvittää*/
+
+//This is a really old comment by eliasjhojala(@github.com), I'm keeping it here for the memories :)
+    //Tässä välilehdessä piirretään alavalikko, jossa näkyy mm. fixtuurien nykyiset arvot 
+    //Alavalikko toimii nyt hyvin ja fixture(i) voidia voi käyttää missä vain ohjelmassa
+
  
 //Create variables for old mouse locations
 int oldMouseX2;
 int oldMouseY2;
  
 void alavalikko() {
+  
   //The boolean is set to true on a spot that has been checked. It should not be drawn again.
   boolean[] drawn = new boolean[bottomMenuOrder.length];
   
@@ -34,7 +36,6 @@ void alavalikko() {
   notifier.draw(width-168);
   
   
-  
 }
 
 
@@ -46,7 +47,7 @@ class LowerMenu {
     locX = 0;
     locY = 0;
     w = 500;
-    h = 500;
+    h = 300;
   }
   
   boolean open;
@@ -64,31 +65,35 @@ class LowerMenu {
         g.fill(0, 30, 60, 130);
         g.stroke(0, 61, 100);
         g.strokeWeight(3);
+        
         //Box itself
         g.rect(0, 0, w, h, 20);
         mouse.declareUpdateElementRelative("LowerMenu", 1, 0, 0, w, h, g);
         mouse.setElementExpire("LowerMenu", 2);
+        
         //Grabable location button
         g.fill(180);
         g.noStroke();
-        g.rect(10, 10, 20, 20, 20, 0, 0, 4);
-        mouse.declareUpdateElementRelative("LowerMenu:move", "LowerMenu", 10, 10, 20, 20, g);
+        g.rect(10, h-10, 20, -20, 4, 0, 0, 20);
+        mouse.declareUpdateElementRelative("LowerMenu:move", "LowerMenu", 10, h-10, 20, -20, g);
         mouse.setElementExpire("LowerMenu:move", 2);
         if(mouse.isCaptured("LowerMenu:move")) {
           locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
-          locX = constrain(mouseX - pmouseX + locX, 40, width - (320 + 168));
+          locX = constrain(mouseX - pmouseX + locX, 40, width - w-(20 + 168));
         }
-        //Cancel button
-        mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, 10, 50, 20, g);
+        w = width - 40 - 20 - 168;
+        
+        //Close button
+        mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, h-10, 30, -20, g);
         mouse.setElementExpire("LowerMenu:cancel", 2);
         boolean cancelHover = mouse.elmIsHover("LowerMenu:cancel");
-        g.fill(cancelHover ? 220 : 180, 30, 30);
+        g.fill(cancelHover ? 160 : 140);
         //Close if Cancel is pressed
         if(mouse.isCaptured("LowerMenu:cancel")) open = false;
-        g.rect(30, 10, 50, 20, 0, 4, 4, 0);
+        g.rect(30, h-10, 30, -20, 0, 4, 4, 0);
         g.fill(230);
         g.textAlign(CENTER);
-        g.text("Close", 55, 24);
+        g.text("X", 45, h-16);
         
       }
               
@@ -100,6 +105,8 @@ class LowerMenu {
     }
   }
 }
+
+
 void createFixtureBox(int id) {
   drawFixtureRectangles(id); //draw fixtureboxes with buttons etc.
   checkFixtureBoxGo(id); //Check if you pressed go button button to set fixture on until jo release mouse
@@ -540,6 +547,11 @@ class Notifier {
     messageEndTime = millis() + 2000;
     messageIsCritical = false;
     showingMessage = true;
+  }
+  
+  
+  void notify(String message, boolean critical) {
+    notify(message, 2000, critical);
   }
   
   

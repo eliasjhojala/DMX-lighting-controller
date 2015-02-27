@@ -5,26 +5,30 @@
 class SubWindowContainer {
   //X and Y offset
   int x, y;
+  int h, w;
   
   Mouse swMouse;
   
   PGraphics swBuffer;
   
   //Contained windows
-  MemoryCreationBox memoryCreation;
-  SettingsWindow settings;
+  //MemoryCreationBox memoryCreation;
+  //SettingsWindow settings;
+  //LowerMenu lowerm;
+  java.lang.Object window;
+  Class windowClass;
   
   
   boolean reflectionCapable = true;
   
-  //int mode; // 0: memBox, 1: settings, 2: fixtureProperties, 3: lowerMenu/fixtureValues
+  
   
   SubWindowContainer(java.lang.Object window, String mouseName, int mousePriority) {
     this.window = window;
     windowClass = window.getClass();
     
-    int w = 0;
-    int h = 0;
+    w = 0;
+    h = 0;
     int locX = 0;
     int locY = 0;
     try {
@@ -47,22 +51,20 @@ class SubWindowContainer {
     
   }
   
-  SubWindowContainer(SettingsWindow setWin, String mouseName, int mousePriority) {
-    settings = setWin;
-    swBuffer = createGraphics(setWin.size+3, setWin.size+3);
-    x = setWin.locX; y = setWin.locY;
-    swMouse = new Mouse(mouse, mouseName, mousePriority, x, y, setWin.size, setWin.size);
-    mode = 1;
-  }
   
   boolean draw() {
     if(isOpen() && reflectionCapable) {
       mouse.getElementByName(swMouse.bridgedModeName).enabled = true;
+      getXY();
+      
       swBuffer.beginDraw();
       swBuffer.clear();
       swBuffer.translate(1, 1);
+      
       getXY();
       swMouse.refreshBridged(x, y, swBuffer);
+      
+      swMouse.refreshBridged(x, y, w, h, swBuffer);
       
       //memoryCreation.draw(swBuffer, swMouse, false);
       try {
@@ -73,6 +75,7 @@ class SubWindowContainer {
         reflectionCapable = false;
         println("Error while creating SubWindowContainer " + this.toString() + ". Probably passed an incapable object as the window parameter!\n");
       }
+      
       swBuffer.endDraw();
       image(swBuffer, x, y);
       if(mouse.isCaptured(swMouse.bridgedModeName)) return true;
@@ -85,6 +88,17 @@ class SubWindowContainer {
     try {
       x = (int) windowClass.getDeclaredField("locX").getInt(window);
       y = (int) windowClass.getDeclaredField("locY").getInt(window);
+      
+      int tempW, tempH;
+      tempW = (int) windowClass.getDeclaredField("w").getInt(window);
+      tempH = (int) windowClass.getDeclaredField("h").getInt(window);
+      if(w != tempW || h != tempH) { //size changed
+        w = tempW;
+        h = tempH;
+        swBuffer = createGraphics(w+3, h+3);
+      }
+      
+      
     } catch(Exception e) {
       
       reflectionCapable = false;
@@ -105,6 +119,7 @@ class SubWindowContainer {
       e.printStackTrace();
       return false;
     }
+    
   }
   
 }

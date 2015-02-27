@@ -74,40 +74,49 @@ void ylavalikko() {
   text(avgFrameRate + " fps", 3, 28, 125, 125);
   avgFrameRate = (avgFrameRate + int(frameRate)) / 2;
   
-  { //Here you can place buttons to left side
-    { //Wash button
-      pushMatrix();
-        int round = 20;
-        translate(-2, 150);
-        pushStyle();
-          fill(topMenuTheme2);
-          rect(0, 0, 40, 100, 0, round, round, 0);
-          mouse.declareUpdateElementRelative("washButton", "main:move", 0, 0, 40, 100);
-          boolean isHovered = isHover(0, 0, 40, 100);
-          boolean isClicked = mouse.isCaptured("washButton") && mouse.firstCaptureFrame;
-          if(isClicked) { colorWashMenuOpen = !colorWashMenuOpen; }
-        popStyle();
-        pushMatrix();
-          translate(13, 27);
-          rotate(radians(90));
-          pushStyle();
-            if(isHovered) {
-              fill(250);
-            }
-            else {
-              fill(topMenuTheme);
-            }
-            textSize(20);
-            text("Wash", 0, 0);
-          popStyle();
-        popMatrix();
-      popMatrix();
-    } //End of wash button
-  
-  } //End of buttons placed to left side
+  { //Here you can place buttons to left side 
+  pushMatrix();
+    int round = 20;
+    if(drawLeftSideButton(round, "Wash")) colorWashMenuOpen = !colorWashMenuOpen;
+    translate(0, 120);
+    if(drawLeftSideButton(round, "Control")) lowerMenu.open = !lowerMenu.open;
+  popMatrix();
+  } //End of buttons placed to left side       
   //settingsWindow.draw();
   popStyle();
   
+}
+
+
+boolean drawLeftSideButton(int round, String text) {
+  pushMatrix();
+    translate(-2, 150);
+    
+    pushStyle();
+      fill(topMenuTheme2);
+      rect(0, 0, 40, 100, 0, round, round, 0);
+      mouse.declareUpdateElementRelative("UpperMenu:"+text, "main:move", 0, 0, 40, 100);
+      boolean isHovered = isHover(0, 0, 40, 100);
+      boolean isClicked = mouse.isCaptured("UpperMenu:"+text) && mouse.firstCaptureFrame;
+    popStyle();
+    pushMatrix();
+      translate(13, 50);
+      rotate(radians(90));
+      pushStyle();
+        if(isHovered) {
+          fill(250);
+        }
+        else {
+          fill(topMenuTheme);
+        }
+        textSize(20);
+        textAlign(CENTER);
+        text(text, 0, 0);
+      popStyle();
+    popMatrix();
+  popMatrix();
+  
+  return isClicked;
 }
 
 

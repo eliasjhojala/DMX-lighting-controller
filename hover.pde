@@ -91,9 +91,11 @@ class Mouse {
     
   }
   
-  void refreshBridged(int newX, int newY, PGraphics g) {
+  void refreshBridged(int newX, int newY, int newW, int newH, PGraphics g) {
     bridgedX = newX;
     bridgedY = newY;
+    bridgedW = newW;
+    bridgedH = newH;
     bridgedModeParent.updateElement(bridgedModeName, newX, newY, newX+bridgedW, newY+bridgedH);
     firstCaptureFrame = bridgedModeParent.firstCaptureFrame;
     if(bridgedMode) refresh(mouseX - bridgedX, mouseY - bridgedY, g);
@@ -106,7 +108,7 @@ class Mouse {
     return mouseY - bridgedY;
   }
   void refreshBridged(PGraphics g) {
-    refreshBridged(bridgedX, bridgedY, g);
+    refreshBridged(bridgedX, bridgedY, bridgedW, bridgedH, g);
   }
   
   //////////////////////////////////////////

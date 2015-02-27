@@ -1,5 +1,20 @@
 //Tässä välilehdessä on paljon lyhyitä voideja
 
+  
+int[] newIncrementingIntArray(int length, int start) {
+  int[] toReturn = new int[length];
+  incrementingIntArray(toReturn, start);
+  return toReturn;
+}
+void incrementingIntArray(int[] array, int start) {
+  
+  
+  for(int i = 0, c = start; i < array.length; i++, c++) {
+    array[i] = c;
+  }
+  
+}
+
 boolean scrolledDown = false;
 boolean scrolledUp = false;
 
@@ -15,6 +30,14 @@ int indexOfMinCheck(int[] input, boolean[] checked) {
     }
   }
   return toReturn;
+}
+
+
+int indexOf(int[] array, int target) {
+  for(int i = 0; i < array.length; i++) {
+    if(array[i] == target) return i;
+  }
+  return -1;
 }
 
 
@@ -211,6 +234,14 @@ boolean isHoverAB(int obj1X, int obj1Y, int obj2X, int obj2Y, float moX, float m
 boolean isHoverSimple(int offsetX, int offsetY, int w, int h) {
   return isHoverSimple(offsetX, offsetY, w, h, mouseX, mouseY, g);
 } 
+
+boolean isHoverSimple(int offsetX, int offsetY, int w, int h) {
+  return isHoverSimple(offsetX, offsetY, w, h, mouseX, mouseY, g);
+} 
+
+boolean isHoverSimple(int ofX, int ofY, int w, int h, PGraphics g, Mouse mouse) {
+  return isHoverSimple(ofX, ofY, w, h, mouse.getBridgedMouseX(), mouse.getBridgedMouseY(), g);
+}
 
 //A simpler version of isHover. Doesn't make a bounding box, only regards the two corners and checks a rectangle between them. (Useful with non-rotated scenarios)
 boolean isHoverSimple(int offsetX, int offsetY, int w, int h, int moX, int moY, PGraphics g){
@@ -597,16 +628,13 @@ void keyPressed() {
     if(key == 'l') { loadAllData(); }
  
     if(keyCode == 17) { ctrlDown = true; }
-    if(keyCode == 16) { shftDown = true; println("toimii"); }
+    if(keyCode == 16) { shftDown = true; }
     if(key == 'o') { fileDialogInput(); ctrlDown = false; }
     if(key == 's') {
-      if(shftDown) {
-        fileDialogOutput();
-        shftDown = false; println("TOIMII");
-      }
-      else {
-        saveAllData();
-      }
+      saveAllData();
+    }
+    if(key == 'S') {
+      fileDialogOutput();
     }
 
     if(keyCode == RIGHT) { rightPressed = true; }

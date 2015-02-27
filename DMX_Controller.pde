@@ -404,8 +404,10 @@ void setup() {
   
   subWindowHandler = new SubWindowHandler();
   
+  
   f.setBounds(0, 0, displayWidth, displayHeight);
   s1.loop();
+  
   
 }
 

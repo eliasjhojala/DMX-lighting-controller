@@ -2,6 +2,13 @@
  
 MemoryCreationBox memoryCreator;
 
+int[] memoryControllerLookupTable = newIncrementingIntArray(numberOfMemories, 0);
+
+
+boolean draggingMemory = false;
+int     draggingMemoryId;
+
+
 boolean savingMemory = false;
  
 void sivuValikko() {
@@ -84,13 +91,26 @@ void sivuValikko() {
   translate(width-168, 0);
   mouse.declareUpdateElement("rearMenu:presetcontrols", "main:move", width-168, 0, width, height);
   for(int i = 1; i <= height/20+1; i++) {
-    if(memoryMenu+i < numberOfMemories) {
+    int ai = memoryControllerLookupTable[i] + memoryMenu;
+    if(ai < numberOfMemories) {
       pushMatrix();
         translate(0, 20*(i-1));
-        drawMemoryController(i+memoryMenu, memories[i+memoryMenu].getText());
+        drawMemoryController(ai, memories[ai].getText());
       popMatrix();
     }
   }
+  
+  if(draggingMemory) { pushStyle();
+    translate(0, mouseY);
+    PGraphics temp = createGraphics(170, 22);
+    temp.beginDraw();
+    temp.translate(1, 1);
+    drawMemoryControllerToBuffer(draggingMemoryId, memories[draggingMemoryId].getText(), temp, false, true);
+    temp.endDraw();
+    tint(255, 140);
+    image(temp, -1, -1);
+  popStyle(); }
+  
   popMatrix();
   //-
     
@@ -98,54 +118,102 @@ void sivuValikko() {
   //if(!showMode) { memoryCreator.draw(); }
 }
 
+void reorderMemoryController(int from, int to) {
+  int valFrom = from;
+  int valTo   = to  ;
+  from = indexOf(memoryControllerLookupTable, from);
+  to   = indexOf(memoryControllerLookupTable, to  );
+  
+  
+  
+  if(from > to) { //If from is lower than to (drawn)
+    for(int i = from; i > to; i--) {
+      if(i - 1 >= 0) memoryControllerLookupTable[i] = memoryControllerLookupTable[i - 1];
+    }
+    memoryControllerLookupTable[to] = valFrom;
+    return;
+  } else if(from < to) { //If from is higher than to (drawn)
+    for(int i = from; i < to; i++) {
+      if(i + 1 >= 0) memoryControllerLookupTable[i] = memoryControllerLookupTable[i + 1];
+    }
+    memoryControllerLookupTable[to] = valFrom;
+  } else if(from == to) {
+    return;
+  }
+}
 
-void drawMemoryController(int controlledMemoryId, String text) {
+void drawMemoryController(int cMId, String text) {
+  drawMemoryControllerToBuffer(cMId, text, g, true, false);
+}
+
+void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics g, boolean checkMouse, boolean bypassDrawBlock) {
   int value = memories[controlledMemoryId].getValue();
   
-  pushStyle();
+  g.pushStyle();
   
-  textSize(12);
-  textAlign(CENTER);
-  //Draw controller
-  strokeWeight(2);
-  noStroke();
-  fill(240);
-  //Number indication box
-  rect(0, 0, 25, 20);
-  fill(20);
-  text(controlledMemoryId, 25/2, 15);
-  //Type indication box
-  fill(10, 240, 10);
-  rect(25, 0, 40, 20);
-  fill(20);
-  textAlign(LEFT);
-  text(text, 30, 15);
-  
-  //Controller box
-  fill(255, 200);
-  noStroke();
-  rect(65, 0, 100, 20);
-  if(memories[controlledMemoryId].enabled) fill(50, 50, 240);
-    else                                   fill(140);
-  rect(65, 0, map(value, 0, 255, 0, 100), 20);
-  fill(0);
-  text(value, 68, 16);
-  
-  if (isHoverSimple(0, 0, 170, 20) && mouse.isCaptured("rearMenu:presetcontrols")) {
+  if(!(draggingMemory && draggingMemoryId == controlledMemoryId) || bypassDrawBlock) {
+    g.textSize(12);
+    g.textAlign(CENTER);
+    //Draw controller
+    g.strokeWeight(2);
+    g.noStroke();
+    g.fill(240);
+    //Number indication box
+    g.rect(0, 0, 25, 20);
+    g.fill(20);
+    g.text(controlledMemoryId, 25/2, 15);
+    //Type indication box
+    g.fill(10, 240, 10);
+    g.rect(25, 0, 40, 20);
+    g.fill(20);
+    g.textAlign(LEFT);
+    g.text(text, 30, 15);
+    
+    //Controller box
+    g.fill(255, 200);
+    g.noStroke();
+    g.rect(65, 0, 100, 20);
+    if(memories[controlledMemoryId].enabled) g.fill(50, 50, 240);
+      else                                   g.fill(140);
+    g.rect(65, 0, map(value, 0, 255, 0, 100), 20);
+    g.fill(0);
+    g.text(value, 68, 16);
+    
+    //Borders
+    g.noFill();
+    g.stroke(100);
+    g.rect(0, 0, 65, 20);
+    g.rect(65, 0, 100, 20);
+  }
+
+
+  if (isHoverSimple(0, 0, 170, 20) && mouse.isCaptured("rearMenu:presetcontrols") && !draggingMemory && checkMouse) {
     if(mouseButton == LEFT) {
       if(keyPressed && keyCode == CONTROL) {
         if(mouse.firstCaptureFrame) memories[controlledMemoryId].toggleWithMemory(true);
+      } else if(keyPressed && keyCode == SHIFT) {
+        if(!showMode) {
+          draggingMemoryId = controlledMemoryId;
+          draggingMemory = true;
+        }
       } else {
         value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
         memories[controlledMemoryId].setValue(value);
       }
     } else if(mouseButton == RIGHT) memoryCreator.initiateFromExsisting(controlledMemoryId);
+  } else if(draggingMemory && isHoverSimple(0, 0, 170, 20) && checkMouse) {
+    g.fill(20, 255, 20, 180); g.noStroke();
+    g.rect(0, 0, 168, 20);
+    if(!mousePressed) {
+      reorderMemoryController(draggingMemoryId, controlledMemoryId);
+      draggingMemory = false;
+    }
   }
-  noFill();
-  stroke(100);
-  rect(0, 0, 65, 20);
-  rect(65, 0, 100, 20);
-  popStyle();
+  
+  
+  
+  
+  g.popStyle();
 }
 
 
