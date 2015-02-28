@@ -62,6 +62,7 @@ class memory { //Begin of memory class------------------------------------------
   // 3: quickChase  //|
   // 4: master      //|
   // 5: fade        //|
+  // 6: chase1      //|
   //----------------//|
   
   
@@ -148,7 +149,7 @@ class memory { //Begin of memory class------------------------------------------
       case 3: toReturn = "qChs"; break;
       case 4: toReturn = "mstr"; break;
       case 5: toReturn = "fade"; break;
-      case 6: toReturn = "mstrGrp"; break;
+      case 6: toReturn = "chs1"; break;
       default: toReturn = "unkn"; break;
     }
     return toReturn;
@@ -163,7 +164,7 @@ class memory { //Begin of memory class------------------------------------------
         case 2: chase(); break;
         case 4: grandMaster(); break;
         case 5: fade(); break;
-        case 7: masterGroup(); break;
+        case 6: chase(); break;
         default: unknown(); break;
       }
     }
@@ -334,6 +335,15 @@ class Preset { //Begin of Preset class
   memory parent;
   Preset(memory parent) {
     this.parent = parent;
+    for(int i = 0; i < repOfFixtures.length; i++) {
+      repOfFixtures[i] = new FixtureDMX();
+    }
+  }
+  
+  chase parentChase;
+  Preset(chase parentChase) {
+    this.parentChase = parentChase;
+    this.parent = parentChase.parent;
     for(int i = 0; i < repOfFixtures.length; i++) {
       repOfFixtures[i] = new FixtureDMX();
     }
@@ -550,6 +560,7 @@ class chase { //Begin of chase class--------------------------------------------
   
   int[] presets; //all the presets in chase
   int[] content; //all the content in chase - in the future also presets
+  ArrayList<Preset> steps = new ArrayList<Preset>(); //all the presets in chase
   
   int step, brightness, brightness1;
   boolean stepHasChanged;
@@ -583,6 +594,11 @@ class chase { //Begin of chase class--------------------------------------------
       block.setInt("inputMode", inputMode);
       block.setInt("outputMode", outputMode);
       block.setInt("beatModeId", beatModeId);
+    block = xml.addChild("steps");
+      block.setInt("size", steps.size());
+      for(int i = 0; i < steps.size(); i++) {
+        block.addChild(steps.get(i).getXML());
+      }
     return xml;
   }
   
@@ -617,6 +633,15 @@ class chase { //Begin of chase class--------------------------------------------
         inputMode = block.getInt("inputMode");
         outputMode = block.getInt("outputMode");
         beatModeId = block.getInt("beatModeId");
+      }
+      block = xml.getChild("steps");
+      if(block != null) {
+        XML[] blocks = block.getChildren();
+        for(int i = 0; i < blocks.length; i++) {
+          if(blocks[i] != null) if(!trim(blocks[i].toString()).equals("")) {
+            steps.add(new Preset(this));
+          }
+        }
       }
     }
     XMLloadSucces = true;
@@ -1099,6 +1124,11 @@ class chase { //Begin of chase class--------------------------------------------
      setParentType(3); //set parent to 3 which means quickChase 
      //Saving quickChase is ready!
  } //End of create quick chase -----------------------------------------------------------------------
+
+
+  void startCreatingChaseWidthStepsInside() { }
+  void createNextStep() { }
+  void endCreatingChaseWidthStepsInside() { }
 } //end of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
