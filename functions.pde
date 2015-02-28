@@ -645,6 +645,7 @@ void keyPressed() {
         loadXmlToTrusses();
         loadSocketsFromXML();
         saveNearestSocketsToXML();
+        loadMemoriesFromXML();
       }
       else {
         notifier.notify("Can not load in showMode", false);

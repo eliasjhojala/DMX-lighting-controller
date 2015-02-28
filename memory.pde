@@ -17,14 +17,34 @@ XML getMemoriesAsXML() {
   XML xml = parseXML(data);
   for(int i = 0; i < memories.length; i++) {
     if(memories[i].type != 0) {
-      xml.addChild(memories[i].getXML());
+      xml = xml.addChild(memories[i].getXML());
+      xml.setInt("id", i);
+      xml = xml.getParent();
     }
   }
   return xml;
 }
 
+void XMLtoMemories(XML xml) {
+  XML[] block = xml.getChildren();
+  
+  int a = 0;
+
+  for(int i = 0; i < block.length; i++) {
+    if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+      int id = block[i].getInt("id");
+      memories[id].XMLtoObject(block[i]);
+      a++;
+    }
+  }
+}
+
 void saveMemoriesToXML() {
-  saveXML(getMemoriesAsXML(), "XML/memories");
+  saveXML(getMemoriesAsXML(), "XML/memories.xml");
+}
+
+void loadMemoriesFromXML() {
+  XMLtoMemories(loadXML("XML/memories.xml"));
 }
 
 
@@ -68,8 +88,22 @@ class memory { //Begin of memory class------------------------------------------
   XML getXML() {
     String data = "<Memory></Memory>";
     XML xml = parseXML(data);
+    xml.setInt("enabled", int(enabled));
+    xml.setInt("value", value);
+    xml.setInt("valueOld", valueOld);
+    xml.setInt("type", type);
     xml.addChild(myPreset.getXML());
+    xml.addChild(myChase.getXML());
     return xml;
+  }
+  
+  void XMLtoObject(XML xml) {
+    enabled = boolean(xml.getInt("enabled"));
+    value = xml.getInt("value");
+    valueOld = xml.getInt("valueOld");
+    type = xml.getInt("type");
+    myPreset.XMLtoObject(xml);
+    myChase.XMLtoObject(xml);
   }
   
   
@@ -216,13 +250,16 @@ class memory { //Begin of memory class------------------------------------------
 
 
 XML arrayToXML(String name, int[] array) {
+  
   String data = "<" + name + "></" + name + ">";
   XML xml = parseXML(data);
-  for(int i = 0; i < array.length; i++) {
-    if(array[i] != 0) {
-      XML block = xml.addChild("int");
-      block.setInt("id", i);
-      block.setInt("val", array[i]);
+  if(array != null) {
+    for(int i = 0; i < array.length; i++) {
+      if(array[i] != 0) {
+        XML block = xml.addChild("int");
+        block.setInt("id", i);
+        block.setInt("val", array[i]);
+      }
     }
   }
   return xml;
@@ -231,20 +268,22 @@ XML arrayToXML(String name, int[] array) {
 int[] XMLtoIntArray(String name, XML xml) {
   int[] toReturn = { };
   xml = xml.getChild(name);
-  XML[] block = xml.getChildren();
-  int a = 0;
-  for(int i = 0; i < block.length; i++) {
-    if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
-      a++;
+  if(xml != null) {
+    XML[] block = xml.getChildren();
+    int a = 0;
+    for(int i = 0; i < block.length; i++) {
+      if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+        a++;
+      }
     }
-  }
-  toReturn = new int[a];
-  a = 0;
-  for(int i = 0; i < block.length; i++) {
-    if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
-      int id = block[i].getInt("id");
-      toReturn[id] = block[i].getInt("val");
-      a++;
+    toReturn = new int[a];
+    a = 0;
+    for(int i = 0; i < block.length; i++) {
+      if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+        int id = block[i].getInt("id");
+        toReturn[id] = block[i].getInt("val");
+        a++;
+      }
     }
   }
   return toReturn;
@@ -317,6 +356,14 @@ class Preset { //Begin of Preset class
   
   
   void XMLtoObject(XML xml) {
+    xml = xml.getChild("mainData");
+    if(xml != null) {
+      value = xml.getInt("value");
+      valueOld = xml.getInt("valueOld");
+      xml = xml.getParent();
+      whatToSave = XMLtoBooleanArray("whatToSave", xml);
+      fixturesToSave = XMLtoBooleanArray("fixturesToSave", xml);
+    }
   }
   
   void savePreset(boolean[] newWhatToSave) {
@@ -484,31 +531,55 @@ class chase { //Begin of chase class--------------------------------------------
   //----------------------end declaring variables--------------------------------
   
   
-    void saveChasetToXML() {
-    memoryXML.addBlockAndIncrease("Chase");
-      memoryXML.addBlockAndIncrease("BasicData");
-        memoryXML.addBlock("value", value);
-        memoryXML.addBlockAndIncrease("StepData");
-          memoryXML.addData("step", step);
-          memoryXML.addData("brightness", brightness);
-          memoryXML.addData("brightness1", brightness1);
-          memoryXML.addData("stepHasChanged", stepHasChanged);
-          memoryXML.addData("fade", fade);
-          memoryXML.addData("ownFade", ownFade);
-        memoryXML.goBack();
-      memoryXML.goBack();
-      memoryXML.addBlockAndIncrease("ModeData");
-        memoryXML.addBlock("inputMode", inputMode);
-        memoryXML.addBlock("outputMode", outputMode);
-        memoryXML.addBlock("beatModeId", beatModeId);
-        memoryXML.addBlock("beatMode", beatMode);
-        memoryXML.addBlock("fadeMode", fadeMode);
-      memoryXML.goBack();
-      memoryXML.addBlockAndIncrease("contentData");
-        memoryXML.addArray("presets", presets);
-        memoryXML.addArray("content", content);
-      memoryXML.goBack();
-    memoryXML.goBack();
+  XML getXML() {
+    String data = "<Chase></Chase>";
+    XML xml = parseXML(data);
+    xml.addChild(arrayToXML("presets", presets));
+    xml.addChild(arrayToXML("content", content));
+    xml.addChild(arrayToXML("sineValue", sineValue));
+    XML block = xml.addChild("stepData");
+      block.setInt("step", step);
+      block.setInt("brightness", brightness);
+      block.setInt("brightness1", brightness1);
+    block = xml.addChild("mainData");
+      block.setInt("fade", fade);
+      block.setInt("ownFade", ownFade);
+      block.setInt("value", value);
+    block = xml.addChild("modeData");
+      block.setInt("inputMode", inputMode);
+      block.setInt("outputMode", outputMode);
+      block.setInt("beatModeId", beatModeId);
+    return xml;
+  }
+  
+  boolean XMLloadSucces = true;
+  
+  void XMLtoObject(XML xml) {
+    XMLloadSucces = false;
+    if(xml != null) {
+      presets = XMLtoIntArray("presets", xml);
+      content = XMLtoIntArray("content", xml);
+      sineValue = XMLtoIntArray("sineValue", xml);
+      XML block = xml.getChild("stepData");
+//      if(block != null) {
+//        step = block.getInt("step");
+//        brightness = block.getInt("brightness");
+//        brightness1 = block.getInt("brightness1");
+//      }
+      block = xml.getChild("mainData");
+      if(block != null) {
+        fade = block.getInt("fade");
+        ownFade = block.getInt("ownFade");
+        value = block.getInt("value");
+      }
+      block = xml.getChild("modeData");
+      if(block != null) {
+        inputMode = block.getInt("inputMode");
+        outputMode = block.getInt("outputMode");
+        beatModeId = block.getInt("beatModeId");
+      }
+    }
+    XMLloadSucces = true;
   }
   
   
@@ -520,9 +591,11 @@ class chase { //Begin of chase class--------------------------------------------
 
   
   void draw() {
-    setValue();
-    setFade();
-    output();
+    if(XMLloadSucces) {
+      setValue();
+      setFade();
+      output();
+    }
   }
   
   void setValue() {
@@ -812,8 +885,10 @@ class chase { //Begin of chase class--------------------------------------------
     }
     int[] presets = getPresets();
     int rS = getReverse(step, 0, presets.length-1);
-    loadPreset(presets[step], brightness);
-    loadPreset(presets[rS], getInvertedValue(brightness, 0, 255));
+    if(presets.length > 0) {
+      loadPreset(presets[constrain(step, 0, onlyPositive(presets.length-1))], brightness);
+      loadPreset(presets[constrain(rS, 0, onlyPositive(presets.length-1))], getInvertedValue(brightness, 0, 255));
+    }
   }
   
   void freqToLight() { //This function gives frequence values to chase presets
