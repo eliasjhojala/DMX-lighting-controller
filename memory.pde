@@ -12,57 +12,19 @@ void createMemoryObjects() {
   }
 }
 
+XML getMemoriesAsXML() {
+  String data = "<Memories></Memories>";
+  XML xml = parseXML(data);
+  for(int i = 0; i < memories.length; i++) {
+    if(memories[i].type != 0) {
+      xml.addChild(memories[i].getXML());
+    }
+  }
+  return xml;
+}
 
 void saveMemoriesToXML() {
-  memoryXML.addBlockAndIncrease("Memories");
-    for(int i = 0; i < memories.length; i++) {
-      if(memories[i].type != 0) {
-        memoryXML.addBlockAndIncrease("Memory");
-          memoryXML.addData("id", i);
-          memoryXML.addData("type", memories[i].type);
-          memoryXML.addData("value", memories[i].value);
-          memoryXML.addData("valueOld", memories[i].valueOld);
-          memoryXML.addData("enabled", str(memories[i].enabled));
-          
-          memoryXML.addBlockAndIncrease("WhatToSave");
-            for(int j = 0; j < memories[i].whatToSave.length; j++) {
-              if(memories[i].whatToSave[j] != false) {
-                memoryXML.addBlockAndIncrease("WhatToSave");
-                  memoryXML.addData("id", j);
-                  memoryXML.addData("boolean", int(memories[i].whatToSave[j]));
-                memoryXML.goBack();
-              }
-            }
-          memoryXML.goBack();
-          
-          memoryXML.addBlockAndIncrease("fixturesToSave");
-            for(int j = 0; j < memories[i].fixturesToSave.length; j++) {
-              if(memories[i].fixturesToSave[j] != false) {
-                memoryXML.addBlockAndIncrease("fixturesToSave");
-                  memoryXML.addData("id", j);
-                  memoryXML.addData("boolean", int(memories[i].fixturesToSave[j]));
-                memoryXML.goBack();
-              }
-            }
-          memoryXML.goBack();
-          
-          memoryXML.addBlockAndIncrease("repOfFixtures");
-            for(int j = 0; j < memories[i].repOfFixtures.length; j++) {
-              memories[i].repOfFixtures[j].saveToXML("fixture" + str(j), memoryXML);
-            }
-          memoryXML.goBack();
-          
-          if(memories[i].type == 2 || memories[i].type == 3) {
-            memoryXML.addBlockAndIncrease("myChase");
-              memories[i].myChase.saveChasetToXML();
-            memoryXML.goBack();
-          }
-          
-        memoryXML.goBack();
-      }
-    }
-  memoryXML.goBack();
-  memoryXML.saveData();
+  saveXML(getMemoriesAsXML(), "XML/memories");
 }
 
 
@@ -96,12 +58,18 @@ class memory { //Begin of memory class------------------------------------------
   FixtureDMX[] repOfFixtures = new FixtureDMX[fixtures.size()];
   
   chase myChase;
+  Preset myPreset;
   
   memory() {
     myChase = new chase(this);
-    for(int i = 0; i < repOfFixtures.length; i++) {
-      repOfFixtures[i] = new FixtureDMX();
-    }
+    myPreset = new Preset(this);
+  }
+  
+  XML getXML() {
+    String data = "<Memory></Memory>";
+    XML xml = parseXML(data);
+    xml.addChild(myPreset.getXML());
+    return xml;
   }
   
   
@@ -169,6 +137,7 @@ class memory { //Begin of memory class------------------------------------------
   
   void preset() {
     if(type == 1 && enabled) {
+      myPreset.setValue(value);
       loadPreset();
     }
   }
@@ -220,41 +189,161 @@ class memory { //Begin of memory class------------------------------------------
   
   
   
+  
   void savePreset(boolean[] newWhatToSave) {
-    arrayCopy(newWhatToSave, whatToSave);
-    savePreset();
+    myPreset.savePreset(newWhatToSave);
   }
   
-  
   void savePreset() {
-    repOfFixtures = new FixtureDMX[fixtures.size()];
-    for(int i = 0; i < fixtures.size(); i++) {
-        repOfFixtures[i] = new FixtureDMX();
-    }
-    
-    for(int i = 0; i < fixtures.size(); i++) {
-      fixturesToSave[i] = fixtures.get(i).selected;
-    }
-      
-    for(int i = 0; i < fixtures.size(); i++) {
-      if(fixturesToSave[i]) {
-        for(int jk = 1; jk < fixtures.get(i).in.DMXlength; jk++) {
-          if(whatToSave[jk-1])
-            repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
-        }
-      }
-    }
-    type = 1;
+    myPreset.savePreset();
   }
 
 
 
   void loadPreset(int v) {
-    setValue(v);
+    myPreset.setValue(v);
   }
 
   void loadPreset() {
-    if(type == 1) {
+    myPreset.loadPreset();
+  }
+
+  
+  
+} //end of memory class-----------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+XML arrayToXML(String name, int[] array) {
+  String data = "<" + name + "></" + name + ">";
+  XML xml = parseXML(data);
+  for(int i = 0; i < array.length; i++) {
+    if(array[i] != 0) {
+      XML block = xml.addChild("int");
+      block.setInt("id", i);
+      block.setInt("val", array[i]);
+    }
+  }
+  return xml;
+}
+
+int[] XMLtoIntArray(String name, XML xml) {
+  int[] toReturn = { };
+  xml = xml.getChild(name);
+  XML[] block = xml.getChildren();
+  int a = 0;
+  for(int i = 0; i < block.length; i++) {
+    if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+      a++;
+    }
+  }
+  toReturn = new int[a];
+  a = 0;
+  for(int i = 0; i < block.length; i++) {
+    if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+      int id = block[i].getInt("id");
+      toReturn[id] = block[i].getInt("val");
+      a++;
+    }
+  }
+  return toReturn;
+}
+
+XML arrayToXML(String name, boolean[] array) {
+  String data = "<" + name + "></" + name + ">";
+  XML xml = parseXML(data);
+  for(int i = 0; i < array.length; i++) {
+    if(array[i]) {
+      XML block = xml.addChild("int");
+      block.setInt("id", i);
+      block.setInt("val", int(array[i]));
+    }
+  }
+  return xml;
+}
+
+boolean[] XMLtoBooleanArray(String name, XML xml) {
+  boolean[] toReturn = { };
+  xml = xml.getChild(name);
+  XML[] block = xml.getChildren();
+  int a = 0;
+  for(int i = 0; i < block.length; i++) {
+    if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+      a++;
+    }
+  }
+  toReturn = new boolean[a];
+  a = 0;
+  for(int i = 0; i < block.length; i++) {
+    if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+      int id = block[i].getInt("id");
+      toReturn[id] = boolean(block[i].getInt("val"));
+      a++;
+    }
+  }
+  return toReturn;
+}
+
+
+class Preset { //Begin of Preset class
+  //You need to supply a memory parent for this to work properly
+  memory parent;
+  Preset(memory parent) {
+    this.parent = parent;
+    for(int i = 0; i < repOfFixtures.length; i++) {
+      repOfFixtures[i] = new FixtureDMX();
+    }
+  }
+  
+  //Define variables
+    int value, valueOld; //memorys value
+    boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
+    boolean[] fixturesToSave = new boolean[fixtures.size()];
+    FixtureDMX[] repOfFixtures = new FixtureDMX[fixtures.size()];
+  //End of defining variables
+  
+  XML getXML() {
+    String data = "<Preset></Preset>";
+    XML xml = parseXML(data);
+    xml = xml.addChild("mainData");
+    xml.setInt("value", value);
+    xml.setInt("valueOld", valueOld);
+    xml = xml.getParent();
+    xml.addChild(arrayToXML("whatToSave", whatToSave));
+    xml.addChild(arrayToXML("fixturesToSave", fixturesToSave));
+    return xml;
+  }
+  
+  
+  void XMLtoObject(XML xml) {
+  }
+  
+  void savePreset(boolean[] newWhatToSave) {
+    arrayCopy(newWhatToSave, whatToSave);
+    savePreset();
+  }
+  
+  void setValue(int val) {
+    value = val;
+    draw();
+  }
+  int getValue() {
+    return value;
+  }
+  
+  void loadPreset(int v) {
+    setValue(v);
+  }
+  
+  void draw() {
+    if(parent.type == 1 && parent.enabled) {
+      loadPreset();
+    }
+  }
+  
+  void loadPreset() {
+    if(parent.type == 1) {
       valueOld = value;
       for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
         if(whatToSave[jk-1]) {
@@ -275,12 +364,31 @@ class memory { //Begin of memory class------------------------------------------
       }
     }
   }
-
+  
+  void savePreset() {
+    repOfFixtures = new FixtureDMX[fixtures.size()];
+    for(int i = 0; i < fixtures.size(); i++) {
+        repOfFixtures[i] = new FixtureDMX();
+    }
+    
+    for(int i = 0; i < fixtures.size(); i++) {
+      fixturesToSave[i] = fixtures.get(i).selected;
+    }
+      
+    for(int i = 0; i < fixtures.size(); i++) {
+      if(fixturesToSave[i]) {
+        for(int jk = 1; jk < fixtures.get(i).in.DMXlength; jk++) {
+          if(whatToSave[jk-1])
+            repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
+        }
+      }
+    }
+    parent.type = 1;
+    parent.enabled = true;
+  }
   
   
-} //end of memory class-----------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+} //End of Preset class
 
 
 
@@ -612,18 +720,20 @@ class chase { //Begin of chase class--------------------------------------------
       oldValue = new int[getPresets().length];
       firstTimeLoading = false;
     }
-   // if(val != oldValue[constrain(num, 0, oldValue.length-1)]) { //Maked oldValue array, because getPresetValue casued some problems THIS IS ALSO CAUSING SOME PROBLEMS AT LEAST WITH singleSine
-      if(parent.type == 2) {
-          memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
-      }
-      if(parent.type == 3)  {
-            fixtures.get(num).preset.setUniDMXfromPreset(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
-          //fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
-    //  }
+    if(parent.type == 2) {
+      memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
+    }
+    if(parent.type == 3)  {
+      fixtures.get(num).preset.setUniDMXfromPreset(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
+    }
+    if(false) {
+      loadOwnPreset(num, val);
     }
   }
   
+  void loadOwnPreset(int num, int val) {
+  }
       
   int[] getPresets() {
      //here function which returns all the presets in this chase

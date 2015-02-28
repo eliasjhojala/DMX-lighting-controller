@@ -633,6 +633,7 @@ void keyPressed() {
         //fileDialogOutput();
         saveSocketsToXML();
         saveTrussesAsXML();
+        saveMemoriesToXML();
       }
       else {
         notifier.notify("Can not save in showMode", true);
