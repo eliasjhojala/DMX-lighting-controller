@@ -1,4 +1,4 @@
-//Useless indormation: This Processing sketch consists of 9839 lines of code*
+//I COUNT: THERE ARE 9 714 LINES CODE IN THIS SOFTWARE
 boolean showMode = true;                                                                                                                                                  //|                        
 boolean showSockets = false;                                                                                                                                              //| 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
@@ -20,8 +20,6 @@ int touchOscInComing = 8000;                                                    
                                                                                                                                                                           //|
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//|
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//|
-
-//*: According to my bash command string: "ls | grep .pde | xargs cat | wc -l" (not manually calculated like @eliasjhojala did)
 
 
 boolean freeze = false;
@@ -339,7 +337,7 @@ String fileSeparator = java.io.File.separator;
 String actualSketchPath;
 
 void setup() {
-  
+  trusses = new Truss[10];
   for(int i = 0; i < trusses.length; i++) {
     trusses[i] = new Truss();
   }

@@ -629,15 +629,25 @@ void keyPressed() {
       saveAllData();
     }
     if(key == 'S') {
-      //fileDialogOutput();
-      saveSocketsToXML();
-      saveTrussesAsXML();
+      if(!showMode) {
+        //fileDialogOutput();
+        saveSocketsToXML();
+        saveTrussesAsXML();
+      }
+      else {
+        notifier.notify("Can not save in showMode", true);
+      }
     }
     
     if(key == 'L') {
-      loadXmlToTrusses();
-      loadSocketsFromXML();
-      saveNearestSocketsToXML();
+      if(!showMode) {
+        loadXmlToTrusses();
+        loadSocketsFromXML();
+        saveNearestSocketsToXML();
+      }
+      else {
+        notifier.notify("Can not load in showMode", false);
+      }
     }
 
     if(keyCode == RIGHT) { rightPressed = true; }

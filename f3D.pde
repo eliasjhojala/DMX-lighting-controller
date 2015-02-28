@@ -5,12 +5,6 @@
  
 int coneScale = 500;
 
-//0 = None, 1 = ansa 0, 2 = ansa 1
-int numberOfAnsas = 10;
-//int[] ansaZ = new int[numberOfAnsas];
-//int[] ansaX = new int[numberOfAnsas];
-//int[] ansaY = new int[numberOfAnsas];
-//int[] ansaType = new int[numberOfAnsas];
 
 PVector cam = new PVector(s1.width/2.0, s1.height/2.0 + 4000, 1000);
 PVector center = new PVector(0, 0, 0);
@@ -59,7 +53,7 @@ public class secondApplet1 extends PApplet {
   int valoScale = 20;
   
   void draw() {
-    if(use3D) {
+    if(use3D) if(trussesLoadedSucces) {
      setMainSettings(); //Set settings for beginning (camera, perspective etc)
      drawFloor(); //Draw floor
      drawTrusses(); //Draw all the trusses
@@ -282,7 +276,7 @@ public class PFrame1 extends JFrame {
   }
 }
 
-Truss[] trusses = new Truss[numberOfAnsas];
+Truss[] trusses;
 
 class Truss {
   PVector location;
@@ -336,6 +330,13 @@ void XMLtoTrusses(XML xml) {
   int a = 0;
   for(int i = 0; i < XMLtrusses.length; i++) {
     if(XMLtrusses[i] != null) if(!trim(XMLtrusses[i].toString()).equals("")) {
+      a++;
+    }
+  }
+  trusses = new Truss[a];
+  a = 0;
+  for(int i = 0; i < XMLtrusses.length; i++) {
+    if(XMLtrusses[i] != null) if(!trim(XMLtrusses[i].toString()).equals("")) {
       if(a < trusses.length) {
         trusses[a] = new Truss();
         trusses[a].XMLtoObject(XMLtrusses[i]);
@@ -345,8 +346,12 @@ void XMLtoTrusses(XML xml) {
   }
 }
 
+boolean trussesLoadedSucces = false;
+
 void loadXmlToTrusses() {
+  trussesLoadedSucces = false;
   XMLtoTrusses(loadXML("XML/trusses"));
+  trussesLoadedSucces = true;
 }
 
 void saveTrussesAsXML() {

@@ -184,13 +184,13 @@ void oscEvent(OscMessage theOscMessage) {
      
      if(addr.equals("/trussSettings/down") && digitalValue == 1) {
        selectedTruss--;
-       selectedTruss = constrain(selectedTruss, 0, numberOfAnsas);
+       selectedTruss = constrain(selectedTruss, 0, trusses.length-1);
        oscHandler.sendMessage("/trussSettings/selected", selectedTruss);
        oscHandler.sendMessage("/trussSettings/type", trusses[constrain(selectedTruss, 0, trusses.length-1)].type);
      }
      if(addr.equals("/trussSettings/up") && digitalValue == 1) {
        selectedTruss++;
-       selectedTruss = constrain(selectedTruss, 0, numberOfAnsas);
+       selectedTruss = constrain(selectedTruss, 0, trusses.length-1);
        oscHandler.sendMessage("/trussSettings/selected", selectedTruss);
        oscHandler.sendMessage("/trussSettings/type", trusses[constrain(selectedTruss, 0, trusses.length-1)].type);
      }
