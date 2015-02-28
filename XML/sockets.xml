@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Sockets>
-  <Socket channel="7" exist="1" id="0" isInUse="1" number="0" truss="2" x_location="0"/>
+  <Socket channel="0" exist="1" id="0" isInUse="0" number="0" truss="2" x_location="0"/>
   <Socket channel="0" exist="1" id="1" isInUse="0" number="1" truss="2" x_location="100"/>
-  <Socket channel="1" exist="1" id="2" isInUse="1" number="2" truss="2" x_location="200"/>
-  <Socket channel="3" exist="1" id="3" isInUse="1" number="3" truss="2" x_location="300"/>
-  <Socket channel="4" exist="1" id="4" isInUse="1" number="4" truss="2" x_location="400"/>
-  <Socket channel="4" exist="1" id="5" isInUse="1" number="5" truss="2" x_location="500"/>
-  <Socket channel="3" exist="1" id="6" isInUse="1" number="6" truss="2" x_location="600"/>
-  <Socket channel="2" exist="1" id="7" isInUse="1" number="7" truss="2" x_location="700"/>
-  <Socket channel="18" exist="1" id="8" isInUse="1" number="8" truss="2" x_location="800"/>
+  <Socket channel="0" exist="1" id="2" isInUse="0" number="2" truss="2" x_location="200"/>
+  <Socket channel="0" exist="1" id="3" isInUse="0" number="3" truss="2" x_location="300"/>
+  <Socket channel="0" exist="1" id="4" isInUse="0" number="4" truss="2" x_location="400"/>
+  <Socket channel="0" exist="1" id="5" isInUse="0" number="5" truss="2" x_location="500"/>
+  <Socket channel="0" exist="1" id="6" isInUse="0" number="6" truss="2" x_location="600"/>
+  <Socket channel="0" exist="1" id="7" isInUse="0" number="7" truss="2" x_location="700"/>
+  <Socket channel="0" exist="1" id="8" isInUse="0" number="8" truss="2" x_location="800"/>
   <Socket channel="0" exist="1" id="9" isInUse="0" number="9" truss="2" x_location="900"/>
   <Socket channel="0" exist="1" id="10" isInUse="0" number="10" truss="2" x_location="1000"/>
   <Socket channel="0" exist="1" id="11" isInUse="0" number="11" truss="2" x_location="1100"/>

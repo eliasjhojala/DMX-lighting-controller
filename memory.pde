@@ -227,10 +227,14 @@ class memory { //Begin of memory class------------------------------------------
   
   void savePreset(boolean[] newWhatToSave) {
     myPreset.savePreset(newWhatToSave);
+    type = 1;
+    enabled = true;
   }
   
   void savePreset() {
     myPreset.savePreset();
+    type = 1;
+    enabled = true;
   }
 
 
@@ -427,14 +431,14 @@ class Preset { //Begin of Preset class
   
   void draw() {
     if(XMLloadSucces) {
-      if(parent.type == 1 && parent.enabled) {
+      if(parent.type == 1 || parent.type == 6) {
         loadPreset();
       }
     }
   }
   
   void loadPreset() {
-    if(XMLloadSucces) if(parent.type == 1) {
+    if(XMLloadSucces) if(parent.type == 1 || parent.type == 6) {
       valueOld = value;
       for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
         if(whatToSave[jk-1]) {
@@ -474,8 +478,6 @@ class Preset { //Begin of Preset class
         }
       }
     }
-    parent.type = 1;
-    parent.enabled = true;
   }
   
   
@@ -865,12 +867,13 @@ class chase { //Begin of chase class--------------------------------------------
       fixtures.get(num).preset.setUniDMXfromPreset(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
     }
-    if(false) {
+    if(parent.type == 6) {
       loadOwnPreset(num, val);
     }
   }
   
   void loadOwnPreset(int num, int val) {
+    steps.get(num).setValue(rMap(val, 0, 255, 0, value));
   }
       
   int[] getPresets() {
@@ -883,6 +886,12 @@ class chase { //Begin of chase class--------------------------------------------
      else if(parent.type == 3) {
        toReturn = new int[content.length];
        arrayCopy(content, toReturn);
+     }
+     else if(parent.type == 6) {
+       toReturn = new int[steps.size()];
+       for(int i = 0; i < steps.size(); i++) {
+         toReturn[i] = i;
+       }
      }
      return toReturn;
      
@@ -1125,10 +1134,16 @@ class chase { //Begin of chase class--------------------------------------------
      //Saving quickChase is ready!
  } //End of create quick chase -----------------------------------------------------------------------
 
-
-  void startCreatingChaseWidthStepsInside() { }
-  void createNextStep() { }
-  void endCreatingChaseWidthStepsInside() { }
+  boolean chaseWithStepsInsideCreating = false;
+  boolean showWhatToSaveOptions = true;
+  void startCreatingChaseWidthStepsInside() { chaseWithStepsInsideCreating = true; parent.type = 6; }
+  void createNextStep(boolean[] newWhatToSave) {
+    Preset x = new Preset(this);
+    steps.add(x);
+    x.savePreset(newWhatToSave);
+  }
+  void endCreatingChaseWidthStepsInside() { chaseWithStepsInsideCreating = false; }
+  boolean creatingChaseWithStepsInside() { return chaseWithStepsInsideCreating; }
 } //end of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
