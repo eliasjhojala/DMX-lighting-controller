@@ -118,8 +118,8 @@ public class secondApplet1 extends PApplet {
     for(int i = 0; i < trusses.length; i++) {
       if(trusses[i].type == 1) {
         pushMatrix();
-        translate(0, trusses[i].location.x * 5, trusses[i].location.y + 82);
-        box(10000, 10, 10);
+          translate(0, trusses[i].location.y * 5, trusses[i].location.z + 82);
+          box(10000, 10, 10);
         popMatrix();
       }
     }

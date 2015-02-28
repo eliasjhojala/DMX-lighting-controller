@@ -635,6 +635,7 @@ void keyPressed() {
     }
     
     if(key == 'L') {
+      loadXmlToTrusses();
       loadSocketsFromXML();
       saveNearestSocketsToXML();
     }
