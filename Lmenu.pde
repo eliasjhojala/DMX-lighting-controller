@@ -56,6 +56,15 @@ class LowerMenu {
   
   int w, h;
   
+  
+  //Total width of all the controllers
+  int controllerStackWidth = 0;
+  //Current scroll status (from 0 to 1)
+  float scrollStatus = 0;
+  //scrollStatus target, used for smooth-scroll
+  float scrollStatusTrg = 0;
+  boolean doSmoothScroll = false;
+  
   void draw(PGraphics g, Mouse mouse, boolean translate) {
     if(open) {
       g.pushMatrix();
@@ -81,7 +90,7 @@ class LowerMenu {
           locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
           locX = constrain(mouseX - pmouseX + locX, 40, width - w-(20 + 168));
         }
-        w = width - 40 - 20 - 168;
+        w = constrain(width - 40 - 20 - 168, 1, 1920);
         
         //Close button
         mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, h-10, 30, -20, g);
@@ -94,6 +103,39 @@ class LowerMenu {
         g.fill(230);
         g.textAlign(CENTER);
         g.text("X", 45, h-16);
+        
+        
+        
+        //if(controllerStackWidth <= h-20) scrollStatus = 0;
+        g.translate(10, h-46);
+        g.fill(180, 100); g.noStroke();
+        g.rect(0, 0, w-20, 10);
+        mouse.declareUpdateElementRelative("LowerMenu:scroll", "LowerMenu", 0, 0, w-20, 10, g);
+        mouse.setElementExpire("LowerMenu:scroll", 2);
+        if(mouse.isCaptured("LowerMenu:scroll")) {
+          scrollStatus += (mouseY - pmouseY)/(float(h)-20);
+        }
+        if(mouse.elmIsHover("LowerMenu")) {
+          if(scrolledUp)   { scrollStatusTrg += 120/(float(h)-20);
+            doSmoothScroll = true;
+            scrolledUp = false;
+          }
+          if(scrolledDown) { scrollStatusTrg -= 120/(float(h)-20);
+            doSmoothScroll = true;
+            scrolledDown = false;
+          }
+        }
+        if(doSmoothScroll)
+          if(abs(scrollStatusTrg - scrollStatus) > 0.001) scrollStatus += (scrollStatusTrg - scrollStatus) / 3;
+            else doSmoothScroll = false;
+          else scrollStatusTrg = scrollStatus;
+        scrollStatus = constrain(scrollStatus, 0, 1);
+        scrollStatusTrg = constrain(scrollStatusTrg, 0, 1);
+        //if(controllerStackWidth > h-20) {
+          g.translate(scrollStatus * (w-20 - 40), 0);
+          g.fill(180, 180);
+          g.rect(0, 0, 40, 10);
+        //}
         
       }
               
