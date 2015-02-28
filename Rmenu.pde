@@ -537,6 +537,51 @@ class MemoryCreationBox {
           }
           }
         break;
+        case 3: //chase with steps inside
+          //Draw some buttons
+          g.pushMatrix();
+            g.translate(10, 110);
+            mouse.declareUpdateElementRelative("MemoryCreationBox:nextStep", "MemoryCreationBox", 0, 0, 25, 25, g);
+            mouse.setElementExpire("MemoryCreationBox:nextStep", 2);
+            boolean boxIsClicked = mouse.isCaptured("MemoryCreationBox:nextStep");
+            g.pushStyle();
+              if(boxIsClicked) { g.fill(topMenuTheme); }
+              else { g.fill(topMenuAccent); }
+              g.noStroke();
+              g.rect(0, 0, 25, 25, 4);
+            g.popStyle();
+            g.text("save step", 56, 16);
+          g.popMatrix();
+          
+          //Draw whatToSave checkboxes
+          g.translate(0, 35);
+          g.textAlign(LEFT);
+          g.text("What to save:", 10, 125);
+          g.translate(10, 132);
+          cols = 2;
+          rows = saveOptionButtonVariables.length/cols;
+          for(int i = 0; i < saveOptionButtonVariables.length; i++) {
+            g.pushMatrix();
+              g.translate(i / rows * 120, i % rows * 30);
+              mouse.declareUpdateElementRelative("MemoryCreationBox:wts" + i, "MemoryCreationBox", 0, 0, 120, 25, g);
+              mouse.setElementExpire("MemoryCreationBox:wts" + i, 2);
+              boolean boxIsHover = mouse.elmIsHover("MemoryCreationBox:wts" + i);
+              g.fill(boxIsHover ? 210 : 200);
+              g.noStroke();
+              g.rect(0, 0, 25, 25, 4);
+              
+              if(mouse.isCaptured("MemoryCreationBox:wts" + i) && mouse.firstCaptureFrame) {
+                selectedWhatToSave[i] = !selectedWhatToSave[i];
+              }
+              if(selectedWhatToSave[i]) {
+                g.fill(0, 186, 240);
+                g.rect(4, 4, 17, 17, 4);
+              }
+              g.fill(10);
+              g.text(saveOptionButtonVariables[i], 30, 16);
+            g.popMatrix();
+          }
+        break;
       }
     }
     g.popMatrix();
@@ -554,6 +599,9 @@ class MemoryCreationBox {
       case 2: //s2l
         memories[selectedMemorySlot].myChase.createQuickChase();
       break;
+      case 3: //chase with steps inside
+        memories[selectedMemorySlot].myChase.endCreatingChaseWidthStepsInside();
+      break;
     }
     open = false;
     savingMemory = false;
@@ -565,7 +613,7 @@ class MemoryCreationBox {
   }
   
   void addToSelectedMemoryMode() {
-    if(selectedMemoryMode < 2) selectedMemoryMode++;
+    if(selectedMemoryMode < 3) selectedMemoryMode++;
     else selectedMemoryMode = 0;
   }
 }
