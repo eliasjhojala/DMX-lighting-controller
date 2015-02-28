@@ -271,10 +271,11 @@ int[] XMLtoIntArray(String name, XML xml) {
     xml = xml.getChild(name);
     if(xml != null) {
       XML[] block = xml.getChildren();
-      int a = 1;
+      int a = 0;
       for(int i = 0; i < block.length; i++) {
         if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
-          a++;
+          int tmp = block[i].getInt("id")+1;
+          if(tmp > a) a = tmp;
         }
       }
       toReturn = new int[a];
