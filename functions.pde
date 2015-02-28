@@ -6,13 +6,11 @@ int[] newIncrementingIntArray(int length, int start) {
   incrementingIntArray(toReturn, start);
   return toReturn;
 }
+
 void incrementingIntArray(int[] array, int start) {
-  
-  
   for(int i = 0, c = start; i < array.length; i++, c++) {
     array[i] = c;
   }
-  
 }
 
 boolean scrolledDown = false;
@@ -779,11 +777,7 @@ void saveColorToXML(ManageXML xml, String name, color c) {
   xml.goBack();
 }
 
-//color getColorFromXML(ManageXML xml, String name) {
-//  int r, g, b;
-//  
-//  return color(r, g, b);
-//}
+
 
 boolean isBetween(int original, int min, int max) {
   return inBds1D(original, min, max);
