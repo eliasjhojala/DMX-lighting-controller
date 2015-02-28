@@ -105,22 +105,22 @@ class LowerMenu {
         g.text("X", 45, h-16);
         
         
-        
+        g.pushMatrix();
         //if(controllerStackWidth <= h-20) scrollStatus = 0;
-        g.translate(10, h-46);
+        g.translate(70, h-24.5);
         g.fill(180, 100); g.noStroke();
-        g.rect(0, 0, w-20, 10);
-        mouse.declareUpdateElementRelative("LowerMenu:scroll", "LowerMenu", 0, 0, w-20, 10, g);
+        g.rect(0, 0, w-90, 10, 4);
+        mouse.declareUpdateElementRelative("LowerMenu:scroll", "LowerMenu", 0, 0, w-90, 10, g);
         mouse.setElementExpire("LowerMenu:scroll", 2);
         if(mouse.isCaptured("LowerMenu:scroll")) {
-          scrollStatus += (mouseY - pmouseY)/(float(h)-20);
+          scrollStatus += (mouseX - pmouseX)/(float(w)-90);
         }
-        if(mouse.elmIsHover("LowerMenu")) {
-          if(scrolledUp)   { scrollStatusTrg += 120/(float(h)-20);
+        if(mouse.elmIsOver("LowerMenu")) {
+          if(scrolledUp)   { scrollStatusTrg += 120/(float(w)-90);
             doSmoothScroll = true;
             scrolledUp = false;
           }
-          if(scrolledDown) { scrollStatusTrg -= 120/(float(h)-20);
+          if(scrolledDown) { scrollStatusTrg -= 120/(float(w)-90);
             doSmoothScroll = true;
             scrolledDown = false;
           }
@@ -132,19 +132,50 @@ class LowerMenu {
         scrollStatus = constrain(scrollStatus, 0, 1);
         scrollStatusTrg = constrain(scrollStatusTrg, 0, 1);
         //if(controllerStackWidth > h-20) {
-          g.translate(scrollStatus * (w-20 - 40), 0);
+          g.translate(scrollStatus * (w-90 - 40), 0);
           g.fill(180, 180);
-          g.rect(0, 0, 40, 10);
+          g.rect(0, 0, 40, 10, 4);
         //}
+        
+        g.popMatrix();
         
       }
               
       {
+        g.pushMatrix();
+        g.translate(16, 16);
+        int rows = (h-48) / 84;
+        int cols = w / 88 +1;
+        int colStart = getScrollXOffset() / 88;
         
+        for(int i = colStart; i < cols; i++) {
+          for(int j = 0; j < rows; j++) {
+            int id = j + rows*i;
+            if(id < fixtures.size()) {
+              g.pushMatrix();
+              int y = (j+1) * (252 / rows) - 84;
+              g.translate(i*88, y);
+              drawFbox(id, g, mouse);
+              g.popMatrix();
+            } else break;
+          }
+        }
+        controllerStackWidth = fixtures.size() / rows * 88;
+        g.popMatrix();
       }
       g.popMatrix();
       g.popStyle();
     }
+  }
+  
+  int getScrollXOffset() {
+    return int(scrollStatus * controllerStackWidth);
+  }
+  
+  
+  void drawFbox(int id, PGraphics g, Mouse mouse) {
+    g.fill(255, 180); g.noStroke();
+    g.rect(0, 0, 80, 80);
   }
 }
 

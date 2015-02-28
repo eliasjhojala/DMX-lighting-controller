@@ -378,7 +378,7 @@ class SettingsTab {
         if(mouse.isCaptured("settings:scroll")) {
           scrollStatus += (mouseY - pmouseY)/(float(height_)-20);
         }
-        if(mouse.elmIsHover("settings")) {
+        if(mouse.elmIsOver("settings")) {
           if(scrolledUp)   { scrollStatusTrg += 120/(float(height_)-20);
             doSmoothScroll = true;
             scrolledUp = false;

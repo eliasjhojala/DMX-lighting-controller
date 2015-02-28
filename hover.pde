@@ -189,6 +189,11 @@ class Mouse {
     if(targetElement != null) return targetElement.isHovered; else return false;
   }
   
+  boolean elmIsOver(String objName) {
+    HoverableElement targetElement = getElementByName(objName);
+    if(targetElement != null) return targetElement.isOnTop; else return false;
+  }
+  
   void refresh() {
     refresh(mouseX, mouseY, g);
   }
@@ -218,10 +223,11 @@ class Mouse {
         if(bridgedMode) {
           bridgedPass = bridgedModeParent.elmIsHover(bridgedModeName);
         }
-        
+        elm.isOnTop = false;
         if(ontop[i] && elm.priority > curMax && elm.enabled && bridgedPass) {
           curMax = elm.priority;
           maxId = i;
+          elm.isOnTop = true;
           found = true;
         }
       }
@@ -293,6 +299,7 @@ class HoverableElement {
   int expires = -1;
   
   boolean isHovered;  //Is element selected as the one to be hovered (not direct indication of capture)
+  boolean isOnTop;
   
   //You have to modify this manually
   boolean autoCapture = true;    //Is element automatically captured during refresh if it is selected or can an external source decide whether it should capture?
