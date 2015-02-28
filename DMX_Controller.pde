@@ -59,6 +59,8 @@ void setFixtureChannelsAtSoftwareBegin() {
   }
 }
 
+import themidibus.*; 
+import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
 
 
 import themidibus.*; 

@@ -221,9 +221,12 @@ class memory { //Begin of memory class------------------------------------------
   
   
   void savePreset(boolean[] newWhatToSave) {
-    
     arrayCopy(newWhatToSave, whatToSave);
-    
+    savePreset();
+  }
+  
+  
+  void savePreset() {
     repOfFixtures = new FixtureDMX[fixtures.size()];
     for(int i = 0; i < fixtures.size(); i++) {
         repOfFixtures[i] = new FixtureDMX();
@@ -242,7 +245,6 @@ class memory { //Begin of memory class------------------------------------------
       }
     }
     type = 1;
-    
   }
 
 

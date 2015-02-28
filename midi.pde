@@ -1,6 +1,381 @@
-
-
  
+
+
+ LaunchpadData launchpadData;
+ behringerLC2412 LC2412;
+ Input inputClass;
+ Keyrig49 keyRig49;
+
+
+ void createMidiClasses() {
+   LaunchpadData launchpadData = new LaunchpadData();
+ //  launchpad = new Launchpad(2, 2);
+   LC2412 = new behringerLC2412(1, 2);
+   inputClass = new Input();
+  // keyRig49 = new Keyrig49(1);
+ }
+
+
+Launchpad launchpad;
+
+final int OUTPUT_TO_FIXTURES = 1;
+final int OUTPUT_TO_DMX = 2;
+final int OUTPUT_TO_MEMORIES = 3;
+
+
+public class Keyrig49 {
+  
+  final boolean[] OCTAVE = {true, false, true, false, true, true, false, true, false, true, false, true};
+  final int PIANO_OCTAVE_PATTERN_OFFSET = 0;
+  
+  MidiBus bus;
+  
+  boolean[] useToggle;
+  boolean[] keys;
+  boolean[] keysOld;
+  int[] keysVal;
+  int[] keysValOld;
+  
+  int output = OUTPUT_TO_FIXTURES;
+  
+  Keyrig49(int inputIndex) {
+    setup(inputIndex);
+  }
+  
+  void setup(int inputIndex) {
+    
+    bus = new MidiBus(this, inputIndex, 0);
+    keys = new boolean[49];
+    keysOld = new boolean[49];
+    useToggle = new boolean[49];
+    keysVal = new int[49];
+    keysValOld = new int[49];
+    
+  }
+  
+  void noteOn(int channel, int pitch, int velocity) {
+    int whiteI = 0;
+    for(int k = 0; k < pitch; k++) {
+       if(OCTAVE[(k + PIANO_OCTAVE_PATTERN_OFFSET) % OCTAVE.length]) whiteI++;
+    }
+    keys[constrain(whiteI, 0, keys.length-1)] = midiToBoolean(velocity);
+    keysVal[constrain(whiteI, 0, keys.length-1)] = midiToDMX(velocity);
+  }
+  void noteOff(int channel, int pitch, int velocity) {
+    noteOn(channel, pitch, velocity);
+  }
+  
+}
+
+public class Launchpad {
+  final int LEARN = 0;
+  final int VIEW = 1;
+  final int PAGEDOWN = 2;
+  final int PAGEUP = 3;
+  final int SESSION = 4;
+  final int USER1 = 5;
+  final int USER2 = 6;
+  final int MIXER = 7;
+  
+  boolean[][] pads;
+  boolean[][] padsToggle;
+  
+  boolean[] upperPads;
+  boolean[] upperPadsToggle;
+  
+  int[] mapping;
+  int output;
+  
+  boolean[][] useToggle;
+  
+  MidiBus bus;
+  
+  Launchpad(int inputIndex, int outputIndex) {
+    setup(inputIndex, outputIndex);
+  }
+  
+  void setup(int inputIndex, int outputIndex) {
+    
+    bus = new MidiBus(this, inputIndex, outputIndex);
+    pads = new boolean[8][8];
+    padsToggle = new boolean[8][8];
+    upperPads = new boolean[8];
+    upperPadsToggle = new boolean[8];
+    
+    output = 2;
+    useToggle = new boolean[8][8];
+    for(int x = 0; x < 8; x++) { 
+      for(int y = 0; y < 8; y++) { 
+        useToggle[x][y] = true; 
+      } 
+    }
+    
+  }
+  
+  void noteOn(int channel, int pitch, int velocity) {
+    int x = constrain(pitch%16, 0, pads.length-1), y = constrain(pitch/16, 0, pads[0].length-1);
+    boolean val = midiToBoolean(velocity);
+    pads[x][y] = val;
+    if(val) padsToggle[x][y] = !padsToggle[x][y];
+    
+    boolean value;
+    if(useToggle[x][y]) {
+      value = padsToggle[x][y];
+    }
+    else {
+      value = pads[x][y];
+    }
+    bus.sendNoteOn(0, pitch, byte(value) * 127);
+    if(output == 1) { memories[x+8*y+1].setValue(value ? 255 : 0); }
+    else if(output == 2) { fixtures.get(x+8*y).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
+  }
+  
+  void noteOff(int channel, int pitch, int velocity) {
+    noteOn(channel, pitch, 0);
+  }
+
+  
+  void controllerChange(int channel, int number, int value) {
+    boolean val = midiToBoolean(value);
+    int x = constrain(number-104, 0, upperPads.length-1);
+    upperPads[x] = val;
+    if(val) upperPadsToggle[x] = !upperPadsToggle[x];
+  }
+  
+
+
+}
+
+
+public class behringerLC2412 {
+  int[][] faderValue; //[row][number]
+  int[][] faderValueOld; //[row][number]
+  boolean[] buttons; //[number]
+  boolean[] buttonsOld; //[number]
+  boolean[] buttonsToggle;
+  boolean[] buttonsToggleOld;
+  int masterAvalue, masterBvalue, masterValue;
+  int[] masterValues = new int[3];
+  int[] masterValuesOld = new int[3];
+  int[] chaserValues = new int[3];
+  int[] chaserValuesOld = new int[3];
+  int speedValue, xFadeValue, chaserValue;
+  int bank;
+  int chaserNumber;
+  boolean stepKey, channelFlashKey, soloKey, special1Key, special2Key, manualKey, chaserModeKey, insertKey, presetFlashKey, memoryFlashKey;
+  boolean insertToggle, presetFlashToggle, memoryFlashToggle;
+  
+  int[] output = { OUTPUT_TO_FIXTURES, OUTPUT_TO_MEMORIES };
+
+  
+  behringerLC2412(int inputIndex, int outputIndex) {
+    setup(inputIndex, outputIndex);
+  }
+  
+  MidiBus bus;
+  void setup(int inputIndex, int outputIndex) {
+    //Midi start commands
+    bus = new MidiBus(this, inputIndex, outputIndex);
+    faderValue = new int[2][12];
+    faderValueOld = new int[2][12];
+    buttons = new boolean[12];
+    buttonsOld = new boolean[12];
+    buttonsToggle = new boolean[12];
+    buttonsToggleOld = new boolean[12];
+  }
+  
+  void noteOn(int channel, int pitch, int velocity) {
+    if(pitch != 10) { //One slider is crashed
+      midiMessageIn(pitch, velocity);
+      println(str(pitch) + " : " + str(velocity));
+    }
+  }
+  void noteOff(int channel, int pitch, int velocity) {
+    midiMessageIn(pitch, velocity);
+  }
+  void controllerChange(int channel, int pitch, int velocity) {
+    noteOn(channel, pitch, velocity);
+  }
+  
+  void midiMessageIn(int num, int val) {
+    if(isBetween(num, 0, 11)) {
+      faderValue[0][num] = midiToDMX(val);
+    }
+    else if(isBetween(num, 12, 23)) {
+      faderValue[1][num-12] = midiToDMX(val);
+    }
+    else if(isBetween(num, 31, 42)) {
+      buttons[constrain(num-31, 0, buttons.length-1)] = midiToBoolean(val);
+      if(buttons[constrain(num-31, 0, buttons.length-1)]) { buttonsToggle[constrain(num-31, 0, buttons.length-1)] = !buttonsToggle[constrain(num-31, 0, buttons.length-1)]; }
+    }
+    else {
+      switch(num) {
+        case 24: chaserValues[0] = midiToDMX(val); break;
+        case 25: chaserValues[1] = midiToDMX(val); break;
+        case 26: chaserValues[2] = midiToDMX(val); break;
+        case 27: masterValues[0] = midiToDMX(val); break;
+        case 28: masterValues[1] = midiToDMX(val); break;
+        case 29: masterValues[2] = midiToDMX(val); break;
+        case 30: stepKey = midiToBoolean(val); break;
+        case 43: bank = val; break;
+        case 44: chaserNumber = val; break;
+        case 45: channelFlashKey = midiToBoolean(val); break;
+        case 46: soloKey = midiToBoolean(val); break;
+        case 47: special1Key = midiToBoolean(val); break;
+        case 48: special2Key = midiToBoolean(val); break;
+        case 49: manualKey = midiToBoolean(val); break;
+        case 50: chaserModeKey = midiToBoolean(val); break;
+        case 51: insertKey = midiToBoolean(val); if(insertKey) { insertToggle = !insertToggle; } memories[chaserNumber].savePreset(new boolean[] { true }); break;
+        case 52: presetFlashKey = midiToBoolean(val); if(presetFlashKey) { presetFlashToggle = !presetFlashToggle; } break;
+        case 53: memoryFlashKey = midiToBoolean(val); if(memoryFlashKey) { memoryFlashToggle = !memoryFlashToggle; } break;
+      }
+    }
+  }
+  
+  
+  void processValues() {
+    if(masterValues[0] != masterValuesOld[0]) {
+      changeGrandMasterValue(masterValues[0]);
+      masterValuesOld[0] = masterValues[0];
+    }
+  }
+}
+
+class Input {
+  Input() {
+  }
+  
+  void draw() {
+    processBehringerLC2412();
+    
+  }
+  
+  void processBehringerLC2412() {
+    if(LC2412 != null) {
+      processBehringerLC2412master();
+      processBehringerLC2412faders();
+    }
+    if(keyRig49 != null) processKeyrig49Keys();
+      
+    
+  }
+  void processBehringerLC2412master() {
+    if(LC2412.masterValues[0] != LC2412.masterValuesOld[0]) {
+      changeGrandMasterValue(LC2412.masterValues[0]);
+      LC2412.masterValuesOld[0] = LC2412.masterValues[0];
+    }
+  }
+  void processBehringerLC2412faders() {
+    for(int i = 0; i <= 11; i++) {
+      for(int j = 0; j <= 1; j++) {
+        if(setValueToOutput(i, LC2412.output[j], LC2412.bank*12, LC2412.faderValue[j], LC2412.faderValueOld[j])) {
+          LC2412.faderValueOld[j][i] = LC2412.faderValue[j][i];
+        }
+      }
+      int buttonOutput = 0;
+      if(LC2412.channelFlashKey) { buttonOutput = OUTPUT_TO_FIXTURES; } else { buttonOutput = OUTPUT_TO_MEMORIES; }
+      if(LC2412.presetFlashToggle) {
+        if(setValueToOutputFromBoolean(i, buttonOutput, LC2412.bank*12, LC2412.buttons, LC2412.buttonsOld)) {
+            LC2412.buttonsOld[i] = LC2412.buttons[i];
+        }
+      }
+      else {
+        if(setValueToOutputFromBoolean(i, buttonOutput, LC2412.bank*12, LC2412.buttonsToggle, LC2412.buttonsToggleOld)) {
+            LC2412.buttonsToggleOld[i] = LC2412.buttonsToggle[i];
+        }
+      }
+    }
+    
+    for(int i = 0; i <= 2; i++) {
+      if(LC2412.chaserValues[i] != LC2412.chaserValuesOld[i]) {
+        switch(i) {
+          case 0: break;
+          case 1: changeCrossFadeValue(LC2412.chaserValues[i]); break;
+          case 2: break;
+        }
+        LC2412.chaserValuesOld[i] = LC2412.chaserValues[i];
+      }
+    }
+    
+  }
+  
+  void processKeyrig49Keys() {
+    for(int i = 0; i < 49; i++) {
+      if(setValueToOutput(i, keyRig49.output, 0, keyRig49.keysVal, keyRig49.keysValOld)) {
+        keyRig49.keysValOld[i] = keyRig49.keysVal[i];
+      }
+    }
+  }
+  
+  boolean setValueToOutput(int number, int output, int offset, int[] data, int[] dataOld) {
+    int n = number+offset;
+    if(isBetween(number, 0, min(data.length-1, dataOld.length-1))) {
+      if(data[number] != dataOld[number]) {
+        if(output == OUTPUT_TO_FIXTURES) {
+          if(n < fixtures.size()) {
+            fixtures.get(n).in.setUniversalDMX(DMX_DIMMER, data[number]);
+            fixtures.get(n).DMXChanged = true;
+            
+          }
+        }
+        else if(output == OUTPUT_TO_DMX) {
+          //Put value to dmx
+        }
+        else if(output == OUTPUT_TO_MEMORIES) {
+          if(n < memories.length) {
+            memories[n].setValue(data[number]);
+          }
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  boolean setValueToOutputFromBoolean(int number, int output, int offset, boolean[] data, boolean[] dataOld) {
+    int n = number+offset;
+    if(isBetween(number, 0, min(data.length-1, dataOld.length-1))) {
+      if(data[number] != dataOld[number]) {
+        if(output == OUTPUT_TO_FIXTURES) {
+          if(n < fixtures.size()) {
+            fixtures.get(n).setUniversalDMXwithFade(DMX_DIMMER, data[number] ? 255 : 0);
+            //fixtures.get(n).in.setUniversalDMX(DMX_DIMMER, data[number] ? 255 : 0);
+            fixtures.get(n).DMXChanged = true;
+            
+          }
+        }
+        else if(output == OUTPUT_TO_DMX) {
+          //Put value to dmx
+        }
+        else if(output == OUTPUT_TO_MEMORIES) {
+          if(n < memories.length) {
+            memories[n].setValue(data[number] ? 255 : 0);
+          }
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+
+  
+  
+}
+
+boolean midiToBoolean(int val) {
+  return val > 63;
+}
+int midiToDMX(int val) {
+  return rMap(val, 0, 127, 0, 255);
+}
+
+class LaunchpadData {
+  LaunchpadData() {
+  }
+  boolean[][] button = new boolean[8][8];
+}
+
+
  
 //Maschine Mikro MK2 Interfacing -------------------------------------------------------------------------------------------------------
 

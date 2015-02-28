@@ -1,4 +1,4 @@
-FixtureProfile[] fixtureProfiles = new FixtureProfile[19]; 
+//FixtureProfile[] fixtureProfiles = new FixtureProfile[19]; 
 
 String nameOfProfileFile = "fixtureProfiles.xml"; //Name of xml file where all the fixtureProfile data is located
 
@@ -118,6 +118,4 @@ void loadFixtureProfiles() {
   } //End of going through all the profiles
 } //End of loading fixtureProfiles from xml
 
-void createFixtureProfiles() {
-  loadFixtureProfiles();
-}
+

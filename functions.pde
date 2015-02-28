@@ -256,8 +256,9 @@ boolean inBds2D(float pointerX, float pointerY, float x1, float y1, float x2, fl
   return inBds1D(pointerX, x1, x2) && inBds1D(pointerY, y1, y2);
 }
 
+
 boolean inBds1D(float pointer, float x1, float x2){
-  return pointer > x1 && pointer < x2;
+  return pointer >= x1 && pointer <= x2;
 }
 
 boolean isHoverBottomMenu() {
@@ -646,6 +647,7 @@ void keyPressed() {
 void mousePressed() {
   mouseClicked = true;
 }
+
 void mouseReleased() {
   mouseClicked = false;
   mouseReleased = true;
@@ -767,3 +769,8 @@ void saveColorToXML(ManageXML xml, String name, color c) {
 //  
 //  return color(r, g, b);
 //}
+
+boolean isBetween(int original, int min, int max) {
+  return inBds1D(original, min, max);
+}
+

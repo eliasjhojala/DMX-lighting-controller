@@ -4,8 +4,6 @@ OscP5 oscP52;
 
 
 
-
-
 boolean loadAllDataInSetup = true;
 
 public int leveys;
@@ -28,7 +26,9 @@ void setuppi() {
   
  
     fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-
+    
   createSockets();
   loadXmlToTrusses();
+  
+  createMidiClasses();
 }
