@@ -83,11 +83,12 @@ void ansat(PVector mouseRotated) {
       }
       popMatrix();
     }
-
+    oldMouseXtr = mouseRotated.x;
+    oldMouseYtr = mouseRotated.y;
 }
 
-int oldMouseXtr = 0;
-int oldMouseYtr = 0;
+float oldMouseXtr = 0;
+float oldMouseYtr = 0;
 
 void doTrussMoving(int i, PVector mouseRotated) {
   if(!showMode) {
@@ -100,8 +101,8 @@ void doTrussMoving(int i, PVector mouseRotated) {
     }
     if(movingTruss && trussToMove == i) {
       if(mouseButton == LEFT) {
-        if(!(key == 'y' && keyPressed)) trusses[i].location.x += int((mouseRotated.x - oldMouseXtr) * 100 / zoom);
-        if(!(key == 'x' && keyPressed)) trusses[i].location.y += int((mouseRotated.y - oldMouseYtr) * 100 / zoom);
+        if(!(key == 'y' && keyPressed)) trusses[i].location.x += (mouseRotated.x - oldMouseXtr) * 100 / zoom;
+        if(!(key == 'x' && keyPressed)) trusses[i].location.y += (mouseRotated.y - oldMouseYtr) * 100 / zoom;
       } else if(mouseButton == RIGHT && mouse.firstCaptureFrame) {
         if(lastRMBc > millis() - 1000) {
           if(!(key == 'y' && keyPressed)) trusses[i].location.x = 0;
