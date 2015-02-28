@@ -119,13 +119,15 @@ void doTrussMoving(int i, PVector mouseRotated) {
 int socketToMove = -1;
 boolean movingSocket = false;
 
+PVector oldMouseLocationForSockets = new PVector(0, 0);
+
 void drawSockets(PVector mouseRotated) {
   for(int i = 0; i < sockets.length; i++) {
     Socket socket = sockets[i];
     if(socket != null) if(socket.exist) {
       pushMatrix();
 
-          translate(socket.x_location, trusses[constrain(socket.truss, 0, trusses.length-1)].location.y);
+          translate(socket.x_location+trusses[constrain(socket.truss, 0, trusses.length-1)].location.x, trusses[constrain(socket.truss, 0, trusses.length-1)].location.y);
           fill(20);
           stroke(0, 0, 255);
           PVector point1 = new PVector(0, 0);
@@ -139,8 +141,8 @@ void drawSockets(PVector mouseRotated) {
       popMatrix();
     }
   }
-      oldMouseXtr = int(mouseRotated.x);
-    oldMouseYtr = int(mouseRotated.y);
+    oldMouseLocationForSockets.x = mouseRotated.x;
+    oldMouseLocationForSockets.y = mouseRotated.y;
 }
 
 void doSocketMoving(int i, PVector mouseRotated, PVector point1, PVector point2) {
@@ -155,7 +157,7 @@ void doSocketMoving(int i, PVector mouseRotated, PVector point1, PVector point2)
     }
     if(movingSocket && socketToMove == i) {
       if(mouseButton == LEFT) {
-         socket.x_location += int((mouseRotated.x - oldMouseXtr) * 100 / zoom);
+         socket.x_location += int((mouseRotated.x - oldMouseLocationForSockets.x) * 100 / zoom);
          if(keyPressed && keyReleased) {
            if(keyCode == UP) { socket.truss += 1; socket.truss = constrain(socket.truss, 0, trusses.length-1); }
            if(keyCode == DOWN) { socket.truss -= 1; socket.truss = constrain(socket.truss, 0, trusses.length-1); }
