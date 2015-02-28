@@ -267,23 +267,26 @@ XML arrayToXML(String name, int[] array) {
 
 int[] XMLtoIntArray(String name, XML xml) {
   int[] toReturn = { };
-  xml = xml.getChild(name);
   if(xml != null) {
-    XML[] block = xml.getChildren();
-    int a = 0;
-    for(int i = 0; i < block.length; i++) {
-      if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
-        a++;
+    xml = xml.getChild(name);
+    if(xml != null) {
+      XML[] block = xml.getChildren();
+      int a = 1;
+      for(int i = 0; i < block.length; i++) {
+        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+          a++;
+        }
       }
-    }
-    toReturn = new int[a];
-    a = 0;
-    for(int i = 0; i < block.length; i++) {
-      if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
-        int id = block[i].getInt("id");
-        toReturn[id] = block[i].getInt("val");
-        a++;
+      toReturn = new int[a];
+      a = 0;
+      for(int i = 0; i < block.length; i++) {
+        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+          int id = block[i].getInt("id");
+          toReturn[id] = block[i].getInt("val");
+          a++;
+        }
       }
+      println("TOIMII");
     }
   }
   return toReturn;
@@ -351,20 +354,48 @@ class Preset { //Begin of Preset class
     xml = xml.getParent();
     xml.addChild(arrayToXML("whatToSave", whatToSave));
     xml.addChild(arrayToXML("fixturesToSave", fixturesToSave));
+    xml = xml.addChild("repOfFixtures");
+      for(int i = 0; i < repOfFixtures.length; i++) {
+        if(max(repOfFixtures[i].DMX) > 0) {
+          xml = xml.addChild(repOfFixtures[i].getXML());
+          xml.setInt("id", i);
+          xml = xml.getParent();
+        }
+      }
+    xml = xml.getParent();
     return xml;
   }
   
   
+  boolean XMLloadSucces = true;
+  
   void XMLtoObject(XML xml) {
+    XMLloadSucces = false;
+    xml = xml.getChild("Preset");
     xml = xml.getChild("mainData");
     if(xml != null) {
       value = xml.getInt("value");
       valueOld = xml.getInt("valueOld");
       xml = xml.getParent();
-      whatToSave = XMLtoBooleanArray("whatToSave", xml);
-      fixturesToSave = XMLtoBooleanArray("fixturesToSave", xml);
     }
+    if(xml != null) {
+      arrayCopy(XMLtoBooleanArray("whatToSave", xml), whatToSave);
+      arrayCopy(XMLtoBooleanArray("fixturesToSave", xml), fixturesToSave);
+    }
+
+    xml = xml.getChild("repOfFixtures");
+    XML[] block = xml.getChildren();
+      for(int i = 0; i < block.length; i++) {
+        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+          int id = block[i].getInt("id");
+          repOfFixtures[id].XMLtoObject(block[i]);
+        }
+      }
+    xml = xml.getParent();
+    XMLloadSucces = true;
   }
+  
+  
   
   void savePreset(boolean[] newWhatToSave) {
     arrayCopy(newWhatToSave, whatToSave);
@@ -384,13 +415,15 @@ class Preset { //Begin of Preset class
   }
   
   void draw() {
-    if(parent.type == 1 && parent.enabled) {
-      loadPreset();
+    if(XMLloadSucces) {
+      if(parent.type == 1 && parent.enabled) {
+        loadPreset();
+      }
     }
   }
   
   void loadPreset() {
-    if(parent.type == 1) {
+    if(XMLloadSucces) if(parent.type == 1) {
       valueOld = value;
       for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
         if(whatToSave[jk-1]) {
@@ -557,15 +590,16 @@ class chase { //Begin of chase class--------------------------------------------
   void XMLtoObject(XML xml) {
     XMLloadSucces = false;
     if(xml != null) {
+      xml = xml.getChild("Chase");
       presets = XMLtoIntArray("presets", xml);
       content = XMLtoIntArray("content", xml);
       sineValue = XMLtoIntArray("sineValue", xml);
       XML block = xml.getChild("stepData");
-//      if(block != null) {
-//        step = block.getInt("step");
-//        brightness = block.getInt("brightness");
-//        brightness1 = block.getInt("brightness1");
-//      }
+      if(block != null) {
+        step = block.getInt("step");
+        brightness = block.getInt("brightness");
+        brightness1 = block.getInt("brightness1");
+      }
       block = xml.getChild("mainData");
       if(block != null) {
         fade = block.getInt("fade");

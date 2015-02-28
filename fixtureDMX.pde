@@ -104,6 +104,18 @@ class FixtureDMX { //Class containig all the dmx values
     }
   }
   
+  
+  XML getXML() {
+    String data = "<fixtureDMX></fixtureDMX>";;
+    XML xml = parseXML(data);
+    xml.addChild(arrayToXML("DMX", DMX));
+    return xml;
+  }
+  
+  void XMLtoObject(XML xml) {
+    arrayCopy(XMLtoIntArray("DMX", xml), DMX);
+  }
+  
 
   
  

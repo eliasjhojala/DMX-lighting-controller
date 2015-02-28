@@ -5,6 +5,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -20,6 +21,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -35,6 +37,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -47,7 +50,7 @@
         <int id="5" val="24"/>
       </content>
       <sineValue/>
-      <stepData brightness="0" brightness1="0" step="1"/>
+      <stepData brightness="0" brightness1="0" step="0"/>
       <mainData fade="0" ownFade="0" value="255"/>
       <modeData beatModeId="0" inputMode="0" outputMode="0"/>
     </Chase>
@@ -57,6 +60,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets>
@@ -71,7 +75,7 @@
         <int id="5" val="38"/>
       </content>
       <sineValue/>
-      <stepData brightness="0" brightness1="0" step="4"/>
+      <stepData brightness="0" brightness1="0" step="3"/>
       <mainData fade="0" ownFade="0" value="255"/>
       <modeData beatModeId="1" inputMode="1" outputMode="1"/>
     </Chase>
@@ -81,6 +85,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -96,6 +101,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -111,6 +117,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -126,6 +133,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -141,6 +149,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -156,6 +165,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -171,6 +181,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -186,6 +197,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets>
@@ -208,6 +220,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -230,6 +243,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
@@ -252,6 +266,7 @@
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
       <fixturesToSave/>
+      <repOfFixtures/>
     </Preset>
     <Chase>
       <presets/>
