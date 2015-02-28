@@ -951,7 +951,7 @@ class chase { //Begin of chase class--------------------------------------------
     return parent.type == 3;
   }
   
-  int loopMap(int val, int in_lo, int in_hi, int out_hi, int offset) {
+  float loopMap(float val, float in_lo, float in_hi, float out_hi, float offset) {
     return (int(map(val, in_lo, in_hi, 0, out_hi)) + offset) % out_hi;
   }
   
@@ -1041,12 +1041,12 @@ class chase { //Begin of chase class--------------------------------------------
 
   }  
   
-  int hueOffset = 0;
+  float hueOffset = 0;
   void rainbow() {
     if(true) {
       pushStyle();
         colorMode(HSB);
-        hueOffset += getInvertedValue(fade, 0, 255)/10;
+        hueOffset += float(getInvertedValue(fade, 0, 255))/10;
         if(hueOffset > 255) { hueOffset = 0; }
         for(int i = 0; i < getPresets().length; i++) {
           color c = color(loopMap(i, 0, getPresets().length, 255, hueOffset), 255, 255);
