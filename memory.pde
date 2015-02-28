@@ -386,27 +386,61 @@ class Preset { //Begin of Preset class
   
   void XMLtoObject(XML xml) {
     XMLloadSucces = false;
-    xml = xml.getChild("Preset");
-    xml = xml.getChild("mainData");
     if(xml != null) {
-      value = xml.getInt("value");
-      valueOld = xml.getInt("valueOld");
-      xml = xml.getParent();
-    }
-    if(xml != null) {
-      arrayCopy(XMLtoBooleanArray("whatToSave", xml), whatToSave);
-      arrayCopy(XMLtoBooleanArray("fixturesToSave", xml), fixturesToSave);
-    }
-
-    xml = xml.getChild("repOfFixtures");
-    XML[] block = xml.getChildren();
-      for(int i = 0; i < block.length; i++) {
-        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
-          int id = block[i].getInt("id");
-          repOfFixtures[id].XMLtoObject(block[i]);
+      xml = xml.getChild("Preset");
+      if(xml != null) {
+        xml = xml.getChild("mainData");
+        if(xml != null) {
+          value = xml.getInt("value");
+          valueOld = xml.getInt("valueOld");
+          xml = xml.getParent();
         }
+        if(xml != null) {
+          arrayCopy(XMLtoBooleanArray("whatToSave", xml), whatToSave);
+          arrayCopy(XMLtoBooleanArray("fixturesToSave", xml), fixturesToSave);
+        }
+    
+        xml = xml.getChild("repOfFixtures");
+        XML[] block = xml.getChildren();
+          for(int i = 0; i < block.length; i++) {
+            if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+              int id = block[i].getInt("id");
+              repOfFixtures[id].XMLtoObject(block[i]);
+            }
+          }
+        xml = xml.getParent();
       }
-    xml = xml.getParent();
+    }
+    XMLloadSucces = true;
+  }
+  
+  void XMLtoObject(XML xml, boolean a) {
+    XMLloadSucces = false;
+    if(xml != null) {
+      //xml = xml.getChild("Preset");
+      if(xml != null) {
+        xml = xml.getChild("mainData");
+        if(xml != null) {
+          value = xml.getInt("value");
+          valueOld = xml.getInt("valueOld");
+          xml = xml.getParent();
+        }
+        if(xml != null) {
+          arrayCopy(XMLtoBooleanArray("whatToSave", xml), whatToSave);
+          arrayCopy(XMLtoBooleanArray("fixturesToSave", xml), fixturesToSave);
+        }
+    
+        xml = xml.getChild("repOfFixtures");
+        XML[] block = xml.getChildren();
+          for(int i = 0; i < block.length; i++) {
+            if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+              int id = block[i].getInt("id");
+              repOfFixtures[id].XMLtoObject(block[i]);
+            }
+          }
+        xml = xml.getParent();
+      }
+    }
     XMLloadSucces = true;
   }
   
@@ -610,38 +644,42 @@ class chase { //Begin of chase class--------------------------------------------
     XMLloadSucces = false;
     if(xml != null) {
       xml = xml.getChild("Chase");
-      presets = XMLtoIntArray("presets", xml);
-      println("Content before");
-      println(content);
-      content = XMLtoIntArray("content", xml);
-      println("Content after");
-      println(content);
-      //Look these prints, for some reason there are 0 value added to end of array........
-      sineValue = XMLtoIntArray("sineValue", xml);
-      XML block = xml.getChild("stepData");
-      if(block != null) {
-        step = block.getInt("step");
-        brightness = block.getInt("brightness");
-        brightness1 = block.getInt("brightness1");
-      }
-      block = xml.getChild("mainData");
-      if(block != null) {
-        fade = block.getInt("fade");
-        ownFade = block.getInt("ownFade");
-        value = block.getInt("value");
-      }
-      block = xml.getChild("modeData");
-      if(block != null) {
-        inputMode = block.getInt("inputMode");
-        outputMode = block.getInt("outputMode");
-        beatModeId = block.getInt("beatModeId");
-      }
-      block = xml.getChild("steps");
-      if(block != null) {
-        XML[] blocks = block.getChildren();
-        for(int i = 0; i < blocks.length; i++) {
-          if(blocks[i] != null) if(!trim(blocks[i].toString()).equals("")) {
-            steps.add(new Preset(this));
+      if(xml != null) {
+        presets = XMLtoIntArray("presets", xml);
+        println("Content before");
+        println(content);
+        content = XMLtoIntArray("content", xml);
+        println("Content after");
+        println(content);
+        //Look these prints, for some reason there are 0 value added to end of array........
+        sineValue = XMLtoIntArray("sineValue", xml);
+        XML block = xml.getChild("stepData");
+        if(block != null) {
+          step = block.getInt("step");
+          brightness = block.getInt("brightness");
+          brightness1 = block.getInt("brightness1");
+        }
+        block = xml.getChild("mainData");
+        if(block != null) {
+          fade = block.getInt("fade");
+          ownFade = block.getInt("ownFade");
+          value = block.getInt("value");
+        }
+        block = xml.getChild("modeData");
+        if(block != null) {
+          inputMode = block.getInt("inputMode");
+          outputMode = block.getInt("outputMode");
+          beatModeId = block.getInt("beatModeId");
+        }
+        block = xml.getChild("steps");
+        if(block != null) {
+          XML[] blocks = block.getChildren();
+          for(int i = 0; i < blocks.length; i++) {
+            if(blocks[i] != null) if(!trim(blocks[i].toString()).equals("")) {
+              Preset x = new Preset(this);
+              steps.add(x);
+              x.XMLtoObject(blocks[i], true);
+            }
           }
         }
       }
