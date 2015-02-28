@@ -286,10 +286,10 @@ int[] XMLtoIntArray(String name, XML xml) {
           a++;
         }
       }
-      println("TOIMII");
     }
+    return toReturn;
   }
-  return toReturn;
+  return null;
 }
 
 XML arrayToXML(String name, boolean[] array) {
@@ -592,7 +592,12 @@ class chase { //Begin of chase class--------------------------------------------
     if(xml != null) {
       xml = xml.getChild("Chase");
       presets = XMLtoIntArray("presets", xml);
+      println("Content before");
+      println(content);
       content = XMLtoIntArray("content", xml);
+      println("Content after");
+      println(content);
+      //Look these prints, for some reason there are 0 value added to end of array........
       sineValue = XMLtoIntArray("sineValue", xml);
       XML block = xml.getChild("stepData");
       if(block != null) {
