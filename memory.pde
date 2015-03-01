@@ -1192,7 +1192,7 @@ class soundDetect { //----------------------------------------------------------
   
   
   //init all the variables
-  float[] bands;
+  float[] bands = new float[getFreqMax()];
   float[] avgTemp = new float[getFreqMax()];
   float[] avgCounter = new float[getFreqMax()];
   float[] avg = new float[getFreqMax()];
@@ -1200,37 +1200,57 @@ class soundDetect { //----------------------------------------------------------
   float[] currentAvg = new float[getFreqMax()];
   float[] currentAvgCounter = new float[getFreqMax()];
   float[] max = new float[getFreqMax()];
+ 
   boolean blinky = true;
+  
+  int oldFrameCount = 0;
+  boolean onset, kick, snare, hat;
+  
   //end initing variables
   
   
+  
   soundDetect() {
-    bands = new float[fft.specSize()];
   }
   
   
   boolean beat(int bT) {
     beat.detect(in.mix); //beat detect command of minim library
     boolean toReturn = true;
-    switch(bT) {
-      case 1: toReturn = beat.isOnset(); break;
-      case 2: toReturn = beat.isKick(); break;
-      case 3: toReturn = beat.isSnare(); break;
-      case 4: toReturn = beat.isHat(); break;
+    
+    if(frameCount > oldFrameCount) {
+      oldFrameCount = frameCount;
+      switch(bT) {
+        case 1: toReturn = beat.isOnset(); onset = toReturn; break;
+        case 2: toReturn = beat.isKick(); kick = toReturn; break;
+        case 3: toReturn = beat.isSnare(); snare = toReturn; break;
+        case 4: toReturn = beat.isHat(); hat = toReturn; break;
+      }
     }
+    else {
+      switch(bT) {
+        case 1: toReturn = onset; break;
+        case 2: toReturn = kick; break;
+        case 3: toReturn = snare; break;
+        case 4: toReturn = hat;
+      }
+    }
+    
     return toReturn;
   }
   
+  
   //inside soundDetect class  
   int freq(int i) { //Get freq of specific band
+    float toReturn = 0;
     fft.forward(in.mix);
-    int toReturn = 0;
+    toReturn = 0;
     float val = getBand(i);
-    toReturn = constrain(round((map(val, avg[i], max[i], 0, 300))), 0, 255); //This is what this function returns
+    toReturn = constrain((map(val, avg[i], max[i], 0, 255*2)), 0, 255); //This is what this function returns
     { //Counting avg values
       avgTemp[i] += val; 
       avgCounter[i]++;
-      if(avgCounter[i] > 2000) {
+      if(avgCounter[i] > 200) {
         avg[i] = (avg[i] + (avgTemp[i] / avgCounter[i])) / 2;
         avgTemp[i] = 0;
         avgCounter[i] = 0;
@@ -1238,13 +1258,11 @@ class soundDetect { //----------------------------------------------------------
     } //End of counting avg values
     
     { //Counting max values
-      if(max[i] > 0.5) { max[i]-=0.01; } //Make sure max isn't too big
+      if(max[i] > 0.8) { max[i]-=0.01; } //Make sure max isn't too big
       if(val > max[i]) { max[i] = val; } //Make sure max isn't too small
     } //End of counting max values
-    return toReturn;
+    return round(toReturn);
     //command to get  right freq from fft or something like it. 
-    //This functions should be done now.
-   
   }
   
   float getBand(int i) {
@@ -1264,7 +1282,6 @@ class soundDetect { //----------------------------------------------------------
     int toReturn = fft.specSize();
     return toReturn;
     //command which tells how many frequencies there is available. 
-    //This function should be done now.
   }
   
   
