@@ -29,6 +29,10 @@ public class secondApplet1 extends PApplet {
   
   PShape par64Model, par64Holder, base, cone; //Define 3D model objects
   
+  void clearScreen() {
+    background(0);
+  }
+  
   void setup() {
     size(500, 500, P3D);
 

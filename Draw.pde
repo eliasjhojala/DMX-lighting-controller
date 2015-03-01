@@ -9,14 +9,22 @@ int oldGrandMaster = 40;
 
 boolean soloIsOn;
 
+boolean oldUse3D = false;
+
 void draw() {
   if(showModeLocked) { showMode = true; }
   if(showMode) { printMode = false; }
+  
   if(programReadyToRun && !freeze) {
 
-    for(int i = 0; i < fixtures.size(); i++) {
-      if(fixtures.get(i) != null) {
-        fixtures.get(i).soloInThisFixture = false;
+    if(use3D) { if(use3D != oldUse3D) { s1.loop(); f.setBounds(0, 0, displayWidth, displayHeight); oldUse3D = use3D; } }
+    else { if(use3D != oldUse3D) { s1.noLoop(); f.setBounds(0, 0, 0, 0); oldUse3D = use3D; } }
+    
+    if(soloIsOn) {
+      for(int i = 0; i < fixtures.size(); i++) {
+        if(fixtures.get(i) != null) {
+          fixtures.get(i).soloInThisFixture = false;
+        }
       }
     }
     
