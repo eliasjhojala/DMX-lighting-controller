@@ -11,6 +11,8 @@ boolean soloIsOn;
 
 boolean oldUse3D = false;
 
+boolean useMidiMaschines = false;
+
 void draw() {
   if(showModeLocked) { showMode = true; }
   if(showMode) { printMode = false; }
@@ -30,7 +32,7 @@ void draw() {
     
     textSize(12);
     
-    inputClass.draw();
+    if(useMidiMaschines) { inputClass.draw(); }
 
     mouse.refresh();
     
