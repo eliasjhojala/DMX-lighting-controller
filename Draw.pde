@@ -14,54 +14,21 @@ boolean oldUse3D = false;
 boolean useMidiMaschines = false;
 
 void draw() {
-  if(showModeLocked) { showMode = true; }
-  if(showMode) { printMode = false; }
-  
+  checkShowMode();
+  check3D();
   if(programReadyToRun && !freeze) {
-
-    if(use3D) { if(use3D != oldUse3D) { s1.loop(); f.setBounds(0, 0, displayWidth, displayHeight); oldUse3D = use3D; } }
-    else { if(use3D != oldUse3D) { s1.noLoop(); f.setBounds(0, 0, 0, 0); oldUse3D = use3D; } }
-    
-    if(soloIsOn) {
-      for(int i = 0; i < fixtures.size(); i++) {
-        if(fixtures.get(i) != null) {
-          fixtures.get(i).soloInThisFixture = false;
-        }
-      }
-    }
-    
-    textSize(12);
-    
-    if(useMidiMaschines) { inputClass.draw(); }
-
+    checkSolo();
+    setTextSize();
+    updateMidi();
     mouse.refresh();
-    
-    //Move this to setDimAndMemoryValuesAtEveryDraw, maybe?
     updateMemories();
-    
     checkThemeMode();
-    
     setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
-    if (arduinoFinished) thread("arduinoSend"); //Send dim-values to arduino, which sends them to DMX-shield
-    
-    drawMainWindow(); //Draw fixtures (tab main_window)
-    
-    if(!printMode) {
-      ylavalikko(); //top menu
-      alavalikko(); //bottom menu
-      sivuValikko(); //right menu
-      contextMenu1.draw();
-    }
-
-    
-    if (useMaschine) calcMaschineAutoTap();
-    
-    //Invoke every fixtures draw
-    invokeFixturesDraw();
-    drawColorWashMenu();
-    
-    subWindowHandler.draw();
-    soloIsOn = false;
+    sendDataToArduino();
+    drawMainWindow(); //Draw main view (mainly fixtures)
+    drawMenus();
+    invokeFixturesDraw(); //Invoke every fixtures draw  
+    resetSolo();  
   }
 }
 
@@ -74,3 +41,43 @@ void updateMemories() {
   memoriesFinished = true;
 }
 
+void checkShowMode() {
+  if(showModeLocked) { showMode = true; }
+  if(showMode) { printMode = false; }
+}
+void check3D() {
+  if(use3D) { if(use3D != oldUse3D) { s1.loop(); f.setBounds(0, 0, displayWidth, displayHeight); oldUse3D = use3D; } }
+  else { if(use3D != oldUse3D) { s1.noLoop(); f.setBounds(0, 0, 0, 0); oldUse3D = use3D; } }
+}
+void checkSolo() {
+  if(soloIsOn) {
+    for(int i = 0; i < fixtures.size(); i++) {
+      if(fixtures.get(i) != null) {
+        fixtures.get(i).soloInThisFixture = false;
+      }
+    }
+  }
+}
+void setTextSize() {
+  textSize(12);
+}
+void updateMidi() {
+  if(useMidiMaschines) { inputClass.draw(); }
+  if (useMaschine) { calcMaschineAutoTap(); }
+}
+void sendDataToArduino() {
+  if (arduinoFinished) { thread("arduinoSend"); } //Send dim-values to arduino, which sends them to DMX-shield
+}
+void drawMenus() {
+  if(!printMode) {
+    ylavalikko(); //top menu
+    alavalikko(); //bottom menu
+    sivuValikko(); //right menu
+    contextMenu1.draw();
+    drawColorWashMenu();
+    subWindowHandler.draw();
+  }
+}
+void resetSolo() {
+  soloIsOn = false;
+}
