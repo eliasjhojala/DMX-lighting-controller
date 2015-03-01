@@ -94,7 +94,7 @@ void drawMainWindow() {
            mouse.capture(mouse.getElementByName("main:fixtures"));
            oldMouseX1 = int(mouseRotated.x);
            oldMouseY1 = int(mouseRotated.y);
-           if(!showMode) {
+           if(!showMode && !showModeLocked) {
              lampToMove = i;
              moveLamp = true;
              mouseReleased = false;
@@ -196,7 +196,7 @@ void endBoxSelect() {
         
        
     }
-  } else if(!showMode) {
+  } else if(!showMode && !showModeLocked) {
     //open contextMwnu
     String[] acts = { "createNewFixtureAt00" };
     String[] texs = { "Create new fixture" };

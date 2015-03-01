@@ -23,8 +23,11 @@ void createSockets() {
   }
 }
 
+boolean savingNearestSocketsToXML = false;
 void saveNearestSocketsToXML() {
+  savingNearestSocketsToXML = true;
   saveXML(getNearestSocketsAsXML(), "XML/nearestSockets.xml");
+  savingNearestSocketsToXML = false;
 }
 
 XML getNearestSocketsAsXML() {

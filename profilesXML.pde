@@ -2,6 +2,7 @@
 
 String nameOfProfileFile = "fixtureProfiles.xml"; //Name of xml file where all the fixtureProfile data is located
 
+boolean loadingFixtureProfiles = false;
 void saveFixtureProfiles() {
   //This function saves all the fixtureProfiles to xml file
   //This will be useful when qui for adding fixtureProfiles is ready
@@ -62,7 +63,7 @@ void saveFixtureProfiles() {
 
 void loadFixtureProfiles() {
   //This function loads all the fixtureProfiles from XML file
-  
+  loadingFixtureProfiles = true;
   XML xml; //Define xml variable
 
   xml = loadXML(nameOfProfileFile); //load XML from file
@@ -118,6 +119,7 @@ void loadFixtureProfiles() {
       fixtureProfiles[id].checkDMXchannels(); //Check DMX channels if there is strobe or something like that
     } //end of loading fixture model PShape
   } //End of going through all the profiles
+  loadingFixtureProfiles = false;
 } //End of loading fixtureProfiles from xml
 
 

@@ -1,91 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NearestSockets>
   <truss id="0">
-    <socket channel="0" fixture="11" id="0">H6</socket>
-    <socket channel="0" fixture="16" id="2">H6</socket>
-    <socket channel="0" fixture="17" id="3">H6</socket>
-    <socket channel="0" fixture="19" id="5">H6</socket>
-    <socket channel="0" fixture="20" id="6">H6</socket>
-    <socket channel="0" fixture="21" id="7">H6</socket>
-    <socket channel="0" fixture="27" id="12">H6</socket>
-    <socket channel="0" fixture="28" id="13">H6</socket>
-    <socket channel="0" fixture="29" id="14">H6</socket>
-    <socket channel="0" fixture="30" id="15">H6</socket>
-    <socket channel="0" fixture="31" id="16">H6</socket>
-    <socket channel="0" fixture="32" id="17">H6</socket>
-    <socket channel="0" fixture="39" id="18">H6</socket>
-    <socket channel="0" fixture="40" id="19">H6</socket>
-    <socket channel="0" fixture="41" id="20">H6</socket>
-    <socket channel="0" fixture="42" id="21">H6</socket>
-    <socket channel="0" fixture="43" id="22">H6</socket>
-    <socket channel="0" fixture="44" id="23">H6</socket>
-    <socket channel="0" fixture="45" id="24">H6</socket>
-    <socket channel="0" fixture="46" id="25">H6</socket>
-    <socket channel="0" fixture="47" id="26">H6</socket>
-    <socket channel="0" fixture="48" id="27">H6</socket>
-    <socket channel="0" fixture="49" id="28">H6</socket>
-    <socket channel="0" fixture="50" id="29">H6</socket>
-    <socket channel="0" fixture="51" id="30">H6</socket>
-    <socket channel="0" fixture="52" id="31">H6</socket>
-    <socket channel="0" fixture="53" id="32">H6</socket>
-    <socket channel="0" fixture="54" id="33">H6</socket>
-    <socket channel="0" fixture="55" id="34">H6</socket>
-    <socket channel="0" fixture="56" id="35">H6</socket>
-    <socket channel="0" fixture="57" id="36">H6</socket>
-    <socket channel="0" fixture="58" id="37">H6</socket>
-    <socket channel="0" fixture="59" id="38">H6</socket>
-    <socket channel="0" fixture="60" id="39">H6</socket>
-    <socket channel="0" fixture="61" id="40">H6</socket>
-    <socket channel="0" fixture="62" id="41">H6</socket>
-    <socket channel="0" fixture="63" id="42">H6</socket>
-    <socket channel="0" fixture="64" id="43">H6</socket>
-    <socket channel="0" fixture="65" id="44">H6</socket>
-    <socket channel="0" fixture="66" id="45">H6</socket>
-    <socket channel="0" fixture="67" id="46">H6</socket>
-    <socket channel="0" fixture="68" id="47">H6</socket>
-    <socket channel="0" fixture="69" id="48">H6</socket>
-    <socket channel="0" fixture="70" id="49">H6</socket>
-    <socket channel="0" fixture="71" id="50">H6</socket>
-    <socket channel="0" fixture="72" id="51">H6</socket>
-    <socket channel="0" fixture="73" id="52">H6</socket>
-    <socket channel="0" fixture="74" id="53">H6</socket>
-    <socket channel="0" fixture="75" id="54">H6</socket>
-    <socket channel="0" fixture="76" id="55">H6</socket>
-    <socket channel="0" fixture="77" id="56">H6</socket>
-    <socket channel="0" fixture="78" id="57">H6</socket>
-    <socket channel="0" fixture="79" id="58">H6</socket>
-    <socket channel="0" fixture="80" id="59">H6</socket>
-    <socket channel="0" fixture="81" id="60">H6</socket>
-    <socket channel="0" fixture="82" id="61">H6</socket>
-    <socket channel="0" fixture="83" id="62">H6</socket>
-    <socket channel="0" fixture="84" id="63">H6</socket>
-    <socket channel="0" fixture="85" id="64">H6</socket>
-    <socket channel="0" fixture="86" id="65">H6</socket>
-    <socket channel="0" fixture="87" id="66">H6</socket>
-    <socket channel="0" fixture="88" id="67">H6</socket>
+    <socket channel="7" fixture="15" id="0">H0</socket>
   </truss>
-  <truss id="1">
-    <socket channel="17" fixture="7" id="0">H17</socket>
-    <socket channel="16" fixture="8" id="1">H12</socket>
-    <socket channel="1" fixture="0" id="2">H7</socket>
-  </truss>
+  <truss id="1"/>
   <truss id="2">
-    <socket channel="1" fixture="0" id="0">H11</socket>
-    <socket channel="3" fixture="1" id="1">H13</socket>
-    <socket channel="4" fixture="2" id="2">H14</socket>
-    <socket channel="4" fixture="3" id="3">H16</socket>
-    <socket channel="3" fixture="4" id="4">H18</socket>
-    <socket channel="2" fixture="5" id="5">H19</socket>
-    <socket channel="18" fixture="6" id="6">H15</socket>
-    <socket channel="1" fixture="0" id="7">H11</socket>
+    <socket channel="1" fixture="0" id="0">H2</socket>
+    <socket channel="3" fixture="1" id="1">H3</socket>
+    <socket channel="4" fixture="2" id="2">H4</socket>
+    <socket channel="4" fixture="3" id="3">H5</socket>
+    <socket channel="3" fixture="4" id="4">H6</socket>
+    <socket channel="2" fixture="5" id="5">H7</socket>
+    <socket channel="18" fixture="6" id="6">H8</socket>
+    <socket channel="1" fixture="0" id="7">H2</socket>
   </truss>
-  <truss id="3">
-    <socket channel="100" fixture="33" id="0">H3</socket>
-    <socket channel="108" fixture="34" id="1">H4</socket>
-    <socket channel="116" fixture="35" id="2">H5</socket>
-    <socket channel="124" fixture="36" id="3">H2</socket>
-    <socket channel="132" fixture="37" id="4">H1</socket>
-  </truss>
+  <truss id="3"/>
   <truss id="4"/>
   <truss id="5"/>
   <truss id="6"/>

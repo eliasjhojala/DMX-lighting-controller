@@ -40,9 +40,6 @@ int indexOf(int[] array, int target) {
 }
 
 
-
-int ansaWidth;
-
 int[] valueToDmxOld = new int[DMX_CHAN_LENGTH+1];
 
 boolean arduinoFinished = true;
@@ -71,7 +68,7 @@ void ansat(PVector mouseRotated) {
           translate(trusses[i].location.x, trusses[i].location.y+25);
           fill(20);
           stroke(255);
-          rect(0, 0, ansaWidth, 5);
+          rect(0, 0, trusses[i].lng, 5);
           doTrussMoving(i, mouseRotated);
         break;
         case 0:
@@ -90,10 +87,10 @@ float oldMouseXtr = 0;
 float oldMouseYtr = 0;
 
 void doTrussMoving(int i, PVector mouseRotated) {
-  if(!showMode) {
+  if(!showMode && !showModeLocked) {
     fill(topMenuTheme);
-    rect(ansaWidth-5, -5, 15, 15, 3);
-    if(isHover(ansaWidth-5, -5, 15, 15) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
+    rect(trusses[i].lng-5, -5, 15, 15, 3);
+    if(isHover(trusses[i].lng-5, -5, 15, 15) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
       mouse.capture(mouse.getElementByName("main:fixtures"));
       trussToMove = i;
       movingTruss = true;
@@ -146,7 +143,7 @@ void drawSockets(PVector mouseRotated) {
 
 void doSocketMoving(int i, PVector mouseRotated, PVector point1, PVector point2) {
   Socket socket = sockets[i];
-  if(!showMode) {
+  if(!showMode && !showModeLocked) {
     fill(topMenuTheme);
     if(isHover(round(point1.x), round(point1.y), round(point2.x), round(point2.y)) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
       println(i);
@@ -615,43 +612,51 @@ void keyPressed() {
       printMode = false;
     } //Otetaan esc-näppäin pois käytöstä. on kumminkin huomioitava, että tämä toimii vain pääikkunassa
     if(key == 'm') {
-      showMode = !showMode;
-      notifier.notify("showMode is now " + (showMode ? "enabled" : "disabled") + ".");
+      if(!showModeLocked) {
+        showMode = !showMode;
+        notifier.notify("showMode is now " + (showMode ? "enabled" : "disabled") + ".");
+      }
+      else {
+        showMode = true;
+        notifier.notify("showMode is locked for your safety", true);
+      }
     }
     if(key == 'r') { revStepPressed = true; }
-    if(key == 'l') { loadAllData(); }
+    
  
     if(keyCode == 17) { ctrlDown = true; }
     if(keyCode == 16) { shftDown = true; }
     if(key == 'o') { fileDialogInput(); ctrlDown = false; }
     if(key == 's') {
-      saveAllData();
-    }
-    if(key == 'S') {
-      if(!showMode) {
-        //fileDialogOutput();
-        saveSocketsToXML();
-        saveTrussesAsXML();
-        saveMemoriesToXML();
+      if(!showMode && !showModeLocked) {
+        try {
+          saveAllData(); 
+        }
+        catch (Exception e) {
+          notifier.notify("Error saving data", true);
+        }
       }
       else {
         notifier.notify("Can not save in showMode", true);
       }
     }
-    
-    if(key == 'L') {
-      if(!showMode) {
-        loadXmlToTrusses();
-        loadSocketsFromXML();
-        saveNearestSocketsToXML();
-        loadinMemoriesFromXML = true;
-        loadMemoriesFromXML();
-        loadinMemoriesFromXML = false;
+    if(key == 'l') { 
+      if(!showMode && !showModeLocked) {
+        try {
+          if(!loadingDataAtTheTime()) {
+            loadAllData(); 
+          }
+        }
+        catch (Exception e) {
+          notifier.notify("Error loading data", true);
+        }
       }
       else {
         notifier.notify("Can not load in showMode", false);
       }
     }
+    if(key == 'S') { /* SHIFT + s pressed */ }
+    if(key == 'L') { /* SHIFT + l pressed */ }
 
     if(keyCode == RIGHT) { rightPressed = true; }
     if(keyCode == LEFT) { leftPressed = true; }

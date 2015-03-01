@@ -237,7 +237,7 @@ class contextMenu {
     fixtureId = fId;
     String[] acts;
     String[] labs;
-    if(!showMode) {
+    if(!showMode && !showModeLocked) {
       acts = new String[] {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs", "removeFixtureFromCM", "removeAllSelectedFixtures"};
       labs = new String[] {"Control this", "Control all selected", "Remove this", "Remove all selected"};
     } else {

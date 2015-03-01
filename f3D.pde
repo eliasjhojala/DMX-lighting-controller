@@ -281,7 +281,7 @@ Truss[] trusses;
 class Truss {
   PVector location;
   int type;
-  int lng;
+  int lng = 1000;
   Truss(PVector loc, int len, int t) {
     location = loc;
     type = t;

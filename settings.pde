@@ -42,7 +42,8 @@ class SettingsWindow {
         new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", tabs[1]),
         new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", tabs[1]),
         new SettingController(3, 2, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[1]),
-        new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[1])
+        new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[1]),
+        new SettingController(5, "Lock showMode", "Make sure that showMode isn't turned off accidentally", tabs[1])
       }
     );
     tabs[2] = new SettingsTab("Chase", this);
@@ -67,12 +68,13 @@ class SettingsWindow {
   //It's stupid we do it like this, but primitives.
   void setExternalBoValue(boolean b, int var) {
     switch(var) {
-      case 0: use3D = b;               break;
-      case 1: showOutputAsNumbers = b; break;
-      case 2: showMode = b;            break;
-      case 3: printMode = b;           break;
-      case 4: s2l.blinky = b;          break;
-      case 10: showSockets = b;          break;
+      case 0: use3D = b;                       break;
+      case 1: showOutputAsNumbers = b;         break;
+      case 2: showMode = b || showModeLocked;  break;
+      case 3: printMode = b;                   break;
+      case 4: s2l.blinky = b;                  break;
+      case 5: showModeLocked = b;              break;
+      case 10: showSockets = b;                break;
     }
   }
   
@@ -83,6 +85,7 @@ class SettingsWindow {
       case 2:  return showMode;
       case 3:  return printMode;
       case 4:  return s2l.blinky;
+      case 5:  return showModeLocked;
       case 10: return showSockets;
       default: return false;
     }

@@ -25,7 +25,7 @@ void sivuValikko() {
     
     
     if (mouse.isCaptured("addMemory") && mouse.firstCaptureFrame) {
-      if(!showMode) memoryCreator.initiatePassive();
+      if(!showMode && !showModeLocked) memoryCreator.initiatePassive();
         else notifier.notify("Cannot use memoryCreator while showMode is enabled! (Press M to toggle)");
       
     }
@@ -192,7 +192,7 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
       if(keyPressed && keyCode == CONTROL) {
         if(mouse.firstCaptureFrame) memories[controlledMemoryId].toggleWithMemory(true);
       } else if(keyPressed && keyCode == SHIFT) {
-        if(!showMode) {
+        if(!showMode && !showModeLocked) {
           draggingMemoryId = controlledMemoryId;
           draggingMemory = true;
         }

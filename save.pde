@@ -133,18 +133,14 @@ void saveAllData() {
     saveSocketsToXML();
     saveTrussesAsXML();
     saveMemoriesToXML();
+    saveTestXML();
   } catch (Exception e) {
     e.printStackTrace();
     notifier.notify("Save failed! Try again by saving to another location by pressing SHIFT + S", true);
   }
   
-  
-  println(); println(); println(); 
-  println("SAVE READY");
+
   long takedTime = millis() - saveDataBeginMillis;
-  println("It took " + str(takedTime) + " ms");
   notifier.notify("Save complete. (" + str(takedTime) + "ms)");
-  println();
-  
 }
 

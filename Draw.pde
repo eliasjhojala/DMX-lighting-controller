@@ -10,6 +10,8 @@ int oldGrandMaster = 40;
 boolean soloIsOn;
 
 void draw() {
+  if(showModeLocked) { showMode = true; }
+  if(showMode) { printMode = false; }
   if(programReadyToRun && !freeze) {
 
     for(int i = 0; i < fixtures.size(); i++) {
@@ -45,7 +47,6 @@ void draw() {
     if (useMaschine) calcMaschineAutoTap();
     
     //Invoke every fixtures draw
-    //if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
     invokeFixturesDraw();
     drawColorWashMenu();
     

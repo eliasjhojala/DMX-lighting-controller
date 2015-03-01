@@ -1,5 +1,6 @@
 //I COUNT: THERE ARE 9 714 LINES CODE IN THIS SOFTWARE
-boolean showMode = true;                                                                                                                                                  //|                        
+boolean showMode = true;                                                                                                                                                  //| 
+boolean showModeLocked = true;                                                                                                                                            //|
 boolean showSockets = false;                                                                                                                                              //| 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
 boolean useCOM = true; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                       //|

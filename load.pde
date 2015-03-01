@@ -17,7 +17,13 @@ void loadAllData() {
     e.printStackTrace();
   }
 }
+boolean fixtureProfilesLoaded = false;
+boolean loadingAllData;
 void loadAllData1() {
+  loadingAllData = true;
+  long loadDataBeginMillis = millis();
+  if(!loadingFixtureProfiles) { loadFixtureProfiles(); }
+  
      table = loadTable(loadPath, "header"); //Eliaksen polku
 
 
@@ -66,6 +72,7 @@ void loadAllData1() {
     
     for (TableRow row : table.findRows("ansaParent", "variable_name")) if(fixtures.array.size() > int(row.getString("1D"))) 
         { fixtures.array.get(int(row.getString("1D"))).parentAnsa           = int(row.getString("value")); }
+
     
     //--------------------------------------------------------------------------------------------------------------------------------------
 
@@ -89,13 +96,24 @@ void loadAllData1() {
     for (TableRow row : table.findRows("centerY", "variable_name"))              { center.y = int(row.getString("value")); }
     
   
-    loadXmlToTrusses();
-    loadSocketsFromXML();
-    saveNearestSocketsToXML();
-    loadinMemoriesFromXML = true;
-    loadMemoriesFromXML();
-    loadinMemoriesFromXML = false;
+    
+    
+    
     
     dataLoaded = true;
+    programReadyToRun = true;
+    
+    
+    if(!loadinMemoriesFromXML) { thread("loadMemoriesFromXML"); }
+    if(!savingNearestSocketsToXML) { thread("saveNearestSocketsToXML"); }
+    loadXmlToTrusses();
+    loadSocketsFromXML();
+    
+    long takedTime = millis() - loadDataBeginMillis;
+    notifier.notify("Load complete. (" + str(takedTime) + "ms)");
+    loadingAllData = false;
+}
 
+boolean loadingDataAtTheTime() {
+  return loadinMemoriesFromXML || savingNearestSocketsToXML || loadingFixtureProfiles || loadingAllData;
 }
