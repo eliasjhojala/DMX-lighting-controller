@@ -1131,7 +1131,9 @@ class chase { //Begin of chase class--------------------------------------------
     int[] presets = getPresets();
     for(int i = 0; i <= sineMax; i++) {
       if(i < presets.length) { //No nullpointers anymore
-        loadPreset(presets[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
+        if(i < presets.length && i < sineValue.length) {
+          loadPreset(presets[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
+        }
       }
     }
     
