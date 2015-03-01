@@ -130,6 +130,9 @@ void saveAllData() {
   println(savePath);
   try {
     saveTable(table, savePath, "csv");
+    saveSocketsToXML();
+    saveTrussesAsXML();
+    saveMemoriesToXML();
   } catch (Exception e) {
     e.printStackTrace();
     notifier.notify("Save failed! Try again by saving to another location by pressing SHIFT + S", true);

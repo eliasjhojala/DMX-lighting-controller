@@ -9,14 +9,13 @@ boolean loadAllDataInSetup = true;
 public int leveys;
 public int korkeus;
 void setuppi() {
-   createMemoryObjects();
+  createMemoryObjects();
+  createSockets();
+  createMidiClasses();
 
   leveys = displayWidth;
   korkeus = displayHeight;
-  loadSetupData();
-  if(loadAllDataInSetup == true) {
-    thread("loadAllData");
-  }
+  thread("loadAllData");
   thread("setFixtureChannelsAtSoftwareBegin");
 
 
@@ -26,9 +25,7 @@ void setuppi() {
   
  
     fixtureForSelected[0] = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-    
-  createSockets();
-  loadXmlToTrusses();
+
   
-  createMidiClasses();
+  
 }

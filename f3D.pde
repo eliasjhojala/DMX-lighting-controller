@@ -350,12 +350,12 @@ boolean trussesLoadedSucces = false;
 
 void loadXmlToTrusses() {
   trussesLoadedSucces = false;
-  XMLtoTrusses(loadXML("XML/trusses"));
+  XMLtoTrusses(loadXML("XML/trusses.xml"));
   trussesLoadedSucces = true;
 }
 
 void saveTrussesAsXML() {
-  saveXML(getTrussesAsXML(), "XML/trusses");
+  saveXML(getTrussesAsXML(), "XML/trusses.xml");
 }
 
 XML vectorAsXML(PVector vector, String name) {

@@ -1,9 +1,6 @@
-//Tässä välilehdessä luetaan aikaisemmin tallennettuja tietoja csv-taulukkotiedostosta
+//Load all the data from csv file and xml files
 boolean dataLoaded = false;
 boolean programReadyToRun = false; 
-void loadSetupData() {
-  showOutputAsNumbers = true;
-}
 
 void loadAllData() {
   programReadyToRun = false;
@@ -21,22 +18,16 @@ void loadAllData() {
   }
 }
 void loadAllData1() {
-    loadSetupData();
-
      table = loadTable(loadPath, "header"); //Eliaksen polku
 
-        
-   
+
     //FIXTURES---------------------------------------------------------------------------------------------------------------------------
     //Initialize fixtures using type
     fixtures.clear();
     for(TableRow row : table.findRows("idLookupTable", "variable_name")) {
       idLookupTable.add(int(row.getString("value")));
     }
-    
-  
-    
-    //fixtures.array.ensureCapacity(int(table.findRow("fixtures.size", "variable_name").getString("value")));
+
     
     for (TableRow row : table.findRows("fixtureType1", "variable_name")) 
         { 
@@ -79,10 +70,6 @@ void loadAllData1() {
     //--------------------------------------------------------------------------------------------------------------------------------------
 
 
-
-
-    //---------------------------------------------------------------------------------------------------------------------------------------
-
     int[] grouping = new int[3];
     for (TableRow row : table.findRows("grouping", "variable_name")) if(int(row.getString("1D")) < grouping.length) { grouping[int(row.getString("1D"))] = int(row.getString("value")); }
     controlP5place = grouping[0]; enttecDMXplace = grouping[1]; touchOSCplace = grouping[2];
@@ -102,9 +89,13 @@ void loadAllData1() {
     for (TableRow row : table.findRows("centerY", "variable_name"))              { center.y = int(row.getString("value")); }
     
   
+    loadXmlToTrusses();
+    loadSocketsFromXML();
+    saveNearestSocketsToXML();
+    loadinMemoriesFromXML = true;
+    loadMemoriesFromXML();
+    loadinMemoriesFromXML = false;
     
     dataLoaded = true;
-    
-    
-  
+
 }
