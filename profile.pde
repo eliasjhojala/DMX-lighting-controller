@@ -61,6 +61,8 @@ class FixtureProfile {
   int[] channelTypes;
   fixtureSize size;
   
+  boolean isStrobe;
+  
   FixtureProfile() {
     String[] empty = { "" };
     int[] emptyy = { 0 };
@@ -110,6 +112,7 @@ class FixtureProfile {
     channelNames = cN;
     channelTypes = cT;
     size = s;
+    checkDMXchannels();
   }
   
   void setFixtureNameData(String fln, String fB) {
@@ -124,5 +127,9 @@ class FixtureProfile {
   
   PShape getModel() {
     return model;
+  }
+  
+  void checkDMXchannels() {
+    isStrobe = isInArray(channelTypes, DMX_STROBE, DMX_FREQUENCY);
   }
 }

@@ -377,8 +377,11 @@ class MemoryCreationBox {
         case 2: {
           g.text("QChase", 2, 25);
         } break;
-        case 3: {
+        case 5: {
           g.text("Chase1", 2, 25);
+        } break;
+        case 6: {
+          g.text("Special", 2, 25);
         } break;
       }
     }
@@ -467,7 +470,7 @@ class MemoryCreationBox {
               g.text(saveOptionButtonVariables[i], 30, 16);
             g.popMatrix();
           }
-        break;
+        break; //end of case 0
         case 1: case 2: //Chase & quickChase
           if(memories[selectedMemorySlot].myChase != null) {
           g.textAlign(LEFT);
@@ -559,7 +562,7 @@ class MemoryCreationBox {
             
           }
           }
-        break;
+        break; //end of case 1 and case 2
         case 5: //chase with steps inside
           //Draw some buttons
           if(memories[selectedMemorySlot].myChase.creatingChaseWithStepsInside()) {
@@ -743,7 +746,97 @@ class MemoryCreationBox {
               
               }
           }
-        break; //end of case 3
+        break; //end of case 5
+        case 6: //specialMemory
+          g.pushMatrix();
+          g.pushStyle();
+          g.textAlign(LEFT);
+            g.pushMatrix(); //SpecialType 0, type 0
+                g.translate(30, 120+40*0);
+                mouse.declareUpdateElementRelative("MemoryCreationBox:specialType0", "MemoryCreationBox", 0, 0, 120, 25, g);
+                mouse.setElementExpire("MemoryCreationBox:specialType0", 2);
+                boxIsHover = mouse.elmIsHover("MemoryCreationBox:specialType0");
+                g.fill(soloBoxIsHover ? 210 : 200);
+                g.noStroke();
+                g.rect(0, 0, 25, 25, 4);
+                
+                if(mouse.isCaptured("MemoryCreationBox:specialType0") && mouse.firstCaptureFrame) {
+                  memories[selectedMemorySlot].specialType = 0;
+                  memories[selectedMemorySlot].type = 0;
+                }
+                if(memories[selectedMemorySlot].specialType == 0) {
+                  g.fill(0, 186, 240);
+                  g.rect(4, 4, 17, 17, 4);
+                }
+                g.fill(10);
+                g.text("None", 50, 17);
+            g.popMatrix();
+            g.pushMatrix(); //SpecialType 1
+                g.translate(30, 120+40*1);
+                mouse.declareUpdateElementRelative("MemoryCreationBox:specialType1", "MemoryCreationBox", 0, 0, 120, 25, g);
+                mouse.setElementExpire("MemoryCreationBox:specialType1", 2);
+                boxIsHover = mouse.elmIsHover("MemoryCreationBox:specialType1");
+                g.fill(soloBoxIsHover ? 210 : 200);
+                g.noStroke();
+                g.rect(0, 0, 25, 25, 4);
+                
+                if(mouse.isCaptured("MemoryCreationBox:specialType1") && mouse.firstCaptureFrame) {
+                  memories[selectedMemorySlot].specialType = 1;
+                  memories[selectedMemorySlot].type = 7;
+                }
+                if(memories[selectedMemorySlot].specialType == 1) {
+                  g.fill(0, 186, 240);
+                  g.rect(4, 4, 17, 17, 4);
+                }
+                g.fill(10);
+                g.text("FullOn", 50, 17);
+            g.popMatrix();
+            
+            g.pushMatrix(); //SpecialType 2
+                g.translate(30, 120+40*2);
+                mouse.declareUpdateElementRelative("MemoryCreationBox:specialType2", "MemoryCreationBox", 0, 0, 120, 25, g);
+                mouse.setElementExpire("MemoryCreationBox:specialType2", 2);
+                boxIsHover = mouse.elmIsHover("MemoryCreationBox:specialType2");
+                g.fill(soloBoxIsHover ? 210 : 200);
+                g.noStroke();
+                g.rect(0, 0, 25, 25, 4);
+                
+                if(mouse.isCaptured("MemoryCreationBox:specialType2") && mouse.firstCaptureFrame) {
+                  memories[selectedMemorySlot].specialType = 2;
+                  memories[selectedMemorySlot].type = 7;
+                }
+                if(memories[selectedMemorySlot].specialType == 2) {
+                  g.fill(0, 186, 240);
+                  g.rect(4, 4, 17, 17, 4);
+                }
+                g.fill(10);
+                g.text("BlackOut", 50, 17);
+            g.popMatrix();
+            
+            g.pushMatrix(); //SpecialType 3
+                g.translate(30, 120+40*3);
+                mouse.declareUpdateElementRelative("MemoryCreationBox:specialType3", "MemoryCreationBox", 0, 0, 120, 25, g);
+                mouse.setElementExpire("MemoryCreationBox:specialType3", 2);
+                boxIsHover = mouse.elmIsHover("MemoryCreationBox:specialType3");
+                g.fill(soloBoxIsHover ? 210 : 200);
+                g.noStroke();
+                g.rect(0, 0, 25, 25, 4);
+                
+                if(mouse.isCaptured("MemoryCreationBox:specialType3") && mouse.firstCaptureFrame) {
+                  memories[selectedMemorySlot].specialType = 3;
+                  memories[selectedMemorySlot].type = 7;
+                }
+                if(memories[selectedMemorySlot].specialType == 3) {
+                  g.fill(0, 186, 240);
+                  g.rect(4, 4, 17, 17, 4);
+                }
+                g.fill(10);
+                g.text("StrobeNow", 50, 17);
+            g.popMatrix();
+          g.popStyle();
+          g.popMatrix();
+          
+        break; //end of case 6
       }
     }
     g.popMatrix();
@@ -774,10 +867,10 @@ class MemoryCreationBox {
     return isHoverSimple(width - (320 + 168), locY, 300, 300) && open;
   }
   
-  int[] memoryModesToShow = { 0, 1, 2, 5 };
+  int[] memoryModesToShow = { 0, 1, 2, 5, 6 };
   int sMm = 0;
   void addToSelectedMemoryMode() {
-    if(sMm < 3) { sMm++; }
+    if(sMm < 4) { sMm++; }
     else { sMm = 0; }
     selectedMemoryMode = memoryModesToShow[sMm];
   }

@@ -7,6 +7,7 @@ int multixy1_value_old;
 int multixy1_value_offset;
 
 boolean fullOn; //Muuttuja, joka kertoo onko fullOn päällä
+boolean strobeNow;
 int[] valueOfDimBeforeFullOn = new int[channels]; //Muuttuja johon kirjoitetaan kanavien arvot ennen kun ne laitetaan täysille
 boolean blackOutButtonWasReleased;
 int masterValueBeforeBlackout;
@@ -53,43 +54,15 @@ void oscEvent(OscMessage theOscMessage) {
   }
   
 
-  
-  
-     /*
-       Blackout toimintaperiaate:
-       laitetaan grandMaster nollaan
-     */
-  
+
    if(addr.equals("/blackout")) { //Jos blackout nappia painetaan
-       if(digitalValue == 1) {
-         blackOutToggle();
-       }
+     if(digitalValue == 1) {
+         blackOut = !blackOut;
      }
+   }
      
      if(addr.equals("/strobenow")) {
-       if(digitalValue == 1) {
-         for(int i = 0; i < fixtures.size(); i++) {
-           valueOfDimBeforeStrobe[i] = fixtures.get(i).in.getUniDMX(DMX_DIMMER);
-           fixtures.get(i).setDimmer(0);
-         }
-         for(int i = 0; i < fixtures.size(); i++) {
-           if(getFixtureNameByType(fixtures.get(i).fixtureTypeId) == "strobe") {
-             fixtures.get(i).in.setUniDMX(DMX_DIMMER, 200);
-             fixtures.get(i).in.setUniDMX(DMX_FREQUENCY, 200);
-           }
-         }
-       }
-       else {
-         for(int i = 0; i < fixtures.size(); i++) {
-           fixtures.get(i).setDimmer(valueOfDimBeforeStrobe[i]);
-         }
-         for(int i = 0; i < fixtures.size(); i++) {
-           if(getFixtureNameByType(fixtures.get(i).fixtureTypeId) == "strobe") {
-             fixtures.get(i).in.setUniDMX(DMX_DIMMER, 0);
-             fixtures.get(i).in.setUniDMX(DMX_FREQUENCY, 0);
-           }
-         }
-       }
+       strobeNow = boolean(digitalValue);
      }
      
      if(addr.equals("/nextstep")) {

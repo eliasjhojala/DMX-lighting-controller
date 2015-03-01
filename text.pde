@@ -22,7 +22,6 @@ public class secondApplet extends PApplet {
           pushMatrix();
             for(int i = j*100; i < (j+1)*100; i++) {
               if(i <= DMX_CHAN_LENGTH) { //DMX protocol max channel
-                fill(255, 255, 255);
                 translate(0, 12);
                 text(i + ":" + DMXforOutput[constrain(i, 0, DMXforOutput.length-1)], 10, 10);
               }
@@ -38,7 +37,6 @@ public class secondApplet extends PApplet {
   
    text("touchOSCchannels", 105, 10);
     for(int i = 0; i <= 24; i++) {
-      fill(255, 255, 255);
       text(i + ":" + touchOSCchannel[i], 110, i*15+25);
   }
 
@@ -49,7 +47,6 @@ public class secondApplet extends PApplet {
   for(int j = 1; j <= 5; j++) {
     text("allChannels[" + str(j) + "]", j*100+5, 10);
     for(int i = 0; i < 24; i++) {
-      fill(255, 255, 255);
       text(i + ":" + allChannels[1][i], 100*j+10, i*15+25);
     }
   }

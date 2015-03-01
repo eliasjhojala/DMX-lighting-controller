@@ -783,3 +783,17 @@ boolean isBetween(int original, int min, int max) {
   return inBds1D(original, min, max);
 }
 
+boolean isInArray(int[] array, int toFind) {
+  for(int i = 0; i < array.length; i++) {
+    if(array[i] == toFind) { return true; }
+  }
+  return false;
+}
+
+boolean isInArray(int[] array, int toFind1, int toFind2) {
+  for(int i = 0; i < array.length; i++) {
+    if(array[i] == toFind1 || array[i] == toFind2) { return true; }
+  }
+  return false;
+}
+

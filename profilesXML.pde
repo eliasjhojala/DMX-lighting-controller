@@ -114,6 +114,8 @@ void loadFixtureProfiles() {
       if(fixtureModelPath != null) {
         fixtureProfiles[id].setModel(fixtureModelPath.getContent());
       }
+      
+      fixtureProfiles[id].checkDMXchannels(); //Check DMX channels if there is strobe or something like that
     } //end of loading fixture model PShape
   } //End of going through all the profiles
 } //End of loading fixtureProfiles from xml

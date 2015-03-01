@@ -63,6 +63,7 @@ class memory { //Begin of memory class------------------------------------------
   // 4: master      //|
   // 5: fade        //|
   // 6: chase1      //|
+  // 7: special     //|
   //----------------//|
   
   
@@ -71,6 +72,7 @@ class memory { //Begin of memory class------------------------------------------
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
   boolean enabled = true;
   boolean soloInThisMemory;
+  int specialType; //Strobeon, fullon, blackout etc.
 
   
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
@@ -151,6 +153,7 @@ class memory { //Begin of memory class------------------------------------------
       case 4: toReturn = "mstr"; break;
       case 5: toReturn = "fade"; break;
       case 6: toReturn = "chs1"; break;
+      case 7: toReturn = "spcl"; break;
       default: toReturn = "unkn"; break;
     }
     return toReturn;
@@ -166,6 +169,7 @@ class memory { //Begin of memory class------------------------------------------
         case 4: grandMaster(); break;
         case 5: fade(); break;
         case 6: chase(); break;
+        case 7: special(); break;
         default: unknown(); break;
       }
     }
@@ -202,6 +206,26 @@ class memory { //Begin of memory class------------------------------------------
   void empty() {
   }
   void masterGroup() {
+  }
+  void special() {
+    if(enabled) {
+      if(value == 0 && firstTimeAtZero) {
+         switch(specialType) {
+           case 1: fullOn = false; break;
+           case 2: blackOut = false; break;
+           case 3: strobeNow = false; break;
+         }
+         firstTimeAtZero = false;
+      }
+      if(value > 0) {
+        switch(specialType) {
+           case 1: fullOn = true; break;
+           case 2: blackOut = true; break;
+           case 3: strobeNow = true; break;
+         }
+        firstTimeAtZero = true;
+      }
+    }
   }
   
   

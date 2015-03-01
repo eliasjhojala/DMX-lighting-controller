@@ -237,17 +237,37 @@ class fixture {
     if(soloIsOn && !soloInThisFixture) { newIn[DMX_DIMMER] = 0; }
     if(fullOn) { 
       newIn[DMX_DIMMER] = 255; 
-      if((newIn[DMX_RED] + newIn[DMX_GREEN] + newIn[DMX_BLUE]) == 0) { newIn[DMX_RED] = 255; newIn[DMX_GREEN] = 255; newIn[DMX_BLUE] = 255; }
+      if((newIn[DMX_RED] + newIn[DMX_GREEN] + newIn[DMX_BLUE] + newIn[DMX_WHITE])  == 0) { newIn[DMX_RED] = 255; newIn[DMX_GREEN] = 255; newIn[DMX_BLUE] = 255; newIn[DMX_WHITE] = 255; }
       else { 
-        int maxValueOfColors = max(newIn[DMX_RED], newIn[DMX_GREEN], newIn[DMX_BLUE]);
+        int maxValueOfColors = max(max(newIn[DMX_RED], newIn[DMX_GREEN]), newIn[DMX_BLUE], newIn[DMX_WHITE]);
         newIn[DMX_RED] = round(map(newIn[DMX_RED], 0, maxValueOfColors, 0, 255));
         newIn[DMX_GREEN] = round(map(newIn[DMX_GREEN], 0, maxValueOfColors, 0, 255));
         newIn[DMX_BLUE] = round(map(newIn[DMX_BLUE], 0, maxValueOfColors, 0, 255));
+        newIn[DMX_WHITE] = round(map(newIn[DMX_WHITE], 0, maxValueOfColors, 0, 255));
       }
-      
+    }
+    if(strobeNow) {
+      if(fixtureProfiles[fixtureTypeId].isStrobe) {
+        newIn[DMX_DIMMER] = 255;
+        newIn[DMX_FREQUENCY] = 255;
+        newIn[DMX_STROBE] = 255;
+        newIn[DMX_RED] = 255; 
+        newIn[DMX_GREEN] = 255; 
+        newIn[DMX_BLUE] = 255; 
+        newIn[DMX_WHITE] = 255;
+      }
+      else {
+        newIn[DMX_DIMMER] = 0;
+      }
+    }
+    if(blackOut) { newIn[DMX_DIMMER] = 0; }
+    int[] oldDMX = out.getUniversalDMX();
+    for(int i = 0; i < newIn.length; i++) {
+      if(newIn[i] != oldDMX[i]) {
+        DMXChanged = true;
+      }
     }
     out.setUniversalDMX(newIn);
-    
     processFade();
     
     for(int i = 0; i < bottomMenu.DMXlength; i++) {
