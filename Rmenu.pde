@@ -421,28 +421,29 @@ class MemoryCreationBox {
   void drawTypeSpecificOptions(PGraphics g, Mouse mouse) {
     g.pushMatrix();
     {
-      if(memories[selectedMemorySlot].type != 0) {
-        g.pushMatrix();
-            g.translate(260, 110);
-            mouse.declareUpdateElementRelative("MemoryCreationBox:solo", "MemoryCreationBox", 0, 0, 120, 25, g);
-            mouse.setElementExpire("MemoryCreationBox:solo", 2);
-            boolean soloBoxIsHover = mouse.elmIsHover("MemoryCreationBox:solo");
-            g.fill(soloBoxIsHover ? 210 : 200);
-            g.noStroke();
-            g.rect(0, 0, 25, 25, 4);
-            
-            if(mouse.isCaptured("MemoryCreationBox:solo") && mouse.firstCaptureFrame) {
-              memories[selectedMemorySlot].soloInThisMemory = !memories[selectedMemorySlot].soloInThisMemory;
-            }
-            if(memories[selectedMemorySlot].soloInThisMemory) {
-              g.fill(0, 186, 240);
-              g.rect(4, 4, 17, 17, 4);
-            }
-            g.fill(10);
-            g.text("Solo", 40, 17);
-        g.popMatrix();
-      }
-      switch(selectedMemoryMode) {
+      
+        if(selectedMemoryMode == 0 || selectedMemoryMode == 1 || selectedMemoryMode == 2 || selectedMemoryMode == 5 || selectedMemoryMode == 6) {
+          g.pushMatrix();
+              g.translate(260, 110);
+              mouse.declareUpdateElementRelative("MemoryCreationBox:solo", "MemoryCreationBox", 0, 0, 120, 25, g);
+              mouse.setElementExpire("MemoryCreationBox:solo", 2);
+              boolean soloBoxIsHover = mouse.elmIsHover("MemoryCreationBox:solo");
+              g.fill(soloBoxIsHover ? 210 : 200);
+              g.noStroke();
+              g.rect(0, 0, 25, 25, 4);
+              
+              if(mouse.isCaptured("MemoryCreationBox:solo") && mouse.firstCaptureFrame) {
+                memories[selectedMemorySlot].soloInThisMemory = !memories[selectedMemorySlot].soloInThisMemory;
+              }
+              if(memories[selectedMemorySlot].soloInThisMemory) {
+                g.fill(0, 186, 240);
+                g.rect(4, 4, 17, 17, 4);
+              }
+              g.fill(10);
+              g.text("Solo", -14, 17);
+          g.popMatrix();
+        }
+     switch(selectedMemoryMode) {
         case 0: //Preset
           //Draw whatToSave checkboxes
           g.textAlign(LEFT);
@@ -582,19 +583,42 @@ class MemoryCreationBox {
               g.popMatrix();
             }
             
-            g.pushMatrix();
-              g.translate(100, 110);
-              mouse.declareUpdateElementRelative("MemoryCreationBox:startCreating", "MemoryCreationBox", 0, 0, 25, 25, g);
-              mouse.setElementExpire("MemoryCreationBox:startCreating", 2);
-              boolean boxIsClicked = mouse.isCaptured("MemoryCreationBox:startCreating") && mouse.firstCaptureFrame;
-              g.pushStyle();
-                if(boxIsClicked) { g.fill(topMenuTheme); memories[selectedMemorySlot].myChase.startCreatingChaseWidthStepsInside(); }
-                else { g.fill(topMenuAccent); }
-                g.noStroke();
-                g.rect(0, 0, 25, 25, 4);
-              g.popStyle();
-              g.text("start creating", 69, 16); //69 was some reason better than 56
-            g.popMatrix();
+            if(memories[selectedMemorySlot].type != 6 || memories[selectedMemorySlot].myChase.clearedChaseWithStepsInside()) {
+              g.pushMatrix();
+                g.translate(100, 110);
+                mouse.declareUpdateElementRelative("MemoryCreationBox:startCreating", "MemoryCreationBox", 0, 0, 25, 25, g);
+                mouse.setElementExpire("MemoryCreationBox:startCreating", 2);
+                boolean boxIsClicked = mouse.isCaptured("MemoryCreationBox:startCreating") && mouse.firstCaptureFrame;
+                g.pushStyle();
+                  if(boxIsClicked) { g.fill(topMenuTheme); memories[selectedMemorySlot].myChase.startCreatingChaseWidthStepsInside(); }
+                  else { g.fill(topMenuAccent); }
+                  g.noStroke();
+                  g.rect(0, 0, 25, 25, 4);
+                g.popStyle();
+                g.pushStyle();
+                  g.textAlign(LEFT);
+                  g.text("Start creating", 30, 16);
+                g.popStyle();
+              g.popMatrix();
+            }
+            else {
+              g.pushMatrix();
+                g.translate(100, 110);
+                mouse.declareUpdateElementRelative("MemoryCreationBox:clear", "MemoryCreationBox", 0, 0, 25, 25, g);
+                mouse.setElementExpire("MemoryCreationBox:clear", 2);
+                boolean boxIsClicked = mouse.isCaptured("MemoryCreationBox:clear") && mouse.firstCaptureFrame;
+                g.pushStyle();
+                  if(boxIsClicked) { g.fill(topMenuTheme); memories[selectedMemorySlot].myChase.clearChaseWidthStepsInside(); }
+                  else { g.fill(topMenuAccent); }
+                  g.noStroke();
+                  g.rect(0, 0, 25, 25, 4);
+                g.popStyle();
+                g.pushStyle();
+                  g.textAlign(LEFT);
+                  g.text("clear", 30, 16);
+                g.popStyle();
+              g.popMatrix();
+            }
             
             
             g.pushMatrix();
@@ -614,7 +638,7 @@ class MemoryCreationBox {
                 g.rect(4, 4, 17, 17, 4);
               }
               g.fill(10);
-              g.text("view", 40, 17);
+              g.text("view", 43, 17);
             g.popMatrix();
           
           

@@ -208,23 +208,21 @@ class memory { //Begin of memory class------------------------------------------
   void masterGroup() {
   }
   void special() {
-    if(enabled) {
-      if(value == 0 && firstTimeAtZero) {
-         switch(specialType) {
-           case 1: fullOn = false; break;
-           case 2: blackOut = false; break;
-           case 3: strobeNow = false; break;
-         }
-         firstTimeAtZero = false;
-      }
-      if(value > 0) {
-        switch(specialType) {
-           case 1: fullOn = true; break;
-           case 2: blackOut = true; break;
-           case 3: strobeNow = true; break;
-         }
-        firstTimeAtZero = true;
-      }
+    if((value == 0 || !enabled) && firstTimeAtZero) {
+       switch(specialType) {
+         case 1: fullOn = false; break;
+         case 2: blackOut = false; break;
+         case 3: strobeNow = false; break;
+       }
+       firstTimeAtZero = false;
+    }
+    if(value > 0 && enabled) {
+      switch(specialType) {
+         case 1: fullOn = true; break;
+         case 2: blackOut = true; break;
+         case 3: strobeNow = true; break;
+       }
+      firstTimeAtZero = true;
     }
   }
   
@@ -1206,14 +1204,17 @@ class chase { //Begin of chase class--------------------------------------------
 
   boolean chaseWithStepsInsideCreating = false;
   boolean showWhatToSaveOptions = true;
-  void startCreatingChaseWidthStepsInside() { chaseWithStepsInsideCreating = true; parent.type = 6; }
+  boolean chaseWithStepsInsideIsCleared = false;
+  void startCreatingChaseWidthStepsInside() { chaseWithStepsInsideCreating = true; parent.type = 6; chaseWithStepsInsideIsCleared = false; }
   void createNextStep(boolean[] newWhatToSave) {
     Preset x = new Preset(this);
     steps.add(x);
     x.savePreset(newWhatToSave);
   }
   void endCreatingChaseWidthStepsInside() { chaseWithStepsInsideCreating = false; }
+  void clearChaseWidthStepsInside() { steps = new ArrayList<Preset>(); chaseWithStepsInsideIsCleared = true; }
   boolean creatingChaseWithStepsInside() { return chaseWithStepsInsideCreating; }
+  boolean clearedChaseWithStepsInside() { return chaseWithStepsInsideIsCleared; }
 } //end of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
