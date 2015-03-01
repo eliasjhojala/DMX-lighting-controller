@@ -48,7 +48,7 @@ void draw() {
     subWindowHandler.draw();
     
     
-    
+    cursor.push();
   }
   if(!freeze) initSettingsInSetup();
 }

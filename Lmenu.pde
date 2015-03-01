@@ -78,14 +78,12 @@ class LowerMenu {
         //Box itself
         g.rect(0, 0, w, h, 20);
         mouse.declareUpdateElementRelative("LowerMenu", 1, 0, 0, w, h, g);
-        mouse.setElementExpire("LowerMenu", 2);
         
         //Grabable location button
         g.fill(180);
         g.noStroke();
         g.rect(10, h-10, 20, -20, 4, 0, 0, 20);
         mouse.declareUpdateElementRelative("LowerMenu:move", "LowerMenu", 10, h-10, 20, -20, g);
-        mouse.setElementExpire("LowerMenu:move", 2);
         if(mouse.isCaptured("LowerMenu:move")) {
           locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
           locX = constrain(mouseX - pmouseX + locX, 40, width - w-(20 + 168));
@@ -94,7 +92,6 @@ class LowerMenu {
         
         //Close button
         mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, h-10, 30, -20, g);
-        mouse.setElementExpire("LowerMenu:cancel", 2);
         boolean cancelHover = mouse.elmIsHover("LowerMenu:cancel");
         g.fill(cancelHover ? 160 : 140);
         //Close if Cancel is pressed
@@ -103,6 +100,9 @@ class LowerMenu {
         g.fill(230);
         g.textAlign(CENTER);
         g.text("X", 45, h-16);
+                
+        
+        
         
         
         g.pushMatrix();
@@ -111,7 +111,6 @@ class LowerMenu {
         g.fill(180, 100); g.noStroke();
         g.rect(0, 0, w-90, 10, 4);
         mouse.declareUpdateElementRelative("LowerMenu:scroll", "LowerMenu", 0, 0, w-90, 10, g);
-        mouse.setElementExpire("LowerMenu:scroll", 2);
         if(mouse.isCaptured("LowerMenu:scroll")) {
           scrollStatus += (mouseX - pmouseX)/(float(w)-90);
         }
@@ -144,16 +143,18 @@ class LowerMenu {
       {
         g.pushMatrix();
         g.translate(16, 16);
+        
+        
         int rows = (h-48) / 84;
         int cols = w / 88 +1;
         int colStart = getScrollXOffset() / 88;
-        
-        for(int i = colStart; i < cols; i++) {
+        g.translate(-getScrollXOffset(), 0);
+        for(int i = colStart; i < colStart+cols; i++) {
           for(int j = 0; j < rows; j++) {
             int id = j + rows*i;
             if(id < fixtures.size()) {
               g.pushMatrix();
-              int y = (j+1) * (252 / rows) - 84;
+              int y = (j+1) * ((h-48) / rows) - 84;
               g.translate(i*88, y);
               drawFbox(id, g, mouse);
               g.popMatrix();
@@ -166,6 +167,28 @@ class LowerMenu {
       g.popMatrix();
       g.popStyle();
     }
+    
+    //Streching -- from bottom
+    mouse.declareUpdateElementRelative("LowerMenu:stretchB", "LowerMenu", 0, h-10, w, 10, g);
+    if(mouse.elmIsHover("LowerMenu:stretchB")) {
+      cursor.set(java.awt.Cursor.N_RESIZE_CURSOR);
+      
+    }
+    if(mouse.isCaptured("LowerMenu:stretchB")) {
+      h -= pmouseY - mouseY;
+      h = constrain(h, 132, height-locY-40);
+    }
+    //Streching -- from top
+    mouse.declareUpdateElementRelative("LowerMenu:stretchT", "LowerMenu", 0, 0, w, 10, g);
+    if(mouse.elmIsHover("LowerMenu:stretchT")) {
+      cursor.set(java.awt.Cursor.S_RESIZE_CURSOR);
+      
+    }
+    if(mouse.isCaptured("LowerMenu:stretchT")) {
+      h += pmouseY - mouseY;
+      locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
+      h = constrain(h, 132, height-locY-40);
+    }
   }
   
   int getScrollXOffset() {
@@ -174,8 +197,13 @@ class LowerMenu {
   
   
   void drawFbox(int id, PGraphics g, Mouse mouse) {
+    g.pushStyle();
     g.fill(255, 180); g.noStroke();
     g.rect(0, 0, 80, 80);
+    g.fill(0);
+    g.textSize(16);
+    g.text(str(id), 20, 26);
+    g.popStyle();
   }
 }
 

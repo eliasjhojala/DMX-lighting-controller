@@ -167,6 +167,23 @@ class SubWindowHandler {
 }
 
 
+
+CursorHandler cursor = new CursorHandler();
+class CursorHandler {
+  CursorHandler() {
+  }
+  
+  int cursor;
+  void set(int cur) {
+    cursor = cur;
+  }
+  
+  void push() {
+    cursor(cursor);
+    cursor = java.awt.Cursor.DEFAULT_CURSOR;
+  }
+}
+
 //////////////////////////////////////////////////////////////CONTEXT//MENU///////////////////////////////////////////////////////////////////////////////////////////////////
 contextMenu contextMenu1 = new contextMenu(this); 
 
