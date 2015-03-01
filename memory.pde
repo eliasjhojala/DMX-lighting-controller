@@ -96,6 +96,8 @@ class memory { //Begin of memory class------------------------------------------
     xml.setInt("value", value);
     xml.setInt("valueOld", valueOld);
     xml.setInt("type", type);
+    xml.setInt("specialType", specialType);
+    xml.setInt("soloInThisMemory", int(soloInThisMemory));
     xml.addChild(myPreset.getXML());
     xml.addChild(myChase.getXML());
     return xml;
@@ -106,6 +108,8 @@ class memory { //Begin of memory class------------------------------------------
     value = xml.getInt("value");
     valueOld = xml.getInt("valueOld");
     type = xml.getInt("type");
+    specialType = xml.getInt("specialType");
+    soloInThisMemory = boolean(xml.getInt("soloInThisMemory"));
     myPreset.XMLtoObject(xml);
     myChase.XMLtoObject(xml);
   }
@@ -419,15 +423,26 @@ class Preset { //Begin of Preset class
           xml = xml.getParent();
         }
         if(xml != null) {
+          whatToSave = new boolean[saveOptionButtonVariables.length+10];
           arrayCopy(XMLtoBooleanArray("whatToSave", xml), whatToSave);
+          fixturesToSave = new boolean[saveOptionButtonVariables.length+10];
           arrayCopy(XMLtoBooleanArray("fixturesToSave", xml), fixturesToSave);
         }
     
         xml = xml.getChild("repOfFixtures");
         XML[] block = xml.getChildren();
+        int a = 0;
           for(int i = 0; i < block.length; i++) {
             if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
               int id = block[i].getInt("id");
+              if(id+1 > a) { a = id+1; }
+            }
+          }
+          repOfFixtures = new FixtureDMX[a];
+          for(int i = 0; i < block.length; i++) {
+            if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+              int id = block[i].getInt("id");
+              repOfFixtures[id] = new FixtureDMX();
               repOfFixtures[id].XMLtoObject(block[i]);
             }
           }
@@ -495,32 +510,34 @@ class Preset { //Begin of Preset class
   }
   
   void loadPreset() {
-    if(!soloIsOn || parent.soloInThisMemory) {
-      if(XMLloadSucces) if(parent.type == 1 || parent.type == 6) {
-        valueOld = value;
-        for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
-          if(whatToSave[jk-1]) {
-            for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
-              if(i < repOfFixtures.length) {
-                if(fixturesToSave[i]) {
-                  if(jk < fixtures.get(i).preset.DMXlength) {
-                    int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
-                    fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
-                    if(parent.soloInThisMemory && val > 0) {
-                      fixtures.get(i).soloInThisFixture = true;
-                      soloIsOn = true;
+    if(!loadinMemoriesFromXML) {
+      if(!soloIsOn || parent.soloInThisMemory) {
+        if(XMLloadSucces) if(parent.type == 1 || parent.type == 6) {
+          valueOld = value;
+          for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
+            if(whatToSave[jk-1]) {
+              for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
+                if(i < repOfFixtures.length) {
+                  if(fixturesToSave[i]) {
+                    if(jk < fixtures.get(i).preset.DMXlength) {
+                      int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
+                      fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
+                      if(parent.soloInThisMemory && val > 0) {
+                        fixtures.get(i).soloInThisFixture = true;
+                        soloIsOn = true;
+                      }
                     }
                   }
+                } 
+                else {
+                  break;
                 }
-              } 
-              else {
-                break;
-              }
-            } //End of going through all the fixtures
-          } 
+              } //End of going through all the fixtures
+            } 
+          }
         }
       }
-    }
+      }
   }
   
   void savePreset() {
@@ -931,7 +948,12 @@ class chase { //Begin of chase class--------------------------------------------
       memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
     }
     if(parent.type == 3)  { //quickChase
-      if(parent.soloInThisMemory && defaultConstrain(rMap(val, 0, 255, 0, value)) > 0) { soloIsOn = true; fixtures.get(num).soloInThisFixture = true; } //Solo command
+      
+      if(parent.soloInThisMemory && defaultConstrain(rMap(val, 0, 255, 0, value)) > 0) { //Begin of solo commands
+        soloIsOn = true;
+        fixtures.get(num).soloInThisFixture = true; 
+      } //End of Solo commands
+      
       fixtures.get(num).preset.setUniDMXfromPreset(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
     }

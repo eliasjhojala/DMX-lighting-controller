@@ -1,5 +1,6 @@
 //Tässä välilehdessä on paljon lyhyitä voideja
 
+boolean loadinMemoriesFromXML = false;
   
 int[] newIncrementingIntArray(int length, int start) {
   int[] toReturn = new int[length];
@@ -643,7 +644,9 @@ void keyPressed() {
         loadXmlToTrusses();
         loadSocketsFromXML();
         saveNearestSocketsToXML();
+        loadinMemoriesFromXML = true;
         loadMemoriesFromXML();
+        loadinMemoriesFromXML = false;
       }
       else {
         notifier.notify("Can not load in showMode", false);

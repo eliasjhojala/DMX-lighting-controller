@@ -221,7 +221,9 @@ class fixture {
     in.setDimmer(val);
   }
   
-  
+   float soloFade = 255;
+   float afterSoloFade = 0;
+   boolean thisFixtureWasOffBySolo = false;
   void processDMXvalues() {
     preset.presetProcess();
     
@@ -234,7 +236,18 @@ class fixture {
       newIn[DMX_DIMMER] = oldOut[DMX_DIMMER];
       newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]); //PROBLEM this is causing some masterloop problemes! If master isn't 255 all the lights fade off PROBLEM!!!!!!!!!!
     
-    if(soloIsOn && !soloInThisFixture) { newIn[DMX_DIMMER] = 0; }
+   
+    if(soloIsOn && !soloInThisFixture) { 
+      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, soloFade)); 
+      if(soloFade > 0) { soloFade-=(float(60)/frameRate)*20; soloFade = constrain(soloFade, 0, 255); } 
+      thisFixtureWasOffBySolo = true; 
+      afterSoloFade = 0;
+    }
+    if(!soloIsOn && !soloInThisFixture && thisFixtureWasOffBySolo) {
+      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, afterSoloFade)); 
+      if(afterSoloFade < 255) { afterSoloFade+=(float(60)/frameRate)*20; afterSoloFade = constrain(afterSoloFade, 0, 255); } 
+      if(afterSoloFade == 255) { thisFixtureWasOffBySolo = false;  soloFade = 255;}
+    }
     if(fullOn) { 
       newIn[DMX_DIMMER] = 255; 
       if((newIn[DMX_RED] + newIn[DMX_GREEN] + newIn[DMX_BLUE] + newIn[DMX_WHITE])  == 0) { newIn[DMX_RED] = 255; newIn[DMX_GREEN] = 255; newIn[DMX_BLUE] = 255; newIn[DMX_WHITE] = 255; }

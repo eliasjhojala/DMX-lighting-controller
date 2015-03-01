@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Memories>
-  <Memory enabled="1" id="1" type="4" value="255" valueOld="0">
+  <Memory enabled="1" id="1" soloInThisMemory="0" specialType="0" type="4" value="255" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -17,7 +17,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="2" type="5" value="0" valueOld="0">
+  <Memory enabled="1" id="2" soloInThisMemory="0" specialType="0" type="5" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -34,7 +34,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="4" type="3" value="255" valueOld="0">
+  <Memory enabled="1" id="4" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -52,13 +52,13 @@
         <int id="5" val="24"/>
       </content>
       <sineValue/>
-      <stepData brightness="0" brightness1="0" step="1"/>
+      <stepData brightness="0" brightness1="0" step="5"/>
       <mainData fade="0" ownFade="0" value="255"/>
       <modeData beatModeId="0" inputMode="0" outputMode="0"/>
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="5" type="3" value="255" valueOld="0">
+  <Memory enabled="1" id="5" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -78,15 +78,15 @@
         <int id="5" val="38"/>
       </content>
       <sineValue/>
-      <stepData brightness="0" brightness1="0" step="1"/>
+      <stepData brightness="0" brightness1="0" step="5"/>
       <mainData fade="0" ownFade="0" value="255"/>
       <modeData beatModeId="1" inputMode="1" outputMode="1"/>
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="6" type="1" value="255" valueOld="0">
+  <Memory enabled="1" id="6" soloInThisMemory="1" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
-      <mainData value="255" valueOld="255"/>
+      <mainData value="0" valueOld="0"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -150,7 +150,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="7" type="6" value="0" valueOld="0">
+  <Memory enabled="1" id="7" soloInThisMemory="0" specialType="0" type="6" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -164,7 +164,61 @@
       <stepData brightness="0" brightness1="0" step="1"/>
       <mainData fade="0" ownFade="0" value="0"/>
       <modeData beatModeId="0" inputMode="0" outputMode="0"/>
-      <steps size="2">
+      <steps size="4">
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="0" val="1"/>
+            <int id="1" val="1"/>
+            <int id="2" val="1"/>
+            <int id="3" val="1"/>
+            <int id="4" val="1"/>
+            <int id="5" val="1"/>
+            <int id="6" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="0">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="5">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="0" val="1"/>
+            <int id="1" val="1"/>
+            <int id="2" val="1"/>
+            <int id="3" val="1"/>
+            <int id="4" val="1"/>
+            <int id="5" val="1"/>
+            <int id="6" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="2">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="3">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
         <Preset>
           <mainData value="0" valueOld="0"/>
           <whatToSave>
@@ -222,7 +276,7 @@
       </steps>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="8" type="1" value="0" valueOld="0">
+  <Memory enabled="1" id="8" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -239,7 +293,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="9" type="1" value="0" valueOld="0">
+  <Memory enabled="1" id="9" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -256,7 +310,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="10" type="1" value="0" valueOld="0">
+  <Memory enabled="1" id="10" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -273,7 +327,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="11" type="1" value="0" valueOld="0">
+  <Memory enabled="1" id="11" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -290,7 +344,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="12" type="1" value="0" valueOld="0">
+  <Memory enabled="1" id="12" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -307,7 +361,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="13" type="1" value="0" valueOld="0">
+  <Memory enabled="1" id="13" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -324,7 +378,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="14" type="1" value="0" valueOld="0">
+  <Memory enabled="1" id="14" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -341,7 +395,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="15" type="1" value="0" valueOld="0">
+  <Memory enabled="1" id="15" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -358,7 +412,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="16" type="2" value="0" valueOld="0">
+  <Memory enabled="1" id="16" soloInThisMemory="0" specialType="0" type="2" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -382,7 +436,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="20" type="3" value="0" valueOld="0">
+  <Memory enabled="1" id="20" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -401,12 +455,12 @@
       </content>
       <sineValue/>
       <stepData brightness="0" brightness1="0" step="0"/>
-      <mainData fade="0" ownFade="0" value="0"/>
+      <mainData fade="0" ownFade="0" value="255"/>
       <modeData beatModeId="2" inputMode="1" outputMode="6"/>
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="21" type="3" value="0" valueOld="0">
+  <Memory enabled="1" id="21" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -430,7 +484,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="25" type="1" value="0" valueOld="0">
+  <Memory enabled="1" id="25" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
