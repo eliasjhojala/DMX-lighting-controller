@@ -44,10 +44,10 @@ LowerMenu lowerMenu = new LowerMenu();
 class LowerMenu {
   LowerMenu() {
     open = true;
-    locX = 0;
-    locY = 0;
+    locX = 40;
+    locY = 40;
     w = 500;
-    h = 300;
+    h = 312;
   }
   
   boolean open;
@@ -72,8 +72,7 @@ class LowerMenu {
       { // frame & frame controls
         if(translate) g.translate(locX, locY);
         g.fill(0, 30, 60, 130);
-        g.stroke(0, 61, 100);
-        g.strokeWeight(3);
+        g.noStroke();
         
         //Box itself
         g.rect(0, 0, w, h, 20);
@@ -142,19 +141,19 @@ class LowerMenu {
               
       {
         g.pushMatrix();
-        g.translate(16, 16);
+        g.translate(16, 17);
         
         
-        int rows = (h-48) / 84;
-        int cols = w / 88 +1;
-        int colStart = getScrollXOffset() / 88;
+        int rows = (h-48) / 88;
+        int cols = w / 88 +3;
+        int colStart = getScrollXOffset() / 88 - 1;
         g.translate(-getScrollXOffset(), 0);
         for(int i = colStart; i < colStart+cols; i++) {
           for(int j = 0; j < rows; j++) {
             int id = j + rows*i;
-            if(id < fixtures.size()) {
+            if(id < fixtures.size() && id >= 0) {
               g.pushMatrix();
-              int y = (j+1) * ((h-48) / rows) - 84;
+              int y = j * ((h-48) / rows);
               g.translate(i*88, y);
               drawFbox(id, g, mouse);
               g.popMatrix();
@@ -166,29 +165,40 @@ class LowerMenu {
       }
       g.popMatrix();
       g.popStyle();
+      
+      //Streching -- from bottom
+      mouse.declareUpdateElementRelative("LowerMenu:stretchB", "LowerMenu", 0, h-10, w, 10, g);
+      if(mouse.elmIsHover("LowerMenu:stretchB")) {
+        cursor.set(java.awt.Cursor.N_RESIZE_CURSOR);
+        
+      }
+      if(mouse.isCaptured("LowerMenu:stretchB")) {
+        cursor.set(java.awt.Cursor.N_RESIZE_CURSOR);
+        h -= pmouseY - mouseY;
+        h = constrain(h, 150, height-locY-40);
+      }
+      //Streching -- from top
+      mouse.declareUpdateElementRelative("LowerMenu:stretchT", "LowerMenu", 0, 0, w, 10, g);
+      if(mouse.elmIsHover("LowerMenu:stretchT")) {
+        cursor.set(java.awt.Cursor.S_RESIZE_CURSOR);
+        
+      }
+      if(mouse.isCaptured("LowerMenu:stretchT")) {
+        cursor.set(java.awt.Cursor.S_RESIZE_CURSOR);
+        h += pmouseY - mouseY;
+        locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
+        h = constrain(h, 150, height-locY-40);
+      }
+      
+      //Border
+      g.stroke(0, 61, 100);
+      g.noFill();
+      g.strokeWeight(3.4);
+      g.rect(0, 0, w, h, 20);
     }
     
-    //Streching -- from bottom
-    mouse.declareUpdateElementRelative("LowerMenu:stretchB", "LowerMenu", 0, h-10, w, 10, g);
-    if(mouse.elmIsHover("LowerMenu:stretchB")) {
-      cursor.set(java.awt.Cursor.N_RESIZE_CURSOR);
-      
-    }
-    if(mouse.isCaptured("LowerMenu:stretchB")) {
-      h -= pmouseY - mouseY;
-      h = constrain(h, 132, height-locY-40);
-    }
-    //Streching -- from top
-    mouse.declareUpdateElementRelative("LowerMenu:stretchT", "LowerMenu", 0, 0, w, 10, g);
-    if(mouse.elmIsHover("LowerMenu:stretchT")) {
-      cursor.set(java.awt.Cursor.S_RESIZE_CURSOR);
-      
-    }
-    if(mouse.isCaptured("LowerMenu:stretchT")) {
-      h += pmouseY - mouseY;
-      locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
-      h = constrain(h, 132, height-locY-40);
-    }
+    
+    
   }
   
   int getScrollXOffset() {
