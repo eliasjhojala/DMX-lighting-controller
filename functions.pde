@@ -59,7 +59,7 @@ void arduinoSend() {
 int trussToMove = -1;
 boolean movingTruss = false;
 
-void ansat(PVector mouseRotated) {
+void drawTrusses(PVector mouseRotated) {
   
     for(int i = 0; i < trusses.length; i++) {
       pushMatrix();

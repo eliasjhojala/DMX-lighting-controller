@@ -1,143 +1,146 @@
 //Draw main/2D visualization
 
-
+boolean rotateLamp = false;
+int lampToRotate = -1;
+PVector oldMouseForMovingFixtures = new PVector(0, 0);
 
 void drawMainWindow() {
   pushMatrix(); 
-    //TÄSSÄ KÄÄNNETÄÄN JA SIIRRETÄÄN NÄKYMÄ OIKEIN - DO ROTATE AND TRANSFORM RIGHT
    
-   mouse.declareUpdateElement("main:fixtures", 0, 0, 0, width, height);
-   mouse.getElementByName("main:fixtures").autoCapture = false;
-   mouse.declareUpdateElement("main:move", 0, 0, 0, width, height);
-   mouse.getElementByName("main:move").autoCapture = false;
-   //Transform
+   { //Declare all the mouse elements
+     mouse.declareUpdateElement("main:fixtures", 0, 0, 0, width, height);
+     mouse.getElementByName("main:fixtures").autoCapture = false;
+     mouse.declareUpdateElement("main:move", 0, 0, 0, width, height);
+     mouse.getElementByName("main:move").autoCapture = false;
+   } //End of declaring all the mouse variables
    
-   
-   translate(width/2, height/2);
-   scale(zoom/100); //Skaalataan sivua oikean verran - scale page
-   translate(x_siirto, y_siirto); //Siirretään sivua oikean verran - move page
-   
-   rotate(radians(pageRotation)); //Käännetään sivua oikean verran - rotate page
-   translate(-width/2, -height/2); //move page back
-   //translate(0, 50); //Siirretään kaikkea alaspäin ylävalikon verran - move all the objects down because top menu
-   
+   { //Transform view
+     translate(width/2, height/2); //Move view for fine rotating
+     scale(zoom/100); //Scale view
+     translate(x_siirto, y_siirto); //Move view depending on the values set by user
+     rotate(radians(pageRotation)); //Rotate view depending on the values set by user
+     translate(-width/2, -height/2); //Move view back after rotating
+   } //End of transforming view
    
    
-   {//begin drawing all elements (fixtures & other non-HUD objects)
-    
-    
-    
+   
+  { //begin drawing all elements (fixtures & other non-HUD objects)
     //Just using the rotation of PVectors, it already exists, so why not use it?
     PVector mouseRotated = new PVector(mouseX, mouseY);
     mouseRotated.rotate(radians(-pageRotation));
     
     //TÄSSÄ PIIRRETÄÄN ANSAT - DRAW TRUSSES
-    ansat(mouseRotated);
-    if(showSockets) {
-    drawSockets(mouseRotated);
-    }
-    
-    /*if(moveLamp) {
-      mouseLocked = true;
-      mouseLocker = "main:fixMove";
-    }*/
+    drawTrusses(mouseRotated); //Draw trusses
+    if(showSockets) { drawSockets(mouseRotated); } //Draw sockets
     
     
-    if(!mousePressed && moveLamp == true) {
-      if(lampToMove < fixtures.size()) {
-        fixtures.get(lampToMove).x_location += int((mouseRotated.x - oldMouseX1) * 100 / zoom);
-        fixtures.get(lampToMove).y_location += int((mouseRotated.y - oldMouseY1) * 100 / zoom);
-      }
-      if(fixtures.get(lampToMove).selected) {
-        for(int i = 0; i < fixtures.size(); i++) {
-          if(fixtures.get(i).selected && i != lampToMove) {
-            fixtures.get(i).x_location += int((mouseRotated.x - oldMouseX1) * 100 / zoom);
-            fixtures.get(i).y_location += int((mouseRotated.y - oldMouseY1) * 100 / zoom);
-          }
-        }
-      }
+    //DO MOVING TO ALL THE FIXTURES
+    { //Move (selected) fixtures
+      if(moveLamp == true) { //Check are we moving any lamp
+        if(lampToMove < fixtures.size() && lampToMove >= 0) { //Make sure that lampToMove is "good" value
+          fixture fix = fixtures.get(lampToMove); //Use fix only to make cleaner code
+          fix.x_location += int((mouseRotated.x - oldMouseForMovingFixtures.x) * 100 / zoom); //Add mouse offset
+          fix.y_location += int((mouseRotated.y - oldMouseForMovingFixtures.y) * 100 / zoom); //Add mouse offset
+          if(fix.selected) { //If fixture we are moving is selected then let's move all the selected fixtures
+            for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
+              fix = fixtures.get(i); //Use fix only to make cleaner code
+              if(fix.selected && i != lampToMove) { //Let's check is this fixture selected
+                fix.x_location += int((mouseRotated.x - oldMouseForMovingFixtures.x) * 100 / zoom); //Add mouse offset
+                fix.y_location += int((mouseRotated.y - oldMouseForMovingFixtures.y) * 100 / zoom); //Add mouse offset
+              } //End of checking is this fixture selected 
+            } //End of going through all the fixtures 
+          } //End of checking is fixture we are moving selected
+        } //End of checking is lampToMove good value
+      } //End of checking are we moving any lamp
       
-      moveLamp = false; 
-    }
+      oldMouseForMovingFixtures = mouseRotated.get(); //Set old mouse location for fixture moving
+      
+      if(!mousePressed) { 
+        //If mouse isn't pressed then we aren't moving or rotating anything
+        rotateLamp = false;
+        moveLamp = false; 
+      }
+    } //End of moving (selected) fixtures
+    //END OF MOVING ALL THE FIXTURES
     
-    if(!showSockets) for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) {
+    //THIS FOR LOOP DRAWS ALL THE FIXTURES AND CHECKS IF YOU HAVE CLICKED THEM
+    if(!showSockets) for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) { //Go through all the fixtures if sockets aren't shown
       pushMatrix();
+      
         fixture fix = fixtures.get(i);
-        boolean translated = false;
+        PVector originalLocation = new PVector(fix.x_location, fix.y_location);
+        PVector trussOffset = new PVector(trusses[fix.parentAnsa].location.x, trusses[fix.parentAnsa].location.y);
+        PVector finalLocation = new PVector(originalLocation.x + trussOffset.x, originalLocation.y + trussOffset.y);
         
-        if(!mouse.captured || mouse.isCaptured("main:fixtures")) {
-    
-          if(moveLamp == true) {
-            //mouse.capture(mouse.getElementByName("main:fixtures"));
-            if(i == lampToMove) { translate(fixtures.get(lampToMove).x_location + ((int(mouseRotated.x) - oldMouseX1) * 100 / zoom)  + trusses[fixtures.get(lampToMove).parentAnsa].location.x, fixtures.get(lampToMove).y_location + (int(mouseRotated.y) - oldMouseY1) * 100 / zoom + trusses[fixtures.get(lampToMove).parentAnsa].location.y); 
-                                  translated = true; }
-          }
+        //Center fixture
+        finalLocation.x += fix.size.w/2;
+        finalLocation.y += fix.size.h/2;
+        //End of centering
+        
+        translate(finalLocation.x, finalLocation.y);
+        
+        if(rotateLamp && lampToRotate == i) {
+          PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
+          int rot = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
+          fix.rotationZ = rot;
         }
         
-        if(!translated) { translate(fix.x_location+trusses[fix.parentAnsa].location.x, fix.y_location+trusses[fix.parentAnsa].location.y);
-                          translated = true; }
-        translate(fix.size.w/2, fix.size.h/2);
-        if(fix.fixtureTypeId != 14) { rotate(radians(fix.rotationZ)); }
+        rotate(radians(fix.rotationZ)); 
         
-        
-             
-       //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
-       if(isHover(-fix.size.w/2, -fix.size.h/2, fix.size.w, fix.size.h) && mousePressed && !mouse.captured && mouse.elmIsHover("main:fixtures")) {
-        
-         if(mouseButton == RIGHT) {
-           toChangeFixtureColor = true; toRotateFixture = true; changeColorFixtureId = i; 
-           mouse.capture(mouse.getElementByName("main:fixtures"));
-           
-           contextMenu1.initiateForFixture(i);
-         }
-         else {
-           mouse.capture(mouse.getElementByName("main:fixtures"));
-           oldMouseX1 = int(mouseRotated.x);
-           oldMouseY1 = int(mouseRotated.y);
-           if(!showMode && !showModeLocked) {
-             lampToMove = i;
-             moveLamp = true;
-             mouseReleased = false;
-           } 
-           else {
+         
+        //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
+        //Functions running when pressed on the fixture
+        if(isHover(-fix.size.w/2, -fix.size.h/2, fix.size.w, fix.size.h) && mousePressed && !mouse.captured && mouse.elmIsHover("main:fixtures")) {
+          if(mouseButton == RIGHT) { //Functions running when pressed on the fixture with mouse left button
+            mouse.capture(mouse.getElementByName("main:fixtures"));
+            contextMenu1.initiateForFixture(i);
+          } //End of functions running when pressed on the fixture with mouse left button
+          else { //Functions running when pressed on the fixture with mouse left button
+            mouse.capture(mouse.getElementByName("main:fixtures"));
+            oldMouseX1 = int(mouseRotated.x);
+            oldMouseY1 = int(mouseRotated.y);
+            if(!showMode && !showModeLocked) { //Rotate and move fixtures if not in showMode
+              if(keyPressed && key == 'r') { //If r pressed then we will rotate fixture
+                lampToRotate = i; //Tell what fixture are we rotating
+                rotateLamp = true; //Tell that we are rotating some fixture 
+              }
+              else { //If only mouse clicked without pressing r then we will move fixture
+                lampToMove = i; //Tell what fixture we are moving
+                moveLamp = true; //Tell that we are moving some fixture
+              }
+              mouseReleased = false; //Tell that mouse isn't released anymore
+            } 
+            else { //Put fixture on and off by clicking it in showMode
               fix.toggle(true);
-           }
-           
-         }
-       }
-       
-       
-       fix.draw2D(i);
-       
+            }
+          } //End of functions running when pressed on the fixture with mouse left button
+        } //End of functions running when pressed on the fixture
+        fix.draw2D(i); //This command draws the fixture
+        
       popMatrix();
-      
-    }
+          
+    } //End of going through all the fixtures if sockets aren't shown
+    //END OF DRAWING ALL THE FIXTURES AND CHECKING IF YOU HAVE CLICKED THEM
+    
     popMatrix();
-    
-    
-    
-  }//Endof: draw all elements
+  } //Endof: draw all elements
       
-  //---------------View drag & box selection
-  if(!moveLamp) {
-    
-    if(mousePressed) {
-      
-      if (mouseButton == LEFT) {
-        if (!mouse.captured || mouse.isCaptured("main:move")) {
-          mouse.capture(mouse.getElementByName("main:move"));
-          movePage();
+  //------------------View drag & box selection------------------------
+    if(!moveLamp) {
+      if(mousePressed) {
+        if (mouseButton == LEFT) {
+          if (!mouse.captured || mouse.isCaptured("main:move")) {
+            mouse.capture(mouse.getElementByName("main:move"));
+            movePage();
+          }
+        } else if(mouseButton == RIGHT) {
+          //Box select
+          doBoxSelect();
         }
-      } else if(mouseButton == RIGHT) {
-        //Box select
-        
-        
-        doBoxSelect();
-        
       }
     }
-  }
-  if(!mousePressed && boxSelect) thread("endBoxSelect");
+    if(!mousePressed && boxSelect) thread("endBoxSelect");
+  //-------------End of view drag & box selection----------------------
 }
 
 

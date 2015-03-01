@@ -179,9 +179,6 @@ void checkFixtureBoxSlider(int id) {
 
 void checkFixtureBoxRightClick(int id) {
    if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && mouseReleased) { //Check if mouse is on the title box anf clicked
-    toChangeFixtureColor = true; //Tells controlP5 to open fixtureSettings window
-    toRotateFixture = true; //Tells controlP5 to open fixtureSettings window
-    changeColorFixtureId = id; //Tells controlP5 which fixture to edit
     
     openBottomMenuControlBox(id); // open bottomMenu
   }

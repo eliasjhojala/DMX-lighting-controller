@@ -120,9 +120,6 @@ int fixtureMasterValue = 255; //Fixtuurien master-muuttuja
 int chaseSpeed = 500;
 int chaseFade = 255;
 
-boolean toRotateFixture;
-boolean toChangeFixtureColor; 
-int changeColorFixtureId = 0;
 
 boolean getPaths = false;
 
