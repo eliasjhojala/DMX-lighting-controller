@@ -101,94 +101,12 @@ void saveAllData() {
       saveDataMainCommands(str(fixtures.array.get(i).channelStart),  "channel", "1", str(i), "-");
       saveDataMainCommands(str(fixtures.array.get(i).parentAnsa),    "ansaParent", "1", str(i), "-");
   }
-  
-  
-  
-  //---------------------------------------------------------------Saving memories---------------------------------------------------------------------------------------------------------
-
-  saveVariable(memories.length, "memories.length");
-  for(int i = 0; i < memories.length; i++) {
-    if(memories[i].repOfFixtures != null) {
-      saveDataMainCommands(str(memories[i].repOfFixtures.length), "memories[i].repOfFixtures.length", "1", str(i), "-");
-    }
-    
-    saveDataMainCommands(str(memories[i].type), "memories[i].type", "1", str(i), "-");
-     saveDataMainCommands(str(memories[i].value), "memories[i].value", "1", str(i), "-");
-
-    { //Saving chase variables
-      if(memories[i].myChase != null) {
-        
-        { //IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT  
-          if(memories[i].myChase.presets != null) {
-            saveDataMainCommands(str(memories[i].myChase.presets.length), "memories[i].myChase.presets.length", "1", str(i), "-"); 
-            for(int ij = 0; ij < memories[i].myChase.presets.length; ij++) { //This is the most important part of saving chase data
-              saveDataMainCommands(str(memories[i].myChase.presets[ij]), "memories[i].myChase.presets[ij]", "2", str(i), str(ij));
-            } //End of for(int ij = 0; ij < memories[i].myChase.presets.length; ij++)
-          }
-          
-          if(memories[i].myChase.content != null) {
-            saveDataMainCommands(str(memories[i].myChase.content.length), "memories[i].myChase.content.length", "1", str(i), "-"); 
-            for(int ij = 0; ij < memories[i].myChase.content.length; ij++) { //This is the most important part of saving chase data
-              saveDataMainCommands(str(memories[i].myChase.content[ij]), "memories[i].myChase.content[ij]", "2", str(i), str(ij));
-            } //End of for(int ij = 0; ij < memories[i].myChase.content.length; ij++)
-          }
-          
-          
-          { //Pretty important data to save
-            saveDataMainCommands(str(memories[i].myChase.inputMode), "memories[i].myChase.inputMode", "1", str(i), "-");
-            saveDataMainCommands(str(memories[i].myChase.outputMode), "memories[i].myChase.outputMode", "1", str(i), "-");
-            saveDataMainCommands(str(memories[i].myChase.beatModeId), "memories[i].myChase.beatModeId", "1", str(i), "-");
-            saveDataMainCommands(memories[i].myChase.beatMode, "memories[i].myChase.beatMode", "1", str(i), "-");
-          } //End of saving pretty important data
-        } //END OF IMPORTANT   END OF IMPORTANT   END OF IMPORTANT   END OF IMPORTANT   END OF IMPORTANT   END OF IMPORTANT   END OF IMPORTANT   END OF IMPORTANT   
-        
-        //INSIDE SAVING MEMORIES
-        
-        { //UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   UNIMPORTANT   
-
-          
-          { //These are not so important variables
-            saveDataMainCommands(str(memories[i].myChase.step), "memories[i].myChase.step", "1", str(i), "-");
-            saveDataMainCommands(str(memories[i].myChase.brightness), "memories[i].myChase.brightness", "1", str(i), "-");
-            saveDataMainCommands(str(memories[i].myChase.brightness1), "memories[i].myChase.brightness1", "1", str(i), "-");
-            saveDataMainCommands(str(int(memories[i].myChase.stepHasChanged)), "memories[i].myChase.stepHasChanged", "1", str(i), "-");
-            saveDataMainCommands(str(memories[i].myChase.fade), "memories[i].myChase.fade", "1", str(i), "-");
-          } //End of saving unimportant variables
-        } //END OF UNIMPORTANT   END OF UNIMPORTANT   END OF UNIMPORTANT   END OF UNIMPORTANT   END OF UNIMPORTANT   END OF UNIMPORTANT   END OF UNIMPORTANT   
-      } //End of check the memory is not null
-    } //End saving chase variables
-    
-
-    //INSIDE SAVING MEMORIES
-    
-    for(int ij = 0; ij < memories[i].whatToSave.length; ij++) {
-      saveDataMainCommands(str(memories[i].whatToSave[ij]), "memories[i].whatToSave[ij]", "2", str(i), str(ij));
-    } //End of for(int ij = 0; ij < memories[i].whatToSave.length; ij++)
-    
-   for (int j = 0; j < memories[i].repOfFixtures.length; j++) {
-       // whatToSave titles: { "dimmer", "colorWheel", "gobo", "goboRotation", "shutter", "pan", "tilt" }
-       for(int jk = 0; jk < universalDMXlength; jk++) {
-          if(memories[i].whatToSave[jk]) saveDataMainCommands(str(memories[i].repOfFixtures[j].getUniDMX(jk)), "memories[i].repOfFixtures[j].getUniDMX(" + str(jk) + ")", "2", str(i), str(j));
-       }
-    } //End of for (int j = 1; j < memories[i].repOfFixtures.length; j++)
-
-  } //End of for(int i = 0; i < memories.length; i++)
- 
-  
-  //-------------------------------------------------------End saving memories------------------------------------------------------------------------------------------------------------------------------
-  
-  //INSIDE VOID SAVE
 
 
-//  save1Darray(trusses.location.z, "ansaZ");
-//  save1Darray(trusses.location.x, "ansaX");
-//  save1Darray(trusses.location.y, "ansaY");
-//  save1Darray(trusses.type, "ansaType");
 
   save1Darray(bottomMenuOrder, "bottomMenuOrder");
   
-  
-  
+
   
   int[] grouping = new int[3];
         grouping[0] = controlP5place;
