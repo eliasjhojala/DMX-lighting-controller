@@ -6,7 +6,6 @@ int oldMouseY1;
 int grandMaster = 255;
 int oldGrandMaster = 40;
 
-long totalMillis[] = new long[9];
 
 boolean soloIsOn;
 
