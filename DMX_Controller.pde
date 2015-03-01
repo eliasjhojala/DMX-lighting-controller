@@ -1,4 +1,3 @@
-//I COUNT: THERE ARE 9 714 LINES CODE IN THIS SOFTWARE
 boolean showMode = true;                                                                                                                                                  //| 
 boolean showModeLocked = true;                                                                                                                                            //|
 boolean showSockets = false;                                                                                                                                              //| 

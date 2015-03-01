@@ -1,4 +1,4 @@
-//Tässä välilehdessä on koko ohjelman ydin, eli draw-loop
+//The main loop (void draw()) is located in this tab
  
 int oldMouseX1;
 int oldMouseY1;

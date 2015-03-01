@@ -1,7 +1,9 @@
-
-//This is a really old comment by eliasjhojala(@github.com), I'm keeping it here for the memories :)
-    //Tässä välilehdessä piirretään alavalikko, jossa näkyy mm. fixtuurien nykyiset arvot 
-    //Alavalikko toimii nyt hyvin ja fixture(i) voidia voi käyttää missä vain ohjelmassa
+/*
+In this tab are located
+  - lower menu containing fixture controller boxes
+  - bottomMenuControlBox to control all the channels of fixtures
+  - notifier class: notifications located at the bottom of screen
+*/
 
  
 //Create variables for old mouse locations

@@ -1,3 +1,5 @@
+//DMX values between fixtures and output are mainly processed in this tab
+
 boolean dimCheckFinished = true;
 
 final int DMX_CHAN_LENGTH = 512;

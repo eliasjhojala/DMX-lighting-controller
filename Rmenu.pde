@@ -1,4 +1,12 @@
-//Tässä välilehdessä piirretään sivuvalikko, jossa näkyy memorit ja niiden arvot, sekä tyypit
+/*
+In this tab are located
+  - right bubbles  
+       - create memory
+       - inputMode for chase
+       - outputMode for chase
+  - memory controllers with sliders
+  - memoryCreator window
+*/
  
 MemoryCreationBox memoryCreator;
 

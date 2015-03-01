@@ -1,3 +1,4 @@
+//Functions to handle XML are located in this tab
 
 ManageXML fixtureXML = new ManageXML("XML/fixtures.xml");
 ManageXML memoryXML = new ManageXML("XML/memories.xml");

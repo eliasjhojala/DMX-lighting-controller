@@ -1,4 +1,12 @@
-//Tässä välilehdessä piirretään ylävalikko, ja käsitellään sen nappuloiden komentoja 
+/*
+In this tab are located
+  - left bubbles
+       - clock viewer
+       - fps viewer
+       - settings button
+  - left buttons
+       - actually only colorWash
+*/
 
 color topMenuTheme = color(222, 0, 0);
 color topMenuTheme2 = color(200, 0, 0);

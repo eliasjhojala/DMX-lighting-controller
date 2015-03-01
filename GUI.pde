@@ -1,7 +1,5 @@
 //This tab contains classes and functions related to the GUI
 
-
-
 class SubWindowContainer {
   //X and Y offset
   int x, y;
