@@ -124,6 +124,7 @@ void oscEvent(OscMessage theOscMessage) {
 
   
      if(addr.equals("/fullon")) {
+       fullOn = boolean(digitalValue);
      }
      
      

@@ -8,9 +8,16 @@ int oldGrandMaster = 40;
 
 long totalMillis[] = new long[9];
 
+boolean soloIsOn;
+
 void draw() {
   if(programReadyToRun && !freeze) {
     
+    for(int i = 0; i < fixtures.size(); i++) {
+      if(fixtures.get(i) != null) {
+        fixtures.get(i).soloInThisFixture = false;
+      }
+    }
     textSize(12);
     
     inputClass.draw();
@@ -45,7 +52,7 @@ void draw() {
     subWindowHandler.draw();
     
     
-    
+    soloIsOn = false;
   }
 }
 
