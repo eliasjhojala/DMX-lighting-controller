@@ -9,18 +9,18 @@ int oldMouseY1;
 int grandMaster = 255;
 int oldGrandMaster = 40;
 
-long totalMillis[] = new long[9];
+long[] totalMillis = new long[9];
+
+
 
 void draw() {
   if(programReadyToRun && !freeze) {
-    
     textSize(12);
     
     mouse.refresh();
     
     //Move this to setDimAndMemoryValuesAtEveryDraw, maybe?
     updateMemories();
-    
     
     
     checkThemeMode();
@@ -36,7 +36,7 @@ void draw() {
       sivuValikko(); //right menu
       contextMenu1.draw();
     }
-
+    
     
     if (useMaschine) calcMaschineAutoTap();
     
@@ -46,7 +46,6 @@ void draw() {
     drawColorWashMenu();
     
     subWindowHandler.draw();
-    
     
     cursor.push();
   }
