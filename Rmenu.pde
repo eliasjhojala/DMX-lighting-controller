@@ -421,26 +421,27 @@ class MemoryCreationBox {
   void drawTypeSpecificOptions(PGraphics g, Mouse mouse) {
     g.pushMatrix();
     {
-      g.pushMatrix();
+      if(memories[selectedMemorySlot].type != 0) {
         g.pushMatrix();
-              g.translate(275, 110);
-              mouse.declareUpdateElementRelative("MemoryCreationBox:solo", "MemoryCreationBox", 0, 0, 120, 25, g);
-              mouse.setElementExpire("MemoryCreationBox:solo", 2);
-              boolean soloBoxIsHover = mouse.elmIsHover("MemoryCreationBox:solo");
-              g.fill(soloBoxIsHover ? 210 : 200);
-              g.noStroke();
-              g.rect(0, 0, 25, 25, 4);
-              
-              if(mouse.isCaptured("MemoryCreationBox:solo") && mouse.firstCaptureFrame) {
-                memories[selectedMemorySlot].soloInThisMemory = !memories[selectedMemorySlot].soloInThisMemory;
-              }
-              if(memories[selectedMemorySlot].soloInThisMemory) {
-                g.fill(0, 186, 240);
-                g.rect(4, 4, 17, 17, 4);
-              }
-              g.fill(10);
-            g.popMatrix();
-      g.popMatrix();
+            g.translate(260, 110);
+            mouse.declareUpdateElementRelative("MemoryCreationBox:solo", "MemoryCreationBox", 0, 0, 120, 25, g);
+            mouse.setElementExpire("MemoryCreationBox:solo", 2);
+            boolean soloBoxIsHover = mouse.elmIsHover("MemoryCreationBox:solo");
+            g.fill(soloBoxIsHover ? 210 : 200);
+            g.noStroke();
+            g.rect(0, 0, 25, 25, 4);
+            
+            if(mouse.isCaptured("MemoryCreationBox:solo") && mouse.firstCaptureFrame) {
+              memories[selectedMemorySlot].soloInThisMemory = !memories[selectedMemorySlot].soloInThisMemory;
+            }
+            if(memories[selectedMemorySlot].soloInThisMemory) {
+              g.fill(0, 186, 240);
+              g.rect(4, 4, 17, 17, 4);
+            }
+            g.fill(10);
+            g.text("Solo", 40, 17);
+        g.popMatrix();
+      }
       switch(selectedMemoryMode) {
         case 0: //Preset
           //Draw whatToSave checkboxes
@@ -597,7 +598,7 @@ class MemoryCreationBox {
             
             
             g.pushMatrix();
-              g.translate(250, 110);
+              g.translate(2/2*120+10, 140);
               mouse.declareUpdateElementRelative("MemoryCreationBox:swtso", "MemoryCreationBox", 0, 0, 120, 25, g);
               mouse.setElementExpire("MemoryCreationBox:swtso", 2);
               boolean boxIsHover = mouse.elmIsHover("MemoryCreationBox:swtso");
@@ -613,6 +614,7 @@ class MemoryCreationBox {
                 g.rect(4, 4, 17, 17, 4);
               }
               g.fill(10);
+              g.text("view", 40, 17);
             g.popMatrix();
           
           
@@ -756,7 +758,7 @@ class MemoryCreationBox {
                 mouse.declareUpdateElementRelative("MemoryCreationBox:specialType0", "MemoryCreationBox", 0, 0, 120, 25, g);
                 mouse.setElementExpire("MemoryCreationBox:specialType0", 2);
                 boxIsHover = mouse.elmIsHover("MemoryCreationBox:specialType0");
-                g.fill(soloBoxIsHover ? 210 : 200);
+                g.fill(boxIsHover ? 210 : 200);
                 g.noStroke();
                 g.rect(0, 0, 25, 25, 4);
                 
@@ -776,7 +778,7 @@ class MemoryCreationBox {
                 mouse.declareUpdateElementRelative("MemoryCreationBox:specialType1", "MemoryCreationBox", 0, 0, 120, 25, g);
                 mouse.setElementExpire("MemoryCreationBox:specialType1", 2);
                 boxIsHover = mouse.elmIsHover("MemoryCreationBox:specialType1");
-                g.fill(soloBoxIsHover ? 210 : 200);
+                g.fill(boxIsHover ? 210 : 200);
                 g.noStroke();
                 g.rect(0, 0, 25, 25, 4);
                 
@@ -797,7 +799,7 @@ class MemoryCreationBox {
                 mouse.declareUpdateElementRelative("MemoryCreationBox:specialType2", "MemoryCreationBox", 0, 0, 120, 25, g);
                 mouse.setElementExpire("MemoryCreationBox:specialType2", 2);
                 boxIsHover = mouse.elmIsHover("MemoryCreationBox:specialType2");
-                g.fill(soloBoxIsHover ? 210 : 200);
+                g.fill(boxIsHover ? 210 : 200);
                 g.noStroke();
                 g.rect(0, 0, 25, 25, 4);
                 
@@ -818,7 +820,7 @@ class MemoryCreationBox {
                 mouse.declareUpdateElementRelative("MemoryCreationBox:specialType3", "MemoryCreationBox", 0, 0, 120, 25, g);
                 mouse.setElementExpire("MemoryCreationBox:specialType3", 2);
                 boxIsHover = mouse.elmIsHover("MemoryCreationBox:specialType3");
-                g.fill(soloBoxIsHover ? 210 : 200);
+                g.fill(boxIsHover ? 210 : 200);
                 g.noStroke();
                 g.rect(0, 0, 25, 25, 4);
                 
