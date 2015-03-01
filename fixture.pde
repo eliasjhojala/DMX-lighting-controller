@@ -224,6 +224,7 @@ class fixture {
    float soloFade = 255;
    float afterSoloFade = 0;
    boolean thisFixtureWasOffBySolo = false;
+   
   void processDMXvalues() {
     preset.presetProcess();
     
@@ -248,6 +249,7 @@ class fixture {
       if(afterSoloFade < 255) { afterSoloFade+=(float(60)/frameRate)*20; afterSoloFade = constrain(afterSoloFade, 0, 255); } 
       if(afterSoloFade == 255) { thisFixtureWasOffBySolo = false;  soloFade = 255;}
     }
+    
     if(fullOn) { 
       newIn[DMX_DIMMER] = 255; 
       if((newIn[DMX_RED] + newIn[DMX_GREEN] + newIn[DMX_BLUE] + newIn[DMX_WHITE])  == 0) { newIn[DMX_RED] = 255; newIn[DMX_GREEN] = 255; newIn[DMX_BLUE] = 255; newIn[DMX_WHITE] = 255; }
