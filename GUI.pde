@@ -429,7 +429,7 @@ class DropdownMenu {
   
   void drawBlock(int id, int order, PGraphics g, Mouse mouse) {
     PVector size = new PVector(500, 40);
-    translate(0, size.y);
+    g.translate(0, size.y);
     blocks.get(id).draw(size, name, id, g, mouse);
   }
 
@@ -476,8 +476,8 @@ class DropdownMenuBlock {
   }
   
   void draw(PVector size, String parentName, int thisId, PGraphics g, Mouse mouse) {
-    pushMatrix();
-      pushStyle();
+    g.pushMatrix();
+      g.pushStyle();
         
         { //Block
           PVector rectStartPoint = new PVector(0, 0);
@@ -498,19 +498,19 @@ class DropdownMenuBlock {
           else if(hovered) {
             fillColor = hoveredBgColor;
           }
-          fill(fillColor);
-          stroke(strokeColor);
-          strokeWeight(strokeWeight);
-          rect(rectStartPoint.x, rectStartPoint.y, rectSize.x, rectSize.y);
+          g.fill(fillColor);
+          g.stroke(strokeColor);
+          g.strokeWeight(strokeWeight);
+          g.rect(rectStartPoint.x, rectStartPoint.y, rectSize.x, rectSize.y);
         } //End of block
         
         { //Text
-          fill(textColor);
-          text(text, 10, (size.y/2)+5);
+          g.fill(textColor);
+          g.text(text, 10, (size.y/2)+5);
         } //End of text
         
-      popStyle();
-    popMatrix();
+      g.popStyle();
+    g.popMatrix();
   }
   
   boolean isHover() {
