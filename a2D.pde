@@ -3,6 +3,8 @@
 boolean rotateLamp = false;
 int lampToRotate = -1;
 PVector oldMouseForMovingFixtures = new PVector(0, 0);
+int rotationForAllTheFixtures;
+boolean rotateFixturesToSamePoint;
 
 void drawMainWindow() {
   pushMatrix(); 
@@ -34,34 +36,8 @@ void drawMainWindow() {
     if(showSockets) { drawSockets(mouseRotated); } //Draw sockets
     
     
-    //DO MOVING TO ALL THE FIXTURES
-    { //Move (selected) fixtures
-      if(moveLamp == true) { //Check are we moving any lamp
-        if(lampToMove < fixtures.size() && lampToMove >= 0) { //Make sure that lampToMove is "good" value
-          fixture fix = fixtures.get(lampToMove); //Use fix only to make cleaner code
-          fix.x_location += int((mouseRotated.x - oldMouseForMovingFixtures.x) * 100 / zoom); //Add mouse offset
-          fix.y_location += int((mouseRotated.y - oldMouseForMovingFixtures.y) * 100 / zoom); //Add mouse offset
-          if(fix.selected) { //If fixture we are moving is selected then let's move all the selected fixtures
-            for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
-              fix = fixtures.get(i); //Use fix only to make cleaner code
-              if(fix.selected && i != lampToMove) { //Let's check is this fixture selected
-                fix.x_location += int((mouseRotated.x - oldMouseForMovingFixtures.x) * 100 / zoom); //Add mouse offset
-                fix.y_location += int((mouseRotated.y - oldMouseForMovingFixtures.y) * 100 / zoom); //Add mouse offset
-              } //End of checking is this fixture selected 
-            } //End of going through all the fixtures 
-          } //End of checking is fixture we are moving selected
-        } //End of checking is lampToMove good value
-      } //End of checking are we moving any lamp
-      
-      oldMouseForMovingFixtures = mouseRotated.get(); //Set old mouse location for fixture moving
-      
-      if(!mousePressed) { 
-        //If mouse isn't pressed then we aren't moving or rotating anything
-        rotateLamp = false;
-        moveLamp = false; 
-      }
-    } //End of moving (selected) fixtures
-    //END OF MOVING ALL THE FIXTURES
+
+    
     
     //THIS FOR LOOP DRAWS ALL THE FIXTURES AND CHECKS IF YOU HAVE CLICKED THEM
     if(!showSockets) for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) { //Go through all the fixtures if sockets aren't shown
@@ -79,12 +55,29 @@ void drawMainWindow() {
         
         translate(finalLocation.x, finalLocation.y);
         
-        if(rotateLamp && lampToRotate == i) {
+        if(rotateLamp && (lampToRotate == i || (fixtures.get(lampToRotate).selected && fix.selected))) {
           PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
-          int rot = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
-          fix.rotationZ = rot;
+          
+          if(rotateFixturesToSamePoint) {
+            int rot = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
+            fix.rotationZ = rot;
+          }
+          else {
+            if(lampToRotate == i) {
+              rotationForAllTheFixtures = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
+            }
+            fix.rotationZ = rotationForAllTheFixtures;
+          }
+          
         }
+        if(moveLamp && (lampToMove >= 0 && lampToMove < fixtures.size())) { //Check are we moving any lamp and is lampToMove valid
+          if(moveLamp && (lampToMove == i || (fixtures.get(lampToMove).selected && fix.selected))) {
+            fix.x_location += int((mouseRotated.x - oldMouseForMovingFixtures.x) * 100 / zoom); //Add mouse offset
+            fix.y_location += int((mouseRotated.y - oldMouseForMovingFixtures.y) * 100 / zoom); //Add mouse offset
+          }
+        } //End of checking are we moving any lamp and is lampToMove valid
         
+
         rotate(radians(fix.rotationZ)); 
         
          
@@ -120,11 +113,20 @@ void drawMainWindow() {
       popMatrix();
           
     } //End of going through all the fixtures if sockets aren't shown
+    oldMouseForMovingFixtures = mouseRotated.get(); //Set old mouse location for fixture moving
     //END OF DRAWING ALL THE FIXTURES AND CHECKING IF YOU HAVE CLICKED THEM
     
     popMatrix();
   } //Endof: draw all elements
-      
+  
+  //Check if mouse is released
+    if(!mousePressed) { 
+      //If mouse isn't pressed then we aren't moving or rotating anything
+      rotateLamp = false;
+      moveLamp = false; 
+    }
+  //End of checking is mouse released
+  
   //------------------View drag & box selection------------------------
     if(!moveLamp) {
       if(mousePressed) {

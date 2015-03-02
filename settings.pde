@@ -43,7 +43,8 @@ class SettingsWindow {
         new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", tabs[1]),
         new SettingController(3, 2, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[1]),
         new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[1]),
-        new SettingController(5, "Lock showMode", "Make sure that showMode isn't turned off accidentally", tabs[1])
+        new SettingController(5, "Lock showMode", "Make sure that showMode isn't turned off accidentally", tabs[1]),
+        new SettingController(15, "Rotate fixtures to same point", "Rotate all the fixtures to same point", tabs[1])
       }
     );
     tabs[2] = new SettingsTab("Chase", this);
@@ -75,6 +76,7 @@ class SettingsWindow {
       case 4: s2l.blinky = b;                  break;
       case 5: showModeLocked = b;              break;
       case 10: showSockets = b;                break;
+      case 15: rotateFixturesToSamePoint = b;  break;
     }
   }
   
@@ -87,6 +89,7 @@ class SettingsWindow {
       case 4:  return s2l.blinky;
       case 5:  return showModeLocked;
       case 10: return showSockets;
+      case 15: return rotateFixturesToSamePoint; 
       default: return false;
     }
   }
