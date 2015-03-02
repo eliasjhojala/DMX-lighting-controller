@@ -13,10 +13,9 @@ boolean oldUse3D = false;
 
 boolean useMidiMaschines = false;
 
-boolean addedBlocks = false;
-
 float scrollSpeed = 0;
 boolean scrolled;
+
 
 void draw() {
   checkShowMode();

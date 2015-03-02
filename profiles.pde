@@ -16,6 +16,7 @@ void createFixtureProfiles() {
       fixtureTypeBlocks.add(newType);
     }
     fixtureTypes = new DropdownMenu("fixtureTypes", fixtureTypeBlocks);
+    fixtureTypes.setBlockSize(new PVector(170, 22));
     
 }
 
