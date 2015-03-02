@@ -435,36 +435,45 @@ class DropdownMenu {
     if(blocks != null) {
       int order = 0;
       int maxNumberOfBlocks = 10;
+      g.pushMatrix();
         g.pushMatrix();
           drawTopBlock(g, mouse);
           if(open) {
-            for(int id = 0; id < maxNumberOfBlocks; id++) {
-              if(round(id+offset) < blocks.size()) {
-                if(blocks.get(id) != null) {
-                  drawBlock(round(id+offset), order, g, mouse);
-                  order++;
+            g.pushMatrix();
+            g.rect(0, 0, blockSize.x, blockSize.y*maxNumberOfBlocks);
+              for(int id = 0; id < maxNumberOfBlocks; id++) {
+                if(isBetween(round(id+offset), 0, blocks.size()-1)) {
+                  if(blocks.get(round(id+offset)) != null) {
+                    drawBlock(round(id+offset), order, g, mouse);
+                    order++;
+                  }
                 }
               }
-            }
-          g.popMatrix();
-          g.pushMatrix();
-            g.pushStyle();
-              g.fill(200, 200, 200);
-              g.strokeWeight(2);
-              g.stroke(100, 100, 100);
-              g.translate(blockSize.x+3, 0);
-              mouse.declareUpdateElementRelative(name+"scrollBar", 100000000, 0, 0, 15, round(blockSize.y*maxNumberOfBlocks)); 
-              g.rect(0, 0, 15, blockSize.y*(maxNumberOfBlocks));
-              g.translate(0, round(offset));
-              mouse.declareUpdateElementRelative(name+"scrollBarBar", 1000000000, 0, 0, 15, 20); 
-              mouse.setElementExpire(name+"scrollBarBar", 2);
-              g.rect(0, 0, 15, 20);
-              if(mouse.isCaptured(name+"scrollBarBar")) {
-                offset += mouseY-pmouseY;
-              }
-            g.popStyle();
-          g.popMatrix();
-        }
+              g.popMatrix();
+            
+            g.pushMatrix();
+              g.pushStyle();
+                g.fill(200, 200, 200);
+                g.strokeWeight(2);
+                g.stroke(100, 100, 100);
+                g.translate(blockSize.x+3, 0);
+                mouse.declareUpdateElementRelative(name+"scrollBar", 100000000, 0, 0, 15, round(blockSize.y*maxNumberOfBlocks), g); 
+                g.rect(0, 0, 15, blockSize.y*(maxNumberOfBlocks));
+                g.translate(0, round(map(offset, 0, blocks.size()-10, 0, blockSize.y*(maxNumberOfBlocks)-round((blockSize.y*(maxNumberOfBlocks))/(blocks.size()/maxNumberOfBlocks)))));
+                mouse.declareUpdateElementRelative(name+"scrollBarBar", 1000000000, 0, 0, 15, round((blockSize.y*(maxNumberOfBlocks))/(blocks.size()/maxNumberOfBlocks)), g); 
+                mouse.setElementExpire(name+"scrollBarBar", 2);
+                g.fill(100, 100, 255);
+                g.rect(0, 0, 15, round((blockSize.y*(maxNumberOfBlocks))/(blocks.size()/maxNumberOfBlocks)));
+                if(mouse.isCaptured(name+"scrollBarBar")) {
+                  offset += map(mouseY-pmouseY, 0, blockSize.y*(maxNumberOfBlocks), 0, blocks.size()-1);
+                  offset = constrain(offset, 0, blocks.size()-10);
+                }
+               
+              g.popStyle();
+            g.popMatrix();
+          }
+        g.popMatrix();
+      g.popMatrix();
     }
   }
   

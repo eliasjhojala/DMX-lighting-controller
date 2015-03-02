@@ -34,7 +34,7 @@ void draw() {
     invokeFixturesDraw(); //Invoke every fixtures draw  
     resetSolo();  
     if(!addedBlocks) {
-      for(int i = 0; i < 20; i++) {
+      for(int i = 0; i < 200; i++) {
         dropDown.addBlock("block"+str(i), i);
       }
       addedBlocks = true;
