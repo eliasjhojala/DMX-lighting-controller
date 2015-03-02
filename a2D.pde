@@ -133,7 +133,7 @@ void drawMainWindow() {
     oldMouseForMovingFixtures = mouseRotated.get(); //Set old mouse location for fixture moving
     //END OF DRAWING ALL THE FIXTURES AND CHECKING IF YOU HAVE CLICKED THEM
     
-    
+    popMatrix(); //End of view scale, rotate and translate
     
     //Functions to draw fixtureTypeSelection dropdownMenu (these are loose from for loop above to put menu on top of fixtures)
     if(!showSockets && editFixtureType && lampToEditFixtureType >= 0 && lampToEditFixtureType < fixtures.size()) {
@@ -141,24 +141,16 @@ void drawMainWindow() {
         int i = lampToEditFixtureType;
         if(fixtures.get(i).size.isDrawn) {
           fixture fix = fixtures.get(i);
-          PVector originalLocation = new PVector(fix.x_location, fix.y_location);
-          PVector trussOffset = new PVector(0, 0); //Create PVector to loccate fixtures to right places according to trusses
-          if(trusses != null) if(trusses[fix.parentAnsa] != null) { //Block nullpointer for trusses
-            trussOffset = new PVector(trusses[fix.parentAnsa].location.x, trusses[fix.parentAnsa].location.y); //Get truss offset from right truss
-          } //End of blocking nullpointer for trusses
-          PVector finalLocation = new PVector(originalLocation.x + trussOffset.x, originalLocation.y + trussOffset.y); //Location where fixture is finally drawn
           
-          //Center fixture
-          finalLocation.x += fix.size.w/2;
-          finalLocation.y += fix.size.h/2;
-          //End of centering
+          PVector finalLocation = new PVector(fix.locationOnScreenX, fix.locationOnScreenY); //Location where fixture is finally drawn
+          
           
           translate(finalLocation.x, finalLocation.y);
           
           //Type selection from dropdownMenu
           if(editFixtureType && lampToEditFixtureType == i) {
             pushMatrix();
-              translate(-(fixtureTypes.getBlockSize().x/2), fix.size.h/2+25);
+              translate(-(fixtureTypes.getBlockSize().x/2), (fix.size.h/2)*zoom/100+25);
               fixtureTypes.draw();
               if(firsTimeDrawingFixtureTypeBox) {
                 fixtureTypes.setValue(fix.fixtureTypeId);
@@ -181,7 +173,7 @@ void drawMainWindow() {
     
     
     
-    popMatrix(); //End of view scale, rotate and translate
+    
 
   } //Endof: draw all elements
   
