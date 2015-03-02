@@ -403,13 +403,22 @@ class Switch {
 
 class DropdownMenu {
   ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
+  DropdownMenuBlock topBlock;
   String name;
   int selectedBlock;
   boolean open;
   
   DropdownMenu(String name) {
     this.name = name;
+    topBlock = new DropdownMenuBlock(name, 0);
   }
+  DropdownMenu(String name, String[] blockNames, int[] blockValues) {
+    this.name = name;
+    topBlock = new DropdownMenuBlock(name, 0);
+    addBlocks(blockNames, blockValues);
+  }
+  
+  
   
   void draw() {
     draw(g, mouse);
@@ -419,6 +428,7 @@ class DropdownMenu {
     if(blocks != null) {
       int order = 0;
       g.pushMatrix();
+        drawTopBlock(g, mouse);
         if(open) {
           for(int id = 0; id < blocks.size(); id++) {
             if(blocks.get(id) != null) {
@@ -427,28 +437,54 @@ class DropdownMenu {
             }
           }
         }
-        else {
-          drawBlock(selectedBlock, order, g, mouse);
-        }
       g.popMatrix();
     }
   }
   
-  void drawBlock(int id, int order, PGraphics g, Mouse mouse) {
-    PVector size = new PVector(150, 20);
+  PVector blockSize = new PVector(150, 20);
+  PVector topBlockBigger = new PVector(10, 10);
+  
+  void drawTopBlock(PGraphics g, Mouse mouse) {
+    PVector size = blockSize.get();
+    size.x += topBlockBigger.x;
+    size.y += topBlockBigger.y;
+    g.pushMatrix();
+      g.translate(-(topBlockBigger.x/2), -(topBlockBigger.y/2));
+      topBlock.draw(size, name, -1, false, g, mouse);
+      if(topBlock.isPressed()) {
+        open = !open;
+      }
+    g.popMatrix();
     g.translate(0, size.y);
+  }
+  
+  void drawBlock(int id, int order, PGraphics g, Mouse mouse) {
+    PVector size = blockSize.get();
     blocks.get(id).draw(size, name, id, selectedBlock == id, g, mouse);
     if(blocks.get(id).isPressed()) {
       if(open) {
-        selectedBlock = id;
+        selectedBlock = id; //Save selected block id
+        topBlock.setText(blocks.get(id).getText()); //Set topBlock text
+        open = false; //Close menu when selected block
       }
-      open = !open;
     }
+    g.translate(0, size.y);
   }
 
   void addBlock(String text, int value) {
     DropdownMenuBlock newBlock = new DropdownMenuBlock(text, value);
     blocks.add(newBlock);
+  }
+  
+  void addBlocks(String[] text, int[] value) {
+    blocks = new ArrayList<DropdownMenuBlock>();
+    for(int i = 0; i < min(text.length, value.length); i++) {
+      addBlock(text[i], value[i]);
+    }
+  }
+  
+  int getValue() {
+    return blocks.get(selectedBlock).value;
   }
 
   
