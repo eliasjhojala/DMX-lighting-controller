@@ -401,4 +401,262 @@ class Switch {
 }
 
 
+class DropdownMenu {
+  ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
+  DropdownMenuBlock topBlock;
+  String name;
+  int selectedBlock;
+  boolean open;
+  boolean thisMenuIsHovered;
+  boolean valueChanged;
+  
+  DropdownMenu(String name) {
+    this.name = name;
+    topBlock = new DropdownMenuBlock(name, 0);
+  }
+  DropdownMenu(String name, String[] blockNames, int[] blockValues) {
+    this.name = name;
+    topBlock = new DropdownMenuBlock(name, 0);
+    addBlocks(blockNames, blockValues);
+  }
+  DropdownMenu(String name, ArrayList<DropdownMenuBlock> newBlocks) {
+    this.name = name;
+    topBlock = new DropdownMenuBlock(name, 0);
+    blocks = newBlocks;
+  }
+  
+  
+  
+  void draw() {
+    draw(g, mouse);
+  }
+  
+  float offset = 0;
+  int maxNumberOfBlocks = 10;
+  
+  void draw(PGraphics g, Mouse mouse) {
+    if(blocks != null) {
+      int order = 0;
+      valueChanged = false;
+      g.pushMatrix();
+        g.pushMatrix();
+          drawTopBlock(g, mouse);
+          if(open) {
+            g.pushMatrix();
+            g.rect(0, 0, blockSize.x, blockSize.y*maxNumberOfBlocks);
+            mouse.declareUpdateElementRelative(name, 1000000, 0, 0, round(blockSize.x), round(blockSize.y*maxNumberOfBlocks), g); 
+            mouse.setElementExpire(name, 2);
+            thisMenuIsHovered = false;
+              for(int id = 0; id < maxNumberOfBlocks; id++) {
+                if(isBetween(round(id+offset), 0, blocks.size()-1)) {
+                  if(blocks.get(round(id+offset)) != null) {
+                    drawBlock(round(id+offset), order, g, mouse);
+                    order++;
+                  }
+                }
+              }
+              g.popMatrix();
+            
+            g.pushMatrix();
+              g.pushStyle();
+                g.fill(200, 200, 200);
+                g.strokeWeight(2);
+                g.stroke(100, 100, 100);
+                g.translate(blockSize.x+3, 0);
+                
+                PVector scrollBarBaseStartPoint = new PVector(0, 0);
+                PVector scrollBarBaseSize = new PVector(15, blockSize.y*(maxNumberOfBlocks));
+                mouse.declareUpdateElementRelative(name+"scrollBarBase", 1000000, scrollBarBaseStartPoint, scrollBarBaseSize, g); 
+                rect(scrollBarBaseStartPoint, scrollBarBaseSize, g);
+                
+                PVector scrollBarStartPoint = new PVector(0, 0);
+                PVector scrollBarSize = new PVector(15, round((blockSize.y*(maxNumberOfBlocks))/(blocks.size()/maxNumberOfBlocks)));
+                
+                g.translate(0, round(map(offset, 0, blocks.size()-maxNumberOfBlocks, 0, scrollBarBaseSize.y-scrollBarSize.y)));
+                mouse.declareUpdateElementRelative(name+"scrollBar", 10000000, scrollBarStartPoint, scrollBarSize, g); 
+                mouse.setElementExpire(name+"scrollBar", 2);
+                g.fill(100, 100, 255);
+                rect(scrollBarStartPoint, scrollBarSize, g);
+                if(mouse.isCaptured(name+"scrollBar")) {
+                  offset += map(mouseY-pmouseY, 0, blockSize.y*(maxNumberOfBlocks), 0, blocks.size()-1);
+                  constrainOffset();
+                }
+                if((mouse.elmIsHover(name) || thisMenuIsHovered) && scrolled) {
+                  offset+=scrollSpeed;
+                  constrainOffset();
+                }
+                
+               
+              g.popStyle();
+            g.popMatrix();
+          }
+        g.popMatrix();
+      g.popMatrix();
+    }
+  }
+  
+  void constrainOffset() {
+    offset = constrain(offset, 0, blocks.size()-maxNumberOfBlocks);
+  }
+  
+  PVector blockSize = new PVector(150, 20);
+  PVector topBlockBigger = new PVector(10, 10);
+  
+  void drawTopBlock(PGraphics g, Mouse mouse) {
+    PVector size = blockSize.get();
+    size.x += topBlockBigger.x;
+    size.y += topBlockBigger.y;
+    g.pushMatrix();
+      g.translate(-(topBlockBigger.x/2), -(topBlockBigger.y/2));
+      topBlock.draw(size, name, -1, false, g, mouse);
+      if(topBlock.isPressed()) {
+        open = !open;
+        setRightOffsetAccordingToId(selectedBlock);
+      }
+    g.popMatrix();
+    g.translate(0, size.y);
+  }
+  
+  void drawBlock(int id, int order, PGraphics g, Mouse mouse) {
+    PVector size = blockSize.get();
+    blocks.get(id).draw(size, name, id, selectedBlock == id, g, mouse);
+    if(blocks.get(id).isPressed()) {
+      if(open) {
+        selectedBlock = id; //Save selected block id
+        topBlock.setText(blocks.get(id).getText()); //Set topBlock text
+        valueChanged = true;
+        open = false; //Close menu when selected block
+      }
+    }
+    if(blocks.get(id).isHovered()) {
+      thisMenuIsHovered = true;
+    }
+    g.translate(0, size.y);
+  }
+
+  void addBlock(String text, int value) {
+    DropdownMenuBlock newBlock = new DropdownMenuBlock(text, value);
+    blocks.add(newBlock);
+  }
+  
+  void addBlocks(String[] text, int[] value) {
+    blocks = new ArrayList<DropdownMenuBlock>();
+    for(int i = 0; i < min(text.length, value.length); i++) {
+      addBlock(text[i], value[i]);
+    }
+  }
+  
+  int getValue() {
+    return blocks.get(selectedBlock).value;
+  }
+  
+  boolean valueHasChanged() {
+    return valueChanged;
+  }
+  
+  void setValue(int value) {
+    for(int id = 0; id < blocks.size(); id++) {
+      if(blocks.get(id) != null) {
+        if(blocks.get(id).getValue() == value) {
+          selectedBlock = id; //Save selected block id
+          topBlock.setText(blocks.get(id).getText()); //Set topBlock text
+          setRightOffsetAccordingToId(id);
+          break;
+        }
+      }
+    }
+  } //End of setValue()
+  
+  void setRightOffsetAccordingToId(int id) {
+    offset = id-round(maxNumberOfBlocks/2);
+    constrainOffset();
+  }
+
+  
+  
+}
+
+class DropdownMenuBlock {
+  int value;
+  String text;
+  
+  color bgColor = color(255, 255, 255);
+  color hoveredBgColor = color(200, 200, 200);
+  color pressedBgColor = color(100, 100, 100);
+  color selectedBgColor = color(100, 100, 255);
+ 
+  color textColor = color(0, 0, 0);
+  color strokeColor = color(100, 100, 100);
+  int strokeWeight = 2;
+  
+  boolean hovered, pressed;
+  
+  DropdownMenuBlock(String text, int value) {
+    this.value = value;
+    this.text = text;
+  }
+  
+  String getText() {
+    return text;
+  }
+  int getValue() {
+    return value;
+  }
+  
+  void setText(String text) {
+    this.text = text;
+  }
+  void setValue(int value) {
+    this.value = value;
+  }
+  
+  void draw(PVector size, String parentName, int thisId, boolean selected, PGraphics g, Mouse mouse) {
+    g.pushMatrix();
+      g.pushStyle();
+        
+        { //Block
+          PVector rectStartPoint = new PVector(0, 0);
+          PVector rectSize = size.get();
+          
+          String blockNameForMouse = parentName+":block:"+str(thisId);
+          
+          mouse.declareUpdateElementRelative(blockNameForMouse, 10000000, round(rectStartPoint.x), round(rectStartPoint.y), round(rectSize.x), round(rectSize.y), g); 
+          mouse.setElementExpire(blockNameForMouse, 2);
+          
+          hovered = mouse.elmIsHover(blockNameForMouse);
+          pressed = mouse.isCaptured(blockNameForMouse) && mouse.firstCaptureFrame;
+          
+          color fillColor = bgColor;
+          if(pressed) {
+            fillColor = pressedBgColor;
+          }
+          else if(hovered) {
+            fillColor = hoveredBgColor;
+          }
+          else if(selected) {
+            fillColor = selectedBgColor;
+          }
+          g.fill(fillColor);
+          g.stroke(strokeColor);
+          g.strokeWeight(strokeWeight);
+          g.rect(rectStartPoint.x, rectStartPoint.y, rectSize.x, rectSize.y);
+        } //End of block
+        
+        { //Text
+          g.fill(textColor);
+          g.text(text, 10, (size.y/2)+5);
+        } //End of text
+        
+      g.popStyle();
+    g.popMatrix();
+  }
+  
+  boolean isHovered() {
+    return hovered;
+  }
+  boolean isPressed() {
+    return pressed;
+  }
+  
+}
 

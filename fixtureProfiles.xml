@@ -124,6 +124,7 @@
         <height>45</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <fixtureModelPath>fog.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="Fog" id="9">
       <channelNames>
@@ -137,6 +138,7 @@
         <height>55</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <fixtureModelPath>fog.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="RGB" id="10">
       <channelNames>
