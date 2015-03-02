@@ -170,11 +170,6 @@ void drawMainWindow() {
     }
     //End of functions to draw fixtureTypeSelection dropdownMenu
     
-    
-    
-    
-    
-
   } //Endof: draw all elements
   
   //Check if mouse is released
