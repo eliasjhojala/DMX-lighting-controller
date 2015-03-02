@@ -91,6 +91,7 @@ void drawMainWindow() {
             fixtureTypes.draw();
             if(firsTimeDrawingFixtureTypeBox) {
               fixtureTypes.setValue(fix.fixtureTypeId);
+              fixtureTypes.open = true;
               firsTimeDrawingFixtureTypeBox = false;
             }
             if(fixtureTypes.valueHasChanged()) {

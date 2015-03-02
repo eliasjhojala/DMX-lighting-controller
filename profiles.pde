@@ -1,5 +1,5 @@
 FixtureProfile[] fixtureProfiles = new FixtureProfile[19]; 
-DropdownMenu fixtureTypes = new DropdownMenu("fixtureTypes");
+DropdownMenu fixtureTypes;
 void createFixtureProfiles() {
     loadFixtureProfiles();
     

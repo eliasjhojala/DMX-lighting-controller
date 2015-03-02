@@ -644,7 +644,7 @@ class DropdownMenuBlock {
         
         { //Text
           g.fill(textColor);
-          g.text(text, 10, (size.y/2)+5);
+          g.text(text, 4, (size.y/2)+5);
         } //End of text
         
       g.popStyle();
