@@ -191,8 +191,10 @@ void mouseWheel(MouseEvent event) {
     else if(e > 0) { if(memoryMenu < numberOfMemories) { memoryMenu++; } }
   }
   float e = event.getCount();
-  if(e < 0) { scrolledDown = true; }
-  if(e > 0) { scrolledUp = true; }
+  if(e < 0) { scrolledDown = true; scrollSpeed = abs(e); }
+  if(e > 0) { scrolledUp = true; scrollSpeed = abs(e); }
+  scrolled = true;
+  scrollSpeed = e;
 }
 
 
@@ -807,3 +809,9 @@ boolean isInArray(int[] array, int toFind1, int toFind2) {
   return false;
 }
 
+void rect(PVector loc1, PVector loc2) {
+  rect(loc1.x, loc1.y, loc2.x, loc2.y);
+}
+void rect(PVector loc1, PVector loc2, PGraphics g) {
+  g.rect(loc1.x, loc1.y, loc2.x, loc2.y);
+}

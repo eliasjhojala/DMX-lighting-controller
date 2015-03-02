@@ -17,6 +17,9 @@ DropdownMenu dropDown = new DropdownMenu("drop1");
 
 boolean addedBlocks = false;
 
+float scrollSpeed = 0;
+boolean scrolled;
+
 void draw() {
   checkShowMode();
   check3D();
@@ -38,10 +41,14 @@ void draw() {
         dropDown.addBlock("block"+str(i), i);
       }
       addedBlocks = true;
+      dropDown.setValue(53);
     }
     translate(300, 300);
     dropDown.draw();
   }
+  scrolledUp = false;
+  scrolledDown = false;
+  scrollSpeed = 0;
 }
 
 boolean memoriesFinished = true;

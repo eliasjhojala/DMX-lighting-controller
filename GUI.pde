@@ -407,6 +407,7 @@ class DropdownMenu {
   String name;
   int selectedBlock;
   boolean open;
+  boolean thisMenuIsHovered;
   
   DropdownMenu(String name) {
     this.name = name;
@@ -430,17 +431,21 @@ class DropdownMenu {
   }
   
   float offset = 0;
+  int maxNumberOfBlocks = 10;
   
   void draw(PGraphics g, Mouse mouse) {
     if(blocks != null) {
       int order = 0;
-      int maxNumberOfBlocks = 10;
+      
       g.pushMatrix();
         g.pushMatrix();
           drawTopBlock(g, mouse);
           if(open) {
             g.pushMatrix();
             g.rect(0, 0, blockSize.x, blockSize.y*maxNumberOfBlocks);
+            mouse.declareUpdateElementRelative(name, 1000000, 0, 0, round(blockSize.x), round(blockSize.y*maxNumberOfBlocks), g); 
+            mouse.setElementExpire(name, 2);
+            thisMenuIsHovered = false;
               for(int id = 0; id < maxNumberOfBlocks; id++) {
                 if(isBetween(round(id+offset), 0, blocks.size()-1)) {
                   if(blocks.get(round(id+offset)) != null) {
@@ -457,17 +462,29 @@ class DropdownMenu {
                 g.strokeWeight(2);
                 g.stroke(100, 100, 100);
                 g.translate(blockSize.x+3, 0);
-                mouse.declareUpdateElementRelative(name+"scrollBar", 100000000, 0, 0, 15, round(blockSize.y*maxNumberOfBlocks), g); 
-                g.rect(0, 0, 15, blockSize.y*(maxNumberOfBlocks));
-                g.translate(0, round(map(offset, 0, blocks.size()-10, 0, blockSize.y*(maxNumberOfBlocks)-round((blockSize.y*(maxNumberOfBlocks))/(blocks.size()/maxNumberOfBlocks)))));
-                mouse.declareUpdateElementRelative(name+"scrollBarBar", 1000000000, 0, 0, 15, round((blockSize.y*(maxNumberOfBlocks))/(blocks.size()/maxNumberOfBlocks)), g); 
-                mouse.setElementExpire(name+"scrollBarBar", 2);
+                
+                PVector scrollBarBaseStartPoint = new PVector(0, 0);
+                PVector scrollBarBaseSize = new PVector(15, blockSize.y*(maxNumberOfBlocks));
+                mouse.declareUpdateElementRelative(name+"scrollBarBase", 1000000, scrollBarBaseStartPoint, scrollBarBaseSize, g); 
+                rect(scrollBarBaseStartPoint, scrollBarBaseSize, g);
+                
+                PVector scrollBarStartPoint = new PVector(0, 0);
+                PVector scrollBarSize = new PVector(15, round((blockSize.y*(maxNumberOfBlocks))/(blocks.size()/maxNumberOfBlocks)));
+                
+                g.translate(0, round(map(offset, 0, blocks.size()-maxNumberOfBlocks, 0, scrollBarBaseSize.y-scrollBarSize.y)));
+                mouse.declareUpdateElementRelative(name+"scrollBar", 10000000, scrollBarStartPoint, scrollBarSize, g); 
+                mouse.setElementExpire(name+"scrollBar", 2);
                 g.fill(100, 100, 255);
-                g.rect(0, 0, 15, round((blockSize.y*(maxNumberOfBlocks))/(blocks.size()/maxNumberOfBlocks)));
-                if(mouse.isCaptured(name+"scrollBarBar")) {
+                rect(scrollBarStartPoint, scrollBarSize, g);
+                if(mouse.isCaptured(name+"scrollBar")) {
                   offset += map(mouseY-pmouseY, 0, blockSize.y*(maxNumberOfBlocks), 0, blocks.size()-1);
-                  offset = constrain(offset, 0, blocks.size()-10);
+                  constrainOffset();
                 }
+                if((mouse.elmIsHover(name) || thisMenuIsHovered) && scrolled) {
+                  offset+=scrollSpeed;
+                  constrainOffset();
+                }
+                
                
               g.popStyle();
             g.popMatrix();
@@ -475,6 +492,10 @@ class DropdownMenu {
         g.popMatrix();
       g.popMatrix();
     }
+  }
+  
+  void constrainOffset() {
+    offset = constrain(offset, 0, blocks.size()-maxNumberOfBlocks);
   }
   
   PVector blockSize = new PVector(150, 20);
@@ -489,6 +510,7 @@ class DropdownMenu {
       topBlock.draw(size, name, -1, false, g, mouse);
       if(topBlock.isPressed()) {
         open = !open;
+        setRightOffsetAccordingToId(selectedBlock);
       }
     g.popMatrix();
     g.translate(0, size.y);
@@ -503,6 +525,9 @@ class DropdownMenu {
         topBlock.setText(blocks.get(id).getText()); //Set topBlock text
         open = false; //Close menu when selected block
       }
+    }
+    if(blocks.get(id).isHovered()) {
+      thisMenuIsHovered = true;
     }
     g.translate(0, size.y);
   }
@@ -521,6 +546,23 @@ class DropdownMenu {
   
   int getValue() {
     return blocks.get(selectedBlock).value;
+  }
+  
+  void setValue(int value) {
+    for(int id = 0; id < blocks.size(); id++) {
+      if(blocks.get(id) != null) {
+        if(blocks.get(id).getValue() == value) {
+          selectedBlock = id; //Save selected block id
+          topBlock.setText(blocks.get(id).getText()); //Set topBlock text
+          setRightOffsetAccordingToId(id);
+          break;
+        }
+      }
+    }
+  } //End of setValue()
+  
+  void setRightOffsetAccordingToId(int id) {
+    offset = id-round(maxNumberOfBlocks/2);
   }
 
   
@@ -571,7 +613,7 @@ class DropdownMenuBlock {
           
           String blockNameForMouse = parentName+":block:"+str(thisId);
           
-          mouse.declareUpdateElementRelative(blockNameForMouse, 100000000, round(rectStartPoint.x), round(rectStartPoint.y), round(rectSize.x), round(rectSize.y), g); 
+          mouse.declareUpdateElementRelative(blockNameForMouse, 10000000, round(rectStartPoint.x), round(rectStartPoint.y), round(rectSize.x), round(rectSize.y), g); 
           mouse.setElementExpire(blockNameForMouse, 2);
           
           hovered = mouse.elmIsHover(blockNameForMouse);
@@ -602,7 +644,7 @@ class DropdownMenuBlock {
     g.popMatrix();
   }
   
-  boolean isHover() {
+  boolean isHovered() {
     return hovered;
   }
   boolean isPressed() {
