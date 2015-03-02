@@ -401,4 +401,116 @@ class Switch {
 }
 
 
+class DropdownMenu {
+  ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
+  String name;
+  
+  DropdownMenu(String name) {
+    this.name = name;
+  }
+  
+  
+  
+  void draw() {
+    if(blocks != null) {
+      int order = 0;
+      pushMatrix();
+        for(int id = 0; id < blocks.size(); id++) {
+          if(blocks.get(id) != null) {
+            drawBlock(id, order);
+            order++;
+          }
+        }
+      popMatrix();
+    }
+  }
+  
+  void drawBlock(int id, int order) {
+    PVector size = new PVector(500, 40);
+    translate(0, size.y);
+    blocks.get(id).draw(size, name, id);
+  }
+
+  void addBlock(String text, int value) {
+    DropdownMenuBlock newBlock = new DropdownMenuBlock(text, value);
+    blocks.add(newBlock);
+  }
+  
+  
+}
+
+class DropdownMenuBlock {
+  int value;
+  String text;
+  
+  color bgColor = color(255, 255, 255);
+  color hoveredBgColor = color(200, 200, 200);
+  color pressedBgColor = color(100, 100, 100);
+ 
+  color textColor = color(0, 0, 0);
+  color strokeColor = color(100, 100, 100);
+  int strokeWeight = 2;
+  
+  boolean hovered, pressed;
+  
+  DropdownMenuBlock(String text, int value) {
+    this.value = value;
+    this.text = text;
+  }
+  
+  String getText() {
+    return text;
+  }
+  int getValue() {
+    return value;
+  }
+  
+  void setText(String text) {
+    this.text = text;
+  }
+  void setValue(int value) {
+    this.value = value;
+  }
+  
+  void draw(PVector size, String parentName, int thisId) {
+    pushMatrix();
+      pushStyle();
+        
+        { //Block
+          hovered = false;
+          pressed = mousePressed;
+          mouse.declareUpdateElementRelative("block:"+str(thisId), "dropdownMenu:" + parentName, round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y)); 
+          mouse.setElementExpire("block:"+str(thisId), 2);
+          PVector rectStartPoint = new PVector(0, 0);
+          PVector rectSize = size.get();
+          color fillColor = bgColor;
+          if(pressed) {
+            fillColor = pressedBgColor;
+          }
+          else if(hovered) {
+            fillColor = hoveredBgColor;
+          }
+          fill(fillColor);
+          stroke(strokeColor);
+          strokeWeight(strokeWeight);
+          rect(rectStartPoint.x, rectStartPoint.y, rectSize.x, rectSize.y);
+        } //End of block
+        
+        { //Text
+          fill(textColor);
+          text(text, 10, (size.y/2)+5);
+        } //End of text
+        
+      popStyle();
+    popMatrix();
+  }
+  
+  boolean isHover() {
+    return hovered;
+  }
+  boolean isPressed() {
+    return pressed;
+  }
+  
+}
 
