@@ -435,7 +435,7 @@ class DropdownMenu {
   }
   
   void drawBlock(int id, int order, PGraphics g, Mouse mouse) {
-    PVector size = new PVector(150, 15);
+    PVector size = new PVector(150, 20);
     g.translate(0, size.y);
     blocks.get(id).draw(size, name, id, selectedBlock == id, g, mouse);
     if(blocks.get(id).isPressed()) {
