@@ -45,13 +45,11 @@ void drawMainWindow() {
       
         fixture fix = fixtures.get(i);
         PVector originalLocation = new PVector(fix.x_location, fix.y_location);
-        PVector trussOffset = new PVector(0, 0);
-        if(trusses != null) {
-          if(trusses[fix.parentAnsa] != null) {
-            trussOffset = new PVector(trusses[fix.parentAnsa].location.x, trusses[fix.parentAnsa].location.y);
-          }
-        }
-        PVector finalLocation = new PVector(originalLocation.x + trussOffset.x, originalLocation.y + trussOffset.y);
+        PVector trussOffset = new PVector(0, 0); //Create PVector to loccate fixtures to right places according to trusses
+        if(trusses != null) if(trusses[fix.parentAnsa] != null) { //Block nullpointer for trusses
+          trussOffset = new PVector(trusses[fix.parentAnsa].location.x, trusses[fix.parentAnsa].location.y); //Get truss offset from right truss
+        } //End of blocking nullpointer for trusses
+        PVector finalLocation = new PVector(originalLocation.x + trussOffset.x, originalLocation.y + trussOffset.y); //Location where fixture is finally drawn
         
         //Center fixture
         finalLocation.x += fix.size.w/2;
@@ -73,8 +71,8 @@ void drawMainWindow() {
             }
             fix.rotationZ = rotationForAllTheFixtures;
           }
-          
         }
+        
         if(moveLamp && (lampToMove >= 0 && lampToMove < fixtures.size())) { //Check are we moving any lamp and is lampToMove valid
           if(moveLamp && (lampToMove == i || (fixtures.get(lampToMove).selected && fix.selected))) {
             PVector mouseOffset = new PVector((mouseRotated.x - oldMouseForMovingFixtures.x) * 100 / zoom, (mouseRotated.y - oldMouseForMovingFixtures.y) * 100 / zoom);
