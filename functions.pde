@@ -63,19 +63,21 @@ void drawTrusses(PVector mouseRotated) {
   
     for(int i = 0; i < trusses.length; i++) {
       pushMatrix();
-      switch(trusses[i].type) {
-        case 1:
-          translate(trusses[i].location.x, trusses[i].location.y+25);
-          fill(20);
-          stroke(255);
-          rect(0, 0, trusses[i].lng, 5);
-          doTrussMoving(i, mouseRotated);
-        break;
-        case 0:
-          translate(trusses[i].location.x, trusses[i].location.y);
-          doTrussMoving(i, mouseRotated);
-        break;
-        
+      if(trusses != null) if(trusses[i] != null) {
+        switch(trusses[i].type) {
+          case 1:
+            translate(trusses[i].location.x, trusses[i].location.y+25);
+            fill(20);
+            stroke(255);
+            rect(0, 0, trusses[i].lng, 5);
+            doTrussMoving(i, mouseRotated);
+          break;
+          case 0:
+            translate(trusses[i].location.x, trusses[i].location.y);
+            doTrussMoving(i, mouseRotated);
+          break;
+          
+        }
       }
       popMatrix();
     }
