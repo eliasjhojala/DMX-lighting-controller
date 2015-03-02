@@ -409,32 +409,35 @@ class DropdownMenu {
     this.name = name;
   }
   
-  
-  
   void draw() {
+    draw(g, mouse);
+  }
+  
+  void draw(PGraphics g, Mouse mouse) {
     if(blocks != null) {
       int order = 0;
-      pushMatrix();
+      g.pushMatrix();
         for(int id = 0; id < blocks.size(); id++) {
           if(blocks.get(id) != null) {
-            drawBlock(id, order);
+            drawBlock(id, order, g, mouse);
             order++;
           }
         }
-      popMatrix();
+      g.popMatrix();
     }
   }
   
-  void drawBlock(int id, int order) {
+  void drawBlock(int id, int order, PGraphics g, Mouse mouse) {
     PVector size = new PVector(500, 40);
     translate(0, size.y);
-    blocks.get(id).draw(size, name, id);
+    blocks.get(id).draw(size, name, id, g, mouse);
   }
 
   void addBlock(String text, int value) {
     DropdownMenuBlock newBlock = new DropdownMenuBlock(text, value);
     blocks.add(newBlock);
   }
+
   
   
 }
@@ -472,17 +475,22 @@ class DropdownMenuBlock {
     this.value = value;
   }
   
-  void draw(PVector size, String parentName, int thisId) {
+  void draw(PVector size, String parentName, int thisId, PGraphics g, Mouse mouse) {
     pushMatrix();
       pushStyle();
         
         { //Block
-          hovered = false;
-          pressed = mousePressed;
-          mouse.declareUpdateElementRelative("block:"+str(thisId), "dropdownMenu:" + parentName, round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y)); 
-          mouse.setElementExpire("block:"+str(thisId), 2);
           PVector rectStartPoint = new PVector(0, 0);
           PVector rectSize = size.get();
+          
+          String blockNameForMouse = "block:"+str(thisId);
+          
+          mouse.declareUpdateElementRelative(blockNameForMouse, "dropdownMenu:" + parentName, round(rectStartPoint.x), round(rectStartPoint.y), round(rectSize.x), round(rectSize.y), g); 
+          mouse.setElementExpire(blockNameForMouse, 2);
+          
+          hovered = mouse.elmIsHover(blockNameForMouse);
+          pressed = mouse.isCaptured(blockNameForMouse) && mouse.firstCaptureFrame;
+          
           color fillColor = bgColor;
           if(pressed) {
             fillColor = pressedBgColor;
