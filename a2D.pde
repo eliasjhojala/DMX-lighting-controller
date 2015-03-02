@@ -131,6 +131,8 @@ void drawMainWindow() {
           
     } //End of going through all the fixtures if sockets aren't shown
     oldMouseForMovingFixtures = mouseRotated.get(); //Set old mouse location for fixture moving
+    //END OF DRAWING ALL THE FIXTURES AND CHECKING IF YOU HAVE CLICKED THEM
+    
     
   
     //Functions to draw fixtureTypeSelection dropdownMenu (these are loose from for loop above to put menu on top of fixtures)
@@ -172,12 +174,11 @@ void drawMainWindow() {
         //End of type selection from dropdownMenu
       }
     }
-    //End of unctions to draw fixtureTypeSelection dropdownMenu
+    //End of functions to draw fixtureTypeSelection dropdownMenu
     
     
-    //END OF DRAWING ALL THE FIXTURES AND CHECKING IF YOU HAVE CLICKED THEM
-    
-    popMatrix();
+    popMatrix(); //End of view scale, rotate and translate
+
   } //Endof: draw all elements
   
   //Check if mouse is released
