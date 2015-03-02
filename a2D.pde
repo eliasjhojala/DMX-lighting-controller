@@ -62,21 +62,23 @@ void drawMainWindow() {
         
         translate(finalLocation.x, finalLocation.y);
         
+        //Fixture rotating
         if(rotateLamp && (lampToRotate == i || (fixtures.get(lampToRotate).selected && fix.selected))) {
           PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
-          
           if(rotateFixturesToSamePoint) {
             int rot = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
             fix.rotationZ = rot;
           }
           else {
-            if(lampToRotate == i) {
-              rotationForAllTheFixtures = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
+            if(lampToRotate == i) { 
+              rotationForAllTheFixtures = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360); 
             }
             fix.rotationZ = rotationForAllTheFixtures;
           }
         }
+        //End of fixture rotating
         
+        //Fixture moving
         if(moveLamp && (lampToMove >= 0 && lampToMove < fixtures.size())) { //Check are we moving any lamp and is lampToMove valid
           if(moveLamp && (lampToMove == i || (fixtures.get(lampToMove).selected && fix.selected))) {
             PVector mouseOffset = new PVector((mouseRotated.x - oldMouseForMovingFixtures.x) * 100 / zoom, (mouseRotated.y - oldMouseForMovingFixtures.y) * 100 / zoom);
@@ -84,10 +86,12 @@ void drawMainWindow() {
             fix.y_location += int(mouseOffset.y); //Add mouse offset
           }
         } //End of checking are we moving any lamp and is lampToMove valid
+        //End of fixture moving
         
+        //Type selection from dropdownMenu
         if(editFixtureType && lampToEditFixtureType == i) {
           pushMatrix();
-            translate(0, 100);
+            translate(0, fix.size.h/2+25);
             fixtureTypes.draw();
             if(firsTimeDrawingFixtureTypeBox) {
               fixtureTypes.setValue(fix.fixtureTypeId);
@@ -101,7 +105,7 @@ void drawMainWindow() {
             }
           popMatrix();
         }
-        
+        //End of type selection from dropdownMenu
 
         rotate(radians(fix.rotationZ)); 
         
