@@ -404,6 +404,8 @@ class Switch {
 class DropdownMenu {
   ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
   String name;
+  int selectedBlock;
+  boolean open;
   
   DropdownMenu(String name) {
     this.name = name;
@@ -417,11 +419,16 @@ class DropdownMenu {
     if(blocks != null) {
       int order = 0;
       g.pushMatrix();
-        for(int id = 0; id < blocks.size(); id++) {
-          if(blocks.get(id) != null) {
-            drawBlock(id, order, g, mouse);
-            order++;
+        if(open) {
+          for(int id = 0; id < blocks.size(); id++) {
+            if(blocks.get(id) != null) {
+              drawBlock(id, order, g, mouse);
+              order++;
+            }
           }
+        }
+        else {
+          drawBlock(selectedBlock, order, g, mouse);
         }
       g.popMatrix();
     }
@@ -430,7 +437,13 @@ class DropdownMenu {
   void drawBlock(int id, int order, PGraphics g, Mouse mouse) {
     PVector size = new PVector(500, 40);
     g.translate(0, size.y);
-    blocks.get(id).draw(size, name, id, g, mouse);
+    blocks.get(id).draw(size, name, id, selectedBlock == id, g, mouse);
+    if(blocks.get(id).isPressed()) {
+      if(open) {
+        selectedBlock = id;
+      }
+      open = !open;
+    }
   }
 
   void addBlock(String text, int value) {
@@ -449,6 +462,7 @@ class DropdownMenuBlock {
   color bgColor = color(255, 255, 255);
   color hoveredBgColor = color(200, 200, 200);
   color pressedBgColor = color(100, 100, 100);
+  color selectedBgColor = color(100, 100, 255);
  
   color textColor = color(0, 0, 0);
   color strokeColor = color(100, 100, 100);
@@ -475,7 +489,7 @@ class DropdownMenuBlock {
     this.value = value;
   }
   
-  void draw(PVector size, String parentName, int thisId, PGraphics g, Mouse mouse) {
+  void draw(PVector size, String parentName, int thisId, boolean selected, PGraphics g, Mouse mouse) {
     g.pushMatrix();
       g.pushStyle();
         
@@ -485,7 +499,7 @@ class DropdownMenuBlock {
           
           String blockNameForMouse = "block:"+str(thisId);
           
-          mouse.declareUpdateElementRelative(blockNameForMouse, "dropdownMenu:" + parentName, round(rectStartPoint.x), round(rectStartPoint.y), round(rectSize.x), round(rectSize.y), g); 
+          mouse.declareUpdateElementRelative(blockNameForMouse, 100000000, round(rectStartPoint.x), round(rectStartPoint.y), round(rectSize.x), round(rectSize.y), g); 
           mouse.setElementExpire(blockNameForMouse, 2);
           
           hovered = mouse.elmIsHover(blockNameForMouse);
@@ -497,6 +511,9 @@ class DropdownMenuBlock {
           }
           else if(hovered) {
             fillColor = hoveredBgColor;
+          }
+          else if(selected) {
+            fillColor = selectedBgColor;
           }
           g.fill(fillColor);
           g.stroke(strokeColor);

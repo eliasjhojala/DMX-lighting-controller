@@ -13,6 +13,10 @@ boolean oldUse3D = false;
 
 boolean useMidiMaschines = false;
 
+DropdownMenu dropDown = new DropdownMenu("drop1");
+
+boolean addedBlocks = false;
+
 void draw() {
   checkShowMode();
   check3D();
@@ -29,6 +33,14 @@ void draw() {
     drawMenus();
     invokeFixturesDraw(); //Invoke every fixtures draw  
     resetSolo();  
+    if(!addedBlocks) {
+      for(int i = 0; i < 20; i++) {
+        dropDown.addBlock("block"+str(i), i);
+      }
+      addedBlocks = true;
+    }
+    translate(300, 300);
+    dropDown.draw();
   }
 }
 
