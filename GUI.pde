@@ -408,6 +408,7 @@ class DropdownMenu {
   int selectedBlock;
   boolean open;
   boolean thisMenuIsHovered;
+  boolean valueChanged;
   
   DropdownMenu(String name) {
     this.name = name;
@@ -436,7 +437,7 @@ class DropdownMenu {
   void draw(PGraphics g, Mouse mouse) {
     if(blocks != null) {
       int order = 0;
-      
+      valueChanged = false;
       g.pushMatrix();
         g.pushMatrix();
           drawTopBlock(g, mouse);
@@ -523,6 +524,7 @@ class DropdownMenu {
       if(open) {
         selectedBlock = id; //Save selected block id
         topBlock.setText(blocks.get(id).getText()); //Set topBlock text
+        valueChanged = true;
         open = false; //Close menu when selected block
       }
     }
@@ -548,6 +550,10 @@ class DropdownMenu {
     return blocks.get(selectedBlock).value;
   }
   
+  boolean valueHasChanged() {
+    return valueChanged;
+  }
+  
   void setValue(int value) {
     for(int id = 0; id < blocks.size(); id++) {
       if(blocks.get(id) != null) {
@@ -563,6 +569,7 @@ class DropdownMenu {
   
   void setRightOffsetAccordingToId(int id) {
     offset = id-round(maxNumberOfBlocks/2);
+    constrainOffset();
   }
 
   

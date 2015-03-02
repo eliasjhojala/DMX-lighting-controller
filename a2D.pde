@@ -6,6 +6,10 @@ PVector oldMouseForMovingFixtures = new PVector(0, 0);
 int rotationForAllTheFixtures;
 boolean rotateFixturesToSamePoint;
 
+boolean editFixtureType;
+int lampToEditFixtureType;
+boolean firsTimeDrawingFixtureTypeBox;
+
 void drawMainWindow() {
   pushMatrix(); 
    
@@ -81,6 +85,22 @@ void drawMainWindow() {
           }
         } //End of checking are we moving any lamp and is lampToMove valid
         
+        if(editFixtureType && lampToEditFixtureType == i) {
+          pushMatrix();
+            translate(0, 100);
+            fixtureTypes.draw();
+            if(firsTimeDrawingFixtureTypeBox) {
+              fixtureTypes.setValue(fix.fixtureTypeId);
+              firsTimeDrawingFixtureTypeBox = false;
+            }
+            if(fixtureTypes.valueHasChanged()) {
+              fix.fixtureTypeId = fixtureTypes.getValue();
+              lampToEditFixtureType = -1;
+              editFixtureType = false;
+            }
+          popMatrix();
+        }
+        
 
         rotate(radians(fix.rotationZ)); 
         
@@ -100,6 +120,11 @@ void drawMainWindow() {
               if(keyPressed && key == 'r') { //If r pressed then we will rotate fixture
                 lampToRotate = i; //Tell what fixture are we rotating
                 rotateLamp = true; //Tell that we are rotating some fixture 
+              }
+              else if(keyPressed && key == 't') {
+                lampToEditFixtureType = i;
+                editFixtureType = true;
+                firsTimeDrawingFixtureTypeBox = true;
               }
               else { //If only mouse clicked without pressing r then we will move fixture
                 lampToMove = i; //Tell what fixture we are moving
