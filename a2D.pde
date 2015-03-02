@@ -163,9 +163,11 @@ void drawMainWindow() {
           if (!mouse.captured || mouse.isCaptured("main:move")) {
             mouse.capture(mouse.getElementByName("main:move"));
             movePage();
+            editFixtureType = false;
           }
         } else if(mouseButton == RIGHT) {
           //Box select
+          editFixtureType = false;
           doBoxSelect();
         }
       }

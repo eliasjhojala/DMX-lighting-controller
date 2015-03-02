@@ -4,7 +4,7 @@ void createFixtureProfiles() {
     loadFixtureProfiles();
     
     ArrayList<DropdownMenuBlock> fixtureTypeBlocks = new ArrayList<DropdownMenuBlock>();
-    for(int i = 0; i < fixtureProfiles.length; i++) {
+    for(int i = 1; i < fixtureProfiles.length; i++) {
       String name = "";
       if(fixtureProfiles[i].fixtureLongName.equals("")) {
         name = fixtureProfiles[i].fixtureName;
