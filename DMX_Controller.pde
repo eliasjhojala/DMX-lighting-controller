@@ -282,8 +282,6 @@ fixture[] fixtureForSelected = new fixture[1];
 //New system for organizing the boxes in the bottom menu. Array index = fixture id, data = fixture location
 int[] bottomMenuOrder = new int[numberOfAllFixtures];
 
-int[] y = { 500, 200 };
-int ansaTaka = 32;
 
 int[] ch = new int[512];
 

@@ -35,7 +35,7 @@ void drawMainWindow() {
     PVector mouseRotated = new PVector(mouseX, mouseY);
     mouseRotated.rotate(radians(-pageRotation));
     
-    //TÄSSÄ PIIRRETÄÄN ANSAT - DRAW TRUSSES
+    //DRAW TRUSSES
     drawTrusses(mouseRotated); //Draw trusses
     if(showSockets) { drawSockets(mouseRotated); } //Draw sockets
     
