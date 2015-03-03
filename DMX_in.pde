@@ -91,6 +91,12 @@ void channelsToDim() {
 
   //Place data from allChannels array to DMX and memory arrays----------------------------------------------------------------------------------------------------------
     
+ for(int i = 24; i < allChannels[1].length; i++) {
+   if(allChannels[1][i] != allChannelsOld[1][i]) {
+     memories[i-24].setValue(allChannels[1][i]);
+   }
+ }
+    
   for(int i = 1; i < 13; i++) {
     if(allChannelsOld[1][i] != allChannels[1][i]) {
       DMX[i] = allChannels[1][i];
@@ -103,17 +109,17 @@ void channelsToDim() {
     }
     
     if(allChannelsOld[5][i] != allChannels[5][i]) {
-        memories[i+memoryMenu].setValue(round(map(allChannels[5][i], 0, 255, 0, memoryMasterValue)));
+        memories[i].setValue(allChannels[1][i]);
         allChannelsOld[5][i] = allChannels[5][i];
     }
     
     if(allChannelsOld[3][i] != allChannels[3][i]) {
-        memories[i].setValue(round(map(allChannels[3][i], 0, 255, 0, memoryMasterValue)));
+        memories[i].setValue(allChannels[3][i]);
         allChannelsOld[3][i] = allChannels[3][i];
     }
     
     if(allChannelsOld[4][i] != allChannels[4][i]) {
-      memories[i+12].setValue(round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue)));
+      memories[i+12].setValue(allChannels[4][i]);
       allChannelsOld[4][i] = allChannels[4][i];
     }
     
