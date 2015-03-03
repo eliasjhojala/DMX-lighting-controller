@@ -1,4 +1,4 @@
-boolean initSettingsInSetupDone = false; 
+boolean initSettingsInSetupDone = false;
 int initSettingsInSetupStep;
 int initSettingsInSetupSelected;
 
@@ -7,7 +7,7 @@ int initSettingsInSetupSelected;
 
 void initSettingsInSetup() {
   if(!initSettingsInSetupDone) {
-    initSettingsInSetupDone = true; 
+    initSettingsInSetupDone = true;
     useEnttec = false;
     useCOM = false;
     background(0);
@@ -68,23 +68,29 @@ String[] getSerialList() {
   return Serial.list();
 }
 
-
+//A debug function
+void printMe() {
+  println("I print!");
+  notifier.notify("I print!");
+}
 
 
 ////////////////////////////////////////SETTINGS//GUI///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SettingsWindow settingsWindow = new SettingsWindow(false);
+SettingsWindow settingsWindow;
 
 class SettingsWindow {
   
+  PApplet master;
   
-  
-  SettingsWindow() {
+  SettingsWindow(PApplet parent) {
+    master = parent;
     onInit();
   }
   
-  SettingsWindow(boolean open) {
+  SettingsWindow(boolean open, PApplet parent) {
     this.open = open;
+    master = parent;
     onInit();
   }
   
@@ -96,6 +102,7 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", tabs[0]),
         new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0]),
+        new SettingController("printMe", master, false, "Test reflection", "Reflection test", tabs[0]),
         new SettingController(0, 0, 0, "Test Int", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int1", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int2", "This is just a test controller to see how the int controller will work.", tabs[0]),
@@ -228,7 +235,7 @@ class SettingsWindow {
         
         g.textSize(12);
         
-        //Close button 
+        //Close button
         mouse.declareUpdateElementRelative("settings:close", "settings", 30, 10, 50, 20, g);
         mouse.setElementExpire("settings:close", 2);
         boolean cancelHover = mouse.elmIsHover("settings:close");
@@ -409,6 +416,7 @@ class SettingController {
   Switch booleanController;
   IntSettingController intController;
   StringSettingController strController;
+  ReflectionController refController;
   
   boolean oldValueBoolean;
   int oldValueInt;
@@ -451,6 +459,17 @@ class SettingController {
     this.description = description;
     parentTab = parent;
     
+  }
+  
+  
+  //reflection
+  SettingController(String target, java.lang.Object targetObject, boolean verify, String name, String description, SettingsTab parent) {
+    mode = 5;
+    refController = new ReflectionController(targetObject, target, verify, parent.width_-106, 8, this);
+    this.name = name;
+    this.description = description;
+    
+    parentTab = parent;
   }
   
   int getDrawHeight() {
@@ -496,6 +515,10 @@ class SettingController {
         drawText(0, 0, buffer);
         strController.drawToBuffer(buffer, mouse);
       break;
+      case 5:
+        drawText(0, 0, buffer);
+        refController.draw(buffer, g, mouse);
+      break;
     }
   }
   
@@ -516,7 +539,43 @@ class SettingController {
 
 
 
-
+class ReflectionController {
+  SettingController parentContainer;
+  
+  Class targetClass;
+  java.lang.Object targetObject;
+  Method targetMethod;
+  
+  int x, y;
+  
+  //Throw a cool but annoying box asking: 'do you _really_ want to do this?'
+  boolean verify;
+  
+  ReflectionController(java.lang.Object targetObject, String targetMethod, boolean verify, int x_offs, int y_offs, SettingController parent) {
+    this.targetObject = targetObject;
+    this.targetClass = targetObject.getClass();
+    try {
+      this.targetMethod = targetClass.getDeclaredMethod(targetMethod, null);
+    } catch(Exception e) {
+      e.printStackTrace();
+      this.targetMethod = null;
+    }
+    
+    x = x_offs;
+    y = y_offs;
+    parentContainer = parent;
+  }
+  
+  void draw(PGraphics b, PGraphics g, Mouse mouse) {
+    b.pushMatrix();
+      b.translate(x, y);
+      b.fill(45, 138, 179);
+      b.stroke(20, 100, 130);
+      b.ellipse(15, 15, 30, 30);
+    b.popMatrix();
+    
+  }
+}
 
 
 

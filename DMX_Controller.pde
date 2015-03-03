@@ -3,7 +3,7 @@ int userId = 3; //Määritellään millä tietokoneella ohjelmaa käytetään 1 
 boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                               //|
                                                                                                                                                                           //|
 boolean showMode = true;                                                                                                                                                  //|
-                                                                                                                                                                          //| 
+                                                                                                                                                                          //|
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
 boolean useCOM = true; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                       //|
 boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                               //|
@@ -69,7 +69,7 @@ void setFixtureChannelsAtSoftwareBegin() {
 
 
 
-import themidibus.*; 
+import themidibus.*;
 import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
 MidiBus myBus; // The MidiBus
 MidiBus Maschine;
@@ -152,7 +152,7 @@ int chaseSpeed = 500;
 int chaseFade = 255;
 
 boolean toRotateFixture;
-boolean toChangeFixtureColor; 
+boolean toChangeFixtureColor;
 int changeColorFixtureId = 0;
 
 boolean getPaths = false;
@@ -298,7 +298,7 @@ import ddf.minim.ugens.*;                                                       
 import ddf.minim.effects.*;                                                     //|
                                                                                 //|
 Minim minim;                                                                    //|
-AudioPlayer song;                                                               //|                             
+AudioPlayer song;                                                               //|
 AudioInput in;                                                                  //|
 BeatDetect beat;                                                                //|
                                                                                 //|
@@ -332,7 +332,7 @@ void setDmxChannel(int channel, int value) {                                    
     }                                                                                                                   //|
     if(useAnotherArduino) {                                                                                             //|
       if(allowChannel[1][channel]) {                                                                                    //|
-        arduinoPort2.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );                                 //| 
+        arduinoPort2.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );                                 //|
       }                                                                                                                 //|
     }                                                                                                                   //|
   }                                                                                                                     //|
@@ -441,7 +441,7 @@ void setup() {
     
     
     
-    thread("initializeCOM");  
+    thread("initializeCOM");
     
     minim = new Minim(this);
 
@@ -456,7 +456,7 @@ void setup() {
     
     
     //---------------------------------------------------------Touchoscin setup-komennot------------------------------------------------------------
-      oscP5 = new OscP5(this, touchOscInComing); 
+      oscP5 = new OscP5(this, touchOscInComing);
       frame.setResizable(true);
       Remote = new NetAddress(remoteIP,portOutgoing);
     //----------------------------------------------------------------------------------------------------------------------------------------------
@@ -476,6 +476,7 @@ void setup() {
   colorWashSetup();
   
   memoryCreator = new MemoryCreationBox(false);
+  settingsWindow = new SettingsWindow(false, this);
   
   createFixtureProfiles();
   
@@ -484,5 +485,3 @@ void setup() {
   
   
 }
-
-
