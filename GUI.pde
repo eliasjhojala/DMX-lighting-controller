@@ -203,7 +203,7 @@ class CursorHandler {
 }
 
 //////////////////////////////////////////////////////////////CONTEXT//MENU///////////////////////////////////////////////////////////////////////////////////////////////////
-contextMenu contextMenu1 = new contextMenu(this); 
+contextMenu contextMenu1 = new contextMenu(this);
 
 class contextMenu {
   
@@ -340,6 +340,44 @@ class contextMenuOption {
   
 }
 
+
+//////////////////////////////////////////////////////////////////////////PROMPT/////////////////////////////////////////////////////////////////////////////////////////////////
+
+Prompter prompter = new Prompter();
+class Prompter {
+  Method targetMethod;
+  Object targetObject;
+  
+  String text;
+  String actionName;
+  
+  boolean prompting;
+  
+  Prompter() {
+  }
+  
+  
+  
+  void prompt(Method targetMethod, Object targetObject, String text, String actionName) {
+    this.targetMethod = targetMethod;
+    this.targetObject = targetObject;
+    this.text = text;
+    this.actionName = actionName;
+    prompting = true;
+  }
+  
+  void draw() {
+    if(prompting) { pushMatrix();
+      
+      //Draw prompt box
+      translate(width/2-200, height/2-100);
+      rect(0, 0, 400, 200);
+      
+      if(keyPressed && keyCode == ESC) prompting = false;
+    popMatrix(); }
+  }
+}
+
 //////////////////////////////////////////////////////////////////////////SWITCH////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Switch {
@@ -432,6 +470,3 @@ class Switch {
     return state;
   }
 }
-
-
-

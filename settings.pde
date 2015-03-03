@@ -102,7 +102,7 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", tabs[0]),
         new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0]),
-        new SettingController("printMe", master, false, "Test reflection", "Reflection test", tabs[0]),
+        new SettingController("printMe", master, true, "Test reflection", "Reflection test", tabs[0]),
         new SettingController(0, 0, 0, "Test Int", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int1", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int2", "This is just a test controller to see how the int controller will work.", tabs[0]),
@@ -543,7 +543,7 @@ class ReflectionController {
   SettingController parentContainer;
   
   Class targetClass;
-  java.lang.Object targetObject;
+  Object targetObject;
   Method targetMethod;
   
   int x, y;
@@ -551,7 +551,7 @@ class ReflectionController {
   //Throw a cool but annoying box asking: 'do you _really_ want to do this?'
   boolean verify;
   
-  ReflectionController(java.lang.Object targetObject, String targetMethod, boolean verify, int x_offs, int y_offs, SettingController parent) {
+  ReflectionController(Object targetObject, String targetMethod, boolean verify, int x_offs, int y_offs, SettingController parent) {
     this.targetObject = targetObject;
     this.targetClass = targetObject.getClass();
     try {
@@ -564,6 +564,7 @@ class ReflectionController {
     x = x_offs;
     y = y_offs;
     parentContainer = parent;
+    this.verify = verify;
   }
   
   void draw(PGraphics b, PGraphics g, Mouse mouse) {
@@ -581,13 +582,17 @@ class ReflectionController {
         mouse.setElementExpire("settings:"+parentContainer.name, 2);
       g.popMatrix();
       if(mouse.isCaptured("settings:"+parentContainer.name) && mouse.firstCaptureFrame) {
-        try {
-          targetMethod.invoke(targetObject);
-        } catch(Exception e) {
-          e.printStackTrace();
-          notifier.notify("Whoops! Something went wrong while executing the requested command. See the console for more information.", true);
+        if(!verify) {
+          try {
+            targetMethod.invoke(targetObject);
+          } catch(Exception e) {
+            e.printStackTrace();
+            notifier.notify("Whoops! Something went wrong while executing the requested command. See the console for more information.", true);
+          }
+        } else {
+          //Pass the method to a Prompt
+          prompter.prompt(targetMethod, targetObject, "Do you really want to do this?", "'"+parentContainer.name+"'");
         }
-        
         
       }
     b.popMatrix(); b.popStyle();
