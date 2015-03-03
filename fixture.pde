@@ -319,7 +319,22 @@ class fixture {
           }
         }
       }
+//      int[] oldOut = out.getUniversalDMX();
+//      //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
+////      if(isHalogen() && abs(fadeVal[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
+////        fadeVal[DMX_DIMMER] = oldOut[DMX_DIMMER];
+////      fadeVal[DMX_DIMMER] = masterize(fadeVal[DMX_DIMMER]);
+//      out.setUniversalDMX(fadeVal);
+//      DMXChanged = true;
+//      out.DMXChanged = true;
+    }
+  } 
 
+  
+
+  
+
+ 
   
   boolean thisFixtureUseRgb() {
     return fixtureUseRgbByType(fixtureTypeId);
