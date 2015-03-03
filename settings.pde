@@ -465,7 +465,7 @@ class SettingController {
   //reflection
   SettingController(String target, java.lang.Object targetObject, boolean verify, String name, String description, SettingsTab parent) {
     mode = 5;
-    refController = new ReflectionController(targetObject, target, verify, parent.width_-106, 8, this);
+    refController = new ReflectionController(targetObject, target, verify, parent.width_-40, 8, this);
     this.name = name;
     this.description = description;
     
@@ -567,12 +567,30 @@ class ReflectionController {
   }
   
   void draw(PGraphics b, PGraphics g, Mouse mouse) {
-    b.pushMatrix();
+    b.pushMatrix(); b.pushStyle();
       b.translate(x, y);
       b.fill(45, 138, 179);
       b.stroke(20, 100, 130);
       b.ellipse(15, 15, 30, 30);
-    b.popMatrix();
+      b.textAlign(CENTER);
+      b.fill(255);
+      b.text("Go", 15, 20);
+      g.pushMatrix();
+        g.translate(b.screenX(0, 0), b.screenY(0, 0));
+        mouse.declareUpdateElementRelative("settings:"+parentContainer.name, "settings", 0, 0, 30, 30, g);
+        mouse.setElementExpire("settings:"+parentContainer.name, 2);
+      g.popMatrix();
+      if(mouse.isCaptured("settings:"+parentContainer.name) && mouse.firstCaptureFrame) {
+        try {
+          targetMethod.invoke(targetObject);
+        } catch(Exception e) {
+          e.printStackTrace();
+          notifier.notify("Whoops! Something went wrong while executing the requested command. See the console for more information.", true);
+        }
+        
+        
+      }
+    b.popMatrix(); b.popStyle();
     
   }
 }
