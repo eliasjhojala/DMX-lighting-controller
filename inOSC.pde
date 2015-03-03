@@ -8,6 +8,7 @@ int multixy1_value_offset;
 
 boolean fullOn; //Muuttuja, joka kertoo onko fullOn päällä
 boolean strobeNow;
+boolean fogNow;
 int[] valueOfDimBeforeFullOn = new int[channels]; //Muuttuja johon kirjoitetaan kanavien arvot ennen kun ne laitetaan täysille
 boolean blackOutButtonWasReleased;
 int masterValueBeforeBlackout;

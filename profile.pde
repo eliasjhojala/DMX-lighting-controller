@@ -62,6 +62,7 @@ class FixtureProfile {
   fixtureSize size;
   
   boolean isStrobe;
+  boolean isFog;
   
   FixtureProfile() {
     String[] empty = { "" };
@@ -131,5 +132,6 @@ class FixtureProfile {
   
   void checkDMXchannels() {
     isStrobe = isInArray(channelTypes, DMX_STROBE, DMX_FREQUENCY);
+    isFog = isInArray(channelTypes, DMX_FOG);
   }
 }

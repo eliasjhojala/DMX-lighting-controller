@@ -275,6 +275,11 @@ class fixture {
         newIn[DMX_DIMMER] = 0;
       }
     }
+    if(fogNow) {
+      if(fixtureProfiles[fixtureTypeId].isFog) {
+        newIn[DMX_FOG] = 255;
+      }
+    }
     if(blackOut) { newIn[DMX_DIMMER] = 0; }
     int[] oldDMX = out.getUniversalDMX();
     for(int i = 0; i < newIn.length; i++) {
