@@ -10,7 +10,14 @@ boolean editFixtureType;
 int lampToEditFixtureType;
 boolean firsTimeDrawingFixtureTypeBox;
 
+boolean addedElementsToHelp = false;
+
 void drawMainWindow() {
+  if(!addedElementsToHelp) {
+    help.add("Rotating fixture", "You can rotate fixture by pressin r key and dragging fixture");
+    help.add("Changing fixtureType", "You can open fixtureType menu by pressing t key and clicking on the fixture");
+    addedElementsToHelp = true;
+  }
   pushMatrix(); 
    
    { //Declare all the mouse elements
