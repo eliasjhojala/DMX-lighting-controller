@@ -19,4 +19,3 @@ void createFixtureProfiles() {
     fixtureTypes.setBlockSize(new PVector(170, 22));
     
 }
-

@@ -134,6 +134,8 @@ class SubWindowHandler {
   void createDefaultWindows() {
     subWindows.add(new SubWindowContainer(memoryCreator, "MemoryCreator", 1000));
     subWindows.add(new SubWindowContainer(settingsWindow, "SettingsWindow", 1000));
+    subWindows.add(new SubWindowContainer(help, "HelpWindow", 1000));
+    
     //subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
   }
   

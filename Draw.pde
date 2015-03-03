@@ -16,6 +16,8 @@ boolean useMidiMaschines = false;
 float scrollSpeed = 0;
 boolean scrolled;
 
+boolean helpBoxOpen;
+
 
 void draw() {
   checkShowMode();
