@@ -100,6 +100,9 @@ void oscEvent(OscMessage theOscMessage) {
      if(addr.equals("/fullon")) {
        fullOn = boolean(digitalValue);
      }
+     if(addr.equals("/fognow")) {
+       fogNow = boolean(digitalValue);
+     }
      
      
      { //Functions to move fixtures in visualisatioon

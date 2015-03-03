@@ -331,26 +331,8 @@ class fixture {
   } 
 
   
-  void toggle(boolean down) {
-    if(down) {
-      if(fixtureTypeId == 8) { if(in.getUniversalDMX(DMX_HAZE) < 255 || in.getUniversalDMX(DMX_FAN) < 255) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); } else { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); } }
-      if(fixtureTypeId == 9) { if(in.getUniversalDMX(DMX_FOG) < 255) { in.setUniversalDMX(DMX_FOG, 255); } else { in.setUniversalDMX(DMX_FOG, 0); } }
-      if(fixtureTypeId != 8 && fixtureTypeId != 9) { if(in.getUniversalDMX(DMX_DIMMER) < 255) { in.setUniversalDMX(DMX_DIMMER, 255); } else { in.setUniversalDMX(DMX_DIMMER, 0); } }
-      DMXChanged = true;
-    }
-  }
-  void push(boolean down) {
-    if(down) {
-      if(fixtureTypeId == 8) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); }
-      if(fixtureTypeId == 9) { in.setUniversalDMX(DMX_FOG, 255); }
-      if(fixtureTypeId != 8 && fixtureTypeId != 9) { in.setDimmer(255); }
-    }
-    else {
-      if(fixtureTypeId == 8) { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); }
-      if(fixtureTypeId == 9) { in.setUniversalDMX(DMX_FOG, 0); }
-      if(fixtureTypeId != 8 && fixtureTypeId != 9) { in.setDimmer(0); }
-    }
-  }
+
+  
 
  
   
@@ -578,10 +560,53 @@ class fixture {
     }
   }
   
+  color getFixtureColorFor2D() {
+    FixtureProfile profile = fixtureProfiles[fixtureTypeId];
+    if(profile.hasDimmer) {
+      return this.getColor_wDim();
+    }
+    else if(profile.isFog) {
+      int val = in.getUniversalDMX(DMX_FOG);
+      color c = color(val, val, val);
+      return c;
+    }
+    else if(profile.isHazer) {
+      int val = in.getUniversalDMX(DMX_HAZE);
+      color c = color(val, val, val);
+      return c;
+    }
+    else {
+      color c = color(0, 0, 0);
+      return c;
+    }
+  }
+  
+  boolean toggleState = false;
+  
+  void push(boolean down) {
+    mainChannelOnOff(down);
+  }
+  
+  void toggle(boolean down) {
+    if(down) {
+      toggleState = !toggleState;
+      mainChannelOnOff(toggleState);
+    }
+  }
+  
+  void mainChannelOnOff(boolean state) {
+    FixtureProfile profile = fixtureProfiles[fixtureTypeId];
+    if(profile.hasDimmer) { in.setUniversalDMX(DMX_DIMMER, state ? 255 : 0); }
+    if(profile.isStrobe && profile.channelTypes.length <= 2) { in.setUniversalDMX(DMX_STROBE, state ? 255 : 0); }
+    if(profile.isFog) { in.setUniversalDMX(DMX_FOG, state ? 255 : 0); }
+    if(profile.isHazer) { in.setUniversalDMX(DMX_HAZE, state ? 255 : 0); in.setUniversalDMX(DMX_FAN, state ? 255 : 0); }
+    DMXChanged = true;
+  }
+  
   //Index is used only to display the id of the fixture
   void draw2D(int index) {
     pushStyle();
-    kalvo(this.getColor_wDim());
+    fill(getFixtureColorFor2D());
     boolean showFixture = true;
     int lampWidth = 30;
     int lampHeight = 40;

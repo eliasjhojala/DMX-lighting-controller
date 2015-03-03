@@ -171,12 +171,6 @@ void doSocketMoving(int i, PVector mouseRotated, PVector point1, PVector point2)
   }
 }
 
-void kalvo(color c) {
-  fill(c);
-}
-
-
-
 
 
 void mouseWheel(MouseEvent event) {

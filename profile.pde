@@ -63,6 +63,8 @@ class FixtureProfile {
   
   boolean isStrobe;
   boolean isFog;
+  boolean hasDimmer;
+  boolean isHazer;
   
   FixtureProfile() {
     String[] empty = { "" };
@@ -133,5 +135,7 @@ class FixtureProfile {
   void checkDMXchannels() {
     isStrobe = isInArray(channelTypes, DMX_STROBE, DMX_FREQUENCY);
     isFog = isInArray(channelTypes, DMX_FOG);
+    hasDimmer = isInArray(channelTypes, DMX_DIMMER);
+    isHazer = isInArray(channelTypes, DMX_HAZE);
   }
 }
