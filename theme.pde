@@ -135,6 +135,11 @@ class TextTheme {
     g.fill(fill);
     g.textSize(size);
   }
+  
+  void setTheme() {
+    fill(fill);
+    textSize(size);
+  }
 }
 
 

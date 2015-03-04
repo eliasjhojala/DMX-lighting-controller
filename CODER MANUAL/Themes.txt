@@ -1,3 +1,7 @@
+Theme class is made to make GUI design easier and more modular
+For example to set right fill and stroke values you can call function 
+themes.window.setTheme();
+
 You can create new ShapeTheme with one of the followings command
 new ShapeTheme(color,       color,       int,          boolean);
 new ShapeTheme(ColorTheme,  color,       int,          boolean);
@@ -14,6 +18,28 @@ When you want to set some theme to your code you only have to
 call function themes.themeName.setTheme(g, mouse, isHovered, isPressed);
 or function   themes.themeName(g, mouse);
 
+
+ColorTheme
+
 Creating colorTheme is pretty easy also. It can be created calling function
 new ColorTheme(neutralColor, hoveredColor, activeColor);
 where all the variables are type color
+
+If using PGraphics and mouse
+   fillColor(g, mouse, hovered, pressed); //set fill color
+   strokeColor(g, mouse, hovered, pressed); //set stroke color
+
+If not using PGraphics and mouse
+   fillColor(hovered, pressed); //set fill color
+   strokeColor(hovered, pressed); //set stroke color
+
+
+TextTheme
+
+Class containing text color and size variables
+Create new TextTheme with command
+new TextTheme(fill, size); //Fill should be color and size int
+
+Load theme with function
+setTheme(g, mouse); //If you are using PGraphihcs and Mouse
+setTheme(); //If you aren't using PGraphcis and Mouse
