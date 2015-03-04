@@ -13,11 +13,12 @@ class Fade {
   }
   
   void startFade(int from, int to, int pre, int post) {
-    if(to != targetValue) {
+    if(to != from) {
       preFade = pre;
       postFade = post;
       startMillis = millis();
       originalValue = from;
+      actualValue = originalValue;
       targetValue = to;
       complete = false;
     }

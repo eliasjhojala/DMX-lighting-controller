@@ -1,18 +1,6 @@
-
-/*void saveFixtureMemory(int number) {
-  memories[number] = new memory();
-  memories[number].savePreset(); 
-}*/
-
-void loadFixtureMemory(int number, int value) {
-  try {
-    memories[number].value = value;
-    memories[number].loadPreset();
-  }
-  catch(Exception e) {
-    println("Can't load memory");
-  }
-}
+String[] saveOptionButtonVariables = { "dimmer", "red", "green", "blue", "white", "amber", "pan", "tilt", "panFine", "tiltFine", 
+"colorWheel", "goboWheel", "goboRotation", "prism", "focus", "shutter", "strobe", "frequency", "responseSpeed", 
+"autoPrograms", "specialFunctions", "haze", "fan", "fog", "special1", "special2", "special3", "special4" };
 
   soundDetect s2l;
   memory[] memories = new memory[1000];
@@ -22,6 +10,43 @@ void createMemoryObjects() {
   for(int i = 0; i < memories.length; i++) {
     memories[i] = new memory();
   }
+}
+
+XML getMemoriesAsXML() {
+  String data = "<Memories></Memories>";
+  XML xml = parseXML(data);
+  for(int i = 0; i < memories.length; i++) {
+    if(memories[i].type != 0) {
+      xml = xml.addChild(memories[i].getXML());
+      xml.setInt("id", i);
+      xml = xml.getParent();
+    }
+  }
+  return xml;
+}
+
+void XMLtoMemories(XML xml) {
+  XML[] block = xml.getChildren();
+  
+  int a = 0;
+
+  for(int i = 0; i < block.length; i++) {
+    if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+      int id = block[i].getInt("id");
+      memories[id].XMLtoObject(block[i]);
+      a++;
+    }
+  }
+}
+
+void saveMemoriesToXML() {
+  saveXML(getMemoriesAsXML(), "XML/memories.xml");
+}
+
+void loadMemoriesFromXML() {
+   loadinMemoriesFromXML = true;
+    XMLtoMemories(loadXML("XML/memories.xml"));
+   loadinMemoriesFromXML = false;
 }
 
 
@@ -39,6 +64,8 @@ class memory { //Begin of memory class------------------------------------------
   // 3: quickChase  //|
   // 4: master      //|
   // 5: fade        //|
+  // 6: chase1      //|
+  // 7: special     //|
   //----------------//|
   
   
@@ -46,20 +73,47 @@ class memory { //Begin of memory class------------------------------------------
   int value, valueOld; //memorys value
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
   boolean enabled = true;
+  boolean soloInThisMemory;
+  int specialType; //Strobeon, fullon, blackout etc.
 
   
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
+  boolean[] fixturesToSave = new boolean[fixtures.size()];
   
   
   FixtureDMX[] repOfFixtures = new FixtureDMX[fixtures.size()];
   
   chase myChase;
+  Preset myPreset;
   
   memory() {
     myChase = new chase(this);
-    for(int i = 0; i < repOfFixtures.length; i++) {
-      repOfFixtures[i] = new FixtureDMX();
-    }
+    myPreset = new Preset(this);
+  }
+  
+  XML getXML() {
+    String data = "<Memory></Memory>";
+    XML xml = parseXML(data);
+    xml.setInt("enabled", int(enabled));
+    xml.setInt("value", value);
+    xml.setInt("valueOld", valueOld);
+    xml.setInt("type", type);
+    xml.setInt("specialType", specialType);
+    xml.setInt("soloInThisMemory", int(soloInThisMemory));
+    xml.addChild(myPreset.getXML());
+    xml.addChild(myChase.getXML());
+    return xml;
+  }
+  
+  void XMLtoObject(XML xml) {
+    enabled = boolean(xml.getInt("enabled"));
+    value = xml.getInt("value");
+    valueOld = xml.getInt("valueOld");
+    type = xml.getInt("type");
+    specialType = xml.getInt("specialType");
+    soloInThisMemory = boolean(xml.getInt("soloInThisMemory"));
+    myPreset.XMLtoObject(xml);
+    myChase.XMLtoObject(xml);
   }
   
   
@@ -104,6 +158,8 @@ class memory { //Begin of memory class------------------------------------------
       case 3: toReturn = "qChs"; break;
       case 4: toReturn = "mstr"; break;
       case 5: toReturn = "fade"; break;
+      case 6: toReturn = "chs1"; break;
+      case 7: toReturn = "spcl"; break;
       default: toReturn = "unkn"; break;
     }
     return toReturn;
@@ -118,6 +174,8 @@ class memory { //Begin of memory class------------------------------------------
         case 2: chase(); break;
         case 4: grandMaster(); break;
         case 5: fade(); break;
+        case 6: chase(); break;
+        case 7: special(); break;
         default: unknown(); break;
       }
     }
@@ -125,6 +183,7 @@ class memory { //Begin of memory class------------------------------------------
   
   void preset() {
     if(type == 1 && enabled) {
+      myPreset.setValue(value);
       loadPreset();
     }
   }
@@ -152,6 +211,28 @@ class memory { //Begin of memory class------------------------------------------
   }
   void empty() {
   }
+  void masterGroup() {
+  }
+  void special() {
+    if((value == 0 || !enabled) && firstTimeAtZero) {
+       switch(specialType) {
+         case 1: fullOn = false; break;
+         case 2: blackOut = false; break;
+         case 3: strobeNow = false; break;
+       }
+       firstTimeAtZero = false;
+    }
+    if(value > 0 && enabled) {
+      switch(specialType) {
+         case 1: fullOn = true; break;
+         case 2: blackOut = true; break;
+         case 3: strobeNow = true; break;
+       }
+      firstTimeAtZero = true;
+    }
+  }
+  
+  
   void setValue(int val) {
     value = val;
     draw();
@@ -172,48 +253,27 @@ class memory { //Begin of memory class------------------------------------------
   
   
   
+  
   void savePreset(boolean[] newWhatToSave) {
-    
-    arrayCopy(newWhatToSave, whatToSave);
-    
-    repOfFixtures = new FixtureDMX[fixtures.size()];
-    for(int i = 0; i < fixtures.size(); i++) {
-        repOfFixtures[i] = new FixtureDMX();
-    }
-      
-    for(int i = 0; i < fixtures.size(); i++) {
-      for(int jk = 1; jk < fixtures.get(i).in.DMXlength; jk++) {
-        if(whatToSave[jk-1])
-          repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
-      }
-    }
+    myPreset.savePreset(newWhatToSave);
     type = 1;
-    
+    enabled = true;
+  }
+  
+  void savePreset() {
+    myPreset.savePreset();
+    type = 1;
+    enabled = true;
   }
 
 
 
   void loadPreset(int v) {
-    setValue(v);
+    myPreset.setValue(v);
   }
 
   void loadPreset() {
-    if(type == 1) {
-      //if(value != valueOld) { //overwirtecheck
-      valueOld = value;
-      for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
-        if(whatToSave[jk-1])
-          for(int i = 0; i < fixtures.size(); i++) {
-            if(i < repOfFixtures.length) if(jk < fixtures.get(i).preset.DMXlength) {
-              int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
-              
-              fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
-              
-            } else {} else break;
-          }
-      }
-      //}
-    }
+    myPreset.loadPreset();
   }
 
   
@@ -221,6 +281,289 @@ class memory { //Begin of memory class------------------------------------------
 } //end of memory class-----------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+XML arrayToXML(String name, int[] array) {
+  
+  String data = "<" + name + "></" + name + ">";
+  XML xml = parseXML(data);
+  if(array != null) {
+    for(int i = 0; i < array.length; i++) {
+      if(array[i] != 0) {
+        XML block = xml.addChild("int");
+        block.setInt("id", i);
+        block.setInt("val", array[i]);
+      }
+    }
+  }
+  return xml;
+}
+
+int[] XMLtoIntArray(String name, XML xml) {
+  int[] toReturn = { };
+  if(xml != null) {
+    xml = xml.getChild(name);
+    if(xml != null) {
+      XML[] block = xml.getChildren();
+      int a = 0;
+      for(int i = 0; i < block.length; i++) {
+        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+          int tmp = block[i].getInt("id")+1;
+          if(tmp > a) a = tmp;
+        }
+      }
+      toReturn = new int[a];
+      a = 0;
+      for(int i = 0; i < block.length; i++) {
+        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+          int id = block[i].getInt("id");
+          toReturn[id] = block[i].getInt("val");
+          a++;
+        }
+      }
+    }
+    return toReturn;
+  }
+  return null;
+}
+
+XML arrayToXML(String name, boolean[] array) {
+  String data = "<" + name + "></" + name + ">";
+  XML xml = parseXML(data);
+  for(int i = 0; i < array.length; i++) {
+    if(array[i]) {
+      XML block = xml.addChild("int");
+      block.setInt("id", i);
+      block.setInt("val", int(array[i]));
+    }
+  }
+  return xml;
+}
+
+boolean[] XMLtoBooleanArray(String name, XML xml) {
+  boolean[] toReturn = { };
+  xml = xml.getChild(name);
+  XML[] block = xml.getChildren();
+  int a = 0;
+  for(int i = 0; i < block.length; i++) {
+    if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+      a++;
+    }
+  }
+  toReturn = new boolean[a];
+  a = 0;
+  for(int i = 0; i < block.length; i++) {
+    if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+      int id = block[i].getInt("id");
+      toReturn[id] = boolean(block[i].getInt("val"));
+      a++;
+    }
+  }
+  return toReturn;
+}
+
+
+class Preset { //Begin of Preset class
+  //You need to supply a memory parent for this to work properly
+  memory parent;
+  Preset(memory parent) {
+    this.parent = parent;
+    for(int i = 0; i < repOfFixtures.length; i++) {
+      repOfFixtures[i] = new FixtureDMX();
+    }
+  }
+  
+  chase parentChase;
+  Preset(chase parentChase) {
+    this.parentChase = parentChase;
+    this.parent = parentChase.parent;
+    for(int i = 0; i < repOfFixtures.length; i++) {
+      repOfFixtures[i] = new FixtureDMX();
+    }
+  }
+  
+  //Define variables
+    int value, valueOld; //memorys value
+    boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
+    boolean[] fixturesToSave = new boolean[fixtures.size()];
+    FixtureDMX[] repOfFixtures = new FixtureDMX[fixtures.size()];
+  //End of defining variables
+  
+  XML getXML() {
+    String data = "<Preset></Preset>";
+    XML xml = parseXML(data);
+    xml = xml.addChild("mainData");
+    xml.setInt("value", value);
+    xml.setInt("valueOld", valueOld);
+    xml = xml.getParent();
+    xml.addChild(arrayToXML("whatToSave", whatToSave));
+    xml.addChild(arrayToXML("fixturesToSave", fixturesToSave));
+    xml = xml.addChild("repOfFixtures");
+      for(int i = 0; i < repOfFixtures.length; i++) {
+        if(max(repOfFixtures[i].DMX) > 0) {
+          xml = xml.addChild(repOfFixtures[i].getXML());
+          xml.setInt("id", i);
+          xml = xml.getParent();
+        }
+      }
+    xml = xml.getParent();
+    return xml;
+  }
+  
+  
+  boolean XMLloadSucces = true;
+  
+  void XMLtoObject(XML xml) {
+    XMLloadSucces = false;
+    if(xml != null) {
+      xml = xml.getChild("Preset");
+      if(xml != null) {
+        xml = xml.getChild("mainData");
+        if(xml != null) {
+          value = xml.getInt("value");
+          valueOld = xml.getInt("valueOld");
+          xml = xml.getParent();
+        }
+        if(xml != null) {
+          whatToSave = new boolean[saveOptionButtonVariables.length+10];
+          arrayCopy(XMLtoBooleanArray("whatToSave", xml), whatToSave);
+          fixturesToSave = new boolean[saveOptionButtonVariables.length+10];
+          arrayCopy(XMLtoBooleanArray("fixturesToSave", xml), fixturesToSave);
+        }
+    
+        xml = xml.getChild("repOfFixtures");
+        XML[] block = xml.getChildren();
+        int a = 0;
+          for(int i = 0; i < block.length; i++) {
+            if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+              int id = block[i].getInt("id");
+              if(id+1 > a) { a = id+1; }
+            }
+          }
+          repOfFixtures = new FixtureDMX[a];
+          for(int i = 0; i < block.length; i++) {
+            if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+              int id = block[i].getInt("id");
+              repOfFixtures[id] = new FixtureDMX();
+              repOfFixtures[id].XMLtoObject(block[i]);
+            }
+          }
+        xml = xml.getParent();
+      }
+    }
+    XMLloadSucces = true;
+  }
+  
+  void XMLtoObject(XML xml, boolean a) {
+    XMLloadSucces = false;
+    if(xml != null) {
+      //xml = xml.getChild("Preset");
+      if(xml != null) {
+        xml = xml.getChild("mainData");
+        if(xml != null) {
+          value = xml.getInt("value");
+          valueOld = xml.getInt("valueOld");
+          xml = xml.getParent();
+        }
+        if(xml != null) {
+          arrayCopy(XMLtoBooleanArray("whatToSave", xml), whatToSave);
+          arrayCopy(XMLtoBooleanArray("fixturesToSave", xml), fixturesToSave);
+        }
+    
+        xml = xml.getChild("repOfFixtures");
+        XML[] block = xml.getChildren();
+          for(int i = 0; i < block.length; i++) {
+            if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+              int id = block[i].getInt("id");
+              repOfFixtures[id].XMLtoObject(block[i]);
+            }
+          }
+        xml = xml.getParent();
+      }
+    }
+    XMLloadSucces = true;
+  }
+  
+  
+  
+  void savePreset(boolean[] newWhatToSave) {
+    arrayCopy(newWhatToSave, whatToSave);
+    savePreset();
+  }
+  
+  void setValue(int val) {
+    value = val;
+    draw();
+  }
+  int getValue() {
+    return value;
+  }
+  
+  void loadPreset(int v) {
+    setValue(v);
+  }
+  
+  void draw() {
+    if(XMLloadSucces) {
+      if(parent.type == 1 || parent.type == 6) {
+        loadPreset();
+      }
+    }
+  }
+  
+  void loadPreset() {
+    if(!loadinMemoriesFromXML) {
+      if(!soloIsOn || parent.soloInThisMemory) {
+        if(XMLloadSucces) if(parent.type == 1 || parent.type == 6) {
+          valueOld = value;
+          for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
+            if(whatToSave[jk-1]) {
+              for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
+                if(i < repOfFixtures.length) {
+                  if(fixturesToSave[i]) {
+                    if(jk < fixtures.get(i).preset.DMXlength) {
+                      int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
+                      fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
+                      if(parent.soloInThisMemory && val > 0) {
+                        fixtures.get(i).soloInThisFixture = true;
+                        soloIsOn = true;
+                      }
+                    }
+                  }
+                } 
+                else {
+                  break;
+                }
+              } //End of going through all the fixtures
+            } 
+          }
+        }
+      }
+      }
+  }
+  
+  void savePreset() {
+    repOfFixtures = new FixtureDMX[fixtures.size()];
+    for(int i = 0; i < fixtures.size(); i++) {
+        repOfFixtures[i] = new FixtureDMX();
+    }
+    
+    for(int i = 0; i < fixtures.size(); i++) {
+      fixturesToSave[i] = fixtures.get(i).selected;
+    }
+      
+    for(int i = 0; i < fixtures.size(); i++) {
+      if(fixturesToSave[i]) {
+        for(int jk = 1; jk < fixtures.get(i).in.DMXlength; jk++) {
+          if(whatToSave[jk-1])
+            repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
+        }
+      }
+    }
+  }
+  
+  
+} //End of Preset class
 
 
 
@@ -301,6 +644,7 @@ class chase { //Begin of chase class--------------------------------------------
   
   int[] presets; //all the presets in chase
   int[] content; //all the content in chase - in the future also presets
+  ArrayList<Preset> steps = new ArrayList<Preset>(); //all the presets in chase
   
   int step, brightness, brightness1;
   boolean stepHasChanged;
@@ -316,6 +660,76 @@ class chase { //Begin of chase class--------------------------------------------
   //----------------------end declaring variables--------------------------------
   
   
+  XML getXML() {
+    String data = "<Chase></Chase>";
+    XML xml = parseXML(data);
+    xml.addChild(arrayToXML("presets", presets));
+    xml.addChild(arrayToXML("content", content));
+    xml.addChild(arrayToXML("sineValue", sineValue));
+    XML block = xml.addChild("stepData");
+      block.setInt("step", step);
+      block.setInt("brightness", brightness);
+      block.setInt("brightness1", brightness1);
+    block = xml.addChild("mainData");
+      block.setInt("fade", fade);
+      block.setInt("ownFade", ownFade);
+      block.setInt("value", value);
+    block = xml.addChild("modeData");
+      block.setInt("inputMode", inputMode);
+      block.setInt("outputMode", outputMode);
+      block.setInt("beatModeId", beatModeId);
+    block = xml.addChild("steps");
+      block.setInt("size", steps.size());
+      for(int i = 0; i < steps.size(); i++) {
+        block.addChild(steps.get(i).getXML());
+      }
+    return xml;
+  }
+  
+  boolean XMLloadSucces = true;
+  
+  void XMLtoObject(XML xml) {
+    XMLloadSucces = false;
+    if(xml != null) {
+      xml = xml.getChild("Chase");
+      if(xml != null) {
+        presets = XMLtoIntArray("presets", xml);
+        content = XMLtoIntArray("content", xml);
+        sineValue = XMLtoIntArray("sineValue", xml);
+        XML block = xml.getChild("stepData");
+        if(block != null) {
+          step = block.getInt("step");
+          brightness = block.getInt("brightness");
+          brightness1 = block.getInt("brightness1");
+        }
+        block = xml.getChild("mainData");
+        if(block != null) {
+          fade = block.getInt("fade");
+          ownFade = block.getInt("ownFade");
+          value = block.getInt("value");
+        }
+        block = xml.getChild("modeData");
+        if(block != null) {
+          inputMode = block.getInt("inputMode");
+          outputMode = block.getInt("outputMode");
+          beatModeId = block.getInt("beatModeId");
+        }
+        block = xml.getChild("steps");
+        if(block != null) {
+          XML[] blocks = block.getChildren();
+          for(int i = 0; i < blocks.length; i++) {
+            if(blocks[i] != null) if(!trim(blocks[i].toString()).equals("")) {
+              Preset x = new Preset(this);
+              steps.add(x);
+              x.XMLtoObject(blocks[i], true);
+            }
+          }
+        }
+      }
+    }
+    XMLloadSucces = true;
+  }
+  
   
   memory parent;
   //You need to supply a memory parent for this to work properly
@@ -325,9 +739,11 @@ class chase { //Begin of chase class--------------------------------------------
 
   
   void draw() {
-    setValue();
-    setFade();
-    output();
+    if(XMLloadSucces) {
+      setValue();
+      setFade();
+      output();
+    }
   }
   
   void setValue() {
@@ -363,6 +779,7 @@ class chase { //Begin of chase class--------------------------------------------
             case 3: fade = chaseFade; break;
             default: fade = chaseFade;
           }
+          fade = constrain(round(map((pow(round(fade/25.5), 4)+1), (pow(round(0/25.5), 4)+1), (pow(round(255/25.5), 4)+1), 0, 255)), 0, 255);
         }
   //End of fadeMode functions
   
@@ -462,13 +879,16 @@ class chase { //Begin of chase class--------------------------------------------
           return toReturn;
         }
         
+        boolean nextStepPressedWasDown;
+        boolean beatWasTrue;
+        
           boolean trigger() {
             boolean toReturn = false;
             int iM = 0;
             if(inputMode > 0) { iM = inputMode; } else { iM = inputModeMaster; }
             switch(iM) {
-              case 1: toReturn = s2l.beat(constrain(getBeatModeId(), beatModeLimit[0], beatModeLimit[1])); break;
-              case 2: toReturn = (nextStepPressed || (keyPressed && key == ' ')); break;
+              case 1: toReturn = !beatWasTrue && s2l.beat(constrain(getBeatModeId(), beatModeLimit[0], beatModeLimit[1])); if(toReturn) { beatWasTrue = true; } else { beatWasTrue = false; } break;
+              case 2: toReturn = ((!nextStepPressedWasDown && nextStepPressed) || (keyPressed && key == ' ')); if(nextStepPressed) { nextStepPressedWasDown = true; } else { nextStepPressedWasDown = false; } break;
               case 3: toReturn = true; break;
             }
             return toReturn;
@@ -521,18 +941,27 @@ class chase { //Begin of chase class--------------------------------------------
       oldValue = new int[getPresets().length];
       firstTimeLoading = false;
     }
-   // if(val != oldValue[constrain(num, 0, oldValue.length-1)]) { //Maked oldValue array, because getPresetValue casued some problems THIS IS ALSO CAUSING SOME PROBLEMS AT LEAST WITH singleSine
-      if(parent.type == 2) {
-          memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
-      }
-      if(parent.type == 3)  {
-            fixtures.get(num).preset.setUniDMXfromPreset(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
-          //fixtures.get(num).setDimmer(defaultConstrain(rMap(val, 0, 255, 0, value)));
-    //  }
+    if(parent.type == 2) {
+      memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
+    }
+    if(parent.type == 3)  { //quickChase
+      
+      if(parent.soloInThisMemory && defaultConstrain(rMap(val, 0, 255, 0, value)) > 0) { //Begin of solo commands
+        soloIsOn = true;
+        fixtures.get(num).soloInThisFixture = true; 
+      } //End of Solo commands
+      
+      fixtures.get(num).preset.setUniDMXfromPreset(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
+    }
+    if(parent.type == 6) { //Chase with steps inside
+      loadOwnPreset(num, val);
     }
   }
   
+  void loadOwnPreset(int num, int val) {
+    steps.get(num).setValue(rMap(val, 0, 255, 0, value));
+  }
       
   int[] getPresets() {
      //here function which returns all the presets in this chase
@@ -544,6 +973,12 @@ class chase { //Begin of chase class--------------------------------------------
      else if(parent.type == 3) {
        toReturn = new int[content.length];
        arrayCopy(content, toReturn);
+     }
+     else if(parent.type == 6) {
+       toReturn = new int[steps.size()];
+       for(int i = 0; i < steps.size(); i++) {
+         toReturn[i] = i;
+       }
      }
      return toReturn;
      
@@ -565,7 +1000,7 @@ class chase { //Begin of chase class--------------------------------------------
     return parent.type == 3;
   }
   
-  int loopMap(int val, int in_lo, int in_hi, int out_hi, int offset) {
+  float loopMap(float val, float in_lo, float in_hi, float out_hi, float offset) {
     return (int(map(val, in_lo, in_hi, 0, out_hi)) + offset) % out_hi;
   }
   
@@ -611,8 +1046,10 @@ class chase { //Begin of chase class--------------------------------------------
     }
     int[] presets = getPresets();
     int rS = getReverse(step, 0, presets.length-1);
-    loadPreset(presets[step], brightness);
-    loadPreset(presets[rS], getInvertedValue(brightness, 0, 255));
+    if(presets.length > 0) {
+      loadPreset(presets[constrain(step, 0, onlyPositive(presets.length-1))], brightness);
+      loadPreset(presets[constrain(rS, 0, onlyPositive(presets.length-1))], getInvertedValue(brightness, 0, 255));
+    }
   }
   
   void freqToLight() { //This function gives frequence values to chase presets
@@ -653,12 +1090,12 @@ class chase { //Begin of chase class--------------------------------------------
 
   }  
   
-  int hueOffset = 0;
+  float hueOffset = 0;
   void rainbow() {
     if(true) {
       pushStyle();
         colorMode(HSB);
-        hueOffset += getInvertedValue(fade, 0, 255)/10;
+        hueOffset += float(getInvertedValue(fade, 0, 255))/10;
         if(hueOffset > 255) { hueOffset = 0; }
         for(int i = 0; i < getPresets().length; i++) {
           color c = color(loopMap(i, 0, getPresets().length, 255, hueOffset), 255, 255);
@@ -694,7 +1131,9 @@ class chase { //Begin of chase class--------------------------------------------
     int[] presets = getPresets();
     for(int i = 0; i <= sineMax; i++) {
       if(i < presets.length) { //No nullpointers anymore
-        loadPreset(presets[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
+        if(i < presets.length && i < sineValue.length) {
+          loadPreset(presets[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
+        }
       }
     }
     
@@ -783,6 +1222,20 @@ class chase { //Begin of chase class--------------------------------------------
      setParentType(3); //set parent to 3 which means quickChase 
      //Saving quickChase is ready!
  } //End of create quick chase -----------------------------------------------------------------------
+
+  boolean chaseWithStepsInsideCreating = false;
+  boolean showWhatToSaveOptions = true;
+  boolean chaseWithStepsInsideIsCleared = false;
+  void startCreatingChaseWidthStepsInside() { chaseWithStepsInsideCreating = true; parent.type = 6; chaseWithStepsInsideIsCleared = false; }
+  void createNextStep(boolean[] newWhatToSave) {
+    Preset x = new Preset(this);
+    steps.add(x);
+    x.savePreset(newWhatToSave);
+  }
+  void endCreatingChaseWidthStepsInside() { chaseWithStepsInsideCreating = false; }
+  void clearChaseWidthStepsInside() { steps = new ArrayList<Preset>(); chaseWithStepsInsideIsCleared = true; }
+  boolean creatingChaseWithStepsInside() { return chaseWithStepsInsideCreating; }
+  boolean clearedChaseWithStepsInside() { return chaseWithStepsInsideIsCleared; }
 } //end of chase class-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -793,7 +1246,7 @@ class soundDetect { //----------------------------------------------------------
   
   
   //init all the variables
-  float[] bands;
+  float[] bands = new float[getFreqMax()];
   float[] avgTemp = new float[getFreqMax()];
   float[] avgCounter = new float[getFreqMax()];
   float[] avg = new float[getFreqMax()];
@@ -801,37 +1254,57 @@ class soundDetect { //----------------------------------------------------------
   float[] currentAvg = new float[getFreqMax()];
   float[] currentAvgCounter = new float[getFreqMax()];
   float[] max = new float[getFreqMax()];
+ 
   boolean blinky = true;
+  
+  int oldFrameCount = 0;
+  boolean onset, kick, snare, hat;
+  
   //end initing variables
   
   
+  
   soundDetect() {
-    bands = new float[fft.specSize()];
   }
   
   
   boolean beat(int bT) {
     beat.detect(in.mix); //beat detect command of minim library
     boolean toReturn = true;
-    switch(bT) {
-      case 1: toReturn = beat.isOnset(); break;
-      case 2: toReturn = beat.isKick(); break;
-      case 3: toReturn = beat.isSnare(); break;
-      case 4: toReturn = beat.isHat(); break;
+    
+    if(frameCount > oldFrameCount) {
+      oldFrameCount = frameCount;
+      switch(bT) {
+        case 1: toReturn = beat.isOnset(); onset = toReturn; break;
+        case 2: toReturn = beat.isKick(); kick = toReturn; break;
+        case 3: toReturn = beat.isSnare(); snare = toReturn; break;
+        case 4: toReturn = beat.isHat(); hat = toReturn; break;
+      }
     }
+    else {
+      switch(bT) {
+        case 1: toReturn = onset; break;
+        case 2: toReturn = kick; break;
+        case 3: toReturn = snare; break;
+        case 4: toReturn = hat;
+      }
+    }
+    
     return toReturn;
   }
   
+  
   //inside soundDetect class  
   int freq(int i) { //Get freq of specific band
+    float toReturn = 0;
     fft.forward(in.mix);
-    int toReturn = 0;
+    toReturn = 0;
     float val = getBand(i);
-    toReturn = constrain(round((map(val, avg[i], max[i], 0, 300))), 0, 255); //This is what this function returns
+    toReturn = constrain((map(val, avg[i], max[i], 0, 255*2)), 0, 255); //This is what this function returns
     { //Counting avg values
       avgTemp[i] += val; 
       avgCounter[i]++;
-      if(avgCounter[i] > 2000) {
+      if(avgCounter[i] > 200) {
         avg[i] = (avg[i] + (avgTemp[i] / avgCounter[i])) / 2;
         avgTemp[i] = 0;
         avgCounter[i] = 0;
@@ -839,13 +1312,11 @@ class soundDetect { //----------------------------------------------------------
     } //End of counting avg values
     
     { //Counting max values
-      if(max[i] > 0.5) { max[i]-=0.01; } //Make sure max isn't too big
+      if(max[i] > 0.8) { max[i]-=0.01; } //Make sure max isn't too big
       if(val > max[i]) { max[i] = val; } //Make sure max isn't too small
     } //End of counting max values
-    return toReturn;
+    return round(toReturn);
     //command to get  right freq from fft or something like it. 
-    //This functions should be done now.
-   
   }
   
   float getBand(int i) {
@@ -865,7 +1336,6 @@ class soundDetect { //----------------------------------------------------------
     int toReturn = fft.specSize();
     return toReturn;
     //command which tells how many frequencies there is available. 
-    //This function should be done now.
   }
   
   
@@ -876,15 +1346,7 @@ class soundDetect { //----------------------------------------------------------
 
 
 
-
-
-
-  
-
 //Single Sine class
-
-
-
 
 class sine {
   int kerroin = 2;

@@ -4,11 +4,12 @@ class HSBColorPicker {
   HSBColorPicker() {
   }
 
-int hue = 0;
-int saturation = 255*2;
-int brightness = 255*2;
-boolean colorSelectorOpen = true;
-PVector offset = new PVector(0, 0);
+  int hue = 0;
+  int saturation = 255*2;
+  int brightness = 255*2;
+  boolean colorSelectorOpen = true;
+  PVector offset = new PVector(0, 0);
+  
   void showColorSelector() {
     pushMatrix();
       pushStyle();
@@ -26,9 +27,12 @@ PVector offset = new PVector(0, 0);
             offset.y += mouseY-pmouseY;
           }
           
+          //Count values by mouse dragging
           countHue();
           countSaturation();
           countBrightness();
+          
+          //Show bars
           showHue();
           showBrightness();
           showSaturation();
@@ -39,6 +43,7 @@ PVector offset = new PVector(0, 0);
   }
 
   void countHue() {
+    //Edit hue if dragged
     mouse.declareUpdateElementRelative("HSBP:hue", "HSBP", 0, 0, 255*3, 30);
     mouse.setElementExpire("HSBP:hue", 2);
     if(mouse.isCaptured("HSBP:hue")) {
@@ -47,6 +52,7 @@ PVector offset = new PVector(0, 0);
     }
   }
   void countBrightness() {
+    //Edit brightness if dragged
     mouse.declareUpdateElementRelative("HSBP:brightness", "HSBP", 0, 50, 255*3, 30);
     mouse.setElementExpire("HSBP:brightness", 2);
     if(mouse.isCaptured("HSBP:brightness")) {
@@ -55,6 +61,7 @@ PVector offset = new PVector(0, 0);
     }
   }
   void countSaturation() {
+    //Edit saturation if dragged
     mouse.declareUpdateElementRelative("HSBP:saturation", "HSBP", 0, 100, 255*3, 30);
     mouse.setElementExpire("HSBP:saturation", 2);
     if(mouse.isCaptured("HSBP:saturation")) {
@@ -64,6 +71,7 @@ PVector offset = new PVector(0, 0);
   }
   
   void showHue() {
+    //Show hue bar
     for(int i = 0; i < 255; i++) {
       pushStyle();
         colorMode(HSB);
@@ -77,6 +85,7 @@ PVector offset = new PVector(0, 0);
   }
   
   void showBrightness() {
+    //Show brightness bar
     pushMatrix();
       translate(0, 50);
       for(int i = 0; i < 255; i++) {
@@ -93,6 +102,7 @@ PVector offset = new PVector(0, 0);
   }
 
   void showSaturation() {
+    //Show saturation bar
     pushMatrix();
       translate(0, 100);
       for(int i = 0; i < 255; i++) {
@@ -112,9 +122,8 @@ PVector offset = new PVector(0, 0);
     pushStyle();
       colorMode(HSB);
       color c = color(hue/2, saturation/2, brightness/2); //Divide all the values with two because they are 0-255*2
-      popStyle();
-      return c;
-    
+    popStyle();
+    return c;
   }
   
   boolean changed() {

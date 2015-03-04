@@ -137,6 +137,10 @@ class Mouse {
     return declareUpdateElement(name, ontopof, iScreenX(x1, y1, g), iScreenY(x1, y1, g), iScreenX(x1 + x2, y1 + y2, g), iScreenY(x1 + x2, y1 + y2, g));
   }
   
+  boolean declareUpdateElementRelative(String name, String ontopof, PVector loc1, PVector loc2, PGraphics g) {
+    return declareUpdateElementRelative(name, ontopof, round(loc1.x), round(loc1.y), round(loc2.x), round(loc2.y));
+  }
+  
   void declareUpdateElement(String name, int priority, int x1, int y1, int x2, int y2) {
     if(!updateElement(name, x1, y1, x2, y2)) {
       declareElement(name, priority, x1, y1, x2, y2);
@@ -145,6 +149,14 @@ class Mouse {
   }
   void declareUpdateElementRelative(String name, int priority, int x1, int y1, int x2, int y2, PGraphics g) {
     declareUpdateElement(name, priority, iScreenX(x1, y1, g), iScreenY(x1, y1, g), iScreenX(x1 + x2, y1 + y2, g), iScreenY(x1 + x2, y1 + y2, g));
+  }
+  
+  void declareUpdateElementRelative(String name, int priority, PVector loc1, PVector loc2, PGraphics g) {
+    declareUpdateElementRelative(name, priority, round(loc1.x), round(loc1.y), round(loc2.x), round(loc2.y), g);
+  }
+  
+  void declareUpdateElementRelative(String name, int priority, PVector loc1, PVector loc2) {
+    declareUpdateElementRelative(name, priority, round(loc1.x), round(loc1.y), round(loc2.x), round(loc2.y));
   }
   
   boolean declareUpdateElementRelative(String name, String ontopof, int x1, int y1, int x2, int y2) {

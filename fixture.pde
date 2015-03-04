@@ -58,7 +58,7 @@ class FixtureArray {
   
   
   int getArrayId(int fid) {
-    if(fid < idLookupTable.size())
+    if(fid < idLookupTable.size() && fid >= 0)
       return idLookupTable.get(fid);
     else return -1;
   }
@@ -105,6 +105,21 @@ class fixture {
   //int dimmer;
   
 
+  PVector getLocation() {
+    return new PVector(x_location, y_location, z_location);
+  }
+  PVector getLocationOnScreen() {
+    return new PVector(locationOnScreenX, locationOnScreenY, 0);
+  }
+  PVector getRotation() {
+    return new PVector(rotationX, 0, rotationZ);
+  }
+  LocationData getLocationData() {
+    return new LocationData(getLocation(), getRotation());
+  }
+  RGBWD getRGBWD() {
+    return new RGBWD(getRawColor(), out.getUniversalDMX(DMX_DIMMER));
+  }
   
   int x_location, y_location, z_location; //location in visualisation
   int locationOnScreenX, locationOnScreenY;
@@ -123,6 +138,8 @@ class fixture {
   
   int parentAnsa;
   
+  boolean soloInThisFixture;
+  
   FixtureDMX in;
   FixtureDMX process;
   FixtureDMX out;
@@ -135,25 +152,138 @@ class fixture {
 
   //End of initing variables
   
+    void saveFixtureDMXDataToXML(ManageXML XMLObject) {
+    XMLObject.addBlockAndIncrease("FixtureDMXdata");
+      if(in != null) { in.saveToXML("in", XMLObject); }
+      if(process != null) { process.saveToXML("process", XMLObject); }
+      if(out != null) { out.saveToXML("out", XMLObject); }
+      if(preset != null) { preset.saveToXML("preset", XMLObject); }
+      if(bottomMenu != null) { bottomMenu.saveToXML("bottomMenu", XMLObject); }
+      if(fade != null) { fade.saveToXML("fade", XMLObject); }
+    XMLObject.goBack();
+  }
+  
+  void saveFixtureDataToXML(ManageXML XMLObject) {
+    XMLObject.addBlock("StartChannel", channelStart);
+    XMLObject.addBlock("fixtureTypeId", fixtureTypeId);
+    XMLObject.addBlockAndIncrease("Location");
+      XMLObject.addData("x", x_location);
+      XMLObject.addData("y", y_location);
+      XMLObject.addData("z", z_location);
+      XMLObject.addBlockAndIncrease("OnScreen");
+        XMLObject.addData("x", locationOnScreenX);
+        XMLObject.addData("y", locationOnScreenY);
+      XMLObject.goBack();
+      XMLObject.addBlockAndIncrease("Rotation");
+        XMLObject.addData("x", rotationX);
+        XMLObject.addData("z", rotationZ);
+    XMLObject.goBack(2);
+    XMLObject.addBlock("parameter", parameter);
+    XMLObject.addBlock("preFadeSpeed", preFadeSpeed);
+    XMLObject.addBlock("postFadeSpeed", postFadeSpeed);
+    XMLObject.addBlockAndIncrease("Color");
+      XMLObject.addData("r", red);
+      XMLObject.addData("g", green);
+      XMLObject.addData("b", blue);
+    XMLObject.goBack();
+    XMLObject.addBlock("parentAnsa", parentAnsa);
+    saveFixtureDMXDataToXML(XMLObject);
+  }
+  
+  void loadFixtureData(ManageXML XMLObject) {
+    channelStart = int(XMLObject.getBlock("StartChannel"));
+    fixtureTypeId = int(XMLObject.getBlock("fixtureTypeId"));
+    XMLObject.goToChild("Location");
+      x_location = XMLObject.getDataInt("x");
+      y_location = XMLObject.getDataInt("y");
+      z_location = XMLObject.getDataInt("z");
+      XMLObject.goToChild("OnScreen");
+        locationOnScreenX = XMLObject.getDataInt("x");
+        locationOnScreenY = XMLObject.getDataInt("y");
+      XMLObject.goBack();
+      XMLObject.goToChild("Rotation");
+        rotationX = XMLObject.getDataInt("x");
+        rotationZ = XMLObject.getDataInt("z");
+    XMLObject.goBack(2);
+    parameter = int(XMLObject.getBlock("parameter"));
+    preFadeSpeed = int(XMLObject.getBlock("preFadeSpeed"));
+    postFadeSpeed = int(XMLObject.getBlock("postFadeSpeed"));
+    XMLObject.goToChild("Color");
+      red = XMLObject.getDataInt("r");
+      green = XMLObject.getDataInt("g");
+      blue = XMLObject.getDataInt("b");
+    XMLObject.goBack();
+    parentAnsa = int(XMLObject.getBlock("parentAnsa"));
+  }
+  
  
   void setDimmer(int val) { 
     in.setDimmer(val);
   }
   
-  
+   float soloFade = 255;
+   float afterSoloFade = 0;
+   boolean thisFixtureWasOffBySolo = false;
+   
   void processDMXvalues() {
     preset.presetProcess();
     
-    processFade();
+    
     
     int[] newIn  = in.getUniversalDMX();
     int[] oldOut = out.getUniversalDMX();
     //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
     if(isHalogen() && abs(newIn[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
       newIn[DMX_DIMMER] = oldOut[DMX_DIMMER];
-    newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]);
-    out.setUniversalDMX(newIn);
+      newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]); //PROBLEM this is causing some masterloop problemes! If master isn't 255 all the lights fade off PROBLEM!!!!!!!!!!
     
+   
+    if(soloIsOn && !soloInThisFixture) { 
+      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, soloFade)); 
+      if(soloFade > 0) { soloFade-=(float(60)/frameRate)*20; soloFade = constrain(soloFade, 0, 255); } 
+      thisFixtureWasOffBySolo = true; 
+      afterSoloFade = 0;
+    }
+    if(!soloIsOn && !soloInThisFixture && thisFixtureWasOffBySolo) {
+      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, afterSoloFade)); 
+      if(afterSoloFade < 255) { afterSoloFade+=(float(60)/frameRate)*20; afterSoloFade = constrain(afterSoloFade, 0, 255); } 
+      if(afterSoloFade == 255) { thisFixtureWasOffBySolo = false;  soloFade = 255;}
+    }
+    
+    if(fullOn) { 
+      newIn[DMX_DIMMER] = 255; 
+      if((newIn[DMX_RED] + newIn[DMX_GREEN] + newIn[DMX_BLUE] + newIn[DMX_WHITE])  == 0) { newIn[DMX_RED] = 255; newIn[DMX_GREEN] = 255; newIn[DMX_BLUE] = 255; newIn[DMX_WHITE] = 255; }
+      else { 
+        int maxValueOfColors = max(max(newIn[DMX_RED], newIn[DMX_GREEN]), newIn[DMX_BLUE], newIn[DMX_WHITE]);
+        newIn[DMX_RED] = round(map(newIn[DMX_RED], 0, maxValueOfColors, 0, 255));
+        newIn[DMX_GREEN] = round(map(newIn[DMX_GREEN], 0, maxValueOfColors, 0, 255));
+        newIn[DMX_BLUE] = round(map(newIn[DMX_BLUE], 0, maxValueOfColors, 0, 255));
+        newIn[DMX_WHITE] = round(map(newIn[DMX_WHITE], 0, maxValueOfColors, 0, 255));
+      }
+    }
+    if(strobeNow) {
+      if(fixtureProfiles[fixtureTypeId].isStrobe) {
+        newIn[DMX_DIMMER] = 255;
+        newIn[DMX_FREQUENCY] = 255;
+        newIn[DMX_STROBE] = 255;
+        newIn[DMX_RED] = 255; 
+        newIn[DMX_GREEN] = 255; 
+        newIn[DMX_BLUE] = 255; 
+        newIn[DMX_WHITE] = 255;
+      }
+      else {
+        newIn[DMX_DIMMER] = 0;
+      }
+    }
+    if(blackOut) { newIn[DMX_DIMMER] = 0; }
+    int[] oldDMX = out.getUniversalDMX();
+    for(int i = 0; i < newIn.length; i++) {
+      if(newIn[i] != oldDMX[i]) {
+        DMXChanged = true;
+      }
+    }
+    out.setUniversalDMX(newIn);
+    processFade();
     
     for(int i = 0; i < bottomMenu.DMXlength; i++) {
       if(bottomMenu.DMX[i] != bottomMenu.DMXold[i]) {
@@ -162,29 +292,36 @@ class fixture {
         bottomMenu.DMXold[i] = bottomMenu.DMX[i];
       }
     }
-    
   }
   
   void setUniversalDMXwithFade(int i, int val) {
     if(i >= 0 && i < fades.length) {
-      fades[i] = new Fade(in.getUniversalDMX(i), val);
+      fades[i] = new Fade(in.getUniversalDMX(i), val, 10, 500);
     }
   }
   
   void processFade() {
     if(fades != null) {
+      
       int[] fadeVal = new int[fades.length];
       for(int i = 0; i < fades.length; i++) {
         if(fades[i] != null) {
-          fadeVal[i] = fades[i].getActualValue();
+          if(!fades[i].isCompleted()) {
+            fades[i].countActualValue();
+            fadeVal[i] = fades[i].getActualValue();
+            in.setUniversalDMX(i, fadeVal[i]);
+            DMXChanged = true;
+          }
         }
       }
-      int[] oldOut = out.getUniversalDMX();
-      //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
-      if(isHalogen() && abs(fadeVal[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
-        fadeVal[DMX_DIMMER] = oldOut[DMX_DIMMER];
-      fadeVal[DMX_DIMMER] = masterize(fadeVal[DMX_DIMMER]);
-      out.setUniversalDMX(fadeVal);
+//      int[] oldOut = out.getUniversalDMX();
+//      //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
+////      if(isHalogen() && abs(fadeVal[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
+////        fadeVal[DMX_DIMMER] = oldOut[DMX_DIMMER];
+////      fadeVal[DMX_DIMMER] = masterize(fadeVal[DMX_DIMMER]);
+//      out.setUniversalDMX(fadeVal);
+//      DMXChanged = true;
+//      out.DMXChanged = true;
     }
   } 
 
@@ -235,9 +372,7 @@ class fixture {
   
   void setColorForLedFromPreset(int c) {
     if(thisFixtureIsLed()) {
-      preset.setUniDMXfromPreset(DMX_RED, rRed(c));
-      preset.setUniDMXfromPreset(DMX_GREEN, rGreen(c));
-      preset.setUniDMXfromPreset(DMX_BLUE, rBlue(c));
+      setColor(c);
     }
   }
   
@@ -304,23 +439,6 @@ class fixture {
    fixtureTypeId = fixtTypeId;
   }
   
-  
-  //Moving head--------------------------------------------------------------------------------
-//  void visualisationSettingsFromMovingHeadData() {
-//    if(fixtureTypeId == 16 || fixtureTypeId == 17) {
-//      slowRotationForMovingHead();
-//    }
-//  }
-
-//  void slowRotationForMovingHead() {
-//    if(rotationZ < round(map(pan, 0, 255, 0, 540))) { rotationZ += constrain(round((map(float(pan), 0, 255, 0, 540) - float(rotationZ))/20+0.6), 1, 10); }
-//    if(rotationZ > round(map(pan, 0, 255, 0, 540))) { rotationZ -= constrain(round((float(rotationZ) - map(float(pan), 0, 255, 0, 540))/20+0.6), 1, 10); }
-//    if(rotationX < round(map(tilt, 0, 255, 45, 270+45))) { rotationX += constrain(round((map(float(tilt), 0, 255, 45, 270+45) - float(rotationX))/20+0.6), 1, 10); }
-//    if(rotationX > round(map(tilt, 0, 255, 45, 270+45))) { rotationX -= constrain(round((float(rotationX) - map(float(tilt), 0, 255, 45, 270+45))/20+0.6), 1, 10); }
-//  }
-
-
-
   
   //Query-------------------------------------------------------------------------------------
   
@@ -389,7 +507,7 @@ class fixture {
   }
   
   int getDimmerWithMaster() {
-    return masterize(in.getUniversalDMX(DMX_DIMMER));
+    return masterize(out.getUniversalDMX(DMX_DIMMER));
   }
   
   int masterize(int val) {
@@ -481,7 +599,7 @@ class fixture {
       this.locationOnScreenX = int(screenX(x1 + lampWidth/2, y1 + lampHeight/2));
       this.locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
       rectMode(CENTER);
-      if(fixtureTypeId == 13) {  rotate(radians(map(movingHeadPan, 0, 255, 0, 180))); pushMatrix();}
+      if(fixtureTypeId == 13) {  rotate(radians(map(rotationZ, 0, 255, 0, 180))); pushMatrix();}
       if(selected) stroke(100, 100, 255); else stroke(255);
       rect(x1, y1, lampWidth, lampHeight, 3);
       if(fixtureTypeId == 13) {  popMatrix();  }

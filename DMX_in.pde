@@ -80,11 +80,7 @@ void channelsToDim() {
   }
   for(int i = 1; i <= touchOSCchannels; i++) {
     if(touchOSCchannelOld[i] != touchOSCchannel[i]) {         
-      for(int ii = 0; ii < numberOfAllChannelsFirstDimensions; ii++) {
-        if(i > ii*12 && i <= (ii+1)*12) {
-          allChannels[touchOSCplace + ii][i-ii*12] = touchOSCchannel[i];
-        }     
-      }
+      allChannels[1][i] = touchOSCchannel[i];
       touchOSCchannelOld[i] = touchOSCchannel[i];
     }   
   }
@@ -117,12 +113,7 @@ void channelsToDim() {
     }
     
     if(allChannelsOld[4][i] != allChannels[4][i]) {
-      if(useMemories == true) {
-        memories[i+12].setValue(round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue)));
-      }
-      else {
-        fixtures.get(i+12+12-1).setDimmer(allChannels[4][i]);
-      }
+      memories[i+12].setValue(round(map(allChannels[4][i], 0, 255, 0, memoryMasterValue)));
       allChannelsOld[4][i] = allChannels[4][i];
     }
     

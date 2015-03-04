@@ -1,4 +1,12 @@
-//Tässä välilehdessä piirretään ylävalikko, ja käsitellään sen nappuloiden komentoja 
+/*
+In this tab are located
+  - left bubbles
+       - clock viewer
+       - fps viewer
+       - settings button
+  - left buttons
+       - actually only colorWash
+*/
 
 color topMenuTheme = color(222, 0, 0);
 color topMenuTheme2 = color(200, 0, 0);
@@ -79,7 +87,7 @@ void ylavalikko() {
     int round = 20;
     if(drawLeftSideButton(round, "Wash")) colorWashMenuOpen = !colorWashMenuOpen;
     translate(0, 120);
-    if(drawLeftSideButton(round, "Control")) lowerMenu.open = !lowerMenu.open;
+    //if(drawLeftSideButton(round, "Control")) lowerMenu.open = !lowerMenu.open;
   popMatrix();
   } //End of buttons placed to left side       
   //settingsWindow.draw();
@@ -126,7 +134,7 @@ void nextChaseMode() {
   if(chaseMode > 8) {
     chaseMode = 1;
   }
-  sendDataToIpad("/chaseMode", chaseMode);
+  oscHandler.sendMessage("/chaseMode", chaseMode);
 }
 
 void reverseChaseMode() {
@@ -134,7 +142,7 @@ void reverseChaseMode() {
   if(chaseMode < 1) {
     chaseMode = 8;
   }
-  sendDataToIpad("/chaseMode", chaseMode);
+  oscHandler.sendMessage("/chaseMode", chaseMode);
 }
 
 String getTimeAsString() {

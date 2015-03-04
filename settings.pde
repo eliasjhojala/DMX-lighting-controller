@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 boolean initSettingsInSetupDone = false;
 int initSettingsInSetupStep;
 int initSettingsInSetupSelected;
@@ -73,6 +74,8 @@ void printMe() {
   println("I print!");
   notifier.notify("I print!");
 }
+=======
+>>>>>>> XML+3D
 
 
 ////////////////////////////////////////SETTINGS//GUI///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,8 +105,12 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", tabs[0]),
         new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0]),
+<<<<<<< HEAD
         new SettingController("printMe", master, true, "Test reflection", "Reflection test", tabs[0]),
         new SettingController(0, 0, 0, "Test Int", "This is just a test controller to see how the int controller will work.", tabs[0]),
+=======
+        new SettingController(10, "Show sockets", "If you want to edit socket places use this", tabs[0]),
+>>>>>>> XML+3D
         new SettingController(0, 0, 0, "Test Int1", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int2", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int3", "This is just a test controller to see how the int controller will work.", tabs[0]),
@@ -120,7 +127,9 @@ class SettingsWindow {
         new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", tabs[1]),
         new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", tabs[1]),
         new SettingController(3, 2, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[1]),
-        new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[1])
+        new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[1]),
+        new SettingController(5, "Lock showMode", "Make sure that showMode isn't turned off accidentally", tabs[1]),
+        new SettingController(15, "Rotate fixtures to same point", "Rotate all the fixtures to same point", tabs[1])
       }
     );
     tabs[2] = new SettingsTab("Chase", this);
@@ -145,11 +154,14 @@ class SettingsWindow {
   //It's stupid we do it like this, but primitives.
   void setExternalBoValue(boolean b, int var) {
     switch(var) {
-      case 0: use3D = b;               break;
-      case 1: showOutputAsNumbers = b; break;
-      case 2: showMode = b;            break;
-      case 3: printMode = b;           break;
-      case 4: s2l.blinky = b;          break;
+      case 0: use3D = b;                       break;
+      case 1: showOutputAsNumbers = b;         break;
+      case 2: showMode = b || showModeLocked;  break;
+      case 3: printMode = b;                   break;
+      case 4: s2l.blinky = b;                  break;
+      case 5: showModeLocked = b;              break;
+      case 10: showSockets = b;                break;
+      case 15: rotateFixturesToSamePoint = b;  break;
     }
   }
   
@@ -160,6 +172,9 @@ class SettingsWindow {
       case 2:  return showMode;
       case 3:  return printMode;
       case 4:  return s2l.blinky;
+      case 5:  return showModeLocked;
+      case 10: return showSockets;
+      case 15: return rotateFixturesToSamePoint; 
       default: return false;
     }
   }

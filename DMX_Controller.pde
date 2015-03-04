@@ -1,17 +1,15 @@
-
-int userId = 3; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
-boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                               //|
-                                                                                                                                                                          //|
 boolean showMode = true;                                                                                                                                                  //|
-                                                                                                                                                                          //|
+boolean showModeLocked = true;                                                                                                                                            //|
+boolean showSockets = false;                                                                                                                                              //| 
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
 boolean useCOM = true; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                       //|
+boolean use3D = true;                                                                                                                                                     //|
 boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                               //|
 boolean useAnotherArduino = false;                                                                                                                                        //|
                                                                                                                                                                           //|
 boolean useMaschine = false;                                                                                                                                              //|
                                                                                                                                                                           //|
-int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200);                                                                                                      //|
+int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200));                                                                                                     //|
 int arduinoBaud2 = 9600;                                                                                                                                                  //|
                                                                                                                                                                           //|
 int arduinoIndex = 0; //Arduinon COM-portin järjestysnumero                                                                                                               //|
@@ -24,10 +22,7 @@ int touchOscInComing = 8000;                                                    
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//|
 
 
-
-
 boolean freeze = false;
-
 
 boolean[][] allowChannel = new boolean[10][512];
 
@@ -38,9 +33,6 @@ void setAllowedChannels() {
     }
   }
 }
-
-fixtureInput[] fixtureInputs = new fixtureInput[2];
-
 
 
 boolean nextStepPressed = false;
@@ -67,6 +59,8 @@ void setFixtureChannelsAtSoftwareBegin() {
   }
 }
 
+import themidibus.*;
+import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
 
 
 import themidibus.*;
@@ -81,28 +75,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 //--------------------------------------------------------------------------------------------------Moving head variables---------------------------------------------------------
-int[][] mhx50_createFinalChannelValues = new int[2][14];
-int[][][] mhx50_createFinalPresetValues = new int[16][2][14];
-
-
-boolean mhx50_posDuplicate = false;
-boolean mhx50_posMirror = true;
-boolean mhx50_duplicate = true;
-
-boolean savePreset = false;
-boolean changeValues = true;
-
-
 
 int[][] mhx50_RGB_color_Values = { { 255, 255, 255 }, { 255, 255, 0 }, { 255, 100, 255 }, { 0, 100, 0 }, { 255, 0, 255 }, { 0, 0, 255 }, { 0, 255, 0 }, { 255, 30, 0 }, { 0, 0, 100 } };
 int[] mhx50_color_values = { 5, 12, 19, 26, 33, 40, 47, 54, 62 }; //white, yellow, lightpink, green, darkpink, lightblue, lightgreen, red, dark blue
 String[] mhx50_color_names = { "white", "yellow", "lightpink", "green", "darkpink", "lightblue", "lightgreen", "red", "blue" };
 
 int[] mhx50_gobo_values = { 6, 14, 22, 30, 38, 46, 54, 62 };
-
 int[] mhx50_autoProgram_values = { 6, 22, 6, 38, 6, 54, 6, 70, 6, 86, 6, 102, 6, 118, 6, 134, 6, 150, 6, 166, 6, 182, 6, 198, 6, 214, 6, 230, 6, 247, 6, 254 };
-
-boolean midiPositionButtonPressed;
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -116,14 +95,12 @@ import javax.swing.JFrame; //Käytetään frame-kirjastoa, jonka avulla voidaan 
 PFrame f1 = new PFrame(); //Luodaan uusi ikkuna
 secondApplet1 s1;
 
-PFrame1 f = new PFrame1(this); //Luodaan toinenkin uusi ikkuna
+PFrame1 f = new PFrame1(this, 500, 500); //Luodaan toinenkin uusi ikkuna
 secondApplet s;
 
 
 
 
-
-boolean biitti = false;
 
 int pageRotation = 0; //How much is page rotated (0-360)
 
@@ -139,21 +116,15 @@ int memoryMasterValue = 255; //Memorien master-muuttuja
 int fixtureMasterValue = 255; //Fixtuurien master-muuttuja
 
 
-boolean[] presetValueChanged = new boolean[1000];
-
-boolean[] buttonValues = new boolean[100];
-String[] buttonText = new String[100];
-
-boolean[] chaseStepChanging = new boolean[numberOfMemories];
-boolean[] chaseStepChangingRev = new boolean[numberOfMemories];
-boolean[] fallingEdgeChaseStepChangin = new boolean[numberOfMemories];
-
 int chaseSpeed = 500;
 int chaseFade = 255;
 
+<<<<<<< HEAD
 boolean toRotateFixture;
 boolean toChangeFixtureColor;
 int changeColorFixtureId = 0;
+=======
+>>>>>>> XML+3D
 
 boolean getPaths = false;
 
@@ -165,13 +136,6 @@ String savePath = "";
 boolean mouseLocked = false; //Onko hiiri lukittu jollekin tietylle alueelle
 String mouseLocker; //Mille alueelle hiiri on lukittu
 
-int[] valueOfMemory = new int[1000];
-int[] valueOfMemoryBeforeSolo = new int[1000];
-int[] valueOfChannelBeforeSolo = new int[1000];
-
-int[] memoryType = new int[1000]; //Memoryn tyyppi (1 = preset, 2 = sound to light)
-int[] chaseModeByMemoryNumber = new int[1000];
-
 long[] millisNow = new long[100]; //Nykyinen aika   --> Käytetään delayta sijaistavissa komennoissa
 long[] millisOld = new long[100]; //Edellinen aika  --> Käytetään delayta sijaistavissa komennoissa
 
@@ -180,17 +144,8 @@ boolean keyReleased = false; //Onko näppäin vapautettu
 
 boolean useMemories = true; //Käytetäänkö presettejä ohjelmassa
 
-int[][] memory = new int[numberOfMemories][512]; //Memory [numero][fixtuurin arvo]
-int[] memoryValue = new int[numberOfMemories]; //Tämänhetkinen memoryn arvo
-
-int[][] preset = new int[numberOfMemories][512]; //Preset [numero][fixtuurin arvo]
-int[] presetValue = new int[numberOfMemories]; //Tämänhetkinen presetin arvo
-int[] presetValueOld = new int[numberOfMemories]; //Tämänhetkinen presetin arvo
-
 int chaseMode; //1 = s2l, 2 = manual, 3 = auto
 
-int[] soundToLightSteps = new int[numberOfMemories];
-int[][] soundToLightPresets = new int[numberOfMemories][numberOfMemories];
 boolean makingSoundToLightFromPreset = false; //Ollaanko tällä hetkellä tekemässä sound to light presettiä
 boolean selectingSoundToLight = false; //Ollaanko tällä hetkellä valitsemassa sound to light modea (EI KÄYTÖSSÄ)
 int soundToLightNumero = 1; //Sound to lightin järjestysnumero (EI KÄYTÖSSÄ)
@@ -207,15 +162,6 @@ float y_siirto = 0; //Visualisaation sijainnin muutos pystysuunnassa
 float zoom = 100; //Visualisaation zoomauksen muutos
 
 boolean upper; //enttec dmx usb pro ch +12
-
-//----------------------------------------------------------------Moving headin muuttujia--------------------------------------------------------------------------------
-//--------------------------------------------------5.9.2014 nämä eivät ole käytössä-------------------------------------------------------------------------------------
-int movingHeadPan; //Moving headin pan arvo
-int movingHeadTilt; //Moving headin tilt arvo
-
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 
 
@@ -255,9 +201,7 @@ int touchOSCplace = 1; //touchOSC ohjatut kanavat                               
              
              
              
-             
-             
-                                                                                                           
+                                                                                                 
                                                                                                           
 import java.awt.Frame;
 import java.awt.BorderLayout;
@@ -265,7 +209,6 @@ import controlP5.*;
 
 private ControlP5 cp5;
 
-ControlFrame cf;
 
 int def;
 
@@ -347,10 +290,7 @@ int[] bottomMenuOrder = new int[numberOfAllFixtures];
 
 int[] y = { 500, 200 };
 int ansaTaka = 32;
-int[] valueToDmx = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
-int[] dim = new int[512]; //fixtuurien kirkkaus todellisuudessa (dmx output), sekä visualisaatiossa
-int[] dimOld = new int[512];
-int[] dimInput = new int[512];
+
 int[] ch = new int[512];
 
 
@@ -368,14 +308,6 @@ boolean moveLamp = false;
 
 boolean mouseClicked = false;
 int lampToMove;
-
-//--------------------------------------Chase muuttujat-----------------------------------
-int chaseStep1 = 1;
-int chaseStep2;
-int[] chaseBright1 = new int[numberOfMemories];
-int[] chaseBright2 = new int[numberOfMemories];
-
-boolean chase;
 
 void initializeCOM() {
   try {
@@ -399,7 +331,6 @@ void initializeCOM() {
   }
 }
 
-//----------------------------------------------------------------------------------------
 
 
 Serial myPort;  // The serial port
@@ -409,6 +340,12 @@ String fileSeparator = java.io.File.separator;
 String actualSketchPath;
 
 void setup() {
+  trusses = new Truss[10];
+  for(int i = 0; i < trusses.length; i++) {
+    trusses[i] = new Truss();
+  }
+  
+  s1.noLoop();
 
   loadCoreData();
   actualSketchPath = sketchPath("");
@@ -416,20 +353,9 @@ void setup() {
   mouseLocker = "";
   thread("setAllowedChannels");
   memoryIsZero = new boolean[channels];
-  if(getPaths == true) { //Jos ladattavien ja tallennettavien tiedostojen polut halutaan tarkistaa tiedostosta
-    String lines100[] = loadStrings("C:\\DMXcontrolsettings\\savePath.txt"); //Luetaan savePath.txt:stä tiedot muuttujaan lines100[]
-    savePath = lines100[0]; //savePath muuttujan arvoksi annetaan savePath.txt:n ensimmäinen rivi
-    
-    String lines101[] = loadStrings("C:\\DMXcontrolsettings\\loadPath.txt"); //Luetaan loadPath.txt:stä tiedot muuttujaan lines100[]
-    loadPath = lines101[0]; //loadPath muuttujan arvoksi annetaan savePath.txt:n ensimmäinen rivi
-  }
   
   cp5 = new ControlP5(this); //luodaan controlFrame-ikkuna
   
-  // by calling function addControlFrame() a
-  // new frame is created and an instance of class
-  // ControlFrame is instanziated.
-  cf = addControlFrame("Control", 500,500);
   
     size(displayWidth, displayHeight); //Annetaan ikkunan kooksi sama kuin nykyisen näytön koko
     frameRate(60);
@@ -464,7 +390,7 @@ void setup() {
     setuppi();
     
     MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
-  myBus = new MidiBus(this, 1, "KeyRig 49"); // Create a new MidiBus with no input device - you will have to change the input here
+    myBus = new MidiBus(this, 1, "KeyRig 49"); // Create a new MidiBus with no input device - you will have to change the input here
   
   
   if(useMaschine) {
@@ -482,6 +408,9 @@ void setup() {
   
   subWindowHandler = new SubWindowHandler();
   
+  
+  f.setBounds(0, 0, displayWidth, displayHeight);
+  s1.loop();
   
   
 }

@@ -1,7 +1,9 @@
-
-//This is a really old comment by eliasjhojala(@github.com), I'm keeping it here for the memories :)
-    //Tässä välilehdessä piirretään alavalikko, jossa näkyy mm. fixtuurien nykyiset arvot 
-    //Alavalikko toimii nyt hyvin ja fixture(i) voidia voi käyttää missä vain ohjelmassa
+/*
+In this tab are located
+  - lower menu containing fixture controller boxes
+  - bottomMenuControlBox to control all the channels of fixtures
+  - notifier class: notifications located at the bottom of screen
+*/
 
  
 //Create variables for old mouse locations
@@ -9,7 +11,7 @@ int oldMouseX2;
 int oldMouseY2;
  
 void alavalikko() {
-  /*
+  
   //The boolean is set to true on a spot that has been checked. It should not be drawn again.
   boolean[] drawn = new boolean[bottomMenuOrder.length];
   
@@ -31,7 +33,7 @@ void alavalikko() {
     
   if(!mousePressed) { mouseLocked = false; }
   if(mouse.captured && !mouse.isCaptured("bottomMenu")) { mouseLocked = true; mouseLocker = "external"; }
-  */
+  
   drawBottomMenuControlBox();
   notifier.draw(width-168);
   
@@ -39,7 +41,7 @@ void alavalikko() {
 }
 
 
-LowerMenu lowerMenu = new LowerMenu();
+//LowerMenu lowerMenu = new LowerMenu();
 
 class LowerMenu {
   LowerMenu() {
@@ -217,7 +219,7 @@ class LowerMenu {
   }
 }
 
-/*
+
 void createFixtureBox(int id) {
   drawFixtureRectangles(id); //draw fixtureboxes with buttons etc.
   checkFixtureBoxGo(id); //Check if you pressed go button button to set fixture on until jo release mouse
@@ -290,9 +292,6 @@ void checkFixtureBoxSlider(int id) {
 
 void checkFixtureBoxRightClick(int id) {
    if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && mouseReleased) { //Check if mouse is on the title box anf clicked
-    toChangeFixtureColor = true; //Tells controlP5 to open fixtureSettings window
-    toRotateFixture = true; //Tells controlP5 to open fixtureSettings window
-    changeColorFixtureId = id; //Tells controlP5 which fixture to edit
     
     openBottomMenuControlBox(id); // open bottomMenu
   }
@@ -307,7 +306,7 @@ void checkFixtureBoxRightClick(int id) {
     keyReleased = false;
   }
 }
-*/
+
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fixtureProfiles>
+  <profiles>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="" id="0">
+      <channelNames/>
+      <channelTypes/>
+      <fixtureSize>
+        <width>50</width>
+        <height>50</height>
+        <isDrawn>false</isDrawn>
+      </fixtureSize>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="PAR64" fixtureName="par64" id="1">
+      <channelNames>
+        <channelName id="0">Dimmer</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">1</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>30</width>
+        <height>50</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+      <fixtureModelPath>par64.obj</fixtureModelPath>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="Pieni fresu" fixtureName="p.fresu" id="2">
+      <channelNames>
+        <channelName id="0">Dimmer</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">1</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>25</width>
+        <height>30</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+      <fixtureModelPath>kFresu.obj</fixtureModelPath>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="Keskikokoinen fresu" fixtureName="k.fresu" id="3">
+      <channelNames>
+        <channelName id="0">Dimmer</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">1</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>35</width>
+        <height>40</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+      <fixtureModelPath>kFresu.obj</fixtureModelPath>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="Iso fresu" fixtureName="i.fresu" id="4">
+      <channelNames>
+        <channelName id="0">Dimmer</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">1</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>40</width>
+        <height>50</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+      <fixtureModelPath>iFresu.obj</fixtureModelPath>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="flood" id="5">
+      <channelNames>
+        <channelName id="0">Dimmer</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">1</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>40</width>
+        <height>20</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+      <fixtureModelPath>flood.obj</fixtureModelPath>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="linssi" id="6">
+      <channelNames>
+        <channelName id="0">Dimmer</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">1</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>20</width>
+        <height>60</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+      <fixtureModelPath>linssi.obj</fixtureModelPath>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="Strobe" id="7">
+      <channelNames>
+        <channelName id="0">Dimmer</channelName>
+        <channelName id="1">Frequency</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">1</channelType>
+        <channelType id="1">18</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>40</width>
+        <height>25</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+      <fixtureModelPath>strobo.obj</fixtureModelPath>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="Hazer" id="8">
+      <channelNames>
+        <channelName id="0">Haze</channelName>
+        <channelName id="1">Fan</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">22</channelType>
+        <channelType id="1">23</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>40</width>
+        <height>45</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+      <fixtureModelPath>fog.obj</fixtureModelPath>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="Fog" id="9">
+      <channelNames>
+        <channelName id="0">Fog</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">24</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>40</width>
+        <height>55</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+      <fixtureModelPath>fog.obj</fixtureModelPath>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="RGB" id="10">
+      <channelNames>
+        <channelName id="0">Red</channelName>
+        <channelName id="1">Green</channelName>
+        <channelName id="2">Blue</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">2</channelType>
+        <channelType id="1">3</channelType>
+        <channelType id="2">4</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>30</width>
+        <height>40</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="RGBD" id="11">
+      <channelNames>
+        <channelName id="0">Red</channelName>
+        <channelName id="1">Green</channelName>
+        <channelName id="2">Blue</channelName>
+        <channelName id="3">Dimmer</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">2</channelType>
+        <channelType id="1">3</channelType>
+        <channelType id="2">4</channelType>
+        <channelType id="3">1</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>30</width>
+        <height>40</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="RGBW" id="12">
+      <channelNames>
+        <channelName id="0">Red</channelName>
+        <channelName id="1">Green</channelName>
+        <channelName id="2">Blue</channelName>
+        <channelName id="3">White</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">2</channelType>
+        <channelType id="1">3</channelType>
+        <channelType id="2">4</channelType>
+        <channelType id="3">5</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>30</width>
+        <height>40</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="RGBWD" id="13">
+      <channelNames>
+        <channelName id="0">Red</channelName>
+        <channelName id="1">Green</channelName>
+        <channelName id="2">Blue</channelName>
+        <channelName id="3">White</channelName>
+        <channelName id="4">Dimmer</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">2</channelType>
+        <channelType id="1">3</channelType>
+        <channelType id="2">4</channelType>
+        <channelType id="3">5</channelType>
+        <channelType id="4">1</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>30</width>
+        <height>40</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="Stairville 4ch rgbw led" fixtureName="RGBW" id="14">
+      <channelNames>
+        <channelName id="0">Red</channelName>
+        <channelName id="1">Green</channelName>
+        <channelName id="2">Blue</channelName>
+        <channelName id="3">White</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">2</channelType>
+        <channelType id="1">3</channelType>
+        <channelType id="2">4</channelType>
+        <channelType id="3">5</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>30</width>
+        <height>40</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="Stairville 6ch rgbw led" fixtureName="RGBW" id="15">
+      <channelNames>
+        <channelName id="0">Mode</channelName>
+        <channelName id="1">Red</channelName>
+        <channelName id="2">Green</channelName>
+        <channelName id="3">Blue</channelName>
+        <channelName id="4">White</channelName>
+        <channelName id="5">Effect</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">25</channelType>
+        <channelType id="1">2</channelType>
+        <channelType id="2">3</channelType>
+        <channelType id="3">4</channelType>
+        <channelType id="4">5</channelType>
+        <channelType id="5">26</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>30</width>
+        <height>40</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="Stairville 8ch rgbw led" fixtureName="RGBW" id="16">
+      <channelNames>
+        <channelName id="0">Red</channelName>
+        <channelName id="1">Green</channelName>
+        <channelName id="2">Blue</channelName>
+        <channelName id="3">White</channelName>
+        <channelName id="4">Color</channelName>
+        <channelName id="5">Strobe</channelName>
+        <channelName id="6">Mode</channelName>
+        <channelName id="7">Dimmer</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">2</channelType>
+        <channelType id="1">3</channelType>
+        <channelType id="2">4</channelType>
+        <channelType id="3">5</channelType>
+        <channelType id="4">26</channelType>
+        <channelType id="5">17</channelType>
+        <channelType id="6">25</channelType>
+        <channelType id="7">1</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>30</width>
+        <height>40</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="MHX50" id="17">
+      <channelNames>
+        <channelName id="0">Pan</channelName>
+        <channelName id="1">Tilt</channelName>
+        <channelName id="2">Pan fine</channelName>
+        <channelName id="3">Tilt fine</channelName>
+        <channelName id="4">Responsespeed</channelName>
+        <channelName id="5">Colorwheel</channelName>
+        <channelName id="6">Shutter</channelName>
+        <channelName id="7">Dimmer</channelName>
+        <channelName id="8">Gobowheel</channelName>
+        <channelName id="9">Goborotation</channelName>
+        <channelName id="10">Specialfunctions</channelName>
+        <channelName id="11">Autoprograms</channelName>
+        <channelName id="12">Prism</channelName>
+        <channelName id="13">Focus</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">7</channelType>
+        <channelType id="1">8</channelType>
+        <channelType id="2">9</channelType>
+        <channelType id="3">10</channelType>
+        <channelType id="4">19</channelType>
+        <channelType id="5">11</channelType>
+        <channelType id="6">16</channelType>
+        <channelType id="7">1</channelType>
+        <channelType id="8">12</channelType>
+        <channelType id="9">13</channelType>
+        <channelType id="10">21</channelType>
+        <channelType id="11">20</channelType>
+        <channelType id="12">14</channelType>
+        <channelType id="13">15</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>30</width>
+        <height>40</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+    </profile>
+    <profile fixtureBrand="" fixtureLongName="" fixtureName="MHX50" id="18">
+      <channelNames>
+        <channelName id="0">Pan</channelName>
+        <channelName id="1">Tilt</channelName>
+        <channelName id="2">Colorwheel</channelName>
+        <channelName id="3">Shutter</channelName>
+        <channelName id="4">Gobowheel</channelName>
+        <channelName id="5">Gobo rotation</channelName>
+        <channelName id="6">Prism</channelName>
+        <channelName id="7">Focus</channelName>
+      </channelNames>
+      <channelTypes>
+        <channelType id="0">7</channelType>
+        <channelType id="1">8</channelType>
+        <channelType id="2">11</channelType>
+        <channelType id="3">16</channelType>
+        <channelType id="4">12</channelType>
+        <channelType id="5">13</channelType>
+        <channelType id="6">14</channelType>
+        <channelType id="7">15</channelType>
+      </channelTypes>
+      <fixtureSize>
+        <width>30</width>
+        <height>40</height>
+        <isDrawn>true</isDrawn>
+      </fixtureSize>
+    </profile>
+  </profiles>
+</fixtureProfiles>

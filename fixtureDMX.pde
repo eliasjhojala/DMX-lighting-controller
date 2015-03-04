@@ -55,15 +55,18 @@ class FixtureDMX { //Class containig all the dmx values
     for(int i = 0; i < DMXlength; i++) {
         int newV = getUniDMX(i);
         newV = iMap(newV, 0, 255, 0, memoryMasterValue);
+        
         if (newV != DMXold[i]) {
           parent.in.setUniversalDMX(i, newV);
           parent.DMXChanged = true;
           
           
           DMXold[i] = newV;
+          
         }
         
         setUniversalDMX(i, 0);
+        
         
         
     }
@@ -80,6 +83,39 @@ class FixtureDMX { //Class containig all the dmx values
   
   FixtureDMX() {
   }
+  
+    void saveToXML(String name, ManageXML XMLObject) {
+    if(max(DMX) > 0) {
+      XMLObject.addBlockAndIncrease("FixtureDMX");
+        XMLObject.addBlockAndIncrease("name", name);
+          XMLObject.addArray("DMX", DMX);
+        XMLObject.goBack();
+      XMLObject.goBack();
+    }
+  }
+  
+  void loadFromXML(String name, ManageXML XMLObject) {
+    if(max(DMX) > 0) {
+      XMLObject.goToChild("FixtureDMX");
+        name = XMLObject.getBlockAndIncrease("name");
+          arrayCopy(XMLObject.getArray("DMX"), DMX);
+        XMLObject.goBack();
+      XMLObject.goBack();
+    }
+  }
+  
+  
+  XML getXML() {
+    String data = "<fixtureDMX></fixtureDMX>";;
+    XML xml = parseXML(data);
+    xml.addChild(arrayToXML("DMX", DMX));
+    return xml;
+  }
+  
+  void XMLtoObject(XML xml) {
+    arrayCopy(XMLtoIntArray("DMX", xml), DMX);
+  }
+  
 
   
  

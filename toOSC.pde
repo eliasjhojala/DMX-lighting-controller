@@ -1,56 +1,62 @@
-//in this tab software sends data to other pc and ipad
 
-boolean sendOscToAnotherPc = true; 
-boolean sendOscToIpad = true;
-boolean sendMemoryToIpad = true;
+OSCHandler oscHandler = new OSCHandler();
 
-int[] oldChannelValToPc = new int[300];
-int[] oldChannelValToIpad = new int[channels];
-int[] oldMemoryValToIpad = new int[numberOfMemories];
-int[] oldDataValToIpad = new int[100];
- 
-
-void sendOscToAnotherPc(int ch, int val) {
-  if(sendOscToAnotherPc == true) {
-    if(val != oldChannelValToPc[ch]) {
-      OscMessage myMessage1 = new OscMessage(str(ch));
-      myMessage1.add(val); // add an int to the osc message
-      oscP51.send(myMessage1, myRemoteLocation1); 
-      oldChannelValToPc[ch] = val;
+class OSCHandler {
+  OSCmaschine[] OSCmaschines;
+  OSCHandler() {
+    OSCmaschines = new OSCmaschine[2];
+    OSCmaschines[0] = new OSCmaschine(8000, 9000, "192.168.0.15");
+    OSCmaschines[1] = new OSCmaschine(8000, 9000, "192.168.0.13");
+  }
+  void sendFaderVal(int ch, int val) {
+    sendMessage("/1/fader" + str(ch), val);
+  }
+  void sendMessage(String address, int data) {
+    for(int i = 0; i < OSCmaschines.length; i++) {
+      OSCmaschines[i].sendMessage(address, data);
+    }
+  }
+  void sendMessage(String address, String data) {
+    for(int i = 0; i < OSCmaschines.length; i++) {
+      OSCmaschines[i].sendMessage(address, data);
     }
   }
 }
 
-void sendOscToIpad(int ch, int val) {
-  if(sendOscToIpad == true) {
-    if((val < (oldChannelValToIpad[ch] - 10)) || (val > (oldChannelValToIpad[ch] + 10)) || (val == 0 && oldChannelValToIpad[ch] != 0) || (val == 255 && oldChannelValToIpad[ch] != 255)) {
-      OscMessage myMessage2 = new OscMessage("/1/fader" + str(ch));
-      myMessage2.add(val); // add an int to the osc message
-      oscP52.send(myMessage2, myRemoteLocation2); 
-      oldChannelValToIpad[ch] = val;
-    }
+
+
+
+class OSCmaschine {
+  int portOutgoing, portIncoming;
+  String ipAddress;
+  
+  NetAddress osc;
+  
+  OSCmaschine(int out, int in, String ip) {
+    portOutgoing = out;
+    portIncoming = in;
+    ipAddress = ip;
+    osc = new NetAddress(ip, portIncoming);
+  }
+  int getPortOut() {
+    return portOutgoing;
+  }
+  int getPortIn() {
+    return portIncoming;
+  }
+  String getIp() {
+    return ipAddress;
+  }
+  
+  void sendMessage(String address, int val) {
+    OscMessage msg = new OscMessage(address);
+    msg.add(val); // add an int to the osc message
+    oscP52.send(msg, osc); 
+  }
+  
+  void sendMessage(String address, String val) {
+    OscMessage msg = new OscMessage(address);
+    msg.add(val); // add an int to the osc message
+    oscP52.send(msg, osc); 
   }
 }
-
-void sendMemoryToIpad(int ch, int val) {
-  if(sendMemoryToIpad == true) {
-    if((val < (oldMemoryValToIpad[ch] - 10)) || (val > (oldMemoryValToIpad[ch] + 10)) || (val == 0 && oldMemoryValToIpad[ch] != 0) || (val == 255 && oldMemoryValToIpad[ch] != 255)) {
-      OscMessage myMessage2 = new OscMessage("/5/fader" + str(ch));
-      myMessage2.add(val); // add an int to the osc message
-      oscP52.send(myMessage2, myRemoteLocation2); 
-      oldMemoryValToIpad[ch] = val;
-    }
-  }
-}
-
-void sendDataToIpad(String ch, int val) {
-    OscMessage myMessage2 = new OscMessage(ch);
-    myMessage2.add(val); // add an int to the osc message
-    oscP52.send(myMessage2, myRemoteLocation2); 
-}
-void sendDataToIpadAsString(String ch, String val) {
-    OscMessage myMessage2 = new OscMessage(ch);
-    myMessage2.add(val); // add an int to the osc message
-    oscP52.send(myMessage2, myRemoteLocation2); 
-}
-
