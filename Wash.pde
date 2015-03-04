@@ -37,175 +37,196 @@ boolean colorWashMenuOpen = false;
 boolean HSBPicker = false;
 PVector colorMenuOffset = new PVector(0, 0);
 
-void drawColorWashMenu() { //Color wash selection menu box
-  if(colorWashMenuOpen) {
-    pushMatrix();
-    translate(colorMenuOffset.x, colorMenuOffset.y);
-      pushStyle();
-        if(wash == null) { wash = new colorWash(""); } //If wash doesn't exist then create it
-        {
-          stroke(150); //Gray corners
-          strokeWeight(3); //A bit bolded corners
-          fill(255, 230); //White transperent background
-        }
-       
-        //Count all the active colorNames (the colorNames object array is'n really good-ordered)
-          int[] activeColorNames = new int[colorNames.length];
-          int[] activeColorNamesTemp = new int[colorNames.length];
-          int n = 0;
-          for(int i = 0; i < colorNames.length; i++) {
-            if(colorNames[i] != null) {
-              activeColorNames[n] = i; //Write down all the existing colorNames
-              n++;
-            }
-          }
-          mouse.declareUpdateElementRelative("colorSelectBox", 10000000, 50, 80, n/5*100+200, 5*50+20); //Declare element for the whole colorSelectBox
-          mouse.setElementExpire("colorSelectBox", 2);
-          
-          rect(50, 80, n/5*100+200, 5*50+20, 20, 20, 20, 20); //The whole box
-          arrayCopy(activeColorNames, activeColorNamesTemp);
-          activeColorNames = new int[n];
-          for(int i = 0; i < activeColorNames.length; i++) {
-            activeColorNames[i] = activeColorNamesTemp[i];
-          }
-        //End counting active colorNames
+ColorWashMenu colorWashMenu = new ColorWashMenu();
 
-        pushMatrix(); 
-            translate(80, 0);
-            PVector onlySelectedButton = new PVector(50*6-40, 30+50+1*40);
-            PVector buttonSize = new PVector(120, 30);
-            PVector oddEvenButton = new PVector(50*6-40, 30+50+2*40);
-            PVector clearButton = new PVector(50*6-40, 30+50+3*40);
-            PVector HSBPickerButton = new PVector(50*6-40, 30+50+4*40);
-            PVector textOffset = new PVector(15, 22);
-            int buttonCorners = 5;
-            
-            //ONLY SELECTED BUTTON
-              mouse.declareUpdateElementRelative("cWB:onlySelected", "colorSelectBox",  round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y)); 
-              mouse.setElementExpire("cWB:onlyDelected", 2);
-              pushStyle();
-              if(mouse.isCaptured("cWB:onlySelected") && mouse.firstCaptureFrame) { stroke(0); wash.onlySelected = !wash.onlySelected; }
-              rect(round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
-              fill(0); //Black text
-              textSize(15); //A bit bigger text than default
-              if(wash.onlySelected) { text("Selected", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
-              else { text("All", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
-              popStyle();
-            //END OF ONLY SELECTED BUTTON
-            
-            
-            //ODDEVEN BUTTON
-              mouse.declareUpdateElementRelative("cWB:oddEven", "colorSelectBox",  round(oddEvenButton.x), round(oddEvenButton.y), round(buttonSize.x), round(buttonSize.y)); 
-              mouse.setElementExpire("cWB:oddEven", 2);
-              pushStyle();
-              if(mouse.isCaptured("cWB:oddEven") && mouse.firstCaptureFrame) { stroke(0); wash.oddEvenNext(); }
-              rect(round(oddEvenButton.x), round(oddEvenButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
-              fill(0); //Black text
-              textSize(15); //A bit bigger text than default
-              String[] OEMS = { "", "Odd", "Even", "All" }; //OddEven mode names
-              String OEM = OEMS[wash.oddEvenMode];
-              text(OEM, round(oddEvenButton.x+textOffset.x), round(oddEvenButton.y+textOffset.y));
-                
-          
-              popStyle();
-            //END OF ODDEVEN BUTTON
-            
-            //CLEAR BUTTON
-              mouse.declareUpdateElementRelative("cWB:clearAll", "colorSelectBox",  round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y)); 
-              mouse.setElementExpire("cWB:clearAll", 2);
-              pushStyle();  
-              if(mouse.isCaptured("cWB:clearAll") && mouse.firstCaptureFrame) { stroke(0);  clearAllTheWashes(); }
-              rect(round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
-              fill(0); //Black text
-              textSize(15); //A bit bigger text than default
-              text("Clear all", round(clearButton.x+textOffset.x), round(clearButton.y+textOffset.y));
-              popStyle();
-            //END OF CLEAR BUTTON
-            
-            //COLORPICKER BUTTON
-              mouse.declareUpdateElementRelative("cWB:HSBPicker", "colorSelectBox",  round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y)); 
-              mouse.setElementExpire("cWB:HSBPicker", 2);
-              pushStyle();
-              if(mouse.isCaptured("cWB:HSBPicker") && mouse.firstCaptureFrame) { stroke(0); HSBPicker = !HSBPicker; }
-              rect(round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
-              
-                fill(0);
-                textSize(15);
-          
-                
-                if(HSBPicker) { text("Close", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
-                else { text("ColorPicker", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
-              popStyle();
-            //END OF COLORPICKER BUTTON
-            
-           
-           if(HSBPicker) { //Check that should color picker be open
-             pushStyle(); //Pushstyle to make sure no any styles go out of colorPicker
-               colorPick.colorSelectorOpen = true; //Tell to color picker that it should be open
-               color c = colorPick.getColorFromPicker(); //Get picked color
-               if(colorPick.changed()) { //Check if color values has changed
-                 wash.clear(); //Clear old wash
-                 wash.setRgb(round(red(c)), round(green(c)), round(blue(c))); //Set rgb color to wash
-                 wash.dim = round(brightness(c)); //Set also dim value to wash
-                 wash.go(); //Activate wash
-               }
-               pushMatrix(); //Own matrix for colorpicker because translate
-                 translate(500, 0); //colorpicker is located next to the color wash box
-                 colorPick.showColorSelector(); //draw colorPicker and count color values
-               popMatrix();
-             popStyle();
-           }
-           else { //if color picker should be closed then close it
-             colorPick.colorSelectorOpen = false; //Tell to picker that it should be closed
-           }
-            
-            //Move the whole selection box
-            if(mouse.isCaptured("colorSelectBox")) {
-                colorMenuOffset.x += mouseX - pmouseX;
-                colorMenuOffset.y += mouseY - pmouseY;
+class ColorWashMenu {
+  Window window;
+  ColorWashMenu() {
+    w = 1000;
+    h = 500;
+    locX = 100;
+    locY = 100;
+    window = new Window("colorSelectBox", new PVector(700, 400));
+  }
+  int locX, locY, w, h;
+  boolean open;
+  void draw(PGraphics g, Mouse mouse, boolean doTranslate) { //Color wash selection menu box
+     window.draw(g, mouse);
+     locX = window.locX;
+     locY = window.locY;
+     open = window.getOpen();
+     g.pushMatrix();
+        g.pushStyle();
+          if(wash == null) { wash = new colorWash(""); } //If wash doesn't exist then create it
+          {
+            g.stroke(150); //Gray corners
+            g.strokeWeight(3); //A bit bolded corners
+            g.fill(255, 230); //White transperent background
+          }
+         
+          //Count all the active colorNames (the colorNames object array is'n really good-ordered)
+            int[] activeColorNames = new int[colorNames.length];
+            int[] activeColorNamesTemp = new int[colorNames.length];
+            int n = 0;
+            for(int i = 0; i < colorNames.length; i++) {
+              if(colorNames[i] != null) {
+                activeColorNames[n] = i; //Write down all the existing colorNames
+                n++;
+              }
             }
+            mouse.declareUpdateElementRelative("colorSelectBox", 10000000, 50, 80, n/5*100+200, 5*50+20 ,g); //Declare element for the whole colorSelectBox
+            mouse.setElementExpire("colorSelectBox", 2);
             
             
-            { //This function is controlling all the color buttons
-                int a = 0;
-                for(int i = 0; i < activeColorNames.length; i++) { //Go through all the activeColorNames
-                  for(int j = 0; j < 5; j++) { //Five rows
-                    if(i*5+j < activeColorNames.length) { 
-                      if(colorNames[activeColorNames[i*5+j]] != null) {
-                        a++;
-                        mouse.declareUpdateElementRelative("cWB:color"+str(i*5+j), "colorSelectBox",  50*i, 30+50+a*40, 40, 30); //Declare mouse element for color rect
-                        mouse.setElementExpire("cWB:color"+str(i*5+j), 2);
-                        fill(colorNames[activeColorNames[i*5+j]].getRGB()); //Fill rect with right color
-                        strokeWeight(1); //Strokeweight is 1 by default
-                        if(washs[activeColorNames[i*5+j]] == null) {
-                           washs[activeColorNames[i*5+j]] = new colorWash("");
+            arrayCopy(activeColorNames, activeColorNamesTemp);
+            activeColorNames = new int[n];
+            for(int i = 0; i < activeColorNames.length; i++) {
+              activeColorNames[i] = activeColorNamesTemp[i];
+            }
+          //End counting active colorNames
+  
+       
+          g.pushMatrix();
+           
+              g.translate(80, 0);
+              PVector onlySelectedButton = new PVector(50*6-40, 30+50+1*40);
+              PVector buttonSize = new PVector(120, 30);
+              PVector oddEvenButton = new PVector(50*6-40, 30+50+2*40);
+              PVector clearButton = new PVector(50*6-40, 30+50+3*40);
+              PVector HSBPickerButton = new PVector(50*6-40, 30+50+4*40);
+              PVector textOffset = new PVector(15, 22);
+              int buttonCorners = 5;
+              
+              
+              //ONLY SELECTED BUTTON
+                mouse.declareUpdateElementRelative("cWB:onlySelected", "colorSelectBox",  round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.setElementExpire("cWB:onlyDelected", 2);
+                g.pushStyle();
+                if(mouse.isCaptured("cWB:onlySelected") && mouse.firstCaptureFrame) { g.stroke(0); wash.onlySelected = !wash.onlySelected; }
+                g.rect(round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
+                g.fill(0); //Black text
+                g.textSize(15); //A bit bigger text than default
+                g.textMode(LEFT); 
+                if(wash.onlySelected) { g.text("Selected", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
+                else { g.text("All", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
+                g.popStyle();
+              //END OF ONLY SELECTED BUTTON
+             
+             
+              //ODDEVEN BUTTON
+                mouse.declareUpdateElementRelative("cWB:oddEven", "colorSelectBox",  round(oddEvenButton.x), round(oddEvenButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.setElementExpire("cWB:oddEven", 2);
+                g.pushStyle();
+                if(mouse.isCaptured("cWB:oddEven") && mouse.firstCaptureFrame) { g.stroke(0); wash.oddEvenNext(); }
+                g.rect(round(oddEvenButton.x), round(oddEvenButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
+                g.fill(0); //Black text
+                g.textSize(15); //A bit bigger text than default
+                String[] OEMS = { "", "Odd", "Even", "All" }; //OddEven mode names
+                String OEM = OEMS[wash.oddEvenMode];
+                g.text(OEM, round(oddEvenButton.x+textOffset.x), round(oddEvenButton.y+textOffset.y));
+                  
+            
+                g.popStyle();
+              //END OF ODDEVEN BUTTON
+             
+              
+              //CLEAR BUTTON
+                mouse.declareUpdateElementRelative("cWB:clearAll", "colorSelectBox",  round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.setElementExpire("cWB:clearAll", 2);
+                g.pushStyle();  
+                if(mouse.isCaptured("cWB:clearAll") && mouse.firstCaptureFrame) { g.stroke(0);  clearAllTheWashes(); }
+                g.rect(round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
+                g.fill(0); //Black text
+                g.textSize(15); //A bit bigger text than default
+                g.textMode(LEFT); 
+                g.text("Clear all", round(clearButton.x+textOffset.x), round(clearButton.y+textOffset.y));
+                g.popStyle();
+              //END OF CLEAR BUTTON
+               
+               
+              //COLORPICKER BUTTON
+                mouse.declareUpdateElementRelative("cWB:HSBPicker", "colorSelectBox",  round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.setElementExpire("cWB:HSBPicker", 2);
+                g.pushStyle();
+                if(mouse.isCaptured("cWB:HSBPicker") && mouse.firstCaptureFrame) { g.stroke(0); HSBPicker = !HSBPicker; }
+                g.rect(round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
+                
+                  g.fill(0);
+                  g.textSize(15);
+            
+                  g.textMode(LEFT); 
+                  if(HSBPicker) { g.text("Close", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
+                  else { g.text("ColorPicker", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
+                g.popStyle();
+              //END OF COLORPICKER BUTTON
+            g.popMatrix();
+             
+             
+             if(HSBPicker) { //Check that should color picker be open
+               g.pushStyle(); //Pushstyle to make sure no any styles go out of colorPicker
+                 colorPick.colorSelectorOpen = true; //Tell to color picker that it should be open
+                 color c = colorPick.getColorFromPicker(); //Get picked color
+                 if(colorPick.changed()) { //Check if color values has changed
+                   wash.clear(); //Clear old wash
+                   wash.setRgb(round(red(c)), round(green(c)), round(blue(c))); //Set rgb color to wash
+                   wash.dim = round(brightness(c)); //Set also dim value to wash
+                   wash.go(); //Activate wash
+                 }
+                 g.pushMatrix(); //Own matrix for colorpicker because translate
+                   g.translate(500, 0); //colorpicker is located next to the color wash box
+                   colorPick.open = true;
+                 g.popMatrix();
+               g.popStyle();
+             }
+             else { //if color picker should be closed then close it
+               colorPick.colorSelectorOpen = false; //Tell to picker that it should be closed
+             } 
+              
+              g.pushMatrix();
+              g.translate(30, 0);
+        
+              { //This function is controlling all the color buttons
+                  int a = 0;
+                  for(int i = 0; i < activeColorNames.length; i++) { //Go through all the activeColorNames
+                    for(int j = 0; j < 5; j++) { //Five rows
+                      if(i*5+j < activeColorNames.length) { 
+                        if(colorNames[activeColorNames[i*5+j]] != null) {
+                          a++;
+                          mouse.declareUpdateElementRelative("cWB:color"+str(i*5+j), "colorSelectBox",  50*i, 30+50+a*40, 40, 30 ,g); //Declare mouse element for color rect
+                          mouse.setElementExpire("cWB:color"+str(i*5+j), 2);
+                          g.fill(colorNames[activeColorNames[i*5+j]].getRGB()); //Fill rect with right color
+                          g.strokeWeight(1); //Strokeweight is 1 by default
+                          if(washs[activeColorNames[i*5+j]] == null) {
+                             washs[activeColorNames[i*5+j]] = new colorWash("");
+                          }
+                          g.stroke(0); //This is in weird place, because it was the first good place I found quickly
+                          if(!washs[activeColorNames[i*5+j]].isReady()) { g.strokeWeight(4); } //Show if wash is active
+                          if(mouse.isCaptured("cWB:color"+str(i*5+j)) && mouse.firstCaptureFrame) { 
+                            g.strokeWeight(3); //Bolded stroke
+                            boolean found = false;            
+                                washs[activeColorNames[i*5+j]].setColor(colorNames[activeColorNames[i*5+j]].name); //Set new color to wash
+                                if(washs[activeColorNames[i*5+j]].isReady()) {
+                                  washs[activeColorNames[i*5+j]].go(); //Activate wash
+                                }
+                                else {
+                                  washs[activeColorNames[i*5+j]].clear(); //Clear wash
+                                }
+                          } 
+                          g.rect(50*i, 30+50+a*40, 40, 30, 5); //Draw color rect
                         }
-                        stroke(0); //This is in weird place, because it was the first good place I found quickly
-                        if(!washs[activeColorNames[i*5+j]].isReady()) { strokeWeight(4); } //Show if wash is active
-                        if(mouse.isCaptured("cWB:color"+str(i*5+j)) && mouse.firstCaptureFrame) { 
-                          strokeWeight(3); //Bolded stroke
-                          boolean found = false;            
-                              washs[activeColorNames[i*5+j]].setColor(colorNames[activeColorNames[i*5+j]].name); //Set new color to wash
-                              if(washs[activeColorNames[i*5+j]].isReady()) {
-                                washs[activeColorNames[i*5+j]].go(); //Activate wash
-                              }
-                              else {
-                                washs[activeColorNames[i*5+j]].clear(); //Clear wash
-                              }
-                        } 
-                        rect(50*i, 30+50+a*40, 40, 30, 5); //Draw color rect
                       }
                     }
+                    a = 0;
                   }
-                  a = 0;
-                }
-           }
-              
-          popMatrix();
-      popStyle();
-    popMatrix();
-  } //End of if(colorWashMenuOpen)
-} //End of color wash selection box
+             } 
+             
+             g.popMatrix();
+                
+            
+        g.popStyle();
+     g.popMatrix();
+  } //End of color wash selection box
+}
 
 void clearAllTheWashes() {
   //Check allways that we are not trying to call null elements to avoid nullPointers

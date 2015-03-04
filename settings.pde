@@ -11,10 +11,11 @@ class SettingsWindow {
   SettingsWindow() {
     onInit();
   }
-  
+  Window settingsWindowWindow;
   SettingsWindow(boolean open) {
     this.open = open;
     onInit();
+    settingsWindowWindow = new Window("settings", new PVector(500, 500));
   }
   
   //Create and configure all tabs & controllers
@@ -143,37 +144,14 @@ class SettingsWindow {
       g.pushStyle();
       { // frame & frame controls
         if(translate) g.translate(locX, locY);
-        themes.window.setTheme(g, mouse);
         
-        //Box itself
-        g.rect(0, 0, size, size, 20);
-        mouse.declareUpdateElementRelative("settings", 1, 0, 0, size, size, g);
-        mouse.setElementExpire("settings", 2);
-        
-        //Grabable location button
-        g.fill(180);
-        g.noStroke();
-        g.rect(10, 10, 20, 20, 20, 0, 0, 4);
-        mouse.declareUpdateElementRelative("settings:move", "settings", 10, 10, 20, 20, g);
-        mouse.setElementExpire("settings:move", 2);
-        if(mouse.isCaptured("settings:move")) {
-          locY = constrain(mouseY - pmouseY + locY, 40, height - (size+40));
-          locX = constrain(mouseX - pmouseX + locX, 40, width - (size + 20 + 168));
+
+        settingsWindowWindow.draw(g, mouse);
+        locX = settingsWindowWindow.locX;
+        locY = settingsWindowWindow.locY;
+        if(settingsWindowWindow.openChanged()) {
+          open = settingsWindowWindow.open;
         }
-        
-        g.textSize(12);
-        
-        //Close button
-        mouse.declareUpdateElementRelative("settings:close", "settings", 30, 10, 50, 20, g);
-        mouse.setElementExpire("settings:close", 2);
-        boolean cancelHover = mouse.elmIsHover("settings:close");
-        g.fill(cancelHover ? 220 : 180, 30, 30);
-        //Close if close is pressed
-        if(mouse.isCaptured("settings:close")) open = false;
-        g.rect(30, 10, 50, 20, 0, 4, 4, 0);
-        g.fill(230);
-        g.textAlign(CENTER);
-        g.text("Close", 55, 24);
         
         //Window title text
         g.fill(0, 220);

@@ -84,7 +84,6 @@ void drawMenus() {
     alavalikko(); //bottom menu
     sivuValikko(); //right menu
     contextMenu1.draw();
-    drawColorWashMenu();
     subWindowHandler.draw();
   }
 }

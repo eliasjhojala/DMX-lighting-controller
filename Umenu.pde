@@ -89,7 +89,7 @@ void ylavalikko() {
   { //Here you can place buttons to left side 
   pushMatrix();
     int round = 20;
-    if(drawLeftSideButton(round, "Wash")) colorWashMenuOpen = !colorWashMenuOpen;
+    if(drawLeftSideButton(round, "Wash")) colorWashMenu.open = !colorWashMenu.open;
     translate(0, 120);
     if(drawLeftSideButton(round, "Help")) help.open = !help.open;
     translate(0, 120);
