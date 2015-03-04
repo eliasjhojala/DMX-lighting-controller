@@ -546,9 +546,7 @@ class fixture {
       lastDimmerPresetTarget = dimmerPresetTarget;
     } dimmerPresetTarget = -1;*/
    
-    
-//    if (fixtureTypeId == 16 || fixtureTypeId == 17) visualisationSettingsFromMovingHeadData();
-    //TODO: implement a function to get dim channel offset (in case dim isn't on the first channel)
+
     
     if (oldFixtureTypeId != fixtureTypeId) {
       oldFixtureTypeId = fixtureTypeId;
