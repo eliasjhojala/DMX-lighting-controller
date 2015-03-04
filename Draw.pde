@@ -33,12 +33,13 @@ void draw() {
     sendDataToArduino();
     drawMainWindow(); //Draw main view (mainly fixtures)
     drawMenus();
-    invokeFixturesDraw(); //Invoke every fixtures draw  
-    resetSolo();  
+    invokeFixturesDraw(); //Invoke every fixtures draw
+    resetSolo();
   }
   scrolledUp = false;
   scrolledDown = false;
   scrollSpeed = 0;
+  println(idLookupTable.size());
 }
 
 boolean memoriesFinished = true;

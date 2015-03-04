@@ -89,7 +89,7 @@ class SettingsWindow {
       case 4:  return s2l.blinky;
       case 5:  return showModeLocked;
       case 10: return showSockets;
-      case 15: return rotateFixturesToSamePoint; 
+      case 15: return rotateFixturesToSamePoint;
       default: return false;
     }
   }
@@ -165,7 +165,7 @@ class SettingsWindow {
         
         g.textSize(12);
         
-        //Close button 
+        //Close button
         mouse.declareUpdateElementRelative("settings:close", "settings", 30, 10, 50, 20, g);
         mouse.setElementExpire("settings:close", 2);
         boolean cancelHover = mouse.elmIsHover("settings:close");

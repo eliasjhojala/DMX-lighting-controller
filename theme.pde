@@ -16,9 +16,13 @@ class Themes {
 
   Themes() {
     window = new ShapeTheme(color(255, 230), color(0, 200), 3, true);
+<<<<<<< HEAD
     
     bubbleColor = new ColorTheme(color(200, 0, 0), color(222, 0, 0), color(222, 0, 0));
     bubble = new ShapeTheme(bubbleColor, color(150, 0, 0), 2, true);
+=======
+    //bubble = new ShapeTheme(color(222, 0, 0), color(150, 0, 0), 2, true);
+>>>>>>> origin/XML+3D
   }
 }
 
