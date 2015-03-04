@@ -1,0 +1,19 @@
+You can create new ShapeTheme with one of the followings command
+new ShapeTheme(color,       color,       int,          boolean);
+new ShapeTheme(ColorTheme,  color,       int,          boolean);
+new ShapeTheme(ColorTheme,  ColorTheme,  int,          boolean);
+new ShapeTheme(color,       ColorTheme,  int,          boolean);
+
+And here is explanations of variables
+new ShapeTheme(fillColor,   strokeColor, strokeWeight, drawStroke);
+
+If you use color it don't change if object is hovered or clicked
+If you use ColorTheme it changes when object is hovered or clicked
+
+When you want to set some theme to your code you only have to 
+call function themes.themeName.setTheme(g, mouse, isHovered, isPressed);
+or function   themes.themeName(g, mouse);
+
+Creating colorTheme is pretty easy also. It can be created calling function
+new ColorTheme(neutralColor, hoveredColor, activeColor);
+where all the variables are type color
