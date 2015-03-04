@@ -1,3 +1,27 @@
+/* Using theme classes 
+
+You can create new ShapeTheme with one of the followings command
+new ShapeTheme(color,       color,       int,          boolean);
+new ShapeTheme(ColorTheme,  color,       int,          boolean);
+new ShapeTheme(ColorTheme,  ColorTheme,  int,          boolean);
+new ShapeTheme(color,       ColorTheme,  int,          boolean);
+
+And here is explanations of variables
+new ShapeTheme(fillColor,   strokeColor, strokeWeight, drawStroke);
+
+If you use color it don't change if object is hovered or clicked
+If you use ColorTheme it changes when object is hovered or clicked
+
+When you want to set some theme to your code you only have to 
+call function themes.themeName.setTheme(g, mouse, isHovered, isPressed);
+or function   themes.themeName(g, mouse);
+
+Creating colorTheme is pretty easy also. It can be created calling function
+new ColorTheme(neutralColor, hoveredColor, activeColor);
+where all the variables are type color
+
+*/
+
 Themes themes = new Themes();
 
 class Themes {
@@ -15,7 +39,7 @@ class Themes {
   
 
   Themes() {
-    window = new ShapeTheme(color(255, 230), color(0, 200), 3, true);
+    window = new ShapeTheme(color(255, 230), color(150), 3, true);
     
     bubbleColor = new ColorTheme(color(200, 0, 0), color(222, 0, 0), color(222, 0, 0));
     bubble = new ShapeTheme(bubbleColor, color(150, 0, 0), 2, true);
@@ -35,7 +59,7 @@ class ShapeTheme {
   ColorTheme fillTheme;
   ColorTheme strokeTheme;
   
-  ShapeTheme(color fill, color stroke, int stokeWeight, boolean drawStroke) {
+  ShapeTheme(color fill, color stroke, int strokeWeight, boolean drawStroke) {
     this.fill = fill;
     this.stroke = stroke;
     this.strokeWeight = strokeWeight;
@@ -44,7 +68,7 @@ class ShapeTheme {
     this.strokeAsTheme = false;
   }
   
-  ShapeTheme(ColorTheme fillTheme, color stroke, int stokeWeight, boolean drawStroke) {
+  ShapeTheme(ColorTheme fillTheme, color stroke, int strokeWeight, boolean drawStroke) {
     this.fillTheme = fillTheme;
     this.stroke = stroke;
     this.strokeWeight = strokeWeight;
@@ -53,7 +77,7 @@ class ShapeTheme {
     this.strokeAsTheme = false;
   }
   
-  ShapeTheme(ColorTheme fillTheme, ColorTheme strokeTheme, int stokeWeight, boolean drawStroke) {
+  ShapeTheme(ColorTheme fillTheme, ColorTheme strokeTheme, int strokeWeight, boolean drawStroke) {
     this.fillTheme = fillTheme;
     this.strokeTheme = strokeTheme;
     this.strokeWeight = strokeWeight;
@@ -62,7 +86,7 @@ class ShapeTheme {
     this.strokeAsTheme = true;
   }
   
-  ShapeTheme(color fill, ColorTheme strokeTheme, int stokeWeight, boolean drawStroke) {
+  ShapeTheme(color fill, ColorTheme strokeTheme, int strokeWeight, boolean drawStroke) {
     this.fill = fill;
     this.strokeTheme = strokeTheme;
     this.strokeWeight = strokeWeight;

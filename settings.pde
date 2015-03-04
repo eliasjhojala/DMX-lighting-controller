@@ -143,9 +143,7 @@ class SettingsWindow {
       g.pushStyle();
       { // frame & frame controls
         if(translate) g.translate(locX, locY);
-        g.fill(255, 230);
-        g.stroke(150);
-        g.strokeWeight(3);
+        themes.window.setTheme(g, mouse);
         
         //Box itself
         g.rect(0, 0, size, size, 20);
