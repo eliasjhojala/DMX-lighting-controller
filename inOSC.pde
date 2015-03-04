@@ -8,6 +8,7 @@ int multixy1_value_offset;
 
 boolean fullOn; //Muuttuja, joka kertoo onko fullOn päällä
 boolean strobeNow;
+boolean fogNow;
 int[] valueOfDimBeforeFullOn = new int[channels]; //Muuttuja johon kirjoitetaan kanavien arvot ennen kun ne laitetaan täysille
 boolean blackOutButtonWasReleased;
 int masterValueBeforeBlackout;
@@ -98,6 +99,9 @@ void oscEvent(OscMessage theOscMessage) {
   
      if(addr.equals("/fullon")) {
        fullOn = boolean(digitalValue);
+     }
+     if(addr.equals("/fognow")) {
+       fogNow = boolean(digitalValue);
      }
      
      

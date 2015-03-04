@@ -25,11 +25,12 @@ boolean oldUse3D = false;
 
 boolean useMidiMaschines = false;
 
-boolean addedBlocks = false;
-
 float scrollSpeed = 0;
 boolean scrolled;
 >>>>>>> XML+3D
+
+boolean helpBoxOpen;
+
 
 void draw() {
   checkShowMode();

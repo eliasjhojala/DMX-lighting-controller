@@ -153,6 +153,8 @@ class SubWindowHandler {
   void createDefaultWindows() {
     subWindows.add(new SubWindowContainer(memoryCreator, "MemoryCreator", 1000));
     subWindows.add(new SubWindowContainer(settingsWindow, "SettingsWindow", 1000));
+    subWindows.add(new SubWindowContainer(help, "HelpWindow", 1000));
+    
     //subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
   }
   
@@ -477,6 +479,11 @@ class Switch {
 
 
 class DropdownMenu {
+  color scrollBarColor = color(100, 100, 255);
+  color scrollBarBaseColor = color(200, 200, 200);
+  int scrollBarBaseStrokeWeight = 2;
+  color scrollBarBaseStrokeColor = color(100, 100, 100);
+  
   ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
   DropdownMenuBlock topBlock;
   String name;
@@ -518,8 +525,14 @@ class DropdownMenu {
           drawTopBlock(g, mouse);
           if(open) {
             g.pushMatrix();
-            g.rect(0, 0, blockSize.x, blockSize.y*maxNumberOfBlocks);
+            
+            g.pushStyle();
+              g.fill(200, 200, 200);
+              g.noStroke();
+              g.rect(0, 0, blockSize.x, blockSize.y*maxNumberOfBlocks);
+            g.popStyle();
             mouse.declareUpdateElementRelative(name, 1000000, 0, 0, round(blockSize.x), round(blockSize.y*maxNumberOfBlocks), g);
+            
             mouse.setElementExpire(name, 2);
             thisMenuIsHovered = false;
               for(int id = 0; id < maxNumberOfBlocks; id++) {
@@ -534,9 +547,9 @@ class DropdownMenu {
             
             g.pushMatrix();
               g.pushStyle();
-                g.fill(200, 200, 200);
-                g.strokeWeight(2);
-                g.stroke(100, 100, 100);
+                g.fill(scrollBarBaseColor);
+                g.strokeWeight(scrollBarBaseStrokeWeight);
+                g.stroke(scrollBarBaseStrokeColor);
                 g.translate(blockSize.x+3, 0);
                 
                 PVector scrollBarBaseStartPoint = new PVector(0, 0);
@@ -545,12 +558,17 @@ class DropdownMenu {
                 rect(scrollBarBaseStartPoint, scrollBarBaseSize, g);
                 
                 PVector scrollBarStartPoint = new PVector(0, 0);
-                PVector scrollBarSize = new PVector(15, round((blockSize.y*(maxNumberOfBlocks))/(blocks.size()/maxNumberOfBlocks)));
+                PVector scrollBarSize = new PVector(15, (blockSize.y*(maxNumberOfBlocks-1))/((blocks.size())/maxNumberOfBlocks));
                 
+<<<<<<< HEAD
                 g.translate(0, round(map(offset, 0, blocks.size()-maxNumberOfBlocks, 0, scrollBarBaseSize.y-scrollBarSize.y)));
                 mouse.declareUpdateElementRelative(name+"scrollBar", 10000000, scrollBarStartPoint, scrollBarSize, g);
+=======
+                g.translate(0, map(offset, 0, blocks.size()-maxNumberOfBlocks, 0, scrollBarBaseSize.y-scrollBarSize.y));
+                mouse.declareUpdateElementRelative(name+"scrollBar", 10000000, scrollBarStartPoint, scrollBarSize, g);
+>>>>>>> XML+3D
                 mouse.setElementExpire(name+"scrollBar", 2);
-                g.fill(100, 100, 255);
+                g.fill(scrollBarColor);
                 rect(scrollBarStartPoint, scrollBarSize, g);
                 if(mouse.isCaptured(name+"scrollBar")) {
                   offset += map(mouseY-pmouseY, 0, blockSize.y*(maxNumberOfBlocks), 0, blocks.size()-1);
@@ -577,12 +595,14 @@ class DropdownMenu {
   PVector blockSize = new PVector(150, 20);
   PVector topBlockBigger = new PVector(10, 10);
   
+  
   void drawTopBlock(PGraphics g, Mouse mouse) {
     PVector size = blockSize.get();
     size.x += topBlockBigger.x;
     size.y += topBlockBigger.y;
     g.pushMatrix();
       g.translate(-(topBlockBigger.x/2), -(topBlockBigger.y/2));
+      size.x += 17; //This is because scrollbar
       topBlock.draw(size, name, -1, false, g, mouse);
       if(topBlock.isPressed()) {
         open = !open;
@@ -609,6 +629,29 @@ class DropdownMenu {
     g.translate(0, size.y);
   }
 
+  
+  
+  void setValue(int value) {
+    for(int id = 0; id < blocks.size(); id++) {
+      if(blocks.get(id) != null) {
+        if(blocks.get(id).getValue() == value) {
+          selectedBlock = id; //Save selected block id
+          topBlock.setText(blocks.get(id).getText()); //Set topBlock text
+          setRightOffsetAccordingToId(id);
+          break;
+        }
+      }
+    }
+  } //End of setValue()
+  
+  void setRightOffsetAccordingToId(int id) {
+    offset = id-round(maxNumberOfBlocks/2);
+    constrainOffset();
+  }
+  
+  
+  //Functions which could be used from outside class
+  
   void addBlock(String text, int value) {
     DropdownMenuBlock newBlock = new DropdownMenuBlock(text, value);
     blocks.add(newBlock);
@@ -628,27 +671,16 @@ class DropdownMenu {
   boolean valueHasChanged() {
     return valueChanged;
   }
-  
-  void setValue(int value) {
-    for(int id = 0; id < blocks.size(); id++) {
-      if(blocks.get(id) != null) {
-        if(blocks.get(id).getValue() == value) {
-          selectedBlock = id; //Save selected block id
-          topBlock.setText(blocks.get(id).getText()); //Set topBlock text
-          setRightOffsetAccordingToId(id);
-          break;
-        }
-      }
-    }
-  } //End of setValue()
-  
-  void setRightOffsetAccordingToId(int id) {
-    offset = id-round(maxNumberOfBlocks/2);
-    constrainOffset();
-  }
 
+  void setBlockSize(PVector size) {
+    blockSize = size.get();
+  }
   
+  PVector getBlockSize() {
+    return blockSize.get();
+  }
   
+  //End off functions which could be used from outside class
 }
 
 class DropdownMenuBlock {
@@ -658,7 +690,7 @@ class DropdownMenuBlock {
   color bgColor = color(255, 255, 255);
   color hoveredBgColor = color(200, 200, 200);
   color pressedBgColor = color(100, 100, 100);
-  color selectedBgColor = color(100, 100, 255);
+  color selectedBgColor = color(70, 70, 255);
  
   color textColor = color(0, 0, 0);
   color strokeColor = color(100, 100, 100);
@@ -719,7 +751,7 @@ class DropdownMenuBlock {
         
         { //Text
           g.fill(textColor);
-          g.text(text, 10, (size.y/2)+5);
+          g.text(text, 4, (size.y/2)+5);
         } //End of text
         
       g.popStyle();

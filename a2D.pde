@@ -10,7 +10,14 @@ boolean editFixtureType;
 int lampToEditFixtureType;
 boolean firsTimeDrawingFixtureTypeBox;
 
+boolean addedElementsToHelp = false;
+
 void drawMainWindow() {
+  if(!addedElementsToHelp) {
+    help.add("Rotating fixture", "You can rotate fixture by pressin r key and dragging fixture");
+    help.add("Changing fixtureType", "You can open fixtureType menu by pressing t key and clicking on the fixture");
+    addedElementsToHelp = true;
+  }
   pushMatrix(); 
    
    { //Declare all the mouse elements
@@ -35,7 +42,7 @@ void drawMainWindow() {
     PVector mouseRotated = new PVector(mouseX, mouseY);
     mouseRotated.rotate(radians(-pageRotation));
     
-    //TÄSSÄ PIIRRETÄÄN ANSAT - DRAW TRUSSES
+    //DRAW TRUSSES
     drawTrusses(mouseRotated); //Draw trusses
     if(showSockets) { drawSockets(mouseRotated); } //Draw sockets
     
@@ -62,21 +69,23 @@ void drawMainWindow() {
         
         translate(finalLocation.x, finalLocation.y);
         
+        //Fixture rotating
         if(rotateLamp && (lampToRotate == i || (fixtures.get(lampToRotate).selected && fix.selected))) {
           PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
-          
           if(rotateFixturesToSamePoint) {
             int rot = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
             fix.rotationZ = rot;
           }
           else {
-            if(lampToRotate == i) {
-              rotationForAllTheFixtures = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
+            if(lampToRotate == i) { 
+              rotationForAllTheFixtures = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360); 
             }
             fix.rotationZ = rotationForAllTheFixtures;
           }
         }
+        //End of fixture rotating
         
+        //Fixture moving
         if(moveLamp && (lampToMove >= 0 && lampToMove < fixtures.size())) { //Check are we moving any lamp and is lampToMove valid
           if(moveLamp && (lampToMove == i || (fixtures.get(lampToMove).selected && fix.selected))) {
             PVector mouseOffset = new PVector((mouseRotated.x - oldMouseForMovingFixtures.x) * 100 / zoom, (mouseRotated.y - oldMouseForMovingFixtures.y) * 100 / zoom);
@@ -84,22 +93,8 @@ void drawMainWindow() {
             fix.y_location += int(mouseOffset.y); //Add mouse offset
           }
         } //End of checking are we moving any lamp and is lampToMove valid
+        //End of fixture moving
         
-        if(editFixtureType && lampToEditFixtureType == i) {
-          pushMatrix();
-            translate(0, 100);
-            fixtureTypes.draw();
-            if(firsTimeDrawingFixtureTypeBox) {
-              fixtureTypes.setValue(fix.fixtureTypeId);
-              firsTimeDrawingFixtureTypeBox = false;
-            }
-            if(fixtureTypes.valueHasChanged()) {
-              fix.fixtureTypeId = fixtureTypes.getValue();
-              lampToEditFixtureType = -1;
-              editFixtureType = false;
-            }
-          popMatrix();
-        }
         
 
         rotate(radians(fix.rotationZ)); 
@@ -143,9 +138,45 @@ void drawMainWindow() {
           
     } //End of going through all the fixtures if sockets aren't shown
     oldMouseForMovingFixtures = mouseRotated.get(); //Set old mouse location for fixture moving
-    //END OF DRAWING ALL THE FIXTURES AND CHECKING IF YOU HAVE CLICKED THEM
+    //END OF DRAWING ALL THE FIXTURES AND CHECKING IF YOU HAVE CLICKED THEM
     
-    popMatrix();
+    popMatrix(); //End of view scale, rotate and translate
+    
+    //Functions to draw fixtureTypeSelection dropdownMenu (these are loose from for loop above to put menu on top of fixtures)
+    if(!showSockets && editFixtureType && lampToEditFixtureType >= 0 && lampToEditFixtureType < fixtures.size()) {
+      pushMatrix();
+        int i = lampToEditFixtureType;
+        if(fixtures.get(i).size.isDrawn) {
+          fixture fix = fixtures.get(i);
+          
+          PVector finalLocation = new PVector(fix.locationOnScreenX, fix.locationOnScreenY); //Location where fixture is finally drawn
+          
+          
+          translate(finalLocation.x, finalLocation.y);
+          
+          //Type selection from dropdownMenu
+          if(editFixtureType && lampToEditFixtureType == i) {
+            pushMatrix();
+              translate(-(fixtureTypes.getBlockSize().x/2), (fix.size.h/2)*zoom/100+25);
+              fixtureTypes.draw();
+              if(firsTimeDrawingFixtureTypeBox) {
+                fixtureTypes.setValue(fix.fixtureTypeId);
+                fixtureTypes.open = true;
+                firsTimeDrawingFixtureTypeBox = false;
+              }
+              if(fixtureTypes.valueHasChanged()) {
+                fix.fixtureTypeId = fixtureTypes.getValue();
+                lampToEditFixtureType = -1;
+                editFixtureType = false;
+              }
+            popMatrix();
+          }
+          //End of type selection from dropdownMenu
+        }
+      popMatrix();
+    }
+    //End of functions to draw fixtureTypeSelection dropdownMenu
+    
   } //Endof: draw all elements
   
   //Check if mouse is released
@@ -163,9 +194,11 @@ void drawMainWindow() {
           if (!mouse.captured || mouse.isCaptured("main:move")) {
             mouse.capture(mouse.getElementByName("main:move"));
             movePage();
+            editFixtureType = false;
           }
         } else if(mouseButton == RIGHT) {
           //Box select
+          editFixtureType = false;
           doBoxSelect();
         }
       }

@@ -867,6 +867,26 @@ class MemoryCreationBox {
                 g.fill(10);
                 g.text("StrobeNow", 50, 17);
             g.popMatrix();
+            g.pushMatrix(); //SpecialType 4
+                g.translate(30, 120+40*4);
+                mouse.declareUpdateElementRelative("MemoryCreationBox:specialType4", "MemoryCreationBox", 0, 0, 120, 25, g);
+                mouse.setElementExpire("MemoryCreationBox:specialType4", 2);
+                boxIsHover = mouse.elmIsHover("MemoryCreationBox:specialType4");
+                g.fill(boxIsHover ? 210 : 200);
+                g.noStroke();
+                g.rect(0, 0, 25, 25, 4);
+                
+                if(mouse.isCaptured("MemoryCreationBox:specialType4") && mouse.firstCaptureFrame) {
+                  memories[selectedMemorySlot].specialType = 4;
+                  memories[selectedMemorySlot].type = 7;
+                }
+                if(memories[selectedMemorySlot].specialType == 4) {
+                  g.fill(0, 186, 240);
+                  g.rect(4, 4, 17, 17, 4);
+                }
+                g.fill(10);
+                g.text("FogNow", 50, 17);
+            g.popMatrix();
           g.popStyle();
           g.popMatrix();
           

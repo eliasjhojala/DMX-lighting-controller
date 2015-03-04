@@ -20,10 +20,10 @@
   </truss>
   <truss id="3">
     <socket channel="30" fixture="11" id="0">H4</socket>
-    <socket channel="100" fixture="33" id="1">H3</socket>
-    <socket channel="108" fixture="34" id="2">H2</socket>
-    <socket channel="116" fixture="35" id="3">H5</socket>
-    <socket channel="124" fixture="36" id="4">H1</socket>
+    <socket channel="31" fixture="16" id="1">H3</socket>
+    <socket channel="100" fixture="33" id="2">H2</socket>
+    <socket channel="108" fixture="34" id="3">H1</socket>
+    <socket channel="116" fixture="35" id="4">H5</socket>
   </truss>
   <truss id="4"/>
   <truss id="5"/>

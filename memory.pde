@@ -219,6 +219,7 @@ class memory { //Begin of memory class------------------------------------------
          case 1: fullOn = false; break;
          case 2: blackOut = false; break;
          case 3: strobeNow = false; break;
+         case 4: fogNow = false; break;
        }
        firstTimeAtZero = false;
     }
@@ -227,6 +228,7 @@ class memory { //Begin of memory class------------------------------------------
          case 1: fullOn = true; break;
          case 2: blackOut = true; break;
          case 3: strobeNow = true; break;
+         case 4: fogNow = true; break;
        }
       firstTimeAtZero = true;
     }
