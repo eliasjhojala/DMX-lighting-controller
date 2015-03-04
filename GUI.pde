@@ -560,13 +560,8 @@ class DropdownMenu {
                 PVector scrollBarStartPoint = new PVector(0, 0);
                 PVector scrollBarSize = new PVector(15, (blockSize.y*(maxNumberOfBlocks-1))/((blocks.size())/maxNumberOfBlocks));
                 
-<<<<<<< HEAD
-                g.translate(0, round(map(offset, 0, blocks.size()-maxNumberOfBlocks, 0, scrollBarBaseSize.y-scrollBarSize.y)));
-                mouse.declareUpdateElementRelative(name+"scrollBar", 10000000, scrollBarStartPoint, scrollBarSize, g);
-=======
                 g.translate(0, map(offset, 0, blocks.size()-maxNumberOfBlocks, 0, scrollBarBaseSize.y-scrollBarSize.y));
                 mouse.declareUpdateElementRelative(name+"scrollBar", 10000000, scrollBarStartPoint, scrollBarSize, g);
->>>>>>> XML+3D
                 mouse.setElementExpire(name+"scrollBar", 2);
                 g.fill(scrollBarColor);
                 rect(scrollBarStartPoint, scrollBarSize, g);

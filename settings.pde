@@ -1,82 +1,9 @@
-<<<<<<< HEAD
-boolean initSettingsInSetupDone = false;
-int initSettingsInSetupStep;
-int initSettingsInSetupSelected;
-
-
-
-
-void initSettingsInSetup() {
-  if(!initSettingsInSetupDone) {
-    initSettingsInSetupDone = true;
-    useEnttec = false;
-    useCOM = false;
-    background(0);
-    fill(255);
-    textSize(15);
-    if(initSettingsInSetupStep == 0 || initSettingsInSetupStep == 1) {
-      if(initSettingsInSetupStep == 0) {
-        text("Select COM port for enttec", 10, 20);
-      }
-      else if(initSettingsInSetupStep == 1) {
-        text("Select COM port for Arduino", 10, 20);
-      }
-      if(scrolledUp) { initSettingsInSetupSelected++; scrolledUp = false; }
-      if(scrolledDown) { initSettingsInSetupSelected--; scrolledDown = false; }
-      for(int i = 0; i < getSerialList().length; i++) {
-        if(initSettingsInSetupSelected == i) { fill(255, 0, 0); }
-        text(getSerialList()[i], 10, i*20+50);
-        if(initSettingsInSetupSelected == i) { fill(255); }
-      }
-      if(enterPressed) {
-        if(initSettingsInSetupStep == 0) {
-          useEnttec = true;
-          enttecIndex = initSettingsInSetupSelected;
-          initSettingsInSetupStep++;
-        }
-        else if(initSettingsInSetupStep == 1) {
-          useCOM = true;
-          arduinoIndex = initSettingsInSetupSelected;
-          initSettingsInSetupDone = true;
-          if(useEnttec) {
-            myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
-          }
-          if(useCOM) {
-            try {
-              arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
-            }
-            catch(Exception e) {
-              println("ERROR WITH DMX OUTPUT");
-              useCOM = false;
-            }
-          }
-        }
-        enterPressed = false;
-      }
-      if(rightPressed) {
-        initSettingsInSetupStep++;
-        rightPressed = false;
-      }
-      if(leftPressed) {
-        initSettingsInSetupStep--;
-        leftPressed = false;
-      }
-    }
-  }
-}
-
-String[] getSerialList() {
-  return Serial.list();
-}
 
 //A debug function
 void printMe() {
   println("I print!");
   notifier.notify("I print!");
 }
-=======
->>>>>>> XML+3D
-
 
 ////////////////////////////////////////SETTINGS//GUI///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -105,12 +32,7 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", tabs[0]),
         new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0]),
-<<<<<<< HEAD
         new SettingController("printMe", master, true, "Test reflection", "Reflection test", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int", "This is just a test controller to see how the int controller will work.", tabs[0]),
-=======
-        new SettingController(10, "Show sockets", "If you want to edit socket places use this", tabs[0]),
->>>>>>> XML+3D
         new SettingController(0, 0, 0, "Test Int1", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int2", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int3", "This is just a test controller to see how the int controller will work.", tabs[0]),
@@ -126,6 +48,7 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", tabs[1]),
         new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", tabs[1]),
+        new SettingController(10, "Show sockets", "If you want to edit socket places use this", tabs[1]),
         new SettingController(3, 2, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[1]),
         new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[1]),
         new SettingController(5, "Lock showMode", "Make sure that showMode isn't turned off accidentally", tabs[1]),
@@ -174,7 +97,7 @@ class SettingsWindow {
       case 4:  return s2l.blinky;
       case 5:  return showModeLocked;
       case 10: return showSockets;
-      case 15: return rotateFixturesToSamePoint; 
+      case 15: return rotateFixturesToSamePoint;
       default: return false;
     }
   }
