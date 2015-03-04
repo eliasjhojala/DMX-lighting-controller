@@ -1,5 +1,5 @@
 //Tässä välilehdessä piirretään 3D-mallinnus
-/* 
+/*
  This part of the program has mainly been made by Roope Salmi, rpsalmi@gmail.com
  */
  
@@ -38,8 +38,8 @@ public class secondApplet1 extends PApplet {
 
     
     { //Try to load 3D models from file. If not succeed then don't use 3D.
-      try { //Load 3D models 
-        par64Model = loadShape(parent.dataPath("par64.obj")); //Load par64 3D model from file 
+      try { //Load 3D models
+        par64Model = loadShape(parent.dataPath("par64.obj")); //Load par64 3D model from file
         par64Holder = loadShape(parent.dataPath( "par64_holder.obj")); //Load par64 holder 3D model from file
         base = loadShape(parent.dataPath( "base.obj")); //Load base (floor) 3D model from file
         cone = loadShape(parent.dataPath( "cone.obj")); //Load light cone 3D model from file
@@ -57,7 +57,7 @@ public class secondApplet1 extends PApplet {
   int valoScale = 20;
   
   void draw() {
-    if(use3D) if(trussesLoadedSucces) {
+    if(use3D && trussesLoadedSucces && !loadingAllData) {
      setMainSettings(); //Set settings for beginning (camera, perspective etc)
      drawFloor(); //Draw floor
      drawTrusses(); //Draw all the trusses
@@ -70,9 +70,9 @@ public class secondApplet1 extends PApplet {
   
   void drawText(String text) {
     textSize(26);
-    background(0); 
+    background(0);
     fill(255);
-    text(text, 10, 100); 
+    text(text, 10, 100);
   }
   
   void setMainSettings() {
@@ -127,7 +127,7 @@ public class secondApplet1 extends PApplet {
     //Draw lights
     for (int i = 0; i < fixtures.size(); i++) {
       drawSingleLight(i);
-    } 
+    }
     
     for (int i = 0; i < fixtures.size(); i++) {
       drawSingleCone(i);
@@ -245,10 +245,10 @@ public class secondApplet1 extends PApplet {
         center.x += (mouseX - pmouseX) * 5;
         center.y += (mouseY - pmouseY) * 10;
         
-        translate(width/2.0+center.x, height/2.0 + 1500+center.y, 0); 
+        translate(width/2.0+center.x, height/2.0 + 1500+center.y, 0);
         fill(255, 255, 0);
         box(50);
-        translate((width/2.0+center.x)*(-1), (height/2.0 + 1500+center.y)*(-1), 0); 
+        translate((width/2.0+center.x)*(-1), (height/2.0 + 1500+center.y)*(-1), 0);
       }
       
       else {
@@ -259,7 +259,7 @@ public class secondApplet1 extends PApplet {
   
   void keyPressed()
   {
-    if (keyCode == UP) { cam.z += 100; } 
+    if (keyCode == UP) { cam.z += 100; }
     else if (keyCode == DOWN) { cam.z -= 100; }
     if(key==27) { key=0; }
   }

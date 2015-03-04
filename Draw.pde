@@ -39,7 +39,7 @@ void draw() {
   scrolledUp = false;
   scrolledDown = false;
   scrollSpeed = 0;
-  println(idLookupTable.size());
+  
 }
 
 boolean memoriesFinished = true;
