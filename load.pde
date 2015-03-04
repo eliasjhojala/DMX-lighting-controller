@@ -19,9 +19,16 @@ void loadAllData() {
 }
 boolean fixtureProfilesLoaded = false;
 boolean loadingAllData;
+
+int wholeLoadTimeAsSeconds;
+boolean wholeLoadTimeAsSecondsIsCounted;
+
+long loadDataBeginMillis;
+
 void loadAllData1() {
   loadingAllData = true;
-  long loadDataBeginMillis = millis();
+  wholeLoadTimeAsSecondsIsCounted = false;
+  loadDataBeginMillis = millis();
   if(!loadingFixtureProfiles) { loadFixtureProfiles(); }
   
      table = loadTable(loadPath, "header"); //Eliaksen polku
@@ -115,5 +122,10 @@ void loadAllData1() {
 }
 
 boolean loadingDataAtTheTime() {
-  return loadinMemoriesFromXML || savingNearestSocketsToXML || loadingFixtureProfiles || loadingAllData;
+  boolean toReturn = loadinMemoriesFromXML || savingNearestSocketsToXML || loadingFixtureProfiles || loadingAllData;
+  if(!toReturn && !wholeLoadTimeAsSecondsIsCounted) {
+     wholeLoadTimeAsSeconds = round((millis() - loadDataBeginMillis) / 1000);
+     wholeLoadTimeAsSecondsIsCounted = true;
+  }
+  return toReturn;
 }

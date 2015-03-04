@@ -84,6 +84,7 @@ void ylavalikko() {
   avgFrameRate = (avgFrameRate + int(frameRate)) / 2;
   
   if(loadingDataAtTheTime()) { text("Loading...", 3, 28+15, 125, 125); }
+  else { text("Last load taked " + str(wholeLoadTimeAsSeconds), 3, 28+15, 125, 125); }
   
   { //Here you can place buttons to left side 
   pushMatrix();
