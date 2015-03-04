@@ -560,23 +560,27 @@ class fixture {
   
   color getFixtureColorFor2D() {
     FixtureProfile profile = fixtureProfiles[fixtureTypeId];
-    if(profile.hasDimmer) {
-      return this.getColor_wDim();
+    if(profile != null) {
+      if(profile.hasDimmer) {
+        return this.getColor_wDim();
+      }
+      else if(profile.isFog) {
+        int val = in.getUniversalDMX(DMX_FOG);
+        color c = color(val, val, val);
+        return c;
+      }
+      else if(profile.isHazer) {
+        int val = in.getUniversalDMX(DMX_HAZE);
+        color c = color(val, val, val);
+        return c;
+      }
+      else {
+        color c = color(0, 0, 0);
+        return c;
+      }
     }
-    else if(profile.isFog) {
-      int val = in.getUniversalDMX(DMX_FOG);
-      color c = color(val, val, val);
-      return c;
-    }
-    else if(profile.isHazer) {
-      int val = in.getUniversalDMX(DMX_HAZE);
-      color c = color(val, val, val);
-      return c;
-    }
-    else {
-      color c = color(0, 0, 0);
-      return c;
-    }
+    color c = color(0, 0, 0);
+    return c;
   }
   
   boolean toggleState = false;

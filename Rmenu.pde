@@ -54,7 +54,7 @@ void sivuValikko() {
     pushStyle();
       pushStyle();
         //inputMode (lower)
-        fill(isHoverIM ? topMenuTheme : topMenuTheme2);
+        themes.bubbleColor.fillColor(isHoverIM, false);
         rect(width-268, bubS/2+10, 102, 50, 0, 0, 0, 20);
       popStyle();
       pushStyle();
