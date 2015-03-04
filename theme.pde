@@ -1,20 +1,31 @@
 Themes themes = new Themes();
 
 class Themes {
-  RectTheme window;
+  ShapeTheme window;
+  
+  color topMenuTheme = color(222, 0, 0);
+  color topMenuTheme2 = color(200, 0, 0);
+  color topMenuAccent = color(150, 0, 0);
+  
+  /*
+  Bubble: stroke color(150, 0, 0);
+  */
+  
+
   Themes() {
-    window = new RectTheme(color(255, 230), color(0, 200), 3, true);
+    window = new ShapeTheme(color(255, 230), color(0, 200), 3, true);
+    bubble = new ShapeTheme(color(222, 0, 0), color(150, 0, 0), 2, true);
   }
 }
 
 
-class RectTheme {
+class ShapeTheme {
   color fill;
   color stroke;
   int strokeWeight;
   boolean drawStroke;
   
-  RectTheme(color fill, color stroke, int stokeWeight, boolean drawStroke) {
+  ShapeTheme(color fill, color stroke, int stokeWeight, boolean drawStroke) {
     this.fill = fill;
     this.stroke = stroke;
     this.strokeWeight = strokeWeight;
@@ -44,5 +55,28 @@ class TextTheme {
   void setTheme(PGraphics g, Mouse mouse) {
     g.fill(fill);
     g.textSize(size);
+  }
+}
+
+class colorTheme {
+  color neutral;
+  color hovered;
+  color active;
+  colorTheme(color neutral, color hovered, color active) {
+    this.neutral = neutral;
+    this.hovered = hovered;
+    this.active = active;
+  }
+  
+  void setColor(PGraphics g, boolean hover, boolean pressed) {
+    if(hover && !pressed) {
+      g.fill(hovered);
+    }
+    else if(pressed) {
+      g.fill(active);
+    }
+    else {
+      g.fill(neutral);
+    }
   }
 }
