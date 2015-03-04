@@ -35,9 +35,7 @@ class HelpWindow {
   
   void draw(PGraphics g, Mouse mouse, boolean doTranslate) {
     g.pushMatrix();
-      g.fill(baseBackgroundColor);
-      g.stroke(baseStrokeColor);
-      g.strokeWeight(3);
+      themes.window.setTheme(g, mouse);
       mouse.declareUpdateElementRelative("helpWindow", 1, 0, 0, 500, 500, g); 
       mouse.setElementExpire("helpWindow", 2);
       g.rect(0, 0, 500, 500, 20);
