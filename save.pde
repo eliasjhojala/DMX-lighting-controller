@@ -1,6 +1,6 @@
 //Tässä välilehdessä tallennetaan tietoja csv-taulukkotiedostoon
 
-Table table; 
+Table table;
 
 void saveVariable(int variable, String variableName) {
   if(variable != 0) { //Don't save zero values
@@ -43,12 +43,12 @@ void save2DarrayBoolean(boolean[][] array, String arrayName) {
 void saveDataMainCommands(String variable, String variableName, String dimensions, String D1, String D2) {
   if(variable != null) {
     if(!(variable.equals("0")) && !(variable.equals("false"))) { //Don't save zero values
-      TableRow newRow = table.addRow();   
+      TableRow newRow = table.addRow();
       newRow.setInt("id", table.lastRowIndex());
       newRow.setString("variable_name", variableName);
-      newRow.setString("variable_dimensions", dimensions); 
-      newRow.setString("value", variable);   
-      newRow.setString("1D", D1);               
+      newRow.setString("variable_dimensions", dimensions);
+      newRow.setString("value", variable);
+      newRow.setString("1D", D1);
       newRow.setString("2D", D2);
     }
   }
@@ -57,12 +57,12 @@ void saveDataMainCommands(String variable, String variableName, String dimension
 void saveDataBYPASSZERO(String variable, String variableName, String dimensions, String D1, String D2) {
   if(variable != null) {
     //if(!(variable.equals("0")) && !(variable.equals("false"))) { //Don't save zero values
-      TableRow newRow = table.addRow();   
+      TableRow newRow = table.addRow();
       newRow.setInt("id", table.lastRowIndex());
       newRow.setString("variable_name", variableName);
-      newRow.setString("variable_dimensions", dimensions); 
-      newRow.setString("value", variable);   
-      newRow.setString("1D", D1);               
+      newRow.setString("variable_dimensions", dimensions);
+      newRow.setString("value", variable);
+      newRow.setString("1D", D1);
       newRow.setString("2D", D2);
     //}
   }
@@ -113,7 +113,7 @@ void saveAllData() {
         grouping[1] = enttecDMXplace;
         grouping[2] = touchOSCplace;
         
-  save1Darray(grouping, "grouping"); 
+  save1Darray(grouping, "grouping");
   
 
   saveVariable(int(cam.x), "camX");
@@ -143,4 +143,3 @@ void saveAllData() {
   long takedTime = millis() - saveDataBeginMillis;
   notifier.notify("Save complete. (" + str(takedTime) + "ms)");
 }
-

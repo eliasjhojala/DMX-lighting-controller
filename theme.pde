@@ -14,7 +14,7 @@ class Themes {
 
   Themes() {
     window = new ShapeTheme(color(255, 230), color(0, 200), 3, true);
-    bubble = new ShapeTheme(color(222, 0, 0), color(150, 0, 0), 2, true);
+    //bubble = new ShapeTheme(color(222, 0, 0), color(150, 0, 0), 2, true);
   }
 }
 

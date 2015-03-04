@@ -172,7 +172,7 @@ class SubWindowHandler {
 
 
 //////////////////////////////////////////////////////////////CONTEXT//MENU///////////////////////////////////////////////////////////////////////////////////////////////////
-contextMenu contextMenu1 = new contextMenu(this); 
+contextMenu contextMenu1 = new contextMenu(this);
 
 class contextMenu {
   
@@ -455,7 +455,7 @@ class DropdownMenu {
               g.noStroke();
               g.rect(0, 0, blockSize.x, blockSize.y*maxNumberOfBlocks);
             g.popStyle();
-            mouse.declareUpdateElementRelative(name, 1000000, 0, 0, round(blockSize.x), round(blockSize.y*maxNumberOfBlocks), g); 
+            mouse.declareUpdateElementRelative(name, 1000000, 0, 0, round(blockSize.x), round(blockSize.y*maxNumberOfBlocks), g);
             mouse.setElementExpire(name, 2);
             thisMenuIsHovered = false;
               for(int id = 0; id < maxNumberOfBlocks; id++) {
@@ -477,14 +477,14 @@ class DropdownMenu {
                 
                 PVector scrollBarBaseStartPoint = new PVector(0, 0);
                 PVector scrollBarBaseSize = new PVector(15, blockSize.y*(maxNumberOfBlocks));
-                mouse.declareUpdateElementRelative(name+"scrollBarBase", 1000000, scrollBarBaseStartPoint, scrollBarBaseSize, g); 
+                mouse.declareUpdateElementRelative(name+"scrollBarBase", 1000000, scrollBarBaseStartPoint, scrollBarBaseSize, g);
                 rect(scrollBarBaseStartPoint, scrollBarBaseSize, g);
                 
                 PVector scrollBarStartPoint = new PVector(0, 0);
                 PVector scrollBarSize = new PVector(15, (blockSize.y*(maxNumberOfBlocks-1))/((blocks.size())/maxNumberOfBlocks));
                 
                 g.translate(0, map(offset, 0, blocks.size()-maxNumberOfBlocks, 0, scrollBarBaseSize.y-scrollBarSize.y));
-                mouse.declareUpdateElementRelative(name+"scrollBar", 10000000, scrollBarStartPoint, scrollBarSize, g); 
+                mouse.declareUpdateElementRelative(name+"scrollBar", 10000000, scrollBarStartPoint, scrollBarSize, g);
                 mouse.setElementExpire(name+"scrollBar", 2);
                 g.fill(scrollBarColor);
                 rect(scrollBarStartPoint, scrollBarSize, g);
@@ -645,7 +645,7 @@ class DropdownMenuBlock {
           
           String blockNameForMouse = parentName+":block:"+str(thisId);
           
-          mouse.declareUpdateElementRelative(blockNameForMouse, 10000000, round(rectStartPoint.x), round(rectStartPoint.y), round(rectSize.x), round(rectSize.y), g); 
+          mouse.declareUpdateElementRelative(blockNameForMouse, 10000000, round(rectStartPoint.x), round(rectStartPoint.y), round(rectSize.x), round(rectSize.y), g);
           mouse.setElementExpire(blockNameForMouse, 2);
           
           hovered = mouse.elmIsHover(blockNameForMouse);
@@ -684,4 +684,3 @@ class DropdownMenuBlock {
   }
   
 }
-

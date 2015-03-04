@@ -1,4 +1,4 @@
-boolean invokeFixturesDrawFinished = true; 
+boolean invokeFixturesDrawFinished = true;
 void invokeFixturesDraw() {
   invokeFixturesDrawFinished = false;
   for (int ai = 0; ai < fixtures.size(); ai++) if(memoriesFinished) fixtures.get(ai).draw();
@@ -22,7 +22,7 @@ class FixtureArray {
   
   ArrayList<fixture> array;
   
-  fixture dummyFixture;  
+  fixture dummyFixture;
   
   void add(fixture newFix) {
     int newId = array.size();
@@ -35,7 +35,14 @@ class FixtureArray {
         idLookupTable.set(newIndex, newId);
       } else idLookupTable.add(newId);
     }
-    println(idLookupTable.toArray());
+  }
+  
+  void set(int id, fixture newFix) {
+    int newId = array.size();
+    array.add(newFix);
+    if(idLookupTable.indexOf(newId) == -1) {
+      idLookupTable.add(id, newId);
+    }
   }
   
   
@@ -152,7 +159,7 @@ class fixture {
 
   //End of initing variables
   
-    void saveFixtureDMXDataToXML(ManageXML XMLObject) {
+  void saveFixtureDMXDataToXML(ManageXML XMLObject) {
     XMLObject.addBlockAndIncrease("FixtureDMXdata");
       if(in != null) { in.saveToXML("in", XMLObject); }
       if(process != null) { process.saveToXML("process", XMLObject); }
@@ -163,7 +170,8 @@ class fixture {
     XMLObject.goBack();
   }
   
-  void saveFixtureDataToXML(ManageXML XMLObject) {
+  void saveFixtureDataToXML(ManageXML XMLObject, int id) {
+    XMLObject.addBlock("id", id);
     XMLObject.addBlock("StartChannel", channelStart);
     XMLObject.addBlock("fixtureTypeId", fixtureTypeId);
     XMLObject.addBlockAndIncrease("Location");
@@ -217,7 +225,7 @@ class fixture {
   }
   
  
-  void setDimmer(int val) { 
+  void setDimmer(int val) {
     in.setDimmer(val);
   }
   
@@ -238,22 +246,22 @@ class fixture {
       newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]); //PROBLEM this is causing some masterloop problemes! If master isn't 255 all the lights fade off PROBLEM!!!!!!!!!!
     
    
-    if(soloIsOn && !soloInThisFixture) { 
-      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, soloFade)); 
-      if(soloFade > 0) { soloFade-=(float(60)/frameRate)*20; soloFade = constrain(soloFade, 0, 255); } 
-      thisFixtureWasOffBySolo = true; 
+    if(soloIsOn && !soloInThisFixture) {
+      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, soloFade));
+      if(soloFade > 0) { soloFade-=(float(60)/frameRate)*20; soloFade = constrain(soloFade, 0, 255); }
+      thisFixtureWasOffBySolo = true;
       afterSoloFade = 0;
     }
     if(!soloIsOn && !soloInThisFixture && thisFixtureWasOffBySolo) {
-      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, afterSoloFade)); 
-      if(afterSoloFade < 255) { afterSoloFade+=(float(60)/frameRate)*20; afterSoloFade = constrain(afterSoloFade, 0, 255); } 
+      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, afterSoloFade));
+      if(afterSoloFade < 255) { afterSoloFade+=(float(60)/frameRate)*20; afterSoloFade = constrain(afterSoloFade, 0, 255); }
       if(afterSoloFade == 255) { thisFixtureWasOffBySolo = false;  soloFade = 255;}
     }
     
-    if(fullOn) { 
-      newIn[DMX_DIMMER] = 255; 
+    if(fullOn) {
+      newIn[DMX_DIMMER] = 255;
       if((newIn[DMX_RED] + newIn[DMX_GREEN] + newIn[DMX_BLUE] + newIn[DMX_WHITE])  == 0) { newIn[DMX_RED] = 255; newIn[DMX_GREEN] = 255; newIn[DMX_BLUE] = 255; newIn[DMX_WHITE] = 255; }
-      else { 
+      else {
         int maxValueOfColors = max(max(newIn[DMX_RED], newIn[DMX_GREEN]), newIn[DMX_BLUE], newIn[DMX_WHITE]);
         newIn[DMX_RED] = round(map(newIn[DMX_RED], 0, maxValueOfColors, 0, 255));
         newIn[DMX_GREEN] = round(map(newIn[DMX_GREEN], 0, maxValueOfColors, 0, 255));
@@ -266,9 +274,9 @@ class fixture {
         newIn[DMX_DIMMER] = 255;
         newIn[DMX_FREQUENCY] = 255;
         newIn[DMX_STROBE] = 255;
-        newIn[DMX_RED] = 255; 
-        newIn[DMX_GREEN] = 255; 
-        newIn[DMX_BLUE] = 255; 
+        newIn[DMX_RED] = 255;
+        newIn[DMX_GREEN] = 255;
+        newIn[DMX_BLUE] = 255;
         newIn[DMX_WHITE] = 255;
       }
       else {
@@ -328,7 +336,7 @@ class fixture {
 //      DMXChanged = true;
 //      out.DMXChanged = true;
     }
-  } 
+  }
 
   
 
@@ -467,7 +475,7 @@ class fixture {
   
   
   int[] getDMX() {
-    return in.getDMX(); 
+    return in.getDMX();
   }
   
   int dimmerLast = 0;
@@ -503,7 +511,7 @@ class fixture {
   
   int getDMXLength() {
     return out.getDMX().length;
-  } 
+  }
   
   //Returns true if operation is succesful
   boolean receiveDMX(int[] dmxChannels) {
@@ -521,8 +529,8 @@ class fixture {
     }
   
   int colorNumber;
-  void setColorNumber(int value) { 
-      colorNumber = value; 
+  void setColorNumber(int value) {
+      colorNumber = value;
       red = mhx50_RGB_color_Values[colorNumber][0];
       green = mhx50_RGB_color_Values[colorNumber][1];
       blue = mhx50_RGB_color_Values[colorNumber][2];
@@ -680,4 +688,3 @@ class fixtureSize {
     isDrawn = siz[2] == 1;
   }
 }
-

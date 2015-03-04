@@ -10,11 +10,11 @@ void saveTestXML() {
   
   XMLObject.addBlockAndIncrease("fixtures");
 
-  for(int i = 0; i < fixtures.size(); i++) {
+  for(int i = 0; i < fixtures.array.size(); i++) {
     XMLObject.addBlockAndIncrease("Fixture");
     XMLObject.addData("id", i);
-      
-      fixtures.get(i).saveFixtureDataToXML(XMLObject);
+      int id = idLookupTable.indexOf(i);
+      fixtures.array.get(i).saveFixtureDataToXML(XMLObject, id);
     XMLObject.goBack();
   }
   
@@ -27,11 +27,11 @@ void saveFixturesToXML() {
   ManageXML XMLObject = fixtureXML;
   XMLObject.addBlockAndIncrease("fixtures");
 
-  for(int i = 0; i < fixtures.size(); i++) {
+  for(int i = 0; i < fixtures.array.size(); i++) {
     XMLObject.addBlockAndIncrease("Fixture");
     XMLObject.addData("id", i);
-      
-      fixtures.get(i).saveFixtureDataToXML(XMLObject);
+      int id = idLookupTable.indexOf(i);
+      fixtures.array.get(i).saveFixtureDataToXML(XMLObject, id);
     XMLObject.goBack();
   }
 }
@@ -41,16 +41,17 @@ void loadTestXML() {
   ManageXML SingleFixture;
   if(XMLObject.loadData()) {
     
-    //IDLOOKUPTABLE TÄHÄN ROOPE TEEEE
-    
+    //IDLOOKUPTABLE TÄHÄN ROOPE TEEEE --- pitäisi olla nyt tehty (en kokeillut vielä)
+    fixtures.clear();
     XMLObject.goToChild("fixtures");
       XML[] allTheFixtures = XMLObject.currentBlock.getChildren();
       for(int i = 0; i < allTheFixtures.length; i++) {
         if(!trim(allTheFixtures[i].toString()).equals("")) {
           SingleFixture = new ManageXML(allTheFixtures[i]);
           int id = SingleFixture.getDataInt("id");
-          fixtures.array.add(id, new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-          fixtures.get(id).loadFixtureData(SingleFixture);
+          fixture newFix = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+          fixtures.set(id, newFix);
+          newFix.loadFixtureData(SingleFixture);
         }
       }
     XMLObject.goBack();
@@ -58,7 +59,7 @@ void loadTestXML() {
 }
 
 
-ManageXML manageXML = new ManageXML("XML/DMX_Controller.xml");  
+ManageXML manageXML = new ManageXML("XML/DMX_Controller.xml");
 class ManageXML {
   XML currentBlock;
   XML xml;
@@ -151,7 +152,7 @@ class ManageXML {
     newBlock.setContent(content);
   }
   void addBlock(String name, boolean content) {
-    addBlock(name, int(content)); 
+    addBlock(name, int(content));
   }
   void addBlockAndIncrease(String name, String content) {
     currentBlock = currentBlock.addChild(name);
