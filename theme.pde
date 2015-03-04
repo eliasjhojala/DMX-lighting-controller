@@ -32,11 +32,7 @@ class Themes {
   color topMenuTheme = color(222, 0, 0);
   color topMenuTheme2 = color(200, 0, 0);
   color topMenuAccent = color(150, 0, 0);
-  
-  /*
-  Bubble: stroke color(150, 0, 0);
-  */
-  
+
 
   Themes() {
     window = new ShapeTheme(color(255, 230), color(150), 3, true);
@@ -48,74 +44,41 @@ class Themes {
 
 
 class ShapeTheme {
-  color fill;
-  color stroke;
+  color fill, stroke;
   int strokeWeight;
   boolean drawStroke;
   
-  boolean fillAsTheme;
-  boolean strokeAsTheme;
-  
-  ColorTheme fillTheme;
-  ColorTheme strokeTheme;
+  boolean fillAsTheme, strokeAsTheme;
+  ColorTheme fillTheme, strokeTheme;
   
   ShapeTheme(color fill, color stroke, int strokeWeight, boolean drawStroke) {
-    this.fill = fill;
-    this.stroke = stroke;
-    this.strokeWeight = strokeWeight;
-    this.drawStroke = drawStroke;
-    this.fillAsTheme = false;
-    this.strokeAsTheme = false;
+    this.fill = fill; this.stroke = stroke; this.strokeWeight = strokeWeight; this.drawStroke = drawStroke;
+    this.fillAsTheme = false; this.strokeAsTheme = false;
   }
   
   ShapeTheme(ColorTheme fillTheme, color stroke, int strokeWeight, boolean drawStroke) {
-    this.fillTheme = fillTheme;
-    this.stroke = stroke;
-    this.strokeWeight = strokeWeight;
-    this.drawStroke = drawStroke;
-    this.fillAsTheme = true;
-    this.strokeAsTheme = false;
+    this.fillTheme = fillTheme; this.stroke = stroke; this.strokeWeight = strokeWeight; this.drawStroke = drawStroke;
+    this.fillAsTheme = true; this.strokeAsTheme = false;
   }
   
   ShapeTheme(ColorTheme fillTheme, ColorTheme strokeTheme, int strokeWeight, boolean drawStroke) {
-    this.fillTheme = fillTheme;
-    this.strokeTheme = strokeTheme;
-    this.strokeWeight = strokeWeight;
-    this.drawStroke = drawStroke;
-    this.fillAsTheme = true;
-    this.strokeAsTheme = true;
+    this.fillTheme = fillTheme; this.strokeTheme = strokeTheme; this.strokeWeight = strokeWeight; this.drawStroke = drawStroke;
+    this.fillAsTheme = true; this.strokeAsTheme = true;
   }
   
   ShapeTheme(color fill, ColorTheme strokeTheme, int strokeWeight, boolean drawStroke) {
-    this.fill = fill;
-    this.strokeTheme = strokeTheme;
-    this.strokeWeight = strokeWeight;
-    this.drawStroke = drawStroke;
-    this.fillAsTheme = false;
-    this.strokeAsTheme = true;
+    this.fill = fill; this.strokeTheme = strokeTheme; this.strokeWeight = strokeWeight; this.drawStroke = drawStroke;
+    this.fillAsTheme = false; this.strokeAsTheme = true;
   }
   
   void setTheme(PGraphics g, Mouse mouse, boolean hover, boolean active) {
-    if(fillAsTheme) {
-      fillTheme.fillColor(g, mouse, hover, active);
+    if(fillAsTheme) { fillTheme.fillColor(g, mouse, hover, active); }
+    else { g.fill(fill); }
+    if(drawStroke) {
+      if(strokeAsTheme) { strokeTheme.strokeColor(g, mouse, hover, active); }
+      else { g.stroke(stroke); g.strokeWeight(strokeWeight); }
     }
-    else {
-      g.fill(fill);
-    }
-    if(strokeAsTheme) {
-      if(drawStroke) {
-        strokeTheme.strokeColor(g, mouse, hover, active);
-      }
-    }
-    else {
-      if(drawStroke) {
-        g.stroke(stroke);
-        g.strokeWeight(strokeWeight);
-      }
-      else {
-        g.noStroke();
-      }
-    }
+    else { noStroke(); }
   }
 
   void setTheme(PGraphics g, Mouse mouse) {
@@ -144,13 +107,10 @@ class TextTheme {
 
 
 class ColorTheme {
-  color neutral;
-  color hovered;
-  color active;
+  color neutral, hovered, active;
+
   ColorTheme(color neutral, color hovered, color active) {
-    this.neutral = neutral;
-    this.hovered = hovered;
-    this.active = active;
+    this.neutral = neutral; this.hovered = hovered; this.active = active;
   }
   
   void fillColor(PGraphics g, Mouse mouse, boolean hover, boolean pressed) {
