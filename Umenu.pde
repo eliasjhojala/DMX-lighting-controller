@@ -3,6 +3,7 @@ In this tab are located
   - left bubbles
        - clock viewer
        - fps viewer
+       - tell if loading
        - settings button
   - left buttons
        - actually only colorWash
@@ -81,6 +82,8 @@ void ylavalikko() {
   
   text(avgFrameRate + " fps", 3, 28, 125, 125);
   avgFrameRate = (avgFrameRate + int(frameRate)) / 2;
+  
+  if(loadingDataAtTheTime()) { text("Loading...", 3, 28+15, 125, 125); }
   
   { //Here you can place buttons to left side 
   pushMatrix();
