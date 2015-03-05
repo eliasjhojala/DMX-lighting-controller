@@ -137,6 +137,8 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(help, "HelpWindow", 1000));
     subWindows.add(new SubWindowContainer(colorWashMenu, "colorSelectBox", 1000));
     subWindows.add(new SubWindowContainer(colorPick, "HSB", 1000));
+    subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
+
     
     
     
