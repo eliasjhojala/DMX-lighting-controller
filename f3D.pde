@@ -126,11 +126,15 @@ public class secondApplet1 extends PApplet {
   void drawLights() {
     //Draw lights
     for (int i = 0; i < fixtures.size(); i++) {
-      drawSingleLight(i);
+      if(fixtures.get(i).fixtureTypeId < fixtureProfiles.length) {
+        drawSingleLight(i);
+      }
     }
     
     for (int i = 0; i < fixtures.size(); i++) {
-      drawSingleCone(i);
+      if(fixtures.get(i).fixtureTypeId < fixtureProfiles.length) {
+        drawSingleCone(i);
+      }
     }
   }
   

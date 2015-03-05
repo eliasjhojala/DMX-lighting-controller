@@ -15,12 +15,12 @@ class SettingsWindow {
   SettingsWindow(boolean open) {
     this.open = open;
     onInit();
-    settingsWindowWindow = new Window("settings", new PVector(500, 500));
+    settingsWindowWindow = new Window("settings", new PVector(500, 500), this);
   }
   
   //Create and configure all tabs & controllers
   void onInit() {
-    tabs = new SettingsTab[5];
+    tabs = new SettingsTab[3];
     tabs[0] = new SettingsTab("Other windows", this);
     tabs[0].setControllers(
       new SettingController[] {
@@ -52,16 +52,6 @@ class SettingsWindow {
     tabs[2].setControllers(
       new SettingController[] {
         new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", tabs[2])
-      }
-    );
-    tabs[3] = new SettingsTab("COM", this);
-    tabs[4] = new SettingsTab("OSC", this);
-    tabs[4].setControllers(
-      new SettingController[] {
-        new SettingController(123, "", "Test IP", "This is a test text.", tabs[4]),
-        new SettingController(124, "", "Test IP", "This is a test text.", tabs[4]),
-        new SettingController(125, "", "Test IP", "This is a test text.", tabs[4]),
-        new SettingController(54, "", "Test IP", "This is a test text.", tabs[4])
       }
     );
   }
@@ -149,11 +139,6 @@ class SettingsWindow {
         
 
         settingsWindowWindow.draw(g, mouse);
-        locX = settingsWindowWindow.locX;
-        locY = settingsWindowWindow.locY;
-        if(settingsWindowWindow.openChanged()) {
-          open = settingsWindowWindow.open;
-        }
         
         //Window title text
         g.fill(0, 220);

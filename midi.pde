@@ -5,6 +5,21 @@
  behringerLC2412 LC2412;
  Input inputClass;
  Keyrig49 keyRig49;
+ 
+ 
+ class MidiHandler {
+   MidiHandler() {
+   }
+   
+    
+  void printOutputs() {  
+       println();
+    for(int i = 0; i < MidiBus.availableOutputs().length; i++) {
+      println("["+str(i)+"] "+MidiBus.availableOutputs()[i]);
+    }
+    println();
+  }
+ }
 
 
  void createMidiClasses() {

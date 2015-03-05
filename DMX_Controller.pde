@@ -377,7 +377,8 @@ void setup() {
     
     setuppi();
     
-    MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
+    //MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
+
     myBus = new MidiBus(this, 1, "KeyRig 49"); // Create a new MidiBus with no input device - you will have to change the input here
   
   

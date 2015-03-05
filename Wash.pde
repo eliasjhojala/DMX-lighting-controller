@@ -46,15 +46,12 @@ class ColorWashMenu {
     h = 500;
     locX = 100;
     locY = 100;
-    window = new Window("colorSelectBox", new PVector(700, 400));
+    window = new Window("colorSelectBox", new PVector(700, 400), this);
   }
   int locX, locY, w, h;
   boolean open;
   void draw(PGraphics g, Mouse mouse, boolean doTranslate) { //Color wash selection menu box
      window.draw(g, mouse);
-     locX = window.locX;
-     locY = window.locY;
-     open = window.getOpen();
      g.pushMatrix();
         g.pushStyle();
           if(wash == null) { wash = new colorWash(""); } //If wash doesn't exist then create it

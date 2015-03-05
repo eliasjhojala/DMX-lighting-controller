@@ -27,7 +27,7 @@ class HelpWindow {
     locY = 100;
     w = 500;
     h = 500;
-    helpWindowBase = new Window("helpWindow", new PVector(500, 500));
+    helpWindowBase = new Window("helpWindow", new PVector(500, 500), this);
   }
   
   void add(String subject, String text) {
@@ -39,9 +39,6 @@ class HelpWindow {
   void draw(PGraphics g, Mouse mouse, boolean doTranslate) {
     g.pushMatrix();
       helpWindowBase.draw(g, mouse);
-      locX = helpWindowBase.locX;
-      locY = helpWindowBase.locY;
-      open = helpWindowBase.getOpen();
         
       g.translate(0, offset);
       for(int i = 0; i < blocks.size(); i++) {         

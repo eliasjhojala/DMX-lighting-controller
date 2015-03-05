@@ -37,17 +37,20 @@ class TextBox {
   
   void drawToBuffer(PGraphics g, Mouse mouse, String mouseObjectName) {
     
-    if(mouse.elmIsHover(mouseObjectName)) { thisIsActive = true; textBox(); textBoxColor = color(50, 200, 255); }
-    else {
-       textBoxColor  = color(50, 100, 255);
-    }
+    if(mouse.elmIsHover(mouseObjectName)) { thisIsActive = true; textBox(); }
+
+    
+    
 
     g.pushStyle();
-    g.fill(textBoxColor);
-    g.rect(textBoxLocation.x, textBoxLocation.y-3, textBoxSize.x, textBoxSize.y);
+    themes.button.setTheme(g, mouse, mouse.elmIsHover(mouseObjectName), false);
+    g.rect(textBoxLocation.x, textBoxLocation.y, textBoxSize.x, textBoxSize.y, 1);
     g.popStyle();
     if(editedText != null) {
-      g.text(editedText, textBoxLocation.x+4, textBoxLocation.x, textBoxSize.x-5, textBoxSize.y);
+      g.pushStyle();
+        g.fill(255);
+        g.text(editedText, textBoxLocation.x+4, textBoxLocation.x+3, textBoxSize.x-5, textBoxSize.y);
+      g.popStyle();
     }
   }
   

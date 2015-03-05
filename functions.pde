@@ -638,7 +638,6 @@ void keyPressed() {
       else {
         notifier.notify("Can not save in showMode", true);
       }
-      oscHandler.saveToXML();
     }
     if(key == 'l') { 
       if(!showMode && !showModeLocked) {
