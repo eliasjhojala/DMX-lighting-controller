@@ -71,7 +71,9 @@
                if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
                if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
                
-               launchpad = new Launchpad(input, output);
+               if(launchpad != null) { launchpad.setup(input, output); } 
+               else { launchpad = new Launchpad(input, output); }
+               
              }
              
            break;
@@ -86,11 +88,11 @@
                int input = -1;
                int output = -1;
                
-               if(launchpad != null) { output = LC2412.outputIndex; input = LC2412.inputIndex; }
+               if(LC2412 != null) { output = LC2412.outputIndex; input = LC2412.inputIndex; }
                if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
                if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
-               
-               LC2412 = new behringerLC2412(input, output);
+               if(LC2412 != null) { LC2412.setup(input, output); }
+               else { LC2412 = new behringerLC2412(input, output); }
              }
              
            break;
@@ -101,7 +103,8 @@
              
              if(midiInSelect.valueHasChanged()) {
                int input = midiInSelect.getValue();
-               keyRig49 = new Keyrig49(input);
+               if(keyRig49 != null) { keyRig49.setup(input); }
+               else { keyRig49 = new Keyrig49(input); }
              }
              
            break;
@@ -122,13 +125,6 @@
    }
    
     
-  void printOutputs() {  
-       println();
-    for(int i = 0; i < MidiBus.availableOutputs().length; i++) {
-      println("["+str(i)+"] "+MidiBus.availableOutputs()[i]);
-    }
-    println();
-  }
  }
 
 
@@ -171,8 +167,11 @@ public class Keyrig49 {
   }
   
   void setup(int inputIndex) {
+    if(bus != null) { bus.clearAll(); }
     this.inputIndex = inputIndex;
-    bus = new MidiBus(this, inputIndex, 0);
+    if(bus != null) { bus.addInput(inputIndex); }
+    else { bus = new MidiBus(this, inputIndex, 0); }
+
     keys = new boolean[49];
     keysOld = new boolean[49];
     useToggle = new boolean[49];
@@ -182,13 +181,14 @@ public class Keyrig49 {
   }
   
   void noteOn(int channel, int pitch, int velocity) {
-    int whiteI = 0;
-    for(int k = 0; k < pitch; k++) {
-       if(OCTAVE[(k + PIANO_OCTAVE_PATTERN_OFFSET) % OCTAVE.length]) whiteI++;
-    }
-    keys[constrain(whiteI, 0, keys.length-1)] = midiToBoolean(velocity);
-    keysVal[constrain(whiteI, 0, keys.length-1)] = midiToDMX(velocity);
-    fixtures.get(constrain(whiteI, 0, keys.length-1)).in.setUniversalDMX(DMX_DIMMER, midiToDMX(velocity));
+      int whiteI = 0;
+      for(int k = 0; k < pitch; k++) {
+         if(OCTAVE[(k + PIANO_OCTAVE_PATTERN_OFFSET) % OCTAVE.length]) whiteI++;
+      }
+      keys[constrain(whiteI, 0, keys.length-1)] = midiToBoolean(velocity);
+      keysVal[constrain(whiteI, 0, keys.length-1)] = midiToDMX(velocity);
+      fixtures.get(constrain(whiteI, 0, keys.length-1)).in.setUniversalDMX(DMX_DIMMER, midiToDMX(velocity));
+    
   }
   void noteOff(int channel, int pitch, int velocity) {
     noteOn(channel, pitch, velocity);
@@ -227,9 +227,12 @@ public class Launchpad {
   }
   
   void setup(int inputIndex, int outputIndex) {
+    if(bus != null) { bus.clearAll(); }
     this.inputIndex = inputIndex;
     this.outputIndex = outputIndex;
-    bus = new MidiBus(this, inputIndex, outputIndex);
+    if(bus != null) { bus.addInput(inputIndex); bus.addOutput(outputIndex); }
+    else { bus = new MidiBus(this, inputIndex, outputIndex); }
+    
     pads = new boolean[8][8];
     padsToggle = new boolean[8][8];
     upperPads = new boolean[8];
@@ -311,9 +314,12 @@ public class behringerLC2412 {
   MidiBus bus;
   void setup(int inputIndex, int outputIndex) {
     //Midi start commands
+    if(bus != null) { bus.clearAll(); }
     this.inputIndex = inputIndex;
     this.outputIndex = outputIndex;
-    bus = new MidiBus(this, inputIndex, outputIndex);
+    if(bus != null) { bus.addInput(inputIndex); bus.addOutput(outputIndex); }
+    else { bus = new MidiBus(this, inputIndex, outputIndex); }
+    
     faderValue = new int[2][12];
     faderValueOld = new int[2][12];
     buttons = new boolean[12];
