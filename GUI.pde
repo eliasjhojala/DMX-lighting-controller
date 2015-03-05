@@ -744,3 +744,90 @@ class PushButton {
     return false;
   }
 }
+
+
+RadioButtonMenu testRadio = new RadioButtonMenu();
+
+class RadioButtonMenu {
+  ArrayList<RadioButton> buttons = new ArrayList<RadioButton>();
+  
+  RadioButtonMenu() {
+    addBlock(new RadioButton());
+    addBlock(new RadioButton());
+    addBlock(new RadioButton());
+  }
+  
+  void addBlock(RadioButton button) {
+    buttons.add(button);
+  }
+  
+  boolean selectedChanged;
+  int selectedId;
+  
+  void draw(PGraphics g, Mouse mouse) {
+    for(int i = 0; i < buttons.size(); i++) {
+      RadioButton button = buttons.get(i);
+      String mouseName = this.toString() + str(i);
+      button.draw(g, mouse, mouseName);
+      g.translate(0, button.buttonSize*1.5);
+      if(button.selectedChanged) {
+        if(button.selected) {
+          selectedId = i;
+          selectedChanged = true;
+          button.selectedChanged = false;
+        }
+      }
+      else {
+        if(i != selectedId) {
+          button.selected = false;
+        }
+      }
+    }
+  }
+  
+  boolean valueHasChanged() {
+    boolean toReturn = selectedChanged;
+    selectedChanged = false;
+    return toReturn;
+  }
+  
+  int getValue() {
+    return selectedId;
+  }
+  
+}
+
+
+
+class RadioButton {
+  RadioButton() {
+  }
+  boolean selected = false;
+  boolean selectedChanged;
+  int buttonSize;
+  
+  void draw(PGraphics g, Mouse mouse, String mouseName) {
+    buttonSize = 20;
+    mouse.declareUpdateElementRelative(mouseName, 100000, -(buttonSize/2), -(buttonSize/2), buttonSize, buttonSize, g);
+    boolean pressed = mouse.isCaptured(mouseName) && mouse.firstCaptureFrame;
+    if(pressed) { selected = !selected; selectedChanged = true; }
+    drawShapes(g, mouse, selected);
+  }
+  
+  void drawShapes(PGraphics g, Mouse mouse, boolean selected) {
+    g.pushMatrix();
+      g.pushStyle();
+        g.rectMode(CENTER);
+        g.noFill();
+        g.strokeWeight(buttonSize/5);
+        g.stroke(0, 0, 0);
+        g.ellipse(0, 0, buttonSize, buttonSize);
+        if(selected) {
+          g.fill(0, 0, 0);
+          g.noStroke();
+          g.ellipse(0.3, 0.3, buttonSize/2, buttonSize/2);
+        }
+      g.popStyle();
+    g.popMatrix();
+  }
+}
