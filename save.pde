@@ -124,7 +124,7 @@ void saveAllData() {
   saveVariable(chaseMode, "chaseMode");
   
   saveDataMainCommands(loadPath, "loadPath", "0", "-", "-");
-  
+   
 
   //Asetetaan oikeat tallennuspolut käyttäjän mukaan
   println(savePath);
@@ -134,6 +134,7 @@ void saveAllData() {
     saveTrussesAsXML();
     saveMemoriesToXML();
     saveTestXML();
+   
   } catch (Exception e) {
     e.printStackTrace();
     notifier.notify("Save failed! Try again by saving to another location by pressing SHIFT + S", true);

@@ -58,8 +58,10 @@ class SettingsWindow {
     tabs[4] = new SettingsTab("OSC", this);
     tabs[4].setControllers(
       new SettingController[] {
-        new SettingController("Text here", "Test IP", "This is a test text.", tabs[4]),
-        new SettingController("Text here", "Test IP", "This is a test text.", tabs[4])
+        new SettingController(123, "", "Test IP", "This is a test text.", tabs[4]),
+        new SettingController(124, "", "Test IP", "This is a test text.", tabs[4]),
+        new SettingController(125, "", "Test IP", "This is a test text.", tabs[4]),
+        new SettingController(54, "", "Test IP", "This is a test text.", tabs[4])
       }
     );
   }
@@ -188,6 +190,7 @@ class SettingsTab {
   //A container for multiple settings
   
   SettingController[] controllers;
+ 
   
   SettingsWindow parentWindow;
   
@@ -322,6 +325,7 @@ class SettingController {
   Switch booleanController;
   IntSettingController intController;
   StringSettingController strController;
+  TextBox textBox;
   
   boolean oldValueBoolean;
   int oldValueInt;
@@ -357,12 +361,14 @@ class SettingController {
   }
   
   //STRING -- directly controls an object
-  SettingController(String CONTROLLED_OBJECT, String name, String description, SettingsTab parent) {
-    mode = 4;
+  SettingController(int var, String CONTROLLED_OBJECT, String name, String description, SettingsTab parent) {
+    mode = 6;
     strController = new StringSettingController(CONTROLLED_OBJECT, parent.width_-306, 8, this);
     this.name = name;
     this.description = description;
     parentTab = parent;
+    textBox = new TextBox(CONTROLLED_OBJECT, 1);
+    this.var = var;
     
   }
   
@@ -405,9 +411,16 @@ class SettingController {
           oldValueInt = intController.state;
         }
       break;
-      case 4:
-        drawText(0, 0, buffer);
-        strController.drawToBuffer(buffer, mouse);
+//      case 4:
+//        drawText(0, 0, buffer);
+//        strController.drawToBuffer(buffer, mouse);
+//      break;
+      case 6:
+        buffer.translate(0, 80);
+        String mouseObjectName = "SettingsTextBoxController"+str(var);
+        mouse.declareUpdateElementRelative(mouseObjectName, 100000, 0, 0, 240, 40, buffer);
+        mouse.setElementExpire(mouseObjectName, 2);
+        textBox.drawToBuffer(buffer, mouse, mouseObjectName);
       break;
     }
   }

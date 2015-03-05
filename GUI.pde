@@ -137,12 +137,11 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(help, "HelpWindow", 1000));
     subWindows.add(new SubWindowContainer(colorWashMenu, "colorSelectBox", 1000));
     subWindows.add(new SubWindowContainer(colorPick, "HSB", 1000));
-    subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
-
-    
-    
-    
     //subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
+    subWindows.add(new SubWindowContainer(oscSettings, "OSCSettingsWindow", 1000));
+    
+
+
   }
   
   ArrayList<SubWindowContainer> subWindows;
@@ -707,4 +706,36 @@ class DropdownMenuBlock {
     return pressed;
   }
   
+}
+
+class PushButton {
+  String name = "";
+  PushButton(String name) {
+    this.name = name;
+  }
+  
+ 
+  
+  boolean isPressed(PGraphics g, Mouse mouse) {
+    g.pushMatrix();
+    g.pushStyle();
+    PVector size = new PVector(30, 30);
+    
+    mouse.declareUpdateElementRelative("button"+name, 10000000, 0, 0, round(size.x), round(size.y), g);
+    mouse.setElementExpire("button"+name, 2);
+    
+    boolean hovered = mouse.elmIsHover("button"+name);
+    boolean pressed = mouse.isCaptured("button"+name) && mouse.firstCaptureFrame;
+    
+    themes.button.setTheme(g, mouse, hovered, pressed);
+    
+    
+    g.rect(0, 0, size.x, size.y);
+    g.popStyle();
+    g.popMatrix();
+    if(pressed) {
+      return true;
+    }
+    return false;
+  }
 }

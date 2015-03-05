@@ -602,6 +602,7 @@ boolean keyCapElseDown = false;
 
 
 void keyPressed() {
+  keyDown = true;
   if(!keyCapElsewhere) {
     if(key == 'b') { boolean b = s2l.blinky; s2l = new soundDetect(); s2l.blinky = !b; }
 
@@ -637,6 +638,7 @@ void keyPressed() {
       else {
         notifier.notify("Can not save in showMode", true);
       }
+      oscHandler.saveToXML();
     }
     if(key == 'l') { 
       if(!showMode && !showModeLocked) {
