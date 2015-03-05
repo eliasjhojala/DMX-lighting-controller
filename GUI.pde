@@ -752,9 +752,7 @@ class RadioButtonMenu {
   ArrayList<RadioButton> buttons = new ArrayList<RadioButton>();
   
   RadioButtonMenu() {
-    addBlock(new RadioButton());
-    addBlock(new RadioButton());
-    addBlock(new RadioButton());
+
   }
   
   void addBlock(RadioButton button) {
@@ -792,7 +790,17 @@ class RadioButtonMenu {
   }
   
   int getValue() {
-    return selectedId;
+    return buttons.get(selectedId).getValue();
+  }
+  
+  void setValue(int val) {
+    for(int i = 0; i < buttons.size(); i++) {
+      if(buttons.get(i).getValue() == val) {
+        selectedId = i;
+        selectedChanged = true;
+        break;
+      }
+    }
   }
   
 }
@@ -800,11 +808,17 @@ class RadioButtonMenu {
 
 
 class RadioButton {
-  RadioButton() {
+  
+  RadioButton(String text, int value) {
+    this.value = value;
+    this.text = text;
   }
+  
   boolean selected = false;
   boolean selectedChanged;
   int buttonSize;
+  String text;
+  int value;
   
   void draw(PGraphics g, Mouse mouse, String mouseName) {
     buttonSize = 20;
@@ -820,14 +834,26 @@ class RadioButton {
         g.rectMode(CENTER);
         g.noFill();
         g.strokeWeight(buttonSize/5);
-        g.stroke(0, 0, 0);
+        g.stroke(themes.buttonColor.neutral);
         g.ellipse(0, 0, buttonSize, buttonSize);
         if(selected) {
-          g.fill(0, 0, 0);
+          g.fill(themes.buttonColor.neutral);
           g.noStroke();
           g.ellipse(0.3, 0.3, buttonSize/2, buttonSize/2);
         }
+        g.pushMatrix();
+          g.pushStyle();
+            g.textAlign(LEFT);
+            g.rectMode(CORNER);
+            g.fill(0);
+            g.text(text, buttonSize*1.1, buttonSize/4);
+          g.popStyle();
+        g.popMatrix();
       g.popStyle();
     g.popMatrix();
+  }
+  
+  int getValue() {
+    return value;
   }
 }

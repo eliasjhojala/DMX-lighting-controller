@@ -39,7 +39,7 @@ class Themes {
   Themes() {
     window = new ShapeTheme(color(255, 230), color(150), 3, true);
     
-    buttonColor = new ColorTheme(color(0, 0, 255), color(0, 100, 255), color(0, 255, 255));
+    buttonColor = new ColorTheme(color(20, 50, 255), color(20, 70, 255), color(30, 100, 255));
     button = new ShapeTheme(buttonColor, color(0, 0, 255, 200), 2, false);
     
     bubbleColor = new ColorTheme(color(200, 0, 0), color(222, 0, 0), color(222, 0, 0));

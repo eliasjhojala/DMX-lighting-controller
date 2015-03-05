@@ -18,6 +18,7 @@
    DropdownMenu machineSelect;
    DropdownMenu midiInSelect;
    DropdownMenu midiOutSelect;
+   RadioButtonMenu outputModes;
    
    MidiHandlerWindow() {
      h = 500;
@@ -43,6 +44,10 @@
        midiOutputs.add(new DropdownMenuBlock(MidiBus.availableOutputs()[i], i));
      }
      midiOutSelect = new DropdownMenu("Midi outputs", midiOutputs);
+     
+     outputModes = new RadioButtonMenu();
+     outputModes.addBlock(new RadioButton("Memories", 1));
+     outputModes.addBlock(new RadioButton("Fixtures", 2));
    }
    
    void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
@@ -114,7 +119,20 @@
        }
        
        g.translate(0, 200);
-       testRadio.draw(g, mouse);
+       outputModes.draw(g, mouse);
+       if(outputModes.valueHasChanged()) {
+         switch(selectedMachine) {
+           case 1: //Launchpad
+           break;
+           
+           case 2: //LC2412
+           break;
+           
+           case 3: //KerRig 49
+             keyRig49.output = outputModes.getValue();
+           break;
+         }
+       }
      
      g.popMatrix();
      
@@ -190,7 +208,12 @@ public class Keyrig49 {
       }
       keys[constrain(whiteI, 0, keys.length-1)] = midiToBoolean(velocity);
       keysVal[constrain(whiteI, 0, keys.length-1)] = midiToDMX(velocity);
-      fixtures.get(constrain(whiteI, 0, keys.length-1)).in.setUniversalDMX(DMX_DIMMER, midiToDMX(velocity));
+      if(output == 1) {
+        memories[constrain(whiteI, 0, keys.length-1)].setValue(midiToDMX(velocity));
+      }
+      else if(output == 2) {
+        fixtures.get(constrain(whiteI, 0, keys.length-1)).in.setUniversalDMX(DMX_DIMMER, midiToDMX(velocity));
+      }
     
   }
   void noteOff(int channel, int pitch, int velocity) {
