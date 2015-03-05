@@ -139,6 +139,8 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(colorPick, "HSB", 1000));
     subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
     subWindows.add(new SubWindowContainer(oscSettings, "OSCSettingsWindow", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow, "MidiHandlerWindow", 1000));
+    
     
   }
   
@@ -686,12 +688,17 @@ class DropdownMenuBlock {
           g.stroke(strokeColor);
           g.strokeWeight(strokeWeight);
           g.rect(rectStartPoint.x, rectStartPoint.y, rectSize.x, rectSize.y);
-        } //End of block
         
-        { //Text
-          g.fill(textColor);
-          g.text(text, 4, (size.y/2)+5);
-        } //End of text
+        
+          { //Text
+            g.pushStyle();
+            g.textAlign(LEFT);
+            g.fill(textColor);
+            g.text(text, rectStartPoint.x+4, rectStartPoint.y+(size.y/2)+5);
+            g.popStyle();
+          } //End of text
+        
+        } //End of blcock
         
       g.popStyle();
     g.popMatrix();
