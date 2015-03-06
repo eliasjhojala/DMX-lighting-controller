@@ -20,13 +20,13 @@ class SettingsWindow {
   
   //Create and configure all tabs & controllers
   void onInit() {
-    tabs = new SettingsTab[3];
+    tabs = new SettingsTab[4];
     tabs[0] = new SettingsTab("Other windows", this);
     tabs[0].setControllers(
       new SettingController[] {
-        new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", tabs[0]),
-        new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0]),
-        new SettingController(10, "Show sockets", "If you want to edit socket places use this", tabs[0]),
+        new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", true, tabs[0]),
+        new SettingController(1, "Use text window", "This window is handy for debug purposes.", true, tabs[0]),
+        new SettingController(10, "Show sockets", "If you want to edit socket places use this", true, tabs[0]),
         new SettingController(0, 0, 0, "Test Int1", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int2", "This is just a test controller to see how the int controller will work.", tabs[0]),
         new SettingController(0, 0, 0, "Test Int3", "This is just a test controller to see how the int controller will work.", tabs[0]),
@@ -40,18 +40,24 @@ class SettingsWindow {
     tabs[1] = new SettingsTab("Visualization", this);
     tabs[1].setControllers(
       new SettingController[] {
-        new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", tabs[1]),
-        new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", tabs[1]),
+        new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", true, tabs[1]),
+        new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", true, tabs[1]),
         new SettingController(3, 2, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[1]),
         new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[1]),
-        new SettingController(5, "Lock showMode", "Make sure that showMode isn't turned off accidentally", tabs[1]),
-        new SettingController(15, "Rotate fixtures to same point", "Rotate all the fixtures to same point", tabs[1])
+        new SettingController(5, "Lock showMode", "Make sure that showMode isn't turned off accidentally", true, tabs[1]),
+        new SettingController(15, "Rotate fixtures to same point", "Rotate all the fixtures to same point", true, tabs[1])
       }
     );
     tabs[2] = new SettingsTab("Chase", this);
     tabs[2].setControllers(
       new SettingController[] {
-        new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", tabs[2])
+        new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", true, tabs[2])
+      }
+    );
+    tabs[3] = new SettingsTab("more", this);
+    tabs[3].setControllers(
+      new SettingController[] {
+        new SettingController(7, "", "", false, tabs[3])
       }
     );
   }
@@ -311,6 +317,7 @@ class SettingController {
   IntSettingController intController;
   StringSettingController strController;
   TextBox textBox;
+  PushButton pushButton;
   
   boolean oldValueBoolean;
   int oldValueInt;
@@ -336,13 +343,24 @@ class SettingController {
     parentTab = parent;
   }
   //boolean
-  SettingController(int var, String name, String description, SettingsTab parent) {
-    mode = 0;
-    booleanController = new Switch(false, "settings:" + parent.text + ":" + name, "settings", parent.width_-42, 8);
-    this.name = name;
-    this.description = description;
-    this.var = var;
-    parentTab = parent;
+  SettingController(int var, String name, String description, boolean toggle, SettingsTab parent) {
+    if(toggle) {
+      mode = 0;
+      booleanController = new Switch(false, "settings:" + parent.text + ":" + name, "settings", parent.width_-42, 8);
+      this.name = name;
+      this.description = description;
+      this.var = var;
+      parentTab = parent;
+    }
+    else {
+      mode = 5;
+      pushButton = new PushButton("settings:" + parent.text + ":" + name);
+      
+      this.name = name;
+      this.description = description;
+      this.var = var;
+      parentTab = parent;
+    }
   }
   
   //STRING -- directly controls an object
@@ -406,6 +424,12 @@ class SettingController {
         mouse.declareUpdateElementRelative(mouseObjectName, 100000, 0, 0, 240, 40, buffer);
         mouse.setElementExpire(mouseObjectName, 2);
         textBox.drawToBuffer(buffer, mouse, mouseObjectName);
+      break;
+      case 5:
+        buffer.pushMatrix();
+        buffer.translate(20, 100);
+        pushButton.isPressed(buffer, mouse);
+        buffer.popMatrix();
       break;
     }
   }
