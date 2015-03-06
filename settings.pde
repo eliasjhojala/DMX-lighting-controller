@@ -362,7 +362,7 @@ class SettingController {
     }
     else {
       mode = 5;
-      pushButton = new PushButton("settings:" + parent.text + ":" + name + str(var));
+      pushButton = new PushButton("settings:" + parent.text + ":" + name + str(var), new PVector(40, 40));
       
       this.name = name;
       this.description = description;
@@ -506,8 +506,8 @@ class IntSettingController {
         case 0:
           //Numberbox
           //Background
-          b.fill(45, 138, 179);
-          b.stroke(20, 100, 130);
+          b.fill(themes.intControllerColor.neutral);
+          b.stroke(multiplyColor(themes.intControllerColor.neutral, 0.7));
           g.pushMatrix(); pushMatrix();
             g.translate(b.screenX(0, 0), b.screenY(0, 0));
             translate(g.screenX(0, 0), g.screenY(0, 0));
@@ -544,15 +544,15 @@ class IntSettingController {
             }
           g.popMatrix(); popMatrix();
           
-          b.fill(topMenuTheme2);
-          b.stroke(topMenuAccent);
+          b.fill(themes.knobOutsideColor.neutral);
+          b.stroke(multiplyColor(themes.knobOutsideColor.neutral, 0.7));
           b.strokeWeight(1.5);
           //Radial visualizer
           b.arc(0, 0, 50, 50, -HALF_PI, (floatState/360*TWO_PI) - HALF_PI, PIE);
           
           //Text container
-          b.fill(45, 138, 179);
-          b.stroke(20, 100, 130);
+          b.fill(themes.knobColor.neutral);
+          b.stroke(multiplyColor(themes.knobColor.neutral, 0.7));
           b.ellipse(0, 0, 30, 30);
           
           

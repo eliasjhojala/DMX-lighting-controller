@@ -810,3 +810,7 @@ void rect(PVector loc1, PVector loc2) {
 void rect(PVector loc1, PVector loc2, PGraphics g) {
   g.rect(loc1.x, loc1.y, loc2.x, loc2.y);
 }
+
+color invert(color in) {
+  return color(255-red(in), 255-green(in), 255-blue(in));
+}

@@ -506,7 +506,7 @@ class DropdownMenu {
                 PVector scrollBarStartPoint = new PVector(0, 0);
                 PVector scrollBarSize = new PVector(15, (blockSize.y*(maxNumberOfBlocks-1))/((blocks.size())/maxNumberOfBlocks));
                 
-                g.translate(0, map(offset, 0, blocks.size()-maxNumberOfBlocks, 0, scrollBarBaseSize.y-scrollBarSize.y));
+                g.translate(0, map(offset, 0, blocks.size()-maxNumberOfBlocks, 0, scrollBarBaseSize.y-scrollBarSize.y));
                 mouse.declareUpdateElementRelative(name+"scrollBar", 10000000, scrollBarStartPoint, scrollBarSize, g);
                 mouse.setElementExpire(name+"scrollBar", 2);
                 g.fill(scrollBarColor);
@@ -715,59 +715,65 @@ class DropdownMenuBlock {
 
 class PushButton {
   String name = "";
+  PVector size = new PVector(20, 20);
+  
+  boolean hovered, pressed;
+  
   PushButton(String name) {
     this.name = name;
+  }
+  PushButton(String name, PVector size) {
+    this.name = name;
+    this.size = size.get();
   }
   
  
   
   boolean isPressed(PGraphics g, Mouse mouse) {
-    g.pushMatrix();
-    g.pushStyle();
-    PVector size = new PVector(20, 20);
-    
-    mouse.declareUpdateElementRelative("button"+name, 10000000, 0, 0, round(size.x), round(size.y), g);
-    mouse.setElementExpire("button"+name, 2);
-    
-    boolean hovered = mouse.elmIsHover("button"+name);
-    boolean pressed = mouse.isCaptured("button"+name) && mouse.firstCaptureFrame;
-    
-    themes.button.setTheme(g, mouse, hovered, pressed);
-    
-    
-    g.rect(0, 0, size.x, size.y, 4);
-    g.popStyle();
-    g.popMatrix();
-    if(pressed) {
-      return true;
-    }
-    return false;
+    //Usually this function is used
+    drawBeforeMouse(g, mouse);
+    addMouseElement(g, mouse);
+    drawAfterMouse(g, mouse);
+    return pressed;
   }
   
   boolean isPressed(PGraphics b, PGraphics g, Mouse mouse) {
-    b.pushMatrix();
-    b.pushStyle();
-    PVector size = new PVector(20, 20);
+    //This function is made for settings (they are using PGraphics buffer)
+    drawBeforeMouse(b, mouse);
     
     g.pushMatrix();
     g.translate(b.screenX(0, 0), b.screenY(0, 0));
-    mouse.declareUpdateElementRelative("button"+name, 10000000, 0, 0, round(size.x), round(size.y), g);
-    mouse.setElementExpire("button"+name, 2);
+    addMouseElement(g, mouse);
     g.popMatrix();
     
-    boolean hovered = mouse.elmIsHover("button"+name);
-    boolean pressed = mouse.isCaptured("button"+name) && mouse.firstCaptureFrame;
+    drawAfterMouse(b, mouse); 
+    return pressed;
+  }
+  
+  void drawBeforeMouse(PGraphics g, Mouse mouse) {
+    g.pushMatrix();
+    g.pushStyle();
+  }
+  void addMouseElement(PGraphics g, Mouse mouse) {
+    mouse.declareUpdateElementRelative("button"+name, 10000000, 0, 0, round(size.x), round(size.y), g);
+    mouse.setElementExpire("button"+name, 2);
     
-    themes.button.setTheme(b, mouse, hovered, pressed);
-    
-    
-    b.rect(0, 0, size.x, size.y, 4);
-    b.popStyle();
-    b.popMatrix();
-    if(pressed) {
-      return true;
-    }
-    return false;
+    hovered = mouse.elmIsHover("button"+name);
+    pressed = mouse.isCaptured("button"+name) && mouse.firstCaptureFrame;
+  }
+  void drawAfterMouse(PGraphics g, Mouse mouse) {
+    themes.button.setTheme(g, mouse, hovered, pressed);
+    g.pushStyle();
+      g.fill(80, 150);
+      g.noStroke();
+      g.rect(size.x/20, size.y/20, size.x, size.y, min(size.x, size.y)/5);
+    g.popStyle();
+    g.pushStyle();
+      g.noStroke();
+      g.rect(0, 0, size.x, size.y, min(size.x, size.y)/5);
+    g.popStyle();
+    g.popStyle();
+    g.popMatrix();
   }
 }
 
@@ -882,4 +888,71 @@ class RadioButton {
   int getValue() {
     return value;
   }
+}
+
+class IntController {
+  int state;
+  float floatState;
+  String name;
+  
+  int defaultVal;
+  
+  boolean valueChanged;
+  
+  IntController(String name) {
+    this.name = name;
+  }
+  
+  void setState(int newState) {
+    state = newState;
+    floatState = newState;
+  }
+  
+
+  
+  void draw(PGraphics g, Mouse mouse) {
+    PGraphics b = g;
+    b.pushMatrix(); b.pushStyle();
+    if(inBds1D(b.screenY(0, 0), -50, b.height)) {
+
+          //Numberbox
+          //Background
+          b.fill(themes.intControllerColor.neutral);
+          b.stroke(multiplyColor(themes.intControllerColor.neutral, 0.7));
+          g.pushMatrix(); pushMatrix();
+
+            mouse.declareUpdateElementRelative(name, 10000, 0, 0, 100, 20, g);
+            if(mouse.isCaptured(name) && mouseButton == LEFT) {
+              floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(0, 0)) / 20 + 1);
+              if(round(floatState) != state) { valueChanged = true; }
+              state = round(floatState);
+            }
+          g.popMatrix(); popMatrix();
+          
+          b.strokeWeight(1.5);
+          b.rect(0, 0, 100, 20);
+          b.textAlign(RIGHT);
+          b.fill(255);
+          b.textSize(14);
+          b.text(str(state), 2, 2, 96, 18);
+
+      
+      mouse.setElementExpire(name, 2);
+      if(mouse.isCaptured(name) && mouseButton == RIGHT && mouse.firstCaptureFrame) {
+        if(lastRMBc > millis() - 1000) setState(defaultVal); else lastRMBc = millis();
+      }
+    }
+    b.popMatrix(); b.popStyle();
+  }
+  
+  boolean valueHasChanged() {
+    boolean toReturn = valueChanged;
+    valueChanged = false;
+    return toReturn;
+  }
+  
+  int getValue() {
+    return state;
+  }
+  
 }

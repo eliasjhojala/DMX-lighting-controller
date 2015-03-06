@@ -31,6 +31,13 @@ class Themes {
   ShapeTheme button;
   ColorTheme buttonColor;
   
+  ShapeTheme textBox;
+  
+  ColorTheme textBoxColor;
+  ColorTheme intControllerColor;
+  ColorTheme knobColor;
+  ColorTheme knobOutsideColor;
+  
   color topMenuTheme = color(222, 0, 0);
   color topMenuTheme2 = color(200, 0, 0);
   color topMenuAccent = color(150, 0, 0);
@@ -39,11 +46,20 @@ class Themes {
   Themes() {
     window = new ShapeTheme(color(255, 230), color(150), 3, true);
     
-    buttonColor = new ColorTheme(color(20, 50, 255), color(20, 70, 255), color(30, 100, 255));
+    buttonColor = new ColorTheme(color(45, 138, 179), color(61*0.8, 190*0.8, 255*0.8), color(61, 190, 255));
     button = new ShapeTheme(buttonColor, color(0, 0, 255, 200), 2, false);
     
     bubbleColor = new ColorTheme(color(200, 0, 0), color(222, 0, 0), color(222, 0, 0));
     bubble = new ShapeTheme(bubbleColor, color(150, 0, 0), 2, true);
+    
+    textBoxColor = buttonColor;
+    intControllerColor = buttonColor;
+    knobColor = buttonColor;
+    knobOutsideColor = bubbleColor;
+    
+    textBox = button;
+    
+    
   }
 }
 
@@ -88,6 +104,16 @@ class ShapeTheme {
 
   void setTheme(PGraphics g, Mouse mouse) {
     setTheme(g, mouse, false, false);
+  }
+  
+  void setTheme(boolean hover, boolean active) {
+    if(fillAsTheme) { fillTheme.fillColor(hover, active); }
+    else { fill(fill); }
+    if(drawStroke) {
+      if(strokeAsTheme) { strokeTheme.strokeColor(hover, active); }
+      else { stroke(stroke); strokeWeight(strokeWeight); }
+    }
+    else { noStroke(); }
   }
 }
 

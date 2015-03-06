@@ -50,7 +50,7 @@ void sivuValikko() {
     mouse.declareUpdateElementRelative("OutMode", "main:move", width-268, bubS/2, 102, 30);
     mouse.setElementExpire("OutMode", 2);
     boolean isHoverOM = mouse.elmIsHover("OutMode");
-    stroke(topMenuAccent);  strokeWeight(2);
+    stroke(multiplyColor(themes.bubbleColor.neutral, 0.7));  strokeWeight(2);
     pushStyle();
       pushStyle();
         //inputMode (lower)
@@ -63,7 +63,7 @@ void sivuValikko() {
       popStyle();
       pushStyle();
         //outputMode (upper)
-        fill(isHoverOM ? topMenuTheme : topMenuTheme2);
+        themes.bubbleColor.fillColor(isHoverOM, false);
         rect(width-268, bubS/2-50, 102, 80, 0, 0, 0, 20);
       popStyle();
       pushStyle();
@@ -82,8 +82,8 @@ void sivuValikko() {
     
     
     //bubble itself
-    fill(topMenuTheme);
-    stroke(topMenuAccent);
+    themes.bubbleColor.fillColor(mouse.elmIsHover("addMemory"), false);
+    stroke(multiplyColor(themes.bubbleColor.neutral, 0.7));
     arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
     
     //Text

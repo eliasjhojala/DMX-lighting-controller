@@ -9,11 +9,11 @@ In this tab are located
        - actually only colorWash
 */
 
+PShape settingsIcon;
+
 color topMenuTheme = color(222, 0, 0);
 color topMenuTheme2 = color(200, 0, 0);
 color topMenuAccent = color(150, 0, 0);
-
-PShape settingsIcon;
 
 void ylavalikkoSetup() {
   settingsIcon = loadShape("settingsIcon.svg");
@@ -48,27 +48,33 @@ void ylavalikko() {
   noFill();
   stroke(0, 120); strokeWeight(6);
   arc(bubS/2, 0, 120, 120, 0, HALF_PI + QUARTER_PI);
-  fill(topMenuTheme2);
-  stroke(topMenuAccent); strokeWeight(2);
+  fill(themes.bubbleColor.neutral);
+  stroke(multiplyColor(themes.bubbleColor.neutral, 0.7));
+  strokeWeight(2);
   arc(bubS/2, 0, 120, 120, 0, HALF_PI + QUARTER_PI);
   
   
   pushMatrix();
-    strokeWeight(10);
-    if(settingsHover) stroke(250); else stroke(topMenuTheme);
-    if(settingsHover) fill(250); else fill(topMenuTheme);
-    translate(bubS/2 + 4, 4);
-    scale(0.08);
-    if (settingsIcon != null) shape(settingsIcon); // The asset might have not loaded yet
+    pushStyle();
+      strokeWeight(10);
+      if(settingsHover) stroke(250); else stroke(multiplyColor(themes.bubbleColor.neutral, 0.7));
+      if(settingsHover) fill(250); else fill(multiplyColor(themes.bubbleColor.neutral, 0.7));
+      translate(bubS/2 + 4, 4);
+      scale(0.08);
+      if (settingsIcon != null) shape(settingsIcon); // The asset might have not loaded yet
+    popStyle();
   popMatrix();
   
   
   
   
   //Main bubble itself
-  fill(topMenuTheme);
-  stroke(topMenuAccent); strokeWeight(2);
-  arc(0, 0, bubS, bubS, 0, HALF_PI);
+  pushStyle();
+    themes.bubbleColor.fillColor(inBoundsCircle(0, 0, bubS/2, mouseX, mouseY), false);
+    stroke(multiplyColor(themes.bubbleColor.neutral, 0.7));
+    strokeWeight(2);
+    arc(0, 0, bubS, bubS, 0, HALF_PI);
+  popStyle();
   
   
   
@@ -111,7 +117,7 @@ boolean drawLeftSideButton(int round, String text) {
     translate(-2, 150);
     
     pushStyle();
-      fill(topMenuTheme2);
+      fill(themes.bubbleColor.neutral);
       rect(0, 0, 40, 100, 0, round, round, 0);
       mouse.declareUpdateElementRelative("UpperMenu:"+text, "main:move", 0, 0, 40, 100);
       boolean isHovered = isHover(0, 0, 40, 100);
@@ -125,7 +131,7 @@ boolean drawLeftSideButton(int round, String text) {
           fill(250);
         }
         else {
-          fill(topMenuTheme);
+          fill(multiplyColor(themes.bubbleColor.neutral, 0.7));
         }
         textSize(20);
         textAlign(CENTER);

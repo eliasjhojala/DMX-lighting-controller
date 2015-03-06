@@ -43,8 +43,10 @@ class TextBox {
     
 
     g.pushStyle();
-    themes.button.setTheme(g, mouse, mouse.elmIsHover(mouseObjectName), false);
-    g.rect(textBoxLocation.x, textBoxLocation.y, textBoxSize.x, textBoxSize.y, 1);
+    themes.textBox.setTheme(g, mouse, mouse.elmIsHover(mouseObjectName), false);
+    g.strokeWeight(1.5);
+    g.stroke(multiplyColor(themes.textBoxColor.neutral, 0.7));
+    g.rect(textBoxLocation.x, textBoxLocation.y, textBoxSize.x, textBoxSize.y);
     g.popStyle();
     if(editedText != null) {
       g.pushStyle();

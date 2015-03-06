@@ -50,6 +50,8 @@
      outputModes.addBlock(new RadioButton("Fixtures", 2));
    }
    
+   IntController offset = new IntController("testIntController");
+   
    void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
      window.draw(g, mouse);
      g.pushMatrix();
@@ -59,6 +61,8 @@
        if(machineSelect.valueHasChanged()) {
          selectedMachine = machineSelect.getValue();
        }
+       
+       g.pushMatrix();
        
        if(!machineSelect.open) {
          switch(selectedMachine) {
@@ -118,8 +122,31 @@
          
        }
        
+       g.popMatrix();
+       
        g.translate(0, 200);
        outputModes.draw(g, mouse);
+       
+
+       
+       offset.draw(g, mouse);
+       
+       if(offset.valueHasChanged()) {
+         switch(selectedMachine) {
+           case 1: //Launchpad
+             if(launchpad != null) launchpad.offset = offset.getValue();
+           break;
+           
+           case 2: //LC2412
+             if(LC2412 != null) LC2412.offset = offset.getValue();
+           break;
+             
+           case 3: //KerRig 49
+             if(keyRig49 != null) keyRig49.offset = offset.getValue();
+           break;
+         }
+       }
+       
        if(outputModes.valueHasChanged()) {
          switch(selectedMachine) {
            case 1: //Launchpad
@@ -129,7 +156,7 @@
            break;
            
            case 3: //KerRig 49
-             keyRig49.output = outputModes.getValue();
+             if(keyRig49 != null) keyRig49.output = outputModes.getValue();
            break;
          }
        }
@@ -140,6 +167,7 @@
        g.translate(40, 60);
        machineSelect.draw(g, mouse);
      g.popMatrix();
+     
      
      
      
@@ -183,6 +211,8 @@ public class Keyrig49 {
   
   int inputIndex;
   
+  int offset;
+  
   Keyrig49(int inputIndex) {
     setup(inputIndex);
   }
@@ -209,10 +239,10 @@ public class Keyrig49 {
       keys[constrain(whiteI, 0, keys.length-1)] = midiToBoolean(velocity);
       keysVal[constrain(whiteI, 0, keys.length-1)] = midiToDMX(velocity);
       if(output == 1) {
-        memories[constrain(whiteI, 0, keys.length-1)].setValue(midiToDMX(velocity));
+        memories[constrain(whiteI+offset, 0, memories.length-1)].setValue(midiToDMX(velocity));
       }
       else if(output == 2) {
-        fixtures.get(constrain(whiteI, 0, keys.length-1)).in.setUniversalDMX(DMX_DIMMER, midiToDMX(velocity));
+        fixtures.get(constrain(whiteI+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, midiToDMX(velocity));
       }
     
   }
@@ -247,6 +277,8 @@ public class Launchpad {
   
   int inputIndex;
   int outputIndex;
+  
+  int offset;
   
   Launchpad(int inputIndex, int outputIndex) {
     setup(inputIndex, outputIndex);
@@ -288,8 +320,8 @@ public class Launchpad {
       value = pads[x][y];
     }
     bus.sendNoteOn(0, pitch, byte(value) * 127);
-    if(output == 1) { memories[x+8*y+1].enabled = value; }
-    else if(output == 2) { fixtures.get(x+8*y).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
+    if(output == 1) { memories[constrain(x+8*y+1+offset, 0, memories.length-1)].enabled = value; }
+    else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
   }
   
   void noteOff(int channel, int pitch, int velocity) {
@@ -333,6 +365,9 @@ public class behringerLC2412 {
   
   int inputIndex;
   int outputIndex;
+  
+  int offset;
+  
   behringerLC2412(int inputIndex, int outputIndex) {
     setup(inputIndex, outputIndex);
   }
