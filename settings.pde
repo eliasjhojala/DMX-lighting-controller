@@ -417,7 +417,7 @@ class SettingController {
 //      case 4:
 //        drawText(0, 0, buffer);
 //        strController.drawToBuffer(buffer, mouse);
-//      break;
+//      break;+++
       case 6:
         buffer.translate(0, 80);
         String mouseObjectName = "SettingsTextBoxController"+str(var);
@@ -427,8 +427,12 @@ class SettingController {
       break;
       case 5:
         buffer.pushMatrix();
-        buffer.translate(20, 100);
-        pushButton.isPressed(buffer, mouse);
+        //buffer.translate(50, 50);
+        if(pushButton.isPressed(buffer, g, mouse)) {
+          //parentTab.parentWindow.pushButtonPressed(var);
+        }
+        buffer.translate(30, 0);
+        buffer.text(name, 0, 0);
         buffer.popMatrix();
       break;
     }

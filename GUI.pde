@@ -743,6 +743,30 @@ class PushButton {
     }
     return false;
   }
+  
+  boolean isPressed(PGraphics b, PGraphics g, Mouse mouse) {
+    b.pushMatrix();
+    b.pushStyle();
+    PVector size = new PVector(20, 20);
+    b.translate(20, 20);
+    
+    mouse.declareUpdateElementRelative("button"+name, 10000000, 0, 0, round(size.x), round(size.y), g);
+    mouse.setElementExpire("button"+name, 2);
+    
+    boolean hovered = mouse.elmIsHover("button"+name);
+    boolean pressed = mouse.isCaptured("button"+name) && mouse.firstCaptureFrame;
+    
+    themes.button.setTheme(b, mouse, hovered, pressed);
+    
+    
+    b.rect(0, 0, size.x, size.y, 4);
+    b.popStyle();
+    b.popMatrix();
+    if(pressed) {
+      return true;
+    }
+    return false;
+  }
 }
 
 
