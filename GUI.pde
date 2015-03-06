@@ -140,7 +140,7 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
     subWindows.add(new SubWindowContainer(oscSettings, "OSCSettingsWindow", 1000));
     subWindows.add(new SubWindowContainer(midiWindow, "MidiHandlerWindow", 1000));
-    
+    lowerMenu.open = false;
     
   }
   

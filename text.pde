@@ -1,6 +1,6 @@
 //Window to show values of some variables for debugging
 
-boolean showOutputAsNumbers; 
+
  
 public class secondApplet extends PApplet {
   
