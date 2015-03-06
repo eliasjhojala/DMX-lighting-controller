@@ -11,15 +11,16 @@ class SettingsWindow {
   SettingsWindow() {
     onInit();
   }
-  
+  Window settingsWindowWindow;
   SettingsWindow(boolean open) {
     this.open = open;
     onInit();
+    settingsWindowWindow = new Window("settings", new PVector(500, 500), this);
   }
   
   //Create and configure all tabs & controllers
   void onInit() {
-    tabs = new SettingsTab[5];
+    tabs = new SettingsTab[3];
     tabs[0] = new SettingsTab("Other windows", this);
     tabs[0].setControllers(
       new SettingController[] {
@@ -51,14 +52,6 @@ class SettingsWindow {
     tabs[2].setControllers(
       new SettingController[] {
         new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", tabs[2])
-      }
-    );
-    tabs[3] = new SettingsTab("COM", this);
-    tabs[4] = new SettingsTab("OSC", this);
-    tabs[4].setControllers(
-      new SettingController[] {
-        new SettingController("Text here", "Test IP", "This is a test text.", tabs[4]),
-        new SettingController("Text here", "Test IP", "This is a test text.", tabs[4])
       }
     );
   }
@@ -143,37 +136,9 @@ class SettingsWindow {
       g.pushStyle();
       { // frame & frame controls
         if(translate) g.translate(locX, locY);
-        themes.window.setTheme(g, mouse);
         
-        //Box itself
-        g.rect(0, 0, size, size, 20);
-        mouse.declareUpdateElementRelative("settings", 1, 0, 0, size, size, g);
-        mouse.setElementExpire("settings", 2);
-        
-        //Grabable location button
-        g.fill(180);
-        g.noStroke();
-        g.rect(10, 10, 20, 20, 20, 0, 0, 4);
-        mouse.declareUpdateElementRelative("settings:move", "settings", 10, 10, 20, 20, g);
-        mouse.setElementExpire("settings:move", 2);
-        if(mouse.isCaptured("settings:move")) {
-          locY = constrain(mouseY - pmouseY + locY, 40, height - (size+40));
-          locX = constrain(mouseX - pmouseX + locX, 40, width - (size + 20 + 168));
-        }
-        
-        g.textSize(12);
-        
-        //Close button
-        mouse.declareUpdateElementRelative("settings:close", "settings", 30, 10, 50, 20, g);
-        mouse.setElementExpire("settings:close", 2);
-        boolean cancelHover = mouse.elmIsHover("settings:close");
-        g.fill(cancelHover ? 220 : 180, 30, 30);
-        //Close if close is pressed
-        if(mouse.isCaptured("settings:close")) open = false;
-        g.rect(30, 10, 50, 20, 0, 4, 4, 0);
-        g.fill(230);
-        g.textAlign(CENTER);
-        g.text("Close", 55, 24);
+
+        settingsWindowWindow.draw(g, mouse);
         
         //Window title text
         g.fill(0, 220);
@@ -210,6 +175,7 @@ class SettingsTab {
   //A container for multiple settings
   
   SettingController[] controllers;
+ 
   
   SettingsWindow parentWindow;
   
@@ -344,6 +310,7 @@ class SettingController {
   Switch booleanController;
   IntSettingController intController;
   StringSettingController strController;
+  TextBox textBox;
   
   boolean oldValueBoolean;
   int oldValueInt;
@@ -379,12 +346,14 @@ class SettingController {
   }
   
   //STRING -- directly controls an object
-  SettingController(String CONTROLLED_OBJECT, String name, String description, SettingsTab parent) {
-    mode = 4;
+  SettingController(int var, String CONTROLLED_OBJECT, String name, String description, SettingsTab parent) {
+    mode = 6;
     strController = new StringSettingController(CONTROLLED_OBJECT, parent.width_-306, 8, this);
     this.name = name;
     this.description = description;
     parentTab = parent;
+    textBox = new TextBox(CONTROLLED_OBJECT, 1);
+    this.var = var;
     
   }
   
@@ -427,9 +396,16 @@ class SettingController {
           oldValueInt = intController.state;
         }
       break;
-      case 4:
-        drawText(0, 0, buffer);
-        strController.drawToBuffer(buffer, mouse);
+//      case 4:
+//        drawText(0, 0, buffer);
+//        strController.drawToBuffer(buffer, mouse);
+//      break;
+      case 6:
+        buffer.translate(0, 80);
+        String mouseObjectName = "SettingsTextBoxController"+str(var);
+        mouse.declareUpdateElementRelative(mouseObjectName, 100000, 0, 0, 240, 40, buffer);
+        mouse.setElementExpire(mouseObjectName, 2);
+        textBox.drawToBuffer(buffer, mouse, mouseObjectName);
       break;
     }
   }

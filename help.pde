@@ -20,11 +20,14 @@ class HelpWindow {
   
   ArrayList<HelpObject> blocks = new ArrayList<HelpObject>();
   
+  Window helpWindowBase;
+  
   HelpWindow() {
     locX = 100;
     locY = 100;
     w = 500;
     h = 500;
+    helpWindowBase = new Window("helpWindow", new PVector(500, 500), this);
   }
   
   void add(String subject, String text) {
@@ -35,10 +38,8 @@ class HelpWindow {
   
   void draw(PGraphics g, Mouse mouse, boolean doTranslate) {
     g.pushMatrix();
-      themes.window.setTheme(g, mouse);
-      mouse.declareUpdateElementRelative("helpWindow", 1, 0, 0, 500, 500, g); 
-      mouse.setElementExpire("helpWindow", 2);
-      g.rect(0, 0, 500, 500, 20);
+      helpWindowBase.draw(g, mouse);
+        
       g.translate(0, offset);
       for(int i = 0; i < blocks.size(); i++) {         
         blocks.get(i).draw(g, mouse);
@@ -48,8 +49,15 @@ class HelpWindow {
     if(mouse.elmIsHover("helpWindow") && scrolled) {
       offset += scrollSpeed;
     }
+    constrainOffset();
+  }
+  
+  void constrainOffset() {
+    if(offset < 40) { offset = 40; }
   }
 }
+
+  
 
 class HelpObject {
   String subject;

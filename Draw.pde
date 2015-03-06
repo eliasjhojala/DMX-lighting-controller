@@ -39,6 +39,7 @@ void draw() {
   scrolledUp = false;
   scrolledDown = false;
   scrollSpeed = 0;
+  
 }
 
 boolean memoriesFinished = true;
@@ -83,7 +84,6 @@ void drawMenus() {
     alavalikko(); //bottom menu
     sivuValikko(); //right menu
     contextMenu1.draw();
-    drawColorWashMenu();
     subWindowHandler.draw();
   }
 }

@@ -16,11 +16,10 @@ int arduinoIndex = 0; //Arduinon COM-portin järjestysnumero                    
 int arduinoIndex2 = 10;                                                                                                                                                   //|
 int enttecIndex = 1; // Enttecin USB DMX palikan COM-portin järjestysnumero                                                                                               //|
                                                                                                                                                                           //|
-int touchOscInComing = 8000;                                                                                                                                              //|
-                                                                                                                                                                          //|
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//|
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//|
 
+int touchOscIncoming = 8000;
 
 boolean freeze = false;
 
@@ -372,16 +371,14 @@ void setup() {
       fft.window(FFT.HAMMING);
     //----------------------------------------------------------------------------------------------------------------------------------------------
     
-    
-    //---------------------------------------------------------Touchoscin setup-komennot------------------------------------------------------------
-      oscP5 = new OscP5(this, touchOscInComing);
       frame.setResizable(true);
-      Remote = new NetAddress(remoteIP,portOutgoing);
-    //----------------------------------------------------------------------------------------------------------------------------------------------
+
+      oscP5 = new OscP5(this,touchOscIncoming);
     
     setuppi();
     
-    MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
+    //MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
+
     myBus = new MidiBus(this, 1, "KeyRig 49"); // Create a new MidiBus with no input device - you will have to change the input here
   
   

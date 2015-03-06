@@ -602,6 +602,7 @@ boolean keyCapElseDown = false;
 
 
 void keyPressed() {
+  keyDown = true;
   if(!keyCapElsewhere) {
     if(key == 'b') { boolean b = s2l.blinky; s2l = new soundDetect(); s2l.blinky = !b; }
 

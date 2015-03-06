@@ -112,7 +112,9 @@ void loadAllData1() {
     
     
     if(!loadinMemoriesFromXML) { thread("loadMemoriesFromXML"); }
-    if(!savingNearestSocketsToXML) { thread("saveNearestSocketsToXML"); }
+    if(!savingNearestSocketsToXML) { thread("saveNearestSocketsToXML"); } 
+    oscHandler.loadFromXML();
+    
     loadXmlToTrusses();
     loadSocketsFromXML();
     

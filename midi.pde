@@ -5,12 +5,154 @@
  behringerLC2412 LC2412;
  Input inputClass;
  Keyrig49 keyRig49;
+ 
+ MidiHandlerWindow midiWindow = new MidiHandlerWindow();
+ 
+ class MidiHandlerWindow {
+   int locX, locY, w, h;
+   boolean open;
+   
+   int selectedMachine;
+   
+   Window window;
+   DropdownMenu machineSelect;
+   DropdownMenu midiInSelect;
+   DropdownMenu midiOutSelect;
+   RadioButtonMenu outputModes;
+   
+   MidiHandlerWindow() {
+     h = 500;
+     w = 500;
+     locX = 0;
+     locY = 0;
+     window = new Window("MidiHandlerWindow", new PVector(h, w), this);
+     
+     ArrayList<DropdownMenuBlock> midiMachines = new ArrayList<DropdownMenuBlock>();
+     midiMachines.add(new DropdownMenuBlock("launchPad", 1));
+     midiMachines.add(new DropdownMenuBlock("LC2412", 2));
+     midiMachines.add(new DropdownMenuBlock("keyRig 49", 3));
+     machineSelect = new DropdownMenu("midiMachines", midiMachines); 
+     
+     ArrayList<DropdownMenuBlock> midiInputs = new ArrayList<DropdownMenuBlock>();
+     for(int i = 0; i < MidiBus.availableInputs().length; i++) {
+       midiInputs.add(new DropdownMenuBlock(MidiBus.availableInputs()[i], i));
+     }
+     midiInSelect = new DropdownMenu("Midi inputs", midiInputs);
+     
+     ArrayList<DropdownMenuBlock> midiOutputs = new ArrayList<DropdownMenuBlock>();
+     for(int i = 0; i < MidiBus.availableOutputs().length; i++) {
+       midiOutputs.add(new DropdownMenuBlock(MidiBus.availableOutputs()[i], i));
+     }
+     midiOutSelect = new DropdownMenu("Midi outputs", midiOutputs);
+     
+     outputModes = new RadioButtonMenu();
+     outputModes.addBlock(new RadioButton("Memories", 1));
+     outputModes.addBlock(new RadioButton("Fixtures", 2));
+   }
+   
+   void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+     window.draw(g, mouse);
+     g.pushMatrix();
+       g.translate(40, 60);
+  
+       
+       if(machineSelect.valueHasChanged()) {
+         selectedMachine = machineSelect.getValue();
+       }
+       
+       if(!machineSelect.open) {
+         switch(selectedMachine) {
+           case 1: //Launchpad
+             g.translate(0, 50);
+             midiOutSelect.draw(g, mouse);
+             g.translate(200, 0);
+             midiInSelect.draw(g, mouse);
+             
+             if(midiOutSelect.valueHasChanged() || midiInSelect.valueHasChanged()) {
+               int input = -1;
+               int output = -1;
+               
+               if(launchpad != null) { output = launchpad.outputIndex; input = launchpad.inputIndex; }
+               if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
+               if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
+               
+               if(launchpad != null) { launchpad.setup(input, output); } 
+               else { launchpad = new Launchpad(input, output); }
+               
+             }
+             
+           break;
+           
+           case 2: //LC2412
+             g.translate(0, 50);
+             midiOutSelect.draw(g, mouse);
+             g.translate(200, 0);
+             midiInSelect.draw(g, mouse);
+             
+             if(midiOutSelect.valueHasChanged() || midiInSelect.valueHasChanged()) {
+               int input = -1;
+               int output = -1;
+               
+               if(LC2412 != null) { output = LC2412.outputIndex; input = LC2412.inputIndex; }
+               if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
+               if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
+               if(LC2412 != null) { LC2412.setup(input, output); }
+               else { LC2412 = new behringerLC2412(input, output); }
+             }
+             
+           break;
+           
+           case 3: //Keyrig 49
+             g.translate(200, 50);
+             midiInSelect.draw(g, mouse);
+             
+             if(midiInSelect.valueHasChanged()) {
+               int input = midiInSelect.getValue();
+               if(keyRig49 != null) { keyRig49.setup(input); }
+               else { keyRig49 = new Keyrig49(input); }
+             }
+             
+           break;
+         }
+         
+         
+       }
+       
+       g.translate(0, 200);
+       outputModes.draw(g, mouse);
+       if(outputModes.valueHasChanged()) {
+         switch(selectedMachine) {
+           case 1: //Launchpad
+           break;
+           
+           case 2: //LC2412
+           break;
+           
+           case 3: //KerRig 49
+             keyRig49.output = outputModes.getValue();
+           break;
+         }
+       }
+     
+     g.popMatrix();
+     
+     g.pushMatrix();
+       g.translate(40, 60);
+       machineSelect.draw(g, mouse);
+     g.popMatrix();
+     
+     
+     
+   }
+   
+    
+ }
 
 
  void createMidiClasses() {
    LaunchpadData launchpadData = new LaunchpadData();
  //  launchpad = new Launchpad(2, 2);
-   LC2412 = new behringerLC2412(1, 2);
+  // LC2412 = new behringerLC2412(1, 2);
    inputClass = new Input();
   // keyRig49 = new Keyrig49(1);
  }
@@ -28,6 +170,7 @@ public class Keyrig49 {
   final boolean[] OCTAVE = {true, false, true, false, true, true, false, true, false, true, false, true};
   final int PIANO_OCTAVE_PATTERN_OFFSET = 0;
   
+ 
   MidiBus bus;
   
   boolean[] useToggle;
@@ -38,13 +181,18 @@ public class Keyrig49 {
   
   int output = OUTPUT_TO_FIXTURES;
   
+  int inputIndex;
+  
   Keyrig49(int inputIndex) {
     setup(inputIndex);
   }
   
   void setup(int inputIndex) {
-    
-    bus = new MidiBus(this, inputIndex, 0);
+    if(bus != null) { bus.clearAll(); }
+    this.inputIndex = inputIndex;
+    if(bus != null) { bus.addInput(inputIndex); }
+    else { bus = new MidiBus(this, inputIndex, 0); }
+
     keys = new boolean[49];
     keysOld = new boolean[49];
     useToggle = new boolean[49];
@@ -54,12 +202,19 @@ public class Keyrig49 {
   }
   
   void noteOn(int channel, int pitch, int velocity) {
-    int whiteI = 0;
-    for(int k = 0; k < pitch; k++) {
-       if(OCTAVE[(k + PIANO_OCTAVE_PATTERN_OFFSET) % OCTAVE.length]) whiteI++;
-    }
-    keys[constrain(whiteI, 0, keys.length-1)] = midiToBoolean(velocity);
-    keysVal[constrain(whiteI, 0, keys.length-1)] = midiToDMX(velocity);
+      int whiteI = 0;
+      for(int k = 0; k < pitch; k++) {
+         if(OCTAVE[(k + PIANO_OCTAVE_PATTERN_OFFSET) % OCTAVE.length]) whiteI++;
+      }
+      keys[constrain(whiteI, 0, keys.length-1)] = midiToBoolean(velocity);
+      keysVal[constrain(whiteI, 0, keys.length-1)] = midiToDMX(velocity);
+      if(output == 1) {
+        memories[constrain(whiteI, 0, keys.length-1)].setValue(midiToDMX(velocity));
+      }
+      else if(output == 2) {
+        fixtures.get(constrain(whiteI, 0, keys.length-1)).in.setUniversalDMX(DMX_DIMMER, midiToDMX(velocity));
+      }
+    
   }
   void noteOff(int channel, int pitch, int velocity) {
     noteOn(channel, pitch, velocity);
@@ -90,19 +245,26 @@ public class Launchpad {
   
   MidiBus bus;
   
+  int inputIndex;
+  int outputIndex;
+  
   Launchpad(int inputIndex, int outputIndex) {
     setup(inputIndex, outputIndex);
   }
   
   void setup(int inputIndex, int outputIndex) {
+    if(bus != null) { bus.clearAll(); }
+    this.inputIndex = inputIndex;
+    this.outputIndex = outputIndex;
+    if(bus != null) { bus.addInput(inputIndex); bus.addOutput(outputIndex); }
+    else { bus = new MidiBus(this, inputIndex, outputIndex); }
     
-    bus = new MidiBus(this, inputIndex, outputIndex);
     pads = new boolean[8][8];
     padsToggle = new boolean[8][8];
     upperPads = new boolean[8];
     upperPadsToggle = new boolean[8];
     
-    output = 2;
+    output = 1;
     useToggle = new boolean[8][8];
     for(int x = 0; x < 8; x++) { 
       for(int y = 0; y < 8; y++) { 
@@ -126,7 +288,7 @@ public class Launchpad {
       value = pads[x][y];
     }
     bus.sendNoteOn(0, pitch, byte(value) * 127);
-    if(output == 1) { memories[x+8*y+1].setValue(value ? 255 : 0); }
+    if(output == 1) { memories[x+8*y+1].enabled = value; }
     else if(output == 2) { fixtures.get(x+8*y).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
   }
   
@@ -168,6 +330,9 @@ public class behringerLC2412 {
   int[] output = { OUTPUT_TO_FIXTURES, OUTPUT_TO_MEMORIES };
 
   
+  
+  int inputIndex;
+  int outputIndex;
   behringerLC2412(int inputIndex, int outputIndex) {
     setup(inputIndex, outputIndex);
   }
@@ -175,7 +340,12 @@ public class behringerLC2412 {
   MidiBus bus;
   void setup(int inputIndex, int outputIndex) {
     //Midi start commands
-    bus = new MidiBus(this, inputIndex, outputIndex);
+    if(bus != null) { bus.clearAll(); }
+    this.inputIndex = inputIndex;
+    this.outputIndex = outputIndex;
+    if(bus != null) { bus.addInput(inputIndex); bus.addOutput(outputIndex); }
+    else { bus = new MidiBus(this, inputIndex, outputIndex); }
+    
     faderValue = new int[2][12];
     faderValueOld = new int[2][12];
     buttons = new boolean[12];

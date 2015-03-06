@@ -135,8 +135,13 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(memoryCreator, "MemoryCreator", 1000));
     subWindows.add(new SubWindowContainer(settingsWindow, "SettingsWindow", 1000));
     subWindows.add(new SubWindowContainer(help, "HelpWindow", 1000));
+    subWindows.add(new SubWindowContainer(colorWashMenu, "colorSelectBox", 1000));
+    subWindows.add(new SubWindowContainer(colorPick, "HSB", 1000));
+    subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
+    subWindows.add(new SubWindowContainer(oscSettings, "OSCSettingsWindow", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow, "MidiHandlerWindow", 1000));
     
-    //subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
+    
   }
   
   ArrayList<SubWindowContainer> subWindows;
@@ -168,6 +173,24 @@ class SubWindowHandler {
   }
   
   
+}
+
+
+
+CursorHandler cursor = new CursorHandler();
+class CursorHandler {
+  CursorHandler() {
+  }
+  
+  int cursor;
+  void set(int cur) {
+    cursor = cur;
+  }
+  
+  void push() {
+    cursor(cursor);
+    cursor = java.awt.Cursor.DEFAULT_CURSOR;
+  }
 }
 
 
@@ -665,12 +688,17 @@ class DropdownMenuBlock {
           g.stroke(strokeColor);
           g.strokeWeight(strokeWeight);
           g.rect(rectStartPoint.x, rectStartPoint.y, rectSize.x, rectSize.y);
-        } //End of block
         
-        { //Text
-          g.fill(textColor);
-          g.text(text, 4, (size.y/2)+5);
-        } //End of text
+        
+          { //Text
+            g.pushStyle();
+            g.textAlign(LEFT);
+            g.fill(textColor);
+            g.text(text, rectStartPoint.x+4, rectStartPoint.y+(size.y/2)+5);
+            g.popStyle();
+          } //End of text
+        
+        } //End of blcock
         
       g.popStyle();
     g.popMatrix();
@@ -683,4 +711,149 @@ class DropdownMenuBlock {
     return pressed;
   }
   
+}
+
+class PushButton {
+  String name = "";
+  PushButton(String name) {
+    this.name = name;
+  }
+  
+ 
+  
+  boolean isPressed(PGraphics g, Mouse mouse) {
+    g.pushMatrix();
+    g.pushStyle();
+    PVector size = new PVector(20, 20);
+    
+    mouse.declareUpdateElementRelative("button"+name, 10000000, 0, 0, round(size.x), round(size.y), g);
+    mouse.setElementExpire("button"+name, 2);
+    
+    boolean hovered = mouse.elmIsHover("button"+name);
+    boolean pressed = mouse.isCaptured("button"+name) && mouse.firstCaptureFrame;
+    
+    themes.button.setTheme(g, mouse, hovered, pressed);
+    
+    
+    g.rect(0, 0, size.x, size.y, 4);
+    g.popStyle();
+    g.popMatrix();
+    if(pressed) {
+      return true;
+    }
+    return false;
+  }
+}
+
+
+RadioButtonMenu testRadio = new RadioButtonMenu();
+
+class RadioButtonMenu {
+  ArrayList<RadioButton> buttons = new ArrayList<RadioButton>();
+  
+  RadioButtonMenu() {
+
+  }
+  
+  void addBlock(RadioButton button) {
+    buttons.add(button);
+  }
+  
+  boolean selectedChanged;
+  int selectedId;
+  
+  void draw(PGraphics g, Mouse mouse) {
+    for(int i = 0; i < buttons.size(); i++) {
+      RadioButton button = buttons.get(i);
+      String mouseName = this.toString() + str(i);
+      button.draw(g, mouse, mouseName);
+      g.translate(0, button.buttonSize*1.5);
+      if(button.selectedChanged) {
+        if(button.selected) {
+          selectedId = i;
+          selectedChanged = true;
+          button.selectedChanged = false;
+        }
+      }
+      else {
+        if(i != selectedId) {
+          button.selected = false;
+        }
+      }
+    }
+  }
+  
+  boolean valueHasChanged() {
+    boolean toReturn = selectedChanged;
+    selectedChanged = false;
+    return toReturn;
+  }
+  
+  int getValue() {
+    return buttons.get(selectedId).getValue();
+  }
+  
+  void setValue(int val) {
+    for(int i = 0; i < buttons.size(); i++) {
+      if(buttons.get(i).getValue() == val) {
+        selectedId = i;
+        selectedChanged = true;
+        break;
+      }
+    }
+  }
+  
+}
+
+
+
+class RadioButton {
+  
+  RadioButton(String text, int value) {
+    this.value = value;
+    this.text = text;
+  }
+  
+  boolean selected = false;
+  boolean selectedChanged;
+  int buttonSize;
+  String text;
+  int value;
+  
+  void draw(PGraphics g, Mouse mouse, String mouseName) {
+    buttonSize = 20;
+    mouse.declareUpdateElementRelative(mouseName, 100000, -(buttonSize/2), -(buttonSize/2), buttonSize, buttonSize, g);
+    boolean pressed = mouse.isCaptured(mouseName) && mouse.firstCaptureFrame;
+    if(pressed) { selected = !selected; selectedChanged = true; }
+    drawShapes(g, mouse, selected);
+  }
+  
+  void drawShapes(PGraphics g, Mouse mouse, boolean selected) {
+    g.pushMatrix();
+      g.pushStyle();
+        g.rectMode(CENTER);
+        g.noFill();
+        g.strokeWeight(buttonSize/5);
+        g.stroke(themes.buttonColor.neutral);
+        g.ellipse(0, 0, buttonSize, buttonSize);
+        if(selected) {
+          g.fill(themes.buttonColor.neutral);
+          g.noStroke();
+          g.ellipse(0.3, 0.3, buttonSize/2, buttonSize/2);
+        }
+        g.pushMatrix();
+          g.pushStyle();
+            g.textAlign(LEFT);
+            g.rectMode(CORNER);
+            g.fill(0);
+            g.text(text, buttonSize*1.1, buttonSize/4);
+          g.popStyle();
+        g.popMatrix();
+      g.popStyle();
+    g.popMatrix();
+  }
+  
+  int getValue() {
+    return value;
+  }
 }
