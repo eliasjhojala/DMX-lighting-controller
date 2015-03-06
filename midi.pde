@@ -64,64 +64,64 @@
        
        g.pushMatrix();
        
-       if(!machineSelect.open) {
-         switch(selectedMachine) {
-           case 1: //Launchpad
-             g.translate(0, 50);
-             midiOutSelect.draw(g, mouse);
-             g.translate(200, 0);
-             midiInSelect.draw(g, mouse);
+         if(!machineSelect.open) {
+           switch(selectedMachine) {
+             case 1: //Launchpad
+               g.translate(0, 50);
+               midiOutSelect.draw(g, mouse);
+               g.translate(200, 0);
+               midiInSelect.draw(g, mouse);
+               
+               if(midiOutSelect.valueHasChanged() || midiInSelect.valueHasChanged()) {
+                 int input = -1;
+                 int output = -1;
+                 
+                 if(launchpad != null) { output = launchpad.outputIndex; input = launchpad.inputIndex; }
+                 if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
+                 if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
+                 
+                 if(launchpad != null) { launchpad.setup(input, output); } 
+                 else { launchpad = new Launchpad(input, output); }
+                 
+               }
+               
+             break;
              
-             if(midiOutSelect.valueHasChanged() || midiInSelect.valueHasChanged()) {
-               int input = -1;
-               int output = -1;
+             case 2: //LC2412
+               g.translate(0, 50);
+               midiOutSelect.draw(g, mouse);
+               g.translate(200, 0);
+               midiInSelect.draw(g, mouse);
                
-               if(launchpad != null) { output = launchpad.outputIndex; input = launchpad.inputIndex; }
-               if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
-               if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
+               if(midiOutSelect.valueHasChanged() || midiInSelect.valueHasChanged()) {
+                 int input = -1;
+                 int output = -1;
+                 
+                 if(LC2412 != null) { output = LC2412.outputIndex; input = LC2412.inputIndex; }
+                 if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
+                 if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
+                 if(LC2412 != null) { LC2412.setup(input, output); }
+                 else { LC2412 = new behringerLC2412(input, output); }
+               }
                
-               if(launchpad != null) { launchpad.setup(input, output); } 
-               else { launchpad = new Launchpad(input, output); }
-               
-             }
+             break;
              
-           break;
+             case 3: //Keyrig 49
+               g.translate(200, 50);
+               midiInSelect.draw(g, mouse);
+               
+               if(midiInSelect.valueHasChanged()) {
+                 int input = midiInSelect.getValue();
+                 if(keyRig49 != null) { keyRig49.setup(input); }
+                 else { keyRig49 = new Keyrig49(input); }
+               }
+               
+             break;
+           }
            
-           case 2: //LC2412
-             g.translate(0, 50);
-             midiOutSelect.draw(g, mouse);
-             g.translate(200, 0);
-             midiInSelect.draw(g, mouse);
-             
-             if(midiOutSelect.valueHasChanged() || midiInSelect.valueHasChanged()) {
-               int input = -1;
-               int output = -1;
-               
-               if(LC2412 != null) { output = LC2412.outputIndex; input = LC2412.inputIndex; }
-               if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
-               if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
-               if(LC2412 != null) { LC2412.setup(input, output); }
-               else { LC2412 = new behringerLC2412(input, output); }
-             }
-             
-           break;
            
-           case 3: //Keyrig 49
-             g.translate(200, 50);
-             midiInSelect.draw(g, mouse);
-             
-             if(midiInSelect.valueHasChanged()) {
-               int input = midiInSelect.getValue();
-               if(keyRig49 != null) { keyRig49.setup(input); }
-               else { keyRig49 = new Keyrig49(input); }
-             }
-             
-           break;
          }
          
-         
-       }
-       
        g.popMatrix();
        
        g.translate(0, 200);
