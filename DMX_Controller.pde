@@ -3,7 +3,7 @@ boolean showModeLocked = true;                                                  
 boolean showSockets = false;                                                                                                                                              //|
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
 boolean useCOM = true; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                       //|
-boolean use3D = true;                                                                                                                                                     //|
+boolean use3D = false;                                                                                                                                                     //|
 boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                               //|
 boolean useAnotherArduino = false;                                                                                                                                        //|
                                                                                                                                                                           //|
