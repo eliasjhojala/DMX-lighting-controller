@@ -28,6 +28,8 @@ class Themes {
   ShapeTheme window;
   ShapeTheme bubble;
   ColorTheme bubbleColor;
+  ShapeTheme button;
+  ColorTheme buttonColor;
   
   color topMenuTheme = color(222, 0, 0);
   color topMenuTheme2 = color(200, 0, 0);
@@ -36,6 +38,9 @@ class Themes {
 
   Themes() {
     window = new ShapeTheme(color(255, 230), color(150), 3, true);
+    
+    buttonColor = new ColorTheme(color(20, 50, 255), color(20, 70, 255), color(30, 100, 255));
+    button = new ShapeTheme(buttonColor, color(0, 0, 255, 200), 2, false);
     
     bubbleColor = new ColorTheme(color(200, 0, 0), color(222, 0, 0), color(222, 0, 0));
     bubble = new ShapeTheme(bubbleColor, color(150, 0, 0), 2, true);
