@@ -94,10 +94,10 @@ void ylavalikko() {
     if(drawLeftSideButton(round, "Help")) help.open = !help.open;
     translate(0, 120);
     if(drawLeftSideButton(round, "Control")) lowerMenu.open = !lowerMenu.open;
-    translate(0, 120);
-    if(drawLeftSideButton(round, "OSC")) oscSettings.open = !oscSettings.open;
-    translate(0, 120);
-    if(drawLeftSideButton(round, "MIDI")) midiWindow.open = !midiWindow.open;
+//    translate(0, 120);
+//    if(drawLeftSideButton(round, "OSC")) oscSettings.open = !oscSettings.open;
+//    translate(0, 120);
+//    if(drawLeftSideButton(round, "MIDI")) midiWindow.open = !midiWindow.open;
   popMatrix();
   } //End of buttons placed to left side       
   //settingsWindow.draw();

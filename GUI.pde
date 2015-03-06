@@ -748,10 +748,12 @@ class PushButton {
     b.pushMatrix();
     b.pushStyle();
     PVector size = new PVector(20, 20);
-    b.translate(20, 20);
     
+    g.pushMatrix();
+    g.translate(b.screenX(0, 0), b.screenY(0, 0));
     mouse.declareUpdateElementRelative("button"+name, 10000000, 0, 0, round(size.x), round(size.y), g);
     mouse.setElementExpire("button"+name, 2);
+    g.popMatrix();
     
     boolean hovered = mouse.elmIsHover("button"+name);
     boolean pressed = mouse.isCaptured("button"+name) && mouse.firstCaptureFrame;

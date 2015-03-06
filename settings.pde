@@ -54,10 +54,11 @@ class SettingsWindow {
         new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", true, tabs[2])
       }
     );
-    tabs[3] = new SettingsTab("more", this);
+    tabs[3] = new SettingsTab("More", this);
     tabs[3].setControllers(
       new SettingController[] {
-        new SettingController(7, "", "", false, tabs[3])
+        new SettingController(101, "OSC", "Open OSC settings window by clicking the button", false, tabs[3]),
+        new SettingController(102, "Midi", "Open MIDI settings window by clicking the button", false, tabs[3]),
       }
     );
   }
@@ -112,6 +113,13 @@ class SettingsWindow {
       case 3:  return pageRotation;
       case 4:  return int(zoom);
       default: return 0;
+    }
+  }
+  
+  void pushButtonPressed(int var) {
+    switch(var) {
+      case 101: oscSettings.open = !oscSettings.open; settingsWindow.open = false; break;
+      case 102: midiWindow.open = !midiWindow.open; settingsWindow.open = false; break;
     }
   }
   
@@ -354,7 +362,7 @@ class SettingController {
     }
     else {
       mode = 5;
-      pushButton = new PushButton("settings:" + parent.text + ":" + name);
+      pushButton = new PushButton("settings:" + parent.text + ":" + name + str(var));
       
       this.name = name;
       this.description = description;
@@ -427,12 +435,11 @@ class SettingController {
       break;
       case 5:
         buffer.pushMatrix();
-        //buffer.translate(50, 50);
-        if(pushButton.isPressed(buffer, g, mouse)) {
-          //parentTab.parentWindow.pushButtonPressed(var);
-        }
-        buffer.translate(30, 0);
-        buffer.text(name, 0, 0);
+          drawText(0, 0, buffer);
+          buffer.translate(parentTab.width_-42, 8);
+          if(pushButton.isPressed(buffer, g, mouse)) {
+            parentTab.parentWindow.pushButtonPressed(var);
+          }
         buffer.popMatrix();
       break;
     }
