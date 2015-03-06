@@ -261,8 +261,7 @@ public class secondApplet1 extends PApplet {
       }
   }
   
-  void keyPressed()
-  {
+  void keyPressed() {
     if (keyCode == UP) { cam.z += 100; }
     else if (keyCode == DOWN) { cam.z -= 100; }
     if(key==27) { key=0; }
