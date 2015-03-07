@@ -4,6 +4,9 @@ String[] saveOptionButtonVariables = { "dimmer", "red", "green", "blue", "white"
 
   soundDetect s2l;
   memory[] memories = new memory[1000];
+
+int fixtureOwnFade;  
+  
 void createMemoryObjects() {
   s2l = new soundDetect();
   for (memory temp : memories) temp = new memory();
@@ -349,7 +352,8 @@ boolean[] XMLtoBooleanArray(String name, XML xml) {
   int a = 0;
   for(int i = 0; i < block.length; i++) {
     if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
-      a++;
+      int id = block[i].getInt("id");
+      if(id+1 > a) { a = id+1; } 
     }
   }
   toReturn = new boolean[a];
@@ -429,7 +433,7 @@ class Preset { //Begin of Preset class
         if(xml != null) {
           whatToSave = new boolean[saveOptionButtonVariables.length+10];
           arrayCopy(XMLtoBooleanArray("whatToSave", xml), whatToSave);
-          fixturesToSave = new boolean[saveOptionButtonVariables.length+10];
+          fixturesToSave = new boolean[fixtures.size()];
           arrayCopy(XMLtoBooleanArray("fixturesToSave", xml), fixturesToSave);
         }
     
@@ -489,6 +493,7 @@ class Preset { //Begin of Preset class
   
   
   void savePreset(boolean[] newWhatToSave) {
+    whatToSave = new boolean[40];
     arrayCopy(newWhatToSave, whatToSave);
     savePreset();
   }
@@ -526,6 +531,16 @@ class Preset { //Begin of Preset class
                     if(jk < fixtures.get(i).preset.DMXlength) {
                       int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
                       fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
+                      if(val > 0) {
+                        if(parent.type == 1) {
+                          fixtures.get(i).preset.preFade = round(float(fixtureOwnFade)/20);
+                          fixtures.get(i).preset.postFade = fixtureOwnFade;
+                        }
+                        else {
+                          fixtures.get(i).preset.preFade = 0;
+                          fixtures.get(i).preset.postFade = 0;
+                        }
+                      }
                       if(parent.soloInThisMemory && val > 0) {
                         fixtures.get(i).soloInThisFixture = true;
                         soloIsOn = true;
@@ -550,6 +565,7 @@ class Preset { //Begin of Preset class
         repOfFixtures[i] = new FixtureDMX();
     }
     
+    fixturesToSave = new boolean[fixtures.size()];
     for(int i = 0; i < fixtures.size(); i++) {
       fixturesToSave[i] = fixtures.get(i).selected;
     }
@@ -952,7 +968,8 @@ class chase { //Begin of chase class--------------------------------------------
         soloIsOn = true;
         fixtures.get(num).soloInThisFixture = true; 
       } //End of Solo commands
-      
+      fixtures.get(num).preset.preFade = 0;
+      fixtures.get(num).preset.postFade = 0;
       fixtures.get(num).preset.setUniDMXfromPreset(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
     }

@@ -36,6 +36,15 @@ void draw() {
     invokeFixturesDraw(); //Invoke every fixtures draw
     resetSolo();
   }
+  else {
+    pushMatrix(); pushStyle();
+    background(0);
+    textAlign(CENTER);
+    textSize(100);
+    fill(255);
+    text("LOADING", width/2, height/2);
+    popStyle(); popMatrix();
+  }
   scrolledUp = false;
   scrolledDown = false;
   scrollSpeed = 0;

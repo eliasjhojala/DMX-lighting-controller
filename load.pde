@@ -33,7 +33,7 @@ void loadAllData1() {
   
      table = loadTable(loadPath, "header"); //Eliaksen polku
 
-
+    programReadyToRun = false;
     //FIXTURES---------------------------------------------------------------------------------------------------------------------------
     //Initialize fixtures using type
     fixtures.clear();
@@ -112,11 +112,12 @@ void loadAllData1() {
     
     
     if(!loadinMemoriesFromXML) { thread("loadMemoriesFromXML"); }
-    if(!savingNearestSocketsToXML) { thread("saveNearestSocketsToXML"); } 
+    if(!savingNearestSocketsToXML) { saveNearestSocketsToXML(); } 
     oscHandler.loadFromXML();
     
-    loadXmlToTrusses();
+    
     loadSocketsFromXML();
+    loadXmlToTrusses();
     
     long takedTime = millis() - loadDataBeginMillis;
     notifier.notify("Load complete. (" + str(takedTime) + "ms)");

@@ -12,6 +12,9 @@ class Fade {
     startFade(from, to, preFade, postFade);
   }
   
+  Fade() {
+  }
+  
   void startFade(int from, int to, int pre, int post) {
     if(to != from) {
       preFade = pre;

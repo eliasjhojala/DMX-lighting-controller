@@ -236,6 +236,7 @@ public class Keyrig49 {
       for(int k = 0; k < pitch; k++) {
          if(OCTAVE[(k + PIANO_OCTAVE_PATTERN_OFFSET) % OCTAVE.length]) whiteI++;
       }
+      if(velocity > 10) velocity = 127;
       keys[constrain(whiteI, 0, keys.length-1)] = midiToBoolean(velocity);
       keysVal[constrain(whiteI, 0, keys.length-1)] = midiToDMX(velocity);
       if(output == 1) {
@@ -248,6 +249,10 @@ public class Keyrig49 {
   }
   void noteOff(int channel, int pitch, int velocity) {
     noteOn(channel, pitch, velocity);
+  }
+  
+  void controllerChange(int channel, int number, int value) {
+    fixtureOwnFade = value*5;
   }
   
 }
@@ -543,7 +548,7 @@ class Input {
       if(data[number] != dataOld[number]) {
         if(output == OUTPUT_TO_FIXTURES) {
           if(n < fixtures.size()) {
-            fixtures.get(n).setUniversalDMXwithFade(DMX_DIMMER, data[number] ? 255 : 0);
+            fixtures.get(n).setUniversalDMXwithFade(DMX_DIMMER, data[number] ? 255 : 0, 10, 100);
             //fixtures.get(n).in.setUniversalDMX(DMX_DIMMER, data[number] ? 255 : 0);
             fixtures.get(n).DMXChanged = true;
             

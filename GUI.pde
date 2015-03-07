@@ -923,7 +923,7 @@ class IntController {
 
             mouse.declareUpdateElementRelative(name, 10000, 0, 0, 100, 20, g);
             if(mouse.isCaptured(name) && mouseButton == LEFT) {
-              floatState += float(pmouseY - mouseY) / 10 * (abs(mouseX - screenX(0, 0)) / 20 + 1);
+              floatState += float(pmouseY - mouseY) / 20 * (abs(mouseX - screenX(0, 0)) / 20 + 1);
               if(round(floatState) != state) { valueChanged = true; }
               state = round(floatState);
             }
@@ -939,7 +939,7 @@ class IntController {
       
       mouse.setElementExpire(name, 2);
       if(mouse.isCaptured(name) && mouseButton == RIGHT && mouse.firstCaptureFrame) {
-        if(lastRMBc > millis() - 1000) setState(defaultVal); else lastRMBc = millis();
+        if(lastRMBc > millis() - 1000) { setState(defaultVal); valueChanged = true; } else lastRMBc = millis();
       }
     }
     b.popMatrix(); b.popStyle();

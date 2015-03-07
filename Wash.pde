@@ -36,6 +36,8 @@ void newColorWash() {
 boolean colorWashMenuOpen = false;
 PVector colorMenuOffset = new PVector(0, 0);
 
+int lastClickedColor;
+
 ColorWashMenu colorWashMenu = new ColorWashMenu();
 
 class ColorWashMenu {
@@ -189,21 +191,18 @@ class ColorWashMenu {
                           mouse.setElementExpire("cWB:color"+str(i*5+j), 2);
                           g.fill(colorNames[activeColorNames[i*5+j]].getRGB()); //Fill rect with right color
                           g.strokeWeight(1); //Strokeweight is 1 by default
-                          if(washs[activeColorNames[i*5+j]] == null) {
-                             washs[activeColorNames[i*5+j]] = new colorWash("");
-                          }
                           g.stroke(0); //This is in weird place, because it was the first good place I found quickly
-                          if(!washs[activeColorNames[i*5+j]].isReady()) { g.strokeWeight(4); } //Show if wash is active
+                          if(lastClickedColor == i*5+j) {
+                            g.strokeWeight(3);
+                          }
                           if(mouse.isCaptured("cWB:color"+str(i*5+j)) && mouse.firstCaptureFrame) { 
                             g.strokeWeight(3); //Bolded stroke
-                            boolean found = false;            
-                                washs[activeColorNames[i*5+j]].setColor(colorNames[activeColorNames[i*5+j]].name); //Set new color to wash
-                                if(washs[activeColorNames[i*5+j]].isReady()) {
-                                  washs[activeColorNames[i*5+j]].go(); //Activate wash
-                                }
-                                else {
-                                  washs[activeColorNames[i*5+j]].clear(); //Clear wash
-                                }
+                            boolean found = false;         
+                                wash.clear();   
+                                wash.setColor(colorNames[activeColorNames[i*5+j]].name); //Set new color to wash
+                                wash.dim = 255; //Set also dim value to wash
+                                wash.go(); //Activate wash
+                                lastClickedColor = i*5+j;
                           } 
                           g.rect(50*i, 30+50+a*40, 40, 30, 5); //Draw color rect
                         }
@@ -293,7 +292,7 @@ class colorWash {
     colors[0] = h;
     colors[1] = s;
     colors[2] = b;
-    setRgbwd(convertColor(colors, 2, 4));
+    setRgbwd(colorConverter.convertColor(colors, 2, 4));
   }
   
   colorWash(int r, int g, int b) {
@@ -517,7 +516,7 @@ class colorName {
     color c = color(0, 0, 0);
     if(colorMode == 3) {
       int[] rgb = new int[3];
-      arrayCopy(convertColor(toArray(red, green, blue, white), 3, 1), rgb);
+      arrayCopy(colorConverter.convertColor(toArray(red, green, blue, white), 3, 1), rgb);
       c = color(rgb[0], rgb[1], rgb[2]);
     }
     if(colorMode == 1) {
@@ -529,220 +528,222 @@ class colorName {
   
 }
 
-int[] convertColor(int[] original, int from, int to) {
-  //original array: { r, g, b, w, d } or { h, s, b } or
-  //from & to: 1 = rgb, 2 = hsb, 3 = rgbw, 4 = rgbwd, 5 = rgbd
-  int[] toReturn = { 0, 0, 0 };
-  pushStyle(); //we use colorModes in this function so make sure they don't affect to other parts of the software
-      if(from == 1) { //rgb
-        pushStyle();
-          colorMode(RGB);
-            if(to == 1) { //rgb
-              toReturn = new int[3];
-              arrayCopy(original, toReturn);
-            }
-            if(to == 2) { //hsb
-              toReturn = new int[3];
-              color c = color(original[0], original[1], original[2]);
-              toReturn[0] = round(hue(c));
-              toReturn[1] = round(saturation(c));
-              toReturn[2] = round(brightness(c));
-            }
-            else if(to == 3) { //rgbw
-              color c = color(original[0], original[1], original[2]);
-              toReturn = new int[4]; 
-              toReturn[0] = original[0];
-              toReturn[1] = original[1];
-              toReturn[2] = original[2];
-              toReturn[3] = (original[0] + original[1] + original[2]) / 3;
-            }
-            else if(to == 4) { //rgbwd
-              color c = color(original[0], original[1], original[2]);
-              toReturn = new int[4];
-              toReturn[0] = original[0];
-              toReturn[1] = original[1];
-              toReturn[2] = original[2];
-              toReturn[3] = (original[0] + original[1] + original[2]) / 3;
-              toReturn[4] = 255;
-            }
-            else if(to == 5) { //rgbd
-              color c = color(original[0], original[1], original[2]);
-              toReturn = new int[4];
-              toReturn[0] = original[0];
-              toReturn[1] = original[1];
-              toReturn[2] = original[2];
-              toReturn[3] = 255;
-            }
-            else if(to == 6) { //cmyk
-              color c = color(original[0], original[1], original[2]);
-              CMYK_Colour cmyk = new CMYK_Colour(c);
-              toReturn = new int[4];
-              toReturn[0] = round(cmyk.cyan);
-              toReturn[1] = round(cmyk.magenta);
-              toReturn[2] = round(cmyk.yellow);
-              toReturn[3] = round(cmyk.black);
-            }
-          popStyle();
-      }
-      else if(from == 2) { //hsb
-        pushStyle();
-          colorMode(HSB);
-            if(to == 1) { //rgb
-              color c = color(original[0], original[1], original[2]);
-              toReturn = new int[3];
-              toReturn[0] = round(red(c));
-              toReturn[1] = round(green(c));
-              toReturn[2] = round(blue(c));
-            }
-            else if(to == 2) { //hsb
-              toReturn = new int[3];
-              arrayCopy(original, toReturn);
-            }
-            else if(to == 3) { //rgbw
-              toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 2, 1), 1, 3), toReturn);
-            }
-            else if(to == 4) { //rgbwd
-              toReturn = new int[5];
-              arrayCopy(convertColor(convertColor(original, 2, 1), 1, 4), toReturn);
-            }
-            else if(to == 5) { //rgbd
-              toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 2, 1), 1, 5), toReturn);
-            }
-            else if(to == 6) { //cmyk
-              toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 2, 1), 1, 6), toReturn);
-            }
-        popStyle();
-      }
-      else if(from == 3) { //rgbw
-        pushStyle();
-          colorMode(RGB);
-            if(to == 1) { //rgb
-              color c = color(original[0], original[1], original[2]);
-              int white = original[3];
-              toReturn = new int[3];
-              toReturn[0] = round(red(c) + white/2);
-              toReturn[1] = round(green(c) + white/2); 
-              toReturn[2] = round(blue(c) + white/2); 
-            }
-            else if(to == 2) { //hsb
-              toReturn = new int[3];
-              arrayCopy(convertColor(convertColor(original, 3, 1), 1, 2), toReturn);
-            }
-            else if(to == 3) { //rgbw
-              toReturn = new int[4];
-              arrayCopy(original, toReturn);
-            }
-            else if(to == 4) { //rgbwd
-              toReturn = new int[5];
-              arrayCopy(original, toReturn); //rgbw values
-              toReturn[4] = 255; //dimmer
-            }
-            else if(to == 5) {
-              toReturn = new int[4];
-              arrayCopy(convertColor(original, 3, 1), toReturn); //rgb values
-              toReturn[3] = 255; //dimmer
-            }
-            else if(to == 6) { //cmyk
-              toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 3, 1), 1, 6), toReturn);
-            }
-        popStyle();
-      }
-      else if(from == 4) { //rgbwd
-        pushStyle();
-          colorMode(RGB);
-          color c = color(original[0], original[1], original[2]);
-          int dim = original[4];
-          int white = original[3];
-          if(to == 1) { //rgb
-            toReturn = new int[3];
-            arrayCopy(convertColor(original, 3, 1), toReturn);
-            color co = color(toReturn[0], toReturn[1], toReturn[2]);
-            toReturn[0] = rMap(round(red(co)), 0, 255, 0, dim); 
-            toReturn[1] = rMap(round(green(co)), 0, 255, 0, dim);
-            toReturn[2] = rMap(round(blue(co)), 0, 255, 0, dim);
-            
-          }
-          else if(to == 2) { //hsb
-            toReturn = new int[3];
-            toReturn[0] = round(hue(c));
-            toReturn[1] = round((saturation(c) + getInvertedValue(white, 0, 255)) / 2);
-            toReturn[2] = round((brightness(c)*2 + white) / 3);
-          }
-          else if(to == 3) { //rgbw
-            toReturn = new int[4];
-            toReturn[0] = rMap(round(red(c)), 0, 255, 0, dim);
-            toReturn[1] = rMap(round(green(c)), 0, 255, 0, dim);
-            toReturn[2] = rMap(round(blue(c)), 0, 255, 0, dim);
-            toReturn[3] = rMap(white, 0, 255, 0, dim);
-          }
-          else if(to == 4) { //rgbwd
-            toReturn = new int[5];
-            arrayCopy(original, toReturn);
-          }
-          else if(to == 5) { //rgbd
-            toReturn = new int[4];
-            arrayCopy(convertColor(original, 4, 1), toReturn);
-            toReturn[3] = original[4];
-          }
-          else if(to == 6) { //cmyk
-              toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 4, 1), 1, 6), toReturn);
-            }
-          
-        popStyle();
-      }
-      else if(from == 5) { //rgbd
-        pushStyle();
-          colorMode(RGB);
+
+ColorConverter colorConverter = new ColorConverter();
+
+class ColorConverter {
+  ColorConverter() {
+  }
+  int[] convertColor(int[] original, int from, int to) {
+    //original array: { r, g, b, w, d } or { h, s, b }
+    //from & to: 1 = rgb, 2 = hsb, 3 = rgbw, 4 = rgbwd, 5 = rgbd
+    int[] toReturn = { 0, 0, 0 };
+        if(from == 1) { //rgb
+            colorMode(RGB);
+              if(to == 1) { //rgb
+                toReturn = new int[3];
+                arrayCopy(original, toReturn);
+              }
+              if(to == 2) { //hsb
+                toReturn = new int[3];
+                color c = color(original[0], original[1], original[2]);
+                toReturn[0] = round(hue(c));
+                toReturn[1] = round(saturation(c));
+                toReturn[2] = round(brightness(c));
+              }
+              else if(to == 3) { //rgbw
+                color c = color(original[0], original[1], original[2]);
+                toReturn = new int[4]; 
+                toReturn[0] = original[0];
+                toReturn[1] = original[1];
+                toReturn[2] = original[2];
+                toReturn[3] = (original[0] + original[1] + original[2]) / 3;
+              }
+              else if(to == 4) { //rgbwd
+                color c = color(original[0], original[1], original[2]);
+                toReturn = new int[4];
+                toReturn[0] = original[0];
+                toReturn[1] = original[1];
+                toReturn[2] = original[2];
+                toReturn[3] = (original[0] + original[1] + original[2]) / 3;
+                toReturn[4] = 255;
+              }
+              else if(to == 5) { //rgbd
+                color c = color(original[0], original[1], original[2]);
+                toReturn = new int[4];
+                toReturn[0] = original[0];
+                toReturn[1] = original[1];
+                toReturn[2] = original[2];
+                toReturn[3] = 255;
+              }
+              else if(to == 6) { //cmyk
+                color c = color(original[0], original[1], original[2]);
+                CMYK_Colour cmyk = new CMYK_Colour(c);
+                toReturn = new int[4];
+                toReturn[0] = round(cmyk.cyan);
+                toReturn[1] = round(cmyk.magenta);
+                toReturn[2] = round(cmyk.yellow);
+                toReturn[3] = round(cmyk.black);
+              }
+        }
+        else if(from == 2) { //hsb
+            colorMode(HSB);
+              if(to == 1) { //rgb
+                color c = color(original[0], original[1], original[2]);
+                toReturn = new int[3];
+                toReturn[0] = round(red(c));
+                toReturn[1] = round(green(c));
+                toReturn[2] = round(blue(c));
+              }
+              else if(to == 2) { //hsb
+                toReturn = new int[3];
+                arrayCopy(original, toReturn);
+              }
+              else if(to == 3) { //rgbw
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 2, 1), 1, 3), toReturn);
+              }
+              else if(to == 4) { //rgbwd
+                toReturn = new int[5];
+                arrayCopy(convertColor(convertColor(original, 2, 1), 1, 4), toReturn);
+              }
+              else if(to == 5) { //rgbd
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 2, 1), 1, 5), toReturn);
+              }
+              else if(to == 6) { //cmyk
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 2, 1), 1, 6), toReturn);
+              }
+           colorMode(RGB);
+        }
+        else if(from == 3) { //rgbw
+            colorMode(RGB);
+              if(to == 1) { //rgb
+                color c = color(original[0], original[1], original[2]);
+                int white = original[3];
+                toReturn = new int[3];
+                toReturn[0] = round(red(c) + white/1.5);
+                toReturn[1] = round(green(c) + white/1.5); 
+                toReturn[2] = round(blue(c) + white/1.5); 
+                
+                toReturn[0] = round(map(toReturn[0], 0, max(toReturn), 0, max(original)));
+                toReturn[1] = round(map(toReturn[1], 0, max(toReturn), 0, max(original)));
+                toReturn[2] = round(map(toReturn[2], 0, max(toReturn), 0, max(original)));
+              }
+              else if(to == 2) { //hsb
+                toReturn = new int[3];
+                arrayCopy(convertColor(convertColor(original, 3, 1), 1, 2), toReturn);
+              }
+              else if(to == 3) { //rgbw
+                toReturn = new int[4];
+                arrayCopy(original, toReturn);
+              }
+              else if(to == 4) { //rgbwd
+                toReturn = new int[5];
+                arrayCopy(original, toReturn); //rgbw values
+                toReturn[4] = 255; //dimmer
+              }
+              else if(to == 5) {
+                toReturn = new int[4];
+                arrayCopy(convertColor(original, 3, 1), toReturn); //rgb values
+                toReturn[3] = 255; //dimmer
+              }
+              else if(to == 6) { //cmyk
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 3, 1), 1, 6), toReturn);
+              }
+        }
+        else if(from == 4) { //rgbwd
+            colorMode(RGB);
             color c = color(original[0], original[1], original[2]);
-            int dim = original[3];
+            int dim = original[4];
+            int white = original[3];
             if(to == 1) { //rgb
-              //When we conver RGBD to RGB we only have to map all the RGB values with dim value
               toReturn = new int[3];
+              arrayCopy(convertColor(original, 3, 1), toReturn);
+              color co = color(toReturn[0], toReturn[1], toReturn[2]);
+              toReturn[0] = rMap(round(red(co)), 0, 255, 0, dim); 
+              toReturn[1] = rMap(round(green(co)), 0, 255, 0, dim);
+              toReturn[2] = rMap(round(blue(co)), 0, 255, 0, dim);
+              
+            }
+            else if(to == 2) { //hsb
+              toReturn = new int[3];
+              toReturn[0] = round(hue(c));
+              toReturn[1] = round((saturation(c) + getInvertedValue(white, 0, 255)) / 2);
+              toReturn[2] = round((brightness(c)*2 + white) / 3);
+            }
+            else if(to == 3) { //rgbw
+              toReturn = new int[4];
               toReturn[0] = rMap(round(red(c)), 0, 255, 0, dim);
               toReturn[1] = rMap(round(green(c)), 0, 255, 0, dim);
               toReturn[2] = rMap(round(blue(c)), 0, 255, 0, dim);
-            }
-            else if(to == 2) { //hsb
-              //When converting RGBD to HSB we have to take HSB values with hue(), saturation() and brightness functions
-              //We also have to take account of dim value
-              toReturn = new int[3];
-              toReturn[0] = round(hue(c));
-              toReturn[1] = round(saturation(c));
-              toReturn[2] = round(min(brightness(c), dim));
-            }
-            else if(to == 3) { //rgbw
-              //When converting RGBD to RGBW we will first convert the RGB part to RGBW and then map all the values with dim
-              toReturn = new int[4];
-              arrayCopy(convertColor(original, 1, 3), toReturn);
-              for(int i = 0; i < toReturn.length; i++) {
-                toReturn[i] = rMap(toReturn[i], 0, 255, 0, dim);
-              }
+              toReturn[3] = rMap(white, 0, 255, 0, dim);
             }
             else if(to == 4) { //rgbwd
-              //When converting rgbd to rgbwd we will convert only RGB part to RGBW and then add dim to end
               toReturn = new int[5];
-              arrayCopy(convertColor(original, 1, 3), toReturn);
-              toReturn[4] = dim;
-            }
-            else if(to == 5) { //rgbd
-              //RGBD to RGBD doesn't need any convertion so we can copy the original array to return array
-              toReturn = new int[4];
               arrayCopy(original, toReturn);
             }
-            else if(to == 6) { //cmyk
+            else if(to == 5) { //rgbd
               toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 5, 1), 1, 6), toReturn);
+              arrayCopy(convertColor(original, 4, 1), toReturn);
+              toReturn[3] = original[4];
             }
-        popStyle(); 
-      }
-  popStyle();
-  return toReturn;
-}
+            else if(to == 6) { //cmyk
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 4, 1), 1, 6), toReturn);
+              }
+            
+        }
+        else if(from == 5) { //rgbd
+            colorMode(RGB);
+              color c = color(original[0], original[1], original[2]);
+              int dim = original[3];
+              if(to == 1) { //rgb
+                //When we conver RGBD to RGB we only have to map all the RGB values with dim value
+                toReturn = new int[3];
+                toReturn[0] = rMap(round(red(c)), 0, 255, 0, dim);
+                toReturn[1] = rMap(round(green(c)), 0, 255, 0, dim);
+                toReturn[2] = rMap(round(blue(c)), 0, 255, 0, dim);
+              }
+              else if(to == 2) { //hsb
+                //When converting RGBD to HSB we have to take HSB values with hue(), saturation() and brightness functions
+                //We also have to take account of dim value
+                toReturn = new int[3];
+                toReturn[0] = round(hue(c));
+                toReturn[1] = round(saturation(c));
+                toReturn[2] = round(min(brightness(c), dim));
+              }
+              else if(to == 3) { //rgbw
+                //When converting RGBD to RGBW we will first convert the RGB part to RGBW and then map all the values with dim
+                toReturn = new int[4];
+                arrayCopy(convertColor(original, 1, 3), toReturn);
+                for(int i = 0; i < toReturn.length; i++) {
+                  toReturn[i] = rMap(toReturn[i], 0, 255, 0, dim);
+                }
+              }
+              else if(to == 4) { //rgbwd
+                //When converting rgbd to rgbwd we will convert only RGB part to RGBW and then add dim to end
+                toReturn = new int[5];
+                arrayCopy(convertColor(original, 1, 3), toReturn);
+                toReturn[4] = dim;
+              }
+              else if(to == 5) { //rgbd
+                //RGBD to RGBD doesn't need any convertion so we can copy the original array to return array
+                toReturn = new int[4];
+                arrayCopy(original, toReturn);
+              }
+              else if(to == 6) { //cmyk
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 5, 1), 1, 6), toReturn);
+              }
+        }
+    return toReturn;
+  }
+} //End of class ColorConverter
+
+
 
 
 //Got from https://processing.org/discourse/beta/num_1228243376.html

@@ -153,6 +153,7 @@ class fixture {
   FixtureDMX preset;
   FixtureDMX bottomMenu;
   FixtureDMX fade;
+  FixtureDMX presetReady;
   
   Fade[] fades = new Fade[universalDMXlength];
   
@@ -246,6 +247,25 @@ class fixture {
       newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]); //PROBLEM this is causing some masterloop problemes! If master isn't 255 all the lights fade off PROBLEM!!!!!!!!!!
     
    
+//   
+//    for(int i = 0; i < universalDMXlength; i++) {
+//      if(presetReady != null) {
+//        if(presetReady.fades[i] != null) {
+//          presetReady.fades[i].startFade(in.getUniversalDMX(i), preset.getUniversalDMX(i), 500, 500);
+//          presetReady.fades[i].countActualValue();
+//          int fadeVal = presetReady.fades[i].getActualValue();
+//          newIn[i] = fadeVal;
+//        }
+//        else {
+//          presetReady.fades[i] = new Fade(in.getUniversalDMX(i), preset.getUniversalDMX(i), 500, 500);
+//          presetReady.fades[i].countActualValue();
+//          int fadeVal = presetReady.fades[i].getActualValue();
+//          newIn[i] = fadeVal;
+//        }
+//      }
+//    }
+    
+    
     if(soloIsOn && !soloInThisFixture) {
       newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, soloFade));
       if(soloFade > 0) { soloFade-=(float(60)/frameRate)*20; soloFade = constrain(soloFade, 0, 255); }
@@ -307,9 +327,9 @@ class fixture {
     }
   }
   
-  void setUniversalDMXwithFade(int i, int val) {
+  void setUniversalDMXwithFade(int i, int val, int pre, int post) {
     if(i >= 0 && i < fades.length) {
-      fades[i] = new Fade(in.getUniversalDMX(i), val, 10, 500);
+      fades[i] = new Fade(in.getUniversalDMX(i), val, pre, post);
     }
   }
   
@@ -392,8 +412,10 @@ class fixture {
     out = new FixtureDMX(this);
     preset = new FixtureDMX(this);
     bottomMenu = new FixtureDMX(this);
+    presetReady = new FixtureDMX(this);
     
     process.fades = new Fade[process.DMXlength];
+    presetReady.fades = new Fade[process.DMXlength];
   }
 
   //Initialization----------------------------------------------------------------------------
@@ -441,6 +463,10 @@ class fixture {
   
   color getRawColor() {
     if(!isHalogen()) {
+      if(out.getUniversalDMX(DMX_WHITE) > 0) {
+        int[] convertedColor = colorConverter.convertColor(new int[] { out.getUniversalDMX(DMX_RED), out.getUniversalDMX(DMX_GREEN), out.getUniversalDMX(DMX_BLUE), out.getUniversalDMX(DMX_WHITE) }, 3, 1);
+        return color(convertedColor[0], convertedColor[1], convertedColor[2]);
+      }
       return color(out.getUniversalDMX(DMX_RED), out.getUniversalDMX(DMX_GREEN), out.getUniversalDMX(DMX_BLUE));
     }
     else {

@@ -51,7 +51,7 @@ void drawMainWindow() {
     
     
     //THIS FOR LOOP DRAWS ALL THE FIXTURES AND CHECKS IF YOU HAVE CLICKED THEM
-    if(!showSockets) for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) { //Go through all the fixtures if sockets aren't shown
+    if(programReadyToRun) if(!showSockets) for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) { //Go through all the fixtures if sockets aren't shown
       pushMatrix();
       
         fixture fix = fixtures.get(i);

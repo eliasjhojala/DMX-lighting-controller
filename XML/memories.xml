@@ -34,7 +34,7 @@
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="4" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
+  <Memory enabled="1" id="4" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -52,13 +52,13 @@
         <int id="5" val="24"/>
       </content>
       <sineValue/>
-      <stepData brightness="0" brightness1="0" step="4"/>
-      <mainData fade="0" ownFade="0" value="255"/>
+      <stepData brightness="0" brightness1="0" step="2"/>
+      <mainData fade="0" ownFade="0" value="0"/>
       <modeData beatModeId="0" inputMode="0" outputMode="0"/>
       <steps size="0"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="5" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
+  <Memory enabled="1" id="5" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
       <whatToSave/>
@@ -78,8 +78,8 @@
         <int id="5" val="38"/>
       </content>
       <sineValue/>
-      <stepData brightness="0" brightness1="0" step="4"/>
-      <mainData fade="0" ownFade="0" value="255"/>
+      <stepData brightness="0" brightness1="0" step="1"/>
+      <mainData fade="0" ownFade="0" value="0"/>
       <modeData beatModeId="1" inputMode="1" outputMode="1"/>
       <steps size="0"/>
     </Chase>
@@ -164,7 +164,7 @@
       <stepData brightness="0" brightness1="0" step="1"/>
       <mainData fade="0" ownFade="0" value="0"/>
       <modeData beatModeId="0" inputMode="0" outputMode="0"/>
-      <steps size="1619">
+      <steps size="2134">
         <Preset>
           <mainData value="0" valueOld="0"/>
           <whatToSave>
@@ -57989,6 +57989,330 @@
       <whatToSave/>
       <fixturesToSave/>
       <repOfFixtures/>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="30" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="14" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="14">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="31" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="18" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="18">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="32" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="15" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="15">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="33" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="22" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="22">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="34" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="23" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="23">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="35" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="24" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="24">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="37" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="33" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="33">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="38" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="34" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="34">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="39" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="35" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="35">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="40" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="36" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="36">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="41" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="37" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="37">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
+    <Chase>
+      <presets/>
+      <content/>
+      <sineValue/>
+      <stepData brightness="0" brightness1="0" step="0"/>
+      <mainData fade="0" ownFade="0" value="0"/>
+      <modeData beatModeId="0" inputMode="0" outputMode="0"/>
+      <steps size="0"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="42" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="38" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="38">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
     </Preset>
     <Chase>
       <presets/>

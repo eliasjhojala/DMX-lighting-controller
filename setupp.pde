@@ -6,7 +6,7 @@ void setuppi() {
   createSockets();
   thread("createMidiClasses");
   
-  if(loadAllDataInSetup) { thread("loadAllData"); }
+  if(loadAllDataInSetup) { loadAllData(); }
   else { programReadyToRun = true; }
   
   thread("setFixtureChannelsAtSoftwareBegin");

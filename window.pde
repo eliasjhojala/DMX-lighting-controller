@@ -46,12 +46,10 @@ class Window {
     mouse.setElementExpire(name+":move", 2);
     if(mouse.isCaptured(name+":move")) {
       try {
-        int locXvalueFromWindow = locX.getInt(window);
-        int locXvalueToWindow = round(constrain(mouseX - pmouseX + locXvalueFromWindow, 40, width - (size.x+20+168)));
+        int locXvalueToWindow = round(constrain(mouseX - pmouseX + locX.getInt(window), 40, width - (size.x+20+168)));
         locX.setInt(window, locXvalueToWindow);
         
-        int locYvalueFromWindow = locY.getInt(window);
-        int locYvalueToWindow = round(constrain(mouseY - pmouseY + locYvalueFromWindow, 40, height - (size.y+40)));
+        int locYvalueToWindow = round(constrain(mouseY - pmouseY + locY.getInt(window), 40, height - (size.y+40)));
         locY.setInt(window, locYvalueToWindow);
       }
       catch (Exception e) {
