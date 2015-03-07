@@ -34,7 +34,6 @@ void newColorWash() {
 }
 
 boolean colorWashMenuOpen = false;
-boolean HSBPicker = false;
 PVector colorMenuOffset = new PVector(0, 0);
 
 ColorWashMenu colorWashMenu = new ColorWashMenu();
@@ -42,11 +41,11 @@ ColorWashMenu colorWashMenu = new ColorWashMenu();
 class ColorWashMenu {
   Window window;
   ColorWashMenu() {
-    w = 1000;
-    h = 500;
+    w = 600;
+    h = 400;
     locX = 100;
     locY = 100;
-    window = new Window("colorSelectBox", new PVector(700, 400), this);
+    window = new Window("colorSelectBox", new PVector(w, h), this);
   }
   int locX, locY, w, h;
   boolean open;
@@ -54,6 +53,7 @@ class ColorWashMenu {
      window.draw(g, mouse);
      g.pushMatrix();
         g.pushStyle();
+        g.textAlign(LEFT);
           if(wash == null) { wash = new colorWash(""); } //If wash doesn't exist then create it
           {
             g.stroke(150); //Gray corners
@@ -61,7 +61,7 @@ class ColorWashMenu {
             g.fill(255, 230); //White transperent background
           }
          
-          //Count all the active colorNames (the colorNames object array is'n really good-ordered)
+          //Count all the active colorNames (the colorNames object array isn't really good-ordered)
             int[] activeColorNames = new int[colorNames.length];
             int[] activeColorNamesTemp = new int[colorNames.length];
             int n = 0;
@@ -145,21 +145,21 @@ class ColorWashMenu {
                 mouse.declareUpdateElementRelative("cWB:HSBPicker", "colorSelectBox",  round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
                 mouse.setElementExpire("cWB:HSBPicker", 2);
                 g.pushStyle();
-                if(mouse.isCaptured("cWB:HSBPicker") && mouse.firstCaptureFrame) { g.stroke(0); HSBPicker = !HSBPicker; }
+                if(mouse.isCaptured("cWB:HSBPicker") && mouse.firstCaptureFrame) { g.stroke(0); colorPick.open = !colorPick.open; }
                 g.rect(round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
                 
                   g.fill(0);
                   g.textSize(15);
             
                   g.textMode(LEFT); 
-                  if(HSBPicker) { g.text("Close", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
+                  if(colorPick.open) { g.text("Close", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
                   else { g.text("ColorPicker", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
                 g.popStyle();
               //END OF COLORPICKER BUTTON
             g.popMatrix();
              
              
-             if(HSBPicker) { //Check that should color picker be open
+             if(colorPick.open) { //Check that should color picker be open
                g.pushStyle(); //Pushstyle to make sure no any styles go out of colorPicker
                  colorPick.colorSelectorOpen = true; //Tell to color picker that it should be open
                  color c = colorPick.getColorFromPicker(); //Get picked color
@@ -169,10 +169,6 @@ class ColorWashMenu {
                    wash.dim = round(brightness(c)); //Set also dim value to wash
                    wash.go(); //Activate wash
                  }
-                 g.pushMatrix(); //Own matrix for colorpicker because translate
-                   g.translate(500, 0); //colorpicker is located next to the color wash box
-                   colorPick.open = true;
-                 g.popMatrix();
                g.popStyle();
              }
              else { //if color picker should be closed then close it

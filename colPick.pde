@@ -1,11 +1,14 @@
 HSBColorPicker colorPick = new HSBColorPicker();
 class HSBColorPicker { 
   
+  Window window;
+  
   HSBColorPicker() {
     locX = 700;
     locY = 100;
-    w = 800;
-    h = 300;
+    w = 600;
+    h = 230;
+    window = new Window("HSBP", new PVector(w, h), this);
   }
 
   int hue = 0;
@@ -18,21 +21,13 @@ class HSBColorPicker {
   int locX, locY, w, h;
   
   void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+    window.draw(g, mouse);
     g.pushMatrix();
       g.pushStyle();
-      g.translate(100, 100);
+      g.translate(40, 50);
       g.translate(offset.x, offset.y);
         
-          g.fill(255, 230);
-          g.rect(-10, -10, 255*2+20, 150+20, 20);
-          
-          mouse.declareUpdateElementRelative("HSBP", 11000000, -10, -10, 255*2+20, 150+20, g);
-          mouse.setElementExpire("HSBP", 2);
-          if(mouse.isCaptured("HSBP")) {
-            locX += mouseX-pmouseX;
-            locY += mouseY-pmouseY;
-          }
-          
+
           //Count values by mouse dragging
           countHue(g, mouse);
           countSaturation(g, mouse);
@@ -75,6 +70,9 @@ class HSBColorPicker {
     }
   }
   
+  int triangleWidth = 7;
+  int triangleHeight = triangleWidth*2;
+  
   void showHue(PGraphics g, Mouse mouse) {
     //Show hue bar
     for(int i = 0; i < 255; i++) {
@@ -86,7 +84,8 @@ class HSBColorPicker {
       g.popStyle();
     }
     g.fill(255);
-    g.triangle(hue, 20, hue-10, 30, hue+10, 30);
+    g.stroke(0);
+    g.triangle(hue, 20, hue-triangleWidth, 20+triangleHeight, hue+triangleWidth, 20+triangleHeight);
   }
   
   void showBrightness(PGraphics g, Mouse mouse) {
@@ -102,7 +101,8 @@ class HSBColorPicker {
         g.popStyle();
       }
       g.fill(255);
-      g.triangle(brightness, 20, brightness-10, 30, brightness+10, 30);
+      g.stroke(0);
+      g.triangle(brightness, 20, brightness-triangleWidth, 20+triangleHeight, brightness+triangleWidth, 20+triangleHeight);
     g.popMatrix();
   }
 
@@ -119,7 +119,8 @@ class HSBColorPicker {
         g.popStyle();
       }
       g.fill(255);
-      g.triangle(saturation, 20, saturation-10, 30, saturation+10, 30);
+      g.stroke(0);
+      g.triangle(saturation, 20, saturation-triangleWidth, 20+triangleHeight, saturation+triangleWidth, 20+triangleHeight);
     g.popMatrix();
   }
 
