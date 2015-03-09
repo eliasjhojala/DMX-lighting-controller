@@ -26,15 +26,7 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", true, tabs[0]),
         new SettingController(1, "Use text window", "This window is handy for debug purposes.", true, tabs[0]),
-        new SettingController(10, "Show sockets", "If you want to edit socket places use this", true, tabs[0]),
-        new SettingController(0, 0, 0, "Test Int1", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int2", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int3", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int4", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int5", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int6", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int7", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int8", "This is just a test controller to see how the int controller will work.", tabs[0])
+        new SettingController(10, "Show sockets", "If you want to edit socket places use this", true, tabs[0])
       }
     );
     tabs[1] = new SettingsTab("Visualization", this);
@@ -59,6 +51,7 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(101, "OSC", "Open OSC settings window by clicking the button", false, tabs[3]),
         new SettingController(102, "Midi", "Open MIDI settings window by clicking the button", false, tabs[3]),
+        new SettingController(103, "Enttec", "Open Enttec output settings window by clicking the button", false, tabs[3])
       }
     );
   }
@@ -118,8 +111,9 @@ class SettingsWindow {
   
   void pushButtonPressed(int var) {
     switch(var) {
-      case 101: oscSettings.open = !oscSettings.open; settingsWindow.open = false; break;
-      case 102: midiWindow.open = !midiWindow.open; settingsWindow.open = false; break;
+      case 101: oscSettings.locX = locX; oscSettings.locY = locY; oscSettings.open = !oscSettings.open; settingsWindow.open = false; break;
+      case 102: midiWindow.locX = locX; midiWindow.locY = locY; midiWindow.open = !midiWindow.open; settingsWindow.open = false; break;
+      case 103: enttecOutputSettingsWindow.locX = locX; enttecOutputSettingsWindow.locY = locY; enttecOutputSettingsWindow.open = !enttecOutputSettingsWindow.open; settingsWindow.open = false; break;
     }
   }
   
