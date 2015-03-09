@@ -182,8 +182,8 @@ int[] enttecDMXchannelOld = new int[enttecDMXchannels+1]; //DMX kanavan vanha ar
 int[] touchOSCchannelOld = new int[touchOSCchannels+1]; //touchOSC kanavan vanha arvo                      //|||
 int[] controlP5channelOld = new int[controlP5channels+1]; //tietokoneen faderien vanha arvo                //|||
                                                                                                            //|||
-int[][] allChannels = new int[6][48];                                                                      //|||
-int[][] allChannelsOld = new int[6][48];                                                                   //|||
+int[][] allChannels = new int[6][48*2];                                                                    //|||
+int[][] allChannelsOld = new int[6][48*2];                                                                 //|||
                                                                                                            //|||
 int controlP5place = 1; //tietokoneen faderien ohjaamat kanavat                                            //|||
 int enttecDMXplace = 1; //DMX ohjatut kanavat                                                              //|||

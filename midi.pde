@@ -240,7 +240,7 @@ public class Keyrig49 {
       keys[constrain(whiteI, 0, keys.length-1)] = midiToBoolean(velocity);
       keysVal[constrain(whiteI, 0, keys.length-1)] = midiToDMX(velocity);
       if(output == 1) {
-        memories[constrain(whiteI+offset, 0, memories.length-1)].setValue(midiToDMX(velocity));
+        setMemoryValueByOrderInVisualisation(whiteI+offset, midiToDMX(velocity));
       }
       else if(output == 2) {
         fixtures.get(constrain(whiteI+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, midiToDMX(velocity));
@@ -325,7 +325,7 @@ public class Launchpad {
       value = pads[x][y];
     }
     bus.sendNoteOn(0, pitch, byte(value) * 127);
-    if(output == 1) { memories[constrain(x+8*y+1+offset, 0, memories.length-1)].enabled = value; }
+    if(output == 1) { setMemoryEnabledByOrderInVisualisation(x+8*y+1+offset, value); }
     else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
   }
   

@@ -6,6 +6,33 @@ String[] saveOptionButtonVariables = { "dimmer", "red", "green", "blue", "white"
   memory[] memories = new memory[1000];
 
 int fixtureOwnFade;  
+
+void setMemoryValueByOrderInVisualisation(int id, int val) {
+  if(memoryControllerLookupTable != null) {
+    if(id >= 0 && id < memoryControllerLookupTable.length) {
+      int i = memoryControllerLookupTable[id];
+      if(memories != null) {
+        if(i >= 0 && i < memories.length) {
+          val = constrain(val, 0, 255);
+          memories[i].setValue(val);
+        }
+      }
+    }
+  }  
+}
+
+void setMemoryEnabledByOrderInVisualisation(int id, boolean val) {
+  if(memoryControllerLookupTable != null) {
+    if(id >= 0 && id < memoryControllerLookupTable.length) {
+      int i = memoryControllerLookupTable[id];
+      if(memories != null) {
+        if(i >= 0 && i < memories.length) {
+          memories[i].enabled = val;
+        }
+      }
+    }
+  }  
+}
   
 void createMemoryObjects() {
   s2l = new soundDetect();

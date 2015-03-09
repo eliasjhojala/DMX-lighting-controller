@@ -237,7 +237,9 @@ class OSCmachine {
     osc = new NetAddress(ip, portIncoming);
     
     controller = new OSCmachineController(this, id);
+    
   }
+  
   
   int getPortOut() {
     return portOutgoing;

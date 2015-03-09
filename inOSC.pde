@@ -43,7 +43,7 @@ void oscEvent(OscMessage theOscMessage) {
       touchOSCchannel[i] = digitalValue;
     }
     if(addr.equals(nimi1) || addr.equals(nimi3)) {
-      touchOSCchannel[i] = round(map(digitalValue, 0, 1, 0, 255));
+      touchOSCchannel[i] = round(map(digitalValue, 0, 1, -1, 255));
     }
     if(addr.equals(nimi4)) {
       touchOSCchannel[i] = digitalValue;

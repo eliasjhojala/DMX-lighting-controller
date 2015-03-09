@@ -93,7 +93,7 @@ void channelsToDim() {
     
  for(int i = 24; i < allChannels[1].length; i++) {
    if(allChannels[1][i] != allChannelsOld[1][i]) {
-     memories[i-24].setValue(allChannels[1][i]);
+     setMemoryValueByOrderInVisualisation(i-24, allChannels[1][i]);
    }
  }
     

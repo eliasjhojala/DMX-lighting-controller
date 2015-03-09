@@ -36,7 +36,7 @@ public class secondApplet extends PApplet {
  fill(255, 255, 255);
   
    text("touchOSCchannels", 105, 10);
-    for(int i = 0; i <= 24; i++) {
+    for(int i = 0; i < touchOSCchannel.length; i++) {
       text(i + ":" + touchOSCchannel[i], 110, i*15+25);
   }
 
@@ -46,8 +46,8 @@ public class secondApplet extends PApplet {
   
   for(int j = 1; j <= 5; j++) {
     text("allChannels[" + str(j) + "]", j*100+5, 10);
-    for(int i = 0; i < 24; i++) {
-      text(i + ":" + allChannels[1][i], 100*j+10, i*15+25);
+    for(int i = 0; i < allChannels[j].length; i++) {
+      text(i + ":" + allChannels[j][i], 100*j+10, i*15+25);
     }
   }
 
