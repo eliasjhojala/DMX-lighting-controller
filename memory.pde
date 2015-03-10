@@ -1213,7 +1213,13 @@ class chase { //Begin of chase class--------------------------------------------
     if(true) {
       pushStyle();
         colorMode(HSB);
-        hueOffset += float(getInvertedValue(fade, 0, 255))/10;
+        
+        if(fade > 150) {
+          hueOffset += float(getInvertedValue(fade, 0, 255))/float(100);
+        }
+        else {
+          hueOffset += float(getInvertedValue(fade, 0, 255))/float(10);
+        }
         if(hueOffset > 255) { hueOffset = 0; }
         for(int i = 0; i < getPresets().length; i++) {
           color c = color(loopMap(i, 0, getPresets().length, 255, hueOffset), 255, 255);
@@ -1221,6 +1227,10 @@ class chase { //Begin of chase class--------------------------------------------
         }
       popStyle();
     }
+  }
+  
+  float log10 (int x) {
+    return (log(x) / log(10));
   }
   
   
