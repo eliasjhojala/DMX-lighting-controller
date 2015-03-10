@@ -629,7 +629,7 @@ void keyPressed() {
     if(key == 's') {
       if(!showMode && !showModeLocked) {
         try {
-          saveAllData(); 
+          thread("saveAllData"); 
         }
         catch (Exception e) {
           notifier.notify("Error saving data", true);

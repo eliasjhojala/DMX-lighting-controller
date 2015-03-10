@@ -285,7 +285,6 @@ class OSCmachine {
   }
   
   void XMLtoObject(XML xml, int id) {
-    println(xml);
     if(xml != null) {
       portOutgoing = xml.getInt("portOutgoing");
       portIncoming = xml.getInt("portIncoming");

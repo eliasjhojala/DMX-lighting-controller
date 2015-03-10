@@ -461,11 +461,24 @@ class fixture {
   
   //Returns raw fixture color in type color
   
+  color convertedColor;
+  int oldRed, oldGreen, oldBlue, oldWhite;
+  
   color getRawColor() {
     if(!isHalogen()) {
       if(out.getUniversalDMX(DMX_WHITE) > 0) {
-        int[] convertedColor = colorConverter.convertColor(new int[] { out.getUniversalDMX(DMX_RED), out.getUniversalDMX(DMX_GREEN), out.getUniversalDMX(DMX_BLUE), out.getUniversalDMX(DMX_WHITE) }, 3, 1);
-        return color(convertedColor[0], convertedColor[1], convertedColor[2]);
+        if(out.getUniversalDMX(DMX_RED) != oldRed || out.getUniversalDMX(DMX_GREEN) != oldGreen || out.getUniversalDMX(DMX_BLUE) != oldBlue || out.getUniversalDMX(DMX_WHITE) != oldWhite) {
+          oldRed = out.getUniversalDMX(DMX_RED);
+          oldGreen = out.getUniversalDMX(DMX_GREEN);
+          oldBlue = out.getUniversalDMX(DMX_BLUE);
+          oldWhite = out.getUniversalDMX(DMX_WHITE);
+          int[] convertedColorV = colorConverter.convertColor(new int[] { out.getUniversalDMX(DMX_RED), out.getUniversalDMX(DMX_GREEN), out.getUniversalDMX(DMX_BLUE), out.getUniversalDMX(DMX_WHITE) }, 3, 1);
+          convertedColor = color(convertedColorV[0], convertedColorV[1], convertedColorV[2]);
+          return convertedColor;
+        }
+        else {
+          return convertedColor;
+        }
       }
       return color(out.getUniversalDMX(DMX_RED), out.getUniversalDMX(DMX_GREEN), out.getUniversalDMX(DMX_BLUE));
     }

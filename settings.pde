@@ -20,7 +20,7 @@ class SettingsWindow {
   
   //Create and configure all tabs & controllers
   void onInit() {
-    tabs = new SettingsTab[4];
+    tabs = new SettingsTab[5];
     tabs[0] = new SettingsTab("Other windows", this);
     tabs[0].setControllers(
       new SettingController[] {
@@ -54,6 +54,13 @@ class SettingsWindow {
         new SettingController(103, "Enttec", "Open Enttec output settings window by clicking the button", false, tabs[3])
       }
     );
+    tabs[4] = new SettingsTab("Files", this);
+    tabs[4].setControllers(
+      new SettingController[] {
+        new SettingController(201, "Load Fast", "Load data really fast, but not so safely", true, tabs[4]),
+        new SettingController(202, "Load Safe", "Load data slowly, but really safely", true, tabs[4]),
+      }
+    );
   }
   
   
@@ -70,6 +77,8 @@ class SettingsWindow {
       case 5: showModeLocked = b;              break;
       case 10: showSockets = b;                break;
       case 15: rotateFixturesToSamePoint = b;  break;
+      case 201: loadFast = b; loadSafe = !b;   break;
+      case 202: loadSafe = b; loadFast = !b;   break;
     }
   }
   
@@ -83,6 +92,8 @@ class SettingsWindow {
       case 5:  return showModeLocked;
       case 10: return showSockets;
       case 15: return rotateFixturesToSamePoint;
+      case 201: return loadFast;
+      case 202: return loadSafe;
       default: return false;
     }
   }

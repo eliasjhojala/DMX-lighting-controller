@@ -7,7 +7,7 @@
         <StartChannel>1</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="200" y="-5" z="0">
-          <OnScreen x="823" y="1174"/>
+          <OnScreen x="905" y="1166"/>
           <Rotation x="128" z="15"/>
         </Location>
         <parameter>35</parameter>
@@ -22,7 +22,7 @@
         <StartChannel>3</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="287" y="5" z="0">
-          <OnScreen x="932" y="1162"/>
+          <OnScreen x="1014" y="1154"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>76</parameter>
@@ -37,7 +37,7 @@
         <StartChannel>4</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="389" y="-2" z="0">
-          <OnScreen x="1040" y="1165"/>
+          <OnScreen x="1122" y="1157"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -52,7 +52,7 @@
         <StartChannel>4</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="544" y="-3" z="0">
-          <OnScreen x="1195" y="1164"/>
+          <OnScreen x="1277" y="1156"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -67,7 +67,7 @@
         <StartChannel>3</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="628" y="9" z="0">
-          <OnScreen x="1273" y="1166"/>
+          <OnScreen x="1355" y="1158"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -82,7 +82,7 @@
         <StartChannel>2</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="720" y="-1" z="0">
-          <OnScreen x="1358" y="1172"/>
+          <OnScreen x="1440" y="1164"/>
           <Rotation x="128" z="-15"/>
         </Location>
         <parameter>16</parameter>
@@ -97,7 +97,7 @@
         <StartChannel>18</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="465" y="3" z="0">
-          <OnScreen x="1110" y="1160"/>
+          <OnScreen x="1191" y="1152"/>
           <Rotation x="185" z="361"/>
         </Location>
         <parameter>-80</parameter>
@@ -112,7 +112,7 @@
         <StartChannel>17</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="554" y="11" z="0">
-          <OnScreen x="1189" y="528"/>
+          <OnScreen x="1271" y="520"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -127,7 +127,7 @@
         <StartChannel>16</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="399" y="11" z="0">
-          <OnScreen x="1034" y="528"/>
+          <OnScreen x="1116" y="520"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -142,7 +142,7 @@
         <StartChannel>11</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="391" y="5" z="0">
-          <OnScreen x="1036" y="292"/>
+          <OnScreen x="1118" y="284"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -157,7 +157,7 @@
         <StartChannel>12</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="549" y="5" z="0">
-          <OnScreen x="1194" y="292"/>
+          <OnScreen x="1276" y="284"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -172,7 +172,7 @@
         <StartChannel>15</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="448" y="17" z="0">
-          <OnScreen x="1099" y="284"/>
+          <OnScreen x="1181" y="276"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -187,7 +187,7 @@
         <StartChannel>15</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="490" y="17" z="0">
-          <OnScreen x="1141" y="284"/>
+          <OnScreen x="1223" y="276"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -202,7 +202,7 @@
         <StartChannel>5</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="83" y="6" z="0">
-          <OnScreen x="728" y="790"/>
+          <OnScreen x="810" y="782"/>
           <Rotation x="252" z="-11"/>
         </Location>
         <parameter>45</parameter>
@@ -210,7 +210,20 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>6</parentAnsa>
-        <FixtureDMXdata/>
+        <FixtureDMXdata>
+          <FixtureDMX>
+            <name>in<DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </name>
+          </FixtureDMX>
+          <FixtureDMX>
+            <name>out<DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </name>
+          </FixtureDMX>
+        </FixtureDMXdata>
       </Fixture>
       <Fixture id="14">
         <id>-1</id>
@@ -232,7 +245,7 @@
         <StartChannel>6</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="293" y="1" z="0">
-          <OnScreen x="934" y="428"/>
+          <OnScreen x="1016" y="420"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -240,21 +253,14 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>0</parentAnsa>
-        <FixtureDMXdata>
-          <FixtureDMX>
-            <name>out<DMX>
-                <int id="1" val="5"/>
-              </DMX>
-            </name>
-          </FixtureDMX>
-        </FixtureDMXdata>
+        <FixtureDMXdata/>
       </Fixture>
       <Fixture id="16">
         <id>22</id>
         <StartChannel>8</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="507" y="2" z="0">
-          <OnScreen x="1148" y="429"/>
+          <OnScreen x="1230" y="421"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -262,21 +268,14 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>0</parentAnsa>
-        <FixtureDMXdata>
-          <FixtureDMX>
-            <name>out<DMX>
-                <int id="1" val="1"/>
-              </DMX>
-            </name>
-          </FixtureDMX>
-        </FixtureDMXdata>
+        <FixtureDMXdata/>
       </Fixture>
       <Fixture id="17">
         <id>23</id>
         <StartChannel>9</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="608" y="0" z="0">
-          <OnScreen x="1249" y="427"/>
+          <OnScreen x="1331" y="419"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -291,7 +290,7 @@
         <StartChannel>10</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="874" y="5" z="0">
-          <OnScreen x="1510" y="794"/>
+          <OnScreen x="1592" y="786"/>
           <Rotation x="252" z="11"/>
         </Location>
         <parameter>45</parameter>
@@ -306,7 +305,7 @@
         <StartChannel>14</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="877" y="16" z="0">
-          <OnScreen x="1528" y="413"/>
+          <OnScreen x="1610" y="405"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -321,7 +320,7 @@
         <StartChannel>13</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="73" y="16" z="0">
-          <OnScreen x="724" y="413"/>
+          <OnScreen x="806" y="405"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -1176,7 +1175,7 @@
         <StartChannel>100</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="163" y="6" z="0">
-          <OnScreen x="798" y="213"/>
+          <OnScreen x="880" y="205"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1187,15 +1186,15 @@
         <FixtureDMXdata>
           <FixtureDMX>
             <name>in<DMX>
-                <int id="2" val="204"/>
-                <int id="4" val="255"/>
+                <int id="2" val="255"/>
+                <int id="3" val="153"/>
               </DMX>
             </name>
           </FixtureDMX>
           <FixtureDMX>
             <name>out<DMX>
-                <int id="2" val="204"/>
-                <int id="4" val="255"/>
+                <int id="2" val="255"/>
+                <int id="3" val="153"/>
               </DMX>
             </name>
           </FixtureDMX>
@@ -1206,7 +1205,7 @@
         <StartChannel>108</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="271" y="5" z="0">
-          <OnScreen x="906" y="212"/>
+          <OnScreen x="988" y="204"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1217,15 +1216,17 @@
         <FixtureDMXdata>
           <FixtureDMX>
             <name>in<DMX>
-                <int id="2" val="255"/>
-                <int id="4" val="54"/>
+                <int id="1" val="255"/>
+                <int id="2" val="104"/>
+                <int id="3" val="255"/>
               </DMX>
             </name>
           </FixtureDMX>
           <FixtureDMX>
             <name>out<DMX>
-                <int id="2" val="255"/>
-                <int id="4" val="54"/>
+                <int id="1" val="255"/>
+                <int id="2" val="104"/>
+                <int id="3" val="255"/>
               </DMX>
             </name>
           </FixtureDMX>
@@ -1236,7 +1237,7 @@
         <StartChannel>116</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="394" y="4" z="0">
-          <OnScreen x="1029" y="211"/>
+          <OnScreen x="1111" y="203"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1247,15 +1248,15 @@
         <FixtureDMXdata>
           <FixtureDMX>
             <name>in<DMX>
-                <int id="2" val="255"/>
-                <int id="3" val="204"/>
+                <int id="3" val="255"/>
+                <int id="4" val="152"/>
               </DMX>
             </name>
           </FixtureDMX>
           <FixtureDMX>
             <name>out<DMX>
-                <int id="2" val="255"/>
-                <int id="3" val="204"/>
+                <int id="3" val="255"/>
+                <int id="4" val="152"/>
               </DMX>
             </name>
           </FixtureDMX>
@@ -1266,7 +1267,7 @@
         <StartChannel>124</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="524" y="2" z="0">
-          <OnScreen x="1159" y="209"/>
+          <OnScreen x="1241" y="201"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1277,15 +1278,15 @@
         <FixtureDMXdata>
           <FixtureDMX>
             <name>in<DMX>
-                <int id="2" val="53"/>
-                <int id="3" val="255"/>
+                <int id="3" val="104"/>
+                <int id="4" val="255"/>
               </DMX>
             </name>
           </FixtureDMX>
           <FixtureDMX>
             <name>out<DMX>
-                <int id="2" val="53"/>
-                <int id="3" val="255"/>
+                <int id="3" val="104"/>
+                <int id="4" val="255"/>
               </DMX>
             </name>
           </FixtureDMX>
@@ -1296,7 +1297,7 @@
         <StartChannel>132</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="651" y="1" z="0">
-          <OnScreen x="1286" y="208"/>
+          <OnScreen x="1368" y="200"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1307,15 +1308,15 @@
         <FixtureDMXdata>
           <FixtureDMX>
             <name>in<DMX>
-                <int id="3" val="255"/>
-                <int id="4" val="203"/>
+                <int id="2" val="152"/>
+                <int id="4" val="255"/>
               </DMX>
             </name>
           </FixtureDMX>
           <FixtureDMX>
             <name>out<DMX>
-                <int id="3" val="255"/>
-                <int id="4" val="203"/>
+                <int id="2" val="152"/>
+                <int id="4" val="255"/>
               </DMX>
             </name>
           </FixtureDMX>
@@ -1326,7 +1327,7 @@
         <StartChannel>140</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="809" y="1" z="0">
-          <OnScreen x="1444" y="208"/>
+          <OnScreen x="1526" y="200"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1337,15 +1338,15 @@
         <FixtureDMXdata>
           <FixtureDMX>
             <name>in<DMX>
-                <int id="3" val="53"/>
-                <int id="4" val="255"/>
+                <int id="2" val="255"/>
+                <int id="4" val="105"/>
               </DMX>
             </name>
           </FixtureDMX>
           <FixtureDMX>
             <name>out<DMX>
-                <int id="3" val="53"/>
-                <int id="4" val="255"/>
+                <int id="2" val="255"/>
+                <int id="4" val="105"/>
               </DMX>
             </name>
           </FixtureDMX>
@@ -1371,7 +1372,7 @@
         <StartChannel>7</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="402" y="1" z="0">
-          <OnScreen x="1043" y="428"/>
+          <OnScreen x="1125" y="420"/>
           <Rotation x="-106" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1379,21 +1380,14 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>0</parentAnsa>
-        <FixtureDMXdata>
-          <FixtureDMX>
-            <name>out<DMX>
-                <int id="1" val="1"/>
-              </DMX>
-            </name>
-          </FixtureDMX>
-        </FixtureDMXdata>
+        <FixtureDMXdata/>
       </Fixture>
       <Fixture id="85">
         <id>11</id>
         <StartChannel>30</StartChannel>
         <fixtureTypeId>9</fixtureTypeId>
-        <Location x="450" y="14" z="-57">
-          <OnScreen x="1055" y="181"/>
+        <Location x="453" y="-16" z="-57">
+          <OnScreen x="1140" y="143"/>
           <Rotation x="87" z="900"/>
         </Location>
         <parameter>0</parameter>
@@ -1408,7 +1402,7 @@
         <StartChannel>31</StartChannel>
         <fixtureTypeId>8</fixtureTypeId>
         <Location x="205" y="17" z="-65">
-          <OnScreen x="800" y="205"/>
+          <OnScreen x="882" y="197"/>
           <Rotation x="-268" z="135"/>
         </Location>
         <parameter>0</parameter>
@@ -1416,6 +1410,36 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="255" r="255"/>
         <parentAnsa>3</parentAnsa>
+        <FixtureDMXdata/>
+      </Fixture>
+      <Fixture id="87">
+        <id>17</id>
+        <StartChannel>35</StartChannel>
+        <fixtureTypeId>7</fixtureTypeId>
+        <Location x="495" y="123" z="0">
+          <OnScreen x="1228" y="516"/>
+          <Rotation x="-114" z="360"/>
+        </Location>
+        <parameter>0</parameter>
+        <preFadeSpeed>1000</preFadeSpeed>
+        <postFadeSpeed>5000</postFadeSpeed>
+        <Color b="255" g="255" r="255"/>
+        <parentAnsa>0</parentAnsa>
+        <FixtureDMXdata/>
+      </Fixture>
+      <Fixture id="88">
+        <id>19</id>
+        <StartChannel>37</StartChannel>
+        <fixtureTypeId>9</fixtureTypeId>
+        <Location x="441" y="109" z="0">
+          <OnScreen x="1174" y="532"/>
+          <Rotation x="0" z="0"/>
+        </Location>
+        <parameter>0</parameter>
+        <preFadeSpeed>1000</preFadeSpeed>
+        <postFadeSpeed>5000</postFadeSpeed>
+        <Color b="255" g="255" r="255"/>
+        <parentAnsa>0</parentAnsa>
         <FixtureDMXdata/>
       </Fixture>
     </fixtures>

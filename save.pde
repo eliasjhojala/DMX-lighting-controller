@@ -68,79 +68,105 @@ void saveDataBYPASSZERO(String variable, String variableName, String dimensions,
   }
 }
 
+int wholeSaveTimeAsMilliSeconds;
+boolean wholeSaveTimeAsMilliSecondsIsCounted;
+boolean savingAllData;
+long saveDataBeginMillis;
+
 void saveAllData() {
-  long saveDataBeginMillis = millis();
-  table = new Table();
-  
-  table.addColumn("id");
-  table.addColumn("variable_name");
-  table.addColumn("variable_dimensions");
-  table.addColumn("value");
-  table.addColumn("1D");
-  table.addColumn("2D");
-  
-  
-  
-  for (int i = 0; i < idLookupTable.size(); i++) {
-    saveDataBYPASSZERO(str(idLookupTable.get(i)), "idLookupTable", "1", str(i), "-");
-    
-  }
-  saveDataBYPASSZERO(str(fixtures.array.size()), "fixtures.size", "0", "-", "-");
-  for (int i = 0; i < fixtures.array.size(); i++) {
-      saveDataMainCommands(str(fixtures.array.get(i).red),           "red", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.array.get(i).green),         "green", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.array.get(i).blue),          "blue", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.array.get(i).x_location),    "xTaka", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.array.get(i).y_location),    "yTaka", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.array.get(i).z_location),    "fixZ", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.array.get(i).rotationX),     "rotX", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.array.get(i).rotationZ),     "rotTaka", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.array.get(i).parameter),     "fixParam", "1", str(i), "-");
-      saveDataMainCommands(fixtures.array.get(i).fixtureType,        "fixtureTypeS", "1", str(i), "-");
-      saveDataBYPASSZERO(str(fixtures.array.get(i).fixtureTypeId), "fixtureType1", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.array.get(i).channelStart),  "channel", "1", str(i), "-");
-      saveDataMainCommands(str(fixtures.array.get(i).parentAnsa),    "ansaParent", "1", str(i), "-");
-  }
-
-
-
-  save1Darray(bottomMenuOrder, "bottomMenuOrder");
-  
-
-  
-  int[] grouping = new int[3];
-        grouping[0] = controlP5place;
-        grouping[1] = enttecDMXplace;
-        grouping[2] = touchOSCplace;
+  if(!loadingDataAtTheTime()) {
+    if(loadedOnce) {
+      savingAllData = true;
+      wholeSaveTimeAsMilliSecondsIsCounted = false;
+      saveDataBeginMillis = millis();
+      table = new Table();
+      
+      table.addColumn("id");
+      table.addColumn("variable_name");
+      table.addColumn("variable_dimensions");
+      table.addColumn("value");
+      table.addColumn("1D");
+      table.addColumn("2D");
+      
+      
+      
+      for (int i = 0; i < idLookupTable.size(); i++) {
+        saveDataBYPASSZERO(str(idLookupTable.get(i)), "idLookupTable", "1", str(i), "-");
         
-  save1Darray(grouping, "grouping");
-  
-
-  saveVariable(int(cam.x), "camX");
-  saveVariable(int(cam.y), "camY");
-  saveVariable(int(cam.z), "camZ");
-  saveVariable(int(center.x), "centerX");
-  saveVariable(int(center.y), "centerY");
-  saveVariable(chaseMode, "chaseMode");
-  
-  saveDataMainCommands(loadPath, "loadPath", "0", "-", "-");
-   
-
-  //Asetetaan oikeat tallennuspolut käyttäjän mukaan
-  println(savePath);
-  try {
-    saveTable(table, savePath, "csv");
-    saveSocketsToXML();
-    saveTrussesAsXML();
-    saveMemoriesToXML();
-    saveTestXML();
-    oscHandler.saveToXML();
-  } catch (Exception e) {
-    e.printStackTrace();
-    notifier.notify("Save failed! Try again by saving to another location by pressing SHIFT + S", true);
+      }
+      saveDataBYPASSZERO(str(fixtures.array.size()), "fixtures.size", "0", "-", "-");
+      for (int i = 0; i < fixtures.array.size(); i++) {
+          saveDataMainCommands(str(fixtures.array.get(i).red),           "red", "1", str(i), "-");
+          saveDataMainCommands(str(fixtures.array.get(i).green),         "green", "1", str(i), "-");
+          saveDataMainCommands(str(fixtures.array.get(i).blue),          "blue", "1", str(i), "-");
+          saveDataMainCommands(str(fixtures.array.get(i).x_location),    "xTaka", "1", str(i), "-");
+          saveDataMainCommands(str(fixtures.array.get(i).y_location),    "yTaka", "1", str(i), "-");
+          saveDataMainCommands(str(fixtures.array.get(i).z_location),    "fixZ", "1", str(i), "-");
+          saveDataMainCommands(str(fixtures.array.get(i).rotationX),     "rotX", "1", str(i), "-");
+          saveDataMainCommands(str(fixtures.array.get(i).rotationZ),     "rotTaka", "1", str(i), "-");
+          saveDataMainCommands(str(fixtures.array.get(i).parameter),     "fixParam", "1", str(i), "-");
+          saveDataMainCommands(fixtures.array.get(i).fixtureType,        "fixtureTypeS", "1", str(i), "-");
+          saveDataBYPASSZERO(str(fixtures.array.get(i).fixtureTypeId), "fixtureType1", "1", str(i), "-");
+          saveDataMainCommands(str(fixtures.array.get(i).channelStart),  "channel", "1", str(i), "-");
+          saveDataMainCommands(str(fixtures.array.get(i).parentAnsa),    "ansaParent", "1", str(i), "-");
+      }
+    
+    
+    
+      save1Darray(bottomMenuOrder, "bottomMenuOrder");
+      
+    
+      
+      int[] grouping = new int[3];
+            grouping[0] = controlP5place;
+            grouping[1] = enttecDMXplace;
+            grouping[2] = touchOSCplace;
+            
+      save1Darray(grouping, "grouping");
+      
+    
+      saveVariable(int(cam.x), "camX");
+      saveVariable(int(cam.y), "camY");
+      saveVariable(int(cam.z), "camZ");
+      saveVariable(int(center.x), "centerX");
+      saveVariable(int(center.y), "centerY");
+      saveVariable(chaseMode, "chaseMode");
+      
+      saveDataMainCommands(loadPath, "loadPath", "0", "-", "-");
+       
+    
+      //Asetetaan oikeat tallennuspolut käyttäjän mukaan
+      notifier.notify("Started saving to " + savePath, false);
+      try {
+        saveTable(table, savePath, "csv");
+        thread("saveSocketsToXML");
+        thread("saveTrussesAsXML");
+        thread("saveMemoriesToXML");
+        thread("saveTestXML");
+        oscHandler.saveToXML();
+      } catch (Exception e) {
+        e.printStackTrace();
+        notifier.notify("Save failed! Try again by saving to another location by pressing SHIFT + S", true);
+      }
+      
+      savingAllData = false;
+    }
+    else {
+      notifier.notify("You can't save before you have loaded once", true);
+    }
   }
-  
+}
 
-  long takedTime = millis() - saveDataBeginMillis;
-  notifier.notify("Save complete. (" + str(takedTime) + "ms)");
+boolean savingDataAtTheTime() {
+  boolean toReturn = savingSocketsToXML || savingTrussesToXML || savingMemoriesToXML || savingTestXML || savingAllData;
+  if(!toReturn && !wholeSaveTimeAsMilliSecondsIsCounted) {
+     wholeSaveTimeAsMilliSeconds = round(millis() - saveDataBeginMillis);
+     wholeSaveTimeAsMilliSecondsIsCounted = true;
+     notifier.notify("Save complete. (" + str(wholeSaveTimeAsMilliSeconds) + "ms)");
+  }
+  return toReturn;
+}
+
+boolean savingDataRecently() {
+  return savingDataAtTheTime() || (millis()-(saveDataBeginMillis+(wholeSaveTimeAsMilliSeconds)) < 5000);
 }

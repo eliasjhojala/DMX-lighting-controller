@@ -361,8 +361,11 @@ void loadXmlToTrusses() {
   trussesLoadedSucces = true;
 }
 
+boolean savingTrussesToXML;
 void saveTrussesAsXML() {
+  savingTrussesToXML = true;
   saveXML(getTrussesAsXML(), "XML/trusses.xml");
+  savingTrussesToXML = false;
 }
 
 XML vectorAsXML(PVector vector, String name) {

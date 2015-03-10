@@ -89,8 +89,17 @@ void ylavalikko() {
   text(avgFrameRate + " fps", 3, 28, 125, 125);
   avgFrameRate = (avgFrameRate + int(frameRate)) / 2;
   
-  if(loadingDataAtTheTime()) { text("Loading...", 3, 28+15, 125, 125); }
-  else { text("Load taked " + str(wholeLoadTimeAsSeconds) + "s", 3, 28+15, 125, 125); }
+  pushMatrix();
+    if(loadingDataRecently()) {
+      if(loadingDataAtTheTime()) { text("Loading...", 3, 28+15, 125, 125); }
+      else { text("Load taked " + str(round(float(wholeLoadTimeAsMilliSeconds)/1000)) + "s", 3, 28+15, 125, 125); translate(0, 15); }
+    }
+    
+    if(savingDataRecently()) {
+      if(savingDataAtTheTime()) { text("Saving...", 3, 28+15, 125, 125); }
+      else { text("Save taked " + str(round(float(wholeSaveTimeAsMilliSeconds)/1000)) + "s", 3, 28+15, 125, 125); }
+    }
+  popMatrix();
   
   { //Here you can place buttons to left side 
   pushMatrix();

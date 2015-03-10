@@ -3,7 +3,9 @@
 ManageXML fixtureXML = new ManageXML("XML/fixtures.xml");
 ManageXML memoryXML = new ManageXML("XML/memories.xml");
 
+boolean savingTestXML;
 void saveTestXML() {
+  savingTestXML = true;
   ManageXML XMLObject = fixtureXML;
   
   //IDLOOKUPTABLE TÄHÄN ROOPE TEEEE
@@ -20,7 +22,7 @@ void saveTestXML() {
   
   
   XMLObject.saveData();
-
+  savingTestXML = false;
 }
 
 void saveFixturesToXML() {
@@ -197,4 +199,18 @@ class ManageXML {
     saveXML(xml, path);
   }
   
+}
+
+
+void setIntXML(String name, int data, XML block) {
+  if(data != 0) {
+    block.setInt(name, data);
+  }
+}
+
+int getIntXML(String name, XML block) {
+  if(block != null) {
+    return block.getInt(name);
+  }
+  return 0;
 }

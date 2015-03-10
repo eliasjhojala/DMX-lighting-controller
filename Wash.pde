@@ -105,7 +105,7 @@ class ColorWashMenu {
                 g.rect(round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
                 g.fill(0); //Black text
                 g.textSize(15); //A bit bigger text than default
-                g.textMode(LEFT); 
+                g.textAlign(LEFT); 
                 if(wash.onlySelected) { g.text("Selected", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
                 else { g.text("All", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
                 g.popStyle();
@@ -137,7 +137,7 @@ class ColorWashMenu {
                 g.rect(round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
                 g.fill(0); //Black text
                 g.textSize(15); //A bit bigger text than default
-                g.textMode(LEFT); 
+                g.textAlign(LEFT); 
                 g.text("Clear all", round(clearButton.x+textOffset.x), round(clearButton.y+textOffset.y));
                 g.popStyle();
               //END OF CLEAR BUTTON
@@ -153,7 +153,7 @@ class ColorWashMenu {
                   g.fill(0);
                   g.textSize(15);
             
-                  g.textMode(LEFT); 
+                  g.textAlign(LEFT); 
                   if(colorPick.open) { g.text("Close", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
                   else { g.text("ColorPicker", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
                 g.popStyle();
@@ -512,17 +512,28 @@ class colorName {
     colorMode = 3;
   }
   
+  boolean convertedToRGB = false;
+  
+  color rgb = color(0, 0, 0);
+  
   color getRGB() {
-    color c = color(0, 0, 0);
-    if(colorMode == 3) {
-      int[] rgb = new int[3];
-      arrayCopy(colorConverter.convertColor(toArray(red, green, blue, white), 3, 1), rgb);
-      c = color(rgb[0], rgb[1], rgb[2]);
+    if(!convertedToRGB) {
+      if(colorMode == 3) {
+        if(white > 0) {
+          int[] rgbVals = new int[3];
+          arrayCopy(colorConverter.convertColor(toArray(red, green, blue, white), 3, 1), rgbVals);
+          rgb = color(rgbVals[0], rgbVals[1], rgbVals[2]);
+        }
+        else {
+          rgb = color(red, green, blue);
+        }
+      }
+      if(colorMode == 1) {
+        rgb = color(red, green, blue);
+      }
+      convertedToRGB = true;
     }
-    if(colorMode == 1) {
-      c = color(red, green, blue);
-    }
-    return c;
+    return rgb;
   }
   
   

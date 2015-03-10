@@ -73,6 +73,7 @@ class HelpObject {
   void draw(PGraphics g, Mouse mouse) {
     g.pushMatrix();
       g.pushStyle();
+        g.textAlign(LEFT);
         g.fill(parent.blockBackgroundColor);
         g.stroke(parent.blockStrokeColor);
         g.strokeWeight(parent.blockStrokeWeight);

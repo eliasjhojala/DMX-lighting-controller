@@ -52,7 +52,9 @@ XML getNearestSocketsAsXML() {
   return xml; 
 }
 
+boolean savingSocketsToXML;
 void saveSocketsToXML() {
+  savingSocketsToXML = true;
   String data = "<Sockets></Sockets>";
   XML xml = parseXML(data);
   for(int i = 0; i < sockets.length; i++) {
@@ -69,6 +71,7 @@ void saveSocketsToXML() {
     }
   }
   saveXML(xml, "XML/sockets.xml");
+  savingSocketsToXML = false;
 }
 
 void loadSocketsFromXML() {
