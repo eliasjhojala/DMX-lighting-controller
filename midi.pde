@@ -19,6 +19,7 @@
    DropdownMenu midiInSelect;
    DropdownMenu midiOutSelect;
    RadioButtonMenu outputModes;
+   RadioButtonMenu toggleOrPush;
    
    MidiHandlerWindow() {
      h = 500;
@@ -48,6 +49,10 @@
      outputModes = new RadioButtonMenu();
      outputModes.addBlock(new RadioButton("Memories", 1));
      outputModes.addBlock(new RadioButton("Fixtures", 2));
+     
+     toggleOrPush = new RadioButtonMenu();
+     toggleOrPush.addBlock(new RadioButton("Toggle", 1));
+     toggleOrPush.addBlock(new RadioButton("Push", 2));
    }
    
    IntController offset = new IntController("testIntController");
@@ -125,9 +130,32 @@
        g.popMatrix();
        
        g.translate(0, 200);
+       
+       g.pushMatrix();
+         g.translate(200, 0);
+         toggleOrPush.draw(g, mouse);
+       g.popMatrix();
+       
+       
        outputModes.draw(g, mouse);
        
-
+       
+       
+       
+      if(toggleOrPush.valueHasChanged()) {
+         switch(selectedMachine) {
+           case 1: //Launchpad
+             if(launchpad != null) launchpad.setUseToggleToAll(toggleOrPush.getValue() == 1);
+           break;
+           
+           case 2: //LC2412
+           break;
+           
+           case 3: //KerRig 49
+             
+           break;
+         }
+      }
        
        offset.draw(g, mouse);
        
@@ -150,6 +178,7 @@
        if(outputModes.valueHasChanged()) {
          switch(selectedMachine) {
            case 1: //Launchpad
+             if(launchpad != null) launchpad.output = outputModes.getValue();
            break;
            
            case 2: //LC2412
@@ -160,6 +189,8 @@
            break;
          }
        }
+       
+       
      
      g.popMatrix();
      
@@ -309,6 +340,14 @@ public class Launchpad {
       } 
     }
     
+  }
+  
+  void setUseToggleToAll(boolean use) {
+    for(int x = 0; x < 8; x++) { 
+      for(int y = 0; y < 8; y++) { 
+        useToggle[x][y] = use; 
+      } 
+    }
   }
   
   void noteOn(int channel, int pitch, int velocity) {

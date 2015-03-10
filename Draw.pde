@@ -11,7 +11,7 @@ boolean soloIsOn;
 
 boolean oldUse3D = false;
 
-boolean useMidiMaschines = false;
+boolean useMidiMaschines = true;
 
 float scrollSpeed = 0;
 boolean scrolled;

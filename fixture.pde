@@ -335,7 +335,6 @@ class fixture {
   
   void processFade() {
     if(fades != null) {
-      
       int[] fadeVal = new int[fades.length];
       for(int i = 0; i < fades.length; i++) {
         if(fades[i] != null) {
@@ -343,18 +342,11 @@ class fixture {
             fades[i].countActualValue();
             fadeVal[i] = fades[i].getActualValue();
             in.setUniversalDMX(i, fadeVal[i]);
+            in.DMXChanged = true;
             DMXChanged = true;
           }
         }
       }
-//      int[] oldOut = out.getUniversalDMX();
-//      //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
-////      if(isHalogen() && abs(fadeVal[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
-////        fadeVal[DMX_DIMMER] = oldOut[DMX_DIMMER];
-////      fadeVal[DMX_DIMMER] = masterize(fadeVal[DMX_DIMMER]);
-//      out.setUniversalDMX(fadeVal);
-//      DMXChanged = true;
-//      out.DMXChanged = true;
     }
   }
 

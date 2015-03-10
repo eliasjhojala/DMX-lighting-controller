@@ -45,7 +45,7 @@ void createMemoryObjects() {
 XML getMemoriesAsXML() {
   String data = "<Memories></Memories>";
   XML xml = parseXML(data);
- // xml.addChild(arrayToXML("memoryControllerLookupTable", memoryControllerLookupTable));
+  xml.addChild(arrayToXML("memoryControllerLookupTable", memoryControllerLookupTable));
   for(int i = 0; i < memories.length; i++) {
     if(memories[i].type != 0) {
       xml = xml.addChild(memories[i].getXML());
@@ -56,21 +56,14 @@ XML getMemoriesAsXML() {
   return xml;
 }
 
+
 void XMLtoMemories(XML xml) {
   XML[] block = xml.getChildren();
-  
-//  memoryControllerLookupTable = new int[memories.length];
-//  try {
-//    //arrayCopy(XMLtoIntArray("memoryControllerLookupTable", block[0]), memoryControllerLookupTable);
-//  }
-//  catch(Exception e) {
-//    e.printStackTrace();
-//  }
-  
+  memoryControllerLookupTable = XMLtoIntArray("memoryControllerLookupTable", xml);
   int a = 0;
   
   for(int i = 0; i < block.length; i++) {
-    if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+    if(block[i] != null) if(!trim(block[i].toString()).equals("")) /*if(!block[i].getName().equals("memoryControllerLookupTable"))*/  {
       int id = block[i].getInt("id");
       if(loadFast && !loadSafe) {
         singleMemoryXMLtoObjectXML = block[i];
@@ -793,6 +786,7 @@ class chase { //Begin of chase class--------------------------------------------
       setIntXML("inputMode", inputMode, block);
       setIntXML("outputMode", outputMode, block);
       setIntXML("beatModeId", beatModeId, block);
+      setIntXML("fadeMode", fadeMode, block);
     if(parent.type == 6) {
       block = xml.addChild("steps");
         block.setInt("size", steps.size());
@@ -830,6 +824,7 @@ class chase { //Begin of chase class--------------------------------------------
           inputMode = getIntXML("inputMode", block);
           outputMode = getIntXML("outputMode", block);
           beatModeId = getIntXML("beatModeId", block);
+          fadeMode = getIntXML("fadeMode", block);
         }
         block = xml.getChild("steps");
         if(block != null) {

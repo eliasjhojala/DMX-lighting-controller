@@ -99,12 +99,14 @@ void sivuValikko() {
   translate(width-168, 0);
   mouse.declareUpdateElement("rearMenu:presetcontrols", "main:move", width-168, 0, width, height);
   for(int i = 1; i <= height/20+1; i++) {
-    int ai = memoryControllerLookupTable[i] + memoryMenu;
-    if(ai < numberOfMemories) {
-      pushMatrix();
-        translate(0, 20*(i-1));
-        drawMemoryController(ai, memories[ai].getText());
-      popMatrix();
+    if(i >= 0 && i < memoryControllerLookupTable.length) {
+      int ai = memoryControllerLookupTable[i] + memoryMenu;
+      if(ai < numberOfMemories) {
+        pushMatrix();
+          translate(0, 20*(i-1));
+          drawMemoryController(ai, memories[ai].getText());
+        popMatrix();
+      }
     }
   }
   
