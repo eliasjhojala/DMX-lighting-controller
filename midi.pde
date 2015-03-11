@@ -20,6 +20,7 @@
    DropdownMenu midiOutSelect;
    RadioButtonMenu outputModes;
    RadioButtonMenu toggleOrPush;
+   CheckBoxTableWindow launchpadToggleOrPush;
    
    MidiHandlerWindow() {
      h = 500;
@@ -53,6 +54,8 @@
      toggleOrPush = new RadioButtonMenu();
      toggleOrPush.addBlock(new RadioButton("Toggle", 1));
      toggleOrPush.addBlock(new RadioButton("Push", 2));
+     
+     launchpadToggleOrPush = new CheckBoxTableWindow("launchpadToggleOrPush", 8, 8);
    }
    
    IntController offset = new IntController("testIntController");
@@ -128,6 +131,23 @@
          }
          
        g.popMatrix();
+       
+       if(selectedMachine == 1) { //Launchpad
+         g.pushMatrix();
+           g.translate(500, 0);
+           launchpadToggleOrPush.draw(g, mouse, isTranslated);
+           launchpadToggleOrPush.locX = locX + 500;
+           launchpadToggleOrPush.locY = locY;
+           launchpadToggleOrPush.open = true;
+           if(launchpadToggleOrPush.valueHasChanged()) {
+             if(launchpad != null) {
+             launchpad.useToggle[launchpadToggleOrPush.changedValue()[0]][launchpadToggleOrPush.changedValue()[1]] 
+             = launchpadToggleOrPush.getValue(launchpadToggleOrPush.changedValue()[0], launchpadToggleOrPush.changedValue()[1]);
+             }
+           }
+          
+         g.popMatrix();
+       }
        
        g.translate(0, 200);
        
@@ -205,6 +225,73 @@
    }
    
     
+ }
+ 
+ 
+ class CheckBoxTableWindow {
+   Window window;
+   int locX, locY, w, h;
+   boolean open;
+   
+   String name;
+   
+   CheckBox[][] boxes;
+   
+   CheckBoxTableWindow(String name, int x, int y) {
+     boxes = new CheckBox[x][y];
+     this.name = name;
+     locX = 0;
+     locY = 0;
+     w = x*30+100;
+     h = x*30+100;
+     window = new Window("name", new PVector(w, h), this);
+     
+     for(int x_ = 0; x_ < boxes.length; x_++) {
+       for(int y_ = 0; y_ < boxes.length; y_++) {
+         boxes[x_][y_] = new CheckBox("");
+       }
+     }
+   }
+   
+   int changedX, changedY;
+   boolean valueChanged;
+   
+   void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+     window.draw(g, mouse);
+     g.pushMatrix();
+     g.translate(50, 50);
+     for(int x = 0; x < boxes.length; x++) {
+       for(int y = 0; y < boxes[x].length; y++) {
+         g.pushMatrix();
+           g.translate(x*30, y*30);
+           boxes[x][y].draw(g, mouse, name+"box["+str(x)+"]["+str(y)+"]");
+           if(boxes[x][y].valueHasChanged()) {
+             changedX = x;
+             changedY = y;
+             valueChanged = true;
+           }
+         g.popMatrix();
+       }
+     }
+     g.popMatrix();
+   }
+   
+   boolean valueHasChanged() {
+     boolean toReturn = valueChanged;
+     valueChanged = false;
+     return toReturn;
+   }
+   
+   int[] changedValue() {
+     int[] toReturn = new int[2];
+     toReturn[0] = changedY;
+     toReturn[1] = changedX;
+     return toReturn;
+   }
+   
+   boolean getValue(int x, int y) {
+     return boxes[x][y].getValue();
+   }
  }
 
 
@@ -459,12 +546,12 @@ public class behringerLC2412 {
     }
     else {
       switch(num) {
-        case 24: chaserValues[0] = midiToDMX(val); break;
-        case 25: chaserValues[1] = midiToDMX(val); break;
-        case 26: chaserValues[2] = midiToDMX(val); break;
-        case 27: masterValues[0] = midiToDMX(val); break;
-        case 28: masterValues[1] = midiToDMX(val); break;
-        case 29: masterValues[2] = midiToDMX(val); break;
+        case 24: chaserValues[0] = midiToDMX(val); break; //Speed
+        case 25: chaserValues[1] = midiToDMX(val); break; //X-fade
+        case 26: chaserValues[2] = midiToDMX(val); break; //Chase
+        case 27: masterValues[0] = midiToDMX(val); break; //Main
+        case 28: masterValues[1] = midiToDMX(val); break; //Main A
+        case 29: masterValues[2] = midiToDMX(val); break; //Main B
         case 30: stepKey = midiToBoolean(val); break;
         case 43: bank = val; break;
         case 44: chaserNumber = val; break;

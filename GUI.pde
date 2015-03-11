@@ -141,6 +141,7 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(oscSettings, "OSCSettingsWindow", 1000));
     subWindows.add(new SubWindowContainer(midiWindow, "MidiHandlerWindow", 1000));
     subWindows.add(new SubWindowContainer(enttecOutputSettingsWindow, "enttecOutputSettingsWindow", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow.launchpadToggleOrPush, "launchpadToggleOrPush", 1000));
     lowerMenu.open = false;
     
   }
@@ -956,4 +957,60 @@ class IntController {
     return state;
   }
   
+}
+
+
+class CheckBox {
+  
+  CheckBox(String text) {
+    this.text = text;
+  }
+  
+  boolean selected = false;
+  boolean selectedChanged;
+  int buttonSize;
+  String text;
+  
+  void draw(PGraphics g, Mouse mouse, String mouseName) {
+    buttonSize = 20;
+    mouse.declareUpdateElementRelative(mouseName, 100000, -(buttonSize/2), -(buttonSize/2), buttonSize, buttonSize, g);
+    boolean pressed = mouse.isCaptured(mouseName) && mouse.firstCaptureFrame;
+    if(pressed) { selected = !selected; selectedChanged = true; }
+    drawShapes(g, mouse, selected);
+  }
+  
+  void drawShapes(PGraphics g, Mouse mouse, boolean selected) {
+    g.pushMatrix();
+      g.pushStyle();
+        g.rectMode(CENTER);
+        g.noFill();
+        g.strokeWeight(buttonSize/5);
+        g.stroke(themes.buttonColor.neutral);
+        g.rect(0, 0, buttonSize, buttonSize);
+        if(selected) {
+          g.fill(themes.buttonColor.neutral);
+          g.noStroke();
+          g.rect(0.3, 0.3, buttonSize/2, buttonSize/2);
+        }
+        g.pushMatrix();
+          g.pushStyle();
+            g.textAlign(LEFT);
+            g.rectMode(CORNER);
+            g.fill(0);
+            g.text(text, buttonSize*1.1, buttonSize/4);
+          g.popStyle();
+        g.popMatrix();
+      g.popStyle();
+    g.popMatrix();
+  }
+  
+  boolean getValue() {
+    return selected;
+  }
+  
+  boolean valueHasChanged() {
+    boolean toReturn = selectedChanged;
+    selectedChanged = false;
+    return toReturn;
+  }
 }
