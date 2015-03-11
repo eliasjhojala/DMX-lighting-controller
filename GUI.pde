@@ -142,6 +142,8 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(midiWindow, "MidiHandlerWindow", 1000));
     subWindows.add(new SubWindowContainer(enttecOutputSettingsWindow, "enttecOutputSettingsWindow", 1000));
     subWindows.add(new SubWindowContainer(midiWindow.launchpadToggleOrPush, "launchpadToggleOrPush", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow.launchPadMemories, "launchPadMemories", 1000));
+    
     lowerMenu.open = false;
     
   }
@@ -858,7 +860,7 @@ class RadioButton {
     buttonSize = 20;
     mouse.declareUpdateElementRelative(mouseName, 100000, -(buttonSize/2), -(buttonSize/2), buttonSize, buttonSize, g);
     boolean pressed = mouse.isCaptured(mouseName) && mouse.firstCaptureFrame;
-    if(pressed) { selected = !selected; selectedChanged = true; }
+    if(pressed) { selected = true; selectedChanged = true; }
     drawShapes(g, mouse, selected);
   }
   
@@ -1002,6 +1004,10 @@ class CheckBox {
         g.popMatrix();
       g.popStyle();
     g.popMatrix();
+  }
+  
+  void setValue(boolean val) {
+    selected = val;
   }
   
   boolean getValue() {

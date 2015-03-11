@@ -59,7 +59,9 @@ XML getMemoriesAsXML() {
 
 void XMLtoMemories(XML xml) {
   XML[] block = xml.getChildren();
-  memoryControllerLookupTable = XMLtoIntArray("memoryControllerLookupTable", xml);
+  if(XMLtoIntArray("memoryControllerLookupTable", xml) != null) {
+    memoryControllerLookupTable = XMLtoIntArray("memoryControllerLookupTable", xml);
+  }
   int a = 0;
   
   for(int i = 0; i < block.length; i++) {

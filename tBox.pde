@@ -117,3 +117,68 @@ class TextBox {
   
 }
 
+
+class TextBoxTableWindow {
+  Window window;
+  TextBox[][] cells;
+  
+  int locX, locY, w, h;
+  boolean open;
+  
+  String name;
+  
+  TextBoxTableWindow(String name, int x_, int y_) {
+    this.name = name;
+    w = x_*21+100;
+    h = y_*21+100;
+    cells = new TextBox[x_][y_];
+    for(int x = 0; x < cells.length; x++) {
+      for(int y = 0; y < cells[x].length; y++) {
+        cells[x][y] = new TextBox("", 2);
+        cells[x][y].textBoxSize = new PVector(20, 20);
+      }
+    }
+    window = new Window(name+"cellTable", new PVector(w, h), this);
+  }
+  
+  int changedX, changedY;
+  boolean valueChanged;
+  
+  void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+    window.draw(g, mouse);
+    g.translate(50, 50);
+    for(int x = 0; x < cells.length; x++) {
+      for(int y = 0; y < cells[x].length; y++) {
+        g.pushMatrix();
+          g.translate(x*21, y*21);
+          String mouseObjectName = name+"cellTable["+str(x)+"]["+str(y)+"]";
+          mouse.declareUpdateElementRelative(mouseObjectName, 100000, 0, 0, 20, 20, g);
+          mouse.setElementExpire(mouseObjectName, 2);
+          cells[x][y].drawToBuffer(g, mouse, mouseObjectName);
+          if(cells[x][y].textChanged()) {
+            valueChanged = true;
+            changedX = x;
+            changedY = y;
+          }
+        g.popMatrix();
+      }
+    }
+  }
+  
+  boolean valueHasChanged() {
+     boolean toReturn = valueChanged;
+     valueChanged = false;
+     return toReturn;
+   }
+   
+   int[] changedValue() {
+     int[] toReturn = new int[2];
+     toReturn[0] = changedX;
+     toReturn[1] = changedY;
+     return toReturn;
+   }
+  
+  int getValue(int x, int y) {
+    return int(cells[x][y].getText());
+  }
+}

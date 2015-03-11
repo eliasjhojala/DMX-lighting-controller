@@ -21,6 +21,7 @@
    RadioButtonMenu outputModes;
    RadioButtonMenu toggleOrPush;
    CheckBoxTableWindow launchpadToggleOrPush;
+   TextBoxTableWindow launchPadMemories;
    
    MidiHandlerWindow() {
      h = 500;
@@ -56,12 +57,16 @@
      toggleOrPush.addBlock(new RadioButton("Push", 2));
      
      launchpadToggleOrPush = new CheckBoxTableWindow("launchpadToggleOrPush", 8, 8);
+     
+     launchPadMemories = new TextBoxTableWindow("launchPadMemories", 8, 8);
    }
    
    IntController offset = new IntController("testIntController");
    
    void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
      window.draw(g, mouse);
+     
+    
      g.pushMatrix();
        g.translate(40, 60);
   
@@ -135,14 +140,28 @@
        if(selectedMachine == 1) { //Launchpad
          g.pushMatrix();
            g.translate(500, 0);
+           launchPadMemories.locX = locX + 500;
+           launchPadMemories.locY = locY + launchpadToggleOrPush.h;
+           launchPadMemories.open = true;
+           if(launchPadMemories.valueHasChanged()) {
+             if(launchpad != null) {
+               launchpad.toggleMemory[launchPadMemories.changedValue()[0]][launchPadMemories.changedValue()[1]] 
+               = launchPadMemories.getValue(launchPadMemories.changedValue()[0], launchPadMemories.changedValue()[1]);
+             }
+           }
+          
+         g.popMatrix();
+         
+         g.pushMatrix();
+           g.translate(500, 0);
            launchpadToggleOrPush.draw(g, mouse, isTranslated);
            launchpadToggleOrPush.locX = locX + 500;
            launchpadToggleOrPush.locY = locY;
            launchpadToggleOrPush.open = true;
            if(launchpadToggleOrPush.valueHasChanged()) {
              if(launchpad != null) {
-             launchpad.useToggle[launchpadToggleOrPush.changedValue()[0]][launchpadToggleOrPush.changedValue()[1]] 
-             = launchpadToggleOrPush.getValue(launchpadToggleOrPush.changedValue()[0], launchpadToggleOrPush.changedValue()[1]);
+               launchpad.useToggle[launchpadToggleOrPush.changedValue()[0]][launchpadToggleOrPush.changedValue()[1]] 
+               = launchpadToggleOrPush.getValue(launchpadToggleOrPush.changedValue()[0], launchpadToggleOrPush.changedValue()[1]);
              }
            }
           
@@ -165,7 +184,7 @@
       if(toggleOrPush.valueHasChanged()) {
          switch(selectedMachine) {
            case 1: //Launchpad
-             if(launchpad != null) launchpad.setUseToggleToAll(toggleOrPush.getValue() == 1);
+             if(launchpad != null) launchpad.setUseToggleToAll(toggleOrPush.getValue() == 1); launchpadToggleOrPush.setValue(toggleOrPush.getValue() == 1);
            break;
            
            case 2: //LC2412
@@ -263,7 +282,7 @@
      for(int x = 0; x < boxes.length; x++) {
        for(int y = 0; y < boxes[x].length; y++) {
          g.pushMatrix();
-           g.translate(x*30, y*30);
+           g.translate(x*25, y*25);
            boxes[x][y].draw(g, mouse, name+"box["+str(x)+"]["+str(y)+"]");
            if(boxes[x][y].valueHasChanged()) {
              changedX = x;
@@ -284,14 +303,29 @@
    
    int[] changedValue() {
      int[] toReturn = new int[2];
-     toReturn[0] = changedY;
-     toReturn[1] = changedX;
+     toReturn[0] = changedX;
+     toReturn[1] = changedY;
      return toReturn;
    }
    
    boolean getValue(int x, int y) {
      return boxes[x][y].getValue();
    }
+   
+   void setValue(boolean val) {
+     for(int x = 0; x < boxes.length; x++) {
+       for(int y = 0; y < boxes[x].length; y++) {
+         boxes[x][y].setValue(val);
+       }
+     }
+   }
+   
+   void setValue(int x, int y, boolean val) {
+     if(x < boxes.length) if(y < boxes[x].length) {
+       boxes[x][y].setValue(val);
+     }
+   }
+   
  }
 
 
@@ -396,6 +430,8 @@ public class Launchpad {
   
   boolean[][] useToggle;
   
+  int[][] toggleMemory;
+  
   MidiBus bus;
   
   int inputIndex;
@@ -405,6 +441,7 @@ public class Launchpad {
   
   Launchpad(int inputIndex, int outputIndex) {
     setup(inputIndex, outputIndex);
+    useToggle = new boolean[8][8];
   }
   
   void setup(int inputIndex, int outputIndex) {
@@ -419,13 +456,10 @@ public class Launchpad {
     upperPads = new boolean[8];
     upperPadsToggle = new boolean[8];
     
+    toggleMemory = new int[8][8];
+    
     output = 1;
-    useToggle = new boolean[8][8];
-    for(int x = 0; x < 8; x++) { 
-      for(int y = 0; y < 8; y++) { 
-        useToggle[x][y] = true; 
-      } 
-    }
+
     
   }
   
@@ -451,8 +485,14 @@ public class Launchpad {
       value = pads[x][y];
     }
     bus.sendNoteOn(0, pitch, byte(value) * 127);
-    if(output == 1) { setMemoryEnabledByOrderInVisualisation(x+8*y+1+offset, value); }
-    else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
+   // if(output == 1) { setMemoryEnabledByOrderInVisualisation(x+8*y+1+offset, value); }
+   // else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
+    
+    
+    if(output == 1) { memories[toggleMemory[x][y]].enabled = value; }
+    else if(output == 2) { fixtures.get(constrain(toggleMemory[x][y], 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
+    
+    
   }
   
   void noteOff(int channel, int pitch, int velocity) {
