@@ -66,18 +66,13 @@ void channelsToDim() {
   
   //Place data from different arrays to allChannels array if it is changed---------------------------------------------------------------------------------------
   
-  for(int i = 1; i <= controlP5channels; i++) {
-    if(controlP5channelOld[i] != controlP5channel[i]) {
-      allChannels[controlP5place][i] = controlP5channel[i];
-      controlP5channelOld[i] = controlP5channel[i];
-    }
-  }
   for(int i = 1; i <= enttecDMXchannels; i++) {
     if(enttecDMXchannelOld[i] != enttecDMXchannel[i]) {
       allChannels[enttecDMXplace][i] = enttecDMXchannel[i];
       enttecDMXchannelOld[i] = enttecDMXchannel[i];
     }
   }
+  
   for(int i = 1; i <= touchOSCchannels; i++) {
     if(touchOSCchannelOld[i] != touchOSCchannel[i]) {         
       allChannels[1][i] = touchOSCchannel[i];
@@ -94,6 +89,7 @@ void channelsToDim() {
  for(int i = 24; i < allChannels[1].length; i++) {
    if(allChannels[1][i] != allChannelsOld[1][i]) {
      setMemoryValueByOrderInVisualisation(i-24, allChannels[1][i]);
+     allChannelsOld[1][i] = allChannels[1][i];
    }
  }
     
@@ -109,17 +105,14 @@ void channelsToDim() {
     }
     
     if(allChannelsOld[5][i] != allChannels[5][i]) {
-        memories[i].setValue(allChannels[1][i]);
         allChannelsOld[5][i] = allChannels[5][i];
     }
     
     if(allChannelsOld[3][i] != allChannels[3][i]) {
-        memories[i].setValue(allChannels[3][i]);
         allChannelsOld[3][i] = allChannels[3][i];
     }
     
     if(allChannelsOld[4][i] != allChannels[4][i]) {
-      memories[i+12].setValue(allChannels[4][i]);
       allChannelsOld[4][i] = allChannels[4][i];
     }
     

@@ -995,6 +995,7 @@ class chase { //Begin of chase class--------------------------------------------
         
         boolean nextStepPressedWasDown;
         boolean beatWasTrue;
+        boolean reverseStepPressedWasDown;
         
           boolean trigger() {
             boolean toReturn = false;
@@ -1007,6 +1008,23 @@ class chase { //Begin of chase class--------------------------------------------
             }
             return toReturn;
           }
+          
+          boolean back() {
+            boolean toReturn = false;
+            int iM = 0;
+            if(inputMode > 0) { iM = inputMode; } else { iM = inputModeMaster; }
+            switch(iM) {
+              //case 1: toReturn = !beatWasTrue && s2l.beat(constrain(getBeatModeId(), beatModeLimit[0], beatModeLimit[1])); if(toReturn) { beatWasTrue = true; } else { beatWasTrue = false; } break;
+              case 2: toReturn = ((!reverseStepPressedWasDown && reverseStepPressed) || (keyPressed && key == 'r')); if(reverseStepPressed) { reverseStepPressedWasDown = true; } else { reverseStepPressedWasDown = false; } break;
+              //case 3: toReturn = true; break;
+            }
+            return toReturn;
+          }
+          
+          boolean doOnce() {
+            return false;
+          }
+          
    //End of input and output mode functions
    
   
@@ -1140,14 +1158,26 @@ class chase { //Begin of chase class--------------------------------------------
       beatToLightValue = constrain(beatToLightValue-getInvertedValue(fade, 0, 255), 0, 255);
   }
   
-
+  int lastDirection;
+  final int REVERSE = 0;
+  final int NEXT = 1;
+  
   void beatToMoving() {
     //This function goes through all the presets. When there is beat this goes to next preset
     //There is some problems with this function
-    boolean next;
-    next = trigger() && !stepHasChanged;
+    boolean next = trigger() && !stepHasChanged;
+    boolean reverse = back() && !stepHasChanged;
     if(next) { 
+      if(step == getPresets().length-1 && doOnce()) { parent.enabled = false; }
       step = getNext(step, 0, getPresets().length-1);
+      lastDirection = NEXT;
+    }
+    if(reverse) {
+      if(step == 0 && doOnce()) { parent.enabled = false; }
+      step = getReverse(step, 0, getPresets().length-1);
+      lastDirection = REVERSE;
+    }
+    if(next || reverse) {
       brightness1 = 0;
       stepHasChanged = true;
     }
@@ -1160,7 +1190,9 @@ class chase { //Begin of chase class--------------------------------------------
       brightness = defaultConstrain(iMap(brightness1, 0, fade, 0, 255));
     }
     int[] presets = getPresets();
-    int rS = getReverse(step, 0, presets.length-1);
+    int rS = 0; 
+    if(lastDirection == REVERSE) { rS = getNext(step, 0, presets.length-1); }
+    else { rS = getReverse(step, 0, presets.length-1); }
     if(presets.length > 0) {
       loadPreset(presets[constrain(step, 0, onlyPositive(presets.length-1))], brightness);
       loadPreset(presets[constrain(rS, 0, onlyPositive(presets.length-1))], getInvertedValue(brightness, 0, 255));

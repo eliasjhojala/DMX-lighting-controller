@@ -14,6 +14,9 @@ boolean blackOutButtonWasReleased;
 int masterValueBeforeBlackout;
 String addr = "";
 int[] valueOfDimBeforeStrobe = new int[fixtures.size()];
+
+boolean reverseStepPressed;
+
 void oscEvent(OscMessage theOscMessage) {
   
   addr = theOscMessage.addrPattern(); //Luetaan touchOSCin elementin osoite
@@ -76,10 +79,10 @@ void oscEvent(OscMessage theOscMessage) {
      }
      if(addr.equals("/revstep")) {
        if(digitalValue == 1) {
-        revStepPressed = true;
+        reverseStepPressed = true;
        }
        else {
-         revStepPressed = false;
+         reverseStepPressed = false;
        }
      }
      

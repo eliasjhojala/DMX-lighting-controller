@@ -466,6 +466,11 @@ int quickSlider(String mouseLockID, int mousePriority, int value, PGraphics g, M
       toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);*/
       return lim_hi + lim_low - val;
     }
+    
+    //returns getInvertedValue with 0-255 limits
+    int getDefaultInvertedValue(int val) {
+      return getInvertedValue(val, 0, 255);
+    }
   
     
     //defualtConstrain is used to constrain values between 0 and 255, because that is the range used in DMX.
