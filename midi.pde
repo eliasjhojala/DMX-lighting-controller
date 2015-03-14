@@ -22,6 +22,7 @@
    RadioButtonMenu toggleOrPush;
    CheckBoxTableWindow launchpadToggleOrPush;
    TextBoxTableWindow launchPadMemories;
+   PushButton save, load;
    
    MidiHandlerWindow() {
      h = 500;
@@ -59,6 +60,9 @@
      launchpadToggleOrPush = new CheckBoxTableWindow("launchpadToggleOrPush", 8, 8);
      
      launchPadMemories = new TextBoxTableWindow("launchPadMemories", 8, 8);
+     
+     save = new PushButton("saveButtonInMidiWindow");
+     load = new PushButton("loadButtonInMidiWindow");
    }
    
    IntController offset = new IntController("testIntController");
@@ -145,8 +149,17 @@
            launchPadMemories.open = true;
            if(launchPadMemories.valueHasChanged()) {
              if(launchpad != null) {
-               launchpad.toggleMemory[launchPadMemories.changedValue()[0]][launchPadMemories.changedValue()[1]] 
-               = launchPadMemories.getValue(launchPadMemories.changedValue()[0], launchPadMemories.changedValue()[1]);
+               TextBoxTableWindow LPM = launchPadMemories;
+               int x = LPM.changedValue()[0];
+               int y = LPM.changedValue()[1];
+               int val = LPM.getValue(x, y);
+               println(val);
+               try {
+                 launchpad.setToggleToMemoryValue(val, x, y);
+               }
+               catch (Exception e) {
+                 e.printStackTrace();
+               }
              }
            }
           
@@ -159,9 +172,17 @@
            launchpadToggleOrPush.locY = locY;
            launchpadToggleOrPush.open = true;
            if(launchpadToggleOrPush.valueHasChanged()) {
-             if(launchpad != null) {
-               launchpad.useToggle[launchpadToggleOrPush.changedValue()[0]][launchpadToggleOrPush.changedValue()[1]] 
-               = launchpadToggleOrPush.getValue(launchpadToggleOrPush.changedValue()[0], launchpadToggleOrPush.changedValue()[1]);
+             try {
+               if(launchpad != null) {
+                 CheckBoxTableWindow LPTOP = launchpadToggleOrPush;
+                 int x = LPTOP.changedValue()[0];
+                 int y = LPTOP.changedValue()[1];
+                 boolean val = LPTOP.getValue(x, y);
+                 launchpad.setUseToggle(val, x, y);
+               }
+             }
+             catch (Exception e) {
+               e.printStackTrace();
              }
            }
           
@@ -231,6 +252,26 @@
        
        
      
+     g.popMatrix();
+     
+     g.pushMatrix();
+       g.translate(200, 150);
+       switch(selectedMachine) {
+         case 1: //Launchpad
+           if(launchpad != null) {
+             if(save.isPressed(g, mouse)) launchpad.saveToXML();
+             g.pushMatrix(); g.translate(30, 0);
+             if(load.isPressed(g, mouse)) { launchpad.XMLtoObject(); launchPadMemories.setValue(launchpad.toggleMemory); }
+             g.popMatrix();
+           }
+         break;
+         
+         case 2: //LC2412
+         break;
+         
+         case 3: //KeyRig 49
+         break;
+       }
      g.popMatrix();
      
      g.pushMatrix();
@@ -442,6 +483,7 @@ public class Launchpad {
   Launchpad(int inputIndex, int outputIndex) {
     setup(inputIndex, outputIndex);
     useToggle = new boolean[8][8];
+    toggleMemory = new int[8][8];
   }
   
   void setup(int inputIndex, int outputIndex) {
@@ -507,6 +549,50 @@ public class Launchpad {
     if(val) upperPadsToggle[x] = !upperPadsToggle[x];
   }
   
+  
+  void saveToXML() {
+    
+    String data = "<launchpad></launchpad>";
+    XML xml = parseXML(data);
+    xml.addChild(array2DToXML("toggleMemory", toggleMemory));
+    saveXML(xml, "XML/launchpad.xml");
+  }
+  
+  void XMLtoObject() {
+    XML xml = loadXML("XML/launchpad.xml");
+    int[][] fromXML = new int[8][8];
+    arrayCopy(XMLtoIntArray2D("toggleMemory", xml), fromXML);
+    
+    
+
+
+    for(int x = 0; x < fromXML.length; x++) {
+      for(int y = 0; y < fromXML[x].length; y++) {
+        toggleMemory[x][y] = fromXML[x][y];
+        println(fromXML[x][y]);
+      }
+    }
+  }
+  
+  void setUseToggle(boolean val, int x, int y) {
+    useToggle[x][y] = val;
+  }
+  
+  void setToggleToMemoryValue(int val, int x, int y) {
+    if(x < toggleMemory.length) {
+      if(y < toggleMemory[x].length) {
+        toggleMemory[x][y] = val;
+      }
+      else {
+        println("toggleMemory[" + str(x) + "].length: " + toggleMemory[x].length);
+      }
+    }
+    else {
+      println("toggleMemory.length: " + toggleMemory.length);
+    }
+    
+    println(toggleMemory[0][0]);
+  }
 
 
 }

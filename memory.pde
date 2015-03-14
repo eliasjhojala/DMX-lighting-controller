@@ -351,6 +351,54 @@ class memory { //Begin of memory class------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+
+XML array2DToXML(String name, int[][] array2D) {
+  
+  String data = "<" + name + "></" + name + ">";
+  XML xml = parseXML(data);
+  if(array2D != null) {
+    for(int j = 0; j < array2D.length; j++) {
+      int[] array = array2D[j];
+      if(array != null) {
+        XML block = xml.addChild(arrayToXML("row", array));
+        block.setInt("id", j);
+      }
+    }
+  }
+  return xml;
+}
+
+int[][] XMLtoIntArray2D(String name, XML xml) {
+  int[][] toReturn = { };
+  if(xml != null) {
+    xml = xml.getChild(name);
+    if(xml != null) {
+      XML[] block = xml.getChildren();
+      int a = 0;
+      for(int i = 0; i < block.length; i++) {
+        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+          int tmp = block[i].getInt("id")+1;
+          if(tmp > a) a = tmp;
+        }
+      }
+      toReturn = new int[a][];
+      a = 0;
+      for(int i = 0; i < block.length; i++) {
+        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+          int id = block[i].getInt("id");
+          toReturn[id] = XMLtoIntArray(block[i]);
+          a++;
+        }
+      }
+    }
+    return toReturn;
+  }
+  return null;
+}
+
+
+
+
 XML arrayToXML(String name, int[] array) {
   
   String data = "<" + name + "></" + name + ">";
@@ -391,6 +439,32 @@ int[] XMLtoIntArray(String name, XML xml) {
       }
     }
     return toReturn;
+  }
+  return null;
+}
+
+
+int[] XMLtoIntArray(XML xml) {
+  int[] toReturn = { };
+  if(xml != null) {
+    XML[] block = xml.getChildren();
+    int a = 0;
+    for(int i = 0; i < block.length; i++) {
+      if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+        int tmp = block[i].getInt("id")+1;
+        if(tmp > a) a = tmp;
+      }
+    }
+    toReturn = new int[a];
+    a = 0;
+    for(int i = 0; i < block.length; i++) {
+      if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+        int id = block[i].getInt("id");
+        toReturn[id] = block[i].getInt("val");
+        a++;
+      }
+    }
+  return toReturn;
   }
   return null;
 }

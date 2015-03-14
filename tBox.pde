@@ -39,9 +39,6 @@ class TextBox {
     
     if(mouse.elmIsHover(mouseObjectName)) { thisIsActive = true; textBox(); }
 
-    
-    
-
     g.pushStyle();
     themes.textBox.setTheme(g, mouse, mouse.elmIsHover(mouseObjectName), false);
     g.strokeWeight(1.5);
@@ -66,18 +63,25 @@ class TextBox {
           editedText = editedText.substring(0, editedText.length()-1);
         }
         keyReleased = false;
+        export();
       }
       else if (key == ENTER && keyReleased) {
-        ready = true;
-        textHasChanged = true;
-        keyReleased = false;
+        export();
       }
       else if(editedText.equals("null")) { editedText = ""; }
       if(keyIsAccepted()) {
         editedText = editedText+key;
+        export();
       }
     }
   }
+  
+  void export() {
+    ready = true;
+    textHasChanged = true;
+    keyReleased = false;
+  }
+  
    
   
   
@@ -113,6 +117,16 @@ class TextBox {
     boolean toReturn = textHasChanged;
     textHasChanged = false;
     return toReturn;
+  }
+  
+  void setValue(int value) {
+    if(value != 0) {
+      originalText = str(value);
+    }
+    else {
+      originalText = "";
+    }
+    editedText = originalText;
   }
   
 }
@@ -179,6 +193,23 @@ class TextBoxTableWindow {
    }
   
   int getValue(int x, int y) {
-    return int(cells[x][y].getText());
+    if(x >= 0 && x < cells.length) if(y >= 0 && y < cells[x].length) {
+      return int(cells[x][y].getText());
+    }
+    return 0;
+  }
+  
+  void setValue(int value, int x, int y) {
+    if(x >= 0 && x < cells.length) if(y >= 0 && y < cells[x].length) {
+      cells[x][y].setValue(value);
+    }
+  }
+  
+  void setValue(int[][] value) {
+    for(int x = 0; x < value.length; x++) {
+      for(int y = 0; y < value[x].length; y++) {
+        setValue(value[x][y], x, y);
+      }
+    }
   }
 }
