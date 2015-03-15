@@ -296,60 +296,13 @@ boolean isClicked(int x1, int y1, int x2, int y2) {
   }
 }
 
-
- /*
- Fullon toimintaperiaate:
- fullon on toiminto, joka laittaa kaikkien kanavien arvot täysille.
- Tämä tehdään myös pääloopissa (draw) niin pitkään kun fullOn = true,
- jotta arvoja ei ylikirjoiteta. Ennen kuin kaikki arvot laitetaan täysille
- kirjoitetaan niiden arvot muuttujaan (valueOfDimBeforeSolo[]), jotta
- ne voidaan palauttaa fullOnin päätyttyä. Fullon-nappi toimii
- go-tyyppisesti, eli sitä painettaessa fullOn menee päälle ja kun
- se päästetään irti fullOn sammuu.
- */
-
-void fullOn(boolean state) {
-  if(fullOn && !state) {
-    //Turn off full on
-    for(int ii = 0; ii < fixtures.size(); ii++) {
-       fixtures.get(ii).setDimmer(valueOfDimBeforeFullOn[ii]);
-    }
-    fullOn = false;
-  }
-  if(!fullOn && state) {
-    //Turn on full on
-    for(int ii = 0; ii < fixtures.size(); ii++) {
-       valueOfDimBeforeFullOn[ii] = fixtures.get(ii).in.getUniDMX(DMX_DIMMER);
-       fixtures.get(ii).setDimmer(255);
-    }
-    fullOn = true;
-  }
-  
-}
-
-void blackOut(boolean state) {
-  if(!state) {
-    //Turn off blackout
-    blackOut = false;
-    changeGrandMasterValue(masterValueBeforeBlackout);
-  }
-  if(state) {
-    //Turn on blackout
-    masterValueBeforeBlackout = grandMaster;
-    blackOut = true;
-    changeGrandMasterValue(0);
-  }
-  
+void blackOutToggle() {
+  blackOut = !blackOut;
 }
 
 void fullOnToggle() {
-  fullOn(!fullOn);
+  fullOn = !fullOn;
 }
-
-void blackOutToggle() {
-  blackOut(!blackOut);
-}
-
 
 
 boolean inBoundsCircle(int cPosX, int cPosY, int cRadius, int pointerX, int pointerY) {

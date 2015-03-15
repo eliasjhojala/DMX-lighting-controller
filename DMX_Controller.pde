@@ -40,7 +40,6 @@ boolean nextStepPressed = false;
 boolean revStepPressed = false;
 int lastStepDirection;
 
-int[] valueOfDimBeforeBlackout = new int[1000];
 boolean blackOut = false;
 
 int soloMemory = 11; //Memorypaikka, joka on solo - solomemory's memoryplace
