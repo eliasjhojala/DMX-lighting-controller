@@ -1,6 +1,8 @@
 EnttecOutputSettingsWindow enttecOutputSettingsWindow = new EnttecOutputSettingsWindow(this);
 EnttecOutput enttecOutput = new EnttecOutput();
 
+int[] dmxToOutputSended = new int[DMX_CHAN_LENGTH+1];
+
 class EnttecOutputSettingsWindow {
   Window window;
   boolean open;
@@ -84,14 +86,20 @@ class EnttecOutput {
       lastDMX = new int[DMXforOutput.length];
     }
     for(int i = 0; i < DMXforOutput.length; i++) {
-      if(DMXforOutput[i] != lastDMX[i] && waitedEnough()) {
-        sendChannel(i, DMXforOutput[i]);
+      int newVal = DMXforOutput[i];
+      if(newVal != lastDMX[i] /*&& waitedEnough()*/) {
+        sendChannel(i, newVal);
+        lastDMX[i] = newVal;
       }
     }
   }
   
   void sendChannel(int ch, int val) {
     dmxOutput.set(ch, val);
+    if(ch >= 0 && ch < dmxToOutputSended.length) {
+      dmxToOutputSended[ch] = val;
+    }
+    println("Sent dmx ch: " + str(ch) + " val: " + str(val));
   }
   
   boolean waitedEnough() {

@@ -302,25 +302,27 @@ boolean mouseClicked = false;
 int lampToMove;
 
 void initializeCOM() {
-  try {
-    if(useEnttec == true) {
-      myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
-    }
-  }
-  catch(Exception e) {
-    useEnttec = false;
-  }
-  try {
-    if(useCOM == true) {
-      arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
-      if(useAnotherArduino == true) {
-        arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);
-      }
-    }
-  }
-  catch(Exception e) {
-    useCOM = false;
-  }
+//  try {
+//    if(useEnttec == true) {
+//      myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
+//    }
+//  }
+//  catch(Exception e) {
+//    useEnttec = false;
+//  }
+//  try {
+//    if(useCOM == true) {
+//      arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
+//      if(useAnotherArduino == true) {
+//        arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);
+//      }
+//    }
+//  }
+//  catch(Exception e) {
+//    useCOM = false;
+//  }
+useCOM = false;
+useEnttec = false;
 }
 
 

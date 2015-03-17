@@ -1,6 +1,8 @@
 //Window to show values of some variables for debugging
 
 
+
+
  
 public class secondApplet extends PApplet {
   
@@ -10,11 +12,16 @@ public class secondApplet extends PApplet {
     size(600, 900);
     frameRate(4);
   }
+  
+  int[] dmxToOutputSendedOld = new int[DMX_CHAN_LENGTH+1];
+  long[] dmxToOutputSendedOldTime = new long[DMX_CHAN_LENGTH+1];
+  
   public void draw() {
     translate(offset.x, offset.y);
     if(showOutputAsNumbers == true) {
     background(0, 0, 0);
     fill(255, 255, 255);   
+     
      
      
      for(int j = 0; j <= 5; j++) { 
@@ -23,7 +30,12 @@ public class secondApplet extends PApplet {
             for(int i = j*100; i < (j+1)*100; i++) {
               if(i <= DMX_CHAN_LENGTH) { //DMX protocol max channel
                 translate(0, 12);
-                text(i + ":" + DMXforOutput[constrain(i, 0, DMXforOutput.length-1)], 10, 10);
+                //int id = constrain(i, 0, dmxForOutput.length-1);
+                //if(dmxForOutput[id] != dmxToOutputSendedOld[id] || millis() - dmxToOutputSendedOldTime[id] < 5000) {
+                  text(i + ":" + DMXforOutput[i], 10, 10);
+                  //dmxToOutputSendedOld[id] = dmxToOutputSended[id];
+                  //dmxToOutputSendedOldTime[id] = millis();
+                //}
               }
             }
           popMatrix();
