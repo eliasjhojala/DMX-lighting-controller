@@ -148,7 +148,6 @@ class fixture {
   boolean soloInThisFixture;
   
   FixtureDMX in;
-  FixtureDMX process;
   FixtureDMX out;
   FixtureDMX preset;
   FixtureDMX bottomMenu;
@@ -163,7 +162,6 @@ class fixture {
   void saveFixtureDMXDataToXML(ManageXML XMLObject) {
     XMLObject.addBlockAndIncrease("FixtureDMXdata");
       if(in != null) { in.saveToXML("in", XMLObject); }
-      if(process != null) { process.saveToXML("process", XMLObject); }
       if(out != null) { out.saveToXML("out", XMLObject); }
       if(preset != null) { preset.saveToXML("preset", XMLObject); }
       if(bottomMenu != null) { bottomMenu.saveToXML("bottomMenu", XMLObject); }
@@ -245,26 +243,7 @@ class fixture {
     if(isHalogen() && abs(newIn[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
       newIn[DMX_DIMMER] = oldOut[DMX_DIMMER];
       newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]); //PROBLEM this is causing some masterloop problemes! If master isn't 255 all the lights fade off PROBLEM!!!!!!!!!!
-    
-   
-//   
-//    for(int i = 0; i < universalDMXlength; i++) {
-//      if(presetReady != null) {
-//        if(presetReady.fades[i] != null) {
-//          presetReady.fades[i].startFade(in.getUniversalDMX(i), preset.getUniversalDMX(i), 500, 500);
-//          presetReady.fades[i].countActualValue();
-//          int fadeVal = presetReady.fades[i].getActualValue();
-//          newIn[i] = fadeVal;
-//        }
-//        else {
-//          presetReady.fades[i] = new Fade(in.getUniversalDMX(i), preset.getUniversalDMX(i), 500, 500);
-//          presetReady.fades[i].countActualValue();
-//          int fadeVal = presetReady.fades[i].getActualValue();
-//          newIn[i] = fadeVal;
-//        }
-//      }
-//    }
-    
+
     
     if(soloIsOn && !soloInThisFixture) {
       newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, soloFade));
@@ -352,10 +331,6 @@ class fixture {
 
   
 
-  
-
- 
-  
   boolean thisFixtureUseRgb() {
     return fixtureUseRgbByType(fixtureTypeId);
   }
@@ -401,14 +376,12 @@ class fixture {
   
   void createDMXobjects() {
     in = new FixtureDMX(this);
-    process = new FixtureDMX(this);
     out = new FixtureDMX(this);
     preset = new FixtureDMX(this);
     bottomMenu = new FixtureDMX(this);
     presetReady = new FixtureDMX(this);
     
-    process.fades = new Fade[process.DMXlength];
-    presetReady.fades = new Fade[process.DMXlength];
+    presetReady.fades = new Fade[in.DMXlength];
   }
 
   //Initialization----------------------------------------------------------------------------
@@ -445,7 +418,6 @@ class fixture {
    
    size = new fixtureSize(fixtTypeId);
    
-
    fixtureTypeId = fixtTypeId;
   }
   
@@ -566,7 +538,6 @@ class fixture {
       red = mhx50_RGB_color_Values[colorNumber][0];
       green = mhx50_RGB_color_Values[colorNumber][1];
       blue = mhx50_RGB_color_Values[colorNumber][2];
-//      if(ftIsMhX50()) { colorWheel = mhx50_color_values[colorNumber]; } //Gives right value to moving head color channel
     }
     
     boolean ftIsMhX50() { //This function is only to check is the fixtureType moving head (17 or 16)
@@ -670,6 +641,7 @@ class fixture {
     
     if(showFixture == true) {
       int x1 = 0; int y1 = 0;
+      
       this.locationOnScreenX = int(screenX(x1 + lampWidth/2, y1 + lampHeight/2));
       this.locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
       rectMode(CENTER);
@@ -687,8 +659,8 @@ class fixture {
           fill(0, 0, 0);
           text(fixtuuriTyyppi, x1, y1 + lampHeight + 15);
         }
-      
-       text(index + "/" + this.channelStart, x1, y1 - 15);
+       if(!showMode) text(index + "/" + this.channelStart, x1, y1 - 15);
+       else text(this.channelStart, x1, y1 - 15);
       }
     }
     popStyle();

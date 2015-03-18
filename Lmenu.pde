@@ -12,29 +12,35 @@ int oldMouseY2;
  
 void alavalikko() {
   
-  //The boolean is set to true on a spot that has been checked. It should not be drawn again.
-  boolean[] drawn = new boolean[bottomMenuOrder.length];
-  
-  pushMatrix();
-    translate(0, height-170); //alavalikko is located to bottom of the window
-    int row = 20;
-    int rows = 3;
-    mouse.declareUpdateElement("bottomMenu", "main:move", 65, height-260, (row+1)*65, height-260 + rows*65);
+  if(showOldBottomMeu) {
     
-    for(int i = 0; i < row*rows; i++) {
-      int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
-      drawn[tempIndex] = true;
-      pushMatrix();
-        translate(65*(i%row+1), 65*(i/row));
-        createFixtureBox(tempIndex);
-      popMatrix();
-    }
-  popMatrix();
+    //The boolean is set to true on a spot that has been checked. It should not be drawn again.
+    boolean[] drawn = new boolean[bottomMenuOrder.length];
     
-  if(!mousePressed) { mouseLocked = false; }
-  if(mouse.captured && !mouse.isCaptured("bottomMenu")) { mouseLocked = true; mouseLocker = "external"; }
+    pushMatrix();
+      translate(0, height-170); //alavalikko is located to bottom of the window
+      int row = 20;
+      int rows = 3;
+      mouse.declareUpdateElement("bottomMenu", "main:move", 65, height-260, (row+1)*65, height-260 + rows*65);
+      
+      for(int i = 0; i < row*rows; i++) {
+        int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
+        drawn[tempIndex] = true;
+        pushMatrix();
+          translate(65*(i%row+1), 65*(i/row));
+          createFixtureBox(tempIndex);
+        popMatrix();
+      }
+    popMatrix();
+      
+    if(!mousePressed) { mouseLocked = false; }
+    if(mouse.captured && !mouse.isCaptured("bottomMenu")) { mouseLocked = true; mouseLocker = "external"; }
+    
+    drawBottomMenuControlBox();
+    
+  }
   
-  drawBottomMenuControlBox();
+  
   notifier.draw(width-168);
   
   
@@ -221,11 +227,13 @@ class LowerMenu {
 
 
 void createFixtureBox(int id) {
+  
   drawFixtureRectangles(id); //draw fixtureboxes with buttons etc.
   checkFixtureBoxGo(id); //Check if you pressed go button button to set fixture on until jo release mouse
   checkFixtureBoxToggle(id); //Check if you pressed toggle button to set fixture on and off
   checkFixtureBoxSlider(id); //Check if you moved slider to change channels dimInput value
   checkFixtureBoxRightClick(id); //Check if you clicked right button at title to edit fixture settings
+  
 }
 
 void drawFixtureRectangles(int id) {

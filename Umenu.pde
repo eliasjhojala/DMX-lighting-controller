@@ -8,6 +8,8 @@ In this tab are located
   - left buttons
 */
 
+boolean showLeftButtons;
+
 PShape settingsIcon;
 
 color topMenuTheme = color(222, 0, 0);
@@ -100,19 +102,15 @@ void ylavalikko() {
     }
   popMatrix();
   
-  { //Here you can place buttons to left side 
-  pushMatrix();
-    int round = 20;
-    if(drawLeftSideButton(round, "Wash")) colorWashMenu.open = !colorWashMenu.open;
-    translate(0, 120);
-    if(drawLeftSideButton(round, "Help")) help.open = !help.open;
-    translate(0, 120);
-    if(drawLeftSideButton(round, "Control")) lowerMenu.open = !lowerMenu.open;
-//    translate(0, 120);
-//    if(drawLeftSideButton(round, "OSC")) oscSettings.open = !oscSettings.open;
-//    translate(0, 120);
-//    if(drawLeftSideButton(round, "MIDI")) midiWindow.open = !midiWindow.open;
-  popMatrix();
+  if(showLeftButtons) { //Here you can place buttons to left side 
+    pushMatrix();
+      int round = 20;
+      if(drawLeftSideButton(round, "Wash")) colorWashMenu.open = !colorWashMenu.open;
+      translate(0, 120);
+      if(drawLeftSideButton(round, "Help")) help.open = !help.open;
+      translate(0, 120);
+      if(drawLeftSideButton(round, "Control")) lowerMenu.open = !lowerMenu.open;
+    popMatrix();
   } //End of buttons placed to left side       
   //settingsWindow.draw();
   popStyle();

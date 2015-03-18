@@ -37,7 +37,10 @@ class SettingsWindow {
         new SettingController(3, 2, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[1]),
         new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[1]),
         new SettingController(5, "Lock showMode", "Make sure that showMode isn't turned off accidentally", true, tabs[1]),
-        new SettingController(15, "Rotate fixtures to same point", "Rotate all the fixtures to same point", true, tabs[1])
+        new SettingController(15, "Rotate fixtures to same point", "Rotate all the fixtures to same point", true, tabs[1]),
+        new SettingController(23, "Show bottom menu", "Show bottom menu. Takes about 10 fps off...", true, tabs[1]),
+        new SettingController(24, "Show left buttons", "Show left buttons.", true, tabs[1])
+        
       }
     );
     tabs[2] = new SettingsTab("Chase", this);
@@ -79,6 +82,8 @@ class SettingsWindow {
       case 15: rotateFixturesToSamePoint = b;  break;
       case 201: loadFast = b; loadSafe = !b;   break;
       case 202: loadSafe = b; loadFast = !b;   break;
+      case 23: showOldBottomMeu = b;           break;
+      case 24: showLeftButtons = b;            break;
     }
   }
   
@@ -94,6 +99,8 @@ class SettingsWindow {
       case 15: return rotateFixturesToSamePoint;
       case 201: return loadFast;
       case 202: return loadSafe;
+      case 23: return showOldBottomMeu;
+      case 24: return showLeftButtons;
       default: return false;
     }
   }

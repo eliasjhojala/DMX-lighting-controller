@@ -11,6 +11,7 @@ boolean useAnotherArduino = false;                                              
                                                                                                                                                                           //|
 boolean useMaschine = false;                                                                                                                                              //|
 boolean useNewLowerMenu = false;                                                                                                                                          //|
+boolean showOldBottomMeu = false;                                                                                                                                         //|
                                                                                                                                                                           //|
 int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200));                                                                                                     //|
 int arduinoBaud2 = 9600;                                                                                                                                                  //|

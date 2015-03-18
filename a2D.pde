@@ -31,7 +31,7 @@ void drawMainWindow() {
      translate(width/2, height/2); //Move view for fine rotating
      scale(zoom/100); //Scale view
      translate(x_siirto, y_siirto); //Move view depending on the values set by user
-     rotate(radians(pageRotation)); //Rotate view depending on the values set by user
+     if(pageRotation != 0) { rotate(radians(pageRotation)); } //Rotate view depending on the values set by user
      translate(-width/2, -height/2); //Move view back after rotating
    } //End of transforming view
    
@@ -40,7 +40,7 @@ void drawMainWindow() {
   { //begin drawing all elements (fixtures & other non-HUD objects)
     //Just using the rotation of PVectors, it already exists, so why not use it?
     PVector mouseRotated = new PVector(mouseX, mouseY);
-    mouseRotated.rotate(radians(-pageRotation));
+    if(pageRotation != 0) { mouseRotated.rotate(radians(-pageRotation)); }
     
     //DRAW TRUSSES
     drawTrusses(mouseRotated); //Draw trusses
@@ -48,7 +48,6 @@ void drawMainWindow() {
     
     
 
-    
     
     //THIS FOR LOOP DRAWS ALL THE FIXTURES AND CHECKS IF YOU HAVE CLICKED THEM
     if(programReadyToRun) if(!showSockets) for(int i = 0; i < fixtures.size(); i++) if(fixtures.get(i).size.isDrawn) { //Go through all the fixtures if sockets aren't shown
@@ -69,35 +68,38 @@ void drawMainWindow() {
         
         translate(finalLocation.x, finalLocation.y);
         
-        //Fixture rotating
-        if(rotateLamp && (lampToRotate == i || (fixtures.get(lampToRotate).selected && fix.selected))) {
-          PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
-          if(rotateFixturesToSamePoint) {
-            int rot = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
-            fix.rotationZ = rot;
-          }
-          else {
-            if(lampToRotate == i) { 
-              rotationForAllTheFixtures = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360); 
-            }
-            fix.rotationZ = rotationForAllTheFixtures;
-          }
-        }
-        //End of fixture rotating
         
-        //Fixture moving
-        if(moveLamp && (lampToMove >= 0 && lampToMove < fixtures.size())) { //Check are we moving any lamp and is lampToMove valid
-          if(moveLamp && (lampToMove == i || (fixtures.get(lampToMove).selected && fix.selected))) {
-            PVector mouseOffset = new PVector((mouseRotated.x - oldMouseForMovingFixtures.x) * 100 / zoom, (mouseRotated.y - oldMouseForMovingFixtures.y) * 100 / zoom);
-            fix.x_location += int(mouseOffset.x); //Add mouse offset
-            fix.y_location += int(mouseOffset.y); //Add mouse offset
+        if(!showMode && !showModeLocked) { //Rotating and enabling fixtures possible only if showMode isn't enabled
+          //Fixture rotating
+          if(rotateLamp && (lampToRotate == i || (fixtures.get(lampToRotate).selected && fix.selected))) {
+            PVector vec = new PVector(mouseX - screenX(0, 0), mouseY - screenY(0, 0));
+            if(rotateFixturesToSamePoint) {
+              int rot = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
+              fix.rotationZ = rot;
+            }
+            else {
+              if(lampToRotate == i) { 
+                rotationForAllTheFixtures = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360); 
+              }
+              fix.rotationZ = rotationForAllTheFixtures;
+            }
           }
-        } //End of checking are we moving any lamp and is lampToMove valid
-        //End of fixture moving
+          //End of fixture rotating
+          
+          //Fixture moving
+          if(moveLamp && (lampToMove >= 0 && lampToMove < fixtures.size())) { //Check are we moving any lamp and is lampToMove valid
+            if(moveLamp && (lampToMove == i || (fixtures.get(lampToMove).selected && fix.selected))) {
+              PVector mouseOffset = new PVector((mouseRotated.x - oldMouseForMovingFixtures.x) * 100 / zoom, (mouseRotated.y - oldMouseForMovingFixtures.y) * 100 / zoom);
+              fix.x_location += int(mouseOffset.x); //Add mouse offset
+              fix.y_location += int(mouseOffset.y); //Add mouse offset
+            }
+          } //End of checking are we moving any lamp and is lampToMove valid
+          //End of fixture moving
+        }
         
         
 
-        rotate(radians(fix.rotationZ)); 
+        if(fix.rotationZ != 0) { rotate(radians(fix.rotationZ)); }
         
          
         //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
@@ -139,6 +141,8 @@ void drawMainWindow() {
     } //End of going through all the fixtures if sockets aren't shown
     oldMouseForMovingFixtures = mouseRotated.get(); //Set old mouse location for fixture moving
     //END OF DRAWING ALL THE FIXTURES AND CHECKING IF YOU HAVE CLICKED THEM
+    
+    
     
     popMatrix(); //End of view scale, rotate and translate
     
