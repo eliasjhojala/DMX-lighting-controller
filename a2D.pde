@@ -18,16 +18,16 @@ void drawMainWindow() {
     help.add("Changing fixtureType", "You can open fixtureType menu by pressing t key and clicking on the fixture");
     addedElementsToHelp = true;
   }
-  pushMatrix(); 
+  if(drawNow) pushMatrix(); 
    
-   { //Declare all the mouse elements
+   if(drawNow) { //Declare all the mouse elements
      mouse.declareUpdateElement("main:fixtures", 0, 0, 0, width, height);
      mouse.getElementByName("main:fixtures").autoCapture = false;
      mouse.declareUpdateElement("main:move", 0, 0, 0, width, height);
      mouse.getElementByName("main:move").autoCapture = false;
    } //End of declaring all the mouse variables
    
-   { //Transform view
+   if(drawNow) { //Transform view
      translate(width/2, height/2); //Move view for fine rotating
      scale(zoom/100); //Scale view
      translate(x_siirto, y_siirto); //Move view depending on the values set by user
@@ -37,7 +37,7 @@ void drawMainWindow() {
    
    
    
-  { //begin drawing all elements (fixtures & other non-HUD objects)
+  if(drawNow) { //begin drawing all elements (fixtures & other non-HUD objects)
     //Just using the rotation of PVectors, it already exists, so why not use it?
     PVector mouseRotated = new PVector(mouseX, mouseY);
     if(pageRotation != 0) { mouseRotated.rotate(radians(-pageRotation)); }
@@ -182,6 +182,8 @@ void drawMainWindow() {
     //End of functions to draw fixtureTypeSelection dropdownMenu
     
   } //Endof: draw all elements
+  
+  
   
   //Check if mouse is released
     if(!mousePressed) { 

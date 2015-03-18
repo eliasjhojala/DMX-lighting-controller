@@ -20,48 +20,62 @@ class SettingsWindow {
   
   //Create and configure all tabs & controllers
   void onInit() {
-    tabs = new SettingsTab[5];
-    tabs[0] = new SettingsTab("Other windows", this);
-    tabs[0].setControllers(
+    int id = 0;
+    tabs = new SettingsTab[6];
+    tabs[id] = new SettingsTab("Other windows", this);
+    tabs[id].setControllers(
       new SettingController[] {
-        new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", true, tabs[0]),
-        new SettingController(1, "Use text window", "This window is handy for debug purposes.", true, tabs[0]),
-        new SettingController(10, "Show sockets", "If you want to edit socket places use this", true, tabs[0])
+        new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", true, tabs[id]),
+        new SettingController(1, "Use text window", "This window is handy for debug purposes.", true, tabs[id]),
+        new SettingController(10, "Show sockets", "If you want to edit socket places use this", true, tabs[id])
       }
     );
-    tabs[1] = new SettingsTab("Visualization", this);
-    tabs[1].setControllers(
+    id++;
+    tabs[id] = new SettingsTab("Visualization", this);
+    tabs[id].setControllers(
       new SettingController[] {
-        new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", true, tabs[1]),
-        new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", true, tabs[1]),
-        new SettingController(3, 2, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[1]),
-        new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[1]),
-        new SettingController(5, "Lock showMode", "Make sure that showMode isn't turned off accidentally", true, tabs[1]),
-        new SettingController(15, "Rotate fixtures to same point", "Rotate all the fixtures to same point", true, tabs[1]),
-        new SettingController(23, "Show bottom menu", "Show bottom menu. Takes about 10 fps off...", true, tabs[1]),
-        new SettingController(24, "Show left buttons", "Show left buttons.", true, tabs[1])
+        new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", true, tabs[id]),
+        new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", true, tabs[id]),
+        new SettingController(3, 2, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[id]),
+        new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[id]),
+        new SettingController(5, "Lock showMode", "Make sure that showMode isn't turned off accidentally", true, tabs[id]),
+        new SettingController(15, "Rotate fixtures to same point", "Rotate all the fixtures to same point", true, tabs[id])
+      }
+    );
+    id++;
+    tabs[id] = new SettingsTab("SpeedUp", this);
+    tabs[id].setControllers(
+      new SettingController[] {
+        new SettingController(23, "Show bottom menu", "Show bottom menu. Takes about 10 fps off...", true, tabs[id]),
+        new SettingController(24, "Show left buttons", "Show left buttons.", true, tabs[id]),
+        new SettingController(26, "Adjust visualisation speed", "Enable this if you wanted to adjust visualisation speed manually", true, tabs[id]),
+        new SettingController(25, 0, 60, "Visualisation speed", "Adjust speed of visualisation. Smaller speed --> faster dmx processing", tabs[id])
+        
         
       }
     );
-    tabs[2] = new SettingsTab("Chase", this);
-    tabs[2].setControllers(
+    id++;
+    tabs[id] = new SettingsTab("Chase", this);
+    tabs[id].setControllers(
       new SettingController[] {
-        new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", true, tabs[2])
+        new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", true, tabs[id])
       }
     );
-    tabs[3] = new SettingsTab("More", this);
-    tabs[3].setControllers(
+    id++;
+    tabs[id] = new SettingsTab("More", this);
+    tabs[id].setControllers(
       new SettingController[] {
-        new SettingController(101, "OSC", "Open OSC settings window by clicking the button", false, tabs[3]),
-        new SettingController(102, "Midi", "Open MIDI settings window by clicking the button", false, tabs[3]),
-        new SettingController(103, "Enttec", "Open Enttec output settings window by clicking the button", false, tabs[3])
+        new SettingController(101, "OSC", "Open OSC settings window by clicking the button", false, tabs[id]),
+        new SettingController(102, "Midi", "Open MIDI settings window by clicking the button", false, tabs[id]),
+        new SettingController(103, "Enttec", "Open Enttec output settings window by clicking the button", false, tabs[id])
       }
     );
-    tabs[4] = new SettingsTab("Files", this);
-    tabs[4].setControllers(
+    id++;
+    tabs[id] = new SettingsTab("Files", this);
+    tabs[id].setControllers(
       new SettingController[] {
-        new SettingController(201, "Load Fast", "Load data really fast, but not so safely", true, tabs[4]),
-        new SettingController(202, "Load Safe", "Load data slowly, but really safely", true, tabs[4]),
+        new SettingController(201, "Load Fast", "Load data really fast, but not so safely", true, tabs[id]),
+        new SettingController(202, "Load Safe", "Load data slowly, but really safely", true, tabs[id]),
       }
     );
   }
@@ -84,6 +98,7 @@ class SettingsWindow {
       case 202: loadSafe = b; loadFast = !b;   break;
       case 23: showOldBottomMeu = b;           break;
       case 24: showLeftButtons = b;            break;
+      case 26: speedDownVisualisation = b;     break;
     }
   }
   
@@ -101,6 +116,7 @@ class SettingsWindow {
       case 202: return loadSafe;
       case 23: return showOldBottomMeu;
       case 24: return showLeftButtons;
+      case 26: return speedDownVisualisation;
       default: return false;
     }
   }
@@ -113,6 +129,7 @@ class SettingsWindow {
       case 2: /*defaultY*/      break;
       case 3: pageRotation = v; break;
       case 4: zoom = v;         break;
+      case 25: visualisationSpeed = v; break;
     }
   }
   
@@ -123,6 +140,7 @@ class SettingsWindow {
       //case 2: return ;
       case 3:  return pageRotation;
       case 4:  return int(zoom);
+      case 25: return visualisationSpeed;
       default: return 0;
     }
   }

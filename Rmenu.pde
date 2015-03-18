@@ -94,36 +94,37 @@ void sivuValikko() {
   }
   
   
-  //-
-  pushMatrix();
-  translate(width-168, 0);
-  mouse.declareUpdateElement("rearMenu:presetcontrols", "main:move", width-168, 0, width, height);
-  for(int i = 1; i <= height/20+1; i++) {
-    if(i >= 0 && i < memoryControllerLookupTable.length) {
-      int ai = memoryControllerLookupTable[i] + memoryMenu;
-      if(ai < numberOfMemories) {
-        pushMatrix();
-          translate(0, 20*(i-1));
-          drawMemoryController(ai, memories[ai].getText());
-        popMatrix();
+  if(drawNow) {
+    //-
+    pushMatrix();
+    translate(width-168, 0);
+    mouse.declareUpdateElement("rearMenu:presetcontrols", "main:move", width-168, 0, width, height);
+    for(int i = 1; i <= height/20+1; i++) {
+      if(i >= 0 && i < memoryControllerLookupTable.length) {
+        int ai = memoryControllerLookupTable[i] + memoryMenu;
+        if(ai < numberOfMemories) {
+          pushMatrix();
+            translate(0, 20*(i-1));
+            drawMemoryController(ai, memories[ai].getText());
+          popMatrix();
+        }
       }
     }
-  }
-  
-  if(draggingMemory) { pushStyle();
-    translate(0, mouseY);
-    PGraphics temp = createGraphics(170, 22);
-    temp.beginDraw();
-    temp.translate(1, 1);
-    drawMemoryControllerToBuffer(draggingMemoryId, memories[draggingMemoryId].getText(), temp, false, true);
-    temp.endDraw();
-    tint(255, 140);
-    image(temp, -1, -1);
-  popStyle(); }
-  
-  popMatrix();
-  //-
     
+    if(draggingMemory) { pushStyle();
+      translate(0, mouseY);
+      PGraphics temp = createGraphics(170, 22);
+      temp.beginDraw();
+      temp.translate(1, 1);
+      drawMemoryControllerToBuffer(draggingMemoryId, memories[draggingMemoryId].getText(), temp, false, true);
+      temp.endDraw();
+      tint(255, 140);
+      image(temp, -1, -1);
+    popStyle(); }
+    
+    popMatrix();
+    //-
+  }
     
   //if(!showMode) { memoryCreator.draw(); }
 }

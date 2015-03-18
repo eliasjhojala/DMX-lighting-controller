@@ -642,6 +642,7 @@ int rBlue(color c) { return round(blue(c)); }
 
 
 
+
 void checkThemeMode() {
   fill(0, 0, 0);
   if(printMode == true) { //Check if printmode is on 

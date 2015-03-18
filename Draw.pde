@@ -18,22 +18,36 @@ boolean scrolled;
 
 boolean helpBoxOpen;
 
+boolean drawNow;
+int drawCounter;
+
+int visualisationSpeed = 30;
+boolean speedDownVisualisation = false;
 
 void draw() {
+  
+  if(speedDownVisualisation) {
+    drawCounter++;
+    if(drawCounter > round(frameRate/visualisationSpeed)) { drawNow = true; drawCounter = 0; } else { drawNow = false; }
+  }
+  else {
+    drawNow = true;
+  }
+  
   checkShowMode();
   check3D();
   if(programReadyToRun && !freeze) {
     checkSolo();
-    setTextSize();
+    if(drawNow) setTextSize();
     updateMidi();
-    mouse.refresh();
+    if(drawNow) mouse.refresh();
     updateMemories();
-    checkThemeMode();
+    if(drawNow) checkThemeMode();
     setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
     sendDataToArduino();
     drawMainWindow(); //Draw main view (mainly fixtures)
     if(enttecOutput != null) { enttecOutput.draw(); }
-    drawMenus();
+    if(drawNow) drawMenus();
     invokeFixturesDraw(); //Invoke every fixtures draw
     resetSolo();
   }
