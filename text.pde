@@ -1,8 +1,4 @@
 //Window to show values of some variables for debugging
-
-
-
-
  
 public class secondApplet extends PApplet {
   
