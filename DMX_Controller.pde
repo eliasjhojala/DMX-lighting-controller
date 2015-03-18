@@ -10,6 +10,7 @@ boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX 
 boolean useAnotherArduino = false;                                                                                                                                        //|
                                                                                                                                                                           //|
 boolean useMaschine = false;                                                                                                                                              //|
+boolean useNewLowerMenu = false;                                                                                                                                          //|
                                                                                                                                                                           //|
 int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200));                                                                                                     //|
 int arduinoBaud2 = 9600;                                                                                                                                                  //|

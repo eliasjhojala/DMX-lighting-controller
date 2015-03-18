@@ -137,14 +137,14 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(help, "HelpWindow", 1000));
     subWindows.add(new SubWindowContainer(colorWashMenu, "colorSelectBox", 1000));
     subWindows.add(new SubWindowContainer(colorPick, "HSBP", 1000));
-    subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000));
+    if(useNewLowerMenu) { subWindows.add(new SubWindowContainer(lowerMenu, "LowerMenu", 1000)); }
     subWindows.add(new SubWindowContainer(oscSettings, "OSCSettingsWindow", 1000));
     subWindows.add(new SubWindowContainer(midiWindow, "MidiHandlerWindow", 1000));
     subWindows.add(new SubWindowContainer(enttecOutputSettingsWindow, "enttecOutputSettingsWindow", 1000));
     subWindows.add(new SubWindowContainer(midiWindow.launchpadToggleOrPush, "launchpadToggleOrPush", 1000));
     subWindows.add(new SubWindowContainer(midiWindow.launchPadMemories, "launchPadMemories", 1000));
     
-    lowerMenu.open = false;
+    if(useNewLowerMenu) { lowerMenu.open = false; }
     
   }
   

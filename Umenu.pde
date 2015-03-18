@@ -6,7 +6,6 @@ In this tab are located
        - tell if loading
        - settings button
   - left buttons
-       - actually only colorWash
 */
 
 PShape settingsIcon;

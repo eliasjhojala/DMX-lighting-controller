@@ -291,8 +291,8 @@ void checkFixtureBoxSlider(int id) {
 }
 
 void checkFixtureBoxRightClick(int id) {
+   boolean rightClicked = 
    if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && mouseReleased) { //Check if mouse is on the title box anf clicked
-    
     openBottomMenuControlBox(id); // open bottomMenu
   }
   if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && keyPressed && keyCode == RIGHT && keyReleased) { //Check if mouse is on the title box anf clicked

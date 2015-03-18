@@ -8,55 +8,58 @@ boolean dmxToDimFinished = false;
 
 
 void dmxCheck() {
-  try {
-  dmxCheckFinished = false;
-  enttecDMXchannels = 512;
-  if(useEnttec == true) {
-       while (myPort.available() > 0) {
-          if (cycleStart == true) {
-            if (counter <= 6+enttecDMXchannels) {
-              int inBuffer = myPort.read();
-              if(counter > 4) { if(vals[counter-5] == 126 && vals[counter-4] == 5 && vals[counter] == 0) { counter = 0; cycleStart = true; } } //This if checks that checkvalues are right
-                vals[counter] = inBuffer;
-                counter++;
-            }
-            else {
-              cycleStart = false;
-            }
-          } //cycleStart end
-          
-          
-          else {
-            //Here is better function to check all the check values, but for some reason it doesn't work
-            for(int i = 0; i <= 5; i++) {
-              if(vals[i] == check[i]) {
-                if(error == false) {
-                  error = false;
+  if(useEnttec) {
+    try {
+      dmxCheckFinished = false;
+      enttecDMXchannels = 512;
+      if(useEnttec == true) {
+           while (myPort.available() > 0) {
+              if (cycleStart) {
+                if (counter <= 6+enttecDMXchannels) {
+                  int inBuffer = myPort.read();
+                  if(counter > 4) { if(vals[counter-5] == 126 && vals[counter-4] == 5 && vals[counter] == 0) { counter = 0; cycleStart = true; } } //This if checks that checkvalues are right
+                    vals[counter] = inBuffer;
+                    counter++;
                 }
-              }
-            }
-            if(error == false) {
-              for(int i = 0; i < 6+enttecDMXchannels; i++) {
-                if(i < 30) { ch[i] = vals[i]; } //if channel is not over 30 then value is placed in ch array
-              }
-              counter = 0; //Reset counter
-              cycleStart = true; //Now we can start new cycle
-            }
-           } //!cycleStart end
- 
-      } //while (myPort.available() > 0) END
-  }
-  dmxCheckFinished = true;
-  }
-  catch(Exception e) { 
-    println("ERROR WITH DMX INPUT");
+                else {
+                  cycleStart = false;
+                }
+              } //cycleStart end
+              
+              
+              else {
+                //Here is better function to check all the check values, but for some reason it doesn't work
+                error = false;
+                for(int i = 0; i <= 5; i++) {
+                  if(vals[i] != check[i]) {
+                    error = true;
+                  }
+                }
+                if(!error) {
+                  for(int i = 0; i < 6+enttecDMXchannels; i++) {
+                    if(i < 30) { ch[i] = vals[i]; } //if channel is not over 30 then value is placed in ch array
+                  }
+                  counter = 0; //Reset counter
+                  cycleStart = true; //Now we can start new cycle
+                }
+               } //!cycleStart end
+     
+          } //while (myPort.available() > 0) END
+      }
+      dmxCheckFinished = true;
+    }
+    catch(Exception e) { 
+      println("ERROR WITH DMX INPUT");
+    }
   }
 }
 void dmxToDim() {
   dmxToDimFinished = false;
-  //This function places all the values from ch array to enttecDMXchannel array
-  for(int i = 1; i < 25; i++) {
-      enttecDMXchannel[i] = ch[i];
+    if(useEnttec) {
+    //This function places all the values from ch array to enttecDMXchannel array
+    for(int i = 1; i < 25; i++) {
+        enttecDMXchannel[i] = ch[i];
+    }
   }
   channelsToDim();
   dmxToDimFinished = true;
@@ -66,10 +69,12 @@ void channelsToDim() {
   
   //Place data from different arrays to allChannels array if it is changed---------------------------------------------------------------------------------------
   
-  for(int i = 1; i <= enttecDMXchannels; i++) {
-    if(enttecDMXchannelOld[i] != enttecDMXchannel[i]) {
-      allChannels[enttecDMXplace][i] = enttecDMXchannel[i];
-      enttecDMXchannelOld[i] = enttecDMXchannel[i];
+  if(useEnttec) {
+    for(int i = 1; i <= enttecDMXchannels; i++) {
+      if(enttecDMXchannelOld[i] != enttecDMXchannel[i]) {
+        allChannels[enttecDMXplace][i] = enttecDMXchannel[i];
+        enttecDMXchannelOld[i] = enttecDMXchannel[i];
+      }
     }
   }
   
