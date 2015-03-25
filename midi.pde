@@ -20,7 +20,7 @@
    DropdownMenu midiOutSelect;
    RadioButtonMenu outputModes;
    RadioButtonMenu toggleOrPush;
-   CheckBoxTableWindow launchpadToggleOrPush;
+   NumberBoxTableWindow launchpadToggleOrPush;
    TextBoxTableWindow launchPadMemories;
    PushButton save, load;
    
@@ -57,7 +57,7 @@
      toggleOrPush.addBlock(new RadioButton("Toggle", 1));
      toggleOrPush.addBlock(new RadioButton("Push", 2));
      
-     launchpadToggleOrPush = new CheckBoxTableWindow("launchpadToggleOrPush", 8, 8);
+     launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 2);
      
      launchPadMemories = new TextBoxTableWindow("launchPadMemories", 8, 8);
      
@@ -174,11 +174,11 @@
            if(launchpadToggleOrPush.valueHasChanged()) {
              try {
                if(launchpad != null) {
-                 CheckBoxTableWindow LPTOP = launchpadToggleOrPush;
+                 NumberBoxTableWindow LPTOP = launchpadToggleOrPush;
                  int x = LPTOP.changedValue()[0];
                  int y = LPTOP.changedValue()[1];
-                 boolean val = LPTOP.getValue(x, y);
-                 launchpad.setUseToggle(val, x, y);
+                 int val = LPTOP.getValue(x, y);
+                 launchpad.setUseToggle(boolean(val), x, y);
                }
              }
              catch (Exception e) {
@@ -205,7 +205,7 @@
       if(toggleOrPush.valueHasChanged()) {
          switch(selectedMachine) {
            case 1: //Launchpad
-             if(launchpad != null) launchpad.setUseToggleToAll(toggleOrPush.getValue() == 1); launchpadToggleOrPush.setValue(toggleOrPush.getValue() == 1);
+             if(launchpad != null) launchpad.setUseToggleToAll(toggleOrPush.getValue() == 1); launchpadToggleOrPush.setValue(toggleOrPush.getValue());
            break;
            
            case 2: //LC2412
@@ -362,6 +362,92 @@
    }
    
    void setValue(int x, int y, boolean val) {
+     if(x < boxes.length) if(y < boxes[x].length) {
+       boxes[x][y].setValue(val);
+     }
+   }
+   
+ }
+ 
+ 
+ class NumberBoxTableWindow {
+   Window window;
+   int locX, locY, w, h;
+   boolean open;
+   
+   int min, max;
+   
+   String name;
+   
+   NumberBox[][] boxes;
+   
+   NumberBoxTableWindow(String name, int x, int y, int min, int max) {
+     boxes = new NumberBox[x][y];
+     this.name = name;
+     this.min = min;
+     this.max = max;
+     locX = 0;
+     locY = 0;
+     w = x*30+100;
+     h = x*30+100;
+     window = new Window("name", new PVector(w, h), this);
+     
+     for(int x_ = 0; x_ < boxes.length; x_++) {
+       for(int y_ = 0; y_ < boxes.length; y_++) {
+         boxes[x_][y_] = new NumberBox("", min, max);
+       }
+     }
+   }
+   
+   int changedX, changedY;
+   boolean valueChanged;
+   
+   void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+     window.draw(g, mouse);
+     g.pushMatrix();
+     g.translate(50, 50);
+     for(int x = 0; x < boxes.length; x++) {
+       for(int y = 0; y < boxes[x].length; y++) {
+         g.pushMatrix();
+           g.translate(x*25, y*25);
+           boxes[x][y].draw(g, mouse, name+"box["+str(x)+"]["+str(y)+"]");
+           if(boxes[x][y].valueHasChanged()) {
+             changedX = x;
+             changedY = y;
+             valueChanged = true;
+           }
+         g.popMatrix();
+       }
+     }
+     g.popMatrix();
+   }
+   
+   boolean valueHasChanged() {
+     boolean toReturn = valueChanged;
+     valueChanged = false;
+     return toReturn;
+   }
+   
+   int[] changedValue() {
+     int[] toReturn = new int[2];
+     toReturn[0] = changedX;
+     toReturn[1] = changedY;
+     return toReturn;
+   }
+   
+   int getValue(int x, int y) {
+     return boxes[x][y].getValue();
+   }
+   
+   void setValue(int val) {
+     for(int x = 0; x < boxes.length; x++) {
+       for(int y = 0; y < boxes[x].length; y++) {
+         boxes[x][y].setValue(val);
+       }
+     }
+   }
+   
+   void setValue(int x, int y, int val) {
      if(x < boxes.length) if(y < boxes[x].length) {
        boxes[x][y].setValue(val);
      }

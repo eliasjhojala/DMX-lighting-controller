@@ -1020,3 +1020,69 @@ class CheckBox {
     return toReturn;
   }
 }
+
+
+class NumberBox {
+  
+  NumberBox(String text, int min, int max) {
+    this.text = text;
+    minVal = min;
+    maxVal = max;
+  }
+  
+  int val = 0;
+  int minVal = 0;
+  int maxVal = 0;
+  boolean selectedChanged;
+  int buttonSize;
+  String text;
+  
+  void draw(PGraphics g, Mouse mouse, String mouseName) {
+    buttonSize = 20;
+    mouse.declareUpdateElementRelative(mouseName, 100000, -(buttonSize/2), -(buttonSize/2), buttonSize, buttonSize, g);
+    boolean pressed = mouse.isCaptured(mouseName) && mouse.firstCaptureFrame;
+    if(pressed) { val = getNext(val, minVal, maxVal); selectedChanged = true; }
+    drawShapes(g, mouse);
+  }
+  
+  void drawShapes(PGraphics g, Mouse mouse) {
+    g.pushMatrix();
+      g.pushStyle();
+        g.rectMode(CENTER);
+        g.noFill();
+        g.strokeWeight(buttonSize/10);
+        g.stroke(themes.buttonColor.neutral);
+        g.rect(1, 1, buttonSize-2, buttonSize-2);
+        g.pushStyle(); 
+          g.pushMatrix();
+            g.translate(buttonSize/15, buttonSize/3);
+            g.fill(0);
+            g.text(str(val), 0, 0);
+          g.popMatrix(); 
+        g.popStyle();
+        g.pushMatrix();
+          g.pushStyle();
+            g.textAlign(LEFT);
+            g.rectMode(CORNER);
+            g.fill(0);
+            g.text(text, buttonSize*1.1, buttonSize/4);
+          g.popStyle();
+        g.popMatrix();
+      g.popStyle();
+    g.popMatrix();
+  }
+  
+  void setValue(int val) {
+    this.val = val;
+  }
+  
+  int getValue() {
+    return val;
+  }
+  
+  boolean valueHasChanged() {
+    boolean toReturn = selectedChanged;
+    selectedChanged = false;
+    return toReturn;
+  }
+}
