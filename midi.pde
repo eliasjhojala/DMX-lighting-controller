@@ -613,8 +613,8 @@ public class Launchpad {
     if(val) padsToggle[x][y] = !padsToggle[x][y];
     
     boolean value;
-    if(buttonMode[x][y] == 1) {
-      value = padsToggle[x][y];
+    if(buttonMode[x][y] == 1) { //Togglemode
+      value = padsToggle[x][y]; 
     }
     else {
       value = pads[x][y];
@@ -624,7 +624,16 @@ public class Launchpad {
    // else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
     
     
-    if(output == 1) { memories[toggleMemory[x][y]].enabled = value; }
+    if(output == 1) { 
+		if(buttonMode[x][y] != 2) {
+			memories[toggleMemory[x][y]].enabled = value; 
+			memories[toggleMemory][x][y].doOnce = false;
+		}
+		else if(value == true) {
+			memories[toggleMemory][x][y].enabled = true;
+			memories[toggleMemory][x][y].doOnce = true;
+		}
+	}
     else if(output == 2) { fixtures.get(constrain(toggleMemory[x][y], 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
     
     

@@ -127,6 +127,11 @@ class memory { //Begin of memory class------------------------------------------
   boolean enabled = true;
   boolean soloInThisMemory;
   int specialType; //Strobeon, fullon, blackout etc.
+  boolean doOnce;
+  
+  boolean doOnce() {
+	return doOnce;
+  }
 
   
   boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
@@ -1096,7 +1101,7 @@ class chase { //Begin of chase class--------------------------------------------
           }
           
           boolean doOnce() {
-            return false;
+            return parent.doOnce();
           }
           
    //End of input and output mode functions
