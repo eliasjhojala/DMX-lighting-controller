@@ -102,7 +102,7 @@
     <int id="99" val="99"/>
   </memoryControllerLookupTable>
   <Memory enabled="1" id="1" soloInThisMemory="0" specialType="0" type="4" value="255" valueOld="0"/>
-  <Memory enabled="1" id="2" soloInThisMemory="0" specialType="0" type="5" value="155" valueOld="0"/>
+  <Memory enabled="1" id="2" soloInThisMemory="0" specialType="0" type="5" value="94" valueOld="0"/>
   <Memory enabled="0" id="4" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
     <Chase>
       <content>
@@ -113,8 +113,8 @@
         <int id="4" val="23"/>
         <int id="5" val="24"/>
       </content>
-      <stepData brightness="7" brightness1="1"/>
-      <mainData fade="33" value="255"/>
+      <stepData brightness="36" brightness1="1"/>
+      <mainData fade="7" value="255"/>
       <modeData/>
     </Chase>
   </Memory>
@@ -128,8 +128,8 @@
         <int id="4" val="37"/>
         <int id="5" val="38"/>
       </content>
-      <stepData brightness="7" brightness1="1"/>
-      <mainData fade="33" value="255"/>
+      <stepData brightness="47" brightness1="3" step="1"/>
+      <mainData fade="16" value="255"/>
       <modeData beatModeId="1"/>
     </Chase>
   </Memory>
@@ -90039,7 +90039,7 @@
   </Memory>
   <Memory enabled="0" id="37" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="255" valueOld="255"/>
+      <mainData value="0" valueOld="0"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90057,7 +90057,7 @@
   </Memory>
   <Memory enabled="0" id="38" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="255" valueOld="255"/>
+      <mainData value="0" valueOld="0"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90075,7 +90075,7 @@
   </Memory>
   <Memory enabled="0" id="39" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="255" valueOld="255"/>
+      <mainData value="0" valueOld="0"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90093,7 +90093,7 @@
   </Memory>
   <Memory enabled="0" id="40" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="255" valueOld="255"/>
+      <mainData value="0" valueOld="0"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90111,7 +90111,7 @@
   </Memory>
   <Memory enabled="0" id="41" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="255" valueOld="255"/>
+      <mainData value="0" valueOld="0"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90129,7 +90129,7 @@
   </Memory>
   <Memory enabled="0" id="42" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="255" valueOld="255"/>
+      <mainData value="0" valueOld="0"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90160,7 +90160,7 @@
       <modeData fadeMode="1"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="46" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
+  <Memory enabled="0" id="46" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
     <Chase>
       <content>
         <int id="0" val="14"/>
@@ -90173,6 +90173,1217 @@
       <stepData/>
       <mainData ownFade="51" value="255"/>
       <modeData fadeMode="1"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="48" soloInThisMemory="0" specialType="0" type="6" value="255" valueOld="0">
+    <Chase>
+      <stepData brightness="208" brightness1="27" step="2"/>
+      <mainData fade="33" value="255"/>
+      <modeData/>
+      <steps size="6">
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="9" val="1"/>
+            <int id="10" val="1"/>
+            <int id="12" val="1"/>
+            <int id="13" val="1"/>
+            <int id="14" val="1"/>
+            <int id="15" val="1"/>
+            <int id="18" val="1"/>
+            <int id="22" val="1"/>
+            <int id="23" val="1"/>
+            <int id="24" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="9">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="10">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="12">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="13">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="14">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="15">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="18">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="22">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="23">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="24">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="47" valueOld="47"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="9" val="1"/>
+            <int id="10" val="1"/>
+            <int id="12" val="1"/>
+            <int id="13" val="1"/>
+            <int id="14" val="1"/>
+            <int id="15" val="1"/>
+            <int id="18" val="1"/>
+            <int id="22" val="1"/>
+            <int id="23" val="1"/>
+            <int id="24" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="9">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="10">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="12">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="13">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="14">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="15">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="18">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="22">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="23">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="24">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="216" valueOld="216"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="9" val="1"/>
+            <int id="10" val="1"/>
+            <int id="12" val="1"/>
+            <int id="13" val="1"/>
+            <int id="14" val="1"/>
+            <int id="15" val="1"/>
+            <int id="18" val="1"/>
+            <int id="22" val="1"/>
+            <int id="23" val="1"/>
+            <int id="24" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="9">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="10">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="12">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="13">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="14">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="15">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="18">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="22">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="23">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="24">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="9" val="1"/>
+            <int id="10" val="1"/>
+            <int id="12" val="1"/>
+            <int id="13" val="1"/>
+            <int id="14" val="1"/>
+            <int id="15" val="1"/>
+            <int id="18" val="1"/>
+            <int id="22" val="1"/>
+            <int id="23" val="1"/>
+            <int id="24" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="9">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="10">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="12">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="13">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="14">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="15">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="18">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="22">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="23">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="24">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="9" val="1"/>
+            <int id="10" val="1"/>
+            <int id="12" val="1"/>
+            <int id="13" val="1"/>
+            <int id="14" val="1"/>
+            <int id="15" val="1"/>
+            <int id="18" val="1"/>
+            <int id="22" val="1"/>
+            <int id="23" val="1"/>
+            <int id="24" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="9">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="10">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="12">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="13">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="14">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="15">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="18">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="22">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="23">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="24">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="9" val="1"/>
+            <int id="10" val="1"/>
+            <int id="12" val="1"/>
+            <int id="13" val="1"/>
+            <int id="14" val="1"/>
+            <int id="15" val="1"/>
+            <int id="18" val="1"/>
+            <int id="22" val="1"/>
+            <int id="23" val="1"/>
+            <int id="24" val="1"/>
+            <int id="25" val="1"/>
+            <int id="26" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="9">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="10">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="12">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="13">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="14">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="15">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="18">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="22">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="23">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="24">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="25">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="26">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+      </steps>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="49" soloInThisMemory="0" specialType="0" type="6" value="0" valueOld="0">
+    <Chase>
+      <stepData brightness="15" brightness1="1"/>
+      <mainData fade="16"/>
+      <modeData/>
+      <steps size="3">
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+      </steps>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="50" soloInThisMemory="0" specialType="0" type="6" value="0" valueOld="0">
+    <Chase>
+      <stepData brightness="145" brightness1="4"/>
+      <mainData fade="7" ownFade="107"/>
+      <modeData fadeMode="1"/>
+      <steps size="6">
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+      </steps>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="51" soloInThisMemory="0" specialType="0" type="6" value="0" valueOld="0">
+    <Chase>
+      <stepData brightness="15" brightness1="1"/>
+      <mainData fade="16"/>
+      <modeData/>
+      <steps size="6">
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+      </steps>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="52" soloInThisMemory="0" specialType="0" type="6" value="0" valueOld="0">
+    <Chase>
+      <stepData brightness="255" brightness1="7" step="1"/>
+      <mainData fade="7"/>
+      <modeData/>
+      <steps size="6">
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX/>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+        <Preset>
+          <mainData value="0" valueOld="0"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="33" val="1"/>
+            <int id="34" val="1"/>
+            <int id="35" val="1"/>
+            <int id="36" val="1"/>
+            <int id="37" val="1"/>
+            <int id="38" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="33">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="34">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="35">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="36">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="37">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="38">
+              <DMX/>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+      </steps>
     </Chase>
   </Memory>
 </Memories>

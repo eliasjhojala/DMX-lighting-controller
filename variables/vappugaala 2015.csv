@@ -608,8 +608,8 @@ id,variable_name,variable_dimensions,value,1D,2D
 606,grouping,1,1,1,-
 607,grouping,1,1,2,-
 608,camX,0,830,-,-
-609,camY,0,8569,-,-
-610,camZ,0,1900,-,-
+609,camY,0,3679,-,-
+610,camZ,0,1300,-,-
 611,centerX,0,180,-,-
 612,centerY,0,-1470,-,-
 613,chaseMode,0,1,-,-
