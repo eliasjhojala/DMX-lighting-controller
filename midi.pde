@@ -54,8 +54,9 @@
      outputModes.addBlock(new RadioButton("Fixtures", 2));
      
      toggleOrPush = new RadioButtonMenu();
-     toggleOrPush.addBlock(new RadioButton("Toggle", 1));
-     toggleOrPush.addBlock(new RadioButton("Push", 2));
+     toggleOrPush.addBlock(new RadioButton("Toggle", 0));
+     toggleOrPush.addBlock(new RadioButton("Push", 1));
+     toggleOrPush.addBlock(new RadioButton("Trigger", 2));
      
      launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 2);
      
@@ -178,7 +179,7 @@
                  int x = LPTOP.changedValue()[0];
                  int y = LPTOP.changedValue()[1];
                  int val = LPTOP.getValue(x, y);
-                 launchpad.setUseToggle(boolean(val), x, y);
+                 launchpad.setButtonMode(val, x, y);
                }
              }
              catch (Exception e) {
@@ -205,7 +206,7 @@
       if(toggleOrPush.valueHasChanged()) {
          switch(selectedMachine) {
            case 1: //Launchpad
-             if(launchpad != null) launchpad.setUseToggleToAll(toggleOrPush.getValue() == 1); launchpadToggleOrPush.setValue(toggleOrPush.getValue());
+             if(launchpad != null) launchpad.setButtonModeToAll(toggleOrPush.getValue()); launchpadToggleOrPush.setValue(toggleOrPush.getValue());
            break;
            
            case 2: //LC2412
@@ -555,7 +556,7 @@ public class Launchpad {
   int[] mapping;
   int output;
   
-  boolean[][] useToggle;
+  int[][] buttonMode;
   
   int[][] toggleMemory;
   
@@ -568,7 +569,7 @@ public class Launchpad {
   
   Launchpad(int inputIndex, int outputIndex) {
     setup(inputIndex, outputIndex);
-    useToggle = new boolean[8][8];
+    buttonMode = new int[8][8];
     toggleMemory = new int[8][8];
   }
   
@@ -591,10 +592,10 @@ public class Launchpad {
     
   }
   
-  void setUseToggleToAll(boolean use) {
+  void setButtonModeToAll(int mode) {
     for(int x = 0; x < 8; x++) { 
       for(int y = 0; y < 8; y++) { 
-        useToggle[x][y] = use; 
+        buttonMode[x][y] = mode; 
       } 
     }
   }
@@ -606,7 +607,7 @@ public class Launchpad {
     if(val) padsToggle[x][y] = !padsToggle[x][y];
     
     boolean value;
-    if(useToggle[x][y]) {
+    if(buttonMode[x][y] == 1) {
       value = padsToggle[x][y];
     }
     else {
@@ -660,8 +661,8 @@ public class Launchpad {
     }
   }
   
-  void setUseToggle(boolean val, int x, int y) {
-    useToggle[x][y] = val;
+  void setButtonMode(int val, int x, int y) {
+    buttonMode[x][y] = val;
   }
   
   void setToggleToMemoryValue(int val, int x, int y) {
