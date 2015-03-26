@@ -102,8 +102,8 @@
     <int id="99" val="99"/>
   </memoryControllerLookupTable>
   <Memory enabled="1" id="1" soloInThisMemory="0" specialType="0" type="4" value="255" valueOld="0"/>
-  <Memory enabled="1" id="2" soloInThisMemory="0" specialType="0" type="5" value="0" valueOld="0"/>
-  <Memory enabled="1" id="4" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
+  <Memory enabled="1" id="2" soloInThisMemory="0" specialType="0" type="5" value="155" valueOld="0"/>
+  <Memory enabled="0" id="4" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
     <Chase>
       <content>
         <int id="0" val="14"/>
@@ -113,12 +113,12 @@
         <int id="4" val="23"/>
         <int id="5" val="24"/>
       </content>
-      <stepData step="2"/>
-      <mainData/>
+      <stepData brightness="7" brightness1="1"/>
+      <mainData fade="33" value="255"/>
       <modeData/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="5" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
+  <Memory enabled="0" id="5" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
     <Chase>
       <content>
         <int id="0" val="33"/>
@@ -128,9 +128,9 @@
         <int id="4" val="37"/>
         <int id="5" val="38"/>
       </content>
-      <stepData step="1"/>
-      <mainData/>
-      <modeData beatModeId="1" inputMode="1" outputMode="1"/>
+      <stepData brightness="7" brightness1="1"/>
+      <mainData fade="33" value="255"/>
+      <modeData beatModeId="1"/>
     </Chase>
   </Memory>
   <Memory enabled="1" id="6" soloInThisMemory="1" specialType="0" type="1" value="0" valueOld="0">
@@ -192,7 +192,7 @@
       <stepData step="1"/>
       <mainData/>
       <modeData/>
-      <steps size="941">
+      <steps size="2134">
         <Preset>
           <mainData value="0" valueOld="0"/>
           <whatToSave>
@@ -89844,14 +89844,6 @@
       <repOfFixtures/>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="11" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
-    <Preset>
-      <mainData value="0" valueOld="0"/>
-      <whatToSave/>
-      <fixturesToSave/>
-      <repOfFixtures/>
-    </Preset>
-  </Memory>
   <Memory enabled="1" id="12" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
       <mainData value="0" valueOld="0"/>
@@ -89899,7 +89891,7 @@
       <modeData beatModeId="1" inputMode="2" outputMode="1"/>
     </Chase>
   </Memory>
-  <Memory enabled="1" id="20" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
+  <Memory enabled="1" id="20" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
     <Chase>
       <content>
         <int id="0" val="33"/>
@@ -89910,7 +89902,7 @@
         <int id="5" val="38"/>
       </content>
       <stepData/>
-      <mainData value="255"/>
+      <mainData/>
       <modeData beatModeId="2" inputMode="1" outputMode="6"/>
     </Chase>
   </Memory>
@@ -89937,9 +89929,9 @@
       <repOfFixtures/>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="30" soloInThisMemory="0" specialType="0" type="1" value="226" valueOld="0">
+  <Memory enabled="0" id="30" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="226" valueOld="226"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -89955,9 +89947,9 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="31" soloInThisMemory="0" specialType="0" type="1" value="226" valueOld="0">
+  <Memory enabled="0" id="31" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="226" valueOld="226"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -89973,9 +89965,9 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="32" soloInThisMemory="0" specialType="0" type="1" value="221" valueOld="0">
+  <Memory enabled="0" id="32" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="221" valueOld="221"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -89991,9 +89983,9 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="33" soloInThisMemory="0" specialType="0" type="1" value="214" valueOld="0">
+  <Memory enabled="0" id="33" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="214" valueOld="214"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90009,9 +90001,9 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="34" soloInThisMemory="0" specialType="0" type="1" value="206" valueOld="0">
+  <Memory enabled="0" id="34" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="206" valueOld="206"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90027,9 +90019,9 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="35" soloInThisMemory="0" specialType="0" type="1" value="198" valueOld="0">
+  <Memory enabled="0" id="35" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="198" valueOld="198"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90045,9 +90037,9 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="37" soloInThisMemory="0" specialType="0" type="1" value="193" valueOld="0">
+  <Memory enabled="0" id="37" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="193" valueOld="193"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90063,9 +90055,9 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="38" soloInThisMemory="0" specialType="0" type="1" value="191" valueOld="0">
+  <Memory enabled="0" id="38" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="191" valueOld="191"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90081,9 +90073,9 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="39" soloInThisMemory="0" specialType="0" type="1" value="191" valueOld="0">
+  <Memory enabled="0" id="39" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="191" valueOld="191"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90099,9 +90091,9 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="40" soloInThisMemory="0" specialType="0" type="1" value="186" valueOld="0">
+  <Memory enabled="0" id="40" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="186" valueOld="186"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90117,9 +90109,9 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="41" soloInThisMemory="0" specialType="0" type="1" value="186" valueOld="0">
+  <Memory enabled="0" id="41" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="186" valueOld="186"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90135,9 +90127,9 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="42" soloInThisMemory="0" specialType="0" type="1" value="186" valueOld="0">
+  <Memory enabled="0" id="42" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="186" valueOld="186"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -90152,5 +90144,35 @@
         </fixtureDMX>
       </repOfFixtures>
     </Preset>
+  </Memory>
+  <Memory enabled="0" id="45" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
+    <Chase>
+      <content>
+        <int id="0" val="33"/>
+        <int id="1" val="34"/>
+        <int id="2" val="35"/>
+        <int id="3" val="36"/>
+        <int id="4" val="37"/>
+        <int id="5" val="38"/>
+      </content>
+      <stepData/>
+      <mainData ownFade="63" value="255"/>
+      <modeData fadeMode="1"/>
+    </Chase>
+  </Memory>
+  <Memory enabled="1" id="46" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
+    <Chase>
+      <content>
+        <int id="0" val="14"/>
+        <int id="1" val="18"/>
+        <int id="2" val="15"/>
+        <int id="3" val="22"/>
+        <int id="4" val="23"/>
+        <int id="5" val="24"/>
+      </content>
+      <stepData/>
+      <mainData ownFade="51" value="255"/>
+      <modeData fadeMode="1"/>
+    </Chase>
   </Memory>
 </Memories>
