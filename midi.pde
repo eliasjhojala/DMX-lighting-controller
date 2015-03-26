@@ -606,6 +606,12 @@ public class Launchpad {
     }
   }
   
+  
+  void sendNoteOff(int pitch) {
+	int value = 0;
+	bus.sendNoteOn(0, pitch, byte(value) * 127);
+  }
+  
   void noteOn(int channel, int pitch, int velocity) {
     int x = constrain(pitch%16, 0, pads.length-1), y = constrain(pitch/16, 0, pads[0].length-1);
     boolean val = midiToBoolean(velocity);
@@ -627,11 +633,12 @@ public class Launchpad {
     if(output == 1) { 
 		if(buttonMode[x][y] != 2) {
 			memories[toggleMemory[x][y]].enabled = value; 
-			memories[toggleMemory][x][y].doOnce = false;
+			memories[toggleMemory[x][y]].doOnce = false;
 		}
 		else if(value == true) {
-			memories[toggleMemory][x][y].enabled = true;
-			memories[toggleMemory][x][y].doOnce = true;
+			memories[toggleMemory[x][y]].enabled = true;
+			memories[toggleMemory[x][y]].doOnce = true;
+			memories[toggleMemory[x][y]].triggerButton = pitch;
 		}
 	}
     else if(output == 2) { fixtures.get(constrain(toggleMemory[x][y], 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }

@@ -128,6 +128,7 @@ class memory { //Begin of memory class------------------------------------------
   boolean soloInThisMemory;
   int specialType; //Strobeon, fullon, blackout etc.
   boolean doOnce;
+  int triggerButton;
   
   boolean doOnce() {
 	return doOnce;
@@ -1247,7 +1248,7 @@ class chase { //Begin of chase class--------------------------------------------
     boolean next = trigger() && !stepHasChanged;
     boolean reverse = back() && !stepHasChanged;
     if(next) { 
-      if(step == getPresets().length-1 && doOnce()) { parent.enabled = false; }
+      if(step == getPresets().length-1 && doOnce()) { parent.enabled = false; if(launchpad != null) { launchpad.sendNoteOff(parent.triggerButton); } }
       step = getNext(step, 0, getPresets().length-1);
       lastDirection = NEXT;
     }
