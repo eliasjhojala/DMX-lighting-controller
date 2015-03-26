@@ -859,6 +859,7 @@ class RadioButton {
   void draw(PGraphics g, Mouse mouse, String mouseName) {
     buttonSize = 20;
     mouse.declareUpdateElementRelative(mouseName, 100000, -(buttonSize/2), -(buttonSize/2), buttonSize, buttonSize, g);
+    mouse.setElementExpire(mouseName, 2);
     boolean pressed = mouse.isCaptured(mouseName) && mouse.firstCaptureFrame;
     if(pressed) { selected = true; selectedChanged = true; }
     drawShapes(g, mouse, selected);

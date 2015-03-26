@@ -20,6 +20,7 @@
    DropdownMenu midiOutSelect;
    RadioButtonMenu outputModes;
    RadioButtonMenu toggleOrPush;
+   RadioButtonMenu buttonModeForLaunchpad;
    NumberBoxTableWindow launchpadToggleOrPush;
    TextBoxTableWindow launchPadMemories;
    PushButton save, load;
@@ -56,7 +57,13 @@
      toggleOrPush = new RadioButtonMenu();
      toggleOrPush.addBlock(new RadioButton("Toggle", 0));
      toggleOrPush.addBlock(new RadioButton("Push", 1));
-     toggleOrPush.addBlock(new RadioButton("Trigger", 2));
+	 
+	 buttonModeForLaunchpad = new RadioButtonMenu();
+	 buttonModeForLaunchpad.addBlock(new RadioButton("Toggle", 0));
+     buttonModeForLaunchpad.addBlock(new RadioButton("Push", 1));
+     buttonModeForLaunchpad.addBlock(new RadioButton("Trigger", 2));
+	 
+	 
      
      launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 2);
      
@@ -194,7 +201,8 @@
        
        g.pushMatrix();
          g.translate(200, 0);
-         toggleOrPush.draw(g, mouse);
+         if(selectedMachine != 1) { toggleOrPush.draw(g, mouse); }
+		 else { buttonModeForLaunchpad.draw(g, mouse); }
        g.popMatrix();
        
        
@@ -203,21 +211,19 @@
        
        
        
-      if(toggleOrPush.valueHasChanged()) {
+      if(selectedMachine != 1) if(toggleOrPush.valueHasChanged()) {
          switch(selectedMachine) {
-           case 1: //Launchpad
-             if(launchpad != null) launchpad.setButtonModeToAll(toggleOrPush.getValue()); launchpadToggleOrPush.setValue(toggleOrPush.getValue());
-           break;
-           
            case 2: //LC2412
            break;
            
            case 3: //KerRig 49
-             
            break;
          }
       }
        
+	  if(selectedMachine == 1) if(buttonModeForLaunchpad.valueHasChanged()) {
+         if(launchpad != null) launchpad.setButtonModeToAll(toggleOrPush.getValue()); launchpadToggleOrPush.setValue(toggleOrPush.getValue());
+	  }
        offset.draw(g, mouse);
        
        if(offset.valueHasChanged()) {
