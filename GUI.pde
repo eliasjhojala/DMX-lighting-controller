@@ -802,8 +802,7 @@ class RadioButtonMenu {
     for(int i = 0; i < buttons.size(); i++) {
       RadioButton button = buttons.get(i);
       String mouseName = this.toString() + str(i);
-      button.draw(g, mouse, mouseName);
-      g.translate(0, button.buttonSize*1.5);
+
       if(button.selectedChanged) {
         if(button.selected) {
           selectedId = i;
@@ -816,6 +815,9 @@ class RadioButtonMenu {
           button.selected = false;
         }
       }
+      
+      button.draw(g, mouse, mouseName);
+      g.translate(0, button.buttonSize*1.5);
     }
   }
   

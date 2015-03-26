@@ -57,9 +57,9 @@
      toggleOrPush = new RadioButtonMenu();
      toggleOrPush.addBlock(new RadioButton("Toggle", 0));
      toggleOrPush.addBlock(new RadioButton("Push", 1));
-	 
-	 buttonModeForLaunchpad = new RadioButtonMenu();
-	 buttonModeForLaunchpad.addBlock(new RadioButton("Toggle", 0));
+     
+     buttonModeForLaunchpad = new RadioButtonMenu();
+     buttonModeForLaunchpad.addBlock(new RadioButton("Toggle", 0));
      buttonModeForLaunchpad.addBlock(new RadioButton("Push", 1));
      buttonModeForLaunchpad.addBlock(new RadioButton("Trigger", 2));
 	 
@@ -222,7 +222,7 @@
       }
        
 	  if(selectedMachine == 1) if(buttonModeForLaunchpad.valueHasChanged()) {
-         if(launchpad != null) launchpad.setButtonModeToAll(toggleOrPush.getValue()); launchpadToggleOrPush.setValue(toggleOrPush.getValue());
+         if(launchpad != null) launchpad.setButtonModeToAll(buttonModeForLaunchpad.getValue()); launchpadToggleOrPush.setValue(buttonModeForLaunchpad.getValue());
 	  }
        offset.draw(g, mouse);
        
