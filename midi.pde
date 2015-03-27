@@ -268,7 +268,11 @@
            if(launchpad != null) {
              if(save.isPressed(g, mouse)) launchpad.saveToXML();
              g.pushMatrix(); g.translate(30, 0);
-             if(load.isPressed(g, mouse)) { launchpad.XMLtoObject(); launchPadMemories.setValue(launchpad.toggleMemory); }
+             if(load.isPressed(g, mouse)) { 
+				launchpad.XMLtoObject(); 
+				launchPadMemories.setValue(launchpad.toggleMemory); 
+				launchpadToggleOrPush.setValue(launchpad.buttonMode); //Set values to buttonModes
+			}
              g.popMatrix();
            }
          break;
@@ -450,6 +454,14 @@
      for(int x = 0; x < boxes.length; x++) {
        for(int y = 0; y < boxes[x].length; y++) {
          boxes[x][y].setValue(val);
+       }
+     }
+   }
+   
+   void setValue(int[][] val) {
+     for(int x = 0; x < val.length; x++) {
+       for(int y = 0; y < val[x].length; y++) {
+         setValue(x, y, val[x][y]);
        }
      }
    }
@@ -664,6 +676,7 @@ public class Launchpad {
     String data = "<launchpad></launchpad>";
     XML xml = parseXML(data);
     xml.addChild(array2DToXML("toggleMemory", toggleMemory));
+	xml.addChild(array2DToXML("buttonMode", buttonMode));
     saveXML(xml, "XML/launchpad.xml");
   }
   
@@ -672,15 +685,22 @@ public class Launchpad {
     int[][] fromXML = new int[8][8];
     arrayCopy(XMLtoIntArray2D("toggleMemory", xml), fromXML);
     
-    
-
 
     for(int x = 0; x < fromXML.length; x++) {
       for(int y = 0; y < fromXML[x].length; y++) {
         toggleMemory[x][y] = fromXML[x][y];
-        println(fromXML[x][y]);
       }
     }
+	
+	fromXML = new int[8][8];
+    arrayCopy(XMLtoIntArray2D("buttonMode", xml), fromXML);
+	
+	for(int x = 0; x < fromXML.length; x++) {
+      for(int y = 0; y < fromXML[x].length; y++) {
+        buttonMode[x][y] = fromXML[x][y];
+      }
+    }
+
   }
   
   void setButtonMode(int val, int x, int y) {
