@@ -16,28 +16,34 @@
  
  class MidiHandlerWindow {
    
-   int locX, locY, w, h;
-   boolean open;
+   //Init window base variables
+     int locX, locY, w, h;
+     boolean open;
+     Window window;
+   //End of initting window base variables
    
-   int selectedMachine;
+   int selectedMachine; //variable to tell what device are we controlling atm
    
-   Window window;
-   DropdownMenu machineSelect;
-   DropdownMenu midiInSelect;
-   DropdownMenu midiOutSelect;
-   RadioButtonMenu outputModes;
-   RadioButtonMenu toggleOrPush;
-   RadioButtonMenu buttonModeForLaunchpad;
-   NumberBoxTableWindow launchpadToggleOrPush;
-   TextBoxTableWindow launchPadMemories;
-   PushButton save, load, bankUp, bankDown;
-   
-   NumberBoxTableWindow keyrig49keyModes;
-   NumberBoxTableWindow LC2412faderModes;
-   NumberBoxTableWindow LC2412buttonModes;
-   
-   TextBoxTableWindow LC2412faderMemories;
-   TextBoxTableWindow LC2412buttonMemories;
+   //--------------Create all the controllers we use in this window---------------------
+   /**/                                                                              //|
+   /**/   DropdownMenu machineSelect;                                                //|
+   /**/   DropdownMenu midiInSelect;                                                 //|
+   /**/   DropdownMenu midiOutSelect;                                                //|
+   /**/   RadioButtonMenu outputModes;                                               //|
+   /**/   RadioButtonMenu toggleOrPush;                                              //|
+   /**/   RadioButtonMenu buttonModeForLaunchpad;                                    //|
+   /**/   NumberBoxTableWindow launchpadToggleOrPush;                                //|
+   /**/   TextBoxTableWindow launchPadMemories;                                      //|
+   /**/   PushButton save, load, bankUp, bankDown;                                   //|
+   /**/                                                                              //|
+   /**/   NumberBoxTableWindow keyrig49keyModes;                                     //|
+   /**/   NumberBoxTableWindow LC2412faderModes;                                     //|
+   /**/   NumberBoxTableWindow LC2412buttonModes;                                    //|
+   /**/                                                                              //|
+   /**/   TextBoxTableWindow LC2412faderMemories;                                    //|
+   /**/   TextBoxTableWindow LC2412buttonMemories;                                   //|
+   /**/                                                                              //|
+   //----------End of creating all the controllers we use in this window----------------
    
    MidiHandlerWindow() {
      { //Init window
@@ -48,74 +54,76 @@
        window = new Window("MidiHandlerWindow", new PVector(h, w), this);
      } //End of initting window
      
-     { //Create machineSelect dropdownMenu
-       ArrayList<DropdownMenuBlock> midiMachines = new ArrayList<DropdownMenuBlock>();
-       midiMachines.add(new DropdownMenuBlock("launchPad", 1));
-       midiMachines.add(new DropdownMenuBlock("LC2412", 2));
-       midiMachines.add(new DropdownMenuBlock("keyRig 49", 3));
-       machineSelect = new DropdownMenu("midiMachines", midiMachines);
-     } //End of creating machineSelect dropdownMenu
-     
-     { //Create midi in and out select dropdownMenus
-       ArrayList<DropdownMenuBlock> midiInputs = new ArrayList<DropdownMenuBlock>();
-       for(int i = 0; i < MidiBus.availableInputs().length; i++) {
-         midiInputs.add(new DropdownMenuBlock(MidiBus.availableInputs()[i], i));
-       }
-       midiInSelect = new DropdownMenu("Midi inputs", midiInputs);
+     { //Create all the controllers in midiWindow
+       { //Create machineSelect dropdownMenu
+         ArrayList<DropdownMenuBlock> midiMachines = new ArrayList<DropdownMenuBlock>();
+         midiMachines.add(new DropdownMenuBlock("launchPad", 1));
+         midiMachines.add(new DropdownMenuBlock("LC2412", 2));
+         midiMachines.add(new DropdownMenuBlock("keyRig 49", 3));
+         machineSelect = new DropdownMenu("midiMachines", midiMachines);
+       } //End of creating machineSelect dropdownMenu
        
-       ArrayList<DropdownMenuBlock> midiOutputs = new ArrayList<DropdownMenuBlock>();
-       for(int i = 0; i < MidiBus.availableOutputs().length; i++) {
-         midiOutputs.add(new DropdownMenuBlock(MidiBus.availableOutputs()[i], i));
-       }
-       midiOutSelect = new DropdownMenu("Midi outputs", midiOutputs);
-     } //End of creating midi in and out select dropdownMenus
-     
-     { //Create outputModes radioButtonMenu
-       outputModes = new RadioButtonMenu();
-       outputModes.addBlock(new RadioButton("Memories", 1));
-       outputModes.addBlock(new RadioButton("Fixtures", 2));
-     } //End of creating outputModes radioButtonMenu
-    
-     { //Create toggleOrPush radioButtonMenu
-       toggleOrPush = new RadioButtonMenu();
-       toggleOrPush.addBlock(new RadioButton("Toggle", 0));
-       toggleOrPush.addBlock(new RadioButton("Push", 1));
-     } //End of creating toggleOrPush radioButtonMenu
-     
-     { //Create buttonModeForLaunchpad radioButtonMenu
-       buttonModeForLaunchpad = new RadioButtonMenu();
-       buttonModeForLaunchpad.addBlock(new RadioButton("Toggle", 0));
-       buttonModeForLaunchpad.addBlock(new RadioButton("Push", 1));
-       buttonModeForLaunchpad.addBlock(new RadioButton("Trigger", 2));
-     } //End of creating buttonModeForLaunchpad radioButtonMenu
-	 
-	 
-     { //Create launchpad buttons settings tables
-       launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 2);
-       launchPadMemories = new TextBoxTableWindow("launchPadMemories", 8, 8);
-     } //End of creating launchpad buttons settings tables
-     
-     { //Create keyrig49 keys settings tables
-       keyrig49keyModes = new NumberBoxTableWindow("keyrig49keyModes", 29, 1, 0, 2);
-     } //End of creating keyrig49 keys settings tables
-     
-     { //Create LC2412 settings tables for faders and buttons
-       LC2412faderModes = new NumberBoxTableWindow("LC2412faderModes", 12, 2, 0, 1);
-       LC2412buttonModes = new NumberBoxTableWindow("LC2412buttonModes", 12, 1, 0, 2);
+       { //Create midi in and out select dropdownMenus
+         ArrayList<DropdownMenuBlock> midiInputs = new ArrayList<DropdownMenuBlock>();
+         for(int i = 0; i < MidiBus.availableInputs().length; i++) {
+           midiInputs.add(new DropdownMenuBlock(MidiBus.availableInputs()[i], i));
+         }
+         midiInSelect = new DropdownMenu("Midi inputs", midiInputs);
+         
+         ArrayList<DropdownMenuBlock> midiOutputs = new ArrayList<DropdownMenuBlock>();
+         for(int i = 0; i < MidiBus.availableOutputs().length; i++) {
+           midiOutputs.add(new DropdownMenuBlock(MidiBus.availableOutputs()[i], i));
+         }
+         midiOutSelect = new DropdownMenu("Midi outputs", midiOutputs);
+       } //End of creating midi in and out select dropdownMenus
        
-       LC2412faderMemories = new TextBoxTableWindow("launchPadMemories", 12, 2);
-       LC2412buttonMemories = new TextBoxTableWindow("launchPadMemories", 12, 1);
-     } //End of creating LC2412 settings tables for faders and buttons
-     
-     { //Create save and load buttons
-       save = new PushButton("saveButtonInMidiWindow");
-       load = new PushButton("loadButtonInMidiWindow");
-     } //End of creating save and load buttons
-     
-     {
-       bankUp = new PushButton("bankUpInMidiWindow");
-       bankDown = new PushButton("bankDownInMidiWindow");
-     }
+       { //Create outputModes radioButtonMenu
+         outputModes = new RadioButtonMenu();
+         outputModes.addBlock(new RadioButton("Memories", 1));
+         outputModes.addBlock(new RadioButton("Fixtures", 2));
+       } //End of creating outputModes radioButtonMenu
+      
+       { //Create toggleOrPush radioButtonMenu
+         toggleOrPush = new RadioButtonMenu();
+         toggleOrPush.addBlock(new RadioButton("Toggle", 0));
+         toggleOrPush.addBlock(new RadioButton("Push", 1));
+       } //End of creating toggleOrPush radioButtonMenu
+       
+       { //Create buttonModeForLaunchpad radioButtonMenu
+         buttonModeForLaunchpad = new RadioButtonMenu();
+         buttonModeForLaunchpad.addBlock(new RadioButton("Toggle", 0));
+         buttonModeForLaunchpad.addBlock(new RadioButton("Push", 1));
+         buttonModeForLaunchpad.addBlock(new RadioButton("Trigger", 2));
+       } //End of creating buttonModeForLaunchpad radioButtonMenu
+  	 
+  	 
+       { //Create launchpad buttons settings tables
+         launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 2);
+         launchPadMemories = new TextBoxTableWindow("launchPadMemories", 8, 8);
+       } //End of creating launchpad buttons settings tables
+       
+       { //Create keyrig49 keys settings tables
+         keyrig49keyModes = new NumberBoxTableWindow("keyrig49keyModes", 29, 1, 0, 2);
+       } //End of creating keyrig49 keys settings tables
+       
+       { //Create LC2412 settings tables for faders and buttons
+         LC2412faderModes = new NumberBoxTableWindow("LC2412faderModes", 12, 2, 0, 1);
+         LC2412buttonModes = new NumberBoxTableWindow("LC2412buttonModes", 12, 1, 0, 2);
+         
+         LC2412faderMemories = new TextBoxTableWindow("launchPadMemories", 12, 2);
+         LC2412buttonMemories = new TextBoxTableWindow("launchPadMemories", 12, 1);
+       } //End of creating LC2412 settings tables for faders and buttons
+       
+       { //Create save and load buttons
+         save = new PushButton("saveButtonInMidiWindow");
+         load = new PushButton("loadButtonInMidiWindow");
+       } //End of creating save and load buttons
+       
+       { //Create bank buttons
+         bankUp = new PushButton("bankUpInMidiWindow");
+         bankDown = new PushButton("bankDownInMidiWindow");
+       } //End of creating bank buttons
+     } //End of creating all the controllers in midiWindow
    }
    
    IntController offset = new IntController("testIntController");
@@ -436,7 +444,7 @@
 
    }
 
- }
+ } //End of MidiHandlerWindow class
  
  
  class CheckBoxTableWindow {
