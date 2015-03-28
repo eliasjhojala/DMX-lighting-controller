@@ -36,7 +36,7 @@
      midiMachines.add(new DropdownMenuBlock("launchPad", 1));
      midiMachines.add(new DropdownMenuBlock("LC2412", 2));
      midiMachines.add(new DropdownMenuBlock("keyRig 49", 3));
-     machineSelect = new DropdownMenu("midiMachines", midiMachines); 
+     machineSelect = new DropdownMenu("midiMachines", midiMachines);
      
      ArrayList<DropdownMenuBlock> midiInputs = new ArrayList<DropdownMenuBlock>();
      for(int i = 0; i < MidiBus.availableInputs().length; i++) {
@@ -105,7 +105,7 @@
                  if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
                  if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
                  
-                 if(launchpad != null) { launchpad.setup(input, output); } 
+                 if(launchpad != null) { launchpad.setup(input, output); }
                  else { launchpad = new Launchpad(input, output); }
                  
                }
@@ -268,9 +268,9 @@
            if(launchpad != null) {
              if(save.isPressed(g, mouse)) launchpad.saveToXML();
              g.pushMatrix(); g.translate(30, 0);
-             if(load.isPressed(g, mouse)) { 
-				launchpad.XMLtoObject(); 
-				launchPadMemories.setValue(launchpad.toggleMemory); 
+             if(load.isPressed(g, mouse)) {
+				launchpad.XMLtoObject();
+				launchPadMemories.setValue(launchpad.toggleMemory);
 				launchpadToggleOrPush.setValue(launchpad.buttonMode); //Set values to buttonModes
 			}
              g.popMatrix();
@@ -477,10 +477,10 @@
 
  void createMidiClasses() {
    LaunchpadData launchpadData = new LaunchpadData();
- //  launchpad = new Launchpad(2, 2);
-  // LC2412 = new behringerLC2412(1, 2);
+   launchpad = new Launchpad();
+   LC2412 = new behringerLC2412();
    inputClass = new Input();
-  // keyRig49 = new Keyrig49(1);
+   keyRig49 = new Keyrig49();
  }
 
 
@@ -511,6 +511,10 @@ public class Keyrig49 {
   
   int offset;
   
+  Keyrig49() {
+    setup();
+  }
+  
   Keyrig49(int inputIndex) {
     setup(inputIndex);
   }
@@ -520,7 +524,10 @@ public class Keyrig49 {
     this.inputIndex = inputIndex;
     if(bus != null) { bus.addInput(inputIndex); }
     else { bus = new MidiBus(this, inputIndex, 0); }
-
+    setup();
+  }
+  
+  void setup() {
     keys = new boolean[49];
     keysOld = new boolean[49];
     useToggle = new boolean[49];
@@ -585,6 +592,10 @@ public class Launchpad {
   
   int offset;
   
+  Launchpad() {
+    setup();
+  }
+  
   Launchpad(int inputIndex, int outputIndex) {
     setup(inputIndex, outputIndex);
     buttonMode = new int[8][8];
@@ -598,23 +609,27 @@ public class Launchpad {
     if(bus != null) { bus.addInput(inputIndex); bus.addOutput(outputIndex); }
     else { bus = new MidiBus(this, inputIndex, outputIndex); }
     
+    
+    setup();
+    output = 1;
+
+    
+  }
+  
+  void setup() {
     pads = new boolean[8][8];
     padsToggle = new boolean[8][8];
     upperPads = new boolean[8];
     upperPadsToggle = new boolean[8];
     
     toggleMemory = new int[8][8];
-    
-    output = 1;
-
-    
   }
   
   void setButtonModeToAll(int mode) {
-    for(int x = 0; x < 8; x++) { 
-      for(int y = 0; y < 8; y++) { 
-        buttonMode[x][y] = mode; 
-      } 
+    for(int x = 0; x < 8; x++) {
+      for(int y = 0; y < 8; y++) {
+        buttonMode[x][y] = mode;
+      }
     }
   }
   
@@ -632,7 +647,7 @@ public class Launchpad {
     
     boolean value;
     if(buttonMode[x][y] == 1) { //Togglemode
-      value = padsToggle[x][y]; 
+      value = padsToggle[x][y];
     }
     else {
       value = pads[x][y];
@@ -642,9 +657,9 @@ public class Launchpad {
    // else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
     
     
-    if(output == 1) { 
+    if(output == 1) {
 		if(buttonMode[x][y] != 2) {
-			memories[toggleMemory[x][y]].enabled = value; 
+			memories[toggleMemory[x][y]].enabled = value;
 			memories[toggleMemory[x][y]].doOnce = false;
 		}
 		else if(value == true) {
@@ -754,6 +769,10 @@ public class behringerLC2412 {
   
   int offset;
   
+  behringerLC2412() {
+    setup();
+  }
+  
   behringerLC2412(int inputIndex, int outputIndex) {
     setup(inputIndex, outputIndex);
   }
@@ -767,6 +786,11 @@ public class behringerLC2412 {
     if(bus != null) { bus.addInput(inputIndex); bus.addOutput(outputIndex); }
     else { bus = new MidiBus(this, inputIndex, outputIndex); }
     
+    setup();
+  }
+  
+  
+  void setup() {
     faderValue = new int[2][12];
     faderValueOld = new int[2][12];
     buttons = new boolean[12];
@@ -1014,7 +1038,7 @@ void maschineNote(int pitch, int velocity) {
 
 
 void triggerStepFromMaschine(boolean onOrOff) {
-  if (maschineStepDirectionIsNext) nextStepPressed = onOrOff; 
+  if (maschineStepDirectionIsNext) nextStepPressed = onOrOff;
         else revStepPressed = onOrOff;
         
   //Toggle step direction, as nextRevAutoChange is true
@@ -1029,9 +1053,9 @@ void selectMaschinePad(int padId, boolean putOn) {
   //2nd pad is at 14
   Maschine.sendNoteOn(10, padId + 13, 127);
   
-  //Turn the rest off 
+  //Turn the rest off
   for (int i = 1; i <= 16; i++) {
-    if (i != padId || !putOn) Maschine.sendNoteOn(10, i + 13, 0); 
+    if (i != padId || !putOn) Maschine.sendNoteOn(10, i + 13, 0);
   }
 }
 
@@ -1070,23 +1094,23 @@ void maschineControllerChange(int number, int value) {
     case 92: nextChaseMode(); break;
     
     //Step direction: back
-    case 105: 
+    case 105:
       setMaschineStepDirection(false);
     break;
     //Step direction: forward
-    case 106: 
+    case 106:
       setMaschineStepDirection(true);
     break;
     
     //toggle BlackOut
-    case 119: 
+    case 119:
       blackOutToggle();
       //Turn the mute button light on according to current blackout status
       if(blackOut) Maschine.sendControllerChange(10, 119, 127); else Maschine.sendControllerChange(10, 119, 0);
     break;
     
     //toggle fullOn
-    case 112: 
+    case 112:
       fullOnToggle();
       //Turn the mute button light on according to current blackout status
       if(fullOn) Maschine.sendControllerChange(10, 112, 127); else Maschine.sendControllerChange(10, 112, 0);
@@ -1094,7 +1118,7 @@ void maschineControllerChange(int number, int value) {
     
     
     //toggle chasePause
-    case 108: 
+    case 108:
 
       //Turn the play button light on according to current pause status
 
@@ -1106,7 +1130,7 @@ void maschineControllerChange(int number, int value) {
     case 110: clearMaschineAutoTap(); break;
     
     //toggle nextRevAutoChange
-    case 117: 
+    case 117:
       nextRevAutoChange = !nextRevAutoChange;
       //Turn the select button light on according to current nextRecAutoChange status
       if(nextRevAutoChange) Maschine.sendControllerChange(10, 117, 127); else Maschine.sendControllerChange(10, 117, 0);
