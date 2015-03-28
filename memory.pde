@@ -1741,7 +1741,7 @@ class TapTempo {
   }
   
   
-  int length = 4;
+  int length = 12;
 
 
 
