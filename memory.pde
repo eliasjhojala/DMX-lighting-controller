@@ -378,6 +378,22 @@ XML array2DToXML(String name, int[][] array2D) {
   return xml;
 }
 
+XML array3DToXML(String name, int[][][] array3D) {
+  
+  String data = "<" + name + "></" + name + ">";
+  XML xml = parseXML(data);
+  if(array3D != null) {
+    for(int j = 0; j < array3D.length; j++) {
+      int[][] array = array3D[j];
+      if(array != null) {
+        XML block = xml.addChild(array2DToXML("z", array));
+        block.setInt("id", j);
+      }
+    }
+  }
+  return xml;
+}
+
 int[][] XMLtoIntArray2D(String name, XML xml) {
   int[][] toReturn = { };
   if(xml != null) {
@@ -397,6 +413,60 @@ int[][] XMLtoIntArray2D(String name, XML xml) {
         if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
           int id = block[i].getInt("id");
           toReturn[id] = XMLtoIntArray(block[i]);
+          a++;
+        }
+      }
+    }
+    return toReturn;
+  }
+  return null;
+}
+
+int[][] XMLtoIntArray2D(XML xml) {
+  int[][] toReturn = { };
+    if(xml != null) {
+      XML[] block = xml.getChildren();
+      int a = 0;
+      for(int i = 0; i < block.length; i++) {
+        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+          int tmp = block[i].getInt("id")+1;
+          if(tmp > a) a = tmp;
+        }
+      }
+      toReturn = new int[a][];
+      a = 0;
+      for(int i = 0; i < block.length; i++) {
+        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+          int id = block[i].getInt("id");
+          toReturn[id] = XMLtoIntArray(block[i]);
+          a++;
+        }
+      }
+      return toReturn;
+    }
+  return null;
+}
+
+
+int[][][] XMLtoIntArray3D(String name, XML xml) {
+  int[][][] toReturn = { };
+  if(xml != null) {
+    xml = xml.getChild(name);
+    if(xml != null) {
+      XML[] block = xml.getChildren();
+      int a = 0;
+      for(int i = 0; i < block.length; i++) {
+        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+          int tmp = block[i].getInt("id")+1;
+          if(tmp > a) a = tmp;
+        }
+      }
+      toReturn = new int[a][][];
+      a = 0;
+      for(int i = 0; i < block.length; i++) {
+        if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
+          int id = block[i].getInt("id");
+          toReturn[id] = XMLtoIntArray2D(block[i]);
           a++;
         }
       }

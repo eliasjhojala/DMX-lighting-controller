@@ -1,7 +1,4 @@
- 
 
-
- LaunchpadData launchpadData;
  behringerLC2412 LC2412;
  Input inputClass;
  Keyrig49 keyRig49;
@@ -269,78 +266,85 @@
          } //End of launchpad settings
          
          else if(selectedMachine == 2) { //LC2412 fader and button settigns
-             LC2412faderModes.locX = locX+500;
-             LC2412faderModes.locY = locY;
-             LC2412faderModes.open = true;
-             
-             if(LC2412faderModes.valueHasChanged()) {
-               if(LC2412 != null) {
-                 NumberBoxTableWindow LPM = LC2412faderModes;
-                 int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
-                 try { LC2412.setFaderModeValue(val, LC2412bank, x, y); }
-                 catch (Exception e) { e.printStackTrace(); }
+             { //FaderModes
+               LC2412faderModes.locX = locX+500;
+               LC2412faderModes.locY = locY;
+               LC2412faderModes.open = true;
+               
+               if(LC2412faderModes.valueHasChanged()) {
+                 if(LC2412 != null) {
+                   NumberBoxTableWindow LPM = LC2412faderModes;
+                   int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                   try { LC2412.setFaderModeValue(val, LC2412bank, x, y); }
+                   catch (Exception e) { e.printStackTrace(); }
+                 }
                }
-             }
+             } //End of faderModes
 
-             LC2412buttonModes.locX = locX+500;
-             LC2412buttonModes.locY = locY+LC2412faderModes.h;
-             LC2412buttonModes.open = true;
-             
-             if(LC2412buttonModes.valueHasChanged()) {
-               if(LC2412 != null) {
-                 NumberBoxTableWindow LPM = LC2412buttonModes;
-                 int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
-                 try { LC2412.setButtonModeValue(val, LC2412bank, x, y); }
-                 catch (Exception e) { e.printStackTrace(); }
+             { //ButtonModes
+               LC2412buttonModes.locX = locX+500;
+               LC2412buttonModes.locY = locY+LC2412faderModes.h;
+               LC2412buttonModes.open = true;
+               
+               if(LC2412buttonModes.valueHasChanged()) {
+                 if(LC2412 != null) {
+                   NumberBoxTableWindow LPM = LC2412buttonModes;
+                   int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                   try { LC2412.setButtonModeValue(val, LC2412bank, x, y); }
+                   catch (Exception e) { e.printStackTrace(); }
+                 }
                }
-             }
+             } //End of buttonModes
              
-             LC2412faderMemories.locX = locX+500+LC2412faderModes.w;
-             LC2412faderMemories.locY = locY;
-             LC2412faderMemories.open = true;
-             
-             if(LC2412faderMemories.valueHasChanged()) {
-               if(LC2412 != null) {
-                 TextBoxTableWindow LPM = LC2412faderMemories;
-                 int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
-                 try { LC2412.setFaderMemoryValue(val, LC2412bank, x, y); }
-                 catch (Exception e) { e.printStackTrace(); }
+             { //FaderMemories
+               LC2412faderMemories.locX = locX+500+LC2412faderModes.w;
+               LC2412faderMemories.locY = locY;
+               LC2412faderMemories.open = true;
+               
+               if(LC2412faderMemories.valueHasChanged()) {
+                 if(LC2412 != null) {
+                   TextBoxTableWindow LPM = LC2412faderMemories;
+                   int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                   try { LC2412.setFaderMemoryValue(val, LC2412bank, x, y); }
+                   catch (Exception e) { e.printStackTrace(); }
+                 }
                }
-             }
+             } //End of faderMemories
 
-             LC2412buttonMemories.locX = locX+500+LC2412buttonModes.w;
-             LC2412buttonMemories.locY = locY+LC2412faderMemories.h;
-             LC2412buttonMemories.open = true;
-             
-             if(LC2412buttonMemories.valueHasChanged()) {
-               if(LC2412 != null) {
-                 TextBoxTableWindow LPM = LC2412buttonMemories;
-                 int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
-                 try { LC2412.setButtonMemoryValue(val, LC2412bank, x, y); }
-                 catch (Exception e) { e.printStackTrace(); }
+             { //ButtonMemories
+               LC2412buttonMemories.locX = locX+500+LC2412buttonModes.w;
+               LC2412buttonMemories.locY = locY+LC2412faderMemories.h;
+               LC2412buttonMemories.open = true;
+               
+               if(LC2412buttonMemories.valueHasChanged()) {
+                 if(LC2412 != null) {
+                   TextBoxTableWindow LPM = LC2412buttonMemories;
+                   int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                   try { LC2412.setButtonMemoryValue(val, LC2412bank, x, y); }
+                   catch (Exception e) { e.printStackTrace(); }
+                 }
                }
-             }
+             } //End of buttonMemories
              
-             g.pushMatrix(); g.pushStyle(); g.fill(0); g.textAlign(RIGHT);
-               g.translate(350, 150);
-               g.text("bankUp", -25, 13);
-               if(bankUp.isPressed(g, mouse)) { LC2412bank++; LC2412bankChanged = true; }
-               g.translate(0, 25);
-               g.text("bankDown", -25, 13);
-               if(bankDown.isPressed(g, mouse)) { LC2412bank--; LC2412bankChanged = true; }
-               g.translate(0, 25);
-               g.text("actual bank: " + str(LC2412bank), 25, 13);
-               g.text("LC2412 bank: " + str(LC2412.bank), 25, 13+20);
-             g.popMatrix(); g.popStyle();
-             
-             if(LC2412bankChanged) {
-               LC2412bank = constrain(LC2412bank, 0, 9);
-               LC2412faderModes.setValue(LC2412.faderMode[LC2412bank]);
-               LC2412buttonModes.setValue(LC2412.buttonMode[LC2412bank]);
-               LC2412faderMemories.setValue(LC2412.faderMemory[LC2412bank]);
-               LC2412buttonMemories.setValue(LC2412.buttonMemory[LC2412bank]);
-               LC2412bankChanged = false;
-             }
+             { //Bank
+               g.pushMatrix(); g.pushStyle(); g.fill(0); g.textAlign(RIGHT);
+                 g.translate(350, 150);
+                 g.text("bankUp", -25, 13);
+                 if(bankUp.isPressed(g, mouse)) { LC2412bank++; LC2412bankChanged = true; }
+                 g.translate(0, 25);
+                 g.text("bankDown", -25, 13);
+                 if(bankDown.isPressed(g, mouse)) { LC2412bank--; LC2412bankChanged = true; }
+                 g.translate(0, 25);
+                 g.text("actual bank: " + str(LC2412bank), 25, 13);
+                 g.text("LC2412 bank: " + str(LC2412.bank), 25, 13+20);
+               g.popMatrix(); g.popStyle();
+               
+               if(LC2412bankChanged) {
+                 LC2412bank = constrain(LC2412bank, 0, 9);
+                 setLC2412valuesToControllers();
+                 LC2412bankChanged = false;
+               }
+             } //End of bank
          } //End of LC2412 fader and button settings
        } //End of device specific settings
        
@@ -442,6 +446,13 @@
        g.popMatrix();
      } //End of drawing machine select
 
+   } //End of draw
+   
+   void setLC2412valuesToControllers() {
+     LC2412faderModes.setValue(LC2412.faderMode[LC2412bank]);
+     LC2412buttonModes.setValue(LC2412.buttonMode[LC2412bank]);
+     LC2412faderMemories.setValue(LC2412.faderMemory[LC2412bank]);
+     LC2412buttonMemories.setValue(LC2412.buttonMemory[LC2412bank]);
    }
 
  } //End of MidiHandlerWindow class
@@ -526,7 +537,7 @@
      }
    }
    
- }
+ } //End of class CheckBoxTableWindow
  
  
  class NumberBoxTableWindow {
@@ -626,21 +637,21 @@
      }
    }
    
- }
+ } //End of class NumberBoxTableWindow
 
 
  void createMidiClasses() {
-   LaunchpadData launchpadData = new LaunchpadData();
    launchpad = new Launchpad();
    LC2412 = new behringerLC2412();
    inputClass = new Input();
    keyRig49 = new Keyrig49();
- }
+ } //End of void createMidiClasses()
  
  boolean loadingMidiData = false;
  void loadMidiData() {
    loadingMidiData = true;
    loadLaunchpadData();
+   loadBehringerLC2412data();
    loadingMidiData = false;
  }
  
@@ -648,6 +659,7 @@
  void saveMidiData() {
    savingMidiData = true;
    saveLaunchpadData();
+   saveBehringerLC2412data();
    savingMidiData = false;
  }
 
@@ -663,6 +675,15 @@
    if(launchpad != null) {
     launchpad.saveToXML();
    }
+ }
+ 
+ void saveBehringerLC2412data() {
+   if(LC2412 != null) LC2412.saveToXML();
+ }
+ 
+ 
+ void loadBehringerLC2412data() {
+   if(LC2412 != null) LC2412.XMLtoObject();
  }
 
 
@@ -959,6 +980,7 @@ public class behringerLC2412 {
   behringerLC2412() {
     setup();
   }
+
   
   behringerLC2412(int inputIndex, int outputIndex) {
     setup(inputIndex, outputIndex);
@@ -989,6 +1011,72 @@ public class behringerLC2412 {
     buttonMode = new int[10][12];
     faderMemory = new int[10][12][2];
     buttonMemory = new int[10][12];
+  }
+  
+  void saveToXML() {
+    
+    String data = "<LC2412></LC2412>";
+    XML xml = parseXML(data);
+    xml.addChild(array3DToXML("faderMode", faderMode));
+    xml.addChild(array2DToXML("buttonMode", buttonMode));
+    
+    xml.addChild(array3DToXML("faderMemory", faderMemory));
+    xml.addChild(array2DToXML("buttonMemory", buttonMemory));
+    saveXML(xml, "XML/LC2412.xml");
+  }
+  
+  
+  void XMLtoObject() {
+    XML xml = loadXML("XML/LC2412.xml");
+    
+    { //buttonMode
+      int[][] fromXML = XMLtoIntArray2D("buttonMode", xml);
+      
+      for(int x = 0; x < fromXML.length; x++) {
+          for(int y = 0; y < fromXML[x].length; y++) {
+            buttonMode[x][y] = fromXML[x][y];
+          }
+        }
+    } //end of buttonMode
+    
+    { //faderMode
+       int[][][] fromXML = XMLtoIntArray3D("faderMode", xml);
+      
+      
+      for(int z = 0; z < fromXML.length; z++) {
+        if(z < faderMode.length) for(int x = 0; x < fromXML[z].length; x++) {
+          if(x < faderMode[z].length) for(int y = 0; y < fromXML[z][x].length; y++) {
+            if(y < faderMode[z][x].length) faderMode[z][x][y] = fromXML[z][x][y];
+          } //End of y loop
+        } //End of x loop
+      } //End of z loop
+    } //end of faderMode
+    
+    { //buttonMemory
+      int[][] fromXML = XMLtoIntArray2D("buttonMemory", xml);
+      
+      for(int x = 0; x < fromXML.length; x++) {
+          for(int y = 0; y < fromXML[x].length; y++) {
+            buttonMemory[x][y] = fromXML[x][y];
+          }
+        }
+    } //end of buttonMemory
+    
+    { //faderMemory
+       int[][][] fromXML = XMLtoIntArray3D("faderMemory", xml);
+      
+      
+      for(int z = 0; z < fromXML.length; z++) {
+        if(z < faderMemory.length) for(int x = 0; x < fromXML[z].length; x++) {
+          if(x < faderMemory[z].length) for(int y = 0; y < fromXML[z][x].length; y++) {
+            if(y < faderMemory[z][x].length) faderMemory[z][x][y] = fromXML[z][x][y];
+          } //End of y loop
+        } //End of x loop
+      } //End of z loop
+    } //end of faderMemory
+    
+    midiWindow.setLC2412valuesToControllers();
+
   }
 
 
@@ -1202,9 +1290,7 @@ class Input {
     return false;
   }
 
-  
-  
-}
+} //End of class Input
 
 boolean midiToBoolean(int val) {
   return val > 63;
@@ -1213,14 +1299,20 @@ int midiToDMX(int val) {
   return rMap(val, 0, 127, 0, 255);
 }
 
-class LaunchpadData {
-  LaunchpadData() {
-  }
-  boolean[][] button = new boolean[8][8];
-}
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
- 
+
+
 //Maschine Mikro MK2 Interfacing -------------------------------------------------------------------------------------------------------
 
 //This void is executed on program start

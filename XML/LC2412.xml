@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LC2412>
+  <faderMode>
+    <z id="0">
+      <row id="0">
+        <int id="0" val="1"/>
+      </row>
+      <row id="1">
+        <int id="0" val="1"/>
+      </row>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="1">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3">
+        <int id="1" val="1"/>
+      </row>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="2">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="3">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="4">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="5">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="6">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="7">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="8">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="9">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+  </faderMode>
+  <buttonMode>
+    <row id="0">
+      <int id="0" val="1"/>
+      <int id="6" val="1"/>
+    </row>
+    <row id="1"/>
+    <row id="2">
+      <int id="2" val="2"/>
+      <int id="3" val="2"/>
+    </row>
+    <row id="3"/>
+    <row id="4"/>
+    <row id="5"/>
+    <row id="6"/>
+    <row id="7"/>
+    <row id="8"/>
+    <row id="9"/>
+  </buttonMode>
+  <faderMemory>
+    <z id="0">
+      <row id="0">
+        <int id="0" val="1"/>
+      </row>
+      <row id="1">
+        <int id="1" val="5"/>
+      </row>
+      <row id="2">
+        <int id="1" val="2"/>
+      </row>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="1">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="2">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="3">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="4">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="5">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="6">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="7">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="8">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+    <z id="9">
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+      <row id="10"/>
+      <row id="11"/>
+    </z>
+  </faderMemory>
+  <buttonMemory>
+    <row id="0">
+      <int id="1" val="4"/>
+      <int id="5" val="33"/>
+    </row>
+    <row id="1"/>
+    <row id="2"/>
+    <row id="3"/>
+    <row id="4"/>
+    <row id="5"/>
+    <row id="6"/>
+    <row id="7"/>
+    <row id="8"/>
+    <row id="9"/>
+  </buttonMemory>
+</LC2412>
