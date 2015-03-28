@@ -50,6 +50,7 @@ void draw() {
     if(drawNow) drawMenus();
     invokeFixturesDraw(); //Invoke every fixtures draw
     resetSolo();
+    midiWindowLoop();
   }
   else {
     pushMatrix(); pushStyle();

@@ -141,8 +141,13 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(oscSettings, "OSCSettingsWindow", 1000));
     subWindows.add(new SubWindowContainer(midiWindow, "MidiHandlerWindow", 1000));
     subWindows.add(new SubWindowContainer(enttecOutputSettingsWindow, "enttecOutputSettingsWindow", 1000));
+    
     subWindows.add(new SubWindowContainer(midiWindow.launchpadToggleOrPush, "launchpadToggleOrPush", 1000));
     subWindows.add(new SubWindowContainer(midiWindow.launchPadMemories, "launchPadMemories", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow.LC2412faderModes, "LC2412faderModes", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow.LC2412buttonModes, "LC2412buttonModes", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow.LC2412faderMemories, "LC2412faderMemories", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow.LC2412buttonMemories, "LC2412buttonMemories", 1000));
     
     if(useNewLowerMenu) { lowerMenu.open = false; }
     
@@ -750,7 +755,7 @@ class PushButton {
     addMouseElement(g, mouse);
     g.popMatrix();
     
-    drawAfterMouse(b, mouse); 
+    drawAfterMouse(b, mouse);
     return pressed;
   }
   
@@ -1056,12 +1061,12 @@ class NumberBox {
         g.strokeWeight(buttonSize/10);
         g.stroke(themes.buttonColor.neutral);
         g.rect(1, 1, buttonSize-2, buttonSize-2);
-        g.pushStyle(); 
+        g.pushStyle();
           g.pushMatrix();
             g.translate(buttonSize/15, buttonSize/3);
             g.fill(0);
             g.text(str(val), 0, 0);
-          g.popMatrix(); 
+          g.popMatrix();
         g.popStyle();
         g.pushMatrix();
           g.pushStyle();

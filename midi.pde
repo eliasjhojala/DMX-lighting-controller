@@ -8,7 +8,14 @@
  
  MidiHandlerWindow midiWindow = new MidiHandlerWindow();
  
+ void midiWindowLoop() {
+   midiWindow.closeAllTheMidiHandlerWindowsIfMainWindowIsClosed();
+ }
+ 
+ 
+ 
  class MidiHandlerWindow {
+   
    int locX, locY, w, h;
    boolean open;
    
@@ -23,57 +30,115 @@
    RadioButtonMenu buttonModeForLaunchpad;
    NumberBoxTableWindow launchpadToggleOrPush;
    TextBoxTableWindow launchPadMemories;
-   PushButton save, load;
+   PushButton save, load, bankUp, bankDown;
+   
+   NumberBoxTableWindow keyrig49keyModes;
+   NumberBoxTableWindow LC2412faderModes;
+   NumberBoxTableWindow LC2412buttonModes;
+   
+   TextBoxTableWindow LC2412faderMemories;
+   TextBoxTableWindow LC2412buttonMemories;
    
    MidiHandlerWindow() {
-     h = 500;
-     w = 500;
-     locX = 0;
-     locY = 0;
-     window = new Window("MidiHandlerWindow", new PVector(h, w), this);
+     { //Init window
+       h = 500;
+       w = 500;
+       locX = 0;
+       locY = 0;
+       window = new Window("MidiHandlerWindow", new PVector(h, w), this);
+     } //End of initting window
      
-     ArrayList<DropdownMenuBlock> midiMachines = new ArrayList<DropdownMenuBlock>();
-     midiMachines.add(new DropdownMenuBlock("launchPad", 1));
-     midiMachines.add(new DropdownMenuBlock("LC2412", 2));
-     midiMachines.add(new DropdownMenuBlock("keyRig 49", 3));
-     machineSelect = new DropdownMenu("midiMachines", midiMachines);
+     { //Create machineSelect dropdownMenu
+       ArrayList<DropdownMenuBlock> midiMachines = new ArrayList<DropdownMenuBlock>();
+       midiMachines.add(new DropdownMenuBlock("launchPad", 1));
+       midiMachines.add(new DropdownMenuBlock("LC2412", 2));
+       midiMachines.add(new DropdownMenuBlock("keyRig 49", 3));
+       machineSelect = new DropdownMenu("midiMachines", midiMachines);
+     } //End of creating machineSelect dropdownMenu
      
-     ArrayList<DropdownMenuBlock> midiInputs = new ArrayList<DropdownMenuBlock>();
-     for(int i = 0; i < MidiBus.availableInputs().length; i++) {
-       midiInputs.add(new DropdownMenuBlock(MidiBus.availableInputs()[i], i));
-     }
-     midiInSelect = new DropdownMenu("Midi inputs", midiInputs);
+     { //Create midi in and out select dropdownMenus
+       ArrayList<DropdownMenuBlock> midiInputs = new ArrayList<DropdownMenuBlock>();
+       for(int i = 0; i < MidiBus.availableInputs().length; i++) {
+         midiInputs.add(new DropdownMenuBlock(MidiBus.availableInputs()[i], i));
+       }
+       midiInSelect = new DropdownMenu("Midi inputs", midiInputs);
+       
+       ArrayList<DropdownMenuBlock> midiOutputs = new ArrayList<DropdownMenuBlock>();
+       for(int i = 0; i < MidiBus.availableOutputs().length; i++) {
+         midiOutputs.add(new DropdownMenuBlock(MidiBus.availableOutputs()[i], i));
+       }
+       midiOutSelect = new DropdownMenu("Midi outputs", midiOutputs);
+     } //End of creating midi in and out select dropdownMenus
      
-     ArrayList<DropdownMenuBlock> midiOutputs = new ArrayList<DropdownMenuBlock>();
-     for(int i = 0; i < MidiBus.availableOutputs().length; i++) {
-       midiOutputs.add(new DropdownMenuBlock(MidiBus.availableOutputs()[i], i));
-     }
-     midiOutSelect = new DropdownMenu("Midi outputs", midiOutputs);
+     { //Create outputModes radioButtonMenu
+       outputModes = new RadioButtonMenu();
+       outputModes.addBlock(new RadioButton("Memories", 1));
+       outputModes.addBlock(new RadioButton("Fixtures", 2));
+     } //End of creating outputModes radioButtonMenu
+    
+     { //Create toggleOrPush radioButtonMenu
+       toggleOrPush = new RadioButtonMenu();
+       toggleOrPush.addBlock(new RadioButton("Toggle", 0));
+       toggleOrPush.addBlock(new RadioButton("Push", 1));
+     } //End of creating toggleOrPush radioButtonMenu
      
-     outputModes = new RadioButtonMenu();
-     outputModes.addBlock(new RadioButton("Memories", 1));
-     outputModes.addBlock(new RadioButton("Fixtures", 2));
-     
-     toggleOrPush = new RadioButtonMenu();
-     toggleOrPush.addBlock(new RadioButton("Toggle", 0));
-     toggleOrPush.addBlock(new RadioButton("Push", 1));
-     
-     buttonModeForLaunchpad = new RadioButtonMenu();
-     buttonModeForLaunchpad.addBlock(new RadioButton("Toggle", 0));
-     buttonModeForLaunchpad.addBlock(new RadioButton("Push", 1));
-     buttonModeForLaunchpad.addBlock(new RadioButton("Trigger", 2));
+     { //Create buttonModeForLaunchpad radioButtonMenu
+       buttonModeForLaunchpad = new RadioButtonMenu();
+       buttonModeForLaunchpad.addBlock(new RadioButton("Toggle", 0));
+       buttonModeForLaunchpad.addBlock(new RadioButton("Push", 1));
+       buttonModeForLaunchpad.addBlock(new RadioButton("Trigger", 2));
+     } //End of creating buttonModeForLaunchpad radioButtonMenu
 	 
 	 
+     { //Create launchpad buttons settings tables
+       launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 2);
+       launchPadMemories = new TextBoxTableWindow("launchPadMemories", 8, 8);
+     } //End of creating launchpad buttons settings tables
      
-     launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 2);
+     { //Create keyrig49 keys settings tables
+       keyrig49keyModes = new NumberBoxTableWindow("keyrig49keyModes", 29, 1, 0, 2);
+     } //End of creating keyrig49 keys settings tables
      
-     launchPadMemories = new TextBoxTableWindow("launchPadMemories", 8, 8);
+     { //Create LC2412 settings tables for faders and buttons
+       LC2412faderModes = new NumberBoxTableWindow("LC2412faderModes", 12, 2, 0, 1);
+       LC2412buttonModes = new NumberBoxTableWindow("LC2412buttonModes", 12, 1, 0, 2);
+       
+       LC2412faderMemories = new TextBoxTableWindow("launchPadMemories", 12, 2);
+       LC2412buttonMemories = new TextBoxTableWindow("launchPadMemories", 12, 1);
+     } //End of creating LC2412 settings tables for faders and buttons
      
-     save = new PushButton("saveButtonInMidiWindow");
-     load = new PushButton("loadButtonInMidiWindow");
+     { //Create save and load buttons
+       save = new PushButton("saveButtonInMidiWindow");
+       load = new PushButton("loadButtonInMidiWindow");
+     } //End of creating save and load buttons
+     
+     {
+       bankUp = new PushButton("bankUpInMidiWindow");
+       bankDown = new PushButton("bankDownInMidiWindow");
+     }
    }
    
    IntController offset = new IntController("testIntController");
+   
+   void closeAllTheMidiHandlerWindowsIfMainWindowIsClosed() {
+     if(!open || selectedMachine != 1) {
+       launchpadToggleOrPush.open = false;
+       launchPadMemories.open = false;
+     }
+     if(!open || selectedMachine != 2) {
+       LC2412faderModes.open = false;
+       LC2412buttonModes.open = false;
+       
+       LC2412faderMemories.open = false;
+       LC2412buttonMemories.open = false;
+     }
+     if(!open || selectedMachine != 3) {
+       keyrig49keyModes.open = false;
+     }
+   }
+   
+   int LC2412bank;
+   boolean LC2412bankChanged;
    
    void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
      window.draw(g, mouse);
@@ -143,8 +208,6 @@
                
              break;
            }
-           
-           
          }
          
        g.popMatrix();
@@ -197,12 +260,87 @@
          g.popMatrix();
        }
        
+       else if(selectedMachine == 2) {
+           LC2412faderModes.locX = locX+500;
+           LC2412faderModes.locY = locY;
+           LC2412faderModes.open = true;
+           
+           if(LC2412faderModes.valueHasChanged()) {
+             if(LC2412 != null) {
+               NumberBoxTableWindow LPM = LC2412faderModes;
+               int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+               try { LC2412.setFaderModeValue(val, LC2412bank, x, y); }
+               catch (Exception e) { e.printStackTrace(); }
+             }
+           }
+
+           LC2412buttonModes.locX = locX+500;
+           LC2412buttonModes.locY = locY+LC2412faderModes.h;
+           LC2412buttonModes.open = true;
+           
+           if(LC2412buttonModes.valueHasChanged()) {
+             if(LC2412 != null) {
+               NumberBoxTableWindow LPM = LC2412buttonModes;
+               int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+               try { LC2412.setButtonModeValue(val, LC2412bank, x, y); }
+               catch (Exception e) { e.printStackTrace(); }
+             }
+           }
+           
+           LC2412faderMemories.locX = locX+500+LC2412faderModes.w;
+           LC2412faderMemories.locY = locY;
+           LC2412faderMemories.open = true;
+           
+           if(LC2412faderMemories.valueHasChanged()) {
+             if(LC2412 != null) {
+               TextBoxTableWindow LPM = LC2412faderMemories;
+               int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+               try { LC2412.setFaderMemoryValue(val, LC2412bank, x, y); }
+               catch (Exception e) { e.printStackTrace(); }
+             }
+           }
+
+           LC2412buttonMemories.locX = locX+500+LC2412buttonModes.w;
+           LC2412buttonMemories.locY = locY+LC2412faderMemories.h;
+           LC2412buttonMemories.open = true;
+           
+           if(LC2412buttonMemories.valueHasChanged()) {
+             if(LC2412 != null) {
+               TextBoxTableWindow LPM = LC2412buttonMemories;
+               int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+               try { LC2412.setButtonMemoryValue(val, LC2412bank, x, y); }
+               catch (Exception e) { e.printStackTrace(); }
+             }
+           }
+           
+           g.pushMatrix(); g.pushStyle(); g.fill(0); g.textAlign(RIGHT);
+             g.translate(350, 150);
+             g.text("bankUp", -25, 13);
+             if(bankUp.isPressed(g, mouse)) { LC2412bank++; LC2412bankChanged = true; }
+             g.translate(0, 25);
+             g.text("bankDown", -25, 13);
+             if(bankDown.isPressed(g, mouse)) { LC2412bank--; LC2412bankChanged = true; }
+             g.translate(0, 25);
+             g.text("actual bank: " + str(LC2412bank), 25, 13);
+             g.text("LC2412 bank: " + str(LC2412.bank), 25, 13+20);
+           g.popMatrix(); g.popStyle();
+           
+           if(LC2412bankChanged) {
+             LC2412bank = constrain(LC2412bank, 0, 9);
+             LC2412faderModes.setValue(LC2412.faderMode[LC2412bank]);
+             LC2412buttonModes.setValue(LC2412.buttonMode[LC2412bank]);
+             LC2412faderMemories.setValue(LC2412.faderMemory[LC2412bank]);
+             LC2412buttonMemories.setValue(LC2412.buttonMemory[LC2412bank]);
+             LC2412bankChanged = false;
+           }
+       }
+       
        g.translate(0, 200);
        
        g.pushMatrix();
          g.translate(200, 0);
          if(selectedMachine != 1) { toggleOrPush.draw(g, mouse); }
-		 else { buttonModeForLaunchpad.draw(g, mouse); }
+		     else { buttonModeForLaunchpad.draw(g, mouse); }
        g.popMatrix();
        
        
@@ -266,13 +404,9 @@
        switch(selectedMachine) {
          case 1: //Launchpad
            if(launchpad != null) {
-             if(save.isPressed(g, mouse)) launchpad.saveToXML();
+             if(save.isPressed(g, mouse)) saveLaunchpadData();
              g.pushMatrix(); g.translate(30, 0);
-             if(load.isPressed(g, mouse)) {
-				launchpad.XMLtoObject();
-				launchPadMemories.setValue(launchpad.toggleMemory);
-				launchpadToggleOrPush.setValue(launchpad.buttonMode); //Set values to buttonModes
-			}
+             if(load.isPressed(g, mouse)) loadLaunchpadData();
              g.popMatrix();
            }
          break;
@@ -400,11 +534,11 @@
      locX = 0;
      locY = 0;
      w = x*30+100;
-     h = x*30+100;
+     h = y*30+100;
      window = new Window("name", new PVector(w, h), this);
      
      for(int x_ = 0; x_ < boxes.length; x_++) {
-       for(int y_ = 0; y_ < boxes.length; y_++) {
+       for(int y_ = 0; y_ < boxes[x_].length; y_++) {
          boxes[x_][y_] = new NumberBox("", min, max);
        }
      }
@@ -466,6 +600,12 @@
      }
    }
    
+   void setValue(int[] val) {
+    for(int i = 0; i < val.length; i++) {
+      setValue(i, 0, val[i]);
+    }
+   }
+   
    void setValue(int x, int y, int val) {
      if(x < boxes.length) if(y < boxes[x].length) {
        boxes[x][y].setValue(val);
@@ -481,6 +621,34 @@
    LC2412 = new behringerLC2412();
    inputClass = new Input();
    keyRig49 = new Keyrig49();
+ }
+ 
+ boolean loadingMidiData = false;
+ void loadMidiData() {
+   loadingMidiData = true;
+   loadLaunchpadData();
+   loadingMidiData = false;
+ }
+ 
+ boolean savingMidiData = false;
+ void saveMidiData() {
+   savingMidiData = true;
+   saveLaunchpadData();
+   savingMidiData = false;
+ }
+
+ void loadLaunchpadData() {
+   if(launchpad != null) {
+     launchpad.XMLtoObject();
+     midiWindow.launchPadMemories.setValue(launchpad.toggleMemory);
+     midiWindow.launchpadToggleOrPush.setValue(launchpad.buttonMode); //Set values to buttonModes
+   }
+ }
+ 
+ void saveLaunchpadData() {
+   if(launchpad != null) {
+    launchpad.saveToXML();
+   }
  }
 
 
@@ -598,8 +766,6 @@ public class Launchpad {
   
   Launchpad(int inputIndex, int outputIndex) {
     setup(inputIndex, outputIndex);
-    buttonMode = new int[8][8];
-    toggleMemory = new int[8][8];
   }
   
   void setup(int inputIndex, int outputIndex) {
@@ -622,6 +788,9 @@ public class Launchpad {
     upperPads = new boolean[8];
     upperPadsToggle = new boolean[8];
     
+    toggleMemory = new int[8][8];
+    
+    buttonMode = new int[8][8];
     toggleMemory = new int[8][8];
   }
   
@@ -760,9 +929,13 @@ public class behringerLC2412 {
   boolean stepKey, channelFlashKey, soloKey, special1Key, special2Key, manualKey, chaserModeKey, insertKey, presetFlashKey, memoryFlashKey;
   boolean insertToggle, presetFlashToggle, memoryFlashToggle;
   
-  int[] output = { OUTPUT_TO_FIXTURES, OUTPUT_TO_MEMORIES };
+  int[] output = { OUTPUT_TO_MEMORIES, OUTPUT_TO_MEMORIES };
 
+  int[][][] faderMode;
+  int[][] buttonMode;
   
+  int[][][] faderMemory;
+  int[][] buttonMemory;
   
   int inputIndex;
   int outputIndex;
@@ -797,6 +970,28 @@ public class behringerLC2412 {
     buttonsOld = new boolean[12];
     buttonsToggle = new boolean[12];
     buttonsToggleOld = new boolean[12];
+    
+    faderMode = new int[10][12][2];
+    buttonMode = new int[10][12];
+    faderMemory = new int[10][12][2];
+    buttonMemory = new int[10][12];
+  }
+
+
+  void setFaderModeValue(int val, int b, int x, int y) {
+    if(b >= 0 && bank < faderMode.length) if(x >= 0 && x < faderMode[b].length) if(y >= 0 && y < faderMode[b][x].length) faderMode[b][x][y] = val;
+  }
+  
+  void setFaderMemoryValue(int val, int b, int x, int y) {
+    if(b >= 0 && bank < faderMemory.length) if(x >= 0 && x < faderMemory[b].length) if(y >= 0 && y < faderMemory[b][x].length) faderMemory[b][x][y] = val;
+  }
+  
+  void setButtonModeValue(int val, int b, int x, int y) {
+    if(b >= 0 && bank < buttonMode.length) if(x >= 0 && x < buttonMode[b].length) buttonMode[b][x] = val;
+  }
+  
+  void setButtonMemoryValue(int val, int b, int x, int y) {
+    if(b >= 0 && bank < buttonMemory.length) if(x >= 0 && x < buttonMemory[b].length) buttonMemory[b][x] = val;
   }
   
   void noteOn(int channel, int pitch, int velocity) {
@@ -815,9 +1010,11 @@ public class behringerLC2412 {
   void midiMessageIn(int num, int val) {
     if(isBetween(num, 0, 11)) {
       faderValue[0][num] = midiToDMX(val);
+      faderValueChange(midiToDMX(val), num, 0);
     }
     else if(isBetween(num, 12, 23)) {
       faderValue[1][num-12] = midiToDMX(val);
+      faderValueChange(midiToDMX(val), num-12, 1);
     }
     else if(isBetween(num, 31, 42)) {
       buttons[constrain(num-31, 0, buttons.length-1)] = midiToBoolean(val);
@@ -847,6 +1044,24 @@ public class behringerLC2412 {
     }
   }
   
+
+  void faderValueChange(int val, int x, int y) {
+    
+    if(output[y] == OUTPUT_TO_FIXTURES) {
+      fixtures.get(x).in.setUniversalDMX(1, val);
+    }
+    else if(output[y] == OUTPUT_TO_MEMORIES) {
+      int mode = faderMode[bank][x][y];
+      int mem = faderMemory[bank][x][y];
+      if(mode == 0) {
+        if(mem >= 0 && mem < memories.length) memories[mem].setValue(val);
+      }
+      else if(mode == 1) {
+        if(mem >= 0 && mem < memories.length) memories[mem].setFade(val);
+      }
+    }
+  }
+  
   
   void processValues() {
     if(masterValues[0] != masterValuesOld[0]) {
@@ -861,7 +1076,7 @@ class Input {
   }
   
   void draw() {
-    processBehringerLC2412();
+    //processBehringerLC2412();
     
   }
   

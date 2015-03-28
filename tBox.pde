@@ -212,4 +212,10 @@ class TextBoxTableWindow {
       }
     }
   }
+  
+  void setValue(int val[]) {
+    for(int i = 0; i < val.length; i++) {
+      setValue(val[i], i, 0);
+    }
+  }
 }

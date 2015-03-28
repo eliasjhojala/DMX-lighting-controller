@@ -143,6 +143,7 @@ void saveAllData() {
         thread("saveTrussesAsXML");
         thread("saveMemoriesToXML");
         thread("saveTestXML");
+        if(!savingMidiData) { thread("saveMidiData"); }
         oscHandler.saveToXML();
       } catch (Exception e) {
         e.printStackTrace();
@@ -158,7 +159,7 @@ void saveAllData() {
 }
 
 boolean savingDataAtTheTime() {
-  boolean toReturn = savingSocketsToXML || savingTrussesToXML || savingMemoriesToXML || savingTestXML || savingAllData;
+  boolean toReturn = savingSocketsToXML || savingTrussesToXML || savingMemoriesToXML || savingTestXML || savingAllData || savingMidiData;
   if(!toReturn && !wholeSaveTimeAsMilliSecondsIsCounted) {
      wholeSaveTimeAsMilliSeconds = round(millis() - saveDataBeginMillis);
      wholeSaveTimeAsMilliSecondsIsCounted = true;

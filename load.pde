@@ -1,6 +1,6 @@
 //Load all the data from csv file and xml files
 boolean dataLoaded = false;
-boolean programReadyToRun = false; 
+boolean programReadyToRun = false;
 
 boolean loadFast = !showMode;
 boolean loadSafe = showMode;
@@ -48,42 +48,42 @@ void loadAllData1() {
       }
   
       
-      for (TableRow row : table.findRows("fixtureType1", "variable_name")) 
-          { 
+      for (TableRow row : table.findRows("fixtureType1", "variable_name"))
+          {
             fixtures.array.add(int(row.getString("1D")), new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, int(row.getString("value"))));
           
           }
       
       
-      for (TableRow row : table.findRows("xTaka", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D"))) 
+      for (TableRow row : table.findRows("xTaka", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).x_location           = int(row.getString("value")); }
       
-      for (TableRow row : table.findRows("yTaka", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D"))) 
+      for (TableRow row : table.findRows("yTaka", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).y_location           = int(row.getString("value")); }
           
-      for (TableRow row : table.findRows("fixZ", "variable_name"))       if(fixtures.array.size() > int(row.getString("1D"))) 
+      for (TableRow row : table.findRows("fixZ", "variable_name"))       if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).z_location           = int(row.getString("value")); }
           
-      for (TableRow row : table.findRows("rotTaka", "variable_name"))    if(fixtures.array.size() > int(row.getString("1D"))) 
+      for (TableRow row : table.findRows("rotTaka", "variable_name"))    if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).rotationZ            = int(row.getString("value")); }
           
-      for (TableRow row : table.findRows("rotX", "variable_name"))       if(fixtures.array.size() > int(row.getString("1D"))) 
+      for (TableRow row : table.findRows("rotX", "variable_name"))       if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).rotationX            = int(row.getString("value")); }
       
-      for (TableRow row : table.findRows("fixParam", "variable_name"))   if(fixtures.array.size() > int(row.getString("1D"))) 
+      for (TableRow row : table.findRows("fixParam", "variable_name"))   if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).parameter            = int(row.getString("value")); }
       
-      for (TableRow row : table.findRows("red", "variable_name"))        if(fixtures.array.size() > int(row.getString("1D"))) 
+      for (TableRow row : table.findRows("red", "variable_name"))        if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).red                  = int(row.getString("value")); }
-      for (TableRow row : table.findRows("green", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D"))) 
+      for (TableRow row : table.findRows("green", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).green                = int(row.getString("value")); }
-      for (TableRow row : table.findRows("blue", "variable_name"))       if(fixtures.array.size() > int(row.getString("1D"))) 
+      for (TableRow row : table.findRows("blue", "variable_name"))       if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).blue                 = int(row.getString("value")); }
       
-      for (TableRow row : table.findRows("channel", "variable_name"))    if(fixtures.array.size() > int(row.getString("1D"))) 
+      for (TableRow row : table.findRows("channel", "variable_name"))    if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).channelStart         = int(row.getString("value")); }
       
-      for (TableRow row : table.findRows("ansaParent", "variable_name")) if(fixtures.array.size() > int(row.getString("1D"))) 
+      for (TableRow row : table.findRows("ansaParent", "variable_name")) if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).parentAnsa           = int(row.getString("value")); }
   
       
@@ -118,7 +118,8 @@ void loadAllData1() {
       
       
       if(!loadinMemoriesFromXML) { thread("loadMemoriesFromXML"); }
-      if(!savingNearestSocketsToXML) { saveNearestSocketsToXML(); } 
+      if(!savingNearestSocketsToXML) { saveNearestSocketsToXML(); }
+      if(!loadingMidiData) { loadMidiData(); }
       oscHandler.loadFromXML();
       
       
@@ -130,7 +131,7 @@ void loadAllData1() {
 }
 
 boolean loadingDataAtTheTime() {
-  boolean toReturn = loadinMemoriesFromXML || savingNearestSocketsToXML || loadingFixtureProfiles || loadingAllData;
+  boolean toReturn = loadinMemoriesFromXML || savingNearestSocketsToXML || loadingFixtureProfiles || loadingAllData || loadingMidiData;
   if(!toReturn && !wholeLoadTimeAsMilliSecondsIsCounted) {
      wholeLoadTimeAsMilliSeconds = round(millis() - loadDataBeginMillis);
      wholeLoadTimeAsMilliSecondsIsCounted = true;

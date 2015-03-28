@@ -1,11 +1,11 @@
-String[] saveOptionButtonVariables = { "dimmer", "red", "green", "blue", "white", "amber", "pan", "tilt", "panFine", "tiltFine", 
-"colorWheel", "goboWheel", "goboRotation", "prism", "focus", "shutter", "strobe", "frequency", "responseSpeed", 
+String[] saveOptionButtonVariables = { "dimmer", "red", "green", "blue", "white", "amber", "pan", "tilt", "panFine", "tiltFine",
+"colorWheel", "goboWheel", "goboRotation", "prism", "focus", "shutter", "strobe", "frequency", "responseSpeed",
 "autoPrograms", "specialFunctions", "haze", "fan", "fog", "special1", "special2", "special3", "special4" };
 
   soundDetect s2l;
   memory[] memories = new memory[1000];
 
-int fixtureOwnFade;  
+int fixtureOwnFade;
 
 void setMemoryValueByOrderInVisualisation(int id, int val) {
   if(memoryControllerLookupTable != null) {
@@ -18,7 +18,7 @@ void setMemoryValueByOrderInVisualisation(int id, int val) {
         }
       }
     }
-  }  
+  }
 }
 
 void setMemoryEnabledByOrderInVisualisation(int id, boolean val) {
@@ -31,7 +31,7 @@ void setMemoryEnabledByOrderInVisualisation(int id, boolean val) {
         }
       }
     }
-  }  
+  }
 }
   
 void createMemoryObjects() {
@@ -218,6 +218,10 @@ class memory { //Begin of memory class------------------------------------------
 
   boolean thisIsChase() {
     return type == 2;
+  }
+  
+  void setFade(int v) {
+    if(myChase != null) myChase.ownFade = v;
   }
 
   
@@ -496,7 +500,7 @@ boolean[] XMLtoBooleanArray(String name, XML xml) {
   for(int i = 0; i < block.length; i++) {
     if(block[i] != null) if(!trim(block[i].toString()).equals("")) {
       int id = block[i].getInt("id");
-      if(id+1 > a) { a = id+1; } 
+      if(id+1 > a) { a = id+1; }
     }
   }
   toReturn = new boolean[a];
@@ -558,7 +562,7 @@ class Preset { //Begin of Preset class
           if(repOfFixtures != null) {
             for(int i = 0; i < repOfFixtures.length; i++) {
               if(fixturesToSave[i]) {
-                if(repOfFixtures != null) { 
+                if(repOfFixtures != null) {
                     if(repOfFixtures[i].getXML() != null) {
                       xml = xml.addChild(repOfFixtures[i].getXML());
                       xml.setInt("id", i);
@@ -716,12 +720,12 @@ class Preset { //Begin of Preset class
                       }
                     }
                   }
-                } 
+                }
                 else {
                   break;
                 }
               } //End of going through all the fixtures
-            } 
+            }
           }
         }
       }
@@ -980,42 +984,42 @@ class chase { //Begin of chase class--------------------------------------------
  
  
     
-   //beatMode functions                                                                                        
-        void setBeatMode(String bM) {                                                          
-          beatMode = bM;                                                                       
-          if(bM.equals("beat")) { beatModeId = 1; }                                            
-          if(bM.equals("kick")) { beatModeId = 2; }                                            
-          if(bM.equals("snare")) { beatModeId = 3; }                                           
-          if(bM.equals("hat")) { beatModeId = 4; }                                             
-        }                                                                                      
+   //beatMode functions
+        void setBeatMode(String bM) {
+          beatMode = bM;
+          if(bM.equals("beat")) { beatModeId = 1; }
+          if(bM.equals("kick")) { beatModeId = 2; }
+          if(bM.equals("snare")) { beatModeId = 3; }
+          if(bM.equals("hat")) { beatModeId = 4; }
+        }
                                                                                                
-        void setBeatModeId(int bM) {                                                           
-          beatModeId = bM;                                                                     
-          switch(bM) {                                                                         
+        void setBeatModeId(int bM) {
+          beatModeId = bM;
+          switch(bM) {
             case 0: beatMode = "inherit"; break;
-            case 1: beatMode = "beat"; break;                                                  
-            case 2: beatMode = "kick"; break;                                                  
-            case 3: beatMode = "snare"; break;                                                 
-            case 4: beatMode = "hat"; break;                                                   
-          }                                                                                    
-        }                                                                                      
+            case 1: beatMode = "beat"; break;
+            case 2: beatMode = "kick"; break;
+            case 3: beatMode = "snare"; break;
+            case 4: beatMode = "hat"; break;
+          }
+        }
                                                                                                
-        String getBeatMode() {                                                                 
-          return beatMode;                                                                     
-        }                                                                                      
+        String getBeatMode() {
+          return beatMode;
+        }
                                                                                                
-        int getBeatModeId() {   
+        int getBeatModeId() {
           int toReturn = 0;
-          if(beatModeId > 0) { toReturn = beatModeId; } else { toReturn = beatModeMaster; } 
-          return toReturn;                                                                   
-        }                                                                                      
+          if(beatModeId > 0) { toReturn = beatModeId; } else { toReturn = beatModeMaster; }
+          return toReturn;
+        }
                                                                                                
-        void beatModeUp() {                                                                    
-          setBeatModeId(getNext(getBeatModeId(), beatModeLimit));                                       
-        }                                                                                      
-        void beatModeDown() {                                                                  
-          setBeatModeId(getReverse(getBeatModeId(), beatModeLimit));                                    
-        }                                                                                      
+        void beatModeUp() {
+          setBeatModeId(getNext(getBeatModeId(), beatModeLimit));
+        }
+        void beatModeDown() {
+          setBeatModeId(getReverse(getBeatModeId(), beatModeLimit));
+        }
    //End of beatMode functions
    
    
@@ -1110,12 +1114,12 @@ class chase { //Begin of chase class--------------------------------------------
   
   
   
-  /* This function saves all the presets to presets[] 
+  /* This function saves all the presets to presets[]
   array if they are on (value is over 0) */
   void newChase() {
     createPresetsArray();
     makePresetsArray();
-    setParentType(2); 
+    setParentType(2);
   }
   
   int getNumberOfActivePresets() {
@@ -1144,7 +1148,7 @@ class chase { //Begin of chase class--------------------------------------------
     parent.type = t;
   }
   
-  /* This function checks that this memory is a chase 
+  /* This function checks that this memory is a chase
   and the memory we're trying to control is a preset. */
   boolean firstTimeLoading = true;
   int[] oldValue;
@@ -1160,7 +1164,7 @@ class chase { //Begin of chase class--------------------------------------------
       
       if(parent.soloInThisMemory && defaultConstrain(rMap(val, 0, 255, 0, value)) > 0) { //Begin of solo commands
         soloIsOn = true;
-        fixtures.get(num).soloInThisFixture = true; 
+        fixtures.get(num).soloInThisFixture = true;
       } //End of Solo commands
       fixtures.get(num).preset.preFade = 0;
       fixtures.get(num).preset.postFade = 0;
@@ -1234,7 +1238,7 @@ class chase { //Begin of chase class--------------------------------------------
     }
       for(int i = 0; i < getPresets().length; i++) {
           loadPreset(getPresets()[i], beatToLightValue);
-      } 
+      }
       beatToLightValue = constrain(beatToLightValue-getInvertedValue(fade, 0, 255), 0, 255);
   }
   
@@ -1247,7 +1251,7 @@ class chase { //Begin of chase class--------------------------------------------
     //There is some problems with this function
     boolean next = trigger() && !stepHasChanged;
     boolean reverse = back() && !stepHasChanged;
-    if(next) { 
+    if(next) {
       if(step == getPresets().length-1 && doOnce()) { parent.enabled = false; if(launchpad != null) { launchpad.sendNoteOff(parent.triggerButton); } }
       step = getNext(step, 0, getPresets().length-1);
       lastDirection = NEXT;
@@ -1270,7 +1274,7 @@ class chase { //Begin of chase class--------------------------------------------
       brightness = defaultConstrain(iMap(brightness1, 0, fade, 0, 255));
     }
     int[] presets = getPresets();
-    int rS = 0; 
+    int rS = 0;
     if(lastDirection == REVERSE) { rS = getNext(step, 0, presets.length-1); }
     else { rS = getReverse(step, 0, presets.length-1); }
     if(presets.length > 0) {
@@ -1315,7 +1319,7 @@ class chase { //Begin of chase class--------------------------------------------
     }
     
 
-  }  
+  }
   
   float hueOffset = 0;
   void rainbow() {
@@ -1382,7 +1386,7 @@ class chase { //Begin of chase class--------------------------------------------
           if(sines[i].ready) { sines[i].go(); found = true; break; } //If sine is ready we can use it again for new wave
         }
       }
-      if(!found) { //If we didn't found any sine to use 
+      if(!found) { //If we didn't found any sine to use
       int numero = 0; //Reset numbero variable (numero = number)
         for(int i = 0; i < sines.length; i++) { //Go trhough all the sines
           if(sines[i] == null) { //check if sine isn't created
@@ -1397,7 +1401,7 @@ class chase { //Begin of chase class--------------------------------------------
 
   
   //Create quickChase-------------------------------------------------------------
-  /*Actually this function only saves selected 
+  /*Actually this function only saves selected
   fixtures to content array arranged by x location in screen */
   
   
@@ -1456,7 +1460,7 @@ class chase { //Begin of chase class--------------------------------------------
      arrayCopy(fixturesInChaseTemp, fixturesInChase); //copu temp array to fixturesInChase array
      arrayCopy(fixturesInChase, content); //copu fixturesInChase to content array
      
-     setParentType(3); //set parent to 3 which means quickChase 
+     setParentType(3); //set parent to 3 which means quickChase
      //Saving quickChase is ready!
  } //End of create quick chase -----------------------------------------------------------------------
 
@@ -1531,7 +1535,7 @@ class soundDetect { //----------------------------------------------------------
   }
   
   
-  //inside soundDetect class  
+  //inside soundDetect class
   int freq(int i) { //Get freq of specific band
     float toReturn = 0;
     fft.forward(in.mix);
@@ -1539,7 +1543,7 @@ class soundDetect { //----------------------------------------------------------
     float val = getBand(i);
     toReturn = constrain((map(val, avg[i], max[i], 0, 255*2)), 0, 255); //This is what this function returns
     { //Counting avg values
-      avgTemp[i] += val; 
+      avgTemp[i] += val;
       avgCounter[i]++;
       if(avgCounter[i] > 200) {
         avg[i] = (avg[i] + (avgTemp[i] / avgCounter[i])) / 2;
@@ -1553,7 +1557,7 @@ class soundDetect { //----------------------------------------------------------
       if(val > max[i]) { max[i] = val; } //Make sure max isn't too small
     } //End of counting max values
     return round(toReturn);
-    //command to get  right freq from fft or something like it. 
+    //command to get  right freq from fft or something like it.
   }
   
   float getBand(int i) {
@@ -1572,7 +1576,7 @@ class soundDetect { //----------------------------------------------------------
   int getFreqMax() { //How many bands are available
     int toReturn = fft.specSize();
     return toReturn;
-    //command which tells how many frequencies there is available. 
+    //command which tells how many frequencies there is available.
   }
   
   
@@ -1658,4 +1662,3 @@ class sine {
   
   
 }
-
