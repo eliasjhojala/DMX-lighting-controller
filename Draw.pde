@@ -51,6 +51,7 @@ void draw() {
     invokeFixturesDraw(); //Invoke every fixtures draw
     resetSolo();
     midiWindowLoop();
+    tapTempo.draw();
   }
   else {
     pushMatrix(); pushStyle();
@@ -98,7 +99,6 @@ void setTextSize() {
 }
 void updateMidi() {
   if(useMidiMaschines) { inputClass.draw(); }
-  if (useMaschine) { calcMaschineAutoTap(); }
 }
 void sendDataToArduino() {
   if (arduinoFinished) { thread("arduinoSend"); } //Send dim-values to arduino, which sends them to DMX-shield

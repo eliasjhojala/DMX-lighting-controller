@@ -447,7 +447,6 @@ int[][] XMLtoIntArray2D(XML xml) {
   return null;
 }
 
-
 int[][][] XMLtoIntArray3D(String name, XML xml) {
   int[][][] toReturn = { };
   if(xml != null) {
@@ -475,9 +474,6 @@ int[][][] XMLtoIntArray3D(String name, XML xml) {
   }
   return null;
 }
-
-
-
 
 XML arrayToXML(String name, int[] array) {
   
@@ -522,7 +518,6 @@ int[] XMLtoIntArray(String name, XML xml) {
   }
   return null;
 }
-
 
 int[] XMLtoIntArray(XML xml) {
   int[] toReturn = { };
@@ -833,7 +828,7 @@ class Preset { //Begin of Preset class
 
   String[] outputModeDescs = { "inherit", "steps", "eq", "shaky", "sine", "sSine", "rainbow", "onoff" };
 
-  int[] inputModeLimit = { 1, 3 };
+  int[] inputModeLimit = { 1, 4 };
   int[] outputModeLimit = { 1, outputModeDescs.length-1 };
   int[] fadeModeLimit = { 1, 3 };
   int[] beatModeLimit = { 2, 4 };
@@ -877,6 +872,7 @@ class Preset { //Begin of Preset class
             case 1: toReturn = "beat"; break;
             case 2: toReturn = "manual"; break;
             case 3: toReturn = "auto"; break;
+            case 4: toReturn = "tap"; break;
           }
           return toReturn;
         }
@@ -895,7 +891,7 @@ class chase { //Begin of chase class--------------------------------------------
   int inputMode, outputMode, beatModeId; //What is input and what will output look like
   String beatMode = new String(); //kick, snare or hat
  
-  int[] inputModeLimit = { 0, 3 };
+  int[] inputModeLimit = { 0, 4 };
   int[] outputModeLimit = { 0, outputModeDescs.length-1 };
   int[] fadeModeLimit = { 1, 3 };
   int[] beatModeLimit = { 2, 4 };
@@ -1143,6 +1139,7 @@ class chase { //Begin of chase class--------------------------------------------
             case 1: toReturn = "beat"; break;
             case 2: toReturn = "manual"; break;
             case 3: toReturn = "auto"; break;
+            case 4: toReturn = "tap"; break;
           }
           return toReturn;
         }
@@ -1150,6 +1147,7 @@ class chase { //Begin of chase class--------------------------------------------
         boolean nextStepPressedWasDown;
         boolean beatWasTrue;
         boolean reverseStepPressedWasDown;
+        boolean tempoTapTriggerWasTrue;
         
           boolean trigger() {
             boolean toReturn = false;
@@ -1159,6 +1157,7 @@ class chase { //Begin of chase class--------------------------------------------
               case 1: toReturn = !beatWasTrue && s2l.beat(constrain(getBeatModeId(), beatModeLimit[0], beatModeLimit[1])); if(toReturn) { beatWasTrue = true; } else { beatWasTrue = false; } break;
               case 2: toReturn = ((!nextStepPressedWasDown && nextStepPressed) || (keyPressed && key == ' ')); if(nextStepPressed) { nextStepPressedWasDown = true; } else { nextStepPressedWasDown = false; } break;
               case 3: toReturn = true; break;
+              case 4: toReturn = (tapTempo.trigger() && !tempoTapTriggerWasTrue); if(tapTempo.trigger()) { tempoTapTriggerWasTrue = true; } else { tempoTapTriggerWasTrue = false; } break;
             }
             return toReturn;
           }
@@ -1597,7 +1596,7 @@ class soundDetect { //----------------------------------------------------------
         case 1: toReturn = onset; break;
         case 2: toReturn = kick; break;
         case 3: toReturn = snare; break;
-        case 4: toReturn = hat;
+        case 4: toReturn = hat; break;
       }
     }
     
@@ -1731,4 +1730,172 @@ class sine {
   }
   
   
+}
+
+TapTempo tapTempo = new TapTempo();
+
+
+class TapTempo {
+  
+  TapTempo() {
+  }
+  
+  
+  int length = 4;
+
+
+
+  //Tempo tap feature ( = Maschine Auto Tap)----------
+  
+  //How many times the rec button has been pressed (4 is needed to start )
+  int tempotapTapCount = 0;
+  int[] tempotapTaps = new int[length];
+  int tapStartMillis;
+  
+  boolean enable = false;
+  int interval;
+  
+  int[] ellipseSize = new int[length];
+  boolean[] ellipseSizeIsFull = new boolean[length];
+  
+  boolean calculatingRecently;
+  long lastRegistered;
+  
+  boolean boxIsMax = false;
+  boolean drawBox = false;
+  float boxSize = 1;
+  float scale = 1;
+  
+  void draw() {
+    pushMatrix(); pushStyle();
+    calculate();
+    calculatingRecently = millis() - lastRegistered < interval;
+    if(calculating) { drawBox = true; }
+    if(drawBox) {
+      fill(255, 230);
+      translate(width/2, height/2);
+      scale(scale);
+      rect((-(30*length)/2-30*1.5)*boxSize, -50*boxSize, (30*length+30*2)*boxSize, 100*boxSize, 20*boxSize);
+      if(calculating || calculatingRecently) {
+        boxSize = 1;
+        for(int i = 0; i < length; i++) {
+          rectMode(CENTER);
+          pushStyle();
+          if(i <= tempoTapCountForVisualisation) {
+            fill(topMenuAccent);
+            noStroke();
+            if(ellipseSize[i] < 4 && !ellipseSizeIsFull[i]) {
+              ellipseSize[i]++;
+            }
+            else {
+              ellipseSizeIsFull[i] = true;
+            }
+            if(ellipseSizeIsFull[i] && ellipseSize[i] > 0) {
+              ellipseSize[i]--;
+            }
+          }
+          else { fill(themes.buttonColor.neutral, 230); ellipseSizeIsFull[i] = false; }
+          ellipse((-length*30)/2+i*30, 0, 10+ellipseSize[i]*5, 10+ellipseSize[i]*5);
+          popStyle();
+        }
+      }
+      else {
+        if(!boxIsMax) {
+          boxSize+=0.3;
+          if(boxSize > 1.5) {
+            boxIsMax = true;
+          }
+        }
+        if(boxIsMax)
+          if(boxSize > 0.5) {
+            boxSize-=0.3;
+          }
+          else {
+            boxIsMax = false;
+            drawBox = false;
+            boxSize = 1;
+          }
+        }
+    }
+    popMatrix(); popStyle();
+  }
+  
+  boolean calculating = false;
+  int tempoTapCountForVisualisation;
+  
+  //This is triged when the rec button is pressed
+  void register() {
+      //Go to next step
+      lastRegistered = millis();
+      steptriged = true; trig(true);
+      tempoTapCountForVisualisation++;
+      if (tempotapTapCount < length-1) {
+        if (tempotapTapCount == 0) {  tapStartMillis = millis(); tempoTapCountForVisualisation = 0; ellipseSizeIsFull = new boolean[length]; ellipseSize = new int[length]; }
+        tempotapTaps[tempotapTapCount] = millis() - tapStartMillis;
+        trig(true);
+        tempotapTapCount++;
+        enable = false;
+        calculating = true;
+      } else {
+        //Tempo tap finished. Calculate interval and begin autoic "tapping"
+        tempotapTaps[length-1] = millis() - tapStartMillis;
+        //calculate autoic tap interval
+        
+        //Calculate total sum of intervals between taps
+        int total = 0;
+        for (int i = 1; i <= length-1; i++) {
+          total += tempotapTaps[i] - tempotapTaps[i - 1];
+        }
+        //Take average
+        interval = int(total/(length-1));
+        enable = true;
+        calculating = false;
+        clear();
+      }
+      
+      
+  
+  }
+  
+  boolean steptriged = false;
+  int lastStepMillis;
+  //This function gets triged every draw, so it can be used for other purposes as well.
+  
+ 
+  
+  void calculate() {
+  
+    //------AutoTap calculations
+    //Always turn off the booleans if they were put to true last time
+    if(steptriged) { steptriged = false; trig(false); }
+    if(enable) {
+      if(millis() > lastStepMillis + interval) {
+        steptriged = true;
+        trig(true);
+        lastStepMillis = millis();
+      }
+    }
+    
+  }
+  
+  //Clean up  variables
+  void clear() {
+    tempotapTapCount = 0;
+    tempotapTaps = new int[length];
+    tapStartMillis = 0;
+    
+  }
+  
+  long oldFrameCount;
+  
+  
+  boolean triggered = false;
+  void trig(boolean trig) {
+    triggered = trig;
+  }
+  
+  boolean trigger() {
+    return triggered;
+  }
+
 }

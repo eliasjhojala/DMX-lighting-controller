@@ -395,7 +395,7 @@ int quickSlider(String mouseLockID, int mousePriority, int value, PGraphics g, M
       return toReturn;
     }
 
-    /*getNext returns always reverse value and checks that 
+    /*getNext returns always reverse value and checks that
     if you already are at the smallest value then it goes to biggest value */
     int getReverse(int current, int lim_low, int lim_hi) {
       int toReturn = 0;
@@ -405,7 +405,7 @@ int quickSlider(String mouseLockID, int mousePriority, int value, PGraphics g, M
       return toReturn;
     }
     
-    /*getNext returns always next value and checks that 
+    /*getNext returns always next value and checks that
     if you already are at the biggest value then it goes to smallest value */
     int getNext(int current, int lim_low, int lim_hi) {
       int toReturn = 0;
@@ -491,18 +491,18 @@ boolean isAbout(int a, int b, int accu) {
     return true;
   }
   return false;
-} 
+}
 
 boolean isAbout(float a, float b, int accu) {
   if(abs(a - b) <= a/overZero(accu)) {
     return true;
   }
   return false;
-}  
+}
 
 boolean isAbout(int a, int b) {
   return isAbout(a, b, 5);
-}  
+}
    
    
 boolean isInList(int i, int[] list) {
@@ -512,7 +512,7 @@ boolean isInList(int i, int[] list) {
     }
   }
   return false;
-}  
+}
 
 int[] toArray(int a) {
   int[] toReturn = new int[1];
@@ -545,7 +545,7 @@ int[] toArray(int a, int b, int c, int d) {
 
 
 
-boolean ctrlDown = false; 
+boolean ctrlDown = false;
 boolean shftDown = false;
 boolean rightPressed = false;
 boolean leftPressed = false;
@@ -566,7 +566,7 @@ void keyPressed() {
   if(!keyCapElsewhere) {
     if(key == 'b') { boolean b = s2l.blinky; s2l = new soundDetect(); s2l.blinky = !b; }
 
-    if(key==27) { key=0; 
+    if(key==27) { key=0;
       //Escape from printMode
       printMode = false;
     } //Otetaan esc-näppäin pois käytöstä. on kumminkin huomioitava, että tämä toimii vain pääikkunassa
@@ -582,6 +582,8 @@ void keyPressed() {
     }
     if(key == 'r') { revStepPressed = true; }
     
+    if(key == 't') { tapTempo.register(); }
+    
  
     if(keyCode == 17) { ctrlDown = true; }
     if(keyCode == 16) { shftDown = true; }
@@ -589,7 +591,7 @@ void keyPressed() {
     if(key == 's') {
       if(!showMode && !showModeLocked) {
         try {
-          thread("saveAllData"); 
+          thread("saveAllData");
         }
         catch (Exception e) {
           notifier.notify("Error saving data", true);
@@ -599,11 +601,11 @@ void keyPressed() {
         notifier.notify("Can not save in showMode", true);
       }
     }
-    if(key == 'l') { 
+    if(key == 'l') {
       if(!showMode && !showModeLocked) {
         try {
           if(!loadingDataAtTheTime()) {
-            loadAllData(); 
+            loadAllData();
           }
         }
         catch (Exception e) {
@@ -634,7 +636,7 @@ void mouseReleased() {
 }
 
 
-/* Functions to return red, green and blue values 
+/* Functions to return red, green and blue values
    from color object as int instead of float */
 int rRed(color c) { return round(red(c)); }
 int rGreen(color c) { return round(green(c)); }
@@ -645,15 +647,15 @@ int rBlue(color c) { return round(blue(c)); }
 
 void checkThemeMode() {
   fill(0, 0, 0);
-  if(printMode == true) { //Check if printmode is on 
+  if(printMode == true) { //Check if printmode is on
     background(255, 255, 255); //If printmode is on then background is white
-    stroke(0, 0, 0); //If printmode is on then strokes are black 
+    stroke(0, 0, 0); //If printmode is on then strokes are black
   }
-  else { 
+  else {
     background(0); //If printmode is off then background is black
     stroke(255, 255, 255); //If printmode is off then strokes are white
   }
-} 
+}
 
 
 class LocationData {
@@ -668,7 +670,7 @@ class LocationData {
   LocationData(PVector loc, PVector rot) {
     /*
       Init function get location and rotation PVectors as input
-      and simply saves them to class 
+      and simply saves them to class
     */
     
     location = loc;
@@ -706,9 +708,9 @@ class RGBWD {
   color colorWithDim; //color mapped with dim value
   
   RGBWD(color col, int dim) {
-    /* 
+    /*
       Init function get rawColor and dim value as input
-      and counts also colorWithDim value from them 
+      and counts also colorWithDim value from them
     */
        
     rawColor = col;
