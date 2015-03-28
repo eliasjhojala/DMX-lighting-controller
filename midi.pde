@@ -141,295 +141,301 @@
    boolean LC2412bankChanged;
    
    void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
-     window.draw(g, mouse);
+     window.draw(g, mouse); //Draw window base
      
     
      g.pushMatrix();
-       g.translate(40, 60);
-  
-       
-       if(machineSelect.valueHasChanged()) {
-         selectedMachine = machineSelect.getValue();
-       }
-       
-       g.pushMatrix();
-       
-         if(!machineSelect.open) {
-           switch(selectedMachine) {
-             case 1: //Launchpad
-               g.translate(0, 50);
-               midiOutSelect.draw(g, mouse);
-               g.translate(200, 0);
-               midiInSelect.draw(g, mouse);
-               
-               if(midiOutSelect.valueHasChanged() || midiInSelect.valueHasChanged()) {
-                 int input = -1;
-                 int output = -1;
-                 
-                 if(launchpad != null) { output = launchpad.outputIndex; input = launchpad.inputIndex; }
-                 if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
-                 if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
-                 
-                 if(launchpad != null) { launchpad.setup(input, output); }
-                 else { launchpad = new Launchpad(input, output); }
-                 
-               }
-               
-             break;
-             
-             case 2: //LC2412
-               g.translate(0, 50);
-               midiOutSelect.draw(g, mouse);
-               g.translate(200, 0);
-               midiInSelect.draw(g, mouse);
-               
-               if(midiOutSelect.valueHasChanged() || midiInSelect.valueHasChanged()) {
-                 int input = -1;
-                 int output = -1;
-                 
-                 if(LC2412 != null) { output = LC2412.outputIndex; input = LC2412.inputIndex; }
-                 if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
-                 if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
-                 if(LC2412 != null) { LC2412.setup(input, output); }
-                 else { LC2412 = new behringerLC2412(input, output); }
-               }
-               
-             break;
-             
-             case 3: //Keyrig 49
-               g.translate(200, 50);
-               midiInSelect.draw(g, mouse);
-               
-               if(midiInSelect.valueHasChanged()) {
-                 int input = midiInSelect.getValue();
-                 if(keyRig49 != null) { keyRig49.setup(input); }
-                 else { keyRig49 = new Keyrig49(input); }
-               }
-               
-             break;
-           }
-         }
-         
-       g.popMatrix();
-       
-       if(selectedMachine == 1) { //Launchpad
+       g.translate(40, 60); //Marginal (there is close button upper)
+     
+       { //Machineselect
          g.pushMatrix();
-           g.translate(500, 0);
-           launchPadMemories.locX = locX + 500;
-           launchPadMemories.locY = locY + launchpadToggleOrPush.h;
-           launchPadMemories.open = true;
-           if(launchPadMemories.valueHasChanged()) {
-             if(launchpad != null) {
-               TextBoxTableWindow LPM = launchPadMemories;
-               int x = LPM.changedValue()[0];
-               int y = LPM.changedValue()[1];
-               int val = LPM.getValue(x, y);
-               println(val);
+           if(!machineSelect.open) {
+             switch(selectedMachine) {
+               case 1: //Launchpad
+                 g.translate(0, 50);
+                 midiOutSelect.draw(g, mouse);
+                 g.translate(200, 0);
+                 midiInSelect.draw(g, mouse);
+                 
+                 if(midiOutSelect.valueHasChanged() || midiInSelect.valueHasChanged()) {
+                   int input = -1;
+                   int output = -1;
+                   
+                   if(launchpad != null) { output = launchpad.outputIndex; input = launchpad.inputIndex; }
+                   if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
+                   if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
+                   
+                   if(launchpad != null) { launchpad.setup(input, output); }
+                   else { launchpad = new Launchpad(input, output); }
+                   
+                 }
+                 
+               break;
+               
+               case 2: //LC2412
+                 g.translate(0, 50);
+                 midiOutSelect.draw(g, mouse);
+                 g.translate(200, 0);
+                 midiInSelect.draw(g, mouse);
+                 
+                 if(midiOutSelect.valueHasChanged() || midiInSelect.valueHasChanged()) {
+                   int input = -1;
+                   int output = -1;
+                   
+                   if(LC2412 != null) { output = LC2412.outputIndex; input = LC2412.inputIndex; }
+                   if(midiOutSelect.valueHasChanged()) { output = midiOutSelect.getValue(); }
+                   if(midiInSelect.valueHasChanged()) { input = midiInSelect.getValue(); }
+                   if(LC2412 != null) { LC2412.setup(input, output); }
+                   else { LC2412 = new behringerLC2412(input, output); }
+                 }
+                 
+               break;
+               
+               case 3: //Keyrig 49
+                 g.translate(200, 50);
+                 midiInSelect.draw(g, mouse);
+                 
+                 if(midiInSelect.valueHasChanged()) {
+                   int input = midiInSelect.getValue();
+                   if(keyRig49 != null) { keyRig49.setup(input); }
+                   else { keyRig49 = new Keyrig49(input); }
+                 }
+                 
+               break;
+             }
+           }
+         g.popMatrix();
+         
+         if(machineSelect.valueHasChanged()) {
+           selectedMachine = machineSelect.getValue();
+         }
+       } //End of machineselect
+       
+       { //Device specific settings
+         if(selectedMachine == 1) { //Launchpad settings
+           g.pushMatrix();
+             g.translate(500, 0);
+             launchPadMemories.locX = locX + 500;
+             launchPadMemories.locY = locY + launchpadToggleOrPush.h;
+             launchPadMemories.open = true;
+             if(launchPadMemories.valueHasChanged()) {
+               if(launchpad != null) {
+                 TextBoxTableWindow LPM = launchPadMemories;
+                 int x = LPM.changedValue()[0];
+                 int y = LPM.changedValue()[1];
+                 int val = LPM.getValue(x, y);
+                 println(val);
+                 try {
+                   launchpad.setToggleToMemoryValue(val, x, y);
+                 }
+                 catch (Exception e) {
+                   e.printStackTrace();
+                 }
+               }
+             }
+            
+           g.popMatrix();
+           
+           g.pushMatrix();
+             g.translate(500, 0);
+             launchpadToggleOrPush.draw(g, mouse, isTranslated);
+             launchpadToggleOrPush.locX = locX + 500;
+             launchpadToggleOrPush.locY = locY;
+             launchpadToggleOrPush.open = true;
+             if(launchpadToggleOrPush.valueHasChanged()) {
                try {
-                 launchpad.setToggleToMemoryValue(val, x, y);
+                 if(launchpad != null) {
+                   NumberBoxTableWindow LPTOP = launchpadToggleOrPush;
+                   int x = LPTOP.changedValue()[0];
+                   int y = LPTOP.changedValue()[1];
+                   int val = LPTOP.getValue(x, y);
+                   launchpad.setButtonMode(val, x, y);
+                 }
                }
                catch (Exception e) {
                  e.printStackTrace();
                }
              }
-           }
-          
-         g.popMatrix();
+            
+           g.popMatrix();
+         } //End of launchpad settings
          
-         g.pushMatrix();
-           g.translate(500, 0);
-           launchpadToggleOrPush.draw(g, mouse, isTranslated);
-           launchpadToggleOrPush.locX = locX + 500;
-           launchpadToggleOrPush.locY = locY;
-           launchpadToggleOrPush.open = true;
-           if(launchpadToggleOrPush.valueHasChanged()) {
-             try {
-               if(launchpad != null) {
-                 NumberBoxTableWindow LPTOP = launchpadToggleOrPush;
-                 int x = LPTOP.changedValue()[0];
-                 int y = LPTOP.changedValue()[1];
-                 int val = LPTOP.getValue(x, y);
-                 launchpad.setButtonMode(val, x, y);
+         else if(selectedMachine == 2) { //LC2412 fader and button settigns
+             LC2412faderModes.locX = locX+500;
+             LC2412faderModes.locY = locY;
+             LC2412faderModes.open = true;
+             
+             if(LC2412faderModes.valueHasChanged()) {
+               if(LC2412 != null) {
+                 NumberBoxTableWindow LPM = LC2412faderModes;
+                 int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                 try { LC2412.setFaderModeValue(val, LC2412bank, x, y); }
+                 catch (Exception e) { e.printStackTrace(); }
                }
              }
-             catch (Exception e) {
-               e.printStackTrace();
-             }
-           }
-          
-         g.popMatrix();
-       }
-       
-       else if(selectedMachine == 2) {
-           LC2412faderModes.locX = locX+500;
-           LC2412faderModes.locY = locY;
-           LC2412faderModes.open = true;
-           
-           if(LC2412faderModes.valueHasChanged()) {
-             if(LC2412 != null) {
-               NumberBoxTableWindow LPM = LC2412faderModes;
-               int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
-               try { LC2412.setFaderModeValue(val, LC2412bank, x, y); }
-               catch (Exception e) { e.printStackTrace(); }
-             }
-           }
 
-           LC2412buttonModes.locX = locX+500;
-           LC2412buttonModes.locY = locY+LC2412faderModes.h;
-           LC2412buttonModes.open = true;
-           
-           if(LC2412buttonModes.valueHasChanged()) {
-             if(LC2412 != null) {
-               NumberBoxTableWindow LPM = LC2412buttonModes;
-               int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
-               try { LC2412.setButtonModeValue(val, LC2412bank, x, y); }
-               catch (Exception e) { e.printStackTrace(); }
+             LC2412buttonModes.locX = locX+500;
+             LC2412buttonModes.locY = locY+LC2412faderModes.h;
+             LC2412buttonModes.open = true;
+             
+             if(LC2412buttonModes.valueHasChanged()) {
+               if(LC2412 != null) {
+                 NumberBoxTableWindow LPM = LC2412buttonModes;
+                 int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                 try { LC2412.setButtonModeValue(val, LC2412bank, x, y); }
+                 catch (Exception e) { e.printStackTrace(); }
+               }
              }
-           }
-           
-           LC2412faderMemories.locX = locX+500+LC2412faderModes.w;
-           LC2412faderMemories.locY = locY;
-           LC2412faderMemories.open = true;
-           
-           if(LC2412faderMemories.valueHasChanged()) {
-             if(LC2412 != null) {
-               TextBoxTableWindow LPM = LC2412faderMemories;
-               int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
-               try { LC2412.setFaderMemoryValue(val, LC2412bank, x, y); }
-               catch (Exception e) { e.printStackTrace(); }
+             
+             LC2412faderMemories.locX = locX+500+LC2412faderModes.w;
+             LC2412faderMemories.locY = locY;
+             LC2412faderMemories.open = true;
+             
+             if(LC2412faderMemories.valueHasChanged()) {
+               if(LC2412 != null) {
+                 TextBoxTableWindow LPM = LC2412faderMemories;
+                 int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                 try { LC2412.setFaderMemoryValue(val, LC2412bank, x, y); }
+                 catch (Exception e) { e.printStackTrace(); }
+               }
              }
-           }
 
-           LC2412buttonMemories.locX = locX+500+LC2412buttonModes.w;
-           LC2412buttonMemories.locY = locY+LC2412faderMemories.h;
-           LC2412buttonMemories.open = true;
-           
-           if(LC2412buttonMemories.valueHasChanged()) {
-             if(LC2412 != null) {
-               TextBoxTableWindow LPM = LC2412buttonMemories;
-               int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
-               try { LC2412.setButtonMemoryValue(val, LC2412bank, x, y); }
-               catch (Exception e) { e.printStackTrace(); }
+             LC2412buttonMemories.locX = locX+500+LC2412buttonModes.w;
+             LC2412buttonMemories.locY = locY+LC2412faderMemories.h;
+             LC2412buttonMemories.open = true;
+             
+             if(LC2412buttonMemories.valueHasChanged()) {
+               if(LC2412 != null) {
+                 TextBoxTableWindow LPM = LC2412buttonMemories;
+                 int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                 try { LC2412.setButtonMemoryValue(val, LC2412bank, x, y); }
+                 catch (Exception e) { e.printStackTrace(); }
+               }
              }
-           }
-           
-           g.pushMatrix(); g.pushStyle(); g.fill(0); g.textAlign(RIGHT);
-             g.translate(350, 150);
-             g.text("bankUp", -25, 13);
-             if(bankUp.isPressed(g, mouse)) { LC2412bank++; LC2412bankChanged = true; }
-             g.translate(0, 25);
-             g.text("bankDown", -25, 13);
-             if(bankDown.isPressed(g, mouse)) { LC2412bank--; LC2412bankChanged = true; }
-             g.translate(0, 25);
-             g.text("actual bank: " + str(LC2412bank), 25, 13);
-             g.text("LC2412 bank: " + str(LC2412.bank), 25, 13+20);
-           g.popMatrix(); g.popStyle();
-           
-           if(LC2412bankChanged) {
-             LC2412bank = constrain(LC2412bank, 0, 9);
-             LC2412faderModes.setValue(LC2412.faderMode[LC2412bank]);
-             LC2412buttonModes.setValue(LC2412.buttonMode[LC2412bank]);
-             LC2412faderMemories.setValue(LC2412.faderMemory[LC2412bank]);
-             LC2412buttonMemories.setValue(LC2412.buttonMemory[LC2412bank]);
-             LC2412bankChanged = false;
-           }
-       }
+             
+             g.pushMatrix(); g.pushStyle(); g.fill(0); g.textAlign(RIGHT);
+               g.translate(350, 150);
+               g.text("bankUp", -25, 13);
+               if(bankUp.isPressed(g, mouse)) { LC2412bank++; LC2412bankChanged = true; }
+               g.translate(0, 25);
+               g.text("bankDown", -25, 13);
+               if(bankDown.isPressed(g, mouse)) { LC2412bank--; LC2412bankChanged = true; }
+               g.translate(0, 25);
+               g.text("actual bank: " + str(LC2412bank), 25, 13);
+               g.text("LC2412 bank: " + str(LC2412.bank), 25, 13+20);
+             g.popMatrix(); g.popStyle();
+             
+             if(LC2412bankChanged) {
+               LC2412bank = constrain(LC2412bank, 0, 9);
+               LC2412faderModes.setValue(LC2412.faderMode[LC2412bank]);
+               LC2412buttonModes.setValue(LC2412.buttonMode[LC2412bank]);
+               LC2412faderMemories.setValue(LC2412.faderMemory[LC2412bank]);
+               LC2412buttonMemories.setValue(LC2412.buttonMemory[LC2412bank]);
+               LC2412bankChanged = false;
+             }
+         } //End of LC2412 fader and button settings
+       } //End of device specific settings
        
        g.translate(0, 200);
        
-       g.pushMatrix();
-         g.translate(200, 0);
-         if(selectedMachine != 1) { toggleOrPush.draw(g, mouse); }
-		     else { buttonModeForLaunchpad.draw(g, mouse); }
-       g.popMatrix();
-       
-       
-       outputModes.draw(g, mouse);
-       
-       
-       
-       
-      if(selectedMachine != 1) if(toggleOrPush.valueHasChanged()) {
-         switch(selectedMachine) {
-           case 2: //LC2412
-           break;
-           
-           case 3: //KerRig 49
-           break;
-         }
-      }
-       
-	  if(selectedMachine == 1) if(buttonModeForLaunchpad.valueHasChanged()) {
-         if(launchpad != null) launchpad.setButtonModeToAll(buttonModeForLaunchpad.getValue()); launchpadToggleOrPush.setValue(buttonModeForLaunchpad.getValue());
-	  }
-       offset.draw(g, mouse);
-       
-       if(offset.valueHasChanged()) {
-         switch(selectedMachine) {
-           case 1: //Launchpad
-             if(launchpad != null) launchpad.offset = offset.getValue();
-           break;
-           
-           case 2: //LC2412
-             if(LC2412 != null) LC2412.offset = offset.getValue();
-           break;
-             
-           case 3: //KerRig 49
-             if(keyRig49 != null) keyRig49.offset = offset.getValue();
-           break;
-         }
-       }
-       
-       if(outputModes.valueHasChanged()) {
-         switch(selectedMachine) {
-           case 1: //Launchpad
-             if(launchpad != null) launchpad.output = outputModes.getValue();
-           break;
-           
-           case 2: //LC2412
-           break;
-           
-           case 3: //KerRig 49
-             if(keyRig49 != null) keyRig49.output = outputModes.getValue();
-           break;
-         }
-       }
-       
-       
-     
-     g.popMatrix();
-     
-     g.pushMatrix();
-       g.translate(200, 150);
-       switch(selectedMachine) {
-         case 1: //Launchpad
-           if(launchpad != null) {
-             if(save.isPressed(g, mouse)) saveLaunchpadData();
-             g.pushMatrix(); g.translate(30, 0);
-             if(load.isPressed(g, mouse)) loadLaunchpadData();
-             g.popMatrix();
+       { //Buttonmode for all machines
+         { //Draw
+           g.pushMatrix();
+             g.translate(200, 0);
+             if(selectedMachine != 1) { toggleOrPush.draw(g, mouse); }
+    		     else { buttonModeForLaunchpad.draw(g, mouse); }
+           g.popMatrix();
+         } //Endof draw
+         
+         { //Check values
+           if(selectedMachine != 1) if(toggleOrPush.valueHasChanged()) {
+              switch(selectedMachine) {
+                case 2: //LC2412
+                break;
+                
+                case 3: //KerRig 49
+                break;
+              }
            }
-         break;
+            
+           if(selectedMachine == 1) if(buttonModeForLaunchpad.valueHasChanged()) {
+             if(launchpad != null) launchpad.setButtonModeToAll(buttonModeForLaunchpad.getValue()); launchpadToggleOrPush.setValue(buttonModeForLaunchpad.getValue());
+           }
+         } //End of checking values
+       } //End of buttonmode for all machines
+       
+       { //OutputModes radioButtonMenu
+         outputModes.draw(g, mouse);
          
-         case 2: //LC2412
-         break;
+         if(outputModes.valueHasChanged()) {
+           switch(selectedMachine) {
+             case 1: //Launchpad
+               if(launchpad != null) launchpad.output = outputModes.getValue();
+             break;
+             
+             case 2: //LC2412
+             break;
+             
+             case 3: //KerRig 49
+               if(keyRig49 != null) keyRig49.output = outputModes.getValue();
+             break;
+           }
+         }
+       } //End of outputModes radioButtonMenu
+       
+       { //Offset intController
+         offset.draw(g, mouse);
          
-         case 3: //KeyRig 49
-         break;
-       }
+         if(offset.valueHasChanged()) {
+           switch(selectedMachine) {
+             case 1: //Launchpad
+               if(launchpad != null) launchpad.offset = offset.getValue();
+             break;
+             
+             case 2: //LC2412
+               if(LC2412 != null) LC2412.offset = offset.getValue();
+             break;
+               
+             case 3: //KerRig 49
+               if(keyRig49 != null) keyRig49.offset = offset.getValue();
+             break;
+           }
+         }
+       } //End of offset intController
+
      g.popMatrix();
      
-     g.pushMatrix();
-       g.translate(40, 60);
-       machineSelect.draw(g, mouse);
-     g.popMatrix();
+     { //Save and load buttons
+       g.pushMatrix();
+         g.translate(200, 150);
+         switch(selectedMachine) {
+           case 1: //Launchpad
+             if(launchpad != null) {
+               if(save.isPressed(g, mouse)) saveLaunchpadData();
+               g.pushMatrix(); g.translate(30, 0);
+               if(load.isPressed(g, mouse)) loadLaunchpadData();
+               g.popMatrix();
+             }
+           break;
+           
+           case 2: //LC2412
+           break;
+           
+           case 3: //KeyRig 49
+           break;
+         }
+       g.popMatrix();
+     } //End of save and load buttons
      
-     
-     
-     
+     { //Draw machine select
+       g.pushMatrix();
+         g.translate(40, 60);
+         machineSelect.draw(g, mouse);
+       g.popMatrix();
+     } //End of drawing machine select
+
    }
-   
-    
+
  }
  
  
