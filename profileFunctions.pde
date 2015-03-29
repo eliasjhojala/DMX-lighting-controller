@@ -46,6 +46,20 @@ String getFixtureNameByType(int type) {
   return toReturn;
 }
 
+String getFixtureLongNameByType(int type) {
+  String toReturn = "";
+  if(type >= 0 && type < fixtureProfiles.length) if(fixtureProfiles[type] != null) {
+    FixtureProfile profile = fixtureProfiles[type];
+    if(!profile.fixtureLongName.equals("")) {
+      toReturn = profile.fixtureLongName;
+    }
+    else {
+      toReturn  = profile.fixtureName;
+    }
+  }
+  return toReturn;
+}
+
 int getNumberOfFixtureTypes() {
   return fixtureProfiles.length;
 }
@@ -65,6 +79,8 @@ int getFixtureTypeId1(String fixtureType) {
 String getFixtureName(int id) {
   return getFixtureNameByType(fixtures.get(id).fixtureTypeId);
 }
+
+
 
 int universalDMXlength = 28+1;
 

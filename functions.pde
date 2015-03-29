@@ -582,7 +582,7 @@ void keyPressed() {
     }
     if(key == 'r') { revStepPressed = true; }
     
-    if(key == 't') { tapTempo.register(); }
+    if(showMode) if(key == 't') { tapTempo.register(); }
     
  
     if(keyCode == 17) { ctrlDown = true; }

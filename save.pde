@@ -145,6 +145,7 @@ void saveAllData() {
         thread("saveTestXML");
         if(!savingMidiData) { thread("saveMidiData"); }
         oscHandler.saveToXML();
+        SaveChannelsAsPdf();
       } catch (Exception e) {
         e.printStackTrace();
         notifier.notify("Save failed! Try again by saving to another location by pressing SHIFT + S", true);

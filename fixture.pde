@@ -666,6 +666,52 @@ class fixture {
     popStyle();
   }
   
+  
+  //Index is used only to display the id of the fixture
+  void draw2D(int index, PGraphics g) {
+    g.pushStyle();
+    color c = getRawColor();
+    if(brightness(c) == 0) {
+      c = color(255);
+    }
+    g.fill(c);
+    boolean showFixture = true;
+    int lampWidth = 30;
+    int lampHeight = 40;
+    
+    String fixtuuriTyyppi = getFixtureNameByType(fixtureTypeId);
+    
+    
+    
+      lampWidth = this.size.w;
+      lampHeight = this.size.h;
+      showFixture = this.size.isDrawn;
+   
+    
+    boolean selected = this.selected && showFixture;
+    
+    
+    if(showFixture == true) {
+      int x1 = 0; int y1 = 0;
+      g.rectMode(CENTER);
+      g.strokeWeight(2);
+      g.stroke(0, 230);
+      g.rect(x1, y1, lampWidth, lampHeight, 3);
+      g.rotate(radians(-rotationZ));
+      g.translate(-size.w/2, -size.h/2);
+      g.fill(0);
+      
+      String text = getFixtureNameByType(fixtureTypeId);
+      g.textSize(10);
+      g.text(getFixtureNameByType(fixtureTypeId), lampWidth/2-(textWidth(text)/2), y1 + lampHeight + 13);
+      text = str(this.channelStart);
+      g.textSize(15);
+      textSize(15);
+      g.text(text, lampWidth/2-textWidth(text)/2, y1+lampHeight/2+5);
+    }
+    g.popStyle();
+  }
+  
 }//Endof: fixture class
 
 void removeFixtureFromCM() {
