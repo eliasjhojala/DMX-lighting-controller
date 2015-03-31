@@ -65,6 +65,7 @@ class FixtureProfile {
   boolean isFog;
   boolean hasDimmer;
   boolean isHazer;
+  boolean isHalogen;
   
   FixtureProfile() {
     String[] empty = { "" };
@@ -137,5 +138,6 @@ class FixtureProfile {
     isFog = isInArray(channelTypes, DMX_FOG);
     hasDimmer = isInArray(channelTypes, DMX_DIMMER);
     isHazer = isInArray(channelTypes, DMX_HAZE);
+    isHalogen = isInArray(channelTypes, DMX_DIMMER) && channelTypes.length == 1;
   }
 }

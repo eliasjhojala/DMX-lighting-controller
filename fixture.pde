@@ -145,6 +145,8 @@ class fixture {
   
   int parentAnsa;
   
+  IntList allowedTrussesForWiring = new IntList();
+  
   boolean soloInThisFixture;
   
   FixtureDMX in;
@@ -499,10 +501,7 @@ class fixture {
   
   
   boolean isHalogen() {
-    switch(fixtureTypeId) {
-       case 1: case 2: case 3: case 4: case 5: case 6: return true;
-       default: return false;
-    }
+    return fixtureProfiles[fixtureTypeId].isHalogen;
   }
   
   int getDimmerWithMaster() {

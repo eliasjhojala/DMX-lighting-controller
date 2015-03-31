@@ -34,14 +34,14 @@ XML getNearestSocketsAsXML() {
   for(int truss = 0; truss < trusses.length; truss++) {
     xml = xml.addChild("truss");
     xml.setInt("id", truss);
-    int[] fixturesInTruss = getListOfFixturesInTruss(truss);
-    int[] socketsInTruss = getListOfSocketsInTruss(truss);
+    IntList fixturesInTruss = getListOfFixturesInTruss(truss);
+    IntList socketsInTruss = getListOfSocketsInTruss(truss);
     for(int i = 0; i < findNearestSocket(truss).length; i++) {
       if(findNearestSocket(truss)[i] >= 0) {
         XML block = xml.addChild("socket");
         block.setInt("id", i);
         block.setContent("H"+str(sockets[findNearestSocket(truss)[i]].id));
-        block.setInt("fixture", fixturesInTruss[i]);
+        block.setInt("fixture", fixturesInTruss.get(i));
         block.setInt("channel", sockets[findNearestSocket(truss)[i]].channel);
       }
     }
@@ -89,19 +89,13 @@ void loadSocketsFromXML() {
   }
 }
 
-int[] getListOfFixturesInTruss(int truss) {
-  int counter = 0;
-  int[] fixturesInTruss = new int[1];
+IntList getListOfFixturesInTruss(int truss) {
+  IntList fixturesInTruss = new IntList();
   for(int i = 0; i < fixtures.size(); i++) {
     fixture fix = fixtures.get(i);
     if(fixtureIsDrawnById(i)) { //check if fixture exist in visualisation
       if(fix.parentAnsa == truss) { //Check if fixture is in current truss
-        fixturesInTruss[counter] = i;
-        counter++;
-        int[] fixturesInTrussTemp = new int[fixturesInTruss.length];
-        arrayCopy(fixturesInTruss, fixturesInTrussTemp);
-        fixturesInTruss = new int[fixturesInTruss.length+1];
-        arrayCopy(fixturesInTrussTemp, fixturesInTruss);
+        fixturesInTruss.append(i);
       }
     }
   }
@@ -110,20 +104,14 @@ int[] getListOfFixturesInTruss(int truss) {
 }
 
 
-int[] getListOfSocketsInTruss(int truss) {
-  int counter = 0;
-  int[] socketsInTruss = new int[1];
+IntList getListOfSocketsInTruss(int truss) {
+  IntList socketsInTruss = new IntList();
   for(int i = 0; i < sockets.length; i++) {
     Socket socket = sockets[i];
     if(socket != null) {
       if(socket.exist) { //check if fixture exist in visualisation
         if(socket.truss == truss) { //Check if fixture is in current truss
-          socketsInTruss[counter] = i;
-          counter++;
-          int[] socketsInTrussTemp = new int[socketsInTruss.length];
-          arrayCopy(socketsInTruss, socketsInTrussTemp);
-          socketsInTruss = new int[socketsInTruss.length+1];
-          arrayCopy(socketsInTrussTemp, socketsInTruss);
+          socketsInTruss.append(i);
         }
       }
     }
@@ -135,30 +123,32 @@ int[] getListOfSocketsInTruss(int truss) {
 
 
 int[] findNearestSocket(int truss) {
-  int[] fixturesInTruss = getListOfFixturesInTruss(truss);
-  int[] socketsInTruss = getListOfSocketsInTruss(truss);
-  int[] nearestFoundSocket = new int[fixturesInTruss.length];
+  IntList fixturesInTruss = getListOfFixturesInTruss(truss);
+  IntList socketsInTruss = getListOfSocketsInTruss(truss);
+  int[] nearestFoundSocket = new int[fixturesInTruss.size()];
   
   
-  for(int i = 0; i < fixturesInTruss.length; i++) {
+  for(int i = 0; i < fixturesInTruss.size(); i++) {
     int nearestFoundDistance = Integer.MAX_VALUE;
     nearestFoundSocket[i] = -1;
-    fixture fix = fixtures.get(fixturesInTruss[i]);
-    for(int j = 0; j < socketsInTruss.length; j++) {
-      if(sockets[socketsInTruss[j]] != null) {
-        Socket socket = sockets[socketsInTruss[j]];
-        if((!socket.isInUse) || (socket.channel == fix.channelStart)) {
-          if(abs(socket.x_location - fix.x_location) <= nearestFoundDistance) {
-            nearestFoundDistance = abs(socket.x_location - fix.x_location);
-            nearestFoundSocket[i] = socketsInTruss[j];
+    fixture fix = fixtures.get(fixturesInTruss.get(i));
+    if(fix.isHalogen()) {
+      for(int j = 0; j < socketsInTruss.size(); j++) {
+        if(sockets[socketsInTruss.get(j)] != null) {
+          Socket socket = sockets[socketsInTruss.get(j)];
+          if((!socket.isInUse) || (socket.channel == fix.channelStart)) {
+            if(abs(socket.x_location - fix.x_location) <= nearestFoundDistance) {
+              nearestFoundDistance = abs(socket.x_location - fix.x_location);
+              nearestFoundSocket[i] = socketsInTruss.get(j);
+            }
           }
+          
         }
-        
       }
-    }
-    if(nearestFoundSocket[i] >= 0) {
-      sockets[nearestFoundSocket[i]].isInUse = true;
-      sockets[nearestFoundSocket[i]].channel = fix.channelStart;
+      if(nearestFoundSocket[i] >= 0) {
+        sockets[nearestFoundSocket[i]].isInUse = true;
+        sockets[nearestFoundSocket[i]].channel = fix.channelStart;
+      }
     }
  }
   
