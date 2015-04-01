@@ -279,8 +279,8 @@ void endBoxSelect() {
     }
   } else if(!showMode && !showModeLocked) {
     //open contextMwnu
-    String[] acts = { "createNewFixtureAt00" };
-    String[] texs = { "Create new fixture" };
+    String[] acts = { "createNewFixtureAt00", "createNewElement" };
+    String[] texs = { "Create new fixture", "Create new element" };
     contextMenu1.initiate(acts, texs, mouseX, mouseY);
   }
 }
