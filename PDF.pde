@@ -47,6 +47,9 @@ void SaveChannelsAsPdf() {
   pdf.background(255);
   pdf.fill(0);
   pdf.translate(-(min(x)), -(min(y))+80);
+  for(int i = 0; i < elements.size(); i++) {
+    elements.get(i).draw(pdf);
+  }
   for(int i = 0; i < fixtures.size(); i++) {
     fixture fix = fixtures.get(i);
     if(fix.size.isDrawn) {

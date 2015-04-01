@@ -805,6 +805,7 @@ class fixture {
       g.rectMode(CENTER);
       g.strokeWeight(2);
       g.stroke(0, 230);
+      g.translate(size.w/2, 0);
       g.rect(x1, y1, lampWidth, lampHeight, 3);
       g.rotate(radians(-rotationZ));
       g.translate(-size.w/2, -size.h/2);

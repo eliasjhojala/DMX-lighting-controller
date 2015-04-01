@@ -1648,9 +1648,7 @@
           </fixturesToSave>
           <repOfFixtures>
             <fixtureDMX id="33">
-              <DMX>
-                <int id="1" val="255"/>
-              </DMX>
+              <DMX/>
             </fixtureDMX>
             <fixtureDMX id="34">
               <DMX>

@@ -258,7 +258,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 256,red,1,255,16,-
 257,green,1,255,16,-
 258,blue,1,146,16,-
-259,xTaka,1,507,16,-
+259,xTaka,1,506,16,-
 260,yTaka,1,2,16,-
 261,rotX,1,254,16,-
 262,fixParam,1,45,16,-

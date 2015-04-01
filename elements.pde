@@ -177,6 +177,19 @@ class Element {
 			break;
 		}
 	}
+
+
+      void draw(PGraphics g) {
+          switch(type) {
+            case ELEMENT_TYPE_RECTANGLE:
+              g.pushMatrix();
+                g.translate(location.x, location.y);
+                g.fill(col, 100);
+                g.rect(0, 0, size.x, size.y);
+              g.popMatrix();
+            break;
+          }
+        }
 	
 }
 
