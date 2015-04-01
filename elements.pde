@@ -5,13 +5,26 @@ final int ELEMENT_TYPE_CIRCLE = 2;
 ArrayList<Element> elements = new ArrayList<Element>();
 
 void elementsSetup() {
-	elements.add(new Element(ELEMENT_TYPE_RECTANGLE, new PVector(100, 100), new PVector(1000, 500), color(255, 255, 0)));
+	//elements.add(new Element(ELEMENT_TYPE_RECTANGLE, new PVector(100, 100), new PVector(1000, 500), color(255, 255, 0)));
+}
+
+void createNewElement() {
+	elements.add(new Element());
 }
 
 class Element {
 	PVector location, size;
 	int type;
 	color col;
+	
+	Element() {
+		location = new PVector(0, 0);
+        size = new PVector(30, 30);
+        col = color(100, 100, 100);
+        type = ELEMENT_TYPE_RECTANGLE;
+		elementController.open = true;
+		elementController.elementToControl(this);
+	}
 	
 	Element(int type, PVector location, PVector size, color col) {
 		setLocation(location);
@@ -53,26 +66,39 @@ class Element {
 					translate(location.x, location.y);
 					fill(col);
 					rect(0, 0, size.x, size.y);
-					String mouseNameBase = "Element" + this.toString();
-					String mouseNameWhole = mouseNameBase + "whole";
-					String mouseNameCorner = mouseNameBase + "corner";
-					mouse.declareUpdateElementRelative(mouseNameWhole, 10, 0, 0, round(size.x), round(size.y));
-					mouse.declareUpdateElementRelative(mouseNameCorner, 11, round(size.x)-10, round(size.y)-10, 20, 20);
-					mouse.setElementExpire(mouseNameWhole, 2);
-					mouse.setElementExpire(mouseNameCorner, 2);
-					boolean captured = mouse.isCaptured(mouseNameWhole);
-					boolean capturedAtCorner = mouse.isCaptured(mouseNameCorner);
-					if(captured && !capturedAtCorner) {
-						if(mouseButton == LEFT) {
-							setLocationOffset(new PVector(mouseX - pmouseX, mouseY - pmouseY));
+					
+					if(!showMode) {
+						pushStyle();
+							stroke(100);
+							for(int i = 0; i < 5; i++) {
+								line(size.x-1, size.y-i*3-1, size.x-i*3-1, size.y-1);
+							}
+						popStyle();
+						
+						String mouseNameBase = "Element" + this.toString();
+						String mouseNameWhole = mouseNameBase + "whole";
+						String mouseNameCorner = mouseNameBase + "corner";
+						mouse.declareUpdateElementRelative(mouseNameWhole, 10, 0, 0, round(size.x), round(size.y));
+						mouse.declareUpdateElementRelative(mouseNameCorner, 11, round(size.x)-10, round(size.y)-10, 20, 20);
+						mouse.setElementExpire(mouseNameWhole, 2);
+						mouse.setElementExpire(mouseNameCorner, 2);
+						boolean captured = mouse.isCaptured(mouseNameWhole);
+						boolean capturedAtCorner = mouse.isCaptured(mouseNameCorner);
+						if(captured && !capturedAtCorner) {
+							if(mouseButton == LEFT) {
+								setLocationOffset(new PVector(mouseX - pmouseX, mouseY - pmouseY));
+							}
+							else if(mouseButton == RIGHT) {
+								elementController.open = true;
+								elementController.elementToControl(this);
+							}
 						}
-						else if(mouseButton == RIGHT) {
-							elementController.open = true;
-							elementController.elementToControl(this);
+						else if(capturedAtCorner) {
+							setSizeOffset(new PVector(mouseX - pmouseX, mouseY - pmouseY));
 						}
-					}
-					else if(capturedAtCorner) {
-						setSizeOffset(new PVector(mouseX - pmouseX, mouseY - pmouseY));
+						if(mouse.elmIsHover(mouseNameCorner) || capturedAtCorner) { cursor(CROSS); }
+						else if(mouse.elmIsHover(mouseNameWhole) || captured) { cursor(MOVE); }
+						else { cursor(ARROW); }
 					}
 				popMatrix();
 			break;
@@ -89,9 +115,19 @@ class ElementController {
 	int locX, locY, w, h;
 	boolean open;
 	
+	IntController xS, yS, zS, xL, yL, zL;
+	
 	
 	ElementController() {
 		locX = 0; locY = 0; w = 500; h = 500;
+		
+		xS = new IntController("ElementControllerWindow:xS");
+		yS = new IntController("ElementControllerWindow:yS");
+		zS = new IntController("ElementControllerWindow:zS");
+		xL = new IntController("ElementControllerWindow:xL");
+		yL = new IntController("ElementControllerWindow:yL");
+		zL = new IntController("ElementControllerWindow:zL");
+		
 		window = new Window("ElementControllerWindow", new PVector(w, h), this);
 	}
 	
@@ -114,10 +150,43 @@ class ElementController {
 					g.translate(50, 0);
 					if(sliderChanged(g, mouse, 1)) { setColor(color(red, getColorValue(1), blue)); }
 					g.translate(50, 0);
-					if(sliderChanged(g, mouse, 2)) { setColor(color(red, blue, getColorValue(2))); }
+					if(sliderChanged(g, mouse, 2)) { setColor(color(red, green, getColorValue(2))); }
 				g.popMatrix();
 			} //End of RGB picker
+			{ //Location and size controllers
+				g.pushMatrix();
+					g.translate(200, 0);
+					g.pushMatrix();
+						xS.draw(g, mouse); if(xS.valueHasChanged()) setSizeX(xS.getValue());
+						g.translate(0, 30);
+						yS.draw(g, mouse); if(yS.valueHasChanged()) setSizeY(yS.getValue());
+						g.translate(0, 30);
+						zS.draw(g, mouse); if(zS.valueHasChanged()) setSizeZ(zS.getValue());
+					g.popMatrix();
+					g.translate(100, 0);
+					g.pushMatrix();
+						xL.draw(g, mouse); if(xL.valueHasChanged()) setLocationX(xL.getValue());
+						g.translate(0, 30);
+						yL.draw(g, mouse); if(yL.valueHasChanged()) setLocationY(yL.getValue());
+						g.translate(0, 30);
+						zL.draw(g, mouse); if(zL.valueHasChanged()) setLocationZ(zS.getValue());
+					g.popMatrix();
+				g.popMatrix();
+			} //End of location and size controllers
 		}
+	}
+	
+	void setSizeX() {
+	}
+	void setSizeY() {
+	}
+	void setSizeZ() {
+	}
+	void setLocationX() {
+	}
+	void setLocationY() {
+	}
+	void setLocationZ() {
 	}
 	
 	boolean sliderChanged(PGraphics g, Mouse mouse, int c) {
