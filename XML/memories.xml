@@ -2036,9 +2036,7 @@
               </DMX>
             </fixtureDMX>
             <fixtureDMX id="38">
-              <DMX>
-                <int id="1" val="255"/>
-              </DMX>
+              <DMX/>
             </fixtureDMX>
           </repOfFixtures>
         </Preset>

@@ -1,3 +1,52 @@
+FixtureControllerWindow fixtureController = new FixtureControllerWindow();
+class FixtureControllerWindow {
+  Window window;
+  int locX, locY, w, h;
+  boolean open;
+  int x_location, y_location, z_location;
+  
+  
+  fixture fix;
+  IntController xL, yL, zL;
+  
+  FixtureControllerWindow() {
+    w = 700; h = 500;
+    window = new Window("fixtureController", new PVector(w, h), this);
+    
+    xL = new IntController("LocationController"+this.toString()+":xL");
+    yL = new IntController("LocationController"+this.toString()+":yL");
+    zL = new IntController("LocationController"+this.toString()+":zL");
+  }
+  
+  void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+    window.draw(g, mouse);
+    g.translate(60, 80);
+    if(fix != null) {
+      if(fix.x_location != x_location) { x_location = fix.x_location; xL.setValue(x_location); }
+      if(fix.y_location != x_location) { y_location = fix.y_location; yL.setValue(y_location); }
+      if(fix.z_location != x_location) { z_location = fix.z_location; zL.setValue(z_location); }
+      g.pushMatrix();
+        xL.draw(g, mouse); if(xL.valueHasChanged()) { setLocationX(xL.getValue()); }
+        g.translate(0, 30);
+        yL.draw(g, mouse); if(yL.valueHasChanged()) { setLocationY(yL.getValue()); }
+        g.translate(0, 30);
+        zL.draw(g, mouse); if(zL.valueHasChanged()) { setLocationZ(zL.getValue()); }
+      g.popMatrix();
+    }
+  }
+  
+  void setLocationX(int val) {
+    fix.x_location = val;
+  }
+  void setLocationY(int val) {
+    fix.y_location = val;
+  }
+  void setLocationZ(int val) {
+    fix.z_location = val;
+  }
+  
+}
+
 boolean invokeFixturesDrawFinished = true;
 void invokeFixturesDraw() {
   invokeFixturesDrawFinished = false;

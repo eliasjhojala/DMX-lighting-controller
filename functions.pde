@@ -94,10 +94,17 @@ void doTrussMoving(int i, PVector mouseRotated) {
   if(!showMode && !showModeLocked) {
     fill(topMenuTheme);
     rect(trusses[i].lng-5, -5, 15, 15, 3);
-    if(isHover(trusses[i].lng-5, -5, 15, 15) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
-      mouse.capture(mouse.getElementByName("main:fixtures"));
-      trussToMove = i;
-      movingTruss = true;
+    mouse.declareUpdateElementRelative("truss"+str(i), 100, trusses[i].lng-5, -5, 15, 15);
+    if(mouse.isCaptured("truss"+str(i))) {
+      if(mouseButton == LEFT) {
+        mouse.capture(mouse.getElementByName("main:fixtures"));
+        trussToMove = i;
+        movingTruss = true;
+      }
+      else if(mouseButton == RIGHT) {
+        trussController.open = true;
+        trussController.truss = trusses[i];
+      }
     }
     if(movingTruss && trussToMove == i) {
       if(mouseButton == LEFT) {
@@ -776,4 +783,38 @@ void rect(PVector loc1, PVector loc2, PGraphics g) {
 
 color invert(color in) {
   return color(255-red(in), 255-green(in), 255-blue(in));
+}
+
+XML PVectorAsXML(String name, PVector vector) {
+  XML xml = parseXML("<"+name+"></"+name+">");
+  xml.setFloat("x", vector.x);
+  xml.setFloat("y", vector.y);
+  xml.setFloat("z", vector.z);
+  return xml;
+}
+
+PVector xmlAsPvector(String name, XML xml) {
+  PVector toReturn = new PVector(0, 0, 0);
+  xml = xml.getChild(name);
+  toReturn.x = xml.getFloat("x");
+  toReturn.y = xml.getFloat("y");
+  toReturn.z = xml.getFloat("z");
+  xml = xml.getParent();
+  return toReturn;
+}
+
+XML colorAsXML(String name, color c) {
+  XML xml = parseXML("<"+name+"></"+name+">");
+  xml.setFloat("r", red(c));
+  xml.setFloat("g", green(c));
+  xml.setFloat("b", blue(c));
+  return xml;
+}
+
+color xmlAsColor(String name, XML xml) {
+  color toReturn = color(0, 0, 0);
+  xml = xml.getChild(name);
+  toReturn = color(xml.getFloat("r"), xml.getFloat("g"), xml.getFloat("b"));
+  xml = xml.getParent();
+  return toReturn;
 }

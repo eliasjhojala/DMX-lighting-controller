@@ -112,7 +112,11 @@ void drawMainWindow() {
          
         //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
         //Functions running when pressed on the fixture
-        if(isHover(-fix.size.w/2, -fix.size.h/2, fix.size.w, fix.size.h) && mousePressed && !mouse.captured && mouse.elmIsHover("main:fixtures")) {
+        if(!mouse.captured) {
+          mouse.declareUpdateElementRelative("fixture"+str(i), 1000, round(-fix.size.w/2), round(-fix.size.h/2), round(fix.size.w), round(fix.size.h));
+          mouse.setElementExpire("fixture"+str(i), 2);
+        }
+        if(mouse.elmIsHover("fixture"+str(i)) && mousePressed) {
           if(mouseButton == RIGHT) { //Functions running when pressed on the fixture with mouse left button
             mouse.capture(mouse.getElementByName("main:fixtures"));
             contextMenu1.initiateForFixture(i);
@@ -219,9 +223,11 @@ void drawMainWindow() {
     }
     if(!mousePressed && boxSelect) thread("endBoxSelect");
   //-------------End of view drag & box selection----------------------
+} //End of draw main window
+
+void openFixtureSettings() {
+   fixtureController.open = true; fixtureController.fix = fixtures.get(contextMenu1.fixtureId);
 }
-
-
 
 
 //----------\

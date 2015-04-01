@@ -143,6 +143,7 @@ void saveAllData() {
         thread("saveTrussesAsXML");
         thread("saveMemoriesToXML");
         thread("saveTestXML");
+        saveElementsToXML();
         if(!savingMidiData) { thread("saveMidiData"); }
         oscHandler.saveToXML();
         SaveChannelsAsPdf();

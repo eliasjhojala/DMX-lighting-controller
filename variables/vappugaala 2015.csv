@@ -607,8 +607,8 @@ id,variable_name,variable_dimensions,value,1D,2D
 605,grouping,1,1,1,-
 606,grouping,1,1,2,-
 607,camX,0,830,-,-
-608,camY,0,3679,-,-
-609,camZ,0,1300,-,-
+608,camY,0,3799,-,-
+609,camZ,0,600,-,-
 610,centerX,0,180,-,-
 611,centerY,0,-1470,-,-
 612,chaseMode,0,1,-,-
