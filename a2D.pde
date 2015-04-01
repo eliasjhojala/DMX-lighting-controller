@@ -42,6 +42,14 @@ void drawMainWindow() {
     PVector mouseRotated = new PVector(mouseX, mouseY);
     if(pageRotation != 0) { mouseRotated.rotate(radians(-pageRotation)); }
     
+	//DRAW ELEMENTS
+	pushMatrix();
+		for(int i = 0; i < elements.size(); i++) {
+			elements.get(i).draw();
+		}
+	popMatrix();
+	//End of drawing elements
+	
     //DRAW TRUSSES
     drawTrusses(mouseRotated); //Draw trusses
     if(showSockets) { drawSockets(mouseRotated); } //Draw sockets

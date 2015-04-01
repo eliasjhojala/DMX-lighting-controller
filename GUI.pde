@@ -141,6 +141,8 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(oscSettings, "OSCSettingsWindow", 1000));
     subWindows.add(new SubWindowContainer(midiWindow, "MidiHandlerWindow", 1000));
     subWindows.add(new SubWindowContainer(enttecOutputSettingsWindow, "enttecOutputSettingsWindow", 1000));
+	subWindows.add(new SubWindowContainer(elementController, "elementController", 1000));
+	
     
     subWindows.add(new SubWindowContainer(midiWindow.launchpadToggleOrPush, "launchpadToggleOrPush", 1000));
     subWindows.add(new SubWindowContainer(midiWindow.launchPadMemories, "launchPadMemories", 1000));
