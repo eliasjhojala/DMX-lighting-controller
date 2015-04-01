@@ -10,6 +10,7 @@ class FixtureControllerWindow {
   IntController xL, yL, zL;
   PushButton addNewAllowedTrussForWiring;
   DropdownMenu trussesDDM;
+  DropdownMenu socketsDDM;
   
   FixtureControllerWindow() {
     w = 700; h = 500;
@@ -21,6 +22,21 @@ class FixtureControllerWindow {
     
     addNewAllowedTrussForWiring = new PushButton("addNewAllowedTrussForWiring");
     
+    updateTrusses();
+    updateSockets();
+  }
+  
+  void updateSockets() {
+    if(sockets != null) {
+      ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
+      for(int i = 0; i < sockets.size(); i++) {
+        blocks.add(new DropdownMenuBlock("Socket " + sockets.get(i).name, i));
+      }
+      if(blocks != null) socketsDDM = new DropdownMenu("SocketParentTruss", blocks);
+    }
+  }
+  
+  void updateTrusses() {
     if(trusses != null) {
       ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
       for(int i = 0; i < trusses.length; i++) {
@@ -65,6 +81,14 @@ class FixtureControllerWindow {
             if(trussesDDM.valueHasChanged()) { fix.allowedTrussesForWiring.append(trussesDDM.getValue()); addingNewAllowedTrussForWiring = false; }
           }
         }
+        
+        g.pushMatrix();
+        g.translate(100, 0);
+        if(socketsDDM != null) {
+          socketsDDM.draw(g, mouse);
+          if(socketsDDM.valueHasChanged()) { fix.socket = sockets.get(socketsDDM.getValue()); }
+        }
+        g.popMatrix();
         
       g.popMatrix();
     }
@@ -228,6 +252,8 @@ class fixture {
   fixtureSize size;
   
   int parentAnsa;
+  
+  Socket socket = new Socket();
   
   IntList allowedTrussesForWiring = new IntList();
   
@@ -791,6 +817,8 @@ class fixture {
       g.textSize(15);
       textSize(15);
       g.text(text, lampWidth/2-textWidth(text)/2, y1+lampHeight/2+5);
+      text = this.socket.name;
+      g.text(text, lampWidth/2-textWidth(text)/2, y1-12); 
     }
     g.popStyle();
   }

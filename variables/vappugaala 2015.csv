@@ -115,8 +115,8 @@ id,variable_name,variable_dimensions,value,1D,2D
 113,red,1,255,2,-
 114,green,1,255,2,-
 115,blue,1,255,2,-
-116,xTaka,1,389,2,-
-117,yTaka,1,-2,2,-
+116,xTaka,1,364,2,-
+117,yTaka,1,-6,2,-
 118,rotX,1,128,2,-
 119,fixParam,1,45,2,-
 120,fixtureTypeS,1,i.fresu,2,-

@@ -88,7 +88,7 @@ void saveNearestSocketsToXML() {
 XML getNearestSocketsAsXML() {
   String data = "<NearestSockets></NearestSockets>";
   XML xml = parseXML(data);
-  for(int truss = 0; truss < trusses.length; truss++) {
+  for(int truss = 0; truss < trusses.length; truss++) if(trusses[truss].alignSocketsAutomaticly) {
     xml = xml.addChild("truss");
     xml.setInt("id", truss);
     IntList fixturesInTruss = getListOfFixturesInTruss(truss);
@@ -209,6 +209,7 @@ int[] findNearestSocket(int truss) {
       if(nearestFoundSocket[i] >= 0) {
         sockets.get(nearestFoundSocket[i]).isInUse = true;
         sockets.get(nearestFoundSocket[i]).channel = fix.channelStart;
+        fix.socket = sockets.get(nearestFoundSocket[i]); println(fix.socket.name);
       }
     }
  }

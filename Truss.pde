@@ -9,6 +9,8 @@ class TrussControllerWindow {
   
   IntController xL, yL, zL;
   
+  CheckBox alignSocketsAuto;
+  
   TrussControllerWindow() {
     w = 500; h = 500;
     location = new PVector(0, 0, 0);
@@ -17,6 +19,8 @@ class TrussControllerWindow {
     xL = new IntController("LocationController"+this.toString()+":xL");
     yL = new IntController("LocationController"+this.toString()+":yL");
     zL = new IntController("LocationController"+this.toString()+":zL");
+    
+    alignSocketsAuto = new CheckBox("alignSocketsAuto");
   }
   
   Truss truss;
@@ -34,6 +38,10 @@ class TrussControllerWindow {
       g.translate(0, 30);
       zL.draw(g, mouse); if(zL.valueHasChanged()) { setLocationZ(zL.getValue()); }
     g.popMatrix();
+    g.translate(0, 200);
+    alignSocketsAuto.draw(g, mouse, "alignSocketsAuto"+this.toString());
+    if(alignSocketsAuto.valueHasChanged()) { truss.alignSocketsAutomaticly = alignSocketsAuto.getValue(); }
+    
   }
   
   void setLocationX(int val) {
@@ -53,6 +61,8 @@ class Truss {
   PVector location;
   int type;
   int lng = 1000;
+  boolean alignSocketsAutomaticly;
+  
   Truss(PVector loc, int len, int t) {
     location = loc;
     type = t;

@@ -227,6 +227,7 @@ void drawMainWindow() {
 
 void openFixtureSettings() {
    fixtureController.open = true; fixtureController.fix = fixtures.get(contextMenu1.fixtureId);
+   fixtureController.socketsDDM.setText("Socket " + fixtures.get(contextMenu1.fixtureId).socket.name);
 }
 
 

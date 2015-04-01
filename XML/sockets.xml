@@ -3,37 +3,37 @@
   <Socket channel="7" exist="1" id="0" isInUse="0" name="H6" number="6" truss="2" x_location="7"/>
   <Socket channel="12" exist="1" id="1" isInUse="0" name="H8" number="8" truss="2" x_location="58"/>
   <Socket channel="1" exist="1" id="2" isInUse="0" name="H10" number="10" truss="2" x_location="177"/>
-  <Socket channel="1" exist="1" id="3" isInUse="0" name="H11" number="11" truss="2" x_location="204"/>
+  <Socket channel="1" exist="1" id="3" isInUse="1" name="H11" number="11" truss="2" x_location="204"/>
   <Socket channel="132" exist="1" id="4" isInUse="0" name="H1" number="1" truss="3" x_location="-121"/>
   <Socket channel="16" exist="1" id="5" isInUse="0" name="H12" number="12" truss="1" x_location="434"/>
-  <Socket channel="4" exist="1" id="6" isInUse="0" name="H14" number="14" truss="2" x_location="356"/>
+  <Socket channel="4" exist="1" id="6" isInUse="1" name="H14" number="14" truss="2" x_location="356"/>
   <Socket channel="116" exist="1" id="7" isInUse="0" name="H5" number="5" truss="3" x_location="828"/>
   <Socket channel="0" exist="0" id="8" isInUse="0" name="H8" number="8" truss="3" x_location="1224"/>
   <Socket channel="0" exist="0" id="9" isInUse="0" name="H9" number="9" truss="3" x_location="1094"/>
   <Socket channel="12" exist="1" id="10" isInUse="0" name="H23" number="23" truss="2" x_location="962"/>
-  <Socket channel="18" exist="1" id="11" isInUse="0" name="H15" number="15" truss="2" x_location="487"/>
+  <Socket channel="18" exist="1" id="11" isInUse="1" name="H15" number="15" truss="2" x_location="487"/>
   <Socket channel="13" exist="1" id="12" isInUse="0" name="H9" number="9" truss="1" x_location="326"/>
   <Socket channel="124" exist="1" id="13" isInUse="0" name="H2" number="2" truss="3" x_location="-89"/>
   <Socket channel="1" exist="1" id="14" isInUse="0" name="H7" number="7" truss="1" x_location="192"/>
   <Socket channel="100" exist="1" id="15" isInUse="0" name="H3" number="3" truss="3" x_location="129"/>
-  <Socket channel="3" exist="1" id="16" isInUse="0" name="H13" number="13" truss="2" x_location="328"/>
-  <Socket channel="2" exist="1" id="17" isInUse="0" name="H19" number="19" truss="2" x_location="709"/>
+  <Socket channel="3" exist="1" id="16" isInUse="1" name="H13" number="13" truss="2" x_location="328"/>
+  <Socket channel="2" exist="1" id="17" isInUse="1" name="H19" number="19" truss="2" x_location="709"/>
   <Socket channel="0" exist="0" id="18" isInUse="0" name="H18" number="18" truss="3" x_location="1040"/>
   <Socket channel="0" exist="0" id="19" isInUse="0" name="H19" number="19" truss="3" x_location="1156"/>
   <Socket channel="108" exist="1" id="20" isInUse="0" name="H4" number="4" truss="3" x_location="489"/>
   <Socket channel="0" exist="0" id="21" isInUse="0" name="H21" number="21" truss="3" x_location="1417"/>
-  <Socket channel="4" exist="1" id="22" isInUse="0" name="H16" number="16" truss="2" x_location="519"/>
+  <Socket channel="4" exist="1" id="22" isInUse="1" name="H16" number="16" truss="2" x_location="519"/>
   <Socket channel="17" exist="1" id="23" isInUse="0" name="H17" number="17" truss="1" x_location="546"/>
   <Socket channel="0" exist="0" id="24" isInUse="0" name="H24" number="24" truss="3" x_location="1304"/>
   <Socket channel="0" exist="0" id="25" isInUse="0" name="H25" number="25" truss="3" x_location="1350"/>
   <Socket channel="10" exist="1" id="26" isInUse="0" name="H21" number="21" truss="2" x_location="903"/>
   <Socket channel="9" exist="1" id="27" isInUse="0" name="H22" number="22" truss="1" x_location="781"/>
-  <Socket channel="3" exist="1" id="28" isInUse="0" name="H18" number="18" truss="2" x_location="680"/>
+  <Socket channel="3" exist="1" id="28" isInUse="1" name="H18" number="18" truss="2" x_location="680"/>
   <Socket channel="1" exist="1" id="29" isInUse="0" name="H20" number="20" truss="1" x_location="656"/>
-  <Socket channel="0" exist="1" id="30" isInUse="0" name="D1" number="0" truss="8" x_location="442"/>
-  <Socket channel="0" exist="1" id="31" isInUse="0" name="D2" number="0" truss="8" x_location="464"/>
-  <Socket channel="0" exist="1" id="32" isInUse="0" name="D3" number="0" truss="8" x_location="486"/>
-  <Socket channel="0" exist="1" id="33" isInUse="0" name="D4" number="0" truss="8" x_location="508"/>
-  <Socket channel="0" exist="1" id="34" isInUse="0" name="D5" number="0" truss="8" x_location="530"/>
-  <Socket channel="0" exist="1" id="35" isInUse="0" name="D6" number="0" truss="8" x_location="552"/>
+  <Socket channel="7" exist="1" id="30" isInUse="1" name="D1" number="0" truss="8" x_location="442"/>
+  <Socket channel="6" exist="1" id="31" isInUse="1" name="D2" number="0" truss="8" x_location="464"/>
+  <Socket channel="13" exist="1" id="32" isInUse="1" name="D3" number="0" truss="8" x_location="486"/>
+  <Socket channel="8" exist="1" id="33" isInUse="1" name="D4" number="0" truss="8" x_location="508"/>
+  <Socket channel="14" exist="1" id="34" isInUse="1" name="D5" number="0" truss="8" x_location="530"/>
+  <Socket channel="9" exist="1" id="35" isInUse="1" name="D6" number="0" truss="8" x_location="552"/>
 </Sockets>

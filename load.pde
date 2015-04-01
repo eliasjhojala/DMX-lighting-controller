@@ -126,7 +126,7 @@ void loadAllData1() {
       
       loadSocketsFromXML();
       loadXmlToTrusses();
-      
+      doAfterLoad();
       loadingAllData = false;
   }
 }

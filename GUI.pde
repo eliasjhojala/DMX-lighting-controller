@@ -602,6 +602,21 @@ class DropdownMenu {
     }
   } //End of setValue()
   
+  void setText(String text) {
+    for(int id = 0; id < blocks.size(); id++) {
+      if(blocks.get(id) != null) {
+        println(trim(blocks.get(id).getText()));
+        println(trim(text));
+        if(trim(blocks.get(id).getText()).equals(trim(text))) {
+          selectedBlock = id; //Save selected block id
+          topBlock.setText(blocks.get(id).getText()); //Set topBlock text
+          setRightOffsetAccordingToId(id);
+          break;
+        }
+      }
+    }
+  } //End of setValue()
+  
   void setRightOffsetAccordingToId(int id) {
     offset = id-round(maxNumberOfBlocks/2);
     constrainOffset();
@@ -674,6 +689,8 @@ class DropdownMenuBlock {
   void setValue(int value) {
     this.value = value;
   }
+  
+  
   
   void draw(PVector size, String parentName, int thisId, boolean selected, PGraphics g, Mouse mouse) {
     g.pushMatrix();
