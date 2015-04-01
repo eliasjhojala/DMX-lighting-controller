@@ -145,6 +145,7 @@ void saveAllData() {
         thread("saveTestXML");
         saveElementsToXML();
         if(!savingMidiData) { thread("saveMidiData"); }
+        saveNearestSocketsToXML();
         oscHandler.saveToXML();
         SaveChannelsAsPdf();
       } catch (Exception e) {

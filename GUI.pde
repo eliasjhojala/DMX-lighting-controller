@@ -144,6 +144,8 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(elementController, "elementController", 1000));
     subWindows.add(new SubWindowContainer(fixtureController, "fixtureController", 1000));
     subWindows.add(new SubWindowContainer(trussController, "trussController", 1000));
+    subWindows.add(new SubWindowContainer(socketController, "socketController", 1000));
+    
     
     
 	
@@ -276,8 +278,8 @@ class contextMenu {
     String[] acts;
     String[] labs;
     if(!showMode && !showModeLocked) {
-      acts = new String[] {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs", "removeFixtureFromCM", "removeAllSelectedFixtures", "openFixtureSettings"};
-      labs = new String[] {"Control this", "Control all selected", "Remove this", "Remove all selected", "Open fixture settings"};
+        acts = new String[] {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs", "removeFixtureFromCM", "removeAllSelectedFixtures", "openFixtureSettings"};
+        labs = new String[] {"Control this", "Control all selected", "Remove this", "Remove all selected", "Open fixture settings"};
     } else {
       acts = new String[] {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs"};
       labs = new String[] {"Control this", "Control all selected"};

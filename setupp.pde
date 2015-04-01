@@ -17,5 +17,6 @@ void setuppi() {
   
    
   elementsSetup();
-  
+  socketController = new SocketController();
+  fixtureController = new FixtureControllerWindow();
 }

@@ -24,6 +24,7 @@ XML elementsAsXML() {
 }
 
 void XMLtoElements(XML xml) {
+	elements = new ArrayList<Element>();
   XML[] blocks = xml.getChildren();
   int a = 0;
   for(int i = 0; i < blocks.length; i++) {
@@ -68,14 +69,14 @@ class Element {
 	XML getXML() {
 		String data = "<element></element>";
 		XML xml = parseXML(data);
-		try { 
+		try {
                   xml.addChild(PVectorAsXML("size", size));
-                  xml.addChild(PVectorAsXML("location", location)); 
+                  xml.addChild(PVectorAsXML("location", location));
                   xml.addChild(colorAsXML("color", col));
                 }
                 catch (Exception e) {}
 		return xml;
-	} 
+	}
 
         void XMLtoObject(XML xml) {
           size = xmlAsPvector("size", xml);

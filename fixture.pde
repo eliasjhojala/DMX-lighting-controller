@@ -8,6 +8,8 @@ class FixtureControllerWindow {
   
   fixture fix;
   IntController xL, yL, zL;
+  PushButton addNewAllowedTrussForWiring;
+  DropdownMenu trussesDDM;
   
   FixtureControllerWindow() {
     w = 700; h = 500;
@@ -16,7 +18,19 @@ class FixtureControllerWindow {
     xL = new IntController("LocationController"+this.toString()+":xL");
     yL = new IntController("LocationController"+this.toString()+":yL");
     zL = new IntController("LocationController"+this.toString()+":zL");
+    
+    addNewAllowedTrussForWiring = new PushButton("addNewAllowedTrussForWiring");
+    
+    if(trusses != null) {
+      ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
+      for(int i = 0; i < trusses.length; i++) {
+        blocks.add(new DropdownMenuBlock("Truss " + str(i), i));
+      }
+      if(blocks != null) trussesDDM = new DropdownMenu("SocketParentTruss", blocks);
+    }
   }
+  
+  boolean addingNewAllowedTrussForWiring;
   
   void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
     window.draw(g, mouse);
@@ -31,6 +45,27 @@ class FixtureControllerWindow {
         yL.draw(g, mouse); if(yL.valueHasChanged()) { setLocationY(yL.getValue()); }
         g.translate(0, 30);
         zL.draw(g, mouse); if(zL.valueHasChanged()) { setLocationZ(zL.getValue()); }
+      g.popMatrix();
+      g.pushMatrix();
+        g.translate(300, 0);
+        
+        g.pushMatrix();
+          g.translate(0, 100);
+          g.pushStyle(); g.fill(0);
+          for(int i = 0; i < fix.allowedTrussesForWiring.size(); i++) {
+            g.text(fix.allowedTrussesForWiring.get(i), 10, i*20);
+          }
+          g.popStyle();
+        g.popMatrix();
+        
+        if(addNewAllowedTrussForWiring.isPressed(g, mouse)) addingNewAllowedTrussForWiring = true;
+        if(addingNewAllowedTrussForWiring) {
+          if(trussesDDM != null) {
+            trussesDDM.draw(g, mouse);
+            if(trussesDDM.valueHasChanged()) { fix.allowedTrussesForWiring.append(trussesDDM.getValue()); addingNewAllowedTrussForWiring = false; }
+          }
+        }
+        
       g.popMatrix();
     }
   }

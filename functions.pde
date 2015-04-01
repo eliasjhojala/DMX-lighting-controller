@@ -94,6 +94,7 @@ void doTrussMoving(int i, PVector mouseRotated) {
   if(!showMode && !showModeLocked) {
     fill(topMenuTheme);
     rect(trusses[i].lng-5, -5, 15, 15, 3);
+    pushStyle(); fill(255); text("Truss" + str(i), trusses[i].lng+16, 9); popStyle();
     mouse.declareUpdateElementRelative("truss"+str(i), 100, trusses[i].lng-5, -5, 15, 15);
     if(mouse.isCaptured("truss"+str(i))) {
       if(mouseButton == LEFT) {
@@ -129,8 +130,8 @@ boolean movingSocket = false;
 PVector oldMouseLocationForSockets = new PVector(0, 0);
 
 void drawSockets(PVector mouseRotated) {
-  for(int i = 0; i < sockets.length; i++) {
-    Socket socket = sockets[i];
+  for(int i = 0; i < sockets.size(); i++) {
+    Socket socket = sockets.get(i);
     if(socket != null) if(socket.exist) {
       pushMatrix();
 
@@ -141,7 +142,7 @@ void drawSockets(PVector mouseRotated) {
           PVector point2 = new PVector(20, 30);
           rect(point1.x, point1.y, point2.x, point2.y);
           fill(255);
-          text("H" + str(socket.id), point1.x + 2, point1.y + 20);
+          text(socket.name, point1.x + 2, point1.y + 20);
           doSocketMoving(i, mouseRotated, point1, point2);
 
         
@@ -153,14 +154,19 @@ void drawSockets(PVector mouseRotated) {
 }
 
 void doSocketMoving(int i, PVector mouseRotated, PVector point1, PVector point2) {
-  Socket socket = sockets[i];
+  Socket socket = sockets.get(i);
   if(!showMode && !showModeLocked) {
     fill(topMenuTheme);
-    if(isHover(round(point1.x), round(point1.y), round(point2.x), round(point2.y)) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
+    if(!mouse.captured) {
+      mouse.declareUpdateElementRelative("socket" + str(i), 10000, round(point1.x), round(point1.y), round(point2.x), round(point2.y));
+      mouse.setElementExpire("socket" + str(i), 2);
+    }
+    if(mouse.isCaptured("socket" + str(i))) {
       println(i);
       mouse.capture(mouse.getElementByName("main:fixtures"));
       socketToMove = i;
       movingSocket = true;
+      if(mouseButton == RIGHT) { socketController.open = true; socketController.socket = sockets.get(i); }
     }
     if(movingSocket && socketToMove == i) {
       if(mouseButton == LEFT) {
@@ -817,4 +823,12 @@ color xmlAsColor(String name, XML xml) {
   toReturn = color(xml.getFloat("r"), xml.getFloat("g"), xml.getFloat("b"));
   xml = xml.getParent();
   return toReturn;
+}
+
+
+boolean isInIntList(int val, IntList list) {
+  for(int i = 0; i < list.size(); i++) {
+    if(list.get(i) == val) return true;
+  }
+  return false;
 }

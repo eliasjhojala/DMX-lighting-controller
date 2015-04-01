@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NearestSockets>
   <truss id="0"/>
-  <truss id="1"/>
-  <truss id="2">
-    <socket channel="1" fixture="0" id="0">H2</socket>
-    <socket channel="3" fixture="1" id="1">H3</socket>
-    <socket channel="4" fixture="2" id="2">H4</socket>
-    <socket channel="4" fixture="3" id="3">H5</socket>
-    <socket channel="3" fixture="4" id="4">H6</socket>
-    <socket channel="2" fixture="5" id="5">H7</socket>
-    <socket channel="18" fixture="6" id="6">H8</socket>
+  <truss id="1">
+    <socket channel="17" fixture="7" id="0">H17</socket>
+    <socket channel="16" fixture="8" id="1">H12</socket>
   </truss>
-  <truss id="3"/>
+  <truss id="2">
+    <socket channel="1" fixture="0" id="0">H11</socket>
+    <socket channel="3" fixture="1" id="1">H13</socket>
+    <socket channel="4" fixture="2" id="2">H14</socket>
+    <socket channel="4" fixture="3" id="3">H16</socket>
+    <socket channel="3" fixture="4" id="4">H18</socket>
+    <socket channel="2" fixture="5" id="5">H19</socket>
+    <socket channel="18" fixture="6" id="6">H15</socket>
+  </truss>
+  <truss id="3">
+    <socket channel="5" fixture="14" id="1">H3</socket>
+    <socket channel="10" fixture="24" id="3">H5</socket>
+  </truss>
   <truss id="4"/>
   <truss id="5"/>
   <truss id="6"/>
   <truss id="7"/>
-  <truss id="8"/>
+  <truss id="8">
+    <socket channel="7" fixture="15" id="0">D1</socket>
+    <socket channel="6" fixture="18" id="1">D2</socket>
+    <socket channel="8" fixture="22" id="2">D4</socket>
+    <socket channel="9" fixture="23" id="3">D6</socket>
+    <socket channel="14" fixture="25" id="4">D5</socket>
+    <socket channel="13" fixture="26" id="5">D3</socket>
+  </truss>
   <truss id="9"/>
 </NearestSockets>

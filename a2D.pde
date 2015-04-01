@@ -18,7 +18,7 @@ void drawMainWindow() {
     help.add("Changing fixtureType", "You can open fixtureType menu by pressing t key and clicking on the fixture");
     addedElementsToHelp = true;
   }
-  if(drawNow) pushMatrix(); 
+  if(drawNow) pushMatrix();
    
    if(drawNow) { //Declare all the mouse elements
      mouse.declareUpdateElement("main:fixtures", 0, 0, 0, width, height);
@@ -86,8 +86,8 @@ void drawMainWindow() {
               fix.rotationZ = rot;
             }
             else {
-              if(lampToRotate == i) { 
-                rotationForAllTheFixtures = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360); 
+              if(lampToRotate == i) {
+                rotationForAllTheFixtures = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
               }
               fix.rotationZ = rotationForAllTheFixtures;
             }
@@ -128,7 +128,7 @@ void drawMainWindow() {
             if(!showMode && !showModeLocked) { //Rotate and move fixtures if not in showMode
               if(keyPressed && key == 'r') { //If r pressed then we will rotate fixture
                 lampToRotate = i; //Tell what fixture are we rotating
-                rotateLamp = true; //Tell that we are rotating some fixture 
+                rotateLamp = true; //Tell that we are rotating some fixture
               }
               else if(keyPressed && key == 't') {
                 lampToEditFixtureType = i;
@@ -140,7 +140,7 @@ void drawMainWindow() {
                 moveLamp = true; //Tell that we are moving some fixture
               }
               mouseReleased = false; //Tell that mouse isn't released anymore
-            } 
+            }
             else { //Put fixture on and off by clicking it in showMode
               fix.toggle(true);
             }
@@ -198,10 +198,10 @@ void drawMainWindow() {
   
   
   //Check if mouse is released
-    if(!mousePressed) { 
+    if(!mousePressed) {
       //If mouse isn't pressed then we aren't moving or rotating anything
       rotateLamp = false;
-      moveLamp = false; 
+      moveLamp = false;
     }
   //End of checking is mouse released
   
@@ -240,7 +240,7 @@ void doBoxSelect() {
       
       boxSelect = true;
       boxStartX = mouseX;
-      boxStartY = mouseY; 
+      boxStartY = mouseY;
     } else if(mouse.isCaptured("main:move")) {
       
       pushStyle();
@@ -285,8 +285,8 @@ void endBoxSelect() {
     }
   } else if(!showMode && !showModeLocked) {
     //open contextMwnu
-    String[] acts = { "createNewFixtureAt00", "createNewElement" };
-    String[] texs = { "Create new fixture", "Create new element" };
+    String[] acts = { "createNewFixtureAt00", "createNewElement", "addNewSocket" };
+    String[] texs = { "Create new fixture", "Create new element", "Create socket" };
     contextMenu1.initiate(acts, texs, mouseX, mouseY);
   }
 }
