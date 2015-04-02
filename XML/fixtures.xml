@@ -7,7 +7,7 @@
         <StartChannel>1</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="200" y="-5" z="0">
-          <OnScreen x="1272" y="1072"/>
+          <OnScreen x="524" y="505"/>
           <Rotation x="128" z="15"/>
         </Location>
         <parameter>35</parameter>
@@ -15,6 +15,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="1">
@@ -22,7 +23,7 @@
         <StartChannel>3</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="287" y="5" z="0">
-          <OnScreen x="1381" y="1061"/>
+          <OnScreen x="579" y="499"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>76</parameter>
@@ -30,6 +31,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="2">
@@ -37,7 +39,7 @@
         <StartChannel>4</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="364" y="-6" z="0">
-          <OnScreen x="1464" y="1060"/>
+          <OnScreen x="621" y="499"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -45,6 +47,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="3">
@@ -52,7 +55,7 @@
         <StartChannel>4</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="544" y="-3" z="0">
-          <OnScreen x="1644" y="1063"/>
+          <OnScreen x="713" y="500"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -60,6 +63,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="4">
@@ -67,7 +71,7 @@
         <StartChannel>3</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="628" y="9" z="0">
-          <OnScreen x="1722" y="1065"/>
+          <OnScreen x="752" y="501"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -75,6 +79,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="5">
@@ -82,7 +87,7 @@
         <StartChannel>2</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="720" y="-1" z="0">
-          <OnScreen x="1808" y="1071"/>
+          <OnScreen x="796" y="504"/>
           <Rotation x="128" z="-15"/>
         </Location>
         <parameter>16</parameter>
@@ -90,6 +95,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="6">
@@ -97,7 +103,7 @@
         <StartChannel>18</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="465" y="3" z="0">
-          <OnScreen x="1559" y="1059"/>
+          <OnScreen x="669" y="498"/>
           <Rotation x="185" z="361"/>
         </Location>
         <parameter>-80</parameter>
@@ -105,6 +111,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="7">
@@ -112,7 +119,7 @@
         <StartChannel>17</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="554" y="11" z="0">
-          <OnScreen x="1636" y="638"/>
+          <OnScreen x="709" y="284"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -120,6 +127,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="255"/>
         <parentAnsa>1</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="8">
@@ -127,7 +135,7 @@
         <StartChannel>16</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="399" y="11" z="0">
-          <OnScreen x="1481" y="638"/>
+          <OnScreen x="630" y="284"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -135,6 +143,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="255"/>
         <parentAnsa>1</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="9">
@@ -142,7 +151,7 @@
         <StartChannel>11</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="391" y="5" z="0">
-          <OnScreen x="1478" y="417"/>
+          <OnScreen x="628" y="172"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -150,6 +159,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>7</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="10">
@@ -157,7 +167,7 @@
         <StartChannel>12</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="549" y="5" z="0">
-          <OnScreen x="1636" y="417"/>
+          <OnScreen x="709" y="172"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -165,6 +175,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>7</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="11">
@@ -172,7 +183,7 @@
         <StartChannel>15</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="448" y="17" z="0">
-          <OnScreen x="1541" y="409"/>
+          <OnScreen x="660" y="168"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -180,27 +191,15 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>7</parentAnsa>
-        <FixtureDMXdata>
-          <FixtureDMX>
-            <name>in<DMX>
-                <int id="1" val="47"/>
-              </DMX>
-            </name>
-          </FixtureDMX>
-          <FixtureDMX>
-            <name>out<DMX>
-                <int id="1" val="47"/>
-              </DMX>
-            </name>
-          </FixtureDMX>
-        </FixtureDMXdata>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+        <FixtureDMXdata/>
       </Fixture>
       <Fixture id="12">
         <id>13</id>
         <StartChannel>15</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="490" y="17" z="0">
-          <OnScreen x="1583" y="409"/>
+          <OnScreen x="682" y="168"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -208,27 +207,15 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>7</parentAnsa>
-        <FixtureDMXdata>
-          <FixtureDMX>
-            <name>in<DMX>
-                <int id="1" val="47"/>
-              </DMX>
-            </name>
-          </FixtureDMX>
-          <FixtureDMX>
-            <name>out<DMX>
-                <int id="1" val="47"/>
-              </DMX>
-            </name>
-          </FixtureDMX>
-        </FixtureDMXdata>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+        <FixtureDMXdata/>
       </Fixture>
       <Fixture id="13">
         <id>14</id>
         <StartChannel>5</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="83" y="6" z="0">
-          <OnScreen x="1176" y="839"/>
+          <OnScreen x="475" y="386"/>
           <Rotation x="252" z="-11"/>
         </Location>
         <parameter>45</parameter>
@@ -236,6 +223,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>6</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="14">
@@ -251,6 +239,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="15">
@@ -258,7 +247,7 @@
         <StartChannel>6</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="293" y="1" z="0">
-          <OnScreen x="1381" y="542"/>
+          <OnScreen x="579" y="236"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -266,6 +255,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="16">
@@ -273,7 +263,7 @@
         <StartChannel>8</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="506" y="2" z="0">
-          <OnScreen x="1594" y="543"/>
+          <OnScreen x="687" y="236"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -281,27 +271,15 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>0</parentAnsa>
-        <FixtureDMXdata>
-          <FixtureDMX>
-            <name>in<DMX>
-                <int id="1" val="208"/>
-              </DMX>
-            </name>
-          </FixtureDMX>
-          <FixtureDMX>
-            <name>out<DMX>
-                <int id="1" val="208"/>
-              </DMX>
-            </name>
-          </FixtureDMX>
-        </FixtureDMXdata>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+        <FixtureDMXdata/>
       </Fixture>
       <Fixture id="17">
         <id>23</id>
         <StartChannel>9</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="608" y="0" z="0">
-          <OnScreen x="1696" y="541"/>
+          <OnScreen x="739" y="235"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -309,6 +287,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="18">
@@ -316,7 +295,7 @@
         <StartChannel>10</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="874" y="5" z="0">
-          <OnScreen x="1957" y="843"/>
+          <OnScreen x="871" y="389"/>
           <Rotation x="252" z="11"/>
         </Location>
         <parameter>45</parameter>
@@ -324,6 +303,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>6</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="19">
@@ -331,7 +311,7 @@
         <StartChannel>14</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="877" y="16" z="0">
-          <OnScreen x="1975" y="527"/>
+          <OnScreen x="881" y="228"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -339,6 +319,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="20">
@@ -346,7 +327,7 @@
         <StartChannel>13</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="73" y="16" z="0">
-          <OnScreen x="1171" y="527"/>
+          <OnScreen x="473" y="228"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -354,6 +335,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="21">
@@ -369,6 +351,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="22">
@@ -384,6 +367,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="23">
@@ -399,6 +383,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="24">
@@ -414,6 +399,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="25">
@@ -429,6 +415,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="26">
@@ -444,6 +431,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="27">
@@ -459,6 +447,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="28">
@@ -474,6 +463,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="29">
@@ -489,6 +479,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="30">
@@ -504,6 +495,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="31">
@@ -519,6 +511,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="32">
@@ -534,6 +527,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="33">
@@ -549,6 +543,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="34">
@@ -564,6 +559,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="35">
@@ -579,6 +575,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="36">
@@ -594,6 +591,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="37">
@@ -609,6 +607,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="38">
@@ -624,6 +623,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="39">
@@ -639,6 +639,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="40">
@@ -654,6 +655,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="41">
@@ -669,6 +671,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="42">
@@ -684,6 +687,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="43">
@@ -699,6 +703,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="44">
@@ -714,6 +719,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="45">
@@ -729,6 +735,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="46">
@@ -744,6 +751,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="47">
@@ -759,6 +767,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="48">
@@ -774,6 +783,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="49">
@@ -789,6 +799,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="50">
@@ -804,6 +815,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="51">
@@ -819,6 +831,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="52">
@@ -834,6 +847,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="53">
@@ -849,6 +863,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="54">
@@ -864,6 +879,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="55">
@@ -879,6 +895,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="56">
@@ -894,6 +911,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="57">
@@ -909,6 +927,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="58">
@@ -924,6 +943,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="59">
@@ -939,6 +959,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="60">
@@ -954,6 +975,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="61">
@@ -969,6 +991,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="62">
@@ -984,6 +1007,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="63">
@@ -999,6 +1023,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="64">
@@ -1014,6 +1039,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="65">
@@ -1029,6 +1055,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="66">
@@ -1044,6 +1071,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="67">
@@ -1059,6 +1087,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="68">
@@ -1074,6 +1103,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="69">
@@ -1089,6 +1119,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="70">
@@ -1104,6 +1135,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="71">
@@ -1119,6 +1151,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="72">
@@ -1134,6 +1167,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="73">
@@ -1149,6 +1183,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="74">
@@ -1164,6 +1199,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="75">
@@ -1179,6 +1215,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="76">
@@ -1194,6 +1231,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="77">
@@ -1201,7 +1239,7 @@
         <StartChannel>100</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="73" y="4" z="0">
-          <OnScreen x="1166" y="305"/>
+          <OnScreen x="470" y="115"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1209,6 +1247,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="0" r="191"/>
         <parentAnsa>3</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="78">
@@ -1216,7 +1255,7 @@
         <StartChannel>108</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="248" y="2" z="0">
-          <OnScreen x="1341" y="303"/>
+          <OnScreen x="559" y="114"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1224,6 +1263,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="12" g="0" r="255"/>
         <parentAnsa>3</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="79">
@@ -1231,7 +1271,7 @@
         <StartChannel>116</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="381" y="4" z="0">
-          <OnScreen x="1474" y="305"/>
+          <OnScreen x="626" y="115"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1239,6 +1279,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="255" r="215"/>
         <parentAnsa>3</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="80">
@@ -1246,7 +1287,7 @@
         <StartChannel>124</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="582" y="1" z="0">
-          <OnScreen x="1675" y="302"/>
+          <OnScreen x="728" y="114"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1254,6 +1295,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="90" g="255" r="0"/>
         <parentAnsa>3</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="81">
@@ -1261,7 +1303,7 @@
         <StartChannel>132</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="728" y="0" z="0">
-          <OnScreen x="1821" y="301"/>
+          <OnScreen x="802" y="113"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1269,6 +1311,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="113" r="0"/>
         <parentAnsa>3</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="82">
@@ -1276,7 +1319,7 @@
         <StartChannel>140</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="887" y="2" z="0">
-          <OnScreen x="1980" y="303"/>
+          <OnScreen x="883" y="114"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1284,6 +1327,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="0" r="191"/>
         <parentAnsa>3</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="83">
@@ -1299,6 +1343,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="84">
@@ -1306,7 +1351,7 @@
         <StartChannel>7</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="402" y="1" z="0">
-          <OnScreen x="1490" y="542"/>
+          <OnScreen x="634" y="236"/>
           <Rotation x="-106" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1314,27 +1359,15 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="146" g="255" r="255"/>
         <parentAnsa>0</parentAnsa>
-        <FixtureDMXdata>
-          <FixtureDMX>
-            <name>in<DMX>
-                <int id="1" val="208"/>
-              </DMX>
-            </name>
-          </FixtureDMX>
-          <FixtureDMX>
-            <name>out<DMX>
-                <int id="1" val="208"/>
-              </DMX>
-            </name>
-          </FixtureDMX>
-        </FixtureDMXdata>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+        <FixtureDMXdata/>
       </Fixture>
       <Fixture id="85">
         <id>11</id>
         <StartChannel>30</StartChannel>
         <fixtureTypeId>9</fixtureTypeId>
         <Location x="476" y="-16" z="-57">
-          <OnScreen x="1539" y="245"/>
+          <OnScreen x="659" y="85"/>
           <Rotation x="87" z="900"/>
         </Location>
         <parameter>0</parameter>
@@ -1342,6 +1375,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="1" g="255" r="255"/>
         <parentAnsa>3</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="86">
@@ -1349,7 +1383,7 @@
         <StartChannel>31</StartChannel>
         <fixtureTypeId>8</fixtureTypeId>
         <Location x="150" y="19" z="-65">
-          <OnScreen x="1204" y="300"/>
+          <OnScreen x="489" y="113"/>
           <Rotation x="-268" z="135"/>
         </Location>
         <parameter>0</parameter>
@@ -1357,6 +1391,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="255" r="255"/>
         <parentAnsa>3</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="87">
@@ -1364,7 +1399,7 @@
         <StartChannel>35</StartChannel>
         <fixtureTypeId>7</fixtureTypeId>
         <Location x="495" y="123" z="0">
-          <OnScreen x="1593" y="638"/>
+          <OnScreen x="687" y="284"/>
           <Rotation x="-114" z="360"/>
         </Location>
         <parameter>0</parameter>
@@ -1372,6 +1407,7 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
       <Fixture id="88">
@@ -1379,7 +1415,7 @@
         <StartChannel>37</StartChannel>
         <fixtureTypeId>9</fixtureTypeId>
         <Location x="441" y="109" z="0">
-          <OnScreen x="1539" y="654"/>
+          <OnScreen x="659" y="293"/>
           <Rotation x="0" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1387,8 +1423,1435 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>0</parentAnsa>
+        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
         <FixtureDMXdata/>
       </Fixture>
+      <fixtures>
+        <Fixture id="0">
+          <id>0</id>
+          <StartChannel>1</StartChannel>
+          <fixtureTypeId>6</fixtureTypeId>
+          <Location x="200" y="-5" z="0">
+            <OnScreen x="524" y="505"/>
+            <Rotation x="128" z="15"/>
+          </Location>
+          <parameter>35</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="255" r="255"/>
+          <parentAnsa>2</parentAnsa>
+          <socket channel="1" exist="1" isInUse="1" name="H11" number="11" truss="2" x_location="204"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="1">
+          <id>1</id>
+          <StartChannel>3</StartChannel>
+          <fixtureTypeId>3</fixtureTypeId>
+          <Location x="287" y="5" z="0">
+            <OnScreen x="579" y="499"/>
+            <Rotation x="128" z="0"/>
+          </Location>
+          <parameter>76</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="255" r="255"/>
+          <parentAnsa>2</parentAnsa>
+          <socket channel="3" exist="1" isInUse="1" name="H13" number="13" truss="2" x_location="328"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="2">
+          <id>2</id>
+          <StartChannel>4</StartChannel>
+          <fixtureTypeId>4</fixtureTypeId>
+          <Location x="364" y="-6" z="0">
+            <OnScreen x="621" y="499"/>
+            <Rotation x="128" z="0"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="255" r="255"/>
+          <parentAnsa>2</parentAnsa>
+          <socket channel="4" exist="1" isInUse="1" name="H14" number="14" truss="2" x_location="356"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="3">
+          <id>3</id>
+          <StartChannel>4</StartChannel>
+          <fixtureTypeId>4</fixtureTypeId>
+          <Location x="544" y="-3" z="0">
+            <OnScreen x="713" y="500"/>
+            <Rotation x="128" z="0"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="255" r="255"/>
+          <parentAnsa>2</parentAnsa>
+          <socket channel="4" exist="1" isInUse="1" name="H16" number="16" truss="2" x_location="519"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="4">
+          <id>4</id>
+          <StartChannel>3</StartChannel>
+          <fixtureTypeId>3</fixtureTypeId>
+          <Location x="628" y="9" z="0">
+            <OnScreen x="752" y="501"/>
+            <Rotation x="128" z="0"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="255" r="255"/>
+          <parentAnsa>2</parentAnsa>
+          <socket channel="3" exist="1" isInUse="1" name="H18" number="18" truss="2" x_location="680"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="5">
+          <id>5</id>
+          <StartChannel>2</StartChannel>
+          <fixtureTypeId>6</fixtureTypeId>
+          <Location x="720" y="-1" z="0">
+            <OnScreen x="796" y="504"/>
+            <Rotation x="128" z="-15"/>
+          </Location>
+          <parameter>16</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="255" r="255"/>
+          <parentAnsa>2</parentAnsa>
+          <socket channel="2" exist="1" isInUse="1" name="H19" number="19" truss="2" x_location="709"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="6">
+          <id>6</id>
+          <StartChannel>18</StartChannel>
+          <fixtureTypeId>3</fixtureTypeId>
+          <Location x="465" y="3" z="0">
+            <OnScreen x="669" y="498"/>
+            <Rotation x="185" z="361"/>
+          </Location>
+          <parameter>-80</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="255" r="255"/>
+          <parentAnsa>2</parentAnsa>
+          <socket channel="18" exist="1" isInUse="1" name="H15" number="15" truss="2" x_location="487"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="7">
+          <id>7</id>
+          <StartChannel>17</StartChannel>
+          <fixtureTypeId>2</fixtureTypeId>
+          <Location x="554" y="11" z="0">
+            <OnScreen x="709" y="284"/>
+            <Rotation x="180" z="0"/>
+          </Location>
+          <parameter>-80</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="255"/>
+          <parentAnsa>1</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="8">
+          <id>8</id>
+          <StartChannel>16</StartChannel>
+          <fixtureTypeId>2</fixtureTypeId>
+          <Location x="399" y="11" z="0">
+            <OnScreen x="630" y="284"/>
+            <Rotation x="180" z="0"/>
+          </Location>
+          <parameter>-80</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="255"/>
+          <parentAnsa>1</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="9">
+          <id>9</id>
+          <StartChannel>11</StartChannel>
+          <fixtureTypeId>3</fixtureTypeId>
+          <Location x="391" y="5" z="0">
+            <OnScreen x="628" y="172"/>
+            <Rotation x="252" z="0"/>
+          </Location>
+          <parameter>-80</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>7</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="10">
+          <id>10</id>
+          <StartChannel>12</StartChannel>
+          <fixtureTypeId>3</fixtureTypeId>
+          <Location x="549" y="5" z="0">
+            <OnScreen x="709" y="172"/>
+            <Rotation x="252" z="0"/>
+          </Location>
+          <parameter>-80</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>7</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="11">
+          <id>12</id>
+          <StartChannel>15</StartChannel>
+          <fixtureTypeId>5</fixtureTypeId>
+          <Location x="448" y="17" z="0">
+            <OnScreen x="660" y="168"/>
+            <Rotation x="253" z="0"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>7</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="12">
+          <id>13</id>
+          <StartChannel>15</StartChannel>
+          <fixtureTypeId>5</fixtureTypeId>
+          <Location x="490" y="17" z="0">
+            <OnScreen x="682" y="168"/>
+            <Rotation x="253" z="0"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>7</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="13">
+          <id>14</id>
+          <StartChannel>5</StartChannel>
+          <fixtureTypeId>1</fixtureTypeId>
+          <Location x="83" y="6" z="0">
+            <OnScreen x="475" y="386"/>
+            <Rotation x="252" z="-11"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>6</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="14">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="15">
+          <id>18</id>
+          <StartChannel>6</StartChannel>
+          <fixtureTypeId>1</fixtureTypeId>
+          <Location x="293" y="1" z="0">
+            <OnScreen x="579" y="236"/>
+            <Rotation x="254" z="0"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="16">
+          <id>22</id>
+          <StartChannel>8</StartChannel>
+          <fixtureTypeId>1</fixtureTypeId>
+          <Location x="506" y="2" z="0">
+            <OnScreen x="687" y="236"/>
+            <Rotation x="254" z="0"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="17">
+          <id>23</id>
+          <StartChannel>9</StartChannel>
+          <fixtureTypeId>1</fixtureTypeId>
+          <Location x="608" y="0" z="0">
+            <OnScreen x="739" y="235"/>
+            <Rotation x="254" z="0"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="18">
+          <id>24</id>
+          <StartChannel>10</StartChannel>
+          <fixtureTypeId>1</fixtureTypeId>
+          <Location x="874" y="5" z="0">
+            <OnScreen x="871" y="389"/>
+            <Rotation x="252" z="11"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>6</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="19">
+          <id>25</id>
+          <StartChannel>14</StartChannel>
+          <fixtureTypeId>5</fixtureTypeId>
+          <Location x="877" y="16" z="0">
+            <OnScreen x="881" y="228"/>
+            <Rotation x="254" z="0"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="20">
+          <id>26</id>
+          <StartChannel>13</StartChannel>
+          <fixtureTypeId>5</fixtureTypeId>
+          <Location x="73" y="16" z="0">
+            <OnScreen x="473" y="228"/>
+            <Rotation x="254" z="0"/>
+          </Location>
+          <parameter>45</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="21">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>5</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="22">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>5</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="23">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="24">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="25">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>8</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="26">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="27">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="28">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="29">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="30">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="31">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="32">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="33">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="34">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="35">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="36">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="37">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="38">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="39">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="40">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="41">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="42">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="43">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="44">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="45">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="46">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="47">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="48">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="49">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="50">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="51">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="52">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="53">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="54">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="55">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="56">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="57">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="58">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="59">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="60">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="61">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="62">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="63">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="64">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="65">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="66">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="67">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="68">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="69">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="70">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="71">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="72">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="73">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="74">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="75">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="76">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="77">
+          <id>33</id>
+          <StartChannel>100</StartChannel>
+          <fixtureTypeId>16</fixtureTypeId>
+          <Location x="73" y="4" z="0">
+            <OnScreen x="470" y="115"/>
+            <Rotation x="-48" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="0" r="191"/>
+          <parentAnsa>3</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="78">
+          <id>34</id>
+          <StartChannel>108</StartChannel>
+          <fixtureTypeId>16</fixtureTypeId>
+          <Location x="248" y="2" z="0">
+            <OnScreen x="559" y="114"/>
+            <Rotation x="-48" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="12" g="0" r="255"/>
+          <parentAnsa>3</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="79">
+          <id>35</id>
+          <StartChannel>116</StartChannel>
+          <fixtureTypeId>16</fixtureTypeId>
+          <Location x="381" y="4" z="0">
+            <OnScreen x="626" y="115"/>
+            <Rotation x="-48" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="255" r="215"/>
+          <parentAnsa>3</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="80">
+          <id>36</id>
+          <StartChannel>124</StartChannel>
+          <fixtureTypeId>16</fixtureTypeId>
+          <Location x="582" y="1" z="0">
+            <OnScreen x="728" y="114"/>
+            <Rotation x="-48" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="90" g="255" r="0"/>
+          <parentAnsa>3</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="81">
+          <id>37</id>
+          <StartChannel>132</StartChannel>
+          <fixtureTypeId>16</fixtureTypeId>
+          <Location x="728" y="0" z="0">
+            <OnScreen x="802" y="113"/>
+            <Rotation x="-48" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="113" r="0"/>
+          <parentAnsa>3</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="82">
+          <id>38</id>
+          <StartChannel>140</StartChannel>
+          <fixtureTypeId>16</fixtureTypeId>
+          <Location x="887" y="2" z="0">
+            <OnScreen x="883" y="114"/>
+            <Rotation x="-48" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="0" r="191"/>
+          <parentAnsa>3</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="83">
+          <id>-1</id>
+          <StartChannel>0</StartChannel>
+          <fixtureTypeId>0</fixtureTypeId>
+          <Location x="0" y="0" z="0">
+            <OnScreen x="0" y="0"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="0" r="0"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="84">
+          <id>15</id>
+          <StartChannel>7</StartChannel>
+          <fixtureTypeId>1</fixtureTypeId>
+          <Location x="402" y="1" z="0">
+            <OnScreen x="634" y="236"/>
+            <Rotation x="-106" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="146" g="255" r="255"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="85">
+          <id>11</id>
+          <StartChannel>30</StartChannel>
+          <fixtureTypeId>9</fixtureTypeId>
+          <Location x="476" y="-16" z="-57">
+            <OnScreen x="659" y="85"/>
+            <Rotation x="87" z="900"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="1" g="255" r="255"/>
+          <parentAnsa>3</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="86">
+          <id>16</id>
+          <StartChannel>31</StartChannel>
+          <fixtureTypeId>8</fixtureTypeId>
+          <Location x="150" y="19" z="-65">
+            <OnScreen x="489" y="113"/>
+            <Rotation x="-268" z="135"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="0" g="255" r="255"/>
+          <parentAnsa>3</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="87">
+          <id>17</id>
+          <StartChannel>35</StartChannel>
+          <fixtureTypeId>7</fixtureTypeId>
+          <Location x="495" y="123" z="0">
+            <OnScreen x="687" y="284"/>
+            <Rotation x="-114" z="360"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="255" r="255"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+        <Fixture id="88">
+          <id>19</id>
+          <StartChannel>37</StartChannel>
+          <fixtureTypeId>9</fixtureTypeId>
+          <Location x="441" y="109" z="0">
+            <OnScreen x="659" y="293"/>
+            <Rotation x="0" z="0"/>
+          </Location>
+          <parameter>0</parameter>
+          <preFadeSpeed>1000</preFadeSpeed>
+          <postFadeSpeed>5000</postFadeSpeed>
+          <Color b="255" g="255" r="255"/>
+          <parentAnsa>0</parentAnsa>
+          <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+          <FixtureDMXdata/>
+        </Fixture>
+      </fixtures>
     </fixtures>
   </content>
 </DMX_Controller>

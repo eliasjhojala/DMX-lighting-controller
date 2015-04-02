@@ -64,6 +64,29 @@ class Socket {
   }
   Socket() {
   }
+  
+	void XMLtoObject(XML xml) {
+		truss = xml.getInt("truss");
+		id = xml.getInt("number");
+		x_location = xml.getInt("x_location");
+		channel = xml.getInt("channel");
+		isInUse = boolean(xml.getInt("isInUse"));
+		exist = boolean(xml.getInt("exist"));
+		isInUse = false;
+		name = xml.getString("name");
+	}
+	
+	XML getXML() {
+		XML xml = parseXML("<socket></socket>");
+		xml.setInt("number", id);
+		xml.setInt("truss", truss);
+		xml.setInt("x_location", x_location);
+		xml.setInt("channel", channel);
+		xml.setInt("isInUse", int(isInUse));
+		xml.setInt("exist", int(exist));
+		xml.setString("name", name);
+		return xml;
+	}
 }
 
 void createSockets() {
@@ -115,15 +138,8 @@ void saveSocketsToXML() {
   for(int i = 0; i < sockets.size(); i++) {
     Socket socket = sockets.get(i);
     if(socket != null) {
-      XML block = xml.addChild("Socket");
+      XML block = xml.addChild(socket.getXML());
       block.setInt("id", i);
-      block.setInt("number", socket.id);
-      block.setInt("truss", socket.truss);
-      block.setInt("x_location", socket.x_location);
-      block.setInt("channel", socket.channel);
-      block.setInt("isInUse", int(socket.isInUse));
-      block.setInt("exist", int(socket.exist));
-      block.setString("name", socket.name);
     }
   }
   saveXML(xml, "XML/sockets.xml");
@@ -134,19 +150,14 @@ void loadSocketsFromXML() {
   sockets = new ArrayList<Socket>();
   XML xml = loadXML("XML/sockets.xml");
   //XML socketss = xml.getChild("Sockets");
-  XML[] socket = xml.getChildren("Socket");
+  XML[] socket = xml.getChildren("socket");
   for(int i = 0; i < socket.length; i++) {
-    Socket socketO;
-    socketO = new Socket();
-    socketO.truss = socket[i].getInt("truss");
-    socketO.id = socket[i].getInt("number");
-    socketO.x_location = socket[i].getInt("x_location");
-    socketO.channel = socket[i].getInt("channel");
-    socketO.isInUse = boolean(socket[i].getInt("isInUse"));
-    socketO.exist = boolean(socket[i].getInt("exist"));
-    socketO.isInUse = false;
-    socketO.name = socket[i].getString("name");
-    sockets.add(socketO);
+	if(!trim(socket[i].toString()).equals("")) {
+		Socket socketO;
+		socketO = new Socket();
+		socketO.XMLtoObject(socket[i]);
+		sockets.add(socketO);
+	}
   }
 }
 

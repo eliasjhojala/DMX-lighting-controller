@@ -169,9 +169,8 @@ class Element {
 						else if(capturedAtCorner) {
 							setSizeOffset(new PVector(mouseX - pmouseX, mouseY - pmouseY));
 						}
-						if(mouse.elmIsHover(mouseNameCorner) || capturedAtCorner) { cursor(CROSS); }
-						else if(mouse.elmIsHover(mouseNameWhole) || captured) { cursor(MOVE); }
-						else { cursor(ARROW); }
+						if(mouse.elmIsHover(mouseNameCorner) || capturedAtCorner) { cursor.set(java.awt.Cursor.SE_RESIZE_CURSOR); }
+						else if(mouse.elmIsHover(mouseNameWhole) || captured) { cursor.set(MOVE); }
 					}
 				popMatrix();
 			break;
