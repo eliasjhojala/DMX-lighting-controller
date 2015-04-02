@@ -21,7 +21,7 @@ void setuppi() {
 }
 
 void doAfterLoad() {
-  socketController = new SocketController();
+  socketController.updateTrusses();
   fixtureController.updateSockets();
   fixtureController.updateTrusses();
 }

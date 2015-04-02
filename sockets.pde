@@ -16,7 +16,11 @@ class SocketController {
     window = new Window("socketController", new PVector(w, h), this);
     
     socketName = new TextBox("", 1);
+    updateTrusses();
     
+  }
+  
+  void updateTrusses() {
     ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
     if(trusses != null) {
       for(int i = 0; i < trusses.length; i++) {
@@ -25,6 +29,7 @@ class SocketController {
       if(blocks != null) parentTruss = new DropdownMenu("SocketParentTruss", blocks);
     }
   }
+  
   void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
     window.draw(g, mouse);
     g.translate(60, 60);
@@ -204,11 +209,10 @@ int[] findNearestSocket(int truss) {
     int nearestFoundDistance = Integer.MAX_VALUE;
     nearestFoundSocket[i] = -1;
     fixture fix = fixtures.get(fixturesInTruss.get(i));
-    if(fix.isHalogen()) {
       for(int j = 0; j < socketsInTruss.size(); j++) {
         if(sockets.get(socketsInTruss.get(j)) != null) {
           Socket socket = sockets.get(socketsInTruss.get(j));
-          if((!socket.isInUse) || (socket.channel == fix.channelStart)) {
+          if((!socket.isInUse) || (socket.channel == fix.channelStart)/* || (!fix.isHalogen() && socket.channel == -2)*/) {
             if(abs(socket.x_location - fix.x_location) <= nearestFoundDistance) {
               nearestFoundDistance = abs(socket.x_location - fix.x_location);
               nearestFoundSocket[i] = socketsInTruss.get(j);
@@ -219,10 +223,10 @@ int[] findNearestSocket(int truss) {
       }
       if(nearestFoundSocket[i] >= 0) {
         sockets.get(nearestFoundSocket[i]).isInUse = true;
-        sockets.get(nearestFoundSocket[i]).channel = fix.channelStart;
+        /*if(fix.isHalogen()) { */ sockets.get(nearestFoundSocket[i]).channel = fix.channelStart; /*}
+        else { sockets.get(nearestFoundSocket[i]).channel = -2; }*/
         fix.socket = sockets.get(nearestFoundSocket[i]); println(fix.socket.name);
       }
-    }
  }
   
   return nearestFoundSocket;

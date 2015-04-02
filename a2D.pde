@@ -141,7 +141,7 @@ void drawMainWindow() {
               }
               mouseReleased = false; //Tell that mouse isn't released anymore
             }
-            else { //Put fixture on and off by clicking it in showMode
+            else if(mouse.firstCaptureFrame) { //Put fixture on and off by clicking it in showMode
               fix.toggle(true);
             }
           } //End of functions running when pressed on the fixture with mouse left button

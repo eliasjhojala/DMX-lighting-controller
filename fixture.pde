@@ -13,7 +13,7 @@ class FixtureControllerWindow {
   DropdownMenu socketsDDM;
   
   FixtureControllerWindow() {
-    w = 700; h = 500;
+    w = 1000; h = 500;
     window = new Window("fixtureController", new PVector(w, h), this);
     
     xL = new IntController("LocationController"+this.toString()+":xL");
@@ -32,8 +32,11 @@ class FixtureControllerWindow {
       for(int i = 0; i < sockets.size(); i++) {
         blocks.add(new DropdownMenuBlock("Socket " + sockets.get(i).name, i));
       }
+      
       if(blocks != null) socketsDDM = new DropdownMenu("SocketParentTruss", blocks);
     }
+    
+    
   }
   
   void updateTrusses() {
@@ -83,7 +86,7 @@ class FixtureControllerWindow {
         }
         
         g.pushMatrix();
-        g.translate(100, 0);
+        g.translate(200, 0);
         if(socketsDDM != null) {
           socketsDDM.draw(g, mouse);
           if(socketsDDM.valueHasChanged()) { fix.socket = sockets.get(socketsDDM.getValue()); }
@@ -284,12 +287,11 @@ class fixture {
   XML getXML() {
 	String data = "<fixture></fixture>";
 	XML xml = parseXML(data);
-	XML block = xml.addChild("id");
-	block.setContent(id);
+	XML block;
 	block = xml.addChild("StartChannel");
-	block.setContent(channelStart);
+	block.setContent(str(channelStart));
 	block = xml.addChild("fixtureTypeId");
-	block.setContent(fixtureTypeId);
+	block.setContent(str(fixtureTypeId));
 	block = xml.addChild("Location");
 	block.setInt("x", x_location);
 	block.setInt("y", y_location);
@@ -303,27 +305,26 @@ class fixture {
 	block.setInt("z", rotationZ);
 	
 	block = xml.addChild("parameter");
-	block.setContent(parameter);
+	block.setContent(str(parameter));
 	block = xml.addChild("preFadeSpeed");
-	block.setContent(preFadeSpeed);
+	block.setContent(str(preFadeSpeed));
 	block = xml.addChild("postFadeSpeed");
-	block.setContent(postFadeSpeed);
+	block.setContent(str(postFadeSpeed));
 	block = xml.addChild("Color");
 	block.setInt("r", red);
 	block.setInt("g", green);
 	block.setInt("b", blue);
 	block = xml.addChild("parentAnsa");
-	block.setContent(parentAnsa);
+	block.setContent(str(parentAnsa));
 	block = xml.addChild(socket.getXML());
  
 	return xml;
   }
   
-  void loadFixtureData(ManageXML XMLObject) {
-    channelStart = int(XMLObject.getBlock("StartChannel"));
-    fixtureTypeId = int(XMLObject.getBlock("fixtureTypeId"));
+  void loadFixtureData(XML xml) {
+    channelStart = int(xml.getChild("StartChannel").getContent());
+    fixtureTypeId = int(xml.getChild("fixtureTypeId").getContent());
 	
-	XML xml = XMLObject.getCurrentXML();
 	println(xml);println();println();
 	XML block;
 	

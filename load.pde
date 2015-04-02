@@ -55,7 +55,7 @@ void loadAllData1() {
           }
       
       
-     /* for (TableRow row : table.findRows("xTaka", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D")))
+      for (TableRow row : table.findRows("xTaka", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).x_location           = int(row.getString("value")); }
       
       for (TableRow row : table.findRows("yTaka", "variable_name"))      if(fixtures.array.size() > int(row.getString("1D")))
@@ -85,7 +85,7 @@ void loadAllData1() {
       
       for (TableRow row : table.findRows("ansaParent", "variable_name")) if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).parentAnsa           = int(row.getString("value")); }
-  */
+  
       
       //--------------------------------------------------------------------------------------------------------------------------------------
   
@@ -107,7 +107,7 @@ void loadAllData1() {
       
       for (TableRow row : table.findRows("centerX", "variable_name"))              { center.x = int(row.getString("value")); }
       for (TableRow row : table.findRows("centerY", "variable_name"))              { center.y = int(row.getString("value")); }
-      
+     
     
       
       

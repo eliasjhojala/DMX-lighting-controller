@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NearestSockets>
-  <truss id="2">
-    <socket channel="1" fixture="1" id="0">H11</socket>
-    <socket channel="3" fixture="2" id="1">H13</socket>
-    <socket channel="4" fixture="3" id="2">H14</socket>
-    <socket channel="4" fixture="4" id="3">H16</socket>
-    <socket channel="3" fixture="5" id="4">H18</socket>
-    <socket channel="2" fixture="6" id="5">H19</socket>
-    <socket channel="18" fixture="7" id="6">H15</socket>
+  <truss id="1">
+    <socket channel="17" fixture="7" id="0">H17</socket>
+    <socket channel="16" fixture="8" id="1">H12</socket>
   </truss>
 </NearestSockets>
