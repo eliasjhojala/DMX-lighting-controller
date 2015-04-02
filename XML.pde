@@ -25,9 +25,9 @@ void saveTestXML() {
   savingTestXML = false;
 }
 
-void saveFixturesToXML() {
-  ManageXML XMLObject = fixtureXML;
-  XMLObject.addBlockAndIncrease("fixtures");
+XML getFixturesXML() {
+	String data = "<fixtures></fixtures>";
+	XML xml = parseXML(data);
 
   for(int i = 0; i < fixtures.array.size(); i++) {
     XMLObject.addBlockAndIncrease("Fixture");
@@ -36,6 +36,7 @@ void saveFixturesToXML() {
       fixtures.array.get(i).saveFixtureDataToXML(XMLObject, id);
     XMLObject.goBack();
   }
+  return xml;
 }
 
 void loadTestXML() {
@@ -112,6 +113,9 @@ class ManageXML {
   float getDataFloat(String name) {
     return currentBlock.getFloat(name);
   }
+  XML getCurrentXML() {
+	return currentBlock;
+  }
   int[] getArray(String name) {
     int[] data = { };
     if(goToChild(name)) {
@@ -165,6 +169,9 @@ class ManageXML {
   }
   void addBlockAndIncrease(String name) {
     currentBlock = currentBlock.addChild(name);
+  }
+  void addBlock(XML block) {
+	XML newBlock = currentBlock.addChild(block);
   }
   void addArray(String name, int[] data) {
     if(data != null) {

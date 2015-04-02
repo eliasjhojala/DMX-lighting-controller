@@ -281,58 +281,91 @@ class fixture {
     XMLObject.goBack();
   }
   
-  void saveFixtureDataToXML(ManageXML XMLObject, int id) {
-    XMLObject.addBlock("id", id);
-    XMLObject.addBlock("StartChannel", channelStart);
-    XMLObject.addBlock("fixtureTypeId", fixtureTypeId);
-    XMLObject.addBlockAndIncrease("Location");
-      XMLObject.addData("x", x_location);
-      XMLObject.addData("y", y_location);
-      XMLObject.addData("z", z_location);
-      XMLObject.addBlockAndIncrease("OnScreen");
-        XMLObject.addData("x", locationOnScreenX);
-        XMLObject.addData("y", locationOnScreenY);
-      XMLObject.goBack();
-      XMLObject.addBlockAndIncrease("Rotation");
-        XMLObject.addData("x", rotationX);
-        XMLObject.addData("z", rotationZ);
-    XMLObject.goBack(2);
-    XMLObject.addBlock("parameter", parameter);
-    XMLObject.addBlock("preFadeSpeed", preFadeSpeed);
-    XMLObject.addBlock("postFadeSpeed", postFadeSpeed);
-    XMLObject.addBlockAndIncrease("Color");
-      XMLObject.addData("r", red);
-      XMLObject.addData("g", green);
-      XMLObject.addData("b", blue);
-    XMLObject.goBack();
-    XMLObject.addBlock("parentAnsa", parentAnsa);
-    saveFixtureDMXDataToXML(XMLObject);
+  XML getXML() {
+	String data = "<fixture></fixture>";
+	XML xml = parseXML(data);
+	XML block = xml.addChild("id");
+	block.setContent(id);
+	block = xml.addChild("StartChannel");
+	block.setContent(channelStart);
+	block = xml.addChild("fixtureTypeId");
+	block.setContent(fixtureTypeId);
+	block = xml.addChild("Location");
+	block.setInt("x", x_location);
+	block.setInt("y", y_location);
+	block.setInt("z", z_location);
+	block = block.addChild("OnScreen");
+	block.setInt("x", locationOnScreenX);
+	block.setInt("y", locationOnScreenY);
+	block = block.getParent();
+	block = block.addChild("Rotation");
+	block.setInt("x", rotationX);
+	block.setInt("z", rotationZ);
+	
+	block = xml.addChild("parameter");
+	block.setContent(parameter);
+	block = xml.addChild("preFadeSpeed");
+	block.setContent(preFadeSpeed);
+	block = xml.addChild("postFadeSpeed");
+	block.setContent(postFadeSpeed);
+	block = xml.addChild("Color");
+	block.setInt("r", red);
+	block.setInt("g", green);
+	block.setInt("b", blue);
+	block = xml.addChild("parentAnsa");
+	block.setContent(parentAnsa);
+	block = xml.addChild(socket.getXML());
+ 
+	return xml;
   }
   
   void loadFixtureData(ManageXML XMLObject) {
     channelStart = int(XMLObject.getBlock("StartChannel"));
     fixtureTypeId = int(XMLObject.getBlock("fixtureTypeId"));
-    XMLObject.goToChild("Location");
-      x_location = XMLObject.getDataInt("x");
-      y_location = XMLObject.getDataInt("y");
-      z_location = XMLObject.getDataInt("z");
-      XMLObject.goToChild("OnScreen");
-        locationOnScreenX = XMLObject.getDataInt("x");
-        locationOnScreenY = XMLObject.getDataInt("y");
-      XMLObject.goBack();
-      XMLObject.goToChild("Rotation");
-        rotationX = XMLObject.getDataInt("x");
-        rotationZ = XMLObject.getDataInt("z");
-    XMLObject.goBack(2);
-    parameter = int(XMLObject.getBlock("parameter"));
-    preFadeSpeed = int(XMLObject.getBlock("preFadeSpeed"));
-    postFadeSpeed = int(XMLObject.getBlock("postFadeSpeed"));
-    XMLObject.goToChild("Color");
-      red = XMLObject.getDataInt("r");
-      green = XMLObject.getDataInt("g");
-      blue = XMLObject.getDataInt("b");
-    XMLObject.goBack();
-    parentAnsa = int(XMLObject.getBlock("parentAnsa"));
+	
+	XML xml = XMLObject.getCurrentXML();
+	println(xml);println();println();
+	XML block;
+	
+	try {
+		block = xml.getChild("Location");
+		x_location = block.getInt("x");
+		y_location = block.getInt("y");
+		z_location = block.getInt("z_location");
+		block = block.getChild("OnScreen");
+		locationOnScreenX = block.getInt("x");
+		locationOnScreenY = block.getInt("y");
+		block = block.getParent();
+		block = block.getChild("Rotation");
+		rotationX = block.getInt("x");
+		rotationZ = block.getInt("z");
+	}
+	catch(Exception e) {
+		println("Error with location");
+	}
+	
+	try {
+		block = xml.getChild("parameter");
+		parameter = int(block.getContent());
+		block = xml.getChild("preFadeSpeed");
+		preFadeSpeed = int(block.getContent());
+		block = xml.getChild("postFadeSpeed");
+		postFadeSpeed = int(block.getContent());
+		
+		block = xml.getChild("Color");
+		red = block.getInt("r");
+		green = block.getInt("g");
+		blue = block.getInt("b");
+		
+		block = xml.getChild("parentAnsa");
+		parentAnsa = int(block.getContent());
+		block = xml.getChild("socket");
+		socket.XMLtoObject(block);
+	}
+	catch (Exception e) {
+		e.printStackTrace();
+	}
+
   }
   
  
