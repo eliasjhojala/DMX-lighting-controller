@@ -112,6 +112,9 @@ void ylavalikko() {
       if(drawLeftSideButton(round, "Control")) lowerMenu.open = !lowerMenu.open;
       translate(0, 120);
       if(drawLeftSideButton(round, "Power")) powerWindow.open = !powerWindow.open;
+      translate(0, 120);
+      if(drawLeftSideButton(round, "Dimmers")) dimmerWindow.open = !dimmerWindow.open;
+      
     popMatrix();
   } //End of buttons placed to left side       
   //settingsWindow.draw();

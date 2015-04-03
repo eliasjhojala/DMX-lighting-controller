@@ -7,6 +7,134 @@ class Channel {
   }
 }
 
+class Dimmer {
+  int startChannel;
+  int numberOfChannels = 6;
+  int powerSocketId;
+  int phases = 3;
+  
+  Dimmer() {
+  }
+}
+
+DimmerWindow dimmerWindow = new DimmerWindow();
+ArrayList<Dimmer> dimmers = new ArrayList<Dimmer>();
+
+class DimmerWindow {
+  Window window;
+  int locX, locY, w, h;
+  boolean open;
+  
+  PushButton addNewDimmer;
+  IntController dimmerStartChannel, dimmerPowerSocketId, numberOfChannels, phases;
+  
+  Dimmer newDimmer;
+  boolean addingNewDimmer;
+
+  
+  DimmerWindow() {
+    w = 1000; h = 700;
+    window = new Window("powerWindow", new PVector(w, h), this);
+    
+    addNewDimmer = new PushButton("addNewDimmer");
+    dimmerStartChannel = new IntController("dimmerStartChannel"+this.toString());
+    dimmerPowerSocketId = new IntController("dimmerPowerSocketId"+this.toString());
+    numberOfChannels = new IntController("numberOfChannels"+this.toString());
+    phases = new IntController("phases"+this.toString());
+    dimmerStartChannel.setLimits(1, DMX_CHAN_LENGTH);
+    dimmerPowerSocketId.setLimits(1, 4);
+    numberOfChannels.setLimits(1, 36);
+    phases.setLimits(1, 3);
+  }
+  
+  void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+    
+    window.draw(g, mouse);
+    g.translate(60, 60);
+    
+    int textTranslationWithIntController = 14;
+    
+    if(addNewDimmer.isPressed(g, mouse)) { addingNewDimmer = true; newDimmer = new Dimmer(); dimmers.add(newDimmer); }
+    if(addingNewDimmer) {
+      g.pushMatrix(); g.pushStyle();
+        g.fill(0);
+        g.textAlign(LEFT);
+        
+        g.translate(30, 0);
+        g.pushMatrix();
+          String text = "Start channel:";
+          g.text(text, 0, textTranslationWithIntController);
+          g.translate(130, 0);
+          dimmerStartChannel.draw(g, mouse);
+          if(dimmerStartChannel.valueHasChanged()) { newDimmer.startChannel = dimmerStartChannel.getValue(); }
+          if(newDimmer.startChannel != dimmerStartChannel.getValue()) { dimmerStartChannel.setValue(newDimmer.startChannel); }
+        g.popMatrix();
+        
+        g.translate(0, 50);
+        g.pushMatrix();
+          text = "Powersocket id:";
+          g.text(text, 0, textTranslationWithIntController);
+          g.translate(130, 0);
+          dimmerPowerSocketId.draw(g, mouse);
+          if(dimmerPowerSocketId.valueHasChanged()) { newDimmer.powerSocketId = dimmerPowerSocketId.getValue(); }
+          if(newDimmer.powerSocketId != dimmerPowerSocketId.getValue()) { dimmerPowerSocketId.setValue(newDimmer.powerSocketId); }
+        g.popMatrix();
+        
+        g.translate(0, 50);
+        g.pushMatrix();
+          text = "numberOfChannels:";
+          g.text(text, 0, textTranslationWithIntController);
+          g.translate(130, 0);
+          numberOfChannels.draw(g, mouse);
+          if(numberOfChannels.valueHasChanged()) { newDimmer.numberOfChannels = numberOfChannels.getValue(); }
+          if(newDimmer.numberOfChannels != numberOfChannels.getValue()) { numberOfChannels.setValue(newDimmer.numberOfChannels); }
+        g.popMatrix();
+        
+        
+        g.translate(0, 50);
+        g.pushMatrix();
+          text = "phases:";
+          g.text(text, 0, textTranslationWithIntController);
+          g.translate(130, 0);
+          phases.draw(g, mouse);
+          if(phases.valueHasChanged()) { newDimmer.phases = phases.getValue(); }
+          if(newDimmer.phases != phases.getValue()) { phases.setValue(newDimmer.phases); }
+        g.popMatrix();
+        
+      g.popMatrix(); g.popStyle();
+    }
+    
+    
+    g.pushMatrix(); g.pushStyle();
+    g.translate(0, 200);
+    g.fill(0);
+    //g.rect(0, 0, 700, 300);
+    for(int i = 0; i < dimmers.size(); i++) {
+      Dimmer dimmer = dimmers.get(i);
+      g.pushMatrix(); g.pushStyle();
+        g.fill(0);
+        g.translate(40, i*20);
+        g.text("CH "+str(dimmer.startChannel)+"-"+str(dimmer.startChannel+dimmer.numberOfChannels-1), 0, 14);
+        g.text("phases: "+str(dimmer.phases), 100, 14);
+        g.text("powerSocketId: "+str(dimmer.powerSocketId), 200, 14);
+        g.translate(300, 0);
+        {
+          PushButton remove = new PushButton("Remove"+str(i)+this.toString()+dimmer.toString());
+          if(remove.isPressed(g, mouse)) { dimmers.remove(i); }
+          g.translate(30, 0);
+          PushButton edit = new PushButton("edit"+str(i)+this.toString()+dimmer.toString());
+          if(edit.isPressed(g, mouse)) { newDimmer = dimmers.get(i); }
+        }
+        
+      g.popMatrix(); g.popStyle();
+    }
+    
+    g.popMatrix(); g.popStyle();
+    
+  }
+}
+
+
 class PowerWindow {
   Window window;
   int locX, locY, w, h;
@@ -68,9 +196,22 @@ class PowerWindow {
     
     int a = 0;
     float totalPower = 0;
+    float maxTotalPower = 0;
+    float totalAmpers = 0;
+    float maxTotalAmpers = 0;
+    float voltage = 230;
+    
     for(int i = 0; i < fixturesShown.size(); i++) {
       totalPower += fixtures.get(fixturesShown.get(i)).getActualWatts();
+      maxTotalPower += fixtures.get(fixturesShown.get(i)).getWatts();
     }
+    
+    totalAmpers = round(totalPower/voltage*10);
+    totalAmpers = totalAmpers / 10;
+    maxTotalAmpers = round(maxTotalPower/voltage*10);
+    maxTotalAmpers = maxTotalAmpers / 10;
+    
+    
     for(int i = offset; i < fixturesShown.size(); i++) {
       fixture fixD = fixtures.get(fixturesShown.get(i));
       a++;
@@ -101,11 +242,23 @@ class PowerWindow {
     
     
     g.pushMatrix(); g.pushStyle();
-    totalPower = (round(totalPower/10)*10)/1000;
-    g.translate(800, 30);
-    g.fill(0);
-    g.textSize(40);
-    g.text(str(totalPower)+"kW", 0, 0);
+      g.translate(700, 30);
+      g.pushMatrix(); g.pushStyle();
+        g.translate(0, 30);
+        int h1 = 200;
+        int h2 = round(map(totalPower, 0, maxTotalPower, 0, h1));
+        g.fill(100, 230);
+        g.rect(0, 0, h1, 30);
+        g.fill(255, 255, 200);
+        g.rect(0, 0, h2, 30);
+      g.popMatrix(); g.popStyle();
+      totalPower = round(totalPower/100);
+      totalPower = totalPower/10;
+      maxTotalPower = round(maxTotalPower/100);
+      maxTotalPower = maxTotalPower/10;
+      g.fill(0);
+      g.textSize(40);
+      g.text(str(totalPower)+"kW, "+str(totalAmpers)+"A", 0, 0);
     g.popMatrix(); g.popStyle();
   }
 }

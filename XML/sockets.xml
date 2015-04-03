@@ -7,8 +7,8 @@
   <socket channel="0" exist="1" id="4" isInUse="0" name="H5" number="0" truss="3" x_location="687"/>
   <socket channel="0" exist="1" id="5" isInUse="0" name="H7" number="0" truss="1" x_location="168"/>
   <socket channel="0" exist="1" id="6" isInUse="0" name="H9" number="0" truss="1" x_location="282"/>
-  <socket channel="16" exist="1" id="7" isInUse="1" name="H12" number="0" truss="1" x_location="397"/>
-  <socket channel="17" exist="1" id="8" isInUse="1" name="H17" number="0" truss="1" x_location="526"/>
+  <socket channel="16" exist="1" id="7" isInUse="0" name="H12" number="0" truss="1" x_location="397"/>
+  <socket channel="17" exist="1" id="8" isInUse="0" name="H17" number="0" truss="1" x_location="526"/>
   <socket channel="0" exist="1" id="9" isInUse="0" name="H20" number="0" truss="1" x_location="646"/>
   <socket channel="0" exist="1" id="10" isInUse="0" name="H22" number="0" truss="1" x_location="767"/>
   <socket channel="0" exist="1" id="11" isInUse="0" name="H6" number="0" truss="2" x_location="29"/>

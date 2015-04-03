@@ -147,6 +147,7 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(socketController, "socketController", 1000));
     
     subWindows.add(new SubWindowContainer(powerWindow, "powerWindow", 1000));
+    subWindows.add(new SubWindowContainer(dimmerWindow, "dimmerWindow", 1000));
     
     
     

@@ -103,22 +103,55 @@
   </memoryControllerLookupTable>
   <Memory enabled="1" id="1" soloInThisMemory="0" specialType="0" type="4" value="255" valueOld="0"/>
   <Memory enabled="1" id="2" soloInThisMemory="0" specialType="0" type="5" value="94" valueOld="0"/>
-  <Memory enabled="0" id="4" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
-    <Chase>
-      <content>
-        <int id="0" val="14"/>
-        <int id="1" val="18"/>
-        <int id="2" val="15"/>
-        <int id="3" val="22"/>
-        <int id="4" val="23"/>
-        <int id="5" val="24"/>
-      </content>
-      <stepData brightness="36" brightness1="1"/>
-      <mainData fade="7" value="255"/>
-      <modeData/>
-    </Chase>
+  <Memory enabled="1" id="4" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+    <Preset>
+      <mainData value="0" valueOld="0"/>
+      <whatToSave>
+        <int id="0" val="1"/>
+      </whatToSave>
+      <fixturesToSave>
+        <int id="0" val="1"/>
+        <int id="1" val="1"/>
+        <int id="2" val="1"/>
+        <int id="3" val="1"/>
+        <int id="4" val="1"/>
+        <int id="5" val="1"/>
+      </fixturesToSave>
+      <repOfFixtures>
+        <fixtureDMX id="0">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+        <fixtureDMX id="1">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+        <fixtureDMX id="2">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+        <fixtureDMX id="3">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+        <fixtureDMX id="4">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+        <fixtureDMX id="5">
+          <DMX>
+            <int id="1" val="255"/>
+          </DMX>
+        </fixtureDMX>
+      </repOfFixtures>
+    </Preset>
   </Memory>
-  <Memory enabled="0" id="5" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
+  <Memory enabled="0" id="5" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
     <Chase>
       <content>
         <int id="0" val="33"/>
@@ -186,6 +219,21 @@
         </fixtureDMX>
       </repOfFixtures>
     </Preset>
+  </Memory>
+  <Memory enabled="1" id="8" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
+    <Chase>
+      <content>
+        <int id="0" val="20"/>
+        <int id="1" val="15"/>
+        <int id="2" val="81"/>
+        <int id="3" val="16"/>
+        <int id="4" val="17"/>
+        <int id="5" val="19"/>
+      </content>
+      <stepData brightness="72" brightness1="2" step="3"/>
+      <mainData fade="7" ownFade="107" value="255"/>
+      <modeData fadeMode="1"/>
+    </Chase>
   </Memory>
   <Memory enabled="1" id="20" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
     <Chase>
