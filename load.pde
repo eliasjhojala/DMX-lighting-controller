@@ -126,6 +126,7 @@ void loadAllData1() {
       
       loadSocketsFromXML();
       loadXmlToTrusses();
+      loadDimmersFromXML();
       doAfterLoad();
       loadingAllData = false;
   }

@@ -1,9 +1,30 @@
 PowerWindow powerWindow = new PowerWindow();
 
-class Channel {
-  IntList fixtures = new IntList();
-  int watts;
-  Channel() {
+
+
+void saveDimmersToXML() {
+  saveXML(dimmersAsXML(), "XML/dimmers.xml");
+}
+void loadDimmersFromXML() {
+  dimmersFromXML(loadXML("XML/dimmers.xml"));
+}
+
+XML dimmersAsXML() {
+  String data = "<dimmers></dimmers>";
+  XML xml = parseXML(data);
+  for(int i = 0; i < dimmers.size(); i++) {
+    xml.addChild(dimmers.get(i).getXML());
+  }
+  return xml;
+}
+
+void dimmersFromXML(XML xml) {
+  XML[] dimmersXML = xml.getChildren("Dimmer");
+  dimmers.clear();
+  for(int i = 0; i < dimmersXML.length; i++) {
+    Dimmer newDimmer = new Dimmer();
+    dimmers.add(newDimmer);
+    newDimmer.XMLtoObject(dimmersXML[i]);
   }
 }
 
@@ -13,9 +34,30 @@ class Dimmer {
   int powerSocketId;
   int phases = 3;
   
+  int watts;
+  int[] wattsPerPhase;
+  
   Dimmer() {
   }
+  
+  XML getXML() {
+    String data = "<Dimmer></Dimmer>";
+    XML xml = parseXML(data);
+    xml.setInt("startChannel", startChannel);
+    xml.setInt("numberOfChannels", numberOfChannels);
+    xml.setInt("powerSocketId", powerSocketId);
+    xml.setInt("phases", phases);
+    return xml;
+  }
+  
+  void XMLtoObject(XML xml) {
+    startChannel = xml.getInt("startChannel");
+    numberOfChannels = xml.getInt("numberOfChannels");
+    powerSocketId = xml.getInt("powerSocketId");
+    phases = xml.getInt("phases");
+  }
 }
+
 
 DimmerWindow dimmerWindow = new DimmerWindow();
 ArrayList<Dimmer> dimmers = new ArrayList<Dimmer>();
@@ -135,6 +177,28 @@ class DimmerWindow {
 }
 
 
+class Channel {
+  IntList fixtures = new IntList();
+  int watts;
+  Channel() {
+  }
+}
+
+class Phase {
+  int socketId;
+  int phaseId;
+  int watts;
+  int ampers;
+  int maxAmpers = 32;
+  
+  Phase() {
+  }
+}
+
+
+ArrayList<Phase> phases = new ArrayList<Phase>();
+
+
 class PowerWindow {
   Window window;
   int locX, locY, w, h;
@@ -144,7 +208,7 @@ class PowerWindow {
   int offsetChannels = 0;
   
   PowerWindow() {
-    w = 1000; h = 500;
+    w = 1000; h = 700;
     window = new Window("powerWindow", new PVector(w, h), this);
   }
   
@@ -153,6 +217,7 @@ class PowerWindow {
     window.draw(g, mouse);
     g.translate(60, 60);
     
+    float voltage = 230;
     
     IntList fixturesShown = new IntList();
     for(int i = 0; i < fixtures.size(); i++) {
@@ -178,6 +243,49 @@ class PowerWindow {
       }
     }
     
+    for(int i = 0; i < dimmers.size(); i++) {
+      Dimmer dimmer = dimmers.get(i);
+      int start = dimmer.startChannel;
+      int channels = dimmer.numberOfChannels;
+      int phases = dimmer.phases;
+      int channelsPerPhase = channels/phases;
+      
+      dimmer.wattsPerPhase = new int[phases];
+      dimmer.watts = 0;
+      
+      for(int j = 0; j < phases; j++) {
+        dimmer.wattsPerPhase[j] = 0;
+        for(int k = 0; k < channelsPerPhase; k++) {
+          int channel = start+(j*channelsPerPhase)+k;
+          
+          dimmer.wattsPerPhase[j] += fixtureChannels.get(channel).watts;
+          dimmer.watts += fixtureChannels.get(channel).watts;
+        }
+      }
+    }
+    
+    phases.clear();
+    for(int i = 0; i < dimmers.size(); i++) {
+      for(int j = 0; j < dimmers.get(i).wattsPerPhase.length; j++) {
+        Phase phase = new Phase();
+        boolean found = false;
+        for(int k = 0; k < phases.size(); k++) {
+          if(phases.get(k).phaseId == j && phases.get(k).socketId == dimmers.get(i).powerSocketId) {
+            phase = phases.get(k);
+            found = true;
+          }
+        }
+        if(!found) { phase = new Phase(); phases.add(phase); }
+        phase.socketId = dimmers.get(i).powerSocketId;
+        phase.phaseId = j;
+        phase.watts += dimmers.get(i).wattsPerPhase[j];
+        phase.ampers = ceil(phase.watts/voltage);
+        
+      }
+    }
+    
+    
+    
     
     mouse.declareUpdateElementRelative("fixturePowers", "powerWindow", 60, 0, 260, h-100);
     mouse.setElementExpire("fixturePowers", 2);
@@ -199,7 +307,7 @@ class PowerWindow {
     float maxTotalPower = 0;
     float totalAmpers = 0;
     float maxTotalAmpers = 0;
-    float voltage = 230;
+    
     
     for(int i = 0; i < fixturesShown.size(); i++) {
       totalPower += fixtures.get(fixturesShown.get(i)).getActualWatts();
@@ -259,6 +367,38 @@ class PowerWindow {
       g.fill(0);
       g.textSize(40);
       g.text(str(totalPower)+"kW, "+str(totalAmpers)+"A", 0, 0);
+    g.popMatrix(); g.popStyle();
+    
+    g.pushMatrix(); g.pushStyle();
+      g.translate(700, 200); g.fill(0);
+      for(int i = 0; i < dimmers.size(); i++) {
+        g.pushMatrix();
+          g.translate(0, i*20);
+          g.text("Dimmer "+str(i)+" : " + str(dimmers.get(i).watts) + "kW", 0, 0);
+        g.popMatrix();
+      }
+    g.popMatrix(); g.popStyle();
+    
+    g.pushMatrix(); g.pushStyle();
+      g.translate(700, 300); g.fill(0);
+      for(int i = 0; i < phases.size(); i++) {
+        Phase phase = phases.get(i);
+        g.pushMatrix(); g.pushStyle();
+          g.translate(0, i*20);
+          g.text("Phase "+str(phase.socketId)+"."+str(phase.phaseId)+" : " + str(phase.ampers) + "A", 0, 14);
+          float x = map(phase.ampers, 0, phase.maxAmpers, 0, 255);
+          g.noStroke();
+          g.fill(100, 230);
+          g.rect(50, 0, 255/3, 10);
+          color c = color(x, 255-x, 0);
+          colorMode(HSB);
+          c = color(hue(c), 255, 255);
+          colorMode(RGB);
+          g.fill(c);
+          x = x/3;
+          g.rect(50, 0, x, 10);
+        g.popMatrix(); g.popStyle();
+      }
     g.popMatrix(); g.popStyle();
   }
 }

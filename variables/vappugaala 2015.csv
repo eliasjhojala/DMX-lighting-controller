@@ -193,7 +193,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 191,fixParam,1,-80,9,-
 192,fixtureTypeS,1,k.fresu,9,-
 193,fixtureType1,1,3,9,-
-194,channel,1,11,9,-
+194,channel,1,6,9,-
 195,ansaParent,1,7,9,-
 196,red,1,255,10,-
 197,green,1,255,10,-
@@ -204,7 +204,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 202,fixParam,1,-80,10,-
 203,fixtureTypeS,1,k.fresu,10,-
 204,fixtureType1,1,3,10,-
-205,channel,1,12,10,-
+205,channel,1,8,10,-
 206,ansaParent,1,7,10,-
 207,red,1,255,11,-
 208,green,1,255,11,-
@@ -215,7 +215,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 213,fixParam,1,45,11,-
 214,fixtureTypeS,1,flood,11,-
 215,fixtureType1,1,5,11,-
-216,channel,1,15,11,-
+216,channel,1,7,11,-
 217,ansaParent,1,7,11,-
 218,red,1,255,12,-
 219,green,1,255,12,-
@@ -226,7 +226,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 224,fixParam,1,45,12,-
 225,fixtureTypeS,1,flood,12,-
 226,fixtureType1,1,5,12,-
-227,channel,1,15,12,-
+227,channel,1,7,12,-
 228,ansaParent,1,7,12,-
 229,red,1,255,13,-
 230,green,1,255,13,-
@@ -251,7 +251,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 249,fixParam,1,45,15,-
 250,fixtureTypeS,1,par64,15,-
 251,fixtureType1,1,1,15,-
-252,channel,1,6,15,-
+252,channel,1,20,15,-
 253,red,1,255,16,-
 254,green,1,255,16,-
 255,blue,1,146,16,-
@@ -261,7 +261,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 259,fixParam,1,45,16,-
 260,fixtureTypeS,1,par64,16,-
 261,fixtureType1,1,1,16,-
-262,channel,1,8,16,-
+262,channel,1,22,16,-
 263,red,1,255,17,-
 264,green,1,255,17,-
 265,blue,1,146,17,-
@@ -270,7 +270,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 268,fixParam,1,45,17,-
 269,fixtureTypeS,1,par64,17,-
 270,fixtureType1,1,1,17,-
-271,channel,1,9,17,-
+271,channel,1,23,17,-
 272,red,1,255,18,-
 273,green,1,255,18,-
 274,blue,1,146,18,-
@@ -281,7 +281,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 279,fixParam,1,45,18,-
 280,fixtureTypeS,1,par64,18,-
 281,fixtureType1,1,1,18,-
-282,channel,1,10,18,-
+282,channel,1,9,18,-
 283,ansaParent,1,6,18,-
 284,red,1,255,19,-
 285,green,1,255,19,-
@@ -292,7 +292,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 290,fixParam,1,45,19,-
 291,fixtureTypeS,1,flood,19,-
 292,fixtureType1,1,5,19,-
-293,channel,1,14,19,-
+293,channel,1,24,19,-
 294,red,1,255,20,-
 295,green,1,255,20,-
 296,blue,1,146,20,-
@@ -302,7 +302,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 300,fixParam,1,45,20,-
 301,fixtureTypeS,1,flood,20,-
 302,fixtureType1,1,5,20,-
-303,channel,1,13,20,-
+303,channel,1,19,20,-
 304,fixtureTypeS,1,,21,-
 305,fixtureType1,1,0,21,-
 306,fixtureTypeS,1,,22,-
@@ -472,7 +472,7 @@ id,variable_name,variable_dimensions,value,1D,2D
 470,rotX,1,-106,81,-
 471,fixtureTypeS,1,par64,81,-
 472,fixtureType1,1,1,81,-
-473,channel,1,7,81,-
+473,channel,1,21,81,-
 474,red,1,255,82,-
 475,green,1,255,82,-
 476,blue,1,1,82,-
@@ -507,8 +507,8 @@ id,variable_name,variable_dimensions,value,1D,2D
 505,red,1,255,85,-
 506,green,1,255,85,-
 507,blue,1,255,85,-
-508,xTaka,1,441,85,-
-509,yTaka,1,109,85,-
+508,xTaka,1,435,85,-
+509,yTaka,1,114,85,-
 510,fixtureTypeS,1,Fog,85,-
 511,fixtureType1,1,9,85,-
 512,channel,1,37,85,-

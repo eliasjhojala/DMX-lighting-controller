@@ -12,7 +12,7 @@ class FixtureControllerWindow {
   DropdownMenu trussesDDM;
   DropdownMenu socketsDDM;
   
-  IntController watts;
+  IntController watts, channel;
   
   FixtureControllerWindow() {
     w = 1000; h = 500;
@@ -23,6 +23,7 @@ class FixtureControllerWindow {
     zL = new IntController("LocationController"+this.toString()+":zL");
     
     watts = new IntController("Watts"+this.toString());
+    channel = new IntController("Channel"+this.toString());
     
     addNewAllowedTrussForWiring = new PushButton("addNewAllowedTrussForWiring");
     
@@ -119,6 +120,16 @@ class FixtureControllerWindow {
           }
         g.popStyle();
         g.popMatrix();
+        
+        g.pushMatrix(); g.pushStyle();
+          g.translate(200, 250);
+          g.fill(0);
+          g.text("Channel: ", -50, 16);
+          channel.draw(g, mouse);
+          if(channel.valueHasChanged()) { fix.channelStart = channel.getValue(); }
+          if(fix.channelStart != channel.getValue()) { channel.setValue(fix.channelStart); }
+          
+        g.popMatrix(); g.popStyle();
         
       g.popMatrix();
     }

@@ -103,9 +103,9 @@
   </memoryControllerLookupTable>
   <Memory enabled="1" id="1" soloInThisMemory="0" specialType="0" type="4" value="255" valueOld="0"/>
   <Memory enabled="1" id="2" soloInThisMemory="0" specialType="0" type="5" value="94" valueOld="0"/>
-  <Memory enabled="1" id="4" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+  <Memory enabled="1" id="4" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
     <Preset>
-      <mainData value="0" valueOld="0"/>
+      <mainData value="255" valueOld="255"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
