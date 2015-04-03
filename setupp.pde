@@ -17,11 +17,5 @@ void setuppi() {
   
    
   elementsSetup();
-  doAfterLoad();
-}
-
-void doAfterLoad() {
-  socketController.updateTrusses();
-  fixtureController.updateSockets();
-  fixtureController.updateTrusses();
+  
 }

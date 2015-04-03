@@ -25,6 +25,7 @@ int visualisationSpeed = 30;
 boolean speedDownVisualisation = false;
 
 void draw() {
+  
   if(speedDownVisualisation) {
     drawCounter++;
     if(drawCounter > round(frameRate/visualisationSpeed)) { drawNow = true; drawCounter = 0; } else { drawNow = false; }
@@ -64,7 +65,7 @@ void draw() {
   scrolledUp = false;
   scrolledDown = false;
   scrollSpeed = 0;
-  cursor.push();
+  
 }
 
 boolean memoriesFinished = true;

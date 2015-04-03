@@ -119,11 +119,6 @@ class TextBox {
     return toReturn;
   }
   
-  void setText(String text) {
-    originalText = text;
-    editedText = text;
-  }
-  
   void setValue(int value) {
     if(value != 0) {
       originalText = str(value);

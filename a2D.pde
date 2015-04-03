@@ -18,7 +18,7 @@ void drawMainWindow() {
     help.add("Changing fixtureType", "You can open fixtureType menu by pressing t key and clicking on the fixture");
     addedElementsToHelp = true;
   }
-  if(drawNow) pushMatrix();
+  if(drawNow) pushMatrix(); 
    
    if(drawNow) { //Declare all the mouse elements
      mouse.declareUpdateElement("main:fixtures", 0, 0, 0, width, height);
@@ -86,8 +86,8 @@ void drawMainWindow() {
               fix.rotationZ = rot;
             }
             else {
-              if(lampToRotate == i) {
-                rotationForAllTheFixtures = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360);
+              if(lampToRotate == i) { 
+                rotationForAllTheFixtures = round(((vec.heading() + TWO_PI + HALF_PI) % TWO_PI) / TWO_PI * 360); 
               }
               fix.rotationZ = rotationForAllTheFixtures;
             }
@@ -112,11 +112,7 @@ void drawMainWindow() {
          
         //IF cursor is hovering over i:th fixtures bounding box AND fixture should be drawn AND mouse is clicked
         //Functions running when pressed on the fixture
-        if(!mouse.captured) {
-          mouse.declareUpdateElementRelative("fixture"+str(i), 1000, round(-fix.size.w/2), round(-fix.size.h/2), round(fix.size.w), round(fix.size.h));
-          mouse.setElementExpire("fixture"+str(i), 2);
-        }
-        if(mouse.elmIsHover("fixture"+str(i)) && mousePressed) {
+        if(isHover(-fix.size.w/2, -fix.size.h/2, fix.size.w, fix.size.h) && mousePressed && !mouse.captured && mouse.elmIsHover("main:fixtures")) {
           if(mouseButton == RIGHT) { //Functions running when pressed on the fixture with mouse left button
             mouse.capture(mouse.getElementByName("main:fixtures"));
             contextMenu1.initiateForFixture(i);
@@ -128,7 +124,7 @@ void drawMainWindow() {
             if(!showMode && !showModeLocked) { //Rotate and move fixtures if not in showMode
               if(keyPressed && key == 'r') { //If r pressed then we will rotate fixture
                 lampToRotate = i; //Tell what fixture are we rotating
-                rotateLamp = true; //Tell that we are rotating some fixture
+                rotateLamp = true; //Tell that we are rotating some fixture 
               }
               else if(keyPressed && key == 't') {
                 lampToEditFixtureType = i;
@@ -140,8 +136,8 @@ void drawMainWindow() {
                 moveLamp = true; //Tell that we are moving some fixture
               }
               mouseReleased = false; //Tell that mouse isn't released anymore
-            }
-            else if(mouse.firstCaptureFrame) { //Put fixture on and off by clicking it in showMode
+            } 
+            else { //Put fixture on and off by clicking it in showMode
               fix.toggle(true);
             }
           } //End of functions running when pressed on the fixture with mouse left button
@@ -198,10 +194,10 @@ void drawMainWindow() {
   
   
   //Check if mouse is released
-    if(!mousePressed) {
+    if(!mousePressed) { 
       //If mouse isn't pressed then we aren't moving or rotating anything
       rotateLamp = false;
-      moveLamp = false;
+      moveLamp = false; 
     }
   //End of checking is mouse released
   
@@ -223,12 +219,9 @@ void drawMainWindow() {
     }
     if(!mousePressed && boxSelect) thread("endBoxSelect");
   //-------------End of view drag & box selection----------------------
-} //End of draw main window
-
-void openFixtureSettings() {
-   fixtureController.open = true; fixtureController.fix = fixtures.get(contextMenu1.fixtureId);
-   fixtureController.socketsDDM.setText("Socket " + fixtures.get(contextMenu1.fixtureId).socket.name);
 }
+
+
 
 
 //----------\
@@ -241,7 +234,7 @@ void doBoxSelect() {
       
       boxSelect = true;
       boxStartX = mouseX;
-      boxStartY = mouseY;
+      boxStartY = mouseY; 
     } else if(mouse.isCaptured("main:move")) {
       
       pushStyle();
@@ -286,8 +279,8 @@ void endBoxSelect() {
     }
   } else if(!showMode && !showModeLocked) {
     //open contextMwnu
-    String[] acts = { "createNewFixtureAt00", "createNewElement", "addNewSocket" };
-    String[] texs = { "Create new fixture", "Create new element", "Create socket" };
+    String[] acts = { "createNewFixtureAt00", "createNewElement" };
+    String[] texs = { "Create new fixture", "Create new element" };
     contextMenu1.initiate(acts, texs, mouseX, mouseY);
   }
 }

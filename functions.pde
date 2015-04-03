@@ -94,18 +94,10 @@ void doTrussMoving(int i, PVector mouseRotated) {
   if(!showMode && !showModeLocked) {
     fill(topMenuTheme);
     rect(trusses[i].lng-5, -5, 15, 15, 3);
-    pushStyle(); fill(255); text("Truss" + str(i), trusses[i].lng+16, 9); popStyle();
-    mouse.declareUpdateElementRelative("truss"+str(i), 100, trusses[i].lng-5, -5, 15, 15);
-    if(mouse.isCaptured("truss"+str(i))) {
-      if(mouseButton == LEFT) {
-        mouse.capture(mouse.getElementByName("main:fixtures"));
-        trussToMove = i;
-        movingTruss = true;
-      }
-      else if(mouseButton == RIGHT) {
-        trussController.open = true;
-        trussController.truss = trusses[i];
-      }
+    if(isHover(trusses[i].lng-5, -5, 15, 15) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
+      mouse.capture(mouse.getElementByName("main:fixtures"));
+      trussToMove = i;
+      movingTruss = true;
     }
     if(movingTruss && trussToMove == i) {
       if(mouseButton == LEFT) {
@@ -130,8 +122,8 @@ boolean movingSocket = false;
 PVector oldMouseLocationForSockets = new PVector(0, 0);
 
 void drawSockets(PVector mouseRotated) {
-  for(int i = 0; i < sockets.size(); i++) {
-    Socket socket = sockets.get(i);
+  for(int i = 0; i < sockets.length; i++) {
+    Socket socket = sockets[i];
     if(socket != null) if(socket.exist) {
       pushMatrix();
 
@@ -142,7 +134,7 @@ void drawSockets(PVector mouseRotated) {
           PVector point2 = new PVector(20, 30);
           rect(point1.x, point1.y, point2.x, point2.y);
           fill(255);
-          text(socket.name, point1.x + 2, point1.y + 20);
+          text("H" + str(socket.id), point1.x + 2, point1.y + 20);
           doSocketMoving(i, mouseRotated, point1, point2);
 
         
@@ -154,19 +146,14 @@ void drawSockets(PVector mouseRotated) {
 }
 
 void doSocketMoving(int i, PVector mouseRotated, PVector point1, PVector point2) {
-  Socket socket = sockets.get(i);
+  Socket socket = sockets[i];
   if(!showMode && !showModeLocked) {
     fill(topMenuTheme);
-    if(!mouse.captured) {
-      mouse.declareUpdateElementRelative("socket" + str(i), 10000, round(point1.x), round(point1.y), round(point2.x), round(point2.y));
-      mouse.setElementExpire("socket" + str(i), 2);
-    }
-    if(mouse.isCaptured("socket" + str(i))) {
+    if(isHover(round(point1.x), round(point1.y), round(point2.x), round(point2.y)) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
       println(i);
       mouse.capture(mouse.getElementByName("main:fixtures"));
       socketToMove = i;
       movingSocket = true;
-      if(mouseButton == RIGHT) { socketController.open = true; socketController.socket = sockets.get(i); println("TOIMIIIIII"); }
     }
     if(movingSocket && socketToMove == i) {
       if(mouseButton == LEFT) {
@@ -498,25 +485,6 @@ but it returns original array index numbers as sorted arrange */
      return toReturn;
    } //End of sorting algorithm
    
-   int[] sortIndex(String[] toSort) {
-    int[] toReturn = new int[toSort.length];
-    String[] sorted = new String[toSort.length];
-    boolean[] used = new boolean[toSort.length];
-     
-     sorted = sort(toSort);
-     
-     for(int i = 0; i < toSort.length; i++) {
-       for(int j = 0; j < sorted.length; j++) {
-         if(toSort[i].equals(sorted[j]) && !used[j]) {
-           toReturn[j] = i;
-           used[j] = true;
-           break;
-         }
-       }
-     }
-     return toReturn;
-   } //End of sorting algorithm
-   
    
 boolean isAbout(int a, int b, int accu) {
   if(abs(a - b) <= a/overZero(accu)) {
@@ -808,46 +776,4 @@ void rect(PVector loc1, PVector loc2, PGraphics g) {
 
 color invert(color in) {
   return color(255-red(in), 255-green(in), 255-blue(in));
-}
-
-XML PVectorAsXML(String name, PVector vector) {
-  XML xml = parseXML("<"+name+"></"+name+">");
-  xml.setFloat("x", vector.x);
-  xml.setFloat("y", vector.y);
-  xml.setFloat("z", vector.z);
-  return xml;
-}
-
-PVector xmlAsPvector(String name, XML xml) {
-  PVector toReturn = new PVector(0, 0, 0);
-  xml = xml.getChild(name);
-  toReturn.x = xml.getFloat("x");
-  toReturn.y = xml.getFloat("y");
-  toReturn.z = xml.getFloat("z");
-  xml = xml.getParent();
-  return toReturn;
-}
-
-XML colorAsXML(String name, color c) {
-  XML xml = parseXML("<"+name+"></"+name+">");
-  xml.setFloat("r", red(c));
-  xml.setFloat("g", green(c));
-  xml.setFloat("b", blue(c));
-  return xml;
-}
-
-color xmlAsColor(String name, XML xml) {
-  color toReturn = color(0, 0, 0);
-  xml = xml.getChild(name);
-  toReturn = color(xml.getFloat("r"), xml.getFloat("g"), xml.getFloat("b"));
-  xml = xml.getParent();
-  return toReturn;
-}
-
-
-boolean isInIntList(int val, IntList list) {
-  for(int i = 0; i < list.size(); i++) {
-    if(list.get(i) == val) return true;
-  }
-  return false;
 }

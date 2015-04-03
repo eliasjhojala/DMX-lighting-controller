@@ -141,13 +141,7 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(oscSettings, "OSCSettingsWindow", 1000));
     subWindows.add(new SubWindowContainer(midiWindow, "MidiHandlerWindow", 1000));
     subWindows.add(new SubWindowContainer(enttecOutputSettingsWindow, "enttecOutputSettingsWindow", 1000));
-    subWindows.add(new SubWindowContainer(elementController, "elementController", 1000));
-    subWindows.add(new SubWindowContainer(fixtureController, "fixtureController", 1000));
-    subWindows.add(new SubWindowContainer(trussController, "trussController", 1000));
-    subWindows.add(new SubWindowContainer(socketController, "socketController", 1000));
-    
-    
-    
+	subWindows.add(new SubWindowContainer(elementController, "elementController", 1000));
 	
     
     subWindows.add(new SubWindowContainer(midiWindow.launchpadToggleOrPush, "launchpadToggleOrPush", 1000));
@@ -278,8 +272,8 @@ class contextMenu {
     String[] acts;
     String[] labs;
     if(!showMode && !showModeLocked) {
-        acts = new String[] {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs", "removeFixtureFromCM", "removeAllSelectedFixtures", "openFixtureSettings"};
-        labs = new String[] {"Control this", "Control all selected", "Remove this", "Remove all selected", "Open fixture settings"};
+      acts = new String[] {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs", "removeFixtureFromCM", "removeAllSelectedFixtures"};
+      labs = new String[] {"Control this", "Control all selected", "Remove this", "Remove all selected"};
     } else {
       acts = new String[] {"openBottomMenuControlBoxFromContextMenu", "openBottomMenuControlBoxForSelectedFs"};
       labs = new String[] {"Control this", "Control all selected"};
@@ -602,21 +596,6 @@ class DropdownMenu {
     }
   } //End of setValue()
   
-  void setText(String text) {
-    for(int id = 0; id < blocks.size(); id++) {
-      if(blocks.get(id) != null) {
-        println(trim(blocks.get(id).getText()));
-        println(trim(text));
-        if(trim(blocks.get(id).getText()).equals(trim(text))) {
-          selectedBlock = id; //Save selected block id
-          topBlock.setText(blocks.get(id).getText()); //Set topBlock text
-          setRightOffsetAccordingToId(id);
-          break;
-        }
-      }
-    }
-  } //End of setValue()
-  
   void setRightOffsetAccordingToId(int id) {
     offset = id-round(maxNumberOfBlocks/2);
     constrainOffset();
@@ -689,8 +668,6 @@ class DropdownMenuBlock {
   void setValue(int value) {
     this.value = value;
   }
-  
-  
   
   void draw(PVector size, String parentName, int thisId, boolean selected, PGraphics g, Mouse mouse) {
     g.pushMatrix();
@@ -990,11 +967,6 @@ class IntController {
   
   int getValue() {
     return state;
-  }
-  
-  void setValue(float val) {
-    state = int(val);
-    floatState = val;
   }
   
 }
