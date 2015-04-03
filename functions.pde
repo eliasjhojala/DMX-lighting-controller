@@ -166,7 +166,7 @@ void doSocketMoving(int i, PVector mouseRotated, PVector point1, PVector point2)
       mouse.capture(mouse.getElementByName("main:fixtures"));
       socketToMove = i;
       movingSocket = true;
-      if(mouseButton == RIGHT) { socketController.open = true; socketController.socket = sockets.get(i); }
+      if(mouseButton == RIGHT) { socketController.open = true; socketController.socket = sockets.get(i); println("TOIMIIIIII"); }
     }
     if(movingSocket && socketToMove == i) {
       if(mouseButton == LEFT) {
@@ -489,6 +489,25 @@ but it returns original array index numbers as sorted arrange */
      for(int i = 0; i < toSort.length; i++) {
        for(int j = 0; j < sorted.length; j++) {
          if(toSort[i] == sorted[j] && !used[j]) {
+           toReturn[j] = i;
+           used[j] = true;
+           break;
+         }
+       }
+     }
+     return toReturn;
+   } //End of sorting algorithm
+   
+   int[] sortIndex(String[] toSort) {
+    int[] toReturn = new int[toSort.length];
+    String[] sorted = new String[toSort.length];
+    boolean[] used = new boolean[toSort.length];
+     
+     sorted = sort(toSort);
+     
+     for(int i = 0; i < toSort.length; i++) {
+       for(int j = 0; j < sorted.length; j++) {
+         if(toSort[i].equals(sorted[j]) && !used[j]) {
            toReturn[j] = i;
            used[j] = true;
            break;

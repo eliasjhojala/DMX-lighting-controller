@@ -107,7 +107,7 @@ void loadAllData1() {
       
       for (TableRow row : table.findRows("centerX", "variable_name"))              { center.x = int(row.getString("value")); }
       for (TableRow row : table.findRows("centerY", "variable_name"))              { center.y = int(row.getString("value")); }
-      
+     
     
       
       
@@ -118,11 +118,11 @@ void loadAllData1() {
       
       
       if(!loadinMemoriesFromXML) { thread("loadMemoriesFromXML"); }
-      if(!savingNearestSocketsToXML) { saveNearestSocketsToXML(); }
+      //if(!savingNearestSocketsToXML) { saveNearestSocketsToXML(); }
       if(!loadingMidiData) { loadMidiData(); }
       oscHandler.loadFromXML();
       try { loadElementsFromXML(); } catch (Exception e) {}
-      
+      loadTestXML();
       
       loadSocketsFromXML();
       loadXmlToTrusses();

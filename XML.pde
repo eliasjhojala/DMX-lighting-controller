@@ -6,58 +6,43 @@ ManageXML memoryXML = new ManageXML("XML/memories.xml");
 boolean savingTestXML;
 void saveTestXML() {
   savingTestXML = true;
-  ManageXML XMLObject = fixtureXML;
-  
-  //IDLOOKUPTABLE TÄHÄN ROOPE TEEEE
-  
-  XMLObject.addBlockAndIncrease("fixtures");
-
-  for(int i = 0; i < fixtures.array.size(); i++) {
-    XMLObject.addBlockAndIncrease("Fixture");
-    XMLObject.addData("id", i);
-      int id = idLookupTable.indexOf(i);
-      fixtures.array.get(i).saveFixtureDataToXML(XMLObject, id);
-    XMLObject.goBack();
-  }
-  
-  
-  XMLObject.saveData();
+  saveXML(getFixturesXML(), "XML/fixtures.xml");
   savingTestXML = false;
 }
 
-void saveFixturesToXML() {
-  ManageXML XMLObject = fixtureXML;
-  XMLObject.addBlockAndIncrease("fixtures");
+XML getFixturesXML() {
+	String data = "<fixtures></fixtures>";
+	XML xml = parseXML(data);
 
   for(int i = 0; i < fixtures.array.size(); i++) {
-    XMLObject.addBlockAndIncrease("Fixture");
-    XMLObject.addData("id", i);
-      int id = idLookupTable.indexOf(i);
-      fixtures.array.get(i).saveFixtureDataToXML(XMLObject, id);
-    XMLObject.goBack();
+    int id = idLookupTable.indexOf(i);
+    XML block = xml.addChild(fixtures.array.get(i).getXML());
+    block.setInt("id", id);
   }
+  return xml;
 }
 
 void loadTestXML() {
-  ManageXML XMLObject = fixtureXML;
-  ManageXML SingleFixture;
-  if(XMLObject.loadData()) {
-    
     //IDLOOKUPTABLE TÄHÄN ROOPE TEEEE --- pitäisi olla nyt tehty (en kokeillut vielä)
     fixtures.clear();
-    XMLObject.goToChild("fixtures");
-      XML[] allTheFixtures = XMLObject.currentBlock.getChildren();
-      for(int i = 0; i < allTheFixtures.length; i++) {
-        if(!trim(allTheFixtures[i].toString()).equals("")) {
-          SingleFixture = new ManageXML(allTheFixtures[i]);
-          int id = SingleFixture.getDataInt("id");
-          fixture newFix = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-          fixtures.set(id, newFix);
-          newFix.loadFixtureData(SingleFixture);
+    
+      try {
+        XML xml = loadXML("XML/fixtures.xml");
+        XML[] allTheFixtures = xml.getChildren();
+        println(allTheFixtures);
+        for(int i = 0; i < allTheFixtures.length; i++) {
+          if(!trim(allTheFixtures[i].toString()).equals("")) {
+            XML block = allTheFixtures[i];
+            int id = block.getInt("id");
+            fixture newFix = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            fixtures.add(newFix);
+            newFix.loadFixtureData(block);
+          }
         }
       }
-    XMLObject.goBack();
-  }
+      catch (Exception e) {
+        e.printStackTrace();
+      }
 }
 
 
@@ -112,6 +97,9 @@ class ManageXML {
   float getDataFloat(String name) {
     return currentBlock.getFloat(name);
   }
+  XML getCurrentXML() {
+	return currentBlock;
+  }
   int[] getArray(String name) {
     int[] data = { };
     if(goToChild(name)) {
@@ -165,6 +153,9 @@ class ManageXML {
   }
   void addBlockAndIncrease(String name) {
     currentBlock = currentBlock.addChild(name);
+  }
+  void addBlock(XML block) {
+	XML newBlock = currentBlock.addChild(block);
   }
   void addArray(String name, int[] data) {
     if(data != null) {

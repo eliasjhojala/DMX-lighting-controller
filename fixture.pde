@@ -12,13 +12,17 @@ class FixtureControllerWindow {
   DropdownMenu trussesDDM;
   DropdownMenu socketsDDM;
   
+  IntController watts;
+  
   FixtureControllerWindow() {
-    w = 700; h = 500;
+    w = 1000; h = 500;
     window = new Window("fixtureController", new PVector(w, h), this);
     
     xL = new IntController("LocationController"+this.toString()+":xL");
     yL = new IntController("LocationController"+this.toString()+":yL");
     zL = new IntController("LocationController"+this.toString()+":zL");
+    
+    watts = new IntController("Watts"+this.toString());
     
     addNewAllowedTrussForWiring = new PushButton("addNewAllowedTrussForWiring");
     
@@ -32,8 +36,11 @@ class FixtureControllerWindow {
       for(int i = 0; i < sockets.size(); i++) {
         blocks.add(new DropdownMenuBlock("Socket " + sockets.get(i).name, i));
       }
+      
       if(blocks != null) socketsDDM = new DropdownMenu("SocketParentTruss", blocks);
     }
+    
+    
   }
   
   void updateTrusses() {
@@ -83,11 +90,34 @@ class FixtureControllerWindow {
         }
         
         g.pushMatrix();
-        g.translate(100, 0);
+        g.translate(200, 0);
         if(socketsDDM != null) {
           socketsDDM.draw(g, mouse);
           if(socketsDDM.valueHasChanged()) { fix.socket = sockets.get(socketsDDM.getValue()); }
         }
+        g.popMatrix();
+        
+        g.pushMatrix();
+        g.pushStyle();
+          g.translate(200, 200);
+          int valueToWatts = -1;
+          if((fixtureProfiles[fix.fixtureTypeId].watts != watts.getValue() && fix.watts == -1)) {
+            valueToWatts = fixtureProfiles[fix.fixtureTypeId].watts;
+          }
+          if(fix.watts != watts.getValue() && fix.watts != -1) {
+            valueToWatts = fix.watts;
+          }
+          if(valueToWatts != -1) watts.setValue(valueToWatts);
+          g.fill(0);
+          g.textSize(15);
+          g.text("Watts", 125, 16);
+          watts.draw(g, mouse);
+          watts.setDefinition(50);
+          watts.setLimits(0, 2000);
+          if(watts.valueHasChanged()) {
+            fix.watts = watts.getValue();
+          }
+        g.popStyle();
         g.popMatrix();
         
       g.popMatrix();
@@ -248,6 +278,25 @@ class fixture {
   String fixtureType;
   int fixtureTypeId;
   int channelStart;
+  int watts = -1;
+  
+  int getWatts() {
+    if(watts != -1) {
+      return watts;
+    }
+    else {
+      return fixtureProfiles[fixtureTypeId].watts;
+    }
+  }
+  
+  int getActualWatts() {
+    if(isHalogen()) {
+      return round(map(out.getUniversalDMX(1), 0, 255, 0, getWatts()));
+    }
+    else {
+      return getWatts();
+    }
+  }
   
   fixtureSize size;
   
@@ -281,58 +330,89 @@ class fixture {
     XMLObject.goBack();
   }
   
-  void saveFixtureDataToXML(ManageXML XMLObject, int id) {
-    XMLObject.addBlock("id", id);
-    XMLObject.addBlock("StartChannel", channelStart);
-    XMLObject.addBlock("fixtureTypeId", fixtureTypeId);
-    XMLObject.addBlockAndIncrease("Location");
-      XMLObject.addData("x", x_location);
-      XMLObject.addData("y", y_location);
-      XMLObject.addData("z", z_location);
-      XMLObject.addBlockAndIncrease("OnScreen");
-        XMLObject.addData("x", locationOnScreenX);
-        XMLObject.addData("y", locationOnScreenY);
-      XMLObject.goBack();
-      XMLObject.addBlockAndIncrease("Rotation");
-        XMLObject.addData("x", rotationX);
-        XMLObject.addData("z", rotationZ);
-    XMLObject.goBack(2);
-    XMLObject.addBlock("parameter", parameter);
-    XMLObject.addBlock("preFadeSpeed", preFadeSpeed);
-    XMLObject.addBlock("postFadeSpeed", postFadeSpeed);
-    XMLObject.addBlockAndIncrease("Color");
-      XMLObject.addData("r", red);
-      XMLObject.addData("g", green);
-      XMLObject.addData("b", blue);
-    XMLObject.goBack();
-    XMLObject.addBlock("parentAnsa", parentAnsa);
-    saveFixtureDMXDataToXML(XMLObject);
+  XML getXML() {
+	String data = "<fixture></fixture>";
+	XML xml = parseXML(data);
+	XML block;
+	block = xml.addChild("StartChannel");
+	block.setContent(str(channelStart));
+	block = xml.addChild("fixtureTypeId");
+	block.setContent(str(fixtureTypeId));
+	block = xml.addChild("Location");
+	block.setInt("x", x_location);
+	block.setInt("y", y_location);
+	block.setInt("z", z_location);
+	block = block.addChild("OnScreen");
+	block.setInt("x", locationOnScreenX);
+	block.setInt("y", locationOnScreenY);
+	block = block.getParent();
+	block = block.addChild("Rotation");
+	block.setInt("x", rotationX);
+	block.setInt("z", rotationZ);
+	
+	block = xml.addChild("parameter");
+	block.setContent(str(parameter));
+	block = xml.addChild("preFadeSpeed");
+	block.setContent(str(preFadeSpeed));
+	block = xml.addChild("postFadeSpeed");
+	block.setContent(str(postFadeSpeed));
+	block = xml.addChild("Color");
+	block.setInt("r", red);
+	block.setInt("g", green);
+	block.setInt("b", blue);
+	block = xml.addChild("parentAnsa");
+	block.setContent(str(parentAnsa));
+	block = xml.addChild(socket.getXML());
+ 
+	return xml;
   }
   
-  void loadFixtureData(ManageXML XMLObject) {
-    channelStart = int(XMLObject.getBlock("StartChannel"));
-    fixtureTypeId = int(XMLObject.getBlock("fixtureTypeId"));
-    XMLObject.goToChild("Location");
-      x_location = XMLObject.getDataInt("x");
-      y_location = XMLObject.getDataInt("y");
-      z_location = XMLObject.getDataInt("z");
-      XMLObject.goToChild("OnScreen");
-        locationOnScreenX = XMLObject.getDataInt("x");
-        locationOnScreenY = XMLObject.getDataInt("y");
-      XMLObject.goBack();
-      XMLObject.goToChild("Rotation");
-        rotationX = XMLObject.getDataInt("x");
-        rotationZ = XMLObject.getDataInt("z");
-    XMLObject.goBack(2);
-    parameter = int(XMLObject.getBlock("parameter"));
-    preFadeSpeed = int(XMLObject.getBlock("preFadeSpeed"));
-    postFadeSpeed = int(XMLObject.getBlock("postFadeSpeed"));
-    XMLObject.goToChild("Color");
-      red = XMLObject.getDataInt("r");
-      green = XMLObject.getDataInt("g");
-      blue = XMLObject.getDataInt("b");
-    XMLObject.goBack();
-    parentAnsa = int(XMLObject.getBlock("parentAnsa"));
+  void loadFixtureData(XML xml) {
+    channelStart = int(xml.getChild("StartChannel").getContent());
+    fixtureTypeId = int(xml.getChild("fixtureTypeId").getContent());
+	
+	println(xml);println();println();
+	XML block;
+	
+	try {
+		block = xml.getChild("Location");
+		x_location = block.getInt("x");
+		y_location = block.getInt("y");
+		z_location = block.getInt("z_location");
+		block = block.getChild("OnScreen");
+		locationOnScreenX = block.getInt("x");
+		locationOnScreenY = block.getInt("y");
+		block = block.getParent();
+		block = block.getChild("Rotation");
+		rotationX = block.getInt("x");
+		rotationZ = block.getInt("z");
+	}
+	catch(Exception e) {
+		println("Error with location");
+	}
+	
+	try {
+		block = xml.getChild("parameter");
+		parameter = int(block.getContent());
+		block = xml.getChild("preFadeSpeed");
+		preFadeSpeed = int(block.getContent());
+		block = xml.getChild("postFadeSpeed");
+		postFadeSpeed = int(block.getContent());
+		
+		block = xml.getChild("Color");
+		red = block.getInt("r");
+		green = block.getInt("g");
+		blue = block.getInt("b");
+		
+		block = xml.getChild("parentAnsa");
+		parentAnsa = int(block.getContent());
+		block = xml.getChild("socket");
+		socket.XMLtoObject(block);
+	}
+	catch (Exception e) {
+		e.printStackTrace();
+	}
+
   }
   
  

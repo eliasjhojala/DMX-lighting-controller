@@ -139,13 +139,13 @@ void saveAllData() {
       notifier.notify("Started saving to " + savePath, false);
       try {
         saveTable(table, savePath, "csv");
+        saveNearestSocketsToXML();
         thread("saveSocketsToXML");
         thread("saveTrussesAsXML");
         thread("saveMemoriesToXML");
         thread("saveTestXML");
         saveElementsToXML();
         if(!savingMidiData) { thread("saveMidiData"); }
-        saveNearestSocketsToXML();
         oscHandler.saveToXML();
         SaveChannelsAsPdf();
       } catch (Exception e) {
