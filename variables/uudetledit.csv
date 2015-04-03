@@ -612,4 +612,4 @@ id,variable_name,variable_dimensions,value,1D,2D
 610,centerX,0,180,-,-
 611,centerY,0,-1470,-,-
 612,chaseMode,0,1,-,-
-613,loadPath,0,/Users/elias/Dropbox/DMX controller/DMX_Controller/variables/vappugaala 2015.csv,-,-
+613,loadPath,0,C:\Users\elias\Dropbox\DMX controller\DMX_Controller\variables\vappugaala 2015.csv,-,-

@@ -60,6 +60,7 @@ public class secondApplet1 extends PApplet {
     if(use3D && trussesLoadedSucces && !loadingAllData) {
      setMainSettings(); //Set settings for beginning (camera, perspective etc)
      drawFloor(); //Draw floor
+     drawElements(); //Draw all the elements
      drawTrusses(); //Draw all the trusses
      drawLights(); //Draw all the lights
     }
@@ -109,6 +110,26 @@ public class secondApplet1 extends PApplet {
       scale(400, 400, 400);
       shape(base);
     popMatrix();
+  }
+  
+  void drawElements() {
+    for(int i = 0; i < elements.size(); i++) {
+      pushMatrix(); pushStyle();
+        Element elm = elements.get(i);
+        PVector s = elm.size;
+        PVector l = elm.location;
+        float xS = s.x; float yS = s.y; float zS = s.z;
+        float xL = l.x; float yL = l.y; float zL = l.z;
+        xS = xS*5; yS = yS*5; zS = zS;
+        xL = xL*5; yL = yL*5; zL = zL-1000;
+        xL = xL + xS/2 - 1000;
+        yL = yL + yS/2;
+        zL = zL + zS/2;
+        translate(xL, yL, zL);
+        fill(elm.col);
+        box(xS, yS, zS);
+      popMatrix(); popStyle();
+    }
   }
   
   void drawTrusses() {
@@ -283,90 +304,7 @@ public class PFrame1 extends JFrame {
   }
 }
 
-Truss[] trusses;
 
-class Truss {
-  PVector location;
-  int type;
-  int lng = 1000;
-  Truss(PVector loc, int len, int t) {
-    location = loc;
-    type = t;
-    lng = len;
-  }
-  
-  void truss(PVector loc, int len, int t) {
-    location = loc;
-    type = t;
-    lng = len;
-  }
-  Truss() {
-    if(location == null) {
-      location = new PVector(0, 0);
-    }
-    type = 0;
-    lng = 0;
-  }
-  
-  XML getAsXML() {
-    String data = "<Truss></Truss>";
-    XML xml = parseXML(data);
-    xml.addChild(vectorAsXML(location, "location"));
-    xml.setInt("type", type);
-    xml.setInt("length", lng);
-    return xml;
-  }
-  
-  void XMLtoObject(XML xml) {
-    truss(XMLtoVector(xml, "location"), xml.getInt("length"), xml.getInt("type"));
-  }
-}
-
-XML getTrussesAsXML() {
-  String data = "<Trusses></Trusses>";
-  XML xml = parseXML(data);
-  for(int i = 0; i < trusses.length; i++) {
-    xml.addChild(trusses[i].getAsXML());
-    xml.setInt("id", i);
-  }
-  return xml;
-}
-
-void XMLtoTrusses(XML xml) {
-  XML[] XMLtrusses = xml.getChildren();
-  int a = 0;
-  for(int i = 0; i < XMLtrusses.length; i++) {
-    if(XMLtrusses[i] != null) if(!trim(XMLtrusses[i].toString()).equals("")) {
-      a++;
-    }
-  }
-  trusses = new Truss[a];
-  a = 0;
-  for(int i = 0; i < XMLtrusses.length; i++) {
-    if(XMLtrusses[i] != null) if(!trim(XMLtrusses[i].toString()).equals("")) {
-      if(a < trusses.length) {
-        trusses[a] = new Truss();
-        trusses[a].XMLtoObject(XMLtrusses[i]);
-      }
-      a++;
-    }
-  }
-}
-
-boolean trussesLoadedSucces = false;
-
-void loadXmlToTrusses() {
-  trussesLoadedSucces = false;
-  XMLtoTrusses(loadXML("XML/trusses.xml"));
-  trussesLoadedSucces = true;
-}
-
-boolean savingTrussesToXML;
-void saveTrussesAsXML() {
-  savingTrussesToXML = true;
-  saveXML(getTrussesAsXML(), "XML/trusses.xml");
-  savingTrussesToXML = false;
-}
 
 XML vectorAsXML(PVector vector, String name) {
   String data = "<"+name+"></"+name+">";

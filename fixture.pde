@@ -1,3 +1,111 @@
+FixtureControllerWindow fixtureController = new FixtureControllerWindow();
+class FixtureControllerWindow {
+  Window window;
+  int locX, locY, w, h;
+  boolean open;
+  int x_location, y_location, z_location;
+  
+  
+  fixture fix;
+  IntController xL, yL, zL;
+  PushButton addNewAllowedTrussForWiring;
+  DropdownMenu trussesDDM;
+  DropdownMenu socketsDDM;
+  
+  FixtureControllerWindow() {
+    w = 700; h = 500;
+    window = new Window("fixtureController", new PVector(w, h), this);
+    
+    xL = new IntController("LocationController"+this.toString()+":xL");
+    yL = new IntController("LocationController"+this.toString()+":yL");
+    zL = new IntController("LocationController"+this.toString()+":zL");
+    
+    addNewAllowedTrussForWiring = new PushButton("addNewAllowedTrussForWiring");
+    
+    updateTrusses();
+    updateSockets();
+  }
+  
+  void updateSockets() {
+    if(sockets != null) {
+      ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
+      for(int i = 0; i < sockets.size(); i++) {
+        blocks.add(new DropdownMenuBlock("Socket " + sockets.get(i).name, i));
+      }
+      if(blocks != null) socketsDDM = new DropdownMenu("SocketParentTruss", blocks);
+    }
+  }
+  
+  void updateTrusses() {
+    if(trusses != null) {
+      ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
+      for(int i = 0; i < trusses.length; i++) {
+        blocks.add(new DropdownMenuBlock("Truss " + str(i), i));
+      }
+      if(blocks != null) trussesDDM = new DropdownMenu("SocketParentTruss", blocks);
+    }
+  }
+  
+  boolean addingNewAllowedTrussForWiring;
+  
+  void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+    window.draw(g, mouse);
+    g.translate(60, 80);
+    if(fix != null) {
+      if(fix.x_location != x_location) { x_location = fix.x_location; xL.setValue(x_location); }
+      if(fix.y_location != x_location) { y_location = fix.y_location; yL.setValue(y_location); }
+      if(fix.z_location != x_location) { z_location = fix.z_location; zL.setValue(z_location); }
+      g.pushMatrix();
+        xL.draw(g, mouse); if(xL.valueHasChanged()) { setLocationX(xL.getValue()); }
+        g.translate(0, 30);
+        yL.draw(g, mouse); if(yL.valueHasChanged()) { setLocationY(yL.getValue()); }
+        g.translate(0, 30);
+        zL.draw(g, mouse); if(zL.valueHasChanged()) { setLocationZ(zL.getValue()); }
+      g.popMatrix();
+      g.pushMatrix();
+        g.translate(300, 0);
+        
+        g.pushMatrix();
+          g.translate(0, 100);
+          g.pushStyle(); g.fill(0);
+          for(int i = 0; i < fix.allowedTrussesForWiring.size(); i++) {
+            g.text(fix.allowedTrussesForWiring.get(i), 10, i*20);
+          }
+          g.popStyle();
+        g.popMatrix();
+        
+        if(addNewAllowedTrussForWiring.isPressed(g, mouse)) addingNewAllowedTrussForWiring = true;
+        if(addingNewAllowedTrussForWiring) {
+          if(trussesDDM != null) {
+            trussesDDM.draw(g, mouse);
+            if(trussesDDM.valueHasChanged()) { fix.allowedTrussesForWiring.append(trussesDDM.getValue()); addingNewAllowedTrussForWiring = false; }
+          }
+        }
+        
+        g.pushMatrix();
+        g.translate(100, 0);
+        if(socketsDDM != null) {
+          socketsDDM.draw(g, mouse);
+          if(socketsDDM.valueHasChanged()) { fix.socket = sockets.get(socketsDDM.getValue()); }
+        }
+        g.popMatrix();
+        
+      g.popMatrix();
+    }
+  }
+  
+  void setLocationX(int val) {
+    fix.x_location = val;
+  }
+  void setLocationY(int val) {
+    fix.y_location = val;
+  }
+  void setLocationZ(int val) {
+    fix.z_location = val;
+  }
+  
+}
+
 boolean invokeFixturesDrawFinished = true;
 void invokeFixturesDraw() {
   invokeFixturesDrawFinished = false;
@@ -144,6 +252,8 @@ class fixture {
   fixtureSize size;
   
   int parentAnsa;
+  
+  Socket socket = new Socket();
   
   IntList allowedTrussesForWiring = new IntList();
   
@@ -695,6 +805,7 @@ class fixture {
       g.rectMode(CENTER);
       g.strokeWeight(2);
       g.stroke(0, 230);
+      g.translate(size.w/2, 0);
       g.rect(x1, y1, lampWidth, lampHeight, 3);
       g.rotate(radians(-rotationZ));
       g.translate(-size.w/2, -size.h/2);
@@ -707,6 +818,8 @@ class fixture {
       g.textSize(15);
       textSize(15);
       g.text(text, lampWidth/2-textWidth(text)/2, y1+lampHeight/2+5);
+      text = this.socket.name;
+      g.text(text, lampWidth/2-textWidth(text)/2, y1-12); 
     }
     g.popStyle();
   }

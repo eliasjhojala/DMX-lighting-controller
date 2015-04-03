@@ -1,6 +1,6 @@
 final int ELEMENT_TYPE_RECTANGLE = 0;
 final int ELEMENT_TYPE_ELLIPSE = 1;
-final int ELEMENT_TYPE_CIRCLE = 2; 
+final int ELEMENT_TYPE_CIRCLE = 2;
 
 ArrayList<Element> elements = new ArrayList<Element>();
 
@@ -10,6 +10,39 @@ void elementsSetup() {
 
 void createNewElement() {
 	elements.add(new Element());
+}
+
+XML elementsAsXML() {
+  String data = "<elements></elements>";
+  XML xml = parseXML(data);
+  for(int i = 0; i < elements.size(); i++) {
+    xml = xml.addChild(elements.get(i).getXML());
+    xml.setInt("id", i);
+    xml = xml.getParent();
+  }
+  return xml;
+}
+
+void XMLtoElements(XML xml) {
+	elements = new ArrayList<Element>();
+  XML[] blocks = xml.getChildren();
+  int a = 0;
+  for(int i = 0; i < blocks.length; i++) {
+    if(!trim(blocks[i].toString()).equals("")) {
+      Element elm = new Element();
+      elm.XMLtoObject(blocks[i]);
+      elements.add(elm);
+    }
+  }
+}
+
+void saveElementsToXML() {
+  saveXML(elementsAsXML(), "XML/elements.xml");
+}
+
+void loadElementsFromXML() {
+  XMLtoElements(loadXML("XML/elements.xml"));
+  elementController.open = false;
 }
 
 class Element {
@@ -33,6 +66,24 @@ class Element {
 		setColor(col);
 	}
 	
+	XML getXML() {
+		String data = "<element></element>";
+		XML xml = parseXML(data);
+		try {
+                  xml.addChild(PVectorAsXML("size", size));
+                  xml.addChild(PVectorAsXML("location", location));
+                  xml.addChild(colorAsXML("color", col));
+                }
+                catch (Exception e) {}
+		return xml;
+	}
+
+        void XMLtoObject(XML xml) {
+          size = xmlAsPvector("size", xml);
+          location = xmlAsPvector("location", xml);
+          col = xmlAsColor("color", xml);
+        }
+	
 	void setColor(color c) {
 		this.col = c;
 	}
@@ -52,12 +103,31 @@ class Element {
 	void setLocationOffset(PVector os) {
 		location.x += os.x;
 		location.y += os.y;
+                location.z += os.z;
+                if(elementController.element == this) { elementController.setLocationToControllers(location); }
 	}
 	
 	void setSizeOffset(PVector os) {
 		size.x += os.x;
 		size.y += os.y;
+                size.x += os.z;
+                if(elementController.element == this) { elementController.setSizeToControllers(size); }
 	}
+
+        void draw3D() {
+          translate(location.x, location.y, location.z);
+          switch(type) {
+              case ELEMENT_TYPE_RECTANGLE:
+                  fill(255, 255, 255);
+                  Box(size);
+              break;
+          }
+          
+        }
+        
+        void Box(PVector size) {
+          box(round(size.x)*5, round(size.y)*5, round(size.z)*5);
+        }
 	
 	void draw() {
 		switch(type) {
@@ -91,19 +161,34 @@ class Element {
 							else if(mouseButton == RIGHT) {
 								elementController.open = true;
 								elementController.elementToControl(this);
+                                                                elementController.setLocationToControllers(location);
+                                                                elementController.setSizeToControllers(size);
+                                                                elementController.setColorToControllers(col);
 							}
 						}
 						else if(capturedAtCorner) {
 							setSizeOffset(new PVector(mouseX - pmouseX, mouseY - pmouseY));
 						}
-						if(mouse.elmIsHover(mouseNameCorner) || capturedAtCorner) { cursor(CROSS); }
-						else if(mouse.elmIsHover(mouseNameWhole) || captured) { cursor(MOVE); }
-						else { cursor(ARROW); }
+						if(mouse.elmIsHover(mouseNameCorner) || capturedAtCorner) { cursor.set(java.awt.Cursor.SE_RESIZE_CURSOR); }
+						else if(mouse.elmIsHover(mouseNameWhole) || captured) { cursor.set(MOVE); }
 					}
 				popMatrix();
 			break;
 		}
 	}
+
+
+      void draw(PGraphics g) {
+          switch(type) {
+            case ELEMENT_TYPE_RECTANGLE:
+              g.pushMatrix();
+                g.translate(location.x, location.y);
+                g.fill(col, 100);
+                g.rect(0, 0, size.x, size.y);
+              g.popMatrix();
+            break;
+          }
+        }
 	
 }
 
@@ -116,6 +201,7 @@ class ElementController {
 	boolean open;
 	
 	IntController xS, yS, zS, xL, yL, zL;
+        LocationController locationController;
 	
 	
 	ElementController() {
@@ -129,16 +215,17 @@ class ElementController {
 		zL = new IntController("ElementControllerWindow:zL");
 		
 		window = new Window("ElementControllerWindow", new PVector(w, h), this);
+                locationController = new LocationController();
 	}
 	
-	java.lang.Object element;
-	
-	Class elementClass;
-	
-	void elementToControl(java.lang.Object element) {
+	Element element;
+
+
+	void elementToControl(Element element) {
 		this.element = element;
-                elementClass = element.getClass();
 	}
+
+
 	
 	void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
 		window.draw(g, mouse);
@@ -153,41 +240,55 @@ class ElementController {
 					if(sliderChanged(g, mouse, 2)) { setColor(color(red, green, getColorValue(2))); }
 				g.popMatrix();
 			} //End of RGB picker
-			{ //Location and size controllers
-				g.pushMatrix();
-					g.translate(200, 0);
-					g.pushMatrix();
-						xS.draw(g, mouse); if(xS.valueHasChanged()) setSizeX(xS.getValue());
-						g.translate(0, 30);
-						yS.draw(g, mouse); if(yS.valueHasChanged()) setSizeY(yS.getValue());
-						g.translate(0, 30);
-						zS.draw(g, mouse); if(zS.valueHasChanged()) setSizeZ(zS.getValue());
-					g.popMatrix();
-					g.translate(100, 0);
-					g.pushMatrix();
-						xL.draw(g, mouse); if(xL.valueHasChanged()) setLocationX(xL.getValue());
-						g.translate(0, 30);
-						yL.draw(g, mouse); if(yL.valueHasChanged()) setLocationY(yL.getValue());
-						g.translate(0, 30);
-						zL.draw(g, mouse); if(zL.valueHasChanged()) setLocationZ(zS.getValue());
-					g.popMatrix();
-				g.popMatrix();
-			} //End of location and size controllers
+                        LocationController lC = locationController;
+                        g.pushMatrix();
+                          g.translate(200, 0);
+                          lC.draw(g, mouse);
+    			    if(lC.locXchanged()) setLocationX(lC.getLocX());
+                            if(lC.locYchanged()) setLocationX(lC.getLocY());
+                            if(lC.locZchanged()) setLocationX(lC.getLocZ());
+                            if(lC.sizeXchanged()) setSizeX(lC.getSizeX());
+                            if(lC.sizeYchanged()) setSizeY(lC.getSizeY());
+                            if(lC.sizeZchanged()) setSizeZ(lC.getSizeZ());
+                          
+                        g.popMatrix();
 		}
 	}
 	
-	void setSizeX() {
+	void setSizeX(int val) {
+          element.size.x = val;
 	}
-	void setSizeY() {
+	void setSizeY(int val) {
+          element.size.y = val;
 	}
-	void setSizeZ() {
+	void setSizeZ(int val) {
+          element.size.z = val;
 	}
-	void setLocationX() {
+	void setLocationX(int val) {
+          element.location.x = val;
 	}
-	void setLocationY() {
+	void setLocationY(int val) {
+          element.location.y = val;
 	}
-	void setLocationZ() {
+	void setLocationZ(int val) {
+          element.location.z = val;
 	}
+
+        void setLocationToControllers(PVector loc) {
+          LocationController lC = locationController;
+            lC.setLocationToControllers(loc);
+        }
+        
+        void setSizeToControllers(PVector s) {
+          LocationController lC = locationController;
+            lC.setSizeToControllers(s);
+        }
+        
+        void setColorToControllers(color c) {
+          red = round(red(c));
+          green = round(green(c));
+          blue = round(blue(c));
+        }
 	
 	boolean sliderChanged(PGraphics g, Mouse mouse, int c) {
 		int h = 0;
@@ -231,11 +332,129 @@ class ElementController {
 	
 	
 	void setColor(color c) {
-              try {
-					elementClass.getDeclaredMethod("setColor", color.class).invoke(element, c);
-              }
-              catch (Exception e) {
-                e.printStackTrace();
-              }
+              element.setColor(c);
 	}
+}
+
+class LocationController {
+  IntController xS, yS, zS, xL, yL, zL;
+  
+  boolean sizeXchanged, sizeYchanged, sizeZchanged;
+  boolean locationXchanged, locationYchanged, locationZchanged;
+  
+  PVector size, location;
+  
+  LocationController() {
+    xS = new IntController("LocationController"+this.toString()+":xS");
+    yS = new IntController("LocationController"+this.toString()+":yS");
+    zS = new IntController("LocationController"+this.toString()+":zS");
+    xL = new IntController("LocationController"+this.toString()+":xL");
+    yL = new IntController("LocationController"+this.toString()+":yL");
+    zL = new IntController("LocationController"+this.toString()+":zL");
+    size = new PVector(0, 0);
+    location = new PVector(0, 0);
+  }
+  
+  
+  void draw(PGraphics g, Mouse mouse) {
+    { //Location and size controllers
+    try {
+        g.pushMatrix();
+          g.pushMatrix();
+            xS.draw(g, mouse); if(xS.valueHasChanged()) { setSizeX(xS.getValue()); }
+            g.translate(0, 30);
+            yS.draw(g, mouse); if(yS.valueHasChanged()) { setSizeY(yS.getValue()); }
+            g.translate(0, 30);
+            zS.draw(g, mouse); if(zS.valueHasChanged()) { setSizeZ(zS.getValue()); }
+          g.popMatrix();
+          g.translate(100, 0);
+          g.pushMatrix();
+            xL.draw(g, mouse); if(xL.valueHasChanged()) { setLocationX(xL.getValue()); }
+            g.translate(0, 30);
+            yL.draw(g, mouse); if(yL.valueHasChanged()) { setLocationY(yL.getValue()); }
+            g.translate(0, 30);
+            zL.draw(g, mouse); if(zL.valueHasChanged()) { setLocationZ(zL.getValue()); }
+          g.popMatrix();
+        g.popMatrix();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+      } //End of location and size controllers
+  }
+  
+  void setSizeX(int val) {
+     sizeXchanged = true;
+     size.x = val;
+  }
+  void setSizeY(int val) {
+     sizeYchanged = true;
+     size.y = val;
+  }
+  void setSizeZ(int val) {
+     sizeZchanged = true;
+     size.z = val;
+  }
+  void setLocationX(int val) {
+     locationXchanged = true;
+     location.x = val;
+  }
+  void setLocationY(int val) {
+     locationYchanged = true;
+     location.y = val;
+  }
+  void setLocationZ(int val) {
+     locationZchanged = true;
+     location.z = val;
+  }
+  
+  boolean locXchanged() {
+    boolean toReturn = locationXchanged;
+    locationXchanged = false;
+    return toReturn;
+  }
+  boolean locYchanged() {
+    boolean toReturn = locationYchanged;
+    locationYchanged = false;
+    return toReturn;
+  }
+  boolean locZchanged() {
+    boolean toReturn = locationZchanged;
+    locationZchanged = false;
+    return toReturn;
+  }
+  boolean sizeXchanged() {
+    boolean toReturn = sizeXchanged;
+    sizeXchanged = false;
+    return toReturn;
+  }
+  boolean sizeYchanged() {
+    boolean toReturn = sizeYchanged;
+    sizeYchanged = false;
+    return toReturn;
+  }
+  boolean sizeZchanged() {
+    boolean toReturn = sizeZchanged;
+    sizeZchanged = false;
+    return toReturn;
+  }
+  
+  int getLocX() { return round(location.x); }
+  int getLocY() { return round(location.y); }
+  int getLocZ() { return round(location.z); }
+  int getSizeX() { return round(size.x); }
+  int getSizeY() { return round(size.y); }
+  int getSizeZ() { return round(size.z); }
+  
+  void setLocationToControllers(PVector loc) {
+      xL.setValue(loc.x);
+      yL.setValue(loc.y);
+      zL.setValue(loc.z);
+  }
+  
+  void setSizeToControllers(PVector s) {
+      xS.setValue(s.x);
+      yS.setValue(s.y);
+      zS.setValue(s.z);
+  }
 }

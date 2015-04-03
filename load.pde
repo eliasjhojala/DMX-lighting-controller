@@ -121,11 +121,12 @@ void loadAllData1() {
       if(!savingNearestSocketsToXML) { saveNearestSocketsToXML(); }
       if(!loadingMidiData) { loadMidiData(); }
       oscHandler.loadFromXML();
+      try { loadElementsFromXML(); } catch (Exception e) {}
       
       
       loadSocketsFromXML();
       loadXmlToTrusses();
-      
+      doAfterLoad();
       loadingAllData = false;
   }
 }
