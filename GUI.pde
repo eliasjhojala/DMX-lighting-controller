@@ -146,6 +146,10 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(trussController, "trussController", 1000));
     subWindows.add(new SubWindowContainer(socketController, "socketController", 1000));
     
+    subWindows.add(new SubWindowContainer(powerWindow, "powerWindow", 1000));
+    
+    
+    
     
     
 	
@@ -945,7 +949,8 @@ class IntController {
     floatState = newState;
   }
   
-
+  int lo_limit = 0;
+  int hi_limit = 1000;
   
   void draw(PGraphics g, Mouse mouse) {
     PGraphics b = g;
@@ -960,9 +965,10 @@ class IntController {
 
             mouse.declareUpdateElementRelative(name, 10000, 0, 0, 100, 20, g);
             if(mouse.isCaptured(name) && mouseButton == LEFT) {
-              floatState += float(pmouseY - mouseY) / 20 * (abs(mouseX - screenX(0, 0)) / 20 + 1);
+              floatState += (float(pmouseY - mouseY) / 20 * (abs(mouseX - screenX(0, 0)) / 20 + 1))*definition/10;
+              floatState = constrain(floatState, lo_limit, hi_limit);
               if(round(floatState) != state) { valueChanged = true; }
-              state = round(floatState);
+              state = round(floatState/definition)*definition;
             }
           g.popMatrix(); popMatrix();
           
@@ -995,6 +1001,17 @@ class IntController {
   void setValue(float val) {
     state = int(val);
     floatState = val;
+  }
+  
+  
+  int definition = 1;
+  void setDefinition(int val) {
+    definition = val;
+  }
+  
+  void setLimits(int lo, int hi) {
+    hi_limit = hi;
+    lo_limit = lo;
   }
   
 }

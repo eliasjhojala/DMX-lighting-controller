@@ -67,6 +67,8 @@ class FixtureProfile {
   boolean isHazer;
   boolean isHalogen;
   
+  int watts;
+  
   FixtureProfile() {
     String[] empty = { "" };
     int[] emptyy = { 0 };
@@ -99,6 +101,10 @@ class FixtureProfile {
   
    FixtureProfile(String fN, String[] cN, int[] cT) {
     setBasicData(fN, cN, cT);
+  }
+  
+  void setWatts(int watts) {
+    this.watts = watts;
   }
   
   

@@ -22,6 +22,7 @@
         <height>50</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="1000"></watts>
       <fixtureModelPath>par64.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="Pieni fresu" fixtureName="p.fresu" id="2">
@@ -36,6 +37,7 @@
         <height>30</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="1000"></watts>
       <fixtureModelPath>kFresu.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="Keskikokoinen fresu" fixtureName="k.fresu" id="3">
@@ -50,6 +52,7 @@
         <height>40</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="1000"></watts>
       <fixtureModelPath>kFresu.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="Iso fresu" fixtureName="i.fresu" id="4">
@@ -64,6 +67,7 @@
         <height>50</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="1000"></watts>
       <fixtureModelPath>iFresu.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="flood" id="5">
@@ -78,6 +82,7 @@
         <height>20</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="1250"></watts>
       <fixtureModelPath>flood.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="linssi" id="6">
@@ -92,6 +97,7 @@
         <height>60</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="1000"></watts>
       <fixtureModelPath>linssi.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="Strobe" id="7">
@@ -138,6 +144,7 @@
         <height>55</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="1500"></watts>
       <fixtureModelPath>fog.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="RGB" id="10">
