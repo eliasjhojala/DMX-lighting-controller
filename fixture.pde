@@ -12,8 +12,6 @@ class FixtureControllerWindow {
   DropdownMenu trussesDDM;
   DropdownMenu socketsDDM;
   
-  IntController watts;
-  
   FixtureControllerWindow() {
     w = 1000; h = 500;
     window = new Window("fixtureController", new PVector(w, h), this);
@@ -21,8 +19,6 @@ class FixtureControllerWindow {
     xL = new IntController("LocationController"+this.toString()+":xL");
     yL = new IntController("LocationController"+this.toString()+":yL");
     zL = new IntController("LocationController"+this.toString()+":zL");
-    
-    watts = new IntController("Watts"+this.toString());
     
     addNewAllowedTrussForWiring = new PushButton("addNewAllowedTrussForWiring");
     
@@ -95,29 +91,6 @@ class FixtureControllerWindow {
           socketsDDM.draw(g, mouse);
           if(socketsDDM.valueHasChanged()) { fix.socket = sockets.get(socketsDDM.getValue()); }
         }
-        g.popMatrix();
-        
-        g.pushMatrix();
-        g.pushStyle();
-          g.translate(200, 200);
-          int valueToWatts = -1;
-          if((fixtureProfiles[fix.fixtureTypeId].watts != watts.getValue() && fix.watts == -1)) {
-            valueToWatts = fixtureProfiles[fix.fixtureTypeId].watts;
-          }
-          if(fix.watts != watts.getValue() && fix.watts != -1) {
-            valueToWatts = fix.watts;
-          }
-          if(valueToWatts != -1) watts.setValue(valueToWatts);
-          g.fill(0);
-          g.textSize(15);
-          g.text("Watts", 125, 16);
-          watts.draw(g, mouse);
-          watts.setDefinition(50);
-          watts.setLimits(0, 2000);
-          if(watts.valueHasChanged()) {
-            fix.watts = watts.getValue();
-          }
-        g.popStyle();
         g.popMatrix();
         
       g.popMatrix();
@@ -278,25 +251,6 @@ class fixture {
   String fixtureType;
   int fixtureTypeId;
   int channelStart;
-  int watts = -1;
-  
-  int getWatts() {
-    if(watts != -1) {
-      return watts;
-    }
-    else {
-      return fixtureProfiles[fixtureTypeId].watts;
-    }
-  }
-  
-  int getActualWatts() {
-    if(isHalogen()) {
-      return round(map(out.getUniversalDMX(1), 0, 255, 0, getWatts()));
-    }
-    else {
-      return getWatts();
-    }
-  }
   
   fixtureSize size;
   

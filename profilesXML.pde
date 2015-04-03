@@ -50,11 +50,6 @@ void saveFixtureProfiles() {
       XML isDrawn = fixtureSize.addChild("isDrawn");
       isDrawn.setContent(str(fixtureProfiles[i].size.isDrawn));
     } //end of saving fixtureSize
-    
-    { //Save watts
-      XML watts = profile.addChild("watts");
-      watts.setInt("watts", fixtureProfiles[i].watts);
-    } //End of saving watts
   
   
     { //load fixture model PShape
@@ -114,14 +109,6 @@ void loadFixtureProfiles() {
       XML isDrawn = fixtureSize.getChild("isDrawn");
       fixtureProfiles[id].size.isDrawn = boolean(isDrawn.getContent());
     } //end of loading fixtureSize
-    
-    { //load watts
-      try {
-        fixtureProfiles[id].watts = profile[i].getChild("watts").getInt("watts");
-      }
-      catch(Exception e) {
-      }
-    } //End of loading watts
     
      { //load fixture model PShape
       XML fixtureModelPath = profile[i].getChild("fixtureModelPath");
