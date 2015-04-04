@@ -135,9 +135,17 @@ XML getNearestSocketsAsXML() {
   return xml;
 }
 
+
 boolean savingSocketsToXML;
+
 void saveSocketsToXML() {
   savingSocketsToXML = true;
+  saveXML(getSocketsAsXML(), "XML/sockets.xml");
+  savingSocketsToXML = false;
+}
+
+
+XML getSocketsAsXML() {
   String data = "<Sockets></Sockets>";
   XML xml = parseXML(data);
   for(int i = 0; i < sockets.size(); i++) {
@@ -147,13 +155,16 @@ void saveSocketsToXML() {
       block.setInt("id", i);
     }
   }
-  saveXML(xml, "XML/sockets.xml");
-  savingSocketsToXML = false;
+  return xml;
 }
 
 void loadSocketsFromXML() {
+  XMLtoSockets(loadXML("XML/sockets.xml"));
+}
+
+void XMLtoSockets(XML xml) {
   sockets = new ArrayList<Socket>();
-  XML xml = loadXML("XML/sockets.xml");
+  
   //XML socketss = xml.getChild("Sockets");
   XML[] socket = xml.getChildren("socket");
   for(int i = 0; i < socket.length; i++) {

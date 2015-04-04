@@ -665,7 +665,7 @@
 
  void loadLaunchpadData() {
    if(launchpad != null) {
-     launchpad.XMLtoObject();
+     launchpad.loadFromXML();
      midiWindow.launchPadMemories.setValue(launchpad.toggleMemory);
      midiWindow.launchpadToggleOrPush.setValue(launchpad.buttonMode); //Set values to buttonModes
    }
@@ -683,7 +683,7 @@
  
  
  void loadBehringerLC2412data() {
-   if(LC2412 != null) LC2412.XMLtoObject();
+   if(LC2412 != null) LC2412.loadFromXML();
  }
 
 
@@ -890,17 +890,27 @@ public class Launchpad {
   }
   
   
+  
+  
   void saveToXML() {
+    saveXML(getXML(), "XML/launchpad.xml");
+  }
+  
+  void loadFromXML() {
+    XMLtoObject(loadXML("XML/launchpad.xml"));
+  }
+  
+  XML getXML() {
     
     String data = "<launchpad></launchpad>";
     XML xml = parseXML(data);
     xml.addChild(array2DToXML("toggleMemory", toggleMemory));
 	xml.addChild(array2DToXML("buttonMode", buttonMode));
-    saveXML(xml, "XML/launchpad.xml");
+    return xml;
   }
   
-  void XMLtoObject() {
-    XML xml = loadXML("XML/launchpad.xml");
+  void XMLtoObject(XML xml) {
+    
     int[][] fromXML = new int[8][8];
     arrayCopy(XMLtoIntArray2D("toggleMemory", xml), fromXML);
     
@@ -1013,7 +1023,14 @@ public class behringerLC2412 {
     buttonMemory = new int[10][12];
   }
   
+  
+  
+  
   void saveToXML() {
+    saveXML(getXML(), "XML/LC2412.xml");
+  }
+  
+  XML getXML() {
     
     String data = "<LC2412></LC2412>";
     XML xml = parseXML(data);
@@ -1022,12 +1039,17 @@ public class behringerLC2412 {
     
     xml.addChild(array3DToXML("faderMemory", faderMemory));
     xml.addChild(array2DToXML("buttonMemory", buttonMemory));
-    saveXML(xml, "XML/LC2412.xml");
+    return xml;
   }
   
   
-  void XMLtoObject() {
-    XML xml = loadXML("XML/LC2412.xml");
+  void loadFromXML() {
+    XMLtoObject(loadXML("XML/LC2412.xml"));
+  }
+  
+  void XMLtoObject(XML xml) {
+
+    
     
     { //buttonMode
       int[][] fromXML = XMLtoIntArray2D("buttonMode", xml);

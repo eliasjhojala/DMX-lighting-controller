@@ -62,8 +62,8 @@ void SaveChannelsAsPdf() {
       c.socketsInThisChannel.append(i);
     }
     
+    int h = 0;
     { //Count pdf file widht and height
-      int h = 0;
       for(int i = 0; i < dimmers.size(); i++) {
         h += 100+dimmers.get(i).numberOfChannels;
       }

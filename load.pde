@@ -42,13 +42,13 @@ void loadAllData1() {
       programReadyToRun = false;
       //FIXTURES---------------------------------------------------------------------------------------------------------------------------
       //Initialize fixtures using type
-      fixtures.clear();
+  /*    fixtures.clear();
       for(TableRow row : table.findRows("idLookupTable", "variable_name")) {
         idLookupTable.add(int(row.getString("value")));
-      }
+      } */
   
       
-      for (TableRow row : table.findRows("fixtureType1", "variable_name"))
+    /*  for (TableRow row : table.findRows("fixtureType1", "variable_name"))
           {
             fixtures.array.add(int(row.getString("1D")), new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, int(row.getString("value"))));
           
@@ -85,7 +85,7 @@ void loadAllData1() {
       
       for (TableRow row : table.findRows("ansaParent", "variable_name")) if(fixtures.array.size() > int(row.getString("1D")))
           { fixtures.array.get(int(row.getString("1D"))).parentAnsa           = int(row.getString("value")); }
-  
+  */
       
       //--------------------------------------------------------------------------------------------------------------------------------------
   
@@ -117,16 +117,23 @@ void loadAllData1() {
       programReadyToRun = true;
       
       
-      if(!loadinMemoriesFromXML) { thread("loadMemoriesFromXML"); }
+//      if(!loadinMemoriesFromXML) { thread("loadMemoriesFromXML"); }
       //if(!savingNearestSocketsToXML) { saveNearestSocketsToXML(); }
-      if(!loadingMidiData) { loadMidiData(); }
-      oscHandler.loadFromXML();
-      try { loadElementsFromXML(); } catch (Exception e) {}
+//      if(!loadingMidiData) { loadMidiData(); }
+//      oscHandler.loadFromXML();
+//      try { loadElementsFromXML(); } catch (Exception e) {}
+     
+    /*
       loadTestXML();
       
       loadSocketsFromXML();
       loadXmlToTrusses();
       loadDimmersFromXML();
+      
+      */
+      
+      loadShowFileFromXML();
+      
       doAfterLoad();
       loadingAllData = false;
   }

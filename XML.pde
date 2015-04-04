@@ -1,5 +1,63 @@
 //Functions to handle XML are located in this tab
 
+String showFilePath = "XML/ShowFile.xml";
+
+void saveShowFileXML() {
+  String data = "<ShowFile></ShowFile>";
+  XML xml = parseXML(data);
+  XML block;
+  
+  block = xml.addChild("Fixtures");
+  block = block.addChild(getFixturesXML());
+  
+  block = xml.addChild("Memories");
+  block = block.addChild(getMemoriesAsXML());
+  
+  block = xml.addChild("Trusses");
+  block = block.addChild(getTrussesAsXML());
+  
+  block = xml.addChild("Dimmers");
+  block = block.addChild(dimmersAsXML());
+  
+  block = xml.addChild("Elements");
+  block = block.addChild(elementsAsXML());
+  
+  block = xml.addChild("Sockets");
+  block = block.addChild(getSocketsAsXML());
+  
+  block = xml.addChild("OSCHandler");
+  block = block.addChild(oscHandler.getXML());
+  
+  XML midi = xml.addChild("Midi");
+  
+  block = midi.addChild("Launchpad");
+  if(launchpad != null) block = block.addChild(launchpad.getXML());
+  
+  block = midi.addChild("LC2412");
+  if(LC2412 != null) block = block.addChild(LC2412.getXML());
+  
+  saveXML(xml, showFilePath);
+  
+  
+}
+
+void loadShowFileFromXML() {
+  XML xml = loadXML(showFilePath);
+  XML block;
+  
+  XMLtoFixtures(xml.getChild("Fixtures").getChild("fixtures"));
+  XMLtoMemories(xml.getChild("Memories").getChild("Memories"));
+  XMLtoTrusses(xml.getChild("Trusses").getChild("Trusses"));
+  XMLtoDimmers(xml.getChild("Dimmers").getChild("dimmers"));
+  XMLtoElements(xml.getChild("Elements").getChild("elements"));
+  XMLtoSockets(xml.getChild("Sockets").getChild("Sockets"));
+  oscHandler.XMLtoObject(xml.getChild("OSCHandler").getChild("OSChandler"));
+  
+  block = xml.getChild("Midi");
+  if(launchpad != null) launchpad.XMLtoObject(block.getChild("Launchpad").getChild("launchpad"));
+  if(LC2412 != null) LC2412.XMLtoObject(block.getChild("LC2412").getChild("LC2412"));
+}
+
 ManageXML fixtureXML = new ManageXML("XML/fixtures.xml");
 ManageXML memoryXML = new ManageXML("XML/memories.xml");
 
@@ -22,12 +80,17 @@ XML getFixturesXML() {
   return xml;
 }
 
+
+
 void loadTestXML() {
+  XMLtoFixtures(loadXML("XML/fixtures.xml"));
+}
+
+void XMLtoFixtures(XML xml) {
     //IDLOOKUPTABLE TÄHÄN ROOPE TEEEE --- pitäisi olla nyt tehty (en kokeillut vielä)
     fixtures.clear();
-    
       try {
-        XML xml = loadXML("XML/fixtures.xml");
+        
         XML[] allTheFixtures = xml.getChildren();
         println(allTheFixtures);
         for(int i = 0; i < allTheFixtures.length; i++) {

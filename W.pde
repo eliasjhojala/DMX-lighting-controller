@@ -6,7 +6,7 @@ void saveDimmersToXML() {
   saveXML(dimmersAsXML(), "XML/dimmers.xml");
 }
 void loadDimmersFromXML() {
-  dimmersFromXML(loadXML("XML/dimmers.xml"));
+  XMLtoDimmers(loadXML("XML/dimmers.xml"));
 }
 
 XML dimmersAsXML() {
@@ -18,7 +18,7 @@ XML dimmersAsXML() {
   return xml;
 }
 
-void dimmersFromXML(XML xml) {
+void XMLtoDimmers(XML xml) {
   XML[] dimmersXML = xml.getChildren("Dimmer");
   dimmers.clear();
   for(int i = 0; i < dimmersXML.length; i++) {

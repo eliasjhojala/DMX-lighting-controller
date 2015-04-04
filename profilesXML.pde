@@ -3,7 +3,15 @@
 String nameOfProfileFile = "fixtureProfiles.xml"; //Name of xml file where all the fixtureProfile data is located
 
 boolean loadingFixtureProfiles = false;
+
 void saveFixtureProfiles() {
+  saveXML(getFixtureProfilesAsXML(), nameOfProfileFile); //Finally save xml which we have created
+}
+void loadFixtureProfiles() {
+  getFixtureProfilesFromXML(loadXML(nameOfProfileFile)); //load XML from file
+}
+
+XML getFixtureProfilesAsXML() {
   //This function saves all the fixtureProfiles to xml file
   //This will be useful when qui for adding fixtureProfiles is ready
   
@@ -63,15 +71,17 @@ void saveFixtureProfiles() {
     } //end of loading fixture model PShape
     
   } //End of going through all the profiles
-  saveXML(xml, nameOfProfileFile); //Finally save xml which we have created
+  return xml;
 } //End of saving all the fixtureProfiles to xml
 
-void loadFixtureProfiles() {
+
+
+
+void getFixtureProfilesFromXML(XML xml) {
   //This function loads all the fixtureProfiles from XML file
   loadingFixtureProfiles = true;
-  XML xml; //Define xml variable
 
-  xml = loadXML(nameOfProfileFile); //load XML from file
+  
   XML profiles = xml.getChild("profiles"); //parent of all the profiles
   XML[] profile = profiles.getChildren("profile"); //single profiles
 
