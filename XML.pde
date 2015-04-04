@@ -39,6 +39,7 @@ void saveShowFileXML() {
   XML visualisation = xml.addChild("Visualisation");
   visualisation.addChild(get3DasXML());
   visualisation.addChild(get2DasXML());
+  visualisation.addChild(getVisualisationOptionsAsXML());
   
   saveXML(xml, showFilePath);
   
@@ -65,10 +66,27 @@ void loadShowFileFromXML() {
     block = xml.getChild("Visualisation");
     XMLto3D(block.getChild("ThreeDee"));
     XMLto2D(block.getChild("TwoDee"));
+    XMLtoVisualisationOptions(block.getChild("VisualisationOptions"));
   }
   catch (Exception e) {}
   
 
+}
+
+XML getVisualisationOptionsAsXML() {
+  String data = "<VisualisationOptions></VisualisationOptions>";
+  XML xml = parseXML(data);
+  XML block;
+  block = xml.addChild("data");
+  block.setInt("showLeftButtons", int(showLeftButtons));
+  block.setInt("showOldBottomMeu", int(showOldBottomMeu));
+  return xml;
+}
+
+void XMLtoVisualisationOptions(XML xml) {
+  xml = xml.getChild("data");
+  showLeftButtons = boolean(xml.getInt("showLeftButtons"));
+  showOldBottomMeu = boolean(xml.getInt("showOldBottomMeu"));
 }
 
 ManageXML fixtureXML = new ManageXML("XML/fixtures.xml");

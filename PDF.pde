@@ -18,7 +18,9 @@ void SaveChannelsAsPdf() {
     }
   }
   
-  PGraphics pdf = createGraphics(max(textSize)+100, usedChannels*15+30, PDF, "FILES/channels.pdf");
+  int h = usedChannels*15+30;
+  PGraphics pdf = createGraphics(int(max(max(textSize)+50, float(h)*297/420)), h, PDF, "FILES/channels.pdf");
+  
   pdf.beginDraw();
   pdf.background(255, 255, 255);
   pdf.fill(0);
@@ -62,11 +64,12 @@ void SaveChannelsAsPdf() {
       c.socketsInThisChannel.append(i);
     }
     
-    int h = 0;
+    h = 0;
     { //Count pdf file widht and height
       for(int i = 0; i < dimmers.size(); i++) {
-        h += 100+dimmers.get(i).numberOfChannels;
+        h += (50+(dimmers.get(i).numberOfChannels*15));
       }
+
       
       textSize = new int[DMX_CHAN_LENGTH+1];
       
@@ -90,7 +93,7 @@ void SaveChannelsAsPdf() {
       }
     } //End of counting pdf file width and height
     
-    pdf = createGraphics(max(textSize)+100, h, PDF, "FILES/dimmerSockets.pdf");
+    pdf = createGraphics(int(max(max(textSize)+100, float(h)*297/420)), h, PDF, "FILES/dimmerSockets.pdf");
     pdf.beginDraw();
     pdf.background(255);
     

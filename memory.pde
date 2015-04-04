@@ -240,6 +240,7 @@ class memory { //Begin of memory class------------------------------------------
       case 5: toReturn = "fade"; break;
       case 6: toReturn = "chs1"; break;
       case 7: toReturn = "spcl"; break;
+      case 8: toReturn = "chs2"; break;
       default: toReturn = "unkn"; break;
     }
     return toReturn;
@@ -256,6 +257,7 @@ class memory { //Begin of memory class------------------------------------------
         case 5: fade(); break;
         case 6: chase(); break;
         case 7: special(); break;
+        case 8: chase(); break;
         default: unknown(); break;
       }
     }

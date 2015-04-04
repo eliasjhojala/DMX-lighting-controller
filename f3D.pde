@@ -16,6 +16,7 @@ XML get3DasXML() {
   xml.addChild(vectorAsXML(cam, "cam"));
   xml.addChild(vectorAsXML(center, "center"));
   xml.addChild(vectorAsXML(rotation, "rotation"));
+  xml.addChild("Use3D").setContent(str(use3D)); 
   return xml;
 }
 
@@ -23,6 +24,7 @@ void XMLto3D(XML xml) {
   cam = XMLtoVector(xml, "cam").get();
   center = XMLtoVector(xml, "center").get();
   rotation = XMLtoVector(xml, "rotation").get();
+  use3D = boolean(xml.getChild("Use3D").getContent());
 }
 
 public class PFrame extends JFrame {
