@@ -818,15 +818,15 @@ public class Launchpad {
   }
   
   void setup() {
-    pads = new boolean[8][8];
-    padsToggle = new boolean[8][8];
-    upperPads = new boolean[8];
-    upperPadsToggle = new boolean[8];
+    if(pads == null) pads = new boolean[8][8];
+    if(padsToggle == null) padsToggle = new boolean[8][8];
+    if(upperPads == null) upperPads = new boolean[8];
+    if(upperPadsToggle == null) upperPadsToggle = new boolean[8];
     
-    toggleMemory = new int[8][8];
+    if(toggleMemory == null) toggleMemory = new int[8][8];
     
-    buttonMode = new int[8][8];
-    toggleMemory = new int[8][8];
+    if(buttonMode == null) buttonMode = new int[8][8];
+    if(toggleMemory == null) toggleMemory = new int[8][8];
   }
   
   void setButtonModeToAll(int mode) {
@@ -929,6 +929,9 @@ public class Launchpad {
         buttonMode[x][y] = fromXML[x][y];
       }
     }
+    
+    midiWindow.launchPadMemories.setValue(launchpad.toggleMemory);
+    midiWindow.launchpadToggleOrPush.setValue(launchpad.buttonMode); //Set values to buttonModes
 
   }
   
@@ -1010,17 +1013,17 @@ public class behringerLC2412 {
   
   
   void setup() {
-    faderValue = new int[2][12];
-    faderValueOld = new int[2][12];
-    buttons = new boolean[12];
-    buttonsOld = new boolean[12];
-    buttonsToggle = new boolean[12];
-    buttonsToggleOld = new boolean[12];
+    if(faderValue == null) faderValue = new int[2][12];
+    if(faderValueOld == null) faderValueOld = new int[2][12];
+    if(buttons == null) buttons = new boolean[12];
+    if(buttonsOld == null) buttonsOld = new boolean[12];
+    if(buttonsToggle == null) buttonsToggle = new boolean[12];
+    if(buttonsToggleOld == null) buttonsToggleOld = new boolean[12];
     
-    faderMode = new int[10][12][2];
-    buttonMode = new int[10][12];
-    faderMemory = new int[10][12][2];
-    buttonMemory = new int[10][12];
+    if(faderMode == null) faderMode = new int[10][12][2];
+    if(buttonMode == null) buttonMode = new int[10][12];
+    if(faderMemory == null) faderMemory = new int[10][12][2];
+    if(buttonMemory == null) buttonMemory = new int[10][12];
   }
   
   

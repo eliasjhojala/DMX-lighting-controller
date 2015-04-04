@@ -167,7 +167,7 @@ class memory { //Begin of memory class------------------------------------------
     if(type == 1) {
       xml.addChild(myPreset.getXML());
     }
-    if(type == 2 || type == 3 || type == 6) {
+    if(type == 2 || type == 3 || type == 6 || type == 8) {
       xml.addChild(myChase.getXML());
     }
     return xml;
@@ -185,7 +185,7 @@ class memory { //Begin of memory class------------------------------------------
       if(type == 1) {
         myPreset.XMLtoObject(xml);
       }
-      if(type == 2 || type == 3 || type == 6) {
+      if(type == 2 || type == 3 || type == 6 || type == 8) {
         myChase.XMLtoObject(xml);
       }
       loadingFromXML = false;
@@ -908,6 +908,7 @@ class chase { //Begin of chase class--------------------------------------------
   int[] presets; //all the presets in chase
   int[] content; //all the content in chase - in the future also presets
   ArrayList<Preset> steps = new ArrayList<Preset>(); //all the presets in chase
+  IntList stepsForChase2 = new IntList();
   
   int step, brightness, brightness1;
   boolean stepHasChanged;
@@ -952,6 +953,13 @@ class chase { //Begin of chase class--------------------------------------------
           block.addChild(steps.get(i).getXML());
         }
     }
+    if(parent.type == 8) {
+      block = xml.addChild("stepsForChase2");
+        block.setInt("size", stepsForChase2.size());
+        for(int i = 0; i < stepsForChase2.size(); i++) {
+          block.addChild("step").setInt("val", stepsForChase2.get(i));
+        }
+    }
     return xml;
   }
   
@@ -993,6 +1001,13 @@ class chase { //Begin of chase class--------------------------------------------
               steps.add(x);
               x.XMLtoObject(blocks[i], true);
             }
+          }
+        }
+        block = xml.getChild("stepsForChase2");
+        if(block != null) {
+          XML[] blocks = block.getChildren("step");
+          for(int i = 0; i < blocks.length; i++) {
+            stepsForChase2.append(blocks[i].getInt("val"));
           }
         }
       }
@@ -1197,6 +1212,10 @@ class chase { //Begin of chase class--------------------------------------------
     setParentType(2);
   }
   
+  void addNewStepForChase2(int id) {
+    stepsForChase2.append(id);
+  }
+  
   int getNumberOfActivePresets() {
     int a = 0;
     for(int i = 0; i < memories.length; i++) {
@@ -1228,26 +1247,30 @@ class chase { //Begin of chase class--------------------------------------------
   boolean firstTimeLoading = true;
   int[] oldValue;
   void loadPreset(int num, int val) {
+    val = defaultConstrain(rMap(val, 0, 255, 0, value));
     if(firstTimeLoading) {
       oldValue = new int[getPresets().length];
       firstTimeLoading = false;
     }
     if(parent.type == 2) {
-      memories[num].setValue(defaultConstrain(rMap(val, 0, 255, 0, value)));
+      memories[num].setValue(val);
     }
     if(parent.type == 3)  { //quickChase
       
-      if(parent.soloInThisMemory && defaultConstrain(rMap(val, 0, 255, 0, value)) > 0) { //Begin of solo commands
+      if(parent.soloInThisMemory && val > 0) { //Begin of solo commands
         soloIsOn = true;
         fixtures.get(num).soloInThisFixture = true;
       } //End of Solo commands
       fixtures.get(num).preset.preFade = 0;
       fixtures.get(num).preset.postFade = 0;
-      fixtures.get(num).preset.setUniDMXfromPreset(DMX_DIMMER, defaultConstrain(rMap(val, 0, 255, 0, value)));
+      fixtures.get(num).preset.setUniDMXfromPreset(DMX_DIMMER, val);
       oldValue[constrain(num, 0, oldValue.length-1)] = val;
     }
     if(parent.type == 6) { //Chase with steps inside
       loadOwnPreset(num, val);
+    }
+    if(parent.type == 8) {
+      memories[num].setValue(val);
     }
   }
   
@@ -1266,12 +1289,18 @@ class chase { //Begin of chase class--------------------------------------------
        toReturn = new int[content.length];
        arrayCopy(content, toReturn);
      }
-     else if(parent.type == 6) {
+     else if(parent.type == 6) { //Chase1 (all the presets in chase)
        toReturn = new int[steps.size()];
        for(int i = 0; i < steps.size(); i++) {
          toReturn[i] = i;
        }
      }
+     else if(parent.type == 8) { //Chase2 (que stack)
+       toReturn = new int[stepsForChase2.size()];
+       for(int i = 0; i < stepsForChase2.size(); i++) {
+         toReturn[i] = stepsForChase2.get(i);
+       }
+     } //End of if(parent.type == 8)
      return toReturn;
      
   }
@@ -1284,6 +1313,9 @@ class chase { //Begin of chase class--------------------------------------------
      }
      else if(parent.type == 3) {
        toReturn = fixtures.get(getPresets()[n]).in.getUniDMX(DMX_DIMMER);
+     }
+     else if(parent.type == 8) {
+       toReturn = memories[getPresets()[n]].getValue();
      }
      return toReturn;
   }

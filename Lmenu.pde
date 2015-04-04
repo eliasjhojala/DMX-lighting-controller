@@ -294,7 +294,7 @@ void checkFixtureBoxSlider(int id) {
       mouseLocker = "fbox" + id + ":slider";
   } else if(mouseLocked && mouseLocker.equals("fbox" + id + ":slider")) {
       fixtures.get(id).in.setDimmer(fixtures.get(id).in.getUniversalDMX(1) + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
-      fixtures.get(id).in.setDimmer(constrain(fixtures.get(id).in.getUniversalDMX(1), 0, 255)); //Make sure that dimInput value is between 0-255 
+      fixtures.get(id).in.setDimmer(constrain(fixtures.get(id).in.getUniversalDMX(1), 0, 255)); //Make sure that dimInput value is between 0-255
   }
 }
 
@@ -357,7 +357,7 @@ void openBottomMenuControlBox(int owner) {
   bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures.get(owner).fixtureType + ", Starting Channel: " + fixtures.get(owner).channelStart;
   boolean successInit = false; //This boolean is set to true, if the fixtureType has a specific configuration applied for it.
   
-  //Get data from functions in profiles.pde 
+  //Get data from functions in profiles.pde
   {
     int fT = fixtures.get(owner).fixtureTypeId;
     String[] chNames = getChNamesByFixType(fT);
@@ -435,8 +435,8 @@ void bottomMenuDMXUpdate() {
   boolean changd = false;
   //Error prevention
   if (bottomMenuControlBoxDMXValueChanged != null && bottomMenuControlBoxDMXValues != null) if (bottomMenuControlBoxDMXValueChanged.length != 0 && bottomMenuControlBoxDMXValues.length != 0)
-  for (boolean changed : bottomMenuControlBoxDMXValueChanged) { 
-    if (changed) { 
+  for (boolean changed : bottomMenuControlBoxDMXValueChanged) {
+    if (changed) {
       tempDMX[arrayIndex] = bottomMenuControlBoxDMXValues[arrayIndex];
       changd = true;
     } else if(arrayIndex < tempDMX.length) bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
@@ -623,7 +623,7 @@ void drawBottomMenuChControllerButton(String text, boolean down) {
   textSize(12);
   text(text, 4, 12);
   //Draw decorative "frame" around the button
-  noFill(); 
+  noFill();
   if (!down) { stroke(0, 50); strokeWeight(2); } else { stroke(0, 80); strokeWeight(1); }
   rect(0, 0, 48, 15);
   

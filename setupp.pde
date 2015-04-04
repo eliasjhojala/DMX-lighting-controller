@@ -4,7 +4,7 @@ OscP5 oscP52;
 void setuppi() {
   createMemoryObjects();
   createSockets();
-  thread("createMidiClasses");
+  createMidiClasses();
   
   if(loadAllDataInSetup) { loadAllData(); }
   else { programReadyToRun = true; }
