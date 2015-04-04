@@ -94,7 +94,7 @@ class FixtureControllerWindow {
         g.translate(200, 0);
         if(socketsDDM != null) {
           socketsDDM.draw(g, mouse);
-          if(socketsDDM.valueHasChanged()) { fix.socket = sockets.get(socketsDDM.getValue()); }
+          if(socketsDDM.valueHasChanged()) { fix.socket = sockets.get(socketsDDM.getValue()); fix.socket.channel = fix.channelStart; }
         }
         g.popMatrix();
         

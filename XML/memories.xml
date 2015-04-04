@@ -103,9 +103,9 @@
   </memoryControllerLookupTable>
   <Memory enabled="1" id="1" soloInThisMemory="0" specialType="0" type="4" value="255" valueOld="0"/>
   <Memory enabled="1" id="2" soloInThisMemory="0" specialType="0" type="5" value="94" valueOld="0"/>
-  <Memory enabled="1" id="4" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
+  <Memory enabled="1" id="4" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
     <Preset>
-      <mainData value="255" valueOld="255"/>
+      <mainData value="0" valueOld="0"/>
       <whatToSave>
         <int id="0" val="1"/>
       </whatToSave>
@@ -220,7 +220,7 @@
       </repOfFixtures>
     </Preset>
   </Memory>
-  <Memory enabled="1" id="8" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
+  <Memory enabled="1" id="8" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
     <Chase>
       <content>
         <int id="0" val="20"/>
@@ -231,7 +231,7 @@
         <int id="5" val="19"/>
       </content>
       <stepData brightness="109" brightness1="3" step="4"/>
-      <mainData fade="7" ownFade="107" value="255"/>
+      <mainData fade="7" ownFade="107"/>
       <modeData fadeMode="1"/>
     </Chase>
   </Memory>

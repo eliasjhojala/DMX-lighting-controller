@@ -1,11 +1,29 @@
 import processing.pdf.*;
 
 void SaveChannelsAsPdf() {
-  PGraphics pdf = createGraphics(1000, 2000, PDF, "FILES/channels.pdf");
+  
+  int count = 0;
+  int usedChannels = 0;
+  int curCh = -1;
+  int[] textSize = new int[DMX_CHAN_LENGTH+1];
+  for(int ch = 0; ch < DMX_CHAN_LENGTH; ch++) {
+    for(int fix = 0; fix < fixtures.size(); fix++) {
+      if(fixtures.get(fix).channelStart == ch) if(!getFixtureLongNameByType(fixtures.get(fix).fixtureTypeId).equals("")) {
+        if(curCh != ch) {
+          usedChannels++;
+        }
+        textSize[ch] += textWidth(getFixtureLongNameByType(fixtures.get(fix).fixtureTypeId));
+        curCh = ch;
+      }
+    }
+  }
+  
+  PGraphics pdf = createGraphics(max(textSize)+100, usedChannels*15+30, PDF, "FILES/channels.pdf");
   pdf.beginDraw();
   pdf.background(255, 255, 255);
   pdf.fill(0);
-  int count = 0;
+  
+  count = 0;
   for(int ch = 0; ch < DMX_CHAN_LENGTH; ch++) {
     ArrayList<fixture> fixturesInThisChannel = new ArrayList<fixture>();
     for(int fix = 0; fix < fixtures.size(); fix++) {
@@ -13,24 +31,103 @@ void SaveChannelsAsPdf() {
         fixturesInThisChannel.add(fixtures.get(fix));
       }
     }
-    String text = str(ch) + ": ";
+    String text = "";
     if(fixturesInThisChannel.size() > 0) {
       count++;
-      if(fixturesInThisChannel.size() > 1) {
-        for(int fix = 0; fix < fixturesInThisChannel.size(); fix++) {
-          fixture fixt = fixturesInThisChannel.get(fix);
-          text = text + getFixtureLongNameByType(fixt.fixtureTypeId) + ", ";
+      for(int fix = 0; fix < fixturesInThisChannel.size(); fix++) {
+        fixture fixt = fixturesInThisChannel.get(fix);
+        if(text.equals("")) {
+          text = getFixtureLongNameByType(fixt.fixtureTypeId);
+        }
+        else {
+          text = text + ", " + getFixtureLongNameByType(fixt.fixtureTypeId);
         }
       }
-      else {
-        fixture fixt = fixturesInThisChannel.get(0);
-        text = text + getFixtureLongNameByType(fixt.fixtureTypeId);
-      }
-      pdf.text(text, 10, count*15);
+      pdf.text(str(ch) + ": "+text, 10, count*15);
     }
   }
   pdf.dispose();
   pdf.endDraw();
+  
+  
+  { //Set sockets to dimmers
+    ArrayList<Channel> socketChannels = new ArrayList<Channel>();
+    for(int i = 0; i < DMX_CHAN_LENGTH; i++) {
+      socketChannels.add(new Channel());
+    }
+    
+    for(int i = 0; i < sockets.size(); i++) {
+      Socket s = sockets.get(i);
+      Channel c = socketChannels.get(s.channel);
+      c.socketsInThisChannel.append(i);
+    }
+    
+    { //Count pdf file widht and height
+      int h = 0;
+      for(int i = 0; i < dimmers.size(); i++) {
+        h += 100+dimmers.get(i).numberOfChannels;
+      }
+      
+      textSize = new int[DMX_CHAN_LENGTH+1];
+      
+      for(int i = 0; i < dimmers.size(); i++) {
+        Dimmer d = dimmers.get(i);
+        int start = d.startChannel;
+        int nOfCh = d.numberOfChannels;
+        
+          int arrangeNumber = 0;
+          for(int j = start; j < start+nOfCh; j++) {
+            arrangeNumber++;
+            pdf.textSize(12);
+            String text = "";
+            for(int k = 0; k < socketChannels.get(j).socketsInThisChannel.size(); k++) {
+              if(text.equals("")) { text = sockets.get(socketChannels.get(j).socketsInThisChannel.get(k)).name; }
+              else { text = text + ", " + sockets.get(socketChannels.get(j).socketsInThisChannel.get(k)).name; }
+            }
+            textSize[j] = int(textWidth(text));
+          }
+          pdf.translate(0, 25);
+      }
+    } //End of counting pdf file width and height
+    
+    pdf = createGraphics(max(textSize)+100, h, PDF, "FILES/dimmerSockets.pdf");
+    pdf.beginDraw();
+    pdf.background(255);
+    
+    pdf.pushMatrix();
+    for(int i = 0; i < dimmers.size(); i++) {
+      Dimmer d = dimmers.get(i);
+      int start = d.startChannel;
+      int nOfCh = d.numberOfChannels;
+      
+        pdf.translate(0, 25);
+        pdf.fill(0);
+        pdf.textAlign(LEFT);
+        pdf.textSize(16);
+        pdf.text("Dimmer "+str(i),10, 0);
+        int arrangeNumber = 0;
+        for(int j = start; j < start+nOfCh; j++) {
+          arrangeNumber++;
+          pdf.textSize(12);
+          String text = "";
+          for(int k = 0; k < socketChannels.get(j).socketsInThisChannel.size(); k++) {
+            if(text.equals("")) {
+              text = sockets.get(socketChannels.get(j).socketsInThisChannel.get(k)).name;
+            }
+            else {
+              text = text + ", " + sockets.get(socketChannels.get(j).socketsInThisChannel.get(k)).name;
+            }
+          }
+          pdf.text(str(arrangeNumber)+". Ch" + str(j) + " : " + text, 20, 15);
+          pdf.translate(0, 15);
+        }
+        pdf.translate(0, 25);
+    }
+    pdf.popMatrix();
+    pdf.dispose();
+    pdf.endDraw();
+    
+  } //End of settings sockets to dimmers
   
   
   float[] x = new float[fixtures.size()];

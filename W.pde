@@ -179,6 +179,7 @@ class DimmerWindow {
 
 class Channel {
   IntList fixtures = new IntList();
+  IntList socketsInThisChannel = new IntList();
   int watts;
   Channel() {
   }
