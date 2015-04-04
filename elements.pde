@@ -34,6 +34,7 @@ void XMLtoElements(XML xml) {
       elements.add(elm);
     }
   }
+  elementController.open = false;
 }
 
 void saveElementsToXML() {
@@ -42,7 +43,6 @@ void saveElementsToXML() {
 
 void loadElementsFromXML() {
   XMLtoElements(loadXML("XML/elements.xml"));
-  elementController.open = false;
 }
 
 class Element {

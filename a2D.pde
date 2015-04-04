@@ -12,6 +12,27 @@ boolean firsTimeDrawingFixtureTypeBox;
 
 boolean addedElementsToHelp = false;
 
+XML get2DasXML() {
+  String data = "<TwoDee></TwoDee>";
+  XML xml = parseXML(data);
+  XML block;
+  block = xml.addChild("transform");
+  block.setFloat("x_siirto", x_siirto);
+  block.setFloat("y_siirto", y_siirto);
+  block.setFloat("zoom", zoom);
+  block.setInt("pageRotation", pageRotation);
+  return xml;
+}
+
+void XMLto2D(XML xml) {
+  XML block;
+  block = xml.getChild("transform");
+  x_siirto = block.getFloat("x_siirto");
+  y_siirto = block.getFloat("y_siirto");
+  zoom = block.getFloat("zoom");
+  pageRotation = block.getInt("pageRotation");
+}
+
 void drawMainWindow() {
   if(!addedElementsToHelp) {
     help.add("Rotating fixture", "You can rotate fixture by pressin r key and dragging fixture");

@@ -344,6 +344,22 @@ class MemoryCreationBox {
         if(mouse.isCaptured("MemoryCreationBox:save")) {
           save();
         }
+        
+        //Remove button
+        mouse.declareUpdateElementRelative("MemoryCreationBox:remove", "MemoryCreationBox", 80, h-10, -70, -20, g);
+        mouse.setElementExpire("MemoryCreationBox:remove", 2);
+        boolean removeHover = mouse.elmIsHover("MemoryCreationBox:remove");
+        g.fill(removeHover ? topMenuAccent : topMenuTheme);
+        g.rect(80, h-10, -70, -20, 4, 4, 4, 20);
+        g.fill(255);
+        g.textAlign(RIGHT);
+        g.text("Remove", 70, h-15);
+        if(mouse.isCaptured("MemoryCreationBox:remove")) {
+          remove();
+        }
+        
+        
+        
       }
       
       { //Preset creation options
@@ -917,6 +933,10 @@ class MemoryCreationBox {
     }
     open = false;
     savingMemory = false;
+  }
+  
+  void remove() {
+    removeMemory(selectedMemorySlot);
   }
   
   //Returns whether box is hovered on

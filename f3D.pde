@@ -10,6 +10,21 @@ PVector cam = new PVector(s1.width/2.0, s1.height/2.0 + 4000, 1000);
 PVector center = new PVector(0, 0, 0);
 PVector rotation = new PVector(0, 0, 0);
 
+XML get3DasXML() {
+  String data = "<ThreeDee></ThreeDee>";
+  XML xml = parseXML(data);
+  xml.addChild(vectorAsXML(cam, "cam"));
+  xml.addChild(vectorAsXML(center, "center"));
+  xml.addChild(vectorAsXML(rotation, "rotation"));
+  return xml;
+}
+
+void XMLto3D(XML xml) {
+  cam = XMLtoVector(xml, "cam").get();
+  center = XMLtoVector(xml, "center").get();
+  rotation = XMLtoVector(xml, "rotation").get();
+}
+
 public class PFrame extends JFrame {
   public PFrame() {
     setBounds(0, 0, 600, 340);
@@ -57,7 +72,7 @@ public class secondApplet1 extends PApplet {
   int valoScale = 20;
   
   void draw() {
-    if(use3D && trussesLoadedSucces && !loadingAllData) {
+    if(use3D && !loadingAllData) {
      setMainSettings(); //Set settings for beginning (camera, perspective etc)
      drawFloor(); //Draw floor
      drawElements(); //Draw all the elements

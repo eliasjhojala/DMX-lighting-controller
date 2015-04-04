@@ -7,6 +7,10 @@ String[] saveOptionButtonVariables = { "dimmer", "red", "green", "blue", "white"
 
 int fixtureOwnFade;
 
+void removeMemory(int id) {
+  memories[id] = new memory();
+}
+
 void setMemoryValueByOrderInVisualisation(int id, int val) {
   if(memoryControllerLookupTable != null) {
     if(id >= 0 && id < memoryControllerLookupTable.length) {

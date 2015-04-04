@@ -36,6 +36,10 @@ void saveShowFileXML() {
   block = midi.addChild("LC2412");
   if(LC2412 != null) block = block.addChild(LC2412.getXML());
   
+  XML visualisation = xml.addChild("Visualisation");
+  visualisation.addChild(get3DasXML());
+  visualisation.addChild(get2DasXML());
+  
   saveXML(xml, showFilePath);
   
   
@@ -56,6 +60,15 @@ void loadShowFileFromXML() {
   block = xml.getChild("Midi");
   if(launchpad != null) launchpad.XMLtoObject(block.getChild("Launchpad").getChild("launchpad"));
   if(LC2412 != null) LC2412.XMLtoObject(block.getChild("LC2412").getChild("LC2412"));
+  
+  try {
+    block = xml.getChild("Visualisation");
+    XMLto3D(block.getChild("ThreeDee"));
+    XMLto2D(block.getChild("TwoDee"));
+  }
+  catch (Exception e) {}
+  
+
 }
 
 ManageXML fixtureXML = new ManageXML("XML/fixtures.xml");
