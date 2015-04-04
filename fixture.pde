@@ -301,7 +301,7 @@ class fixture {
   }
   
   int getActualWatts() {
-    if(isHalogen()) {
+    if(isHalogen() || isLed()) {
       return round(map(out.getUniversalDMX(1), 0, 255, 0, getWatts()));
     }
     else {
@@ -705,6 +705,10 @@ class fixture {
     return fixtureProfiles[fixtureTypeId].isHalogen;
   }
   
+  boolean isLed() {
+    return fixtureProfiles[fixtureTypeId].isLed;
+  }
+  
   int getDimmerWithMaster() {
     return masterize(out.getUniversalDMX(DMX_DIMMER));
   }
@@ -910,7 +914,7 @@ class fixture {
       textSize(15);
       g.text(text, lampWidth/2-textWidth(text)/2, y1+lampHeight/2+5);
       text = this.socket.name;
-      g.text(text, lampWidth/2-textWidth(text)/2, y1-12); 
+      g.text(text, lampWidth/2-textWidth(text)/2, y1-12);
     }
     g.popStyle();
   }

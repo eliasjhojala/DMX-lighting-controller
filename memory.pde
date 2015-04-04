@@ -1861,8 +1861,12 @@ class TapTempo {
   boolean calculating = false;
   int tempoTapCountForVisualisation;
   
+  long lastRegistered1 = 0;
+  
   //This is triged when the rec button is pressed
   void register() {
+    if(millis() - lastRegistered1 > 100) {
+      lastRegistered1 = millis();
       //Go to next step
       lastRegistered = millis();
       steptriged = true; trig(true);
@@ -1890,7 +1894,7 @@ class TapTempo {
         calculating = false;
         clear();
       }
-      
+    }
       
   
   }
@@ -1910,7 +1914,7 @@ class TapTempo {
       if(millis() > lastStepMillis + interval) {
         steptriged = true;
         trig(true);
-        lastStepMillis = millis();
+        lastStepMillis = millis() - (millis() - (lastStepMillis + interval))+1;
       }
     }
     

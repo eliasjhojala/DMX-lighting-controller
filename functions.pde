@@ -799,6 +799,13 @@ boolean isInArray(int[] array, int toFind1, int toFind2) {
   return false;
 }
 
+boolean isInArray(int[] array, int toFind1, int toFind2, int toFind3) {
+  for(int i = 0; i < array.length; i++) {
+    if(array[i] == toFind1 || array[i] == toFind2 || array[i] == toFind3) { return true; }
+  }
+  return false;
+}
+
 void rect(PVector loc1, PVector loc2) {
   rect(loc1.x, loc1.y, loc2.x, loc2.y);
 }

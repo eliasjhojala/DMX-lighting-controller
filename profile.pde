@@ -14,7 +14,7 @@ PROFILE CREATION GUI CODER TIPS
 - fixtureProfiles[id] = new FixtureProfile(fixtureName, fixtureLongName, fixtureBrand, channelNames, channelTypes, size);
     
           list of dmx channels:
-_____________________________________________          
+_____________________________________________
 channelName        | channelTypeNumber
 -------------------|-------------------------
 "Dimmer"           | DMX_DIMMER
@@ -66,6 +66,7 @@ class FixtureProfile {
   boolean hasDimmer;
   boolean isHazer;
   boolean isHalogen;
+  boolean isLed;
   
   int watts;
   
@@ -145,5 +146,6 @@ class FixtureProfile {
     hasDimmer = isInArray(channelTypes, DMX_DIMMER);
     isHazer = isInArray(channelTypes, DMX_HAZE);
     isHalogen = isInArray(channelTypes, DMX_DIMMER) && channelTypes.length == 1;
+    isLed = isInArray(channelTypes, DMX_RED, DMX_GREEN, DMX_BLUE);
   }
 }

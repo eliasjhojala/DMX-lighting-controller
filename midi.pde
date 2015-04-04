@@ -840,7 +840,8 @@ public class Launchpad {
   
   void sendNoteOff(int pitch) {
 	int value = 0;
-	bus.sendNoteOn(0, pitch, byte(value) * 127);
+	try { bus.sendNoteOn(0, pitch, byte(value) * 127); }
+        catch (Exception e) {}
   }
   
   void noteOn(int channel, int pitch, int velocity) {
@@ -1146,6 +1147,7 @@ public class behringerLC2412 {
     else if(isBetween(num, 31, 42)) {
       buttons[constrain(num-31, 0, buttons.length-1)] = midiToBoolean(val);
       if(buttons[constrain(num-31, 0, buttons.length-1)]) { buttonsToggle[constrain(num-31, 0, buttons.length-1)] = !buttonsToggle[constrain(num-31, 0, buttons.length-1)]; }
+      buttonValueChange(midiToBoolean(val), num-31);
     }
     else {
       switch(num) {
@@ -1155,7 +1157,7 @@ public class behringerLC2412 {
         case 27: masterValues[0] = midiToDMX(val); break; //Main
         case 28: masterValues[1] = midiToDMX(val); break; //Main A
         case 29: masterValues[2] = midiToDMX(val); break; //Main B
-        case 30: stepKey = midiToBoolean(val); break;
+        case 30: stepKey = midiToBoolean(val); tapTempo.register(); break;
         case 43: bank = val; break;
         case 44: chaserNumber = val; break;
         case 45: channelFlashKey = midiToBoolean(val); break;
@@ -1187,6 +1189,32 @@ public class behringerLC2412 {
         if(mem >= 0 && mem < memories.length) memories[mem].setFade(val);
       }
     }
+  }
+  
+  void buttonValueChange(boolean val, int num) {
+    if(true) { //if output to memories
+      int mode = buttonMode[bank][num];
+      int mem = buttonMemory[bank][num];
+      
+      
+      boolean value;
+      if(buttonMode[bank][num] == 1) { //Togglemode
+        value = buttonsToggle[num];
+      }
+      else {
+        value = buttons[num];
+      }
+      
+      if(buttonMode[bank][num] != 2) {
+  			memories[buttonMemory[bank][num]].enabled = value;
+        memories[buttonMemory[bank][num]].doOnce = false;
+  		}
+  		else if(value == true) {
+        memories[buttonMemory[bank][num]].enabled = true;
+        memories[buttonMemory[bank][num]].doOnce = true;
+  		}
+      
+    } //End of if output to memories
   }
   
   

@@ -114,6 +114,7 @@
         <height>25</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="1000"></watts>
       <fixtureModelPath>strobo.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="Hazer" id="8">
@@ -130,6 +131,7 @@
         <height>45</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="1000"></watts>
       <fixtureModelPath>fog.obj</fixtureModelPath>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="Fog" id="9">
@@ -241,6 +243,7 @@
         <height>40</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="120"></watts>
     </profile>
     <profile fixtureBrand="" fixtureLongName="Stairville 6ch rgbw led" fixtureName="RGBW" id="15">
       <channelNames>
@@ -264,6 +267,7 @@
         <height>40</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="120"></watts>
     </profile>
     <profile fixtureBrand="" fixtureLongName="Stairville 8ch rgbw led" fixtureName="RGBW" id="16">
       <channelNames>
@@ -291,6 +295,7 @@
         <height>40</height>
         <isDrawn>true</isDrawn>
       </fixtureSize>
+      <watts watts="120"></watts>
     </profile>
     <profile fixtureBrand="" fixtureLongName="" fixtureName="MHX50" id="17">
       <channelNames>
