@@ -43,7 +43,6 @@ void draw() {
     updateMemories();
     if(drawNow) checkThemeMode();
     setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
-    sendDataToArduino();
     drawMainWindow(); //Draw main view (mainly fixtures)
     if(enttecOutput != null) { enttecOutput.draw(); }
     if(drawNow) drawMenus();
@@ -98,9 +97,6 @@ void setTextSize() {
 }
 void updateMidi() {
   if(useMidiMaschines) { inputClass.draw(); }
-}
-void sendDataToArduino() {
-  if (arduinoFinished) { thread("arduinoSend"); } //Send dim-values to arduino, which sends them to DMX-shield
 }
 void drawMenus() {
   if(!printMode) {

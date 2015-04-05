@@ -13,29 +13,12 @@ boolean useMaschine = false;                                                    
 boolean useNewLowerMenu = false;                                                                                                                                          //|
 boolean showOldBottomMeu = false;                                                                                                                                         //|
                                                                                                                                                                           //|
-int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200));                                                                                                     //|
-int arduinoBaud2 = 9600;                                                                                                                                                  //|
-                                                                                                                                                                          //|
-int arduinoIndex = 0; //Arduinon COM-portin järjestysnumero                                                                                                               //|
-int arduinoIndex2 = 10;                                                                                                                                                   //|
-int enttecIndex = 1; // Enttecin USB DMX palikan COM-portin järjestysnumero                                                                                               //|
-                                                                                                                                                                          //|
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//|
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//|
 
 int touchOscIncoming = 8000;
 
 boolean freeze = false;
-
-boolean[][] allowChannel = new boolean[10][512];
-
-void setAllowedChannels() {
-  for(int i = 0; i < 512; i++) {
-    for(int ij = 0; ij < 10; ij++) {
-      allowChannel[ij][i] = true;
-    }
-  }
-}
 
 
 boolean nextStepPressed = false;
@@ -256,27 +239,6 @@ float[] lastVal;
 
 
 import processing.serial.*; //Käytetään processingin serial kirjastoa arduinon kanssa kommunikointia varten
-Serial arduinoPort;
-Serial arduinoPort2;
-
-
-//----------------Tämä lähettää kaiken datan ohjelmasta ulospäin lukuunottamatta iPadille kulkevaa dataa----------------//|
-//----------------Tämän muuttamiseen ei pitäisi olla mitään syytä ellei Arduinossa olevaa ohjelmaa vaihdeta-------------//|
-void setDmxChannel(int channel, int value) {                                                                            //|
-  if(useCOM == true) { //Tarkistetaan halutaanko dataa lähettää ulos ohjelmasta                                         //|
-    // Convert the parameters into a message of the form: 123c45w where 123 is the channel and 45 is the value          //|
-    // then send to the Arduino                                                                                         //|
-    if(allowChannel[0][channel]) {                                                                                      //|
-      arduinoPort.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );                                    //|
-    }                                                                                                                   //|
-    if(useAnotherArduino) {                                                                                             //|
-      if(allowChannel[1][channel]) {                                                                                    //|
-        arduinoPort2.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );                                 //|
-      }                                                                                                                 //|
-    }                                                                                                                   //|
-  }                                                                                                                     //|
-}                                                                                                                       //|
-//----------------------------------------------------------------------------------------------------------------------//|
 
 FixtureArray fixtures = new FixtureArray();
 fixture[] fixtureForSelected = new fixture[1];
@@ -294,9 +256,6 @@ int counter;
 boolean error = false;
 int[] check = { 126, 5, 14, 0, 0, 0 };
 
-int[] memoryData;
-boolean[] memoryIsZero;
-
 boolean move = false;
 boolean moveLamp = false;
 
@@ -304,27 +263,8 @@ boolean mouseClicked = false;
 int lampToMove;
 
 void initializeCOM() {
-//  try {
-//    if(useEnttec == true) {
-//      myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
-//    }
-//  }
-//  catch(Exception e) {
-//    useEnttec = false;
-//  }
-//  try {
-//    if(useCOM == true) {
-//      arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
-//      if(useAnotherArduino == true) {
-//        arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);
-//      }
-//    }
-//  }
-//  catch(Exception e) {
-//    useCOM = false;
-//  }
-useCOM = false;
-useEnttec = false;
+  useCOM = false;
+  useEnttec = false;
 }
 
 
@@ -347,8 +287,6 @@ void setup() {
   actualSketchPath = sketchPath("");
   //Initialize mouseLocker to prevent nullPointers
   mouseLocker = "";
-  thread("setAllowedChannels");
-  memoryIsZero = new boolean[channels];
   
   cp5 = new ControlP5(this); //luodaan controlFrame-ikkuna
   
@@ -357,24 +295,21 @@ void setup() {
     frameRate(60);
     background(0, 0, 0);
     stroke(255, 255, 255);
-    
-    
-    
-    
-    
-    
+
+
     thread("initializeCOM");
     
-    minim = new Minim(this);
+    
 
-    //---------------------------------------------------------Beat detectin setup-komennot---------------------------------------------------------
+    //--------------------------------------Setup commands of minim library----------------------------------------
+      minim = new Minim(this);
       in = minim.getLineIn(Minim.MONO,buffer_size,sample_rate);
       beat = new BeatDetect(in.bufferSize(), in.sampleRate());
   
       fft = new FFT(in.bufferSize(), in.sampleRate());
       fft.logAverages(16, 2);
       fft.window(FFT.HAMMING);
-    //----------------------------------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------
     
       frame.setResizable(true);
 
@@ -402,7 +337,6 @@ void setup() {
   subWindowHandler = new SubWindowHandler();
   
   
-  f.setBounds(0, 0, displayWidth, displayHeight);
   s1.loop();
   
   

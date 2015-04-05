@@ -42,21 +42,6 @@ int indexOf(int[] array, int target) {
 
 int[] valueToDmxOld = new int[DMX_CHAN_LENGTH+1];
 
-boolean arduinoFinished = true;
-void arduinoSend() {
-  if(useCOM) {
-    arduinoFinished = false;
-    for(int i = 0; i < channels; i++) {
-      if(DMXforOutput[i] != valueToDmxOld[i]) {
-        if(useCOM == true) {
-          setDmxChannel(i, DMXforOutput[i]);
-        }
-        valueToDmxOld[i] = DMXforOutput[i];
-      }
-    }
-    arduinoFinished = true;
-  }
-}
 
 int trussToMove = -1;
 boolean movingTruss = false;
