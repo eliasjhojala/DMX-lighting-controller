@@ -4,7 +4,7 @@ boolean showModeLocked = false;                                                 
 boolean showSockets = false;                                                                                                                                              //|
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
 boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                      //|
-boolean use3D = false;                                                                                                                                                     //|
+boolean use3D = false;                                                                                                                                                    //|
 boolean showOutputAsNumbers = false;                                                                                                                                      //|
 boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                              //|
 boolean useAnotherArduino = false;                                                                                                                                        //|
@@ -23,13 +23,8 @@ boolean freeze = false;
 
 boolean nextStepPressed = false;
 boolean revStepPressed = false;
-int lastStepDirection;
 
 boolean blackOut = false;
-
-int soloMemory = 11; //Memorypaikka, joka on solo - solomemory's memoryplace
-boolean soloWasHere = false; //Oliko Solo äsken käytössä
-boolean useSolo = false; //Käytetäänkö soloa - is solo in use at all
 
 
 //ID CHANGE
