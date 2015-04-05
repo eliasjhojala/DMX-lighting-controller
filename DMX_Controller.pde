@@ -77,11 +77,9 @@ int[] mhx50_autoProgram_values = { 6, 22, 6, 38, 6, 54, 6, 70, 6, 86, 6, 102, 6,
 
 import javax.swing.JFrame; //Käytetään frame-kirjastoa, jonka avulla voidaan luoda monta ikkunaa
 
-PFrame f1 = new PFrame(); //Luodaan uusi ikkuna
-secondApplet1 s1;
+ThreeDeeWindow s1;
 
 PFrame1 f = new PFrame1(this, 500, 500); //Luodaan toinenkin uusi ikkuna
-secondApplet s;
 
 
 
@@ -177,19 +175,6 @@ int touchOSCplace = 1; //touchOSC ohjatut kanavat                               
 //---------------------------------------------------------------------------------------------------------//|||
              
              
-             
-             
-             
-                                                                                                 
-                                                                                                          
-import java.awt.Frame;
-import java.awt.BorderLayout;
-import controlP5.*;
-
-private ControlP5 cp5;
-
-
-int def;
 
 
 //------------------------------OSC-------------------------//|
@@ -288,52 +273,43 @@ void setup() {
   //Initialize mouseLocker to prevent nullPointers
   mouseLocker = "";
   
-  cp5 = new ControlP5(this); //luodaan controlFrame-ikkuna
   
-  
-    size(displayWidth, displayHeight); //Annetaan ikkunan kooksi sama kuin nykyisen näytön koko
-    frameRate(60);
-    background(0, 0, 0);
-    stroke(255, 255, 255);
+  size(displayWidth, displayHeight); //Annetaan ikkunan kooksi sama kuin nykyisen näytön koko
+  frameRate(60);
+  background(0, 0, 0);
+  stroke(255, 255, 255);
 
 
-    thread("initializeCOM");
-    
-    
-
-    //--------------------------------------Setup commands of minim library----------------------------------------
-      minim = new Minim(this);
-      in = minim.getLineIn(Minim.MONO,buffer_size,sample_rate);
-      beat = new BeatDetect(in.bufferSize(), in.sampleRate());
-  
-      fft = new FFT(in.bufferSize(), in.sampleRate());
-      fft.logAverages(16, 2);
-      fft.window(FFT.HAMMING);
-    //------------------------------------------------------------------------------------------------------------
-    
-      frame.setResizable(true);
-
-      oscP5 = new OscP5(this,touchOscIncoming);
-    
-    setuppi();
-    
-    //MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
-
-    myBus = new MidiBus(this, 1, "KeyRig 49"); // Create a new MidiBus with no input device - you will have to change the input here
+  thread("initializeCOM");
   
   
+
+  //--------------------------------------Setup commands of minim library----------------------------------------
+    minim = new Minim(this);
+    in = minim.getLineIn(Minim.MONO,buffer_size,sample_rate);
+    beat = new BeatDetect(in.bufferSize(), in.sampleRate());
+
+    fft = new FFT(in.bufferSize(), in.sampleRate());
+    fft.logAverages(16, 2);
+    fft.window(FFT.HAMMING);
+  //------------------------------------------------------------------------------------------------------------
+  
+  frame.setResizable(true);
+
+  oscP5 = new OscP5(this,touchOscIncoming);
+  
+  setuppi();
+
   if(useMaschine) {
     //This is used to get data from the Maschine Mikro
     Maschine = new MidiBus(this, "Maschine Mikro MK2 In", "Maschine Mikro MK2 Out");
     thread("initializeMaschine");
   }
+  
   thread("ylavalikkoSetup");
   colorWashSetup();
-  
   memoryCreator = new MemoryCreationBox(false);
-  
   createFixtureProfiles();
-  
   subWindowHandler = new SubWindowHandler();
   
   

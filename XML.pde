@@ -89,8 +89,8 @@ void XMLtoVisualisationOptions(XML xml) {
   showOldBottomMeu = boolean(xml.getInt("showOldBottomMeu"));
 }
 
-ManageXML fixtureXML = new ManageXML("XML/fixtures.xml");
-ManageXML memoryXML = new ManageXML("XML/memories.xml");
+//ManageXML fixtureXML = new ManageXML("XML/fixtures.xml");
+//ManageXML memoryXML = new ManageXML("XML/memories.xml");
 
 boolean savingTestXML;
 void saveTestXML() {
@@ -140,7 +140,7 @@ void XMLtoFixtures(XML xml) {
 }
 
 
-ManageXML manageXML = new ManageXML("XML/DMX_Controller.xml");
+//ManageXML manageXML = new ManageXML("XML/DMX_Controller.xml");
 class ManageXML {
   XML currentBlock;
   XML xml;

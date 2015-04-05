@@ -27,20 +27,11 @@ void XMLto3D(XML xml) {
   use3D = boolean(xml.getChild("Use3D").getContent());
 }
 
-public class PFrame extends JFrame {
-  public PFrame() {
-    setBounds(0, 0, 600, 340);
-    s = new secondApplet();
-    add(s);
-    s.init();
-    show();
-  }
-}
 
 //Begin 3D visualizer window class
-public class secondApplet1 extends PApplet {
+public class ThreeDeeWindow extends PApplet {
   PApplet parent;
-  secondApplet1(PApplet parent) {
+  ThreeDeeWindow(PApplet parent) {
     this.parent = parent;
   }
   
@@ -316,7 +307,7 @@ public class PFrame1 extends JFrame {
   public PFrame1(PApplet parent, int w, int h) {
     setBounds(0, 0, w, h);
     setResizable(true);
-    s1 = new secondApplet1(parent);
+    s1 = new ThreeDeeWindow(parent);
     add(s1);
     s1.init();
     show();
