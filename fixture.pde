@@ -1,4 +1,153 @@
-boolean invokeFixturesDrawFinished = true; 
+FixtureControllerWindow fixtureController = new FixtureControllerWindow();
+class FixtureControllerWindow {
+  Window window;
+  int locX, locY, w, h;
+  boolean open;
+  int x_location, y_location, z_location;
+  
+  
+  fixture fix;
+  IntController xL, yL, zL;
+  PushButton addNewAllowedTrussForWiring;
+  DropdownMenu trussesDDM;
+  DropdownMenu socketsDDM;
+  
+  IntController watts, channel;
+  
+  FixtureControllerWindow() {
+    w = 1000; h = 500;
+    window = new Window("fixtureController", new PVector(w, h), this);
+    
+    xL = new IntController("LocationController"+this.toString()+":xL");
+    yL = new IntController("LocationController"+this.toString()+":yL");
+    zL = new IntController("LocationController"+this.toString()+":zL");
+    
+    watts = new IntController("Watts"+this.toString());
+    channel = new IntController("Channel"+this.toString());
+    
+    addNewAllowedTrussForWiring = new PushButton("addNewAllowedTrussForWiring");
+    
+    updateTrusses();
+    updateSockets();
+  }
+  
+  void updateSockets() {
+    if(sockets != null) {
+      ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
+      for(int i = 0; i < sockets.size(); i++) {
+        blocks.add(new DropdownMenuBlock("Socket " + sockets.get(i).name, i));
+      }
+      
+      if(blocks != null) socketsDDM = new DropdownMenu("SocketParentTruss", blocks);
+    }
+    
+    
+  }
+  
+  void updateTrusses() {
+    if(trusses != null) {
+      ArrayList<DropdownMenuBlock> blocks = new ArrayList<DropdownMenuBlock>();
+      for(int i = 0; i < trusses.length; i++) {
+        blocks.add(new DropdownMenuBlock("Truss " + str(i), i));
+      }
+      if(blocks != null) trussesDDM = new DropdownMenu("SocketParentTruss", blocks);
+    }
+  }
+  
+  boolean addingNewAllowedTrussForWiring;
+  
+  void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+    window.draw(g, mouse);
+    g.translate(60, 80);
+    if(fix != null) {
+      if(fix.x_location != x_location) { x_location = fix.x_location; xL.setValue(x_location); }
+      if(fix.y_location != x_location) { y_location = fix.y_location; yL.setValue(y_location); }
+      if(fix.z_location != x_location) { z_location = fix.z_location; zL.setValue(z_location); }
+      g.pushMatrix();
+        xL.draw(g, mouse); if(xL.valueHasChanged()) { setLocationX(xL.getValue()); }
+        g.translate(0, 30);
+        yL.draw(g, mouse); if(yL.valueHasChanged()) { setLocationY(yL.getValue()); }
+        g.translate(0, 30);
+        zL.draw(g, mouse); if(zL.valueHasChanged()) { setLocationZ(zL.getValue()); }
+      g.popMatrix();
+      g.pushMatrix();
+        g.translate(300, 0);
+        
+        g.pushMatrix();
+          g.translate(0, 100);
+          g.pushStyle(); g.fill(0);
+          for(int i = 0; i < fix.allowedTrussesForWiring.size(); i++) {
+            g.text(fix.allowedTrussesForWiring.get(i), 10, i*20);
+          }
+          g.popStyle();
+        g.popMatrix();
+        
+        if(addNewAllowedTrussForWiring.isPressed(g, mouse)) addingNewAllowedTrussForWiring = true;
+        if(addingNewAllowedTrussForWiring) {
+          if(trussesDDM != null) {
+            trussesDDM.draw(g, mouse);
+            if(trussesDDM.valueHasChanged()) { fix.allowedTrussesForWiring.append(trussesDDM.getValue()); addingNewAllowedTrussForWiring = false; }
+          }
+        }
+        
+        g.pushMatrix();
+        g.translate(200, 0);
+        if(socketsDDM != null) {
+          socketsDDM.draw(g, mouse);
+          if(socketsDDM.valueHasChanged()) { fix.socket = sockets.get(socketsDDM.getValue()); fix.socket.channel = fix.channelStart; }
+        }
+        g.popMatrix();
+        
+        g.pushMatrix();
+        g.pushStyle();
+          g.translate(200, 200);
+          int valueToWatts = -1;
+          if((fixtureProfiles[fix.fixtureTypeId].watts != watts.getValue() && fix.watts == -1)) {
+            valueToWatts = fixtureProfiles[fix.fixtureTypeId].watts;
+          }
+          if(fix.watts != watts.getValue() && fix.watts != -1) {
+            valueToWatts = fix.watts;
+          }
+          if(valueToWatts != -1) watts.setValue(valueToWatts);
+          g.fill(0);
+          g.textSize(15);
+          g.text("Watts", 125, 16);
+          watts.draw(g, mouse);
+          watts.setDefinition(50);
+          watts.setLimits(0, 2000);
+          if(watts.valueHasChanged()) {
+            fix.watts = watts.getValue();
+          }
+        g.popStyle();
+        g.popMatrix();
+        
+        g.pushMatrix(); g.pushStyle();
+          g.translate(200, 250);
+          g.fill(0);
+          g.text("Channel: ", -50, 16);
+          channel.draw(g, mouse);
+          if(channel.valueHasChanged()) { fix.channelStart = channel.getValue(); }
+          if(fix.channelStart != channel.getValue()) { channel.setValue(fix.channelStart); }
+          
+        g.popMatrix(); g.popStyle();
+        
+      g.popMatrix();
+    }
+  }
+  
+  void setLocationX(int val) {
+    fix.x_location = val;
+  }
+  void setLocationY(int val) {
+    fix.y_location = val;
+  }
+  void setLocationZ(int val) {
+    fix.z_location = val;
+  }
+  
+}
+
+boolean invokeFixturesDrawFinished = true;
 void invokeFixturesDraw() {
   invokeFixturesDrawFinished = false;
   for (int ai = 0; ai < fixtures.size(); ai++) if(memoriesFinished) fixtures.get(ai).draw();
@@ -22,7 +171,7 @@ class FixtureArray {
   
   ArrayList<fixture> array;
   
-  fixture dummyFixture;  
+  fixture dummyFixture;
   
   void add(fixture newFix) {
     int newId = array.size();
@@ -35,7 +184,14 @@ class FixtureArray {
         idLookupTable.set(newIndex, newId);
       } else idLookupTable.add(newId);
     }
-    println(idLookupTable.toArray());
+  }
+  
+  void set(int id, fixture newFix) {
+    int newId = array.size();
+    array.add(newFix);
+    if(idLookupTable.indexOf(newId) == -1) {
+      idLookupTable.add(id, newId);
+    }
   }
   
   
@@ -58,7 +214,7 @@ class FixtureArray {
   
   
   int getArrayId(int fid) {
-    if(fid < idLookupTable.size())
+    if(fid < idLookupTable.size() && fid >= 0)
       return idLookupTable.get(fid);
     else return -1;
   }
@@ -105,6 +261,21 @@ class fixture {
   //int dimmer;
   
 
+  PVector getLocation() {
+    return new PVector(x_location, y_location, z_location);
+  }
+  PVector getLocationOnScreen() {
+    return new PVector(locationOnScreenX, locationOnScreenY, 0);
+  }
+  PVector getRotation() {
+    return new PVector(rotationX, 0, rotationZ);
+  }
+  LocationData getLocationData() {
+    return new LocationData(getLocation(), getRotation());
+  }
+  RGBWD getRGBWD() {
+    return new RGBWD(getRawColor(), out.getUniversalDMX(DMX_DIMMER));
+  }
   
   int x_location, y_location, z_location; //location in visualisation
   int locationOnScreenX, locationOnScreenY;
@@ -118,42 +289,222 @@ class fixture {
   String fixtureType;
   int fixtureTypeId;
   int channelStart;
+  int watts = -1;
+  
+  int getWatts() {
+    if(watts != -1) {
+      return watts;
+    }
+    else {
+      return fixtureProfiles[fixtureTypeId].watts;
+    }
+  }
+  
+  int getActualWatts() {
+    if(isHalogen() || isLed()) {
+      return round(map(out.getUniversalDMX(1), 0, 255, 0, getWatts()));
+    }
+    else {
+      return getWatts();
+    }
+  }
   
   fixtureSize size;
   
   int parentAnsa;
   
+  Socket socket = new Socket();
+  
+  IntList allowedTrussesForWiring = new IntList();
+  
+  boolean soloInThisFixture;
+  
   FixtureDMX in;
-  FixtureDMX process;
   FixtureDMX out;
   FixtureDMX preset;
   FixtureDMX bottomMenu;
   FixtureDMX fade;
+  FixtureDMX presetReady;
   
   Fade[] fades = new Fade[universalDMXlength];
+  
+  IntList masters = new IntList();
   
 
   //End of initing variables
   
+  void saveFixtureDMXDataToXML(ManageXML XMLObject) {
+    XMLObject.addBlockAndIncrease("FixtureDMXdata");
+      if(in != null) { in.saveToXML("in", XMLObject); }
+      if(out != null) { out.saveToXML("out", XMLObject); }
+      if(preset != null) { preset.saveToXML("preset", XMLObject); }
+      if(bottomMenu != null) { bottomMenu.saveToXML("bottomMenu", XMLObject); }
+      if(fade != null) { fade.saveToXML("fade", XMLObject); }
+    XMLObject.goBack();
+  }
+  
+  XML getXML() {
+	String data = "<fixture></fixture>";
+	XML xml = parseXML(data);
+	XML block;
+	block = xml.addChild("StartChannel");
+	block.setContent(str(channelStart));
+	block = xml.addChild("fixtureTypeId");
+	block.setContent(str(fixtureTypeId));
+	block = xml.addChild("Location");
+	block.setInt("x", x_location);
+	block.setInt("y", y_location);
+	block.setInt("z", z_location);
+	block = block.addChild("OnScreen");
+	block.setInt("x", locationOnScreenX);
+	block.setInt("y", locationOnScreenY);
+	block = block.getParent();
+	block = block.addChild("Rotation");
+	block.setInt("x", rotationX);
+	block.setInt("z", rotationZ);
+	
+	block = xml.addChild("parameter");
+	block.setContent(str(parameter));
+	block = xml.addChild("preFadeSpeed");
+	block.setContent(str(preFadeSpeed));
+	block = xml.addChild("postFadeSpeed");
+	block.setContent(str(postFadeSpeed));
+	block = xml.addChild("Color");
+	block.setInt("r", red);
+	block.setInt("g", green);
+	block.setInt("b", blue);
+	block = xml.addChild("parentAnsa");
+	block.setContent(str(parentAnsa));
+	block = xml.addChild(socket.getXML());
  
-  void setDimmer(int val) { 
+	return xml;
+  }
+  
+  void loadFixtureData(XML xml) {
+    channelStart = int(xml.getChild("StartChannel").getContent());
+    fixtureTypeId = int(xml.getChild("fixtureTypeId").getContent());
+	
+	println(xml);println();println();
+	XML block;
+	
+	try {
+		block = xml.getChild("Location");
+		x_location = block.getInt("x");
+		y_location = block.getInt("y");
+		z_location = block.getInt("z_location");
+		block = block.getChild("OnScreen");
+		locationOnScreenX = block.getInt("x");
+		locationOnScreenY = block.getInt("y");
+		block = block.getParent();
+		block = block.getChild("Rotation");
+		rotationX = block.getInt("x");
+		rotationZ = block.getInt("z");
+	}
+	catch(Exception e) {
+		println("Error with location");
+	}
+	
+	try {
+		block = xml.getChild("parameter");
+		parameter = int(block.getContent());
+		block = xml.getChild("preFadeSpeed");
+		preFadeSpeed = int(block.getContent());
+		block = xml.getChild("postFadeSpeed");
+		postFadeSpeed = int(block.getContent());
+		
+		block = xml.getChild("Color");
+		red = block.getInt("r");
+		green = block.getInt("g");
+		blue = block.getInt("b");
+		
+		block = xml.getChild("parentAnsa");
+		parentAnsa = int(block.getContent());
+		block = xml.getChild("socket");
+		socket.XMLtoObject(block);
+	}
+	catch (Exception e) {
+		e.printStackTrace();
+	}
+
+  }
+  
+ 
+  void setDimmer(int val) {
     in.setDimmer(val);
   }
   
-  
+   float soloFade = 255;
+   float afterSoloFade = 0;
+   boolean thisFixtureWasOffBySolo = false;
+   
   void processDMXvalues() {
     preset.presetProcess();
     
-    processFade();
+    
     
     int[] newIn  = in.getUniversalDMX();
     int[] oldOut = out.getUniversalDMX();
     //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
     if(isHalogen() && abs(newIn[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
       newIn[DMX_DIMMER] = oldOut[DMX_DIMMER];
-    newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]);
-    out.setUniversalDMX(newIn);
+      newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]); //PROBLEM this is causing some masterloop problemes! If master isn't 255 all the lights fade off PROBLEM!!!!!!!!!!
+
+    for(int i = 0; i < masters.size(); i++) {
+      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, masters.get(i)));
+    }
+    masters.clear();
     
+    if(soloIsOn && !soloInThisFixture) {
+      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, soloFade));
+      if(soloFade > 0) { soloFade-=(float(60)/frameRate)*20; soloFade = constrain(soloFade, 0, 255); }
+      thisFixtureWasOffBySolo = true;
+      afterSoloFade = 0;
+    }
+    if(!soloIsOn && !soloInThisFixture && thisFixtureWasOffBySolo) {
+      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, afterSoloFade));
+      if(afterSoloFade < 255) { afterSoloFade+=(float(60)/frameRate)*20; afterSoloFade = constrain(afterSoloFade, 0, 255); }
+      if(afterSoloFade == 255) { thisFixtureWasOffBySolo = false;  soloFade = 255;}
+    }
+    
+    if(fullOn) {
+      newIn[DMX_DIMMER] = 255;
+      if((newIn[DMX_RED] + newIn[DMX_GREEN] + newIn[DMX_BLUE] + newIn[DMX_WHITE])  == 0) { newIn[DMX_RED] = 255; newIn[DMX_GREEN] = 255; newIn[DMX_BLUE] = 255; newIn[DMX_WHITE] = 255; }
+      else {
+        int maxValueOfColors = max(max(newIn[DMX_RED], newIn[DMX_GREEN]), newIn[DMX_BLUE], newIn[DMX_WHITE]);
+        newIn[DMX_RED] = round(map(newIn[DMX_RED], 0, maxValueOfColors, 0, 255));
+        newIn[DMX_GREEN] = round(map(newIn[DMX_GREEN], 0, maxValueOfColors, 0, 255));
+        newIn[DMX_BLUE] = round(map(newIn[DMX_BLUE], 0, maxValueOfColors, 0, 255));
+        newIn[DMX_WHITE] = round(map(newIn[DMX_WHITE], 0, maxValueOfColors, 0, 255));
+      }
+    }
+    if(strobeNow) {
+      if(fixtureProfiles[fixtureTypeId].isStrobe) {
+        newIn[DMX_DIMMER] = 255;
+        newIn[DMX_FREQUENCY] = 255;
+        newIn[DMX_STROBE] = 255;
+        newIn[DMX_RED] = 255;
+        newIn[DMX_GREEN] = 255;
+        newIn[DMX_BLUE] = 255;
+        newIn[DMX_WHITE] = 255;
+      }
+      else {
+        newIn[DMX_DIMMER] = 0;
+      }
+    }
+    if(fogNow) {
+      if(fixtureProfiles[fixtureTypeId].isFog) {
+        newIn[DMX_FOG] = 255;
+      }
+    }
+    if(blackOut) { newIn[DMX_DIMMER] = 0; }
+    int[] oldDMX = out.getUniversalDMX();
+    for(int i = 0; i < newIn.length; i++) {
+      if(newIn[i] != oldDMX[i]) {
+        DMXChanged = true;
+      }
+    }
+    out.setUniversalDMX(newIn);
+    processFade();
     
     for(int i = 0; i < bottomMenu.DMXlength; i++) {
       if(bottomMenu.DMX[i] != bottomMenu.DMXold[i]) {
@@ -162,12 +513,11 @@ class fixture {
         bottomMenu.DMXold[i] = bottomMenu.DMX[i];
       }
     }
-    
   }
   
-  void setUniversalDMXwithFade(int i, int val) {
+  void setUniversalDMXwithFade(int i, int val, int pre, int post) {
     if(i >= 0 && i < fades.length) {
-      fades[i] = new Fade(in.getUniversalDMX(i), val);
+      fades[i] = new Fade(in.getUniversalDMX(i), val, pre, post);
     }
   }
   
@@ -176,42 +526,20 @@ class fixture {
       int[] fadeVal = new int[fades.length];
       for(int i = 0; i < fades.length; i++) {
         if(fades[i] != null) {
-          fadeVal[i] = fades[i].getActualValue();
+          if(!fades[i].isCompleted()) {
+            fades[i].countActualValue();
+            fadeVal[i] = fades[i].getActualValue();
+            in.setUniversalDMX(i, fadeVal[i]);
+            in.DMXChanged = true;
+            DMXChanged = true;
+          }
         }
       }
-      int[] oldOut = out.getUniversalDMX();
-      //Keep old dimmer value if it hasn't changed more than 5 and this fixture is a halogen
-      if(isHalogen() && abs(fadeVal[DMX_DIMMER] - oldOut[DMX_DIMMER]) <= 5)
-        fadeVal[DMX_DIMMER] = oldOut[DMX_DIMMER];
-      fadeVal[DMX_DIMMER] = masterize(fadeVal[DMX_DIMMER]);
-      out.setUniversalDMX(fadeVal);
-    }
-  } 
-
-  
-  void toggle(boolean down) {
-    if(down) {
-      if(fixtureTypeId == 8) { if(in.getUniversalDMX(DMX_HAZE) < 255 || in.getUniversalDMX(DMX_FAN) < 255) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); } else { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); } }
-      if(fixtureTypeId == 9) { if(in.getUniversalDMX(DMX_FOG) < 255) { in.setUniversalDMX(DMX_FOG, 255); } else { in.setUniversalDMX(DMX_FOG, 0); } }
-      if(fixtureTypeId != 8 && fixtureTypeId != 9) { if(in.getUniversalDMX(DMX_DIMMER) < 255) { in.setUniversalDMX(DMX_DIMMER, 255); } else { in.setUniversalDMX(DMX_DIMMER, 0); } }
-      DMXChanged = true;
-    }
-  }
-  void push(boolean down) {
-    if(down) {
-      if(fixtureTypeId == 8) { in.setUniversalDMX(DMX_HAZE, 255); in.setUniversalDMX(DMX_FAN, 255); }
-      if(fixtureTypeId == 9) { in.setUniversalDMX(DMX_FOG, 255); }
-      if(fixtureTypeId != 8 && fixtureTypeId != 9) { in.setDimmer(255); }
-    }
-    else {
-      if(fixtureTypeId == 8) { in.setUniversalDMX(DMX_HAZE, 0); in.setUniversalDMX(DMX_FAN, 0); }
-      if(fixtureTypeId == 9) { in.setUniversalDMX(DMX_FOG, 0); }
-      if(fixtureTypeId != 8 && fixtureTypeId != 9) { in.setDimmer(0); }
     }
   }
 
- 
   
+
   boolean thisFixtureUseRgb() {
     return fixtureUseRgbByType(fixtureTypeId);
   }
@@ -245,6 +573,7 @@ class fixture {
     in.setUniversalDMX(DMX_GREEN, rGreen(c));
     in.setUniversalDMX(DMX_BLUE, rBlue(c));
     DMXChanged = true;
+    in.DMXChanged = true;
   }
   
   color getColor() {
@@ -256,12 +585,12 @@ class fixture {
   
   void createDMXobjects() {
     in = new FixtureDMX(this);
-    process = new FixtureDMX(this);
     out = new FixtureDMX(this);
     preset = new FixtureDMX(this);
     bottomMenu = new FixtureDMX(this);
+    presetReady = new FixtureDMX(this);
     
-    process.fades = new Fade[process.DMXlength];
+    presetReady.fades = new Fade[in.DMXlength];
   }
 
   //Initialization----------------------------------------------------------------------------
@@ -298,7 +627,6 @@ class fixture {
    
    size = new fixtureSize(fixtTypeId);
    
-
    fixtureTypeId = fixtTypeId;
   }
   
@@ -307,8 +635,25 @@ class fixture {
   
   //Returns raw fixture color in type color
   
+  color convertedColor;
+  int oldRed, oldGreen, oldBlue, oldWhite;
+  
   color getRawColor() {
     if(!isHalogen()) {
+      if(out.getUniversalDMX(DMX_WHITE) > 0) {
+        if(out.getUniversalDMX(DMX_RED) != oldRed || out.getUniversalDMX(DMX_GREEN) != oldGreen || out.getUniversalDMX(DMX_BLUE) != oldBlue || out.getUniversalDMX(DMX_WHITE) != oldWhite) {
+          oldRed = out.getUniversalDMX(DMX_RED);
+          oldGreen = out.getUniversalDMX(DMX_GREEN);
+          oldBlue = out.getUniversalDMX(DMX_BLUE);
+          oldWhite = out.getUniversalDMX(DMX_WHITE);
+          int[] convertedColorV = colorConverter.convertColor(new int[] { out.getUniversalDMX(DMX_RED), out.getUniversalDMX(DMX_GREEN), out.getUniversalDMX(DMX_BLUE), out.getUniversalDMX(DMX_WHITE) }, 3, 1);
+          convertedColor = color(convertedColorV[0], convertedColorV[1], convertedColorV[2]);
+          return convertedColor;
+        }
+        else {
+          return convertedColor;
+        }
+      }
       return color(out.getUniversalDMX(DMX_RED), out.getUniversalDMX(DMX_GREEN), out.getUniversalDMX(DMX_BLUE));
     }
     else {
@@ -343,7 +688,7 @@ class fixture {
   
   
   int[] getDMX() {
-    return in.getDMX(); 
+    return in.getDMX();
   }
   
   int dimmerLast = 0;
@@ -363,14 +708,15 @@ class fixture {
   
   
   boolean isHalogen() {
-    switch(fixtureTypeId) {
-       case 1: case 2: case 3: case 4: case 5: case 6: return true;
-       default: return false;
-    }
+    return fixtureProfiles[fixtureTypeId].isHalogen;
+  }
+  
+  boolean isLed() {
+    return fixtureProfiles[fixtureTypeId].isLed;
   }
   
   int getDimmerWithMaster() {
-    return masterize(in.getUniversalDMX(DMX_DIMMER));
+    return masterize(out.getUniversalDMX(DMX_DIMMER));
   }
   
   int masterize(int val) {
@@ -379,7 +725,7 @@ class fixture {
   
   int getDMXLength() {
     return out.getDMX().length;
-  } 
+  }
   
   //Returns true if operation is succesful
   boolean receiveDMX(int[] dmxChannels) {
@@ -397,12 +743,11 @@ class fixture {
     }
   
   int colorNumber;
-  void setColorNumber(int value) { 
-      colorNumber = value; 
+  void setColorNumber(int value) {
+      colorNumber = value;
       red = mhx50_RGB_color_Values[colorNumber][0];
       green = mhx50_RGB_color_Values[colorNumber][1];
       blue = mhx50_RGB_color_Values[colorNumber][2];
-//      if(ftIsMhX50()) { colorWheel = mhx50_color_values[colorNumber]; } //Gives right value to moving head color channel
     }
     
     boolean ftIsMhX50() { //This function is only to check is the fixtureType moving head (17 or 16)
@@ -422,9 +767,7 @@ class fixture {
       lastDimmerPresetTarget = dimmerPresetTarget;
     } dimmerPresetTarget = -1;*/
    
-    
-//    if (fixtureTypeId == 16 || fixtureTypeId == 17) visualisationSettingsFromMovingHeadData();
-    //TODO: implement a function to get dim channel offset (in case dim isn't on the first channel)
+
     
     if (oldFixtureTypeId != fixtureTypeId) {
       oldFixtureTypeId = fixtureTypeId;
@@ -436,10 +779,59 @@ class fixture {
     }
   }
   
+  color getFixtureColorFor2D() {
+    if(fixtureTypeId < fixtureProfiles.length) {
+      FixtureProfile profile = fixtureProfiles[fixtureTypeId];
+      if(profile != null) {
+        if(profile.hasDimmer) {
+          return this.getColor_wDim();
+        }
+        else if(profile.isFog) {
+          int val = in.getUniversalDMX(DMX_FOG);
+          color c = color(val, val, val);
+          return c;
+        }
+        else if(profile.isHazer) {
+          int val = in.getUniversalDMX(DMX_HAZE);
+          color c = color(val, val, val);
+          return c;
+        }
+        else {
+          color c = color(0, 0, 0);
+          return c;
+        }
+      }
+    }
+    color c = color(0, 0, 0);
+    return c;
+  }
+  
+  boolean toggleState = false;
+  
+  void push(boolean down) {
+    mainChannelOnOff(down);
+  }
+  
+  void toggle(boolean down) {
+    if(down) {
+      toggleState = !toggleState;
+      mainChannelOnOff(toggleState);
+    }
+  }
+  
+  void mainChannelOnOff(boolean state) {
+    FixtureProfile profile = fixtureProfiles[fixtureTypeId];
+    if(profile.hasDimmer) { in.setUniversalDMX(DMX_DIMMER, state ? 255 : 0); }
+    if(profile.isStrobe && profile.channelTypes.length <= 2) { in.setUniversalDMX(DMX_STROBE, state ? 255 : 0); }
+    if(profile.isFog) { in.setUniversalDMX(DMX_FOG, state ? 255 : 0); }
+    if(profile.isHazer) { in.setUniversalDMX(DMX_HAZE, state ? 255 : 0); in.setUniversalDMX(DMX_FAN, state ? 255 : 0); }
+    DMXChanged = true;
+  }
+  
   //Index is used only to display the id of the fixture
   void draw2D(int index) {
     pushStyle();
-    kalvo(this.getColor_wDim());
+    fill(getFixtureColorFor2D());
     boolean showFixture = true;
     int lampWidth = 30;
     int lampHeight = 40;
@@ -459,6 +851,7 @@ class fixture {
     
     if(showFixture == true) {
       int x1 = 0; int y1 = 0;
+      
       this.locationOnScreenX = int(screenX(x1 + lampWidth/2, y1 + lampHeight/2));
       this.locationOnScreenY = int(screenY(x1 + lampWidth/2, y1 + lampHeight/2));
       rectMode(CENTER);
@@ -476,11 +869,60 @@ class fixture {
           fill(0, 0, 0);
           text(fixtuuriTyyppi, x1, y1 + lampHeight + 15);
         }
-      
-       text(index + "/" + this.channelStart, x1, y1 - 15);
+       if(!showMode) text(index + "/" + this.channelStart, x1, y1 - 15);
+       else text(this.channelStart, x1, y1 - 15);
       }
     }
     popStyle();
+  }
+  
+  
+  //Index is used only to display the id of the fixture
+  void draw2D(int index, PGraphics g) {
+    g.pushStyle();
+    color c = getRawColor();
+    if(brightness(c) == 0) {
+      c = color(255);
+    }
+    g.fill(c);
+    boolean showFixture = true;
+    int lampWidth = 30;
+    int lampHeight = 40;
+    
+    String fixtuuriTyyppi = getFixtureNameByType(fixtureTypeId);
+    
+    
+    
+      lampWidth = this.size.w;
+      lampHeight = this.size.h;
+      showFixture = this.size.isDrawn;
+   
+    
+    boolean selected = this.selected && showFixture;
+    
+    
+    if(showFixture == true) {
+      int x1 = 0; int y1 = 0;
+      g.rectMode(CENTER);
+      g.strokeWeight(2);
+      g.stroke(0, 230);
+      g.translate(size.w/2, 0);
+      g.rect(x1, y1, lampWidth, lampHeight, 3);
+      g.rotate(radians(-rotationZ));
+      g.translate(-size.w/2, -size.h/2);
+      g.fill(0);
+      
+      String text = getFixtureNameByType(fixtureTypeId);
+      g.textSize(10);
+      g.text(getFixtureNameByType(fixtureTypeId), lampWidth/2-(textWidth(text)/2), y1 + lampHeight + 13);
+      text = str(this.channelStart);
+      g.textSize(15);
+      textSize(15);
+      g.text(text, lampWidth/2-textWidth(text)/2, y1+lampHeight/2+5);
+      text = this.socket.name;
+      g.text(text, lampWidth/2-textWidth(text)/2, y1-12);
+    }
+    g.popStyle();
   }
   
 }//Endof: fixture class
@@ -515,4 +957,3 @@ class fixtureSize {
     isDrawn = siz[2] == 1;
   }
 }
-

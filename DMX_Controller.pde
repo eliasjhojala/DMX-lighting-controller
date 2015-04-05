@@ -1,55 +1,30 @@
-
-int userId = 3; //Määritellään millä tietokoneella ohjelmaa käytetään 1 = Elias mac, 2 = Roope, 3 = Elias laptop - what pc are you using?                                 //|
-boolean roopeAidilla = true; //Onko Roope äidillänsä? Hieman eri asetukset.                                                                                               //|
-                                                                                                                                                                          //|
-boolean showMode = true;                                                                                                                                                  //|
-                                                                                                                                                                          //| 
+boolean loadAllDataInSetup = false;                                                                                                                                       //|
+boolean showMode = false;                                                                                                                                                 //|
+boolean showModeLocked = false;                                                                                                                                           //|
+boolean showSockets = false;                                                                                                                                              //|
 boolean printMode = false; //This changes theme which could be usable if you want to print the visualisation                                                              //|
-boolean useCOM = true; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                       //|
-boolean useEnttec = true; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                               //|
+boolean useCOM = false; //Onko tietokoneeseen kytketty arduino ja enttec DMX usb pro - are arduino and enttec in use                                                      //|
+boolean use3D = false;                                                                                                                                                    //|
+boolean showOutputAsNumbers = false;                                                                                                                                      //|
+boolean useEnttec = false; //Onko enttec usb dmx pro käytössä - is enttec DMX Usb pro in use                                                                              //|
 boolean useAnotherArduino = false;                                                                                                                                        //|
                                                                                                                                                                           //|
 boolean useMaschine = false;                                                                                                                                              //|
-                                                                                                                                                                          //|
-int arduinoBaud = 115200; //Arduinon baudRate (serial.begin(115200));                                                                                                     //|
-int arduinoBaud2 = 9600;                                                                                                                                                  //|
-                                                                                                                                                                          //|
-int arduinoIndex = 0; //Arduinon COM-portin järjestysnumero                                                                                                               //|
-int arduinoIndex2 = 10;                                                                                                                                                   //|
-int enttecIndex = 1; // Enttecin USB DMX palikan COM-portin järjestysnumero                                                                                               //|
-                                                                                                                                                                          //|
-int touchOscInComing = 8000;                                                                                                                                              //|
+boolean useNewLowerMenu = false;                                                                                                                                          //|
+boolean showOldBottomMeu = false;                                                                                                                                         //|
                                                                                                                                                                           //|
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//|
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------//|
 
+int touchOscIncoming = 8000;
 
 boolean freeze = false;
-
-boolean[][] allowChannel = new boolean[10][512];
-
-void setAllowedChannels() {
-  for(int i = 0; i < 512; i++) {
-    for(int ij = 0; ij < 10; ij++) {
-      allowChannel[ij][i] = true;
-    }
-  }
-}
-
-fixtureInput[] fixtureInputs = new fixtureInput[2];
-
 
 
 boolean nextStepPressed = false;
 boolean revStepPressed = false;
-int lastStepDirection;
 
-int[] valueOfDimBeforeBlackout = new int[1000];
 boolean blackOut = false;
-
-int soloMemory = 11; //Memorypaikka, joka on solo - solomemory's memoryplace
-boolean soloWasHere = false; //Oliko Solo äsken käytössä
-boolean useSolo = false; //Käytetäänkö soloa - is solo in use at all
 
 
 //ID CHANGE
@@ -64,9 +39,11 @@ void setFixtureChannelsAtSoftwareBegin() {
   }
 }
 
+import themidibus.*;
+import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
 
 
-import themidibus.*; 
+import themidibus.*;
 import javax.sound.midi.MidiMessage; //Import the MidiMessage classes http://java.sun.com/j2se/1.5.0/docs/api/javax/sound/midi/MidiMessage.html
 MidiBus myBus; // The MidiBus
 MidiBus Maschine;
@@ -95,11 +72,9 @@ int[] mhx50_autoProgram_values = { 6, 22, 6, 38, 6, 54, 6, 70, 6, 86, 6, 102, 6,
 
 import javax.swing.JFrame; //Käytetään frame-kirjastoa, jonka avulla voidaan luoda monta ikkunaa
 
-PFrame f1 = new PFrame(); //Luodaan uusi ikkuna
-secondApplet1 s1;
+ThreeDeeWindow s1;
 
-PFrame1 f = new PFrame1(this); //Luodaan toinenkin uusi ikkuna
-secondApplet s;
+PFrame1 f = new PFrame1(this, 500, 500); //Luodaan toinenkin uusi ikkuna
 
 
 
@@ -122,9 +97,6 @@ int fixtureMasterValue = 255; //Fixtuurien master-muuttuja
 int chaseSpeed = 500;
 int chaseFade = 255;
 
-boolean toRotateFixture;
-boolean toChangeFixtureColor; 
-int changeColorFixtureId = 0;
 
 boolean getPaths = false;
 
@@ -187,8 +159,8 @@ int[] enttecDMXchannelOld = new int[enttecDMXchannels+1]; //DMX kanavan vanha ar
 int[] touchOSCchannelOld = new int[touchOSCchannels+1]; //touchOSC kanavan vanha arvo                      //|||
 int[] controlP5channelOld = new int[controlP5channels+1]; //tietokoneen faderien vanha arvo                //|||
                                                                                                            //|||
-int[][] allChannels = new int[6][48];                                                                      //|||
-int[][] allChannelsOld = new int[6][48];                                                                   //|||
+int[][] allChannels = new int[6][48*2];                                                                    //|||
+int[][] allChannelsOld = new int[6][48*2];                                                                 //|||
                                                                                                            //|||
 int controlP5place = 1; //tietokoneen faderien ohjaamat kanavat                                            //|||
 int enttecDMXplace = 1; //DMX ohjatut kanavat                                                              //|||
@@ -198,20 +170,6 @@ int touchOSCplace = 1; //touchOSC ohjatut kanavat                               
 //---------------------------------------------------------------------------------------------------------//|||
              
              
-             
-             
-             
-                                                                                                 
-                                                                                                          
-import java.awt.Frame;
-import java.awt.BorderLayout;
-import controlP5.*;
-
-private ControlP5 cp5;
-
-ControlFrame cf;
-
-int def;
 
 
 //------------------------------OSC-------------------------//|
@@ -242,7 +200,7 @@ import ddf.minim.ugens.*;                                                       
 import ddf.minim.effects.*;                                                     //|
                                                                                 //|
 Minim minim;                                                                    //|
-AudioPlayer song;                                                               //|                             
+AudioPlayer song;                                                               //|
 AudioInput in;                                                                  //|
 BeatDetect beat;                                                                //|
                                                                                 //|
@@ -261,27 +219,6 @@ float[] lastVal;
 
 
 import processing.serial.*; //Käytetään processingin serial kirjastoa arduinon kanssa kommunikointia varten
-Serial arduinoPort;
-Serial arduinoPort2;
-
-
-//----------------Tämä lähettää kaiken datan ohjelmasta ulospäin lukuunottamatta iPadille kulkevaa dataa----------------//|
-//----------------Tämän muuttamiseen ei pitäisi olla mitään syytä ellei Arduinossa olevaa ohjelmaa vaihdeta-------------//|
-void setDmxChannel(int channel, int value) {                                                                            //|
-  if(useCOM == true) { //Tarkistetaan halutaanko dataa lähettää ulos ohjelmasta                                         //|
-    // Convert the parameters into a message of the form: 123c45w where 123 is the channel and 45 is the value          //|
-    // then send to the Arduino                                                                                         //|
-    if(allowChannel[0][channel]) {                                                                                      //|
-      arduinoPort.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );                                    //|
-    }                                                                                                                   //|
-    if(useAnotherArduino) {                                                                                             //|
-      if(allowChannel[1][channel]) {                                                                                    //|
-        arduinoPort2.write( str(channel) + "c" + str(constrain(value, 0, 255)) + "w" );                                 //| 
-      }                                                                                                                 //|
-    }                                                                                                                   //|
-  }                                                                                                                     //|
-}                                                                                                                       //|
-//----------------------------------------------------------------------------------------------------------------------//|
 
 FixtureArray fixtures = new FixtureArray();
 fixture[] fixtureForSelected = new fixture[1];
@@ -289,8 +226,6 @@ fixture[] fixtureForSelected = new fixture[1];
 //New system for organizing the boxes in the bottom menu. Array index = fixture id, data = fixture location
 int[] bottomMenuOrder = new int[numberOfAllFixtures];
 
-int[] y = { 500, 200 };
-int ansaTaka = 32;
 
 int[] ch = new int[512];
 
@@ -301,9 +236,6 @@ int counter;
 boolean error = false;
 int[] check = { 126, 5, 14, 0, 0, 0 };
 
-int[] memoryData;
-boolean[] memoryIsZero;
-
 boolean move = false;
 boolean moveLamp = false;
 
@@ -311,25 +243,8 @@ boolean mouseClicked = false;
 int lampToMove;
 
 void initializeCOM() {
-  try {
-    if(useEnttec == true) {
-      myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
-    }
-  }
-  catch(Exception e) {
-    useEnttec = false;
-  }
-  try {
-    if(useCOM == true) {
-      arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
-      if(useAnotherArduino == true) {
-        arduinoPort2 = new Serial(this, Serial.list()[arduinoIndex2], arduinoBaud2);
-      }
-    }
-  }
-  catch(Exception e) {
-    useCOM = false;
-  }
+  useCOM = false;
+  useEnttec = false;
 }
 
 
@@ -341,78 +256,59 @@ String fileSeparator = java.io.File.separator;
 String actualSketchPath;
 
 void setup() {
+  trusses = new Truss[10];
+  for(int i = 0; i < trusses.length; i++) {
+    trusses[i] = new Truss();
+  }
+  
+  s1.noLoop();
 
   loadCoreData();
   actualSketchPath = sketchPath("");
   //Initialize mouseLocker to prevent nullPointers
   mouseLocker = "";
-  thread("setAllowedChannels");
-  memoryIsZero = new boolean[channels];
-  if(getPaths == true) { //Jos ladattavien ja tallennettavien tiedostojen polut halutaan tarkistaa tiedostosta
-    String lines100[] = loadStrings("C:\\DMXcontrolsettings\\savePath.txt"); //Luetaan savePath.txt:stä tiedot muuttujaan lines100[]
-    savePath = lines100[0]; //savePath muuttujan arvoksi annetaan savePath.txt:n ensimmäinen rivi
-    
-    String lines101[] = loadStrings("C:\\DMXcontrolsettings\\loadPath.txt"); //Luetaan loadPath.txt:stä tiedot muuttujaan lines100[]
-    loadPath = lines101[0]; //loadPath muuttujan arvoksi annetaan savePath.txt:n ensimmäinen rivi
-  }
   
-  cp5 = new ControlP5(this); //luodaan controlFrame-ikkuna
   
-  // by calling function addControlFrame() a
-  // new frame is created and an instance of class
-  // ControlFrame is instanziated.
-  cf = addControlFrame("Control", 500,500);
-  
-    size(displayWidth, displayHeight); //Annetaan ikkunan kooksi sama kuin nykyisen näytön koko
-    frameRate(60);
-    background(0, 0, 0);
-    stroke(255, 255, 255);
-    
-    
-    
-    
-    
-    
-    thread("initializeCOM");  
-    
-    minim = new Minim(this);
+  size(displayWidth, displayHeight); //Annetaan ikkunan kooksi sama kuin nykyisen näytön koko
+  frameRate(60);
+  background(0, 0, 0);
+  stroke(255, 255, 255);
 
-    //---------------------------------------------------------Beat detectin setup-komennot---------------------------------------------------------
-      in = minim.getLineIn(Minim.MONO,buffer_size,sample_rate);
-      beat = new BeatDetect(in.bufferSize(), in.sampleRate());
-  
-      fft = new FFT(in.bufferSize(), in.sampleRate());
-      fft.logAverages(16, 2);
-      fft.window(FFT.HAMMING);
-    //----------------------------------------------------------------------------------------------------------------------------------------------
-    
-    
-    //---------------------------------------------------------Touchoscin setup-komennot------------------------------------------------------------
-      oscP5 = new OscP5(this, touchOscInComing); 
-      frame.setResizable(true);
-      Remote = new NetAddress(remoteIP,portOutgoing);
-    //----------------------------------------------------------------------------------------------------------------------------------------------
-    
-    setuppi();
-    
-    MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
-    myBus = new MidiBus(this, 1, "KeyRig 49"); // Create a new MidiBus with no input device - you will have to change the input here
+
+  thread("initializeCOM");
   
   
+
+  //--------------------------------------Setup commands of minim library----------------------------------------
+    minim = new Minim(this);
+    in = minim.getLineIn(Minim.MONO,buffer_size,sample_rate);
+    beat = new BeatDetect(in.bufferSize(), in.sampleRate());
+
+    fft = new FFT(in.bufferSize(), in.sampleRate());
+    fft.logAverages(16, 2);
+    fft.window(FFT.HAMMING);
+  //------------------------------------------------------------------------------------------------------------
+  
+  frame.setResizable(true);
+
+  oscP5 = new OscP5(this,touchOscIncoming);
+  
+  setuppi();
+
   if(useMaschine) {
     //This is used to get data from the Maschine Mikro
     Maschine = new MidiBus(this, "Maschine Mikro MK2 In", "Maschine Mikro MK2 Out");
     thread("initializeMaschine");
   }
+  
   thread("ylavalikkoSetup");
   colorWashSetup();
-  
   memoryCreator = new MemoryCreationBox(false);
-  
   createFixtureProfiles();
-  
   subWindowHandler = new SubWindowHandler();
   
+  
+  s1.loop();
+  
+  
 }
-
-

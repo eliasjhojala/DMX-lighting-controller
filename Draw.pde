@@ -1,7 +1,4 @@
-//Tässä välilehdessä on koko ohjelman ydin, eli draw-loop
-
-int[] midiNotesWithoutBlacks = { 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6, 7, 8, 8, 9, 9, 10, 11, 11, 12, 12, 13, 13, 14, 15, 15, 16, 16, 17, 18, 18, 19, 19, 20, 20, 21, 22, 22, 23, 23, 24, 25, 25, 26, 26, 27, 27, 28, 29, 30, 31 };
-boolean wasAt64 = false; 
+//The main loop (void draw()) is located in this tab
  
 int oldMouseX1;
 int oldMouseY1;
@@ -9,48 +6,64 @@ int oldMouseY1;
 int grandMaster = 255;
 int oldGrandMaster = 40;
 
-long totalMillis[] = new long[9];
+
+boolean soloIsOn;
+
+boolean oldUse3D = false;
+
+boolean useMidiMaschines = true;
+
+float scrollSpeed = 0;
+boolean scrolled;
+
+boolean helpBoxOpen;
+
+boolean drawNow;
+int drawCounter;
+
+int visualisationSpeed = 30;
+boolean speedDownVisualisation = false;
 
 void draw() {
-  if(programReadyToRun && !freeze) {
-    
-    textSize(12);
-    
-    mouse.refresh();
-    
-    //Move this to setDimAndMemoryValuesAtEveryDraw, maybe?
-    updateMemories();
-    
-    
-    
-    checkThemeMode();
-    
-    setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
-    if (arduinoFinished) thread("arduinoSend"); //Send dim-values to arduino, which sends them to DMX-shield
-    
-    drawMainWindow(); //Draw fixtures (tab main_window)
-    
-    if(!printMode) {
-      ylavalikko(); //top menu
-      alavalikko(); //bottom menu
-      sivuValikko(); //right menu
-      contextMenu1.draw();
-    }
-
-    
-    if (useMaschine) calcMaschineAutoTap();
-    
-    //Invoke every fixtures draw
-    //if(invokeFixturesDrawFinished) thread("invokeFixturesDraw");
-    invokeFixturesDraw();
-    drawColorWashMenu();
-    
-    subWindowHandler.draw();
-    
-    
-    
+  if(speedDownVisualisation) {
+    drawCounter++;
+    if(drawCounter > round(frameRate/visualisationSpeed)) { drawNow = true; drawCounter = 0; } else { drawNow = false; }
   }
-  if(!freeze) initSettingsInSetup();
+  else {
+    drawNow = true;
+  }
+  
+  checkShowMode();
+  check3D();
+  if(programReadyToRun && !freeze) {
+    checkSolo();
+    if(drawNow) setTextSize();
+    updateMidi();
+    if(drawNow) mouse.refresh();
+    updateMemories();
+    if(drawNow) checkThemeMode();
+    setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
+    drawMainWindow(); //Draw main view (mainly fixtures)
+    if(enttecOutput != null) { enttecOutput.draw(); }
+    if(drawNow) drawMenus();
+    invokeFixturesDraw(); //Invoke every fixtures draw
+    resetSolo();
+    midiWindowLoop();
+    tapTempo.draw();
+  }
+  else {
+    pushMatrix(); pushStyle();
+    background(0);
+    textAlign(CENTER);
+    textSize(100);
+    fill(255);
+    text("LOADING", width/2, height/2);
+    popStyle(); popMatrix();
+  }
+  scrolledUp = false;
+  scrolledDown = false;
+  scrollSpeed = 0;
+  cursor.push();
 }
 
 boolean memoriesFinished = true;
@@ -62,73 +75,38 @@ void updateMemories() {
   memoriesFinished = true;
 }
 
-
-
-//------------------------------------------------------------------------------------------------------------------------MIDI----------------------------------------------------------------------------------------------------------------------------------
-
-//This void detects if midi keyboard key is pressed
-void noteOn(int channel, int pitch, int velocity) {
-  
-  if (channel != 10 && !useMaschine) {
-    noteOn[pitch] = true;
-    if(pitch < midiNotesWithoutBlacks.length) {
-     // dimInput[midiNotesWithoutBlacks[pitch]] = constrain(int(velocity*2.3), 0, 255);
+void checkShowMode() {
+  if(showModeLocked) { showMode = true; }
+  if(showMode) { printMode = false; }
+}
+void check3D() {
+  if(use3D) { if(use3D != oldUse3D) { s1.loop(); f.setBounds(0, 0, displayWidth, displayHeight); oldUse3D = use3D; } }
+  else { if(use3D != oldUse3D) { s1.noLoop(); f.setBounds(0, 0, 0, 0); oldUse3D = use3D; } }
+}
+void checkSolo() {
+  if(soloIsOn) {
+    for(int i = 0; i < fixtures.size(); i++) {
+      if(fixtures.get(i) != null) {
+        fixtures.get(i).soloInThisFixture = false;
+      }
     }
-  } else {
-    //Coming from Maschine
-    maschineNote(pitch, velocity);
   }
 }
-
-//This void detects if midi keyboard key is released
-void noteOff(int channel, int pitch, int velocity) {
-  
-   if (channel != 10 && !useMaschine) {
-     noteOn[pitch] = false;
-     if(pitch < midiNotesWithoutBlacks.length) {
-      // dimInput[midiNotesWithoutBlacks[pitch]] = 0;
-     }
-   } else {
-     //Coming from Maschine
-     maschineNote(pitch, velocity);
-   }
+void setTextSize() {
+  textSize(12);
 }
-
-
-void controllerChange(ControlChange change) {
-  if (change.channel() != 10 && !useMaschine) {
-    int i = round(map(change.value(), 0, 127, 0, 255));
-    if(change.number() == 7) {
-      changeGrandMasterValue(i);
-    }
-    else if(change.number() == 1) {
-      changeCrossFadeValue(i);
-    }
-  } else {
-    //Coming from Maschine
-    maschineControllerChange(change.number(), change.value());
+void updateMidi() {
+  if(useMidiMaschines) { inputClass.draw(); }
+}
+void drawMenus() {
+  if(!printMode) {
+    ylavalikko(); //top menu
+    alavalikko(); //bottom menu
+    sivuValikko(); //right menu
+    contextMenu1.draw();
+    subWindowHandler.draw();
   }
-
 }
-
-
-void midiMessage(MidiMessage message) { // You can also use midiMessage(MidiMessage message, long timestamp, String bus_name)
-
-  if(message.getStatus() == 224) {
-    if(((int)(message.getMessage()[2] & 0xFF)) > 64 && wasAt64) {
-      chaseMode++;
-    }
-    if(((int)(message.getMessage()[2] & 0xFF)) < 64 && wasAt64) {
-      chaseMode--;
-    }
-    if((int)(message.getMessage()[2] & 0xFF) == 64) {
-      wasAt64 = true;
-    }
-    else {
-      wasAt64 = false;
-    }
-  }
-  
+void resetSolo() {
+  soloIsOn = false;
 }
-
-//----------------------------------------------------------------------------------------------------------------------MIDI END--------------------------------------------------------------------------------------------------------------------------------

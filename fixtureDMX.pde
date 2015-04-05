@@ -37,6 +37,7 @@ class FixtureDMX { //Class containig all the dmx values
   
   int[] DMX = new int[DMXlength];
   int[] DMXold = new int[DMXlength];
+  int preFade, postFade;
   boolean DMXChanged;
   
   
@@ -52,23 +53,26 @@ class FixtureDMX { //Class containig all the dmx values
   Fade[] fades;
   
   void presetProcess() {
+    if(fades == null) {
+      fades = new Fade[DMXlength];
+    }
     for(int i = 0; i < DMXlength; i++) {
         int newV = getUniDMX(i);
         newV = iMap(newV, 0, 255, 0, memoryMasterValue);
+   
         
         if (newV != DMXold[i]) {
-          parent.in.setUniversalDMX(i, newV);
-          parent.DMXChanged = true;
-          
-          
-          DMXold[i] = newV;
-          
-        }
+          if(preFade > 0 || postFade > 0) {
+            parent.setUniversalDMXwithFade(i, newV, preFade, postFade);
+          }
+          else {
+            parent.in.setUniversalDMX(i, newV);
+          }
+          parent.DMXChanged = true;      
+          DMXold[i] = newV; 
+        }     
         
         setUniversalDMX(i, 0);
-        
-        
-        
     }
   }
   
@@ -83,6 +87,39 @@ class FixtureDMX { //Class containig all the dmx values
   
   FixtureDMX() {
   }
+  
+    void saveToXML(String name, ManageXML XMLObject) {
+    if(max(DMX) > 0) {
+      XMLObject.addBlockAndIncrease("FixtureDMX");
+        XMLObject.addBlockAndIncrease("name", name);
+          XMLObject.addArray("DMX", DMX);
+        XMLObject.goBack();
+      XMLObject.goBack();
+    }
+  }
+  
+  void loadFromXML(String name, ManageXML XMLObject) {
+    if(max(DMX) > 0) {
+      XMLObject.goToChild("FixtureDMX");
+        name = XMLObject.getBlockAndIncrease("name");
+          arrayCopy(XMLObject.getArray("DMX"), DMX);
+        XMLObject.goBack();
+      XMLObject.goBack();
+    }
+  }
+  
+  
+  XML getXML() {
+    String data = "<fixtureDMX></fixtureDMX>";;
+    XML xml = parseXML(data);
+    xml.addChild(arrayToXML("DMX", DMX));
+    return xml;
+  }
+  
+  void XMLtoObject(XML xml) {
+    arrayCopy(XMLtoIntArray("DMX", xml), DMX);
+  }
+  
 
   
  

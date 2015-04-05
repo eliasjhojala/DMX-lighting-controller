@@ -1,10 +1,20 @@
-//Tässä välilehdessä piirretään ylävalikko, ja käsitellään sen nappuloiden komentoja 
+/*
+In this tab are located
+  - left bubbles
+       - clock viewer
+       - fps viewer
+       - tell if loading
+       - settings button
+  - left buttons
+*/
+
+boolean showLeftButtons;
+
+PShape settingsIcon;
 
 color topMenuTheme = color(222, 0, 0);
 color topMenuTheme2 = color(200, 0, 0);
 color topMenuAccent = color(150, 0, 0);
-
-PShape settingsIcon;
 
 void ylavalikkoSetup() {
   settingsIcon = loadShape("settingsIcon.svg");
@@ -39,27 +49,33 @@ void ylavalikko() {
   noFill();
   stroke(0, 120); strokeWeight(6);
   arc(bubS/2, 0, 120, 120, 0, HALF_PI + QUARTER_PI);
-  fill(topMenuTheme2);
-  stroke(topMenuAccent); strokeWeight(2);
+  fill(themes.bubbleColor.neutral);
+  stroke(multiplyColor(themes.bubbleColor.neutral, 0.7));
+  strokeWeight(2);
   arc(bubS/2, 0, 120, 120, 0, HALF_PI + QUARTER_PI);
   
   
   pushMatrix();
-    strokeWeight(10);
-    if(settingsHover) stroke(250); else stroke(topMenuTheme);
-    if(settingsHover) fill(250); else fill(topMenuTheme);
-    translate(bubS/2 + 4, 4);
-    scale(0.08);
-    if (settingsIcon != null) shape(settingsIcon); // The asset might have not loaded yet
+    pushStyle();
+      strokeWeight(10);
+      if(settingsHover) stroke(250); else stroke(multiplyColor(themes.bubbleColor.neutral, 0.7));
+      if(settingsHover) fill(250); else fill(multiplyColor(themes.bubbleColor.neutral, 0.7));
+      translate(bubS/2 + 4, 4);
+      scale(0.08);
+      if (settingsIcon != null) shape(settingsIcon); // The asset might have not loaded yet
+    popStyle();
   popMatrix();
   
   
   
   
   //Main bubble itself
-  fill(topMenuTheme);
-  stroke(topMenuAccent); strokeWeight(2);
-  arc(0, 0, bubS, bubS, 0, HALF_PI);
+  pushStyle();
+    themes.bubbleColor.fillColor(inBoundsCircle(0, 0, bubS/2, mouseX, mouseY), false);
+    stroke(multiplyColor(themes.bubbleColor.neutral, 0.7));
+    strokeWeight(2);
+    arc(0, 0, bubS, bubS, 0, HALF_PI);
+  popStyle();
   
   
   
@@ -74,40 +90,68 @@ void ylavalikko() {
   text(avgFrameRate + " fps", 3, 28, 125, 125);
   avgFrameRate = (avgFrameRate + int(frameRate)) / 2;
   
-  { //Here you can place buttons to left side
-    { //Wash button
-      pushMatrix();
-        int round = 20;
-        translate(-2, 150);
-        pushStyle();
-          fill(topMenuTheme2);
-          rect(0, 0, 40, 100, 0, round, round, 0);
-          mouse.declareUpdateElementRelative("washButton", "main:move", 0, 0, 40, 100);
-          boolean isHovered = isHover(0, 0, 40, 100);
-          boolean isClicked = mouse.isCaptured("washButton") && mouse.firstCaptureFrame;
-          if(isClicked) { colorWashMenuOpen = !colorWashMenuOpen; }
-        popStyle();
-        pushMatrix();
-          translate(13, 27);
-          rotate(radians(90));
-          pushStyle();
-            if(isHovered) {
-              fill(250);
-            }
-            else {
-              fill(topMenuTheme);
-            }
-            textSize(20);
-            text("Wash", 0, 0);
-          popStyle();
-        popMatrix();
-      popMatrix();
-    } //End of wash button
+  pushMatrix();
+    if(loadingDataRecently()) {
+      if(loadingDataAtTheTime()) { text("Loading...", 3, 28+15, 125, 125); }
+      else { text("Load taked " + str(round(float(wholeLoadTimeAsMilliSeconds)/1000)) + "s", 3, 28+15, 125, 125); translate(0, 15); }
+    }
+    
+    if(savingDataRecently()) {
+      if(savingDataAtTheTime()) { text("Saving...", 3, 28+15, 125, 125); }
+      else { text("Save taked " + str(round(float(wholeSaveTimeAsMilliSeconds)/1000)) + "s", 3, 28+15, 125, 125); }
+    }
+  popMatrix();
   
-  } //End of buttons placed to left side
+  if(showLeftButtons) { //Here you can place buttons to left side 
+    pushMatrix();
+      int round = 20;
+      if(drawLeftSideButton(round, "Wash")) colorWashMenu.open = !colorWashMenu.open;
+      translate(0, 120);
+      if(drawLeftSideButton(round, "Help")) help.open = !help.open;
+      translate(0, 120);
+      if(drawLeftSideButton(round, "Control")) lowerMenu.open = !lowerMenu.open;
+      translate(0, 120);
+      if(drawLeftSideButton(round, "Power")) powerWindow.open = !powerWindow.open;
+      translate(0, 120);
+      if(drawLeftSideButton(round, "Dimmers")) dimmerWindow.open = !dimmerWindow.open;
+      
+    popMatrix();
+  } //End of buttons placed to left side       
   //settingsWindow.draw();
   popStyle();
   
+}
+
+
+boolean drawLeftSideButton(int round, String text) {
+  pushMatrix();
+    translate(-2, 150);
+    
+    pushStyle();
+      fill(themes.bubbleColor.neutral);
+      rect(0, 0, 40, 100, 0, round, round, 0);
+      mouse.declareUpdateElementRelative("UpperMenu:"+text, "main:move", 0, 0, 40, 100);
+      boolean isHovered = isHover(0, 0, 40, 100);
+      boolean isClicked = mouse.isCaptured("UpperMenu:"+text) && mouse.firstCaptureFrame;
+    popStyle();
+    pushMatrix();
+      translate(13, 50);
+      rotate(radians(90));
+      pushStyle();
+        if(isHovered) {
+          fill(250);
+        }
+        else {
+          fill(multiplyColor(themes.bubbleColor.neutral, 0.7));
+        }
+        textSize(20);
+        textAlign(CENTER);
+        text(text, 0, 0);
+      popStyle();
+    popMatrix();
+  popMatrix();
+  
+  return isClicked;
 }
 
 
@@ -117,7 +161,7 @@ void nextChaseMode() {
   if(chaseMode > 8) {
     chaseMode = 1;
   }
-  sendDataToIpad("/chaseMode", chaseMode);
+  oscHandler.sendMessage("/chaseMode", chaseMode);
 }
 
 void reverseChaseMode() {
@@ -125,7 +169,7 @@ void reverseChaseMode() {
   if(chaseMode < 1) {
     chaseMode = 8;
   }
-  sendDataToIpad("/chaseMode", chaseMode);
+  oscHandler.sendMessage("/chaseMode", chaseMode);
 }
 
 String getTimeAsString() {

@@ -1,5 +1,18 @@
 //Tässä välilehdessä on paljon lyhyitä voideja
+
+boolean loadinMemoriesFromXML = false;
   
+int[] newIncrementingIntArray(int length, int start) {
+  int[] toReturn = new int[length];
+  incrementingIntArray(toReturn, start);
+  return toReturn;
+}
+
+void incrementingIntArray(int[] array, int start) {
+  for(int i = 0, c = start; i < array.length; i++, c++) {
+    array[i] = c;
+  }
+}
 
 boolean scrolledDown = false;
 boolean scrolledUp = false;
@@ -19,73 +32,74 @@ int indexOfMinCheck(int[] input, boolean[] checked) {
 }
 
 
+int indexOf(int[] array, int target) {
+  for(int i = 0; i < array.length; i++) {
+    if(array[i] == target) return i;
+  }
+  return -1;
+}
 
-int ansaWidth;
 
 int[] valueToDmxOld = new int[DMX_CHAN_LENGTH+1];
 
-boolean arduinoFinished = true;
-void arduinoSend() {
-  arduinoFinished = false;
-  for(int i = 0; i < channels; i++) {
-    if(DMXforOutput[i] != valueToDmxOld[i]) {
-      if(useCOM == true) {
-        setDmxChannel(i, DMXforOutput[i]);
-      }
-      valueToDmxOld[i] = DMXforOutput[i];
-    }
-    sendOscToIpad(i, DMX[i]);
-  }
-  arduinoFinished = true;
-}
 
 int trussToMove = -1;
 boolean movingTruss = false;
 
-void ansat(PVector mouseRotated) {
+void drawTrusses(PVector mouseRotated) {
   
-    for(int i = 0; i < ansaY.length; i++) {
+    for(int i = 0; i < trusses.length; i++) {
       pushMatrix();
-      switch(ansaType[i]) {
-        case 1:
-          translate(ansaX[i], ansaY[i]+25);
-          fill(20);
-          stroke(255);
-          rect(0, 0, ansaWidth, 5);
-          doTrussMoving(i, mouseRotated);
-        break;
-        case 0:
-          translate(ansaX[i], ansaY[i]);
-          doTrussMoving(i, mouseRotated);
-        break;
-        
+      if(trusses != null) if(trusses[i] != null) {
+        switch(trusses[i].type) {
+          case 1:
+            translate(trusses[i].location.x, trusses[i].location.y+25);
+            fill(20);
+            stroke(255);
+            rect(0, 0, trusses[i].lng, 5);
+            doTrussMoving(i, mouseRotated);
+          break;
+          case 0:
+            translate(trusses[i].location.x, trusses[i].location.y);
+            doTrussMoving(i, mouseRotated);
+          break;
+          
+        }
       }
       popMatrix();
     }
-    oldMouseXtr = int(mouseRotated.x);
-    oldMouseYtr = int(mouseRotated.y);
+    oldMouseXtr = mouseRotated.x;
+    oldMouseYtr = mouseRotated.y;
 }
 
-int oldMouseXtr = 0;
-int oldMouseYtr = 0;
+float oldMouseXtr = 0;
+float oldMouseYtr = 0;
 
 void doTrussMoving(int i, PVector mouseRotated) {
-  if(!showMode) {
+  if(!showMode && !showModeLocked) {
     fill(topMenuTheme);
-    rect(ansaWidth-5, -5, 15, 15, 3);
-    if(isHover(ansaWidth-5, -5, 15, 15) && mouse.elmIsHover("main:fixtures") && !mouse.captured && mousePressed) {
-      mouse.capture(mouse.getElementByName("main:fixtures"));
-      trussToMove = i;
-      movingTruss = true;
+    rect(trusses[i].lng-5, -5, 15, 15, 3);
+    pushStyle(); fill(255); text("Truss" + str(i), trusses[i].lng+16, 9); popStyle();
+    mouse.declareUpdateElementRelative("truss"+str(i), 100, trusses[i].lng-5, -5, 15, 15);
+    if(mouse.isCaptured("truss"+str(i))) {
+      if(mouseButton == LEFT) {
+        mouse.capture(mouse.getElementByName("main:fixtures"));
+        trussToMove = i;
+        movingTruss = true;
+      }
+      else if(mouseButton == RIGHT) {
+        trussController.open = true;
+        trussController.truss = trusses[i];
+      }
     }
     if(movingTruss && trussToMove == i) {
       if(mouseButton == LEFT) {
-        if(!(key == 'y' && keyPressed)) ansaX[i] += int((mouseRotated.x - oldMouseXtr) * 100 / zoom);
-        if(!(key == 'x' && keyPressed)) ansaY[i] += int((mouseRotated.y - oldMouseYtr) * 100 / zoom);
+        if(!(key == 'y' && keyPressed)) trusses[i].location.x += (mouseRotated.x - oldMouseXtr) * 100 / zoom;
+        if(!(key == 'x' && keyPressed)) trusses[i].location.y += (mouseRotated.y - oldMouseYtr) * 100 / zoom;
       } else if(mouseButton == RIGHT && mouse.firstCaptureFrame) {
         if(lastRMBc > millis() - 1000) {
-          if(!(key == 'y' && keyPressed)) ansaX[i] = 0;
-            else                          ansaY[i] = 0;
+          if(!(key == 'y' && keyPressed)) trusses[i].location.x = 0;
+            else                          trusses[i].location.y = 0;
           
         } else lastRMBc = millis();
       }
@@ -95,11 +109,67 @@ void doTrussMoving(int i, PVector mouseRotated) {
   }
 }
 
-void kalvo(color c) {
-  fill(c);
+int socketToMove = -1;
+boolean movingSocket = false;
+
+PVector oldMouseLocationForSockets = new PVector(0, 0);
+
+void drawSockets(PVector mouseRotated) {
+  for(int i = 0; i < sockets.size(); i++) {
+    Socket socket = sockets.get(i);
+    if(socket != null) if(socket.exist) {
+      pushMatrix();
+
+          translate(socket.x_location+trusses[constrain(socket.truss, 0, trusses.length-1)].location.x, trusses[constrain(socket.truss, 0, trusses.length-1)].location.y);
+          fill(20);
+          stroke(0, 0, 255);
+          PVector point1 = new PVector(0, 0);
+          PVector point2 = new PVector(20, 30);
+          rect(point1.x, point1.y, point2.x, point2.y);
+          fill(255);
+          text(socket.name, point1.x + 2, point1.y + 20);
+          doSocketMoving(i, mouseRotated, point1, point2);
+
+        
+      popMatrix();
+    }
+  }
+    oldMouseLocationForSockets.x = mouseRotated.x;
+    oldMouseLocationForSockets.y = mouseRotated.y;
 }
 
-
+void doSocketMoving(int i, PVector mouseRotated, PVector point1, PVector point2) {
+  Socket socket = sockets.get(i);
+  if(!showMode && !showModeLocked) {
+    fill(topMenuTheme);
+    if(!mouse.captured) {
+      mouse.declareUpdateElementRelative("socket" + str(i), 10000, round(point1.x), round(point1.y), round(point2.x), round(point2.y));
+      mouse.setElementExpire("socket" + str(i), 2);
+    }
+    if(mouse.isCaptured("socket" + str(i))) {
+      println(i);
+      mouse.capture(mouse.getElementByName("main:fixtures"));
+      socketToMove = i;
+      movingSocket = true;
+      if(mouseButton == RIGHT) { socketController.open = true; socketController.socket = sockets.get(i); println("TOIMIIIIII"); }
+    }
+    if(movingSocket && socketToMove == i) {
+      if(mouseButton == LEFT) {
+         socket.x_location += int((mouseRotated.x - oldMouseLocationForSockets.x) * 100 / zoom);
+         if(keyPressed && keyReleased) {
+           if(keyCode == UP) { socket.truss += 1; socket.truss = constrain(socket.truss, 0, trusses.length-1); }
+           if(keyCode == DOWN) { socket.truss -= 1; socket.truss = constrain(socket.truss, 0, trusses.length-1); }
+           if(keyCode == RIGHT) { socket.id++; }
+           if(keyCode == LEFT) { socket.id--; }
+           if(key == 'x') { socket.exist = false; }
+           keyReleased = false;
+         }
+      }
+    }
+    
+    if(!mousePressed && movingSocket) movingSocket = false;
+  }
+}
 
 
 
@@ -115,10 +185,26 @@ void mouseWheel(MouseEvent event) {
     else if(e > 0) { if(memoryMenu < numberOfMemories) { memoryMenu++; } }
   }
   float e = event.getCount();
-  if(e < 0) { scrolledDown = true; }
-  if(e > 0) { scrolledUp = true; }
+  if(e < 0) { scrolledDown = true; scrollSpeed = abs(e); }
+  if(e > 0) { scrolledUp = true; scrollSpeed = abs(e); }
+  scrolled = true;
+  scrollSpeed = e;
 }
 
+
+
+boolean isHoverSimple(int offsetX, int offsetY, int w, int h) {
+  return isHoverSimple(offsetX, offsetY, w, h, mouseX, mouseY, g);
+}
+
+boolean isHoverSimple(int ofX, int ofY, int w, int h, PGraphics g, Mouse mouse) {
+  return isHoverSimple(ofX, ofY, w, h, mouse.getBridgedMouseX(), mouse.getBridgedMouseY(), g);
+}
+
+//A simpler version of isHover. Doesn't make a bounding box, only regards the two corners and checks a rectangle between them. (Useful with non-rotated scenarios)
+boolean isHoverSimple(int offsetX, int offsetY, int w, int h, int moX, int moY, PGraphics g){
+  return inBds2D(moX, moY, int(g.screenX(offsetX, offsetY)), int(g.screenY(offsetX, offsetY)), int(g.screenX(offsetX + w, offsetY + h)), int(g.screenY(offsetX + w, offsetY + h)));
+}
 
 
 
@@ -149,10 +235,9 @@ boolean isHoverAB(int obj1X, int obj1Y, int obj2X, int obj2Y, float moX, float m
 }
 
 
-//A simpler version of isHover. Doesn't make a bounding box, only regards the two corners and checks a rectangle between them. (Useful with non-rotated scenarios)
-boolean isHoverSimple(int offsetX, int offsetY, int w, int h){
-  return inBds2D(mouseX, mouseY, int(screenX(offsetX, offsetY)), int(screenY(offsetX, offsetY)), int(screenX(offsetX + w, offsetY + h)), int(screenY(offsetX + w, offsetY + h)));
-}
+
+
+
 
 //Automatically takes mouseX and mouseY as pointer
 boolean inBdsMouse(int x1, int y1, int x2, int y2) {
@@ -167,8 +252,9 @@ boolean inBds2D(float pointerX, float pointerY, float x1, float y1, float x2, fl
   return inBds1D(pointerX, x1, x2) && inBds1D(pointerY, y1, y2);
 }
 
+
 boolean inBds1D(float pointer, float x1, float x2){
-  return pointer > x1 && pointer < x2;
+  return pointer >= x1 && pointer <= x2;
 }
 
 boolean isHoverBottomMenu() {
@@ -210,60 +296,13 @@ boolean isClicked(int x1, int y1, int x2, int y2) {
   }
 }
 
-
- /*
- Fullon toimintaperiaate:
- fullon on toiminto, joka laittaa kaikkien kanavien arvot täysille.
- Tämä tehdään myös pääloopissa (draw) niin pitkään kun fullOn = true,
- jotta arvoja ei ylikirjoiteta. Ennen kuin kaikki arvot laitetaan täysille
- kirjoitetaan niiden arvot muuttujaan (valueOfDimBeforeSolo[]), jotta
- ne voidaan palauttaa fullOnin päätyttyä. Fullon-nappi toimii
- go-tyyppisesti, eli sitä painettaessa fullOn menee päälle ja kun
- se päästetään irti fullOn sammuu.
- */
-
-void fullOn(boolean state) {
-  if(fullOn && !state) {
-    //Turn off full on
-    for(int ii = 0; ii < fixtures.size(); ii++) {
-       fixtures.get(ii).setDimmer(valueOfDimBeforeFullOn[ii]);
-    }
-    fullOn = false;
-  }
-  if(!fullOn && state) {
-    //Turn on full on
-    for(int ii = 0; ii < fixtures.size(); ii++) {
-       valueOfDimBeforeFullOn[ii] = fixtures.get(ii).in.getUniDMX(DMX_DIMMER);
-       fixtures.get(ii).setDimmer(255);
-    }
-    fullOn = true;
-  }
-  
-}
-
-void blackOut(boolean state) {
-  if(!state) {
-    //Turn off blackout
-    blackOut = false;
-    changeGrandMasterValue(masterValueBeforeBlackout);
-  }
-  if(state) {
-    //Turn on blackout
-    masterValueBeforeBlackout = grandMaster;
-    blackOut = true;
-    changeGrandMasterValue(0);
-  }
-  
+void blackOutToggle() {
+  blackOut = !blackOut;
 }
 
 void fullOnToggle() {
-  fullOn(!fullOn);
+  fullOn = !fullOn;
 }
-
-void blackOutToggle() {
-  blackOut(!blackOut);
-}
-
 
 
 boolean inBoundsCircle(int cPosX, int cPosY, int cRadius, int pointerX, int pointerY) {
@@ -354,7 +393,7 @@ int quickSlider(String mouseLockID, int mousePriority, int value, PGraphics g, M
       return toReturn;
     }
 
-    /*getNext returns always reverse value and checks that 
+    /*getNext returns always reverse value and checks that
     if you already are at the smallest value then it goes to biggest value */
     int getReverse(int current, int lim_low, int lim_hi) {
       int toReturn = 0;
@@ -364,7 +403,7 @@ int quickSlider(String mouseLockID, int mousePriority, int value, PGraphics g, M
       return toReturn;
     }
     
-    /*getNext returns always next value and checks that 
+    /*getNext returns always next value and checks that
     if you already are at the biggest value then it goes to smallest value */
     int getNext(int current, int lim_low, int lim_hi) {
       int toReturn = 0;
@@ -379,6 +418,11 @@ int quickSlider(String mouseLockID, int mousePriority, int value, PGraphics g, M
       /*int toReturn = 0;
       toReturn = iMap(val, lim_low, lim_hi, lim_hi, lim_low);*/
       return lim_hi + lim_low - val;
+    }
+    
+    //returns getInvertedValue with 0-255 limits
+    int getDefaultInvertedValue(int val) {
+      return getInvertedValue(val, 0, 255);
     }
   
     
@@ -439,24 +483,43 @@ but it returns original array index numbers as sorted arrange */
      return toReturn;
    } //End of sorting algorithm
    
+   int[] sortIndex(String[] toSort) {
+    int[] toReturn = new int[toSort.length];
+    String[] sorted = new String[toSort.length];
+    boolean[] used = new boolean[toSort.length];
+     
+     sorted = sort(toSort);
+     
+     for(int i = 0; i < toSort.length; i++) {
+       for(int j = 0; j < sorted.length; j++) {
+         if(toSort[i].equals(sorted[j]) && !used[j]) {
+           toReturn[j] = i;
+           used[j] = true;
+           break;
+         }
+       }
+     }
+     return toReturn;
+   } //End of sorting algorithm
+   
    
 boolean isAbout(int a, int b, int accu) {
   if(abs(a - b) <= a/overZero(accu)) {
     return true;
   }
   return false;
-} 
+}
 
 boolean isAbout(float a, float b, int accu) {
   if(abs(a - b) <= a/overZero(accu)) {
     return true;
   }
   return false;
-}  
+}
 
 boolean isAbout(int a, int b) {
   return isAbout(a, b, 5);
-}  
+}
    
    
 boolean isInList(int i, int[] list) {
@@ -466,7 +529,7 @@ boolean isInList(int i, int[] list) {
     }
   }
   return false;
-}  
+}
 
 int[] toArray(int a) {
   int[] toReturn = new int[1];
@@ -499,7 +562,7 @@ int[] toArray(int a, int b, int c, int d) {
 
 
 
-boolean ctrlDown = false; 
+boolean ctrlDown = false;
 boolean shftDown = false;
 boolean rightPressed = false;
 boolean leftPressed = false;
@@ -516,47 +579,63 @@ boolean keyCapElseDown = false;
 
 
 void keyPressed() {
+  keyDown = true;
   if(!keyCapElsewhere) {
     if(key == 'b') { boolean b = s2l.blinky; s2l = new soundDetect(); s2l.blinky = !b; }
-    
-    if(key == 'k') { newColorWash(); }
-  
-    
-    if(key==27) { key=0; 
+
+    if(key==27) { key=0;
       //Escape from printMode
       printMode = false;
     } //Otetaan esc-näppäin pois käytöstä. on kumminkin huomioitava, että tämä toimii vain pääikkunassa
     if(key == 'm') {
-      showMode = !showMode;
-      notifier.notify("showMode is now " + (showMode ? "enabled" : "disabled") + ".");
-    }
-    if(key == 'r') { revStepPressed = true; }
-    if(key == '1') { lampToMove = 1; }
-    if(key == 'l') { loadAllData(); }
-    if(key == 'c') {
-      for(int i = 0; i < channels; i++) {
-        valueOfDimBeforeBlackout[i] = 0;
-        valueOfDimBeforeFullOn[i] = 0;
-      }
-    }
-    
-    if(keyCode == 17) { ctrlDown = true; }
-    if(keyCode == 16) { shftDown = true; println("toimii"); }
-    if(key == 'o') { fileDialogInput(); ctrlDown = false; }
-    if(key == 's') {
-      if(shftDown) {
-        fileDialogOutput();
-        shftDown = false; println("TOIMII");
+      if(!showModeLocked) {
+        showMode = !showMode;
+        notifier.notify("showMode is now " + (showMode ? "enabled" : "disabled") + ".");
       }
       else {
-        saveAllData();
+        showMode = true;
+        notifier.notify("showMode is locked for your safety", true);
       }
     }
-  
-    if(key == 'u') {
-        if(upper == true) { enttecDMXplace = enttecDMXplace - 1; upper = false; }
-        else { enttecDMXplace = enttecDMXplace + 1; upper = true; }
-    } 
+    if(key == 'r') { revStepPressed = true; }
+    
+    if(showMode) if(key == 't') { tapTempo.register(); }
+    
+ 
+    if(keyCode == 17) { ctrlDown = true; }
+    if(keyCode == 16) { shftDown = true; }
+    if(key == 'o') { fileDialogInput(); ctrlDown = false; }
+    if(key == 's') {
+      if(!showMode && !showModeLocked) {
+        try {
+          thread("saveAllData");
+        }
+        catch (Exception e) {
+          notifier.notify("Error saving data", true);
+        }
+      }
+      else {
+        notifier.notify("Can not save in showMode", true);
+      }
+    }
+    if(key == 'l') {
+      if(!showMode && !showModeLocked) {
+        try {
+          if(!loadingDataAtTheTime()) {
+            loadAllData();
+          }
+        }
+        catch (Exception e) {
+          notifier.notify("Error loading data", true);
+        }
+      }
+      else {
+        notifier.notify("Can not load in showMode", false);
+      }
+    }
+    if(key == 'S') { /* SHIFT + s pressed */ }
+    if(key == 'L') { /* SHIFT + l pressed */ }
+
     if(keyCode == RIGHT) { rightPressed = true; }
     if(keyCode == LEFT) { leftPressed = true; }
     if(keyCode == ENTER) { enterPressed = true; }
@@ -567,32 +646,200 @@ void keyPressed() {
 void mousePressed() {
   mouseClicked = true;
 }
+
 void mouseReleased() {
   mouseClicked = false;
   mouseReleased = true;
 }
 
 
-int rRed(color c) {
-  return round(red(c));
-}
-int rGreen(color c) {
-  return round(green(c));
-}
-int rBlue(color c) {
-  return round(blue(c));
-}
+/* Functions to return red, green and blue values
+   from color object as int instead of float */
+int rRed(color c) { return round(red(c)); }
+int rGreen(color c) { return round(green(c)); }
+int rBlue(color c) { return round(blue(c)); }
+
 
 
 
 void checkThemeMode() {
   fill(0, 0, 0);
-  if(printMode == true) { //Tarkistetaan onko tulostusmode päällä - check if printmode is on 
-    background(255, 255, 255); //Jos tulostusmode on päällä taustaväri on valkoinen - if printmode is on then background is white
-    stroke(0, 0, 0); //Jos tulostusmode on päällä kuvioiden reunat ovat mustia - if printmode is on then strokes are black 
+  if(printMode == true) { //Check if printmode is on
+    background(255, 255, 255); //If printmode is on then background is white
+    stroke(0, 0, 0); //If printmode is on then strokes are black
   }
-  else { 
-    background(0); //Jos tulostusmode on pois päältä taustaväri on musta - if printmode is off then background is black
-    stroke(255, 255, 255); //Jos tulostusmode on pois päältä kuvoiden reunat ovat valkoisia - if printmode is off then strokes are white
+  else {
+    background(0); //If printmode is off then background is black
+    stroke(255, 255, 255); //If printmode is off then strokes are white
   }
-} 
+}
+
+
+class LocationData {
+  /*
+    This class is made to handle 3D object's rotation and location data
+    at the same time, so functions which uses both of them could have
+    one LocationData variable instead of two seperate PVectors
+  */
+  
+  PVector location, rotation; //Location and rotation as PVectors
+  
+  LocationData(PVector loc, PVector rot) {
+    /*
+      Init function get location and rotation PVectors as input
+      and simply saves them to class
+    */
+    
+    location = loc;
+    rotation = rot;
+  }
+  
+  PVector getLocation() { return location; } //Get location as PVector
+  PVector getRotation() { return rotation; } //Get location as PVector
+  
+  void saveToXML(ManageXML xml) {
+    xml.addBlockAndIncrease("LocationData");
+      savePVectorToXML(xml, "location", location);
+      savePVectorToXML(xml, "rotation", rotation);
+    xml.goBack();
+  }
+}
+
+
+void savePVectorToXML(ManageXML xml, String name, PVector pv) {
+  xml.addBlockAndIncrease(name);
+    xml.addData("x", pv.x);
+    xml.addData("y", pv.y);
+    xml.addData("z", pv.z);
+  xml.goBack();
+}
+
+class RGBWD {
+  /*
+    This class is made to handle fixture color (RGB) data and dimmer (D) data
+    and the mix of them (RGBWD), so functions using both of them could have
+    only one RGBWD variable instead two seperate variables
+  */
+  color rawColor; //Color without dim
+  int dimmer; //dimmer value
+  color colorWithDim; //color mapped with dim value
+  
+  RGBWD(color col, int dim) {
+    /*
+      Init function get rawColor and dim value as input
+      and counts also colorWithDim value from them
+    */
+       
+    rawColor = col;
+    dimmer = dim;
+    colorWithDim = color(MCWD(red(col), dim), MCWD(green(col), dim), MCWD(blue(col), dim));
+  }
+  
+  color getCol() { return rawColor; } //Get original color
+  color getColWithDim() { return colorWithDim; } //Get color mapped with dimmer value
+  int getDim() { return dimmer; } //Get dimmer value
+  
+  int MCWD(float c, float d) { //Map Color With Dimmer (color, dimmer)
+    return round(map(c, 0, 255, 0, d));
+  }
+  
+  void saveToXML(ManageXML xml) {
+    xml.addBlockAndIncrease("RGBWD data");
+      saveColorToXML(xml, "rawColor", rawColor);
+      saveColorToXML(xml, "colorWithDim", colorWithDim);
+      xml.addBlockAndIncrease("dimmer");
+        xml.addData("val", dimmer);
+      xml.goBack();
+    xml.goBack();
+  }
+  
+}
+
+
+void saveColorToXML(ManageXML xml, String name, color c) {
+  xml.addBlockAndIncrease(name);
+    xml.addData("r", red(c));
+    xml.addData("g", green(c));
+    xml.addData("b", blue(c));
+  xml.goBack();
+}
+
+
+
+boolean isBetween(int original, int min, int max) {
+  return inBds1D(original, min, max);
+}
+
+boolean isInArray(int[] array, int toFind) {
+  for(int i = 0; i < array.length; i++) {
+    if(array[i] == toFind) { return true; }
+  }
+  return false;
+}
+
+boolean isInArray(int[] array, int toFind1, int toFind2) {
+  for(int i = 0; i < array.length; i++) {
+    if(array[i] == toFind1 || array[i] == toFind2) { return true; }
+  }
+  return false;
+}
+
+boolean isInArray(int[] array, int toFind1, int toFind2, int toFind3) {
+  for(int i = 0; i < array.length; i++) {
+    if(array[i] == toFind1 || array[i] == toFind2 || array[i] == toFind3) { return true; }
+  }
+  return false;
+}
+
+void rect(PVector loc1, PVector loc2) {
+  rect(loc1.x, loc1.y, loc2.x, loc2.y);
+}
+void rect(PVector loc1, PVector loc2, PGraphics g) {
+  g.rect(loc1.x, loc1.y, loc2.x, loc2.y);
+}
+
+color invert(color in) {
+  return color(255-red(in), 255-green(in), 255-blue(in));
+}
+
+XML PVectorAsXML(String name, PVector vector) {
+  XML xml = parseXML("<"+name+"></"+name+">");
+  xml.setFloat("x", vector.x);
+  xml.setFloat("y", vector.y);
+  xml.setFloat("z", vector.z);
+  return xml;
+}
+
+PVector xmlAsPvector(String name, XML xml) {
+  PVector toReturn = new PVector(0, 0, 0);
+  xml = xml.getChild(name);
+  toReturn.x = xml.getFloat("x");
+  toReturn.y = xml.getFloat("y");
+  toReturn.z = xml.getFloat("z");
+  xml = xml.getParent();
+  return toReturn;
+}
+
+XML colorAsXML(String name, color c) {
+  XML xml = parseXML("<"+name+"></"+name+">");
+  xml.setFloat("r", red(c));
+  xml.setFloat("g", green(c));
+  xml.setFloat("b", blue(c));
+  return xml;
+}
+
+color xmlAsColor(String name, XML xml) {
+  color toReturn = color(0, 0, 0);
+  xml = xml.getChild(name);
+  toReturn = color(xml.getFloat("r"), xml.getFloat("g"), xml.getFloat("b"));
+  xml = xml.getParent();
+  return toReturn;
+}
+
+
+boolean isInIntList(int val, IntList list) {
+  for(int i = 0; i < list.size(); i++) {
+    if(list.get(i) == val) return true;
+  }
+  return false;
+}

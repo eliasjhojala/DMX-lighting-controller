@@ -1,8 +1,17 @@
-FixtureProfile[] fixtureProfiles = new FixtureProfile[19]; 
+//FixtureProfile[] fixtureProfiles = new FixtureProfile[19]; 
 
 String nameOfProfileFile = "fixtureProfiles.xml"; //Name of xml file where all the fixtureProfile data is located
 
+boolean loadingFixtureProfiles = false;
+
 void saveFixtureProfiles() {
+  saveXML(getFixtureProfilesAsXML(), nameOfProfileFile); //Finally save xml which we have created
+}
+void loadFixtureProfiles() {
+  getFixtureProfilesFromXML(loadXML(nameOfProfileFile)); //load XML from file
+}
+
+XML getFixtureProfilesAsXML() {
   //This function saves all the fixtureProfiles to xml file
   //This will be useful when qui for adding fixtureProfiles is ready
   
@@ -49,16 +58,30 @@ void saveFixtureProfiles() {
       XML isDrawn = fixtureSize.addChild("isDrawn");
       isDrawn.setContent(str(fixtureProfiles[i].size.isDrawn));
     } //end of saving fixtureSize
+    
+    { //Save watts
+      XML watts = profile.addChild("watts");
+      watts.setInt("watts", fixtureProfiles[i].watts);
+    } //End of saving watts
+  
+  
+    { //load fixture model PShape
+      XML fixtureModelPath = profile.addChild("fixtureModelPath");
+      fixtureModelPath.setContent(fixtureProfiles[i].modelPath);
+    } //end of loading fixture model PShape
+    
   } //End of going through all the profiles
-  saveXML(xml, nameOfProfileFile); //Finally save xml which we have created
+  return xml;
 } //End of saving all the fixtureProfiles to xml
 
-void loadFixtureProfiles() {
-  //This function loads all the fixtureProfiles from XML file
-  
-  XML xml; //Define xml variable
 
-  xml = loadXML(nameOfProfileFile); //load XML from file
+
+
+void getFixtureProfilesFromXML(XML xml) {
+  //This function loads all the fixtureProfiles from XML file
+  loadingFixtureProfiles = true;
+
+  
   XML profiles = xml.getChild("profiles"); //parent of all the profiles
   XML[] profile = profiles.getChildren("profile"); //single profiles
 
@@ -101,9 +124,25 @@ void loadFixtureProfiles() {
       XML isDrawn = fixtureSize.getChild("isDrawn");
       fixtureProfiles[id].size.isDrawn = boolean(isDrawn.getContent());
     } //end of loading fixtureSize
+    
+    { //load watts
+      try {
+        fixtureProfiles[id].watts = profile[i].getChild("watts").getInt("watts");
+      }
+      catch(Exception e) {
+      }
+    } //End of loading watts
+    
+     { //load fixture model PShape
+      XML fixtureModelPath = profile[i].getChild("fixtureModelPath");
+      if(fixtureModelPath != null) {
+        fixtureProfiles[id].setModel(fixtureModelPath.getContent());
+      }
+      
+      fixtureProfiles[id].checkDMXchannels(); //Check DMX channels if there is strobe or something like that
+    } //end of loading fixture model PShape
   } //End of going through all the profiles
+  loadingFixtureProfiles = false;
 } //End of loading fixtureProfiles from xml
 
-void createFixtureProfiles() {
-  loadFixtureProfiles();
-}
+

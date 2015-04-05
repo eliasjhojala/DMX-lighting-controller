@@ -34,178 +34,191 @@ void newColorWash() {
 }
 
 boolean colorWashMenuOpen = false;
-boolean HSBPicker = false;
 PVector colorMenuOffset = new PVector(0, 0);
 
-void drawColorWashMenu() { //Color wash selection menu box
-  if(colorWashMenuOpen) {
-    pushMatrix();
-    translate(colorMenuOffset.x, colorMenuOffset.y);
-      pushStyle();
-        if(wash == null) { wash = new colorWash(""); } //If wash doesn't exist then create it
-        {
-          stroke(150); //Gray corners
-          strokeWeight(3); //A bit bolded corners
-          fill(255, 230); //White transperent background
-        }
-       
-        //Count all the active colorNames (the colorNames object array is'n really good-ordered)
-          int[] activeColorNames = new int[colorNames.length];
-          int[] activeColorNamesTemp = new int[colorNames.length];
-          int n = 0;
-          for(int i = 0; i < colorNames.length; i++) {
-            if(colorNames[i] != null) {
-              activeColorNames[n] = i; //Write down all the existing colorNames
-              n++;
-            }
-          }
-          mouse.declareUpdateElementRelative("colorSelectBox", 10000000, 50, 80, n/5*100+200, 5*50+20); //Declare element for the whole colorSelectBox
-          mouse.setElementExpire("colorSelectBox", 2);
-          
-          rect(50, 80, n/5*100+200, 5*50+20, 20, 20, 20, 20); //The whole box
-          arrayCopy(activeColorNames, activeColorNamesTemp);
-          activeColorNames = new int[n];
-          for(int i = 0; i < activeColorNames.length; i++) {
-            activeColorNames[i] = activeColorNamesTemp[i];
-          }
-        //End counting active colorNames
+int lastClickedColor;
 
-        pushMatrix(); 
-            translate(80, 0);
-            PVector onlySelectedButton = new PVector(50*6-40, 30+50+1*40);
-            PVector buttonSize = new PVector(120, 30);
-            PVector oddEvenButton = new PVector(50*6-40, 30+50+2*40);
-            PVector clearButton = new PVector(50*6-40, 30+50+3*40);
-            PVector HSBPickerButton = new PVector(50*6-40, 30+50+4*40);
-            PVector textOffset = new PVector(15, 22);
-            int buttonCorners = 5;
-            
-            //ONLY SELECTED BUTTON
-              mouse.declareUpdateElementRelative("cWB:onlySelected", "colorSelectBox",  round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y)); 
-              mouse.setElementExpire("cWB:onlyDelected", 2);
-              pushStyle();
-              if(mouse.isCaptured("cWB:onlySelected") && mouse.firstCaptureFrame) { stroke(0); wash.onlySelected = !wash.onlySelected; }
-              rect(round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
-              fill(0); //Black text
-              textSize(15); //A bit bigger text than default
-              if(wash.onlySelected) { text("Selected", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
-              else { text("All", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
-              popStyle();
-            //END OF ONLY SELECTED BUTTON
-            
-            
-            //ODDEVEN BUTTON
-              mouse.declareUpdateElementRelative("cWB:oddEven", "colorSelectBox",  round(oddEvenButton.x), round(oddEvenButton.y), round(buttonSize.x), round(buttonSize.y)); 
-              mouse.setElementExpire("cWB:oddEven", 2);
-              pushStyle();
-              if(mouse.isCaptured("cWB:oddEven") && mouse.firstCaptureFrame) { stroke(0); wash.oddEvenNext(); }
-              rect(round(oddEvenButton.x), round(oddEvenButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
-              fill(0); //Black text
-              textSize(15); //A bit bigger text than default
-              String[] OEMS = { "", "Odd", "Even", "All" }; //OddEven mode names
-              String OEM = OEMS[wash.oddEvenMode];
-              text(OEM, round(oddEvenButton.x+textOffset.x), round(oddEvenButton.y+textOffset.y));
-                
-          
-              popStyle();
-            //END OF ODDEVEN BUTTON
-            
-            //CLEAR BUTTON
-              mouse.declareUpdateElementRelative("cWB:clearAll", "colorSelectBox",  round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y)); 
-              mouse.setElementExpire("cWB:clearAll", 2);
-              pushStyle();  
-              if(mouse.isCaptured("cWB:clearAll") && mouse.firstCaptureFrame) { stroke(0);  clearAllTheWashes(); }
-              rect(round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
-              fill(0); //Black text
-              textSize(15); //A bit bigger text than default
-              text("Clear all", round(clearButton.x+textOffset.x), round(clearButton.y+textOffset.y));
-              popStyle();
-            //END OF CLEAR BUTTON
-            
-            //COLORPICKER BUTTON
-              mouse.declareUpdateElementRelative("cWB:HSBPicker", "colorSelectBox",  round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y)); 
-              mouse.setElementExpire("cWB:HSBPicker", 2);
-              pushStyle();
-              if(mouse.isCaptured("cWB:HSBPicker") && mouse.firstCaptureFrame) { stroke(0); HSBPicker = !HSBPicker; }
-              rect(round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
-              
-                fill(0);
-                textSize(15);
-          
-                
-                if(HSBPicker) { text("Close", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
-                else { text("ColorPicker", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
-              popStyle();
-            //END OF COLORPICKER BUTTON
-            
-           
-           if(HSBPicker) { //Check that should color picker be open
-             pushStyle(); //Pushstyle to make sure no any styles go out of colorPicker
-               colorPick.colorSelectorOpen = true; //Tell to color picker that it should be open
-               color c = colorPick.getColorFromPicker(); //Get picked color
-               if(colorPick.changed()) { //Check if color values has changed
-                 wash.clear(); //Clear old wash
-                 wash.setRgb(round(red(c)), round(green(c)), round(blue(c))); //Set rgb color to wash
-                 wash.dim = round(brightness(c)); //Set also dim value to wash
-                 wash.go(); //Activate wash
-               }
-               pushMatrix(); //Own matrix for colorpicker because translate
-                 translate(500, 0); //colorpicker is located next to the color wash box
-                 colorPick.showColorSelector(); //draw colorPicker and count color values
-               popMatrix();
-             popStyle();
-           }
-           else { //if color picker should be closed then close it
-             colorPick.colorSelectorOpen = false; //Tell to picker that it should be closed
-           }
-            
-            //Move the whole selection box
-            if(mouse.isCaptured("colorSelectBox")) {
-                colorMenuOffset.x += mouseX - pmouseX;
-                colorMenuOffset.y += mouseY - pmouseY;
+ColorWashMenu colorWashMenu = new ColorWashMenu();
+
+class ColorWashMenu {
+  Window window;
+  ColorWashMenu() {
+    w = 600;
+    h = 400;
+    locX = 100;
+    locY = 100;
+    window = new Window("colorSelectBox", new PVector(w, h), this);
+  }
+  int locX, locY, w, h;
+  boolean open;
+  void draw(PGraphics g, Mouse mouse, boolean doTranslate) { //Color wash selection menu box
+     window.draw(g, mouse);
+     g.pushMatrix();
+        g.pushStyle();
+        g.textAlign(LEFT);
+          if(wash == null) { wash = new colorWash(""); } //If wash doesn't exist then create it
+          {
+            g.stroke(150); //Gray corners
+            g.strokeWeight(3); //A bit bolded corners
+            g.fill(255, 230); //White transperent background
+          }
+         
+          //Count all the active colorNames (the colorNames object array isn't really good-ordered)
+            int[] activeColorNames = new int[colorNames.length];
+            int[] activeColorNamesTemp = new int[colorNames.length];
+            int n = 0;
+            for(int i = 0; i < colorNames.length; i++) {
+              if(colorNames[i] != null) {
+                activeColorNames[n] = i; //Write down all the existing colorNames
+                n++;
+              }
             }
+            mouse.declareUpdateElementRelative("colorSelectBox", 10000000, 50, 80, n/5*100+200, 5*50+20 ,g); //Declare element for the whole colorSelectBox
+            mouse.setElementExpire("colorSelectBox", 2);
             
             
-            { //This function is controlling all the color buttons
-                int a = 0;
-                for(int i = 0; i < activeColorNames.length; i++) { //Go through all the activeColorNames
-                  for(int j = 0; j < 5; j++) { //Five rows
-                    if(i*5+j < activeColorNames.length) { 
-                      if(colorNames[activeColorNames[i*5+j]] != null) {
-                        a++;
-                        mouse.declareUpdateElementRelative("cWB:color"+str(i*5+j), "colorSelectBox",  50*i, 30+50+a*40, 40, 30); //Declare mouse element for color rect
-                        mouse.setElementExpire("cWB:color"+str(i*5+j), 2);
-                        fill(colorNames[activeColorNames[i*5+j]].getRGB()); //Fill rect with right color
-                        strokeWeight(1); //Strokeweight is 1 by default
-                        if(washs[activeColorNames[i*5+j]] == null) {
-                           washs[activeColorNames[i*5+j]] = new colorWash("");
+            arrayCopy(activeColorNames, activeColorNamesTemp);
+            activeColorNames = new int[n];
+            for(int i = 0; i < activeColorNames.length; i++) {
+              activeColorNames[i] = activeColorNamesTemp[i];
+            }
+          //End counting active colorNames
+  
+       
+          g.pushMatrix();
+           
+              g.translate(80, 0);
+              PVector onlySelectedButton = new PVector(50*6-40, 30+50+1*40);
+              PVector buttonSize = new PVector(120, 30);
+              PVector oddEvenButton = new PVector(50*6-40, 30+50+2*40);
+              PVector clearButton = new PVector(50*6-40, 30+50+3*40);
+              PVector HSBPickerButton = new PVector(50*6-40, 30+50+4*40);
+              PVector textOffset = new PVector(15, 22);
+              int buttonCorners = 5;
+              
+              
+              //ONLY SELECTED BUTTON
+                mouse.declareUpdateElementRelative("cWB:onlySelected", "colorSelectBox",  round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.setElementExpire("cWB:onlyDelected", 2);
+                g.pushStyle();
+                if(mouse.isCaptured("cWB:onlySelected") && mouse.firstCaptureFrame) { g.stroke(0); wash.onlySelected = !wash.onlySelected; }
+                g.rect(round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
+                g.fill(0); //Black text
+                g.textSize(15); //A bit bigger text than default
+                g.textAlign(LEFT); 
+                if(wash.onlySelected) { g.text("Selected", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
+                else { g.text("All", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
+                g.popStyle();
+              //END OF ONLY SELECTED BUTTON
+             
+             
+              //ODDEVEN BUTTON
+                mouse.declareUpdateElementRelative("cWB:oddEven", "colorSelectBox",  round(oddEvenButton.x), round(oddEvenButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.setElementExpire("cWB:oddEven", 2);
+                g.pushStyle();
+                if(mouse.isCaptured("cWB:oddEven") && mouse.firstCaptureFrame) { g.stroke(0); wash.oddEvenNext(); }
+                g.rect(round(oddEvenButton.x), round(oddEvenButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
+                g.fill(0); //Black text
+                g.textSize(15); //A bit bigger text than default
+                String[] OEMS = { "", "Odd", "Even", "All" }; //OddEven mode names
+                String OEM = OEMS[wash.oddEvenMode];
+                g.text(OEM, round(oddEvenButton.x+textOffset.x), round(oddEvenButton.y+textOffset.y));
+                  
+            
+                g.popStyle();
+              //END OF ODDEVEN BUTTON
+             
+              
+              //CLEAR BUTTON
+                mouse.declareUpdateElementRelative("cWB:clearAll", "colorSelectBox",  round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.setElementExpire("cWB:clearAll", 2);
+                g.pushStyle();  
+                if(mouse.isCaptured("cWB:clearAll") && mouse.firstCaptureFrame) { g.stroke(0);  clearAllTheWashes(); }
+                g.rect(round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
+                g.fill(0); //Black text
+                g.textSize(15); //A bit bigger text than default
+                g.textAlign(LEFT); 
+                g.text("Clear all", round(clearButton.x+textOffset.x), round(clearButton.y+textOffset.y));
+                g.popStyle();
+              //END OF CLEAR BUTTON
+               
+               
+              //COLORPICKER BUTTON
+                mouse.declareUpdateElementRelative("cWB:HSBPicker", "colorSelectBox",  round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.setElementExpire("cWB:HSBPicker", 2);
+                g.pushStyle();
+                if(mouse.isCaptured("cWB:HSBPicker") && mouse.firstCaptureFrame) { g.stroke(0); colorPick.open = !colorPick.open; }
+                g.rect(round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
+                
+                  g.fill(0);
+                  g.textSize(15);
+            
+                  g.textAlign(LEFT); 
+                  if(colorPick.open) { g.text("Close", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
+                  else { g.text("ColorPicker", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
+                g.popStyle();
+              //END OF COLORPICKER BUTTON
+            g.popMatrix();
+             
+             
+             if(colorPick.open) { //Check that should color picker be open
+               g.pushStyle(); //Pushstyle to make sure no any styles go out of colorPicker
+                 colorPick.colorSelectorOpen = true; //Tell to color picker that it should be open
+                 color c = colorPick.getColorFromPicker(); //Get picked color
+                 if(colorPick.changed()) { //Check if color values has changed
+                   wash.clear(); //Clear old wash
+                   wash.setRgb(round(red(c)), round(green(c)), round(blue(c))); //Set rgb color to wash
+                   wash.dim = round(brightness(c)); //Set also dim value to wash
+                   wash.go(); //Activate wash
+                 }
+               g.popStyle();
+             }
+             else { //if color picker should be closed then close it
+               colorPick.colorSelectorOpen = false; //Tell to picker that it should be closed
+             } 
+              
+              g.pushMatrix();
+              g.translate(30, 0);
+        
+              { //This function is controlling all the color buttons
+                  int a = 0;
+                  for(int i = 0; i < activeColorNames.length; i++) { //Go through all the activeColorNames
+                    for(int j = 0; j < 5; j++) { //Five rows
+                      if(i*5+j < activeColorNames.length) { 
+                        if(colorNames[activeColorNames[i*5+j]] != null) {
+                          a++;
+                          mouse.declareUpdateElementRelative("cWB:color"+str(i*5+j), "colorSelectBox",  50*i, 30+50+a*40, 40, 30 ,g); //Declare mouse element for color rect
+                          mouse.setElementExpire("cWB:color"+str(i*5+j), 2);
+                          g.fill(colorNames[activeColorNames[i*5+j]].getRGB()); //Fill rect with right color
+                          g.strokeWeight(1); //Strokeweight is 1 by default
+                          g.stroke(0); //This is in weird place, because it was the first good place I found quickly
+                          if(lastClickedColor == i*5+j) {
+                            g.strokeWeight(3);
+                          }
+                          if(mouse.isCaptured("cWB:color"+str(i*5+j)) && mouse.firstCaptureFrame) { 
+                            g.strokeWeight(3); //Bolded stroke
+                            boolean found = false;         
+                                wash.clear();   
+                                wash.setColor(colorNames[activeColorNames[i*5+j]].name); //Set new color to wash
+                                wash.dim = 255; //Set also dim value to wash
+                                wash.go(); //Activate wash
+                                lastClickedColor = i*5+j;
+                          } 
+                          g.rect(50*i, 30+50+a*40, 40, 30, 5); //Draw color rect
                         }
-                        stroke(0); //This is in weird place, because it was the first good place I found quickly
-                        if(!washs[activeColorNames[i*5+j]].isReady()) { strokeWeight(4); } //Show if wash is active
-                        if(mouse.isCaptured("cWB:color"+str(i*5+j)) && mouse.firstCaptureFrame) { 
-                          strokeWeight(3); //Bolded stroke
-                          boolean found = false;            
-                              washs[activeColorNames[i*5+j]].setColor(colorNames[activeColorNames[i*5+j]].name); //Set new color to wash
-                              if(washs[activeColorNames[i*5+j]].isReady()) {
-                                washs[activeColorNames[i*5+j]].go(); //Activate wash
-                              }
-                              else {
-                                washs[activeColorNames[i*5+j]].clear(); //Clear wash
-                              }
-                        } 
-                        rect(50*i, 30+50+a*40, 40, 30, 5); //Draw color rect
                       }
                     }
+                    a = 0;
                   }
-                  a = 0;
-                }
-           }
-              
-          popMatrix();
-      popStyle();
-    popMatrix();
-  } //End of if(colorWashMenuOpen)
-} //End of color wash selection box
+             } 
+             
+             g.popMatrix();
+                
+            
+        g.popStyle();
+     g.popMatrix();
+  } //End of color wash selection box
+}
 
 void clearAllTheWashes() {
   //Check allways that we are not trying to call null elements to avoid nullPointers
@@ -279,7 +292,7 @@ class colorWash {
     colors[0] = h;
     colors[1] = s;
     colors[2] = b;
-    setRgbwd(convertColor(colors, 2, 4));
+    setRgbwd(colorConverter.convertColor(colors, 2, 4));
   }
   
   colorWash(int r, int g, int b) {
@@ -499,236 +512,249 @@ class colorName {
     colorMode = 3;
   }
   
+  boolean convertedToRGB = false;
+  
+  color rgb = color(0, 0, 0);
+  
   color getRGB() {
-    color c = color(0, 0, 0);
-    if(colorMode == 3) {
-      int[] rgb = new int[3];
-      arrayCopy(convertColor(toArray(red, green, blue, white), 3, 1), rgb);
-      c = color(rgb[0], rgb[1], rgb[2]);
+    if(!convertedToRGB) {
+      if(colorMode == 3) {
+        if(white > 0) {
+          int[] rgbVals = new int[3];
+          arrayCopy(colorConverter.convertColor(toArray(red, green, blue, white), 3, 1), rgbVals);
+          rgb = color(rgbVals[0], rgbVals[1], rgbVals[2]);
+        }
+        else {
+          rgb = color(red, green, blue);
+        }
+      }
+      if(colorMode == 1) {
+        rgb = color(red, green, blue);
+      }
+      convertedToRGB = true;
     }
-    if(colorMode == 1) {
-      c = color(red, green, blue);
-    }
-    return c;
+    return rgb;
   }
   
   
 }
 
-int[] convertColor(int[] original, int from, int to) {
-  //original array: { r, g, b, w, d } or { h, s, b } or
-  //from & to: 1 = rgb, 2 = hsb, 3 = rgbw, 4 = rgbwd, 5 = rgbd
-  int[] toReturn = { 0, 0, 0 };
-  pushStyle(); //we use colorModes in this function so make sure they don't affect to other parts of the software
-      if(from == 1) { //rgb
-        pushStyle();
-          colorMode(RGB);
-            if(to == 1) { //rgb
-              toReturn = new int[3];
-              arrayCopy(original, toReturn);
-            }
-            if(to == 2) { //hsb
-              toReturn = new int[3];
-              color c = color(original[0], original[1], original[2]);
-              toReturn[0] = round(hue(c));
-              toReturn[1] = round(saturation(c));
-              toReturn[2] = round(brightness(c));
-            }
-            else if(to == 3) { //rgbw
-              color c = color(original[0], original[1], original[2]);
-              toReturn = new int[4]; 
-              toReturn[0] = original[0];
-              toReturn[1] = original[1];
-              toReturn[2] = original[2];
-              toReturn[3] = (original[0] + original[1] + original[2]) / 3;
-            }
-            else if(to == 4) { //rgbwd
-              color c = color(original[0], original[1], original[2]);
-              toReturn = new int[4];
-              toReturn[0] = original[0];
-              toReturn[1] = original[1];
-              toReturn[2] = original[2];
-              toReturn[3] = (original[0] + original[1] + original[2]) / 3;
-              toReturn[4] = 255;
-            }
-            else if(to == 5) { //rgbd
-              color c = color(original[0], original[1], original[2]);
-              toReturn = new int[4];
-              toReturn[0] = original[0];
-              toReturn[1] = original[1];
-              toReturn[2] = original[2];
-              toReturn[3] = 255;
-            }
-            else if(to == 6) { //cmyk
-              color c = color(original[0], original[1], original[2]);
-              CMYK_Colour cmyk = new CMYK_Colour(c);
-              toReturn = new int[4];
-              toReturn[0] = round(cmyk.cyan);
-              toReturn[1] = round(cmyk.magenta);
-              toReturn[2] = round(cmyk.yellow);
-              toReturn[3] = round(cmyk.black);
-            }
-          popStyle();
-      }
-      else if(from == 2) { //hsb
-        pushStyle();
-          colorMode(HSB);
-            if(to == 1) { //rgb
-              color c = color(original[0], original[1], original[2]);
-              toReturn = new int[3];
-              toReturn[0] = round(red(c));
-              toReturn[1] = round(green(c));
-              toReturn[2] = round(blue(c));
-            }
-            else if(to == 2) { //hsb
-              toReturn = new int[3];
-              arrayCopy(original, toReturn);
-            }
-            else if(to == 3) { //rgbw
-              toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 2, 1), 1, 3), toReturn);
-            }
-            else if(to == 4) { //rgbwd
-              toReturn = new int[5];
-              arrayCopy(convertColor(convertColor(original, 2, 1), 1, 4), toReturn);
-            }
-            else if(to == 5) { //rgbd
-              toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 2, 1), 1, 5), toReturn);
-            }
-            else if(to == 6) { //cmyk
-              toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 2, 1), 1, 6), toReturn);
-            }
-        popStyle();
-      }
-      else if(from == 3) { //rgbw
-        pushStyle();
-          colorMode(RGB);
-            if(to == 1) { //rgb
-              color c = color(original[0], original[1], original[2]);
-              int white = original[3];
-              toReturn = new int[3];
-              toReturn[0] = round(red(c) + white/2);
-              toReturn[1] = round(green(c) + white/2); 
-              toReturn[2] = round(blue(c) + white/2); 
-            }
-            else if(to == 2) { //hsb
-              toReturn = new int[3];
-              arrayCopy(convertColor(convertColor(original, 3, 1), 1, 2), toReturn);
-            }
-            else if(to == 3) { //rgbw
-              toReturn = new int[4];
-              arrayCopy(original, toReturn);
-            }
-            else if(to == 4) { //rgbwd
-              toReturn = new int[5];
-              arrayCopy(original, toReturn); //rgbw values
-              toReturn[4] = 255; //dimmer
-            }
-            else if(to == 5) {
-              toReturn = new int[4];
-              arrayCopy(convertColor(original, 3, 1), toReturn); //rgb values
-              toReturn[3] = 255; //dimmer
-            }
-            else if(to == 6) { //cmyk
-              toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 3, 1), 1, 6), toReturn);
-            }
-        popStyle();
-      }
-      else if(from == 4) { //rgbwd
-        pushStyle();
-          colorMode(RGB);
-          color c = color(original[0], original[1], original[2]);
-          int dim = original[4];
-          int white = original[3];
-          if(to == 1) { //rgb
-            toReturn = new int[3];
-            arrayCopy(convertColor(original, 3, 1), toReturn);
-            color co = color(toReturn[0], toReturn[1], toReturn[2]);
-            toReturn[0] = rMap(round(red(co)), 0, 255, 0, dim); 
-            toReturn[1] = rMap(round(green(co)), 0, 255, 0, dim);
-            toReturn[2] = rMap(round(blue(co)), 0, 255, 0, dim);
-            
-          }
-          else if(to == 2) { //hsb
-            toReturn = new int[3];
-            toReturn[0] = round(hue(c));
-            toReturn[1] = round((saturation(c) + getInvertedValue(white, 0, 255)) / 2);
-            toReturn[2] = round((brightness(c)*2 + white) / 3);
-          }
-          else if(to == 3) { //rgbw
-            toReturn = new int[4];
-            toReturn[0] = rMap(round(red(c)), 0, 255, 0, dim);
-            toReturn[1] = rMap(round(green(c)), 0, 255, 0, dim);
-            toReturn[2] = rMap(round(blue(c)), 0, 255, 0, dim);
-            toReturn[3] = rMap(white, 0, 255, 0, dim);
-          }
-          else if(to == 4) { //rgbwd
-            toReturn = new int[5];
-            arrayCopy(original, toReturn);
-          }
-          else if(to == 5) { //rgbd
-            toReturn = new int[4];
-            arrayCopy(convertColor(original, 4, 1), toReturn);
-            toReturn[3] = original[4];
-          }
-          else if(to == 6) { //cmyk
-              toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 4, 1), 1, 6), toReturn);
-            }
-          
-        popStyle();
-      }
-      else if(from == 5) { //rgbd
-        pushStyle();
-          colorMode(RGB);
+
+ColorConverter colorConverter = new ColorConverter();
+
+class ColorConverter {
+  ColorConverter() {
+  }
+  int[] convertColor(int[] original, int from, int to) {
+    //original array: { r, g, b, w, d } or { h, s, b }
+    //from & to: 1 = rgb, 2 = hsb, 3 = rgbw, 4 = rgbwd, 5 = rgbd
+    int[] toReturn = { 0, 0, 0 };
+        if(from == 1) { //rgb
+            colorMode(RGB);
+              if(to == 1) { //rgb
+                toReturn = new int[3];
+                arrayCopy(original, toReturn);
+              }
+              if(to == 2) { //hsb
+                toReturn = new int[3];
+                color c = color(original[0], original[1], original[2]);
+                toReturn[0] = round(hue(c));
+                toReturn[1] = round(saturation(c));
+                toReturn[2] = round(brightness(c));
+              }
+              else if(to == 3) { //rgbw
+                color c = color(original[0], original[1], original[2]);
+                toReturn = new int[4]; 
+                toReturn[0] = original[0];
+                toReturn[1] = original[1];
+                toReturn[2] = original[2];
+                toReturn[3] = (original[0] + original[1] + original[2]) / 3;
+              }
+              else if(to == 4) { //rgbwd
+                color c = color(original[0], original[1], original[2]);
+                toReturn = new int[4];
+                toReturn[0] = original[0];
+                toReturn[1] = original[1];
+                toReturn[2] = original[2];
+                toReturn[3] = (original[0] + original[1] + original[2]) / 3;
+                toReturn[4] = 255;
+              }
+              else if(to == 5) { //rgbd
+                color c = color(original[0], original[1], original[2]);
+                toReturn = new int[4];
+                toReturn[0] = original[0];
+                toReturn[1] = original[1];
+                toReturn[2] = original[2];
+                toReturn[3] = 255;
+              }
+              else if(to == 6) { //cmyk
+                color c = color(original[0], original[1], original[2]);
+                CMYK_Colour cmyk = new CMYK_Colour(c);
+                toReturn = new int[4];
+                toReturn[0] = round(cmyk.cyan);
+                toReturn[1] = round(cmyk.magenta);
+                toReturn[2] = round(cmyk.yellow);
+                toReturn[3] = round(cmyk.black);
+              }
+        }
+        else if(from == 2) { //hsb
+            colorMode(HSB);
+              if(to == 1) { //rgb
+                color c = color(original[0], original[1], original[2]);
+                toReturn = new int[3];
+                toReturn[0] = round(red(c));
+                toReturn[1] = round(green(c));
+                toReturn[2] = round(blue(c));
+              }
+              else if(to == 2) { //hsb
+                toReturn = new int[3];
+                arrayCopy(original, toReturn);
+              }
+              else if(to == 3) { //rgbw
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 2, 1), 1, 3), toReturn);
+              }
+              else if(to == 4) { //rgbwd
+                toReturn = new int[5];
+                arrayCopy(convertColor(convertColor(original, 2, 1), 1, 4), toReturn);
+              }
+              else if(to == 5) { //rgbd
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 2, 1), 1, 5), toReturn);
+              }
+              else if(to == 6) { //cmyk
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 2, 1), 1, 6), toReturn);
+              }
+           colorMode(RGB);
+        }
+        else if(from == 3) { //rgbw
+            colorMode(RGB);
+              if(to == 1) { //rgb
+                color c = color(original[0], original[1], original[2]);
+                int white = original[3];
+                toReturn = new int[3];
+                toReturn[0] = round(red(c) + white/1.5);
+                toReturn[1] = round(green(c) + white/1.5); 
+                toReturn[2] = round(blue(c) + white/1.5); 
+                
+                toReturn[0] = round(map(toReturn[0], 0, max(toReturn), 0, max(original)));
+                toReturn[1] = round(map(toReturn[1], 0, max(toReturn), 0, max(original)));
+                toReturn[2] = round(map(toReturn[2], 0, max(toReturn), 0, max(original)));
+              }
+              else if(to == 2) { //hsb
+                toReturn = new int[3];
+                arrayCopy(convertColor(convertColor(original, 3, 1), 1, 2), toReturn);
+              }
+              else if(to == 3) { //rgbw
+                toReturn = new int[4];
+                arrayCopy(original, toReturn);
+              }
+              else if(to == 4) { //rgbwd
+                toReturn = new int[5];
+                arrayCopy(original, toReturn); //rgbw values
+                toReturn[4] = 255; //dimmer
+              }
+              else if(to == 5) {
+                toReturn = new int[4];
+                arrayCopy(convertColor(original, 3, 1), toReturn); //rgb values
+                toReturn[3] = 255; //dimmer
+              }
+              else if(to == 6) { //cmyk
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 3, 1), 1, 6), toReturn);
+              }
+        }
+        else if(from == 4) { //rgbwd
+            colorMode(RGB);
             color c = color(original[0], original[1], original[2]);
-            int dim = original[3];
+            int dim = original[4];
+            int white = original[3];
             if(to == 1) { //rgb
-              //When we conver RGBD to RGB we only have to map all the RGB values with dim value
               toReturn = new int[3];
+              arrayCopy(convertColor(original, 3, 1), toReturn);
+              color co = color(toReturn[0], toReturn[1], toReturn[2]);
+              toReturn[0] = rMap(round(red(co)), 0, 255, 0, dim); 
+              toReturn[1] = rMap(round(green(co)), 0, 255, 0, dim);
+              toReturn[2] = rMap(round(blue(co)), 0, 255, 0, dim);
+              
+            }
+            else if(to == 2) { //hsb
+              toReturn = new int[3];
+              toReturn[0] = round(hue(c));
+              toReturn[1] = round((saturation(c) + getInvertedValue(white, 0, 255)) / 2);
+              toReturn[2] = round((brightness(c)*2 + white) / 3);
+            }
+            else if(to == 3) { //rgbw
+              toReturn = new int[4];
               toReturn[0] = rMap(round(red(c)), 0, 255, 0, dim);
               toReturn[1] = rMap(round(green(c)), 0, 255, 0, dim);
               toReturn[2] = rMap(round(blue(c)), 0, 255, 0, dim);
-            }
-            else if(to == 2) { //hsb
-              //When converting RGBD to HSB we have to take HSB values with hue(), saturation() and brightness functions
-              //We also have to take account of dim value
-              toReturn = new int[3];
-              toReturn[0] = round(hue(c));
-              toReturn[1] = round(saturation(c));
-              toReturn[2] = round(min(brightness(c), dim));
-            }
-            else if(to == 3) { //rgbw
-              //When converting RGBD to RGBW we will first convert the RGB part to RGBW and then map all the values with dim
-              toReturn = new int[4];
-              arrayCopy(convertColor(original, 1, 3), toReturn);
-              for(int i = 0; i < toReturn.length; i++) {
-                toReturn[i] = rMap(toReturn[i], 0, 255, 0, dim);
-              }
+              toReturn[3] = rMap(white, 0, 255, 0, dim);
             }
             else if(to == 4) { //rgbwd
-              //When converting rgbd to rgbwd we will convert only RGB part to RGBW and then add dim to end
               toReturn = new int[5];
-              arrayCopy(convertColor(original, 1, 3), toReturn);
-              toReturn[4] = dim;
-            }
-            else if(to == 5) { //rgbd
-              //RGBD to RGBD doesn't need any convertion so we can copy the original array to return array
-              toReturn = new int[4];
               arrayCopy(original, toReturn);
             }
-            else if(to == 6) { //cmyk
+            else if(to == 5) { //rgbd
               toReturn = new int[4];
-              arrayCopy(convertColor(convertColor(original, 5, 1), 1, 6), toReturn);
+              arrayCopy(convertColor(original, 4, 1), toReturn);
+              toReturn[3] = original[4];
             }
-        popStyle(); 
-      }
-  popStyle();
-  return toReturn;
-}
+            else if(to == 6) { //cmyk
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 4, 1), 1, 6), toReturn);
+              }
+            
+        }
+        else if(from == 5) { //rgbd
+            colorMode(RGB);
+              color c = color(original[0], original[1], original[2]);
+              int dim = original[3];
+              if(to == 1) { //rgb
+                //When we conver RGBD to RGB we only have to map all the RGB values with dim value
+                toReturn = new int[3];
+                toReturn[0] = rMap(round(red(c)), 0, 255, 0, dim);
+                toReturn[1] = rMap(round(green(c)), 0, 255, 0, dim);
+                toReturn[2] = rMap(round(blue(c)), 0, 255, 0, dim);
+              }
+              else if(to == 2) { //hsb
+                //When converting RGBD to HSB we have to take HSB values with hue(), saturation() and brightness functions
+                //We also have to take account of dim value
+                toReturn = new int[3];
+                toReturn[0] = round(hue(c));
+                toReturn[1] = round(saturation(c));
+                toReturn[2] = round(min(brightness(c), dim));
+              }
+              else if(to == 3) { //rgbw
+                //When converting RGBD to RGBW we will first convert the RGB part to RGBW and then map all the values with dim
+                toReturn = new int[4];
+                arrayCopy(convertColor(original, 1, 3), toReturn);
+                for(int i = 0; i < toReturn.length; i++) {
+                  toReturn[i] = rMap(toReturn[i], 0, 255, 0, dim);
+                }
+              }
+              else if(to == 4) { //rgbwd
+                //When converting rgbd to rgbwd we will convert only RGB part to RGBW and then add dim to end
+                toReturn = new int[5];
+                arrayCopy(convertColor(original, 1, 3), toReturn);
+                toReturn[4] = dim;
+              }
+              else if(to == 5) { //rgbd
+                //RGBD to RGBD doesn't need any convertion so we can copy the original array to return array
+                toReturn = new int[4];
+                arrayCopy(original, toReturn);
+              }
+              else if(to == 6) { //cmyk
+                toReturn = new int[4];
+                arrayCopy(convertColor(convertColor(original, 5, 1), 1, 6), toReturn);
+              }
+        }
+    return toReturn;
+  }
+} //End of class ColorConverter
+
+
 
 
 //Got from https://processing.org/discourse/beta/num_1228243376.html

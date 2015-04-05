@@ -1,74 +1,3 @@
-boolean initSettingsInSetupDone = false; 
-int initSettingsInSetupStep;
-int initSettingsInSetupSelected;
-
-
-
-
-void initSettingsInSetup() {
-  if(!initSettingsInSetupDone) {
-    initSettingsInSetupDone = true; 
-    useEnttec = false;
-    useCOM = false;
-    background(0);
-    fill(255);
-    textSize(15);
-    if(initSettingsInSetupStep == 0 || initSettingsInSetupStep == 1) {
-      if(initSettingsInSetupStep == 0) {
-        text("Select COM port for enttec", 10, 20);
-      }
-      else if(initSettingsInSetupStep == 1) {
-        text("Select COM port for Arduino", 10, 20);
-      }
-      if(scrolledUp) { initSettingsInSetupSelected++; scrolledUp = false; }
-      if(scrolledDown) { initSettingsInSetupSelected--; scrolledDown = false; }
-      for(int i = 0; i < getSerialList().length; i++) {
-        if(initSettingsInSetupSelected == i) { fill(255, 0, 0); }
-        text(getSerialList()[i], 10, i*20+50);
-        if(initSettingsInSetupSelected == i) { fill(255); }
-      }
-      if(enterPressed) {
-        if(initSettingsInSetupStep == 0) {
-          useEnttec = true;
-          enttecIndex = initSettingsInSetupSelected;
-          initSettingsInSetupStep++;
-        }
-        else if(initSettingsInSetupStep == 1) {
-          useCOM = true;
-          arduinoIndex = initSettingsInSetupSelected;
-          initSettingsInSetupDone = true;
-          if(useEnttec) {
-            myPort = new Serial(this, Serial.list()[enttecIndex], 115000);
-          }
-          if(useCOM) {
-            try {
-              arduinoPort = new Serial(this, Serial.list()[arduinoIndex], arduinoBaud);
-            }
-            catch(Exception e) {
-              println("ERROR WITH DMX OUTPUT");
-              useCOM = false;
-            }
-          }
-        }
-        enterPressed = false;
-      }
-      if(rightPressed) {
-        initSettingsInSetupStep++;
-        rightPressed = false;
-      }
-      if(leftPressed) {
-        initSettingsInSetupStep--;
-        leftPressed = false;
-      }
-    }
-  }
-}
-
-String[] getSerialList() {
-  return Serial.list();
-}
-
-
 
 
 ////////////////////////////////////////SETTINGS//GUI///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,52 +11,71 @@ class SettingsWindow {
   SettingsWindow() {
     onInit();
   }
-  
+  Window settingsWindowWindow;
   SettingsWindow(boolean open) {
     this.open = open;
     onInit();
+    settingsWindowWindow = new Window("settings", new PVector(500, 500), this);
   }
   
   //Create and configure all tabs & controllers
   void onInit() {
-    tabs = new SettingsTab[5];
-    tabs[0] = new SettingsTab("Other windows", this);
-    tabs[0].setControllers(
+    int id = 0;
+    tabs = new SettingsTab[6];
+    tabs[id] = new SettingsTab("Other windows", this);
+    tabs[id].setControllers(
       new SettingController[] {
-        new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", tabs[0]),
-        new SettingController(1, "Use text window", "This window is handy for debug purposes.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int1", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int2", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int3", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int4", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int5", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int6", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int7", "This is just a test controller to see how the int controller will work.", tabs[0]),
-        new SettingController(0, 0, 0, "Test Int8", "This is just a test controller to see how the int controller will work.", tabs[0])
+        new SettingController(0, "Use 3D window", "The 3D window visualizes fixtures in a 3D space.", true, tabs[id]),
+        new SettingController(1, "Use text window", "This window is handy for debug purposes.", true, tabs[id]),
+        new SettingController(10, "Show sockets", "If you want to edit socket places use this", true, tabs[id])
       }
     );
-    tabs[1] = new SettingsTab("Visualization", this);
-    tabs[1].setControllers(
+    id++;
+    tabs[id] = new SettingsTab("Visualization", this);
+    tabs[id].setControllers(
       new SettingController[] {
-        new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", tabs[1]),
-        new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", tabs[1]),
-        new SettingController(3, 2, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[1]),
-        new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[1])
+        new SettingController(2, "ShowMode", "When showMode is enabled, many features not intended for performace are disabled. Shortcut: (tgl)[M]", true, tabs[id]),
+        new SettingController(3, "PrintMode", "Show the visualizer with a white background useful for printing. (NOTICE! Press ESC to exit printMode)", true, tabs[id]),
+        new SettingController(3, 2, 0, "View Rotation", "Adjust the rotation of the visualization.", tabs[id]),
+        new SettingController(4, 0, 100, "Zoom", "Adjust the zoom of the visualization. You can also adjust it using the scroll wheel.", tabs[id]),
+        new SettingController(5, "Lock showMode", "Make sure that showMode isn't turned off accidentally", true, tabs[id]),
+        new SettingController(15, "Rotate fixtures to same point", "Rotate all the fixtures to same point", true, tabs[id])
       }
     );
-    tabs[2] = new SettingsTab("Chase", this);
-    tabs[2].setControllers(
+    id++;
+    tabs[id] = new SettingsTab("SpeedUp", this);
+    tabs[id].setControllers(
       new SettingController[] {
-        new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", tabs[2])
+        new SettingController(23, "Show bottom menu", "Show bottom menu. Takes about 10 fps off...", true, tabs[id]),
+        new SettingController(24, "Show left buttons", "Show left buttons.", true, tabs[id]),
+        new SettingController(26, "Adjust visualisation speed", "Enable this if you wanted to adjust visualisation speed manually", true, tabs[id]),
+        new SettingController(25, 0, 60, "Visualisation speed", "Adjust speed of visualisation. Smaller speed --> faster dmx processing", tabs[id])
+        
+        
       }
     );
-    tabs[3] = new SettingsTab("COM", this);
-    tabs[4] = new SettingsTab("OSC", this);
-    tabs[4].setControllers(
+    id++;
+    tabs[id] = new SettingsTab("Chase", this);
+    tabs[id].setControllers(
       new SettingController[] {
-        new SettingController("Text here", "Test IP", "This is a test text.", tabs[4]),
-        new SettingController("Text here", "Test IP", "This is a test text.", tabs[4])
+        new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", true, tabs[id])
+      }
+    );
+    id++;
+    tabs[id] = new SettingsTab("More", this);
+    tabs[id].setControllers(
+      new SettingController[] {
+        new SettingController(101, "OSC", "Open OSC settings window by clicking the button", false, tabs[id]),
+        new SettingController(102, "Midi", "Open MIDI settings window by clicking the button", false, tabs[id]),
+        new SettingController(103, "Enttec", "Open Enttec output settings window by clicking the button", false, tabs[id])
+      }
+    );
+    id++;
+    tabs[id] = new SettingsTab("Files", this);
+    tabs[id].setControllers(
+      new SettingController[] {
+        new SettingController(201, "Load Fast", "Load data really fast, but not so safely", true, tabs[id]),
+        new SettingController(202, "Load Safe", "Load data slowly, but really safely", true, tabs[id]),
       }
     );
   }
@@ -138,11 +86,19 @@ class SettingsWindow {
   //It's stupid we do it like this, but primitives.
   void setExternalBoValue(boolean b, int var) {
     switch(var) {
-      case 0: use3D = b;               break;
-      case 1: showOutputAsNumbers = b; break;
-      case 2: showMode = b;            break;
-      case 3: printMode = b;           break;
-      case 4: s2l.blinky = b;          break;
+      case 0: use3D = b;                       break;
+      case 1: showOutputAsNumbers = b;         break;
+      case 2: showMode = b || showModeLocked;  break;
+      case 3: printMode = b;                   break;
+      case 4: s2l.blinky = b;                  break;
+      case 5: showModeLocked = b;              break;
+      case 10: showSockets = b;                break;
+      case 15: rotateFixturesToSamePoint = b;  break;
+      case 201: loadFast = b; loadSafe = !b;   break;
+      case 202: loadSafe = b; loadFast = !b;   break;
+      case 23: showOldBottomMeu = b;           break;
+      case 24: showLeftButtons = b;            break;
+      case 26: speedDownVisualisation = b;     break;
     }
   }
   
@@ -153,6 +109,14 @@ class SettingsWindow {
       case 2:  return showMode;
       case 3:  return printMode;
       case 4:  return s2l.blinky;
+      case 5:  return showModeLocked;
+      case 10: return showSockets;
+      case 15: return rotateFixturesToSamePoint;
+      case 201: return loadFast;
+      case 202: return loadSafe;
+      case 23: return showOldBottomMeu;
+      case 24: return showLeftButtons;
+      case 26: return speedDownVisualisation;
       default: return false;
     }
   }
@@ -165,6 +129,7 @@ class SettingsWindow {
       case 2: /*defaultY*/      break;
       case 3: pageRotation = v; break;
       case 4: zoom = v;         break;
+      case 25: visualisationSpeed = v; break;
     }
   }
   
@@ -175,7 +140,16 @@ class SettingsWindow {
       //case 2: return ;
       case 3:  return pageRotation;
       case 4:  return int(zoom);
+      case 25: return visualisationSpeed;
       default: return 0;
+    }
+  }
+  
+  void pushButtonPressed(int var) {
+    switch(var) {
+      case 101: oscSettings.locX = locX; oscSettings.locY = locY; oscSettings.open = !oscSettings.open; settingsWindow.open = false; break;
+      case 102: midiWindow.locX = locX; midiWindow.locY = locY; midiWindow.open = !midiWindow.open; settingsWindow.open = false; break;
+      case 103: enttecOutputSettingsWindow.locX = locX; enttecOutputSettingsWindow.locY = locY; enttecOutputSettingsWindow.open = !enttecOutputSettingsWindow.open; settingsWindow.open = false; break;
     }
   }
   
@@ -194,6 +168,7 @@ class SettingsWindow {
   
   //The total width and height of the window (can be un-finalized, but you should only be change it on init)
   final int size = 500;
+  final int w = 500, h = 500;
   
   //Currently selected tab
   int selectedTab = 0;
@@ -205,39 +180,9 @@ class SettingsWindow {
       g.pushStyle();
       { // frame & frame controls
         if(translate) g.translate(locX, locY);
-        g.fill(255, 230);
-        g.stroke(150);
-        g.strokeWeight(3);
         
-        //Box itself
-        g.rect(0, 0, size, size, 20);
-        mouse.declareUpdateElementRelative("settings", 1, 0, 0, size, size, g);
-        mouse.setElementExpire("settings", 2);
-        
-        //Grabable location button
-        g.fill(180);
-        g.noStroke();
-        g.rect(10, 10, 20, 20, 20, 0, 0, 4);
-        mouse.declareUpdateElementRelative("settings:move", "settings", 10, 10, 20, 20, g);
-        mouse.setElementExpire("settings:move", 2);
-        if(mouse.isCaptured("settings:move")) {
-          locY = constrain(mouseY - pmouseY + locY, 40, height - (size+40));
-          locX = constrain(mouseX - pmouseX + locX, 40, width - (size + 20 + 168));
-        }
-        
-        g.textSize(12);
-        
-        //Close button 
-        mouse.declareUpdateElementRelative("settings:close", "settings", 30, 10, 50, 20, g);
-        mouse.setElementExpire("settings:close", 2);
-        boolean cancelHover = mouse.elmIsHover("settings:close");
-        g.fill(cancelHover ? 220 : 180, 30, 30);
-        //Close if close is pressed
-        if(mouse.isCaptured("settings:close")) open = false;
-        g.rect(30, 10, 50, 20, 0, 4, 4, 0);
-        g.fill(230);
-        g.textAlign(CENTER);
-        g.text("Close", 55, 24);
+
+        settingsWindowWindow.draw(g, mouse);
         
         //Window title text
         g.fill(0, 220);
@@ -274,6 +219,7 @@ class SettingsTab {
   //A container for multiple settings
   
   SettingController[] controllers;
+ 
   
   SettingsWindow parentWindow;
   
@@ -408,6 +354,8 @@ class SettingController {
   Switch booleanController;
   IntSettingController intController;
   StringSettingController strController;
+  TextBox textBox;
+  PushButton pushButton;
   
   boolean oldValueBoolean;
   int oldValueInt;
@@ -433,22 +381,35 @@ class SettingController {
     parentTab = parent;
   }
   //boolean
-  SettingController(int var, String name, String description, SettingsTab parent) {
-    mode = 0;
-    booleanController = new Switch(false, "settings:" + parent.text + ":" + name, "settings", parent.width_-42, 8);
-    this.name = name;
-    this.description = description;
-    this.var = var;
-    parentTab = parent;
+  SettingController(int var, String name, String description, boolean toggle, SettingsTab parent) {
+    if(toggle) {
+      mode = 0;
+      booleanController = new Switch(false, "settings:" + parent.text + ":" + name, "settings", parent.width_-42, 8);
+      this.name = name;
+      this.description = description;
+      this.var = var;
+      parentTab = parent;
+    }
+    else {
+      mode = 5;
+      pushButton = new PushButton("settings:" + parent.text + ":" + name + str(var), new PVector(40, 40));
+      
+      this.name = name;
+      this.description = description;
+      this.var = var;
+      parentTab = parent;
+    }
   }
   
   //STRING -- directly controls an object
-  SettingController(String CONTROLLED_OBJECT, String name, String description, SettingsTab parent) {
-    mode = 4;
+  SettingController(int var, String CONTROLLED_OBJECT, String name, String description, SettingsTab parent) {
+    mode = 6;
     strController = new StringSettingController(CONTROLLED_OBJECT, parent.width_-306, 8, this);
     this.name = name;
     this.description = description;
     parentTab = parent;
+    textBox = new TextBox(CONTROLLED_OBJECT, 1);
+    this.var = var;
     
   }
   
@@ -491,9 +452,25 @@ class SettingController {
           oldValueInt = intController.state;
         }
       break;
-      case 4:
-        drawText(0, 0, buffer);
-        strController.drawToBuffer(buffer, mouse);
+//      case 4:
+//        drawText(0, 0, buffer);
+//        strController.drawToBuffer(buffer, mouse);
+//      break;+++
+      case 6:
+        buffer.translate(0, 80);
+        String mouseObjectName = "SettingsTextBoxController"+str(var);
+        mouse.declareUpdateElementRelative(mouseObjectName, 100000, 0, 0, 240, 40, buffer);
+        mouse.setElementExpire(mouseObjectName, 2);
+        textBox.drawToBuffer(buffer, mouse, mouseObjectName);
+      break;
+      case 5:
+        buffer.pushMatrix();
+          drawText(0, 0, buffer);
+          buffer.translate(parentTab.width_-42, 8);
+          if(pushButton.isPressed(buffer, g, mouse)) {
+            parentTab.parentWindow.pushButtonPressed(var);
+          }
+        buffer.popMatrix();
       break;
     }
   }
@@ -559,8 +536,8 @@ class IntSettingController {
         case 0:
           //Numberbox
           //Background
-          b.fill(45, 138, 179);
-          b.stroke(20, 100, 130);
+          b.fill(themes.intControllerColor.neutral);
+          b.stroke(multiplyColor(themes.intControllerColor.neutral, 0.7));
           g.pushMatrix(); pushMatrix();
             g.translate(b.screenX(0, 0), b.screenY(0, 0));
             translate(g.screenX(0, 0), g.screenY(0, 0));
@@ -597,15 +574,15 @@ class IntSettingController {
             }
           g.popMatrix(); popMatrix();
           
-          b.fill(topMenuTheme2);
-          b.stroke(topMenuAccent);
+          b.fill(themes.knobOutsideColor.neutral);
+          b.stroke(multiplyColor(themes.knobOutsideColor.neutral, 0.7));
           b.strokeWeight(1.5);
           //Radial visualizer
           b.arc(0, 0, 50, 50, -HALF_PI, (floatState/360*TWO_PI) - HALF_PI, PIE);
           
           //Text container
-          b.fill(45, 138, 179);
-          b.stroke(20, 100, 130);
+          b.fill(themes.knobColor.neutral);
+          b.stroke(multiplyColor(themes.knobColor.neutral, 0.7));
           b.ellipse(0, 0, 30, 30);
           
           

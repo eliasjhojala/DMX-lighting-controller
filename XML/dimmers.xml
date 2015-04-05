@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dimmers>
+  <Dimmer numberOfChannels="6" phases="3" powerSocketId="1" startChannel="1"/>
+  <Dimmer numberOfChannels="6" phases="3" powerSocketId="2" startChannel="7"/>
+  <Dimmer numberOfChannels="6" phases="3" powerSocketId="3" startChannel="13"/>
+  <Dimmer numberOfChannels="6" phases="3" powerSocketId="1" startChannel="19"/>
+</dimmers>

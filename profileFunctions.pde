@@ -16,6 +16,14 @@ int[] getFixtureSizeByType(int type) {
   
 }
 
+int[] getFixtureSizeById(int id) {
+  return getFixtureSizeByType(fixtures.get(id).fixtureTypeId);
+}
+
+boolean fixtureIsDrawnById(int id) {
+  return boolean(getFixtureSizeById(id)[2]);
+}
+
 int[] getFixtureSize(int id) {
   return getFixtureSizeByType(fixtures.get(id).fixtureTypeId);
 }
@@ -34,6 +42,20 @@ String getFixtureNameByType(int type) {
   String toReturn = "";
   if(fixtureProfiles[constrain(type, 0, fixtureProfiles.length-1)] != null) {
     toReturn = fixtureProfiles[constrain(type, 0, fixtureProfiles.length-1)].fixtureName;
+  }
+  return toReturn;
+}
+
+String getFixtureLongNameByType(int type) {
+  String toReturn = "";
+  if(type >= 0 && type < fixtureProfiles.length) if(fixtureProfiles[type] != null) {
+    FixtureProfile profile = fixtureProfiles[type];
+    if(!profile.fixtureLongName.equals("")) {
+      toReturn = profile.fixtureLongName;
+    }
+    else {
+      toReturn  = profile.fixtureName;
+    }
   }
   return toReturn;
 }
@@ -57,6 +79,8 @@ int getFixtureTypeId1(String fixtureType) {
 String getFixtureName(int id) {
   return getFixtureNameByType(fixtures.get(id).fixtureTypeId);
 }
+
+
 
 int universalDMXlength = 28+1;
 
@@ -98,3 +122,10 @@ fixtureSize toFixtureSize(int w, int h) {
   return fS;
 }
 
+PShape getFixtureModelByType(int type) {
+  return fixtureProfiles[type].getModel();
+}
+
+PShape getFixtureModelById(int id) {
+  return getFixtureModelByType(fixtures.get(id).fixtureTypeId);
+}

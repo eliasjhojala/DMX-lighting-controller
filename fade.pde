@@ -12,12 +12,16 @@ class Fade {
     startFade(from, to, preFade, postFade);
   }
   
+  Fade() {
+  }
+  
   void startFade(int from, int to, int pre, int post) {
-    if(to != targetValue) {
+    if(to != from) {
       preFade = pre;
       postFade = post;
       startMillis = millis();
       originalValue = from;
+      actualValue = originalValue;
       targetValue = to;
       complete = false;
     }
@@ -26,10 +30,10 @@ class Fade {
   void countActualValue() {
     if(!complete) {
       int timer = round(millis()-startMillis);
-      if(actualValue < targetValue && actualValue <= 255) {
+      if(actualValue < targetValue && actualValue < 255) {
         actualValue = constrain(iMap(timer, 0, preFade, originalValue, targetValue), originalValue, targetValue);
       } 
-      else if(actualValue > targetValue && actualValue >= 0) {
+      else if(actualValue > targetValue && actualValue > 0) {
         actualValue = constrain(iMap(timer, 0, postFade, originalValue, targetValue), targetValue, originalValue);
       } 
       else {

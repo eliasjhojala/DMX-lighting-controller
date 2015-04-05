@@ -14,7 +14,7 @@ PROFILE CREATION GUI CODER TIPS
 - fixtureProfiles[id] = new FixtureProfile(fixtureName, fixtureLongName, fixtureBrand, channelNames, channelTypes, size);
     
           list of dmx channels:
-_____________________________________________          
+_____________________________________________
 channelName        | channelTypeNumber
 -------------------|-------------------------
 "Dimmer"           | DMX_DIMMER
@@ -49,6 +49,9 @@ channelName        | channelTypeNumber
 */
 
 class FixtureProfile {
+  String modelPath = "par64.obj";
+  PShape model = s1.loadShape(dataPath(modelPath));
+  
   String fixtureName;
   String fixtureLongName;
   String fixtureBrand;
@@ -57,6 +60,15 @@ class FixtureProfile {
   String[] channelNames;
   int[] channelTypes;
   fixtureSize size;
+  
+  boolean isStrobe;
+  boolean isFog;
+  boolean hasDimmer;
+  boolean isHazer;
+  boolean isHalogen;
+  boolean isLed;
+  
+  int watts;
   
   FixtureProfile() {
     String[] empty = { "" };
@@ -92,6 +104,10 @@ class FixtureProfile {
     setBasicData(fN, cN, cT);
   }
   
+  void setWatts(int watts) {
+    this.watts = watts;
+  }
+  
   
   void setBasicData(String fN, String[] cN, int[] cT) {
     fixtureName = fN;
@@ -107,10 +123,29 @@ class FixtureProfile {
     channelNames = cN;
     channelTypes = cT;
     size = s;
+    checkDMXchannels();
   }
   
   void setFixtureNameData(String fln, String fB) {
     fixtureLongName = fln;
     fixtureBrand = fB;
+  }
+  
+  void setModel(String path) {
+    modelPath = path;
+    model = s1.loadShape(dataPath(modelPath));
+  }
+  
+  PShape getModel() {
+    return model;
+  }
+  
+  void checkDMXchannels() {
+    isStrobe = isInArray(channelTypes, DMX_STROBE, DMX_FREQUENCY);
+    isFog = isInArray(channelTypes, DMX_FOG);
+    hasDimmer = isInArray(channelTypes, DMX_DIMMER);
+    isHazer = isInArray(channelTypes, DMX_HAZE);
+    isHalogen = isInArray(channelTypes, DMX_DIMMER) && channelTypes.length == 1;
+    isLed = isInArray(channelTypes, DMX_RED, DMX_GREEN, DMX_BLUE);
   }
 }

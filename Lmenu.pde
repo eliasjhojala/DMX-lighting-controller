@@ -1,44 +1,239 @@
-//Tässä välilehdessä piirretään alavalikko, jossa näkyy mm. fixtuurien nykyiset arvot 
-//Alavalikko toimii nyt hyvin ja fixture(i) voidia voi käyttää missä vain ohjelmassa
-/*Jostain syystä id:n vaihtamisen kanssa on välillä pieniä ongelmia
-se pitäisi selvittää*/
+/*
+In this tab are located
+  - lower menu containing fixture controller boxes
+  - bottomMenuControlBox to control all the channels of fixtures
+  - notifier class: notifications located at the bottom of screen
+*/
+
  
 //Create variables for old mouse locations
 int oldMouseX2;
 int oldMouseY2;
  
 void alavalikko() {
-  //The boolean is set to true on a spot that has been checked. It should not be drawn again.
-  boolean[] drawn = new boolean[bottomMenuOrder.length];
   
-  pushMatrix();
-    translate(0, height-170); //alavalikko is located to bottom of the window
-    int row = 20;
-    int rows = 3;
-    mouse.declareUpdateElement("bottomMenu", "main:move", 65, height-260, (row+1)*65, height-260 + rows*65);
+  if(showOldBottomMeu) {
     
-    for(int i = 0; i < row*rows; i++) {
-      int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
-      drawn[tempIndex] = true;
-      pushMatrix();
-        translate(65*(i%row+1), 65*(i/row));
-        createFixtureBox(tempIndex);
-      popMatrix();
-    }
-  popMatrix();
+    //The boolean is set to true on a spot that has been checked. It should not be drawn again.
+    boolean[] drawn = new boolean[bottomMenuOrder.length];
     
-  if(!mousePressed) { mouseLocked = false; }
-  if(mouse.captured && !mouse.isCaptured("bottomMenu")) { mouseLocked = true; mouseLocker = "external"; }
+    pushMatrix();
+      translate(0, height-170); //alavalikko is located to bottom of the window
+      int row = 20;
+      int rows = 3;
+      mouse.declareUpdateElement("bottomMenu", "main:move", 65, height-260, (row+1)*65, height-260 + rows*65);
+      
+      for(int i = 0; i < row*rows; i++) {
+        int tempIndex = indexOfMinCheck(bottomMenuOrder, drawn);
+        drawn[tempIndex] = true;
+        pushMatrix();
+          translate(65*(i%row+1), 65*(i/row));
+          createFixtureBox(tempIndex);
+        popMatrix();
+      }
+    popMatrix();
+      
+    if(!mousePressed) { mouseLocked = false; }
+    if(mouse.captured && !mouse.isCaptured("bottomMenu")) { mouseLocked = true; mouseLocker = "external"; }
+    
+    drawBottomMenuControlBox();
+    
+  }
   
-  drawBottomMenuControlBox();
+  
   notifier.draw(width-168);
+  
+  
 }
+
+
+LowerMenu lowerMenu = new LowerMenu();
+
+class LowerMenu {
+  LowerMenu() {
+    open = true;
+    locX = 40;
+    locY = 40;
+    w = 500;
+    h = 312;
+  }
+  
+  boolean open;
+  
+  int locX, locY;
+  
+  int w, h;
+  
+  
+  //Total width of all the controllers
+  int controllerStackWidth = 0;
+  //Current scroll status (from 0 to 1)
+  float scrollStatus = 0;
+  //scrollStatus target, used for smooth-scroll
+  float scrollStatusTrg = 0;
+  boolean doSmoothScroll = false;
+  
+  void draw(PGraphics g, Mouse mouse, boolean translate) {
+    if(open) {
+      g.pushMatrix();
+      g.pushStyle();
+      { // frame & frame controls
+        if(translate) g.translate(locX, locY);
+        g.fill(0, 30, 60, 130);
+        g.noStroke();
+        
+        //Box itself
+        g.rect(0, 0, w, h, 20);
+        mouse.declareUpdateElementRelative("LowerMenu", 1, 0, 0, w, h, g);
+        
+        //Grabable location button
+        g.fill(180);
+        g.noStroke();
+        g.rect(10, h-10, 20, -20, 4, 0, 0, 20);
+        mouse.declareUpdateElementRelative("LowerMenu:move", "LowerMenu", 10, h-10, 20, -20, g);
+        if(mouse.isCaptured("LowerMenu:move")) {
+          locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
+          locX = constrain(mouseX - pmouseX + locX, 40, width - w-(20 + 168));
+        }
+        w = constrain(width - 40 - 20 - 168, 1, 1920);
+        
+        //Close button
+        mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, h-10, 30, -20, g);
+        boolean cancelHover = mouse.elmIsHover("LowerMenu:cancel");
+        g.fill(cancelHover ? 160 : 140);
+        //Close if Cancel is pressed
+        if(mouse.isCaptured("LowerMenu:cancel")) open = false;
+        g.rect(30, h-10, 30, -20, 0, 4, 4, 0);
+        g.fill(230);
+        g.textAlign(CENTER);
+        g.text("X", 45, h-16);
+                
+        
+        
+        
+        
+        g.pushMatrix();
+        //if(controllerStackWidth <= h-20) scrollStatus = 0;
+        g.translate(70, h-24.5);
+        g.fill(180, 100); g.noStroke();
+        g.rect(0, 0, w-90, 10, 4);
+        mouse.declareUpdateElementRelative("LowerMenu:scroll", "LowerMenu", 0, 0, w-90, 10, g);
+        if(mouse.isCaptured("LowerMenu:scroll")) {
+          scrollStatus += (mouseX - pmouseX)/(float(w)-90);
+        }
+        if(mouse.elmIsHover("LowerMenu")) {
+          if(scrolledUp)   { scrollStatusTrg += 120/(float(w)-90);
+            doSmoothScroll = true;
+            scrolledUp = false;
+          }
+          if(scrolledDown) { scrollStatusTrg -= 120/(float(w)-90);
+            doSmoothScroll = true;
+            scrolledDown = false;
+          }
+        }
+        if(doSmoothScroll)
+          if(abs(scrollStatusTrg - scrollStatus) > 0.001) scrollStatus += (scrollStatusTrg - scrollStatus) / 3;
+            else doSmoothScroll = false;
+          else scrollStatusTrg = scrollStatus;
+        scrollStatus = constrain(scrollStatus, 0, 1);
+        scrollStatusTrg = constrain(scrollStatusTrg, 0, 1);
+        //if(controllerStackWidth > h-20) {
+          g.translate(scrollStatus * (w-90 - 40), 0);
+          g.fill(180, 180);
+          g.rect(0, 0, 40, 10, 4);
+        //}
+        
+        g.popMatrix();
+        
+      }
+              
+      {
+        g.pushMatrix();
+        g.translate(16, 17);
+        
+        
+        int rows = (h-48) / 88;
+        int cols = w / 88 +3;
+        int colStart = getScrollXOffset() / 88 - 1;
+        g.translate(-getScrollXOffset(), 0);
+        for(int i = colStart; i < colStart+cols; i++) {
+          for(int j = 0; j < rows; j++) {
+            int id = j + rows*i;
+            if(id < fixtures.size() && id >= 0) {
+              g.pushMatrix();
+              int y = j * ((h-48) / rows);
+              g.translate(i*88, y);
+              drawFbox(id, g, mouse);
+              g.popMatrix();
+            } else break;
+          }
+        }
+        controllerStackWidth = fixtures.size() / rows * 88;
+        g.popMatrix();
+      }
+      g.popMatrix();
+      g.popStyle();
+      
+      //Streching -- from bottom
+      mouse.declareUpdateElementRelative("LowerMenu:stretchB", "LowerMenu", 0, h-10, w, 10, g);
+      if(mouse.elmIsHover("LowerMenu:stretchB")) {
+        cursor.set(java.awt.Cursor.N_RESIZE_CURSOR);
+        
+      }
+      if(mouse.isCaptured("LowerMenu:stretchB")) {
+        cursor.set(java.awt.Cursor.N_RESIZE_CURSOR);
+        h -= pmouseY - mouseY;
+        h = constrain(h, 150, height-locY-40);
+      }
+      //Streching -- from top
+      mouse.declareUpdateElementRelative("LowerMenu:stretchT", "LowerMenu", 0, 0, w, 10, g);
+      if(mouse.elmIsHover("LowerMenu:stretchT")) {
+        cursor.set(java.awt.Cursor.S_RESIZE_CURSOR);
+        
+      }
+      if(mouse.isCaptured("LowerMenu:stretchT")) {
+        cursor.set(java.awt.Cursor.S_RESIZE_CURSOR);
+        h += pmouseY - mouseY;
+        locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
+        h = constrain(h, 150, height-locY-40);
+      }
+      
+      //Border
+      g.stroke(0, 61, 100);
+      g.noFill();
+      g.strokeWeight(3.4);
+      g.rect(0, 0, w, h, 20);
+    }
+    
+    
+    
+  }
+  
+  int getScrollXOffset() {
+    return int(scrollStatus * controllerStackWidth);
+  }
+  
+  
+  void drawFbox(int id, PGraphics g, Mouse mouse) {
+    g.pushStyle();
+    g.fill(255, 180); g.noStroke();
+    g.rect(0, 0, 80, 80);
+    g.fill(0);
+    g.textSize(16);
+    g.text(str(id), 20, 26);
+    g.popStyle();
+  }
+}
+
+
 void createFixtureBox(int id) {
+  
   drawFixtureRectangles(id); //draw fixtureboxes with buttons etc.
   checkFixtureBoxGo(id); //Check if you pressed go button button to set fixture on until jo release mouse
   checkFixtureBoxToggle(id); //Check if you pressed toggle button to set fixture on and off
   checkFixtureBoxSlider(id); //Check if you moved slider to change channels dimInput value
   checkFixtureBoxRightClick(id); //Check if you clicked right button at title to edit fixture settings
+  
 }
 
 void drawFixtureRectangles(int id) {
@@ -99,16 +294,12 @@ void checkFixtureBoxSlider(int id) {
       mouseLocker = "fbox" + id + ":slider";
   } else if(mouseLocked && mouseLocker.equals("fbox" + id + ":slider")) {
       fixtures.get(id).in.setDimmer(fixtures.get(id).in.getUniversalDMX(1) + int(map(pmouseY - mouseY, 0, 30, 0, 255))); //Change dimInput value as much as user has moved the mouse and make sure it is between 0 and 255
-      fixtures.get(id).in.setDimmer(constrain(fixtures.get(id).in.getUniversalDMX(1), 0, 255)); //Make sure that dimInput value is between 0-255 
+      fixtures.get(id).in.setDimmer(constrain(fixtures.get(id).in.getUniversalDMX(1), 0, 255)); //Make sure that dimInput value is between 0-255
   }
 }
 
 void checkFixtureBoxRightClick(int id) {
    if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && mouseReleased) { //Check if mouse is on the title box anf clicked
-    toChangeFixtureColor = true; //Tells controlP5 to open fixtureSettings window
-    toRotateFixture = true; //Tells controlP5 to open fixtureSettings window
-    changeColorFixtureId = id; //Tells controlP5 which fixture to edit
-    
     openBottomMenuControlBox(id); // open bottomMenu
   }
   if(isHover(0, -40, 60, -15) && mouseClicked && mouseButton == RIGHT && keyPressed && keyCode == RIGHT && keyReleased) { //Check if mouse is on the title box anf clicked
@@ -166,7 +357,7 @@ void openBottomMenuControlBox(int owner) {
   bottomMenuControlBoxDisplayText = "Fixture ID: " + owner + ", Type: " + fixtures.get(owner).fixtureType + ", Starting Channel: " + fixtures.get(owner).channelStart;
   boolean successInit = false; //This boolean is set to true, if the fixtureType has a specific configuration applied for it.
   
-  //Get data from functions in profiles.pde 
+  //Get data from functions in profiles.pde
   {
     int fT = fixtures.get(owner).fixtureTypeId;
     String[] chNames = getChNamesByFixType(fT);
@@ -244,8 +435,8 @@ void bottomMenuDMXUpdate() {
   boolean changd = false;
   //Error prevention
   if (bottomMenuControlBoxDMXValueChanged != null && bottomMenuControlBoxDMXValues != null) if (bottomMenuControlBoxDMXValueChanged.length != 0 && bottomMenuControlBoxDMXValues.length != 0)
-  for (boolean changed : bottomMenuControlBoxDMXValueChanged) { 
-    if (changed) { 
+  for (boolean changed : bottomMenuControlBoxDMXValueChanged) {
+    if (changed) {
       tempDMX[arrayIndex] = bottomMenuControlBoxDMXValues[arrayIndex];
       changd = true;
     } else if(arrayIndex < tempDMX.length) bottomMenuControlBoxDMXValues[arrayIndex] = tempDMX[arrayIndex];
@@ -432,7 +623,7 @@ void drawBottomMenuChControllerButton(String text, boolean down) {
   textSize(12);
   text(text, 4, 12);
   //Draw decorative "frame" around the button
-  noFill(); 
+  noFill();
   if (!down) { stroke(0, 50); strokeWeight(2); } else { stroke(0, 80); strokeWeight(1); }
   rect(0, 0, 48, 15);
   
@@ -473,6 +664,11 @@ class Notifier {
     messageEndTime = millis() + 2000;
     messageIsCritical = false;
     showingMessage = true;
+  }
+  
+  
+  void notify(String message, boolean critical) {
+    notify(message, 2000, critical);
   }
   
   
