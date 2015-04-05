@@ -410,6 +410,12 @@ class MemoryCreationBox {
         case 6: {
           g.text("Special", 2, 25);
         } break;
+        case 7: {
+          g.text("Chase2", 2, 25);
+        } break;
+        case 8: {
+          g.text("MasterGroup", 2, 25);
+        } break;
       }
     }
     g.popMatrix();
@@ -1086,6 +1092,9 @@ class MemoryCreationBox {
               }
           }
         break; //End of cue stack (case 7)
+        case 8:
+          
+        break;
       }
     }
     g.popMatrix();
@@ -1106,6 +1115,9 @@ class MemoryCreationBox {
       case 3: //chase with steps inside
         memories[selectedMemorySlot].myChase.endCreatingChaseWidthStepsInside();
       break;
+      case 8: 
+        memories[selectedMemorySlot].saveMasterGroup();
+      break;
     }
     open = false;
     savingMemory = false;
@@ -1120,10 +1132,10 @@ class MemoryCreationBox {
     return isHoverSimple(width - (320 + 168), locY, 300, 300) && open;
   }
   
-  int[] memoryModesToShow = { 0, 1, 2, 5, 6, 7 };
+  int[] memoryModesToShow = { 0, 1, 2, 5, 6, 7, 8 };
   int sMm = 0;
   void addToSelectedMemoryMode() {
-    if(sMm < 5) { sMm++; }
+    if(sMm < 6) { sMm++; }
     else { sMm = 0; }
     selectedMemoryMode = memoryModesToShow[sMm];
   }

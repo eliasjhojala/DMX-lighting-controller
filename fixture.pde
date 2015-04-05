@@ -328,6 +328,8 @@ class fixture {
   
   Fade[] fades = new Fade[universalDMXlength];
   
+  IntList masters = new IntList();
+  
 
   //End of initing variables
   
@@ -447,6 +449,10 @@ class fixture {
       newIn[DMX_DIMMER] = oldOut[DMX_DIMMER];
       newIn[DMX_DIMMER] = masterize(newIn[DMX_DIMMER]); //PROBLEM this is causing some masterloop problemes! If master isn't 255 all the lights fade off PROBLEM!!!!!!!!!!
 
+    for(int i = 0; i < masters.size(); i++) {
+      newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, masters.get(i)));
+    }
+    masters.clear();
     
     if(soloIsOn && !soloInThisFixture) {
       newIn[DMX_DIMMER] = round(map(newIn[DMX_DIMMER], 0, 255, 0, soloFade));

@@ -122,6 +122,8 @@ class memory { //Begin of memory class------------------------------------------
   // 5: fade        //|
   // 6: chase1      //|
   // 7: special     //|
+  // 8: queStack    //|
+  // 9: masterGroup //|
   //----------------//|
   
   
@@ -170,6 +172,9 @@ class memory { //Begin of memory class------------------------------------------
     if(type == 2 || type == 3 || type == 6 || type == 8) {
       xml.addChild(myChase.getXML());
     }
+    if(type == 9) {
+      xml.addChild(arrayToXML("fixturesToSave", fixturesToSave));
+    }
     return xml;
   }
   
@@ -187,6 +192,10 @@ class memory { //Begin of memory class------------------------------------------
       }
       if(type == 2 || type == 3 || type == 6 || type == 8) {
         myChase.XMLtoObject(xml);
+      }
+      if(type == 9) {
+        fixturesToSave = new boolean[fixtures.size()];
+        arrayCopy(XMLtoBooleanArray("fixturesToSave", xml), fixturesToSave);
       }
       loadingFromXML = false;
     }
@@ -241,6 +250,7 @@ class memory { //Begin of memory class------------------------------------------
       case 6: toReturn = "chs1"; break;
       case 7: toReturn = "spcl"; break;
       case 8: toReturn = "chs2"; break;
+      case 9: toReturn = "mstrG"; break;
       default: toReturn = "unkn"; break;
     }
     return toReturn;
@@ -258,6 +268,7 @@ class memory { //Begin of memory class------------------------------------------
         case 6: chase(); break;
         case 7: special(); break;
         case 8: chase(); break;
+        case 9: masterGroup(); break;
         default: unknown(); break;
       }
     }
@@ -294,7 +305,21 @@ class memory { //Begin of memory class------------------------------------------
   void empty() {
   }
   void masterGroup() {
+    for(int i = 0; i < fixturesToSave.length; i++) {
+      if(fixturesToSave[i]) {
+        fixtures.get(i).masters.append(value);
+      }
+    }
   }
+  
+  void saveMasterGroup() {
+    type = 9;
+    fixturesToSave = new boolean[fixtures.size()];
+    for(int i = 0; i < fixtures.size(); i++) {
+      fixturesToSave[i] = fixtures.get(i).selected;
+    }
+  }
+  
   void special() {
     if((value == 0 || !enabled) && firstTimeAtZero) {
        switch(specialType) {
