@@ -10,6 +10,20 @@ In this tab are located
 
 int MemoryMenuWidth = 300;
 int oldMouseXforMemoryMenuyResize;
+
+
+color[] memoryColorsByType = new color[] {
+  color(255, 255, 255, 200), //0 
+  color(200, 200, 0), //1 preset
+  color(10, 240, 10), //2 chase
+  color(10, 240, 10), //3 quickChase
+  color(10, 200, 240), //4 master
+  color(240, 10, 10), //5 fade
+  color(10, 240, 20), //6 chase1
+  color(240, 10, 10), //7 special
+  color(10, 240, 20), //8 queStack
+  color(10, 200, 240) //9 masterGroup
+};
  
 MemoryCreationBox memoryCreator;
 
@@ -101,10 +115,12 @@ void sivuValikko() {
     //-
     pushMatrix();
     translate(width-MemoryMenuWidth, 0);
+    g.pushMatrix(); g.pushStyle(); g.fill(0); g.noStroke(); g.rect(0, 0, MemoryMenuWidth, height); g.popMatrix(); g.popStyle();
     mouse.declareUpdateElement("rearMenu:presetcontrols", "main:move", width-MemoryMenuWidth, 0, width, height);
     for(int i = 1; i <= height/20+1; i++) {
       if(i >= 0 && i < memoryControllerLookupTable.length) {
-        int ai = memoryControllerLookupTable[i] + memoryMenu;
+        int ai = memoryControllerLookupTable[constrain(i+memoryMenu, 0, memoryControllerLookupTable.length-1)];
+        if(i+memoryMenu >= memoryControllerLookupTable.length) ai = i+memoryMenu;
         if(ai < numberOfMemories) {
           pushMatrix();
             translate(0, 20*(i-1));
@@ -185,14 +201,14 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
     
     int w = numberLocation;
     if(memories[controlledMemoryId].mouseHovered) {
-      if(-(memories[controlledMemoryId].memoryControllerWidth) + w > -200 && -(textWidth(name)) < -(memories[controlledMemoryId].memoryControllerWidth) + w) {
-        memories[controlledMemoryId].memoryControllerWidth+=10;
+      if(-(textWidth(name)) < (-(memories[controlledMemoryId].memoryControllerWidth) + w -27)) {
+        memories[controlledMemoryId].memoryControllerWidth-=ceil((-(textWidth(name))-(-(memories[controlledMemoryId].memoryControllerWidth) + w -27))/5);
         memories[controlledMemoryId].memoryControllerWidth = constrain(memories[controlledMemoryId].memoryControllerWidth, 0, 500);
       }
       
     }
     else if(memories[controlledMemoryId].memoryControllerWidth > 0) {
-      memories[controlledMemoryId].memoryControllerWidth-=10;
+      memories[controlledMemoryId].memoryControllerWidth-=ceil(float(memories[controlledMemoryId].memoryControllerWidth)/5);
       memories[controlledMemoryId].memoryControllerWidth = constrain(memories[controlledMemoryId].memoryControllerWidth, 0, 500);
     }
     w -= memories[controlledMemoryId].memoryControllerWidth;
@@ -211,7 +227,7 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
     //Type indication box
     
     
-    g.fill(10, 240, 10);
+    g.fill(memoryColorsByType[memories[controlledMemoryId].type]);
     g.rect(25+w, 0, 40-w, 20);
     g.fill(20);
     g.textAlign(LEFT);
@@ -254,11 +270,10 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
         value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
         memories[controlledMemoryId].setValue(value);
       }
-      
     } else if(mouseButton == RIGHT) memoryCreator.initiateFromExsisting(controlledMemoryId);
     
   } else if(draggingMemory && isHoverSimple(numberLocation, 0, 170-numberLocation, 20) && checkMouse) {
-    g.fill(20, 255, 20); g.noStroke();
+    g.fill(memoryColorsByType[memories[draggingMemoryId].type]); g.noStroke();
     g.rect(numberLocation-23, 0, MemoryMenuWidth+23, 20);
     g.fill(0);
     g.text(str(draggingMemoryId), numberLocation-20, 14);
