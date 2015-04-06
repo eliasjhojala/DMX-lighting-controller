@@ -126,6 +126,8 @@ class memory { //Begin of memory class------------------------------------------
   // 9: masterGroup //|
   //----------------//|
   
+  //TODO: memory containing memories
+  
   
   //chase variables
   int value, valueOld; //memorys value
