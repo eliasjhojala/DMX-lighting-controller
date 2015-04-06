@@ -41,7 +41,7 @@ void alavalikko() {
   }
   
   
-  notifier.draw(width-168);
+  notifier.draw(width-MemoryMenuWidth);
   
   
 }
@@ -93,9 +93,9 @@ class LowerMenu {
         mouse.declareUpdateElementRelative("LowerMenu:move", "LowerMenu", 10, h-10, 20, -20, g);
         if(mouse.isCaptured("LowerMenu:move")) {
           locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
-          locX = constrain(mouseX - pmouseX + locX, 40, width - w-(20 + 168));
+          locX = constrain(mouseX - pmouseX + locX, 40, width - w-(20 + MemoryMenuWidth));
         }
-        w = constrain(width - 40 - 20 - 168, 1, 1920);
+        w = constrain(width - 40 - 20 - MemoryMenuWidth, 1, 1920);
         
         //Close button
         mouse.declareUpdateElementRelative("LowerMenu:cancel", "LowerMenu", 30, h-10, 30, -20, g);

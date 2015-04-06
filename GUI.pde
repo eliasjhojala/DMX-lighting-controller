@@ -266,7 +266,7 @@ class Window {
     mouse.setElementExpire(name+":move", 2);
     if(mouse.isCaptured(name+":move")) {
       try {
-        int locXvalueToWindow = round(constrain(mouseX - pmouseX + locX.getInt(window), 40, width - (size.x+20+168)));
+        int locXvalueToWindow = round(constrain(mouseX - pmouseX + locX.getInt(window), 40, width - (size.x+20+MemoryMenuWidth)));
         locX.setInt(window, locXvalueToWindow);
         
         int locYvalueToWindow = round(constrain(mouseY - pmouseY + locY.getInt(window), 40, height - (size.y+40)));
@@ -1278,7 +1278,12 @@ class TextBox {
   
   void drawToBuffer(PGraphics g, Mouse mouse, String mouseObjectName) {
     
-    if(mouse.elmIsHover(mouseObjectName)) { thisIsActive = true; textBox(); }
+    if(mouse.elmIsHover(mouseObjectName)) { 
+      thisIsActive = true; 
+      textBox(); 
+      keyCapElsewhere = true;
+      keyCapFrame = frameCount;
+    }
 
     g.pushStyle();
     themes.textBox.setTheme(g, mouse, mouse.elmIsHover(mouseObjectName), false);

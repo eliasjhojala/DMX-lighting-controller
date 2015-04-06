@@ -7,6 +7,9 @@ In this tab are located
   - memory controllers with sliders
   - memoryCreator window
 */
+
+int MemoryMenuWidth = 300;
+int oldMouseXforMemoryMenuyResize;
  
 MemoryCreationBox memoryCreator;
 
@@ -28,7 +31,7 @@ void sivuValikko() {
     //Open MemoryCreator bubblebutton
     int bubS = 250;
     int origBubS = bubS;
-    mouse.declareUpdateElementRelative("addMemory", "main:move", width-168, 0, -bubS/2, bubS/2);
+    mouse.declareUpdateElementRelative("addMemory", "main:move", width-MemoryMenuWidth, 0, -bubS/2, bubS/2);
     if (mouse.elmIsHover("addMemory")) bubS += 10;
     
     
@@ -41,13 +44,13 @@ void sivuValikko() {
     //bubble shadow
     noFill();
     stroke(0, 120); strokeWeight(6);
-    arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
+    arc(width-MemoryMenuWidth, 0, bubS, bubS, -(PI + HALF_PI), -PI);
     
     //chaseMode button(s)
-    mouse.declareUpdateElementRelative("InMode", "main:move", width-268, bubS/2+30, 102, 30);
+    mouse.declareUpdateElementRelative("InMode", "main:move", width-268+168-MemoryMenuWidth, bubS/2+30, 102, 30);
     mouse.setElementExpire("InMode", 2);
     boolean isHoverIM = mouse.elmIsHover("InMode");
-    mouse.declareUpdateElementRelative("OutMode", "main:move", width-268, bubS/2, 102, 30);
+    mouse.declareUpdateElementRelative("OutMode", "main:move", width-268+168-MemoryMenuWidth, bubS/2, 102, 30);
     mouse.setElementExpire("OutMode", 2);
     boolean isHoverOM = mouse.elmIsHover("OutMode");
     stroke(multiplyColor(themes.bubbleColor.neutral, 0.7));  strokeWeight(2);
@@ -55,20 +58,20 @@ void sivuValikko() {
       pushStyle();
         //inputMode (lower)
         themes.bubbleColor.fillColor(isHoverIM, false);
-        rect(width-268, bubS/2+10, 102, 50, 0, 0, 0, 20);
+        rect(width-268+168-MemoryMenuWidth, bubS/2+10, 102, 50, 0, 0, 0, 20);
       popStyle();
       pushStyle();
         fill(255);
-        text("InM: " + getInputModeMasterDesc(), width-262+3, bubS/2+48);
+        text("InM: " + getInputModeMasterDesc(), width-262+3+168-MemoryMenuWidth, bubS/2+48);
       popStyle();
       pushStyle();
         //outputMode (upper)
         themes.bubbleColor.fillColor(isHoverOM, false);
-        rect(width-268, bubS/2-50, 102, 80, 0, 0, 0, 20);
+        rect(width-268+168-MemoryMenuWidth, bubS/2-50, 102, 80, 0, 0, 0, 20);
       popStyle();
       pushStyle();
         fill(255);
-        text("OutM: " + getOutputModeMasterDesc(), width-262+3, bubS/2+20);
+        text("OutM: " + getOutputModeMasterDesc(), width-262+3+168-MemoryMenuWidth, bubS/2+20);
       popStyle();
     popStyle();
     
@@ -84,12 +87,12 @@ void sivuValikko() {
     //bubble itself
     themes.bubbleColor.fillColor(mouse.elmIsHover("addMemory"), false);
     stroke(multiplyColor(themes.bubbleColor.neutral, 0.7));
-    arc(width-168, 0, bubS, bubS, -(PI + HALF_PI), -PI);
+    arc(width-MemoryMenuWidth, 0, bubS, bubS, -(PI + HALF_PI), -PI);
     
     //Text
     fill(255);
     textSize(15);
-    text("Add memory", width-150-bubS/2, 25);
+    text("Add memory", width-150-bubS/2+168-MemoryMenuWidth, 25);
     popStyle();
   }
   
@@ -97,8 +100,8 @@ void sivuValikko() {
   if(drawNow) {
     //-
     pushMatrix();
-    translate(width-168, 0);
-    mouse.declareUpdateElement("rearMenu:presetcontrols", "main:move", width-168, 0, width, height);
+    translate(width-MemoryMenuWidth, 0);
+    mouse.declareUpdateElement("rearMenu:presetcontrols", "main:move", width-MemoryMenuWidth, 0, width, height);
     for(int i = 1; i <= height/20+1; i++) {
       if(i >= 0 && i < memoryControllerLookupTable.length) {
         int ai = memoryControllerLookupTable[i] + memoryMenu;
@@ -116,11 +119,21 @@ void sivuValikko() {
       PGraphics temp = createGraphics(170, 22);
       temp.beginDraw();
       temp.translate(1, 1);
-      drawMemoryControllerToBuffer(draggingMemoryId, memories[draggingMemoryId].getText(), temp, false, true);
+      drawMemoryControllerToBuffer(draggingMemoryId, memories[draggingMemoryId].getText(), temp, false, false);
       temp.endDraw();
       tint(255, 140);
       image(temp, -1, -1);
     popStyle(); }
+    
+    mouse.declareUpdateElementRelative("memoryMenuBorder", 1000, -5, 0, 10, height);
+    if(mouse.elmIsHover("memoryMenuBorder") || mouse.isCaptured("memoryMenuBorder")) {
+      cursor.set(java.awt.Cursor.E_RESIZE_CURSOR);
+      if(mousePressed) {
+        MemoryMenuWidth += oldMouseXforMemoryMenuyResize - mouseX;
+        MemoryMenuWidth = constrain(MemoryMenuWidth, 168, 400);
+      }
+    }
+    oldMouseXforMemoryMenuyResize = mouseX;
     
     popMatrix();
     //-
@@ -161,8 +174,30 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
   int value = memories[controlledMemoryId].getValue();
   
   g.pushStyle();
-  
+  g.pushMatrix();
+  g.translate(MemoryMenuWidth-168, 0);
+  int numberLocation = 168-MemoryMenuWidth;
   if(!(draggingMemory && draggingMemoryId == controlledMemoryId) || bypassDrawBlock) {
+    
+    String name = text;
+    if(memories[controlledMemoryId].name != null) name = memories[controlledMemoryId].name;
+    
+    
+    int w = numberLocation;
+    if(memories[controlledMemoryId].mouseHovered) {
+      if(-(memories[controlledMemoryId].memoryControllerWidth) + w > -200 && -(textWidth(name)) < -(memories[controlledMemoryId].memoryControllerWidth) + w) {
+        memories[controlledMemoryId].memoryControllerWidth+=10;
+        memories[controlledMemoryId].memoryControllerWidth = constrain(memories[controlledMemoryId].memoryControllerWidth, 0, 500);
+      }
+      
+    }
+    else if(memories[controlledMemoryId].memoryControllerWidth > 0) {
+      memories[controlledMemoryId].memoryControllerWidth-=10;
+      memories[controlledMemoryId].memoryControllerWidth = constrain(memories[controlledMemoryId].memoryControllerWidth, 0, 500);
+    }
+    w -= memories[controlledMemoryId].memoryControllerWidth;
+    
+    
     g.textSize(12);
     g.textAlign(CENTER);
     //Draw controller
@@ -170,15 +205,20 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
     g.noStroke();
     g.fill(240);
     //Number indication box
-    g.rect(0, 0, 25, 20);
+    g.rect(w, 0, 25, 20);
     g.fill(20);
-    g.text(controlledMemoryId, 25/2, 15);
+    g.text(controlledMemoryId, 25/2+w, 15);
     //Type indication box
+    
+    
     g.fill(10, 240, 10);
-    g.rect(25, 0, 40, 20);
+    g.rect(25+w, 0, 40-w, 20);
     g.fill(20);
     g.textAlign(LEFT);
-    g.text(text, 30, 15);
+    if(-w > 30) {
+      if(name != null) if(!name.equals("")) { text = name; }
+    }
+    g.text(text, 30+w, 15);
     
     //Controller box
     g.fill(255, 200);
@@ -193,12 +233,15 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
     //Borders
     g.noFill();
     g.stroke(100);
-    g.rect(0, 0, 65, 20);
+    g.rect(w, 0, 65-w, 20);
     g.rect(65, 0, 100, 20);
   }
 
-
-  if (isHoverSimple(0, 0, 170, 20) && mouse.isCaptured("rearMenu:presetcontrols") && !draggingMemory && checkMouse) {
+  boolean memHovered = false;
+  if (isHoverSimple(numberLocation, 0, 170-numberLocation, 20)) {
+    if(!mousePressed) memHovered = true;
+  }
+  if (isHoverSimple(numberLocation, 0, 170-numberLocation, 20) && mouse.isCaptured("rearMenu:presetcontrols") && !draggingMemory && checkMouse) {
     if(mouseButton == LEFT) {
       if(keyPressed && keyCode == CONTROL) {
         if(mouse.firstCaptureFrame) memories[controlledMemoryId].toggleWithMemory(true);
@@ -211,19 +254,25 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
         value = constrain(int(map(mouseX - screenX(65, 0), 0, 100, 0, 255)), 0, 255);
         memories[controlledMemoryId].setValue(value);
       }
+      
     } else if(mouseButton == RIGHT) memoryCreator.initiateFromExsisting(controlledMemoryId);
-  } else if(draggingMemory && isHoverSimple(0, 0, 170, 20) && checkMouse) {
-    g.fill(20, 255, 20, 180); g.noStroke();
-    g.rect(0, 0, 168, 20);
+    
+  } else if(draggingMemory && isHoverSimple(numberLocation, 0, 170-numberLocation, 20) && checkMouse) {
+    g.fill(20, 255, 20); g.noStroke();
+    g.rect(numberLocation-23, 0, MemoryMenuWidth+23, 20);
+    g.fill(0);
+    g.text(str(draggingMemoryId), numberLocation-20, 14);
     if(!mousePressed) {
       reorderMemoryController(draggingMemoryId, controlledMemoryId);
       draggingMemory = false;
     }
   }
   
+  memories[controlledMemoryId].mouseHovered = memHovered;
   
   
   
+  g.popMatrix();
   g.popStyle();
 }
 
@@ -239,7 +288,7 @@ class MemoryCreationBox {
   MemoryCreationBox(boolean o) {
     open = o;
     locY = 40;
-    locX = width - (320 + 168);
+    locX = width - (320 + MemoryMenuWidth);
     selectedWhatToSave = new boolean[saveOptionButtonVariables.length];
   }
   
@@ -254,7 +303,7 @@ class MemoryCreationBox {
   void initiatePassive() {
     open = true;
     locY = 40;
-    locX = width - (320 + 168);
+    locX = width - (320 + MemoryMenuWidth);
   }
   
   //Initiate with configuration from an existing memory
@@ -320,7 +369,7 @@ class MemoryCreationBox {
         mouse.setElementExpire("MemoryCreationBox:move", 2);
         if(mouse.isCaptured("MemoryCreationBox:move")) {
           locY = constrain(mouseY - pmouseY + locY, 40, height - h-40);
-          locX = constrain(mouseX - pmouseX + locX, 40, width - (320 + 168));
+          locX = constrain(mouseX - pmouseX + locX, 40, width - (320 + MemoryMenuWidth));
         }
         //Cancel button
         mouse.declareUpdateElementRelative("MemoryCreationBox:cancel", "MemoryCreationBox", 30, 10, 50, 20, g);
@@ -364,6 +413,7 @@ class MemoryCreationBox {
       
       { //Preset creation options
         drawModeSelection(g, mouse);
+        drawNameTextBox(g, mouse);
         drawSlotSelector(g, mouse);
         drawTypeSpecificOptions(g, mouse);
       }
@@ -417,6 +467,37 @@ class MemoryCreationBox {
           g.text("MasterGroup", 2, 25);
         } break;
       }
+    }
+    g.popMatrix();
+  }
+  
+  TextBox memoryName = new TextBox("", 1);
+  int oldSelectedMemorySlot = 0;
+  
+  void drawNameTextBox(PGraphics g, Mouse mouse) {
+    if(selectedMemorySlot != oldSelectedMemorySlot) {
+      String text = "";
+      if(memories[selectedMemorySlot].name != null) text = memories[selectedMemorySlot].name;
+      memoryName = new TextBox(text, 1);
+      oldSelectedMemorySlot = selectedMemorySlot;
+    }
+    g.pushMatrix();
+    {
+      
+      g.translate(10+100+10, 40+10);
+      g.strokeWeight(1);
+      g.stroke(150);
+      g.fill(240);
+      String mouseObjectNameForMemoryControllerTextBox = "memoryControllerNameTextBox"+this.toString();
+      mouse.declareUpdateElementRelative(mouseObjectNameForMemoryControllerTextBox, 1000, 0, 0, 160, 30, g);
+      mouse.setElementExpire(mouseObjectNameForMemoryControllerTextBox, 2);
+      memoryName.textBoxSize = new PVector(160, 20);
+      memoryName.drawToBuffer(g, mouse, mouseObjectNameForMemoryControllerTextBox);
+      
+      if(memoryName.textChanged()) {
+        memories[selectedMemorySlot].name = memoryName.getText();
+      }
+
     }
     g.popMatrix();
   }
@@ -1129,7 +1210,7 @@ class MemoryCreationBox {
   
   //Returns whether box is hovered on
   boolean isMouseOver() {
-    return isHoverSimple(width - (320 + 168), locY, 300, 300) && open;
+    return isHoverSimple(width - (320 + MemoryMenuWidth), locY, 300, 300) && open;
   }
   
   int[] memoryModesToShow = { 0, 1, 2, 5, 6, 7, 8 };

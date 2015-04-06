@@ -24,6 +24,8 @@ int drawCounter;
 int visualisationSpeed = 30;
 boolean speedDownVisualisation = false;
 
+int keyCapFrame = 0;
+
 void draw() {
   if(speedDownVisualisation) {
     drawCounter++;
@@ -64,6 +66,9 @@ void draw() {
   scrolledDown = false;
   scrollSpeed = 0;
   cursor.push();
+  if(frameCount - keyCapFrame > 2) {
+    keyCapElsewhere = false;
+  }
 }
 
 boolean memoriesFinished = true;

@@ -136,6 +136,10 @@ class memory { //Begin of memory class------------------------------------------
   boolean doOnce;
   int triggerButton;
   
+  String name = "";
+  boolean mouseHovered = false;
+  int memoryControllerWidth = 0;
+  
   boolean doOnce() {
 	return doOnce;
   }
@@ -160,6 +164,7 @@ class memory { //Begin of memory class------------------------------------------
   XML getXML() {
     String data = "<Memory></Memory>";
     XML xml = parseXML(data);
+    xml.setString("name", name);
     xml.setInt("enabled", int(enabled));
     xml.setInt("value", value);
     xml.setInt("valueOld", valueOld);
@@ -181,6 +186,7 @@ class memory { //Begin of memory class------------------------------------------
   void XMLtoObject(XML xml) {
     if(!loadingFromXML) {
       loadingFromXML = true;
+      name = xml.getString("name");
       enabled = boolean(xml.getInt("enabled"));
       value = xml.getInt("value");
       valueOld = xml.getInt("valueOld");
@@ -1939,7 +1945,7 @@ class TapTempo {
       if(millis() > lastStepMillis + interval) {
         steptriged = true;
         trig(true);
-        lastStepMillis = millis() - (millis() - (lastStepMillis + interval))+1;
+        lastStepMillis = millis();
       }
     }
     
