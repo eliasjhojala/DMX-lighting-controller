@@ -16,7 +16,7 @@ void saveShowFileXML() {
   }
   else if(fixturesXML != null) {
     block = xml.addChild("Fixtures");
-    block = block.addChild(fixturesXML);
+    block = block.addChild(fixturesXML.getChild("Fixtures"));
   }
   if(loadedFixturesFromExternalFile) {
     saveXML(getFixturesXML(), "fixturesExternalFile");
@@ -64,8 +64,9 @@ void loadShowFileFromXML() {
   XML xml = loadXML(showFilePath);
   XML block;
   
-  XMLtoFixtures(xml.getChild("Fixtures").getChild("fixtures"));
+  
   fixturesXML = xml.getChild("Fixtures");
+  XMLtoFixtures(fixturesXML.getChild("fixtures"));
   XMLtoMemories(xml.getChild("Memories").getChild("Memories"));
   XMLtoTrusses(xml.getChild("Trusses").getChild("Trusses"));
   XMLtoDimmers(xml.getChild("Dimmers").getChild("dimmers"));

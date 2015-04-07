@@ -87,5 +87,4 @@ id,variable_name,variable_dimensions,value,1D,2D
 85,camZ,0,1300,-,-
 86,centerX,0,1165,-,-
 87,centerY,0,-4550,-,-
-88,chaseMode,0,1,-,-
-89,loadPath,0,/Users/elias/Dropbox/DMX controller/DMX_Controller/variables/vappugaala 2015.csv,-,-
+88,loadPath,0,/Users/elias/Dropbox/DMX controller/DMX_Controller/XML/fixtures.xml,-,-
