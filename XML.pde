@@ -2,13 +2,25 @@
 
 String showFilePath = "XML/ShowFile.xml";
 
+boolean loadedFixturesFromExternalFile = false;
+String fixturesExternalFile = "";
+
 void saveShowFileXML() {
   String data = "<ShowFile></ShowFile>";
   XML xml = parseXML(data);
   XML block;
   
-  block = xml.addChild("Fixtures");
-  block = block.addChild(getFixturesXML());
+  if(!loadedFixturesFromExternalFile) {
+    block = xml.addChild("Fixtures");
+    block = block.addChild(getFixturesXML());
+  }
+  else if(fixturesXML != null) {
+    block = xml.addChild("Fixtures");
+    block = block.addChild(fixturesXML);
+  }
+  if(loadedFixturesFromExternalFile) {
+    saveXML(getFixturesXML(), "fixturesExternalFile");
+  }
   
   block = xml.addChild("Memories");
   block = block.addChild(getMemoriesAsXML());
@@ -46,11 +58,14 @@ void saveShowFileXML() {
   
 }
 
+XML fixturesXML;
+
 void loadShowFileFromXML() {
   XML xml = loadXML(showFilePath);
   XML block;
   
   XMLtoFixtures(xml.getChild("Fixtures").getChild("fixtures"));
+  fixturesXML = xml.getChild("Fixtures");
   XMLtoMemories(xml.getChild("Memories").getChild("Memories"));
   XMLtoTrusses(xml.getChild("Trusses").getChild("Trusses"));
   XMLtoDimmers(xml.getChild("Dimmers").getChild("dimmers"));

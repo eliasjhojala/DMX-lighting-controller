@@ -150,6 +150,10 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(dimmerWindow, "dimmerWindow", 1000));
     
     
+    subWindows.add(new SubWindowContainer(fileSelectWindow, "fileSelectWindow", 1000));
+    
+    
+    
     
     
     
@@ -1278,9 +1282,9 @@ class TextBox {
   
   void drawToBuffer(PGraphics g, Mouse mouse, String mouseObjectName) {
     
-    if(mouse.elmIsHover(mouseObjectName)) { 
-      thisIsActive = true; 
-      textBox(); 
+    if(mouse.elmIsHover(mouseObjectName)) {
+      thisIsActive = true;
+      textBox();
       keyCapElsewhere = true;
       keyCapFrame = frameCount;
     }

@@ -37,30 +37,9 @@ void loadAllData1() {
     loadDataBeginMillis = millis();
     if(!loadingFixtureProfiles) { loadFixtureProfiles(); }
     
-       table = loadTable(loadPath, "header"); //Eliaksen polku
-  
+
       programReadyToRun = false;
 
-  
-      int[] grouping = new int[3];
-  
-      
-      for (TableRow row : table.findRows("camX", "variable_name"))              { cam.x = int(row.getString("value")); }
-      for (TableRow row : table.findRows("camY", "variable_name"))              { cam.y = int(row.getString("value")); }
-      for (TableRow row : table.findRows("camZ", "variable_name"))              { cam.z = int(row.getString("value")); }
-      
-      for (TableRow row : table.findRows("bottomMenuOrder", "variable_name")) if(int(row.getString("1D")) < bottomMenuOrder.length) bottomMenuOrder[int(row.getString("1D"))] = int(row.getString("value"));
-  
-      
-      for (TableRow row : table.findRows("chaseMode", "variable_name"))              { chaseMode = int(row.getString("value")); }
-      
-      for (TableRow row : table.findRows("centerX", "variable_name"))              { center.x = int(row.getString("value")); }
-      for (TableRow row : table.findRows("centerY", "variable_name"))              { center.y = int(row.getString("value")); }
-     
-    
-      
-      
-      
       
       dataLoaded = true;
       programReadyToRun = true;
