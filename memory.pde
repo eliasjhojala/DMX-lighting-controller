@@ -132,6 +132,7 @@ class memory { //Begin of memory class------------------------------------------
   
   //chase variables
   int value, valueOld; //memorys value
+  int lastFrame;
   int type; //memorys type (preset, chase, master, fade etc) (TODO: expalanations for different memory type numbers here)
   boolean enabled = true;
   boolean soloInThisMemory;
@@ -158,6 +159,7 @@ class memory { //Begin of memory class------------------------------------------
   
   chase myChase;
   Preset myPreset;
+  IntList myMemories = new IntList();
   
   memory() {
     myChase = new chase(this);
@@ -183,6 +185,13 @@ class memory { //Begin of memory class------------------------------------------
     if(type == 9) {
       xml.addChild(arrayToXML("fixturesToSave", fixturesToSave));
     }
+    if(type == 10) {
+      XML block = xml.addChild("myMemories");
+      block.setInt("size", myMemories.size());
+      for(int i = 0; i < myMemories.size(); i++) {
+        block.addChild("memory").setInt("val", myMemories.get(i));
+      }
+    }
     return xml;
   }
   
@@ -205,6 +214,13 @@ class memory { //Begin of memory class------------------------------------------
       if(type == 9) {
         fixturesToSave = new boolean[fixtures.size()];
         arrayCopy(XMLtoBooleanArray("fixturesToSave", xml), fixturesToSave);
+      }
+      if(type == 10) {
+        XML block = xml.getChild("myMemories");
+        XML[] blocks = block.getChildren("memory");
+        for(int i = 0; i < blocks.length; i++) {
+          myMemories.append(blocks[i].getInt("val"));
+        }
       }
       loadingFromXML = false;
     }
@@ -260,6 +276,7 @@ class memory { //Begin of memory class------------------------------------------
       case 7: toReturn = "spcl"; break;
       case 8: toReturn = "chs2"; break;
       case 9: toReturn = "mstrG"; break;
+      case 10: toReturn = "mems"; break;
       default: toReturn = "unkn"; break;
     }
     return toReturn;
@@ -278,6 +295,7 @@ class memory { //Begin of memory class------------------------------------------
         case 7: special(); break;
         case 8: chase(); break;
         case 9: masterGroup(); break;
+        case 10: memories(); break;
         default: unknown(); break;
       }
     }
@@ -314,10 +332,25 @@ class memory { //Begin of memory class------------------------------------------
   void empty() {
   }
   void masterGroup() {
-    for(int i = 0; i < fixturesToSave.length; i++) {
-      if(fixturesToSave[i]) {
-        fixtures.get(i).masters.append(value);
+    if(frameCount != lastFrame) {
+      for(int i = 0; i < fixturesToSave.length; i++) {
+        if(fixturesToSave[i]) {
+          fixtures.get(i).masters.append(value);
+        }
       }
+      lastFrame = frameCount;
+    }
+  }
+  
+  void memories() {
+    if(value != valueOld) {
+      for(int i = 0; i < myMemories.size(); i++) {
+        int mem = myMemories.get(i);
+        if(mem >= 0 && mem < memories.length) {
+          memories[mem].setValue(value);
+        }
+      }
+      valueOld = value;
     }
   }
   
@@ -394,6 +427,10 @@ class memory { //Begin of memory class------------------------------------------
     myPreset.loadPreset();
   }
 
+
+  void addNewMemory(int id) {
+    myMemories.append(id);
+  }
   
   
 } //end of memory class-----------------------------------------------------------------------------------------------------------------------------------------------------

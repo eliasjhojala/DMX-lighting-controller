@@ -13,7 +13,7 @@ int oldMouseXforMemoryMenuyResize;
 
 
 color[] memoryColorsByType = new color[] {
-  color(255, 255, 255, 200), //0 
+  color(255, 255, 255, 200), //0
   color(200, 200, 0), //1 preset
   color(10, 240, 10), //2 chase
   color(10, 240, 10), //3 quickChase
@@ -22,7 +22,8 @@ color[] memoryColorsByType = new color[] {
   color(10, 240, 20), //6 chase1
   color(240, 10, 10), //7 special
   color(10, 240, 20), //8 queStack
-  color(10, 200, 240) //9 masterGroup
+  color(10, 200, 240), //9 masterGroup
+  color(200, 200, 0) //10 memories inside memory
 };
  
 MemoryCreationBox memoryCreator;
@@ -198,11 +199,11 @@ void drawMemoryControllerToBuffer(int controlledMemoryId, String text, PGraphics
     String name = text;
     if(memories[controlledMemoryId].name != null) name = memories[controlledMemoryId].name;
     
-    
+    textSize(12);
     int w = numberLocation;
     if(memories[controlledMemoryId].mouseHovered) {
-      if(-(textWidth(name)) < (-(memories[controlledMemoryId].memoryControllerWidth) + w -27)) {
-        memories[controlledMemoryId].memoryControllerWidth-=ceil((-(textWidth(name))-(-(memories[controlledMemoryId].memoryControllerWidth) + w -27))/5);
+      if(-(textWidth(name)) <= (-(memories[controlledMemoryId].memoryControllerWidth) + w)) {
+        memories[controlledMemoryId].memoryControllerWidth-=ceil((-(textWidth(name))-(-(memories[controlledMemoryId].memoryControllerWidth) + w))/5);
         memories[controlledMemoryId].memoryControllerWidth = constrain(memories[controlledMemoryId].memoryControllerWidth, 0, 500);
       }
       
@@ -481,6 +482,9 @@ class MemoryCreationBox {
         case 8: {
           g.text("MasterGroup", 2, 25);
         } break;
+        case 9: {
+          g.text("Memories", 2, 25);
+        } break;
       }
     }
     g.popMatrix();
@@ -549,6 +553,9 @@ class MemoryCreationBox {
   
   boolean addingNewStep = false;
   IntController newStepMemoryId = new IntController("newStepMemoryId"+this.toString());
+  
+  boolean addingNewMemoryToMemoryWithMemoriesInside = false;
+  IntController newMemoryToMemoryWithMemoriesInsideId = new IntController("newMemoryToMemoryWithMemoriesInsideId"+this.toString());
   
   void drawTypeSpecificOptions(PGraphics g, Mouse mouse) {
     g.pushMatrix();
@@ -1188,9 +1195,55 @@ class MemoryCreationBox {
               }
           }
         break; //End of cue stack (case 7)
-        case 8:
+        case 8: //Mastergroup
           
-        break;
+        break; //End of mastergroup (case 8)
+        case 9: //Memory with memories inside
+        {
+          PushButton addNewMemory = new PushButton("addNewMemory"+this.toString());
+          g.pushMatrix(); g.pushStyle();
+            g.translate(0, 100);
+            g.pushMatrix();
+              g.translate(30, 100);
+              g.text("New step", 0, -20);
+              if(addNewMemory.isPressed(g, mouse)) {
+                memories[selectedMemorySlot].type = 10;
+                addingNewMemoryToMemoryWithMemoriesInside = true;
+              }
+            g.popMatrix();
+            
+            {
+              if(addingNewMemoryToMemoryWithMemoriesInside) {
+                g.pushMatrix(); g.pushStyle();
+                g.fill(0);
+                g.textAlign(LEFT);
+                g.translate(60, 100);
+                g.text("Memory id:", 0, 14);
+                g.translate(100, 0);
+                newMemoryToMemoryWithMemoriesInsideId.draw(g, mouse);
+                g.translate(120, 0);
+                g.textAlign(CENTER);
+                g.text("Add", 0, -10);
+                PushButton saveThisMemory = new PushButton("saveThisMemory"+this.toString());
+                if(saveThisMemory.isPressed(g, mouse)) {
+                  memories[selectedMemorySlot].addNewMemory(newMemoryToMemoryWithMemoriesInsideId.getValue());
+                  addingNewMemoryToMemoryWithMemoriesInside = false;
+                }
+                g.popMatrix(); g.popStyle();
+              }
+            }
+            
+            {
+              g.textAlign(LEFT);
+              if(memories[selectedMemorySlot].type == 10) {
+                for(int i = 0; i < memories[selectedMemorySlot].myMemories.size(); i++) {
+                  g.text("Memory "+str(memories[selectedMemorySlot].myMemories.get(i)), 30, 200+i*30);
+                }
+              }
+            }
+          g.popMatrix(); g.popStyle();
+        }
+        break; //End of memory with memories inside (case 9)
       }
     }
     g.popMatrix();
@@ -1211,7 +1264,7 @@ class MemoryCreationBox {
       case 3: //chase with steps inside
         memories[selectedMemorySlot].myChase.endCreatingChaseWidthStepsInside();
       break;
-      case 8: 
+      case 8:
         memories[selectedMemorySlot].saveMasterGroup();
       break;
     }
@@ -1228,10 +1281,10 @@ class MemoryCreationBox {
     return isHoverSimple(width - (320 + MemoryMenuWidth), locY, 300, 300) && open;
   }
   
-  int[] memoryModesToShow = { 0, 1, 2, 5, 6, 7, 8 };
+  int[] memoryModesToShow = { 0, 1, 2, 5, 6, 7, 8, 9 };
   int sMm = 0;
   void addToSelectedMemoryMode() {
-    if(sMm < 6) { sMm++; }
+    if(sMm < 7) { sMm++; }
     else { sMm = 0; }
     selectedMemoryMode = memoryModesToShow[sMm];
   }
