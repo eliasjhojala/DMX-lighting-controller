@@ -124,6 +124,7 @@ class memory { //Begin of memory class------------------------------------------
   // 7: special     //|
   // 8: queStack    //|
   // 9: masterGroup //|
+  // 10: memories   //| (memory containing memories)
   //----------------//|
   
   //TODO: memory containing memories
