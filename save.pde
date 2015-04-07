@@ -79,44 +79,11 @@ void saveAllData() {
       savingAllData = true;
       wholeSaveTimeAsMilliSecondsIsCounted = false;
       saveDataBeginMillis = millis();
-      table = new Table();
-      
-      table.addColumn("id");
-      table.addColumn("variable_name");
-      table.addColumn("variable_dimensions");
-      table.addColumn("value");
-      table.addColumn("1D");
-      table.addColumn("2D");
 
-    
-    
-    
-      save1Darray(bottomMenuOrder, "bottomMenuOrder");
-      
-    
-      
-      int[] grouping = new int[3];
-            grouping[0] = controlP5place;
-            grouping[1] = enttecDMXplace;
-            grouping[2] = touchOSCplace;
-            
-      save1Darray(grouping, "grouping");
-      
-    
-      saveVariable(int(cam.x), "camX");
-      saveVariable(int(cam.y), "camY");
-      saveVariable(int(cam.z), "camZ");
-      saveVariable(int(center.x), "centerX");
-      saveVariable(int(center.y), "centerY");
-      saveVariable(chaseMode, "chaseMode");
-      
-      saveDataMainCommands(loadPath, "loadPath", "0", "-", "-");
-       
     
       //Asetetaan oikeat tallennuspolut käyttäjän mukaan
       notifier.notify("Started saving to " + showFilePath, false);
       try {
-        saveTable(table, savePath, "csv");
         saveNearestSocketsToXML();
 
         SaveChannelsAsPdf();

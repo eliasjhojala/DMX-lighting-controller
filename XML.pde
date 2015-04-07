@@ -19,7 +19,7 @@ void saveShowFileXML() {
     block = block.addChild(fixturesXML.getChild("Fixtures"));
   }
   if(loadedFixturesFromExternalFile) {
-    saveXML(getFixturesXML(), "fixturesExternalFile");
+    saveXML(getFixturesXML(), fixturesExternalFile);
   }
   
   block = xml.addChild("Memories");

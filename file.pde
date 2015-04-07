@@ -128,7 +128,13 @@ class FileSelectWindow {
     g.textAlign(LEFT);
     g.text("Open fixture file", 30, 12);
     if(fixtureFile.isPressed(g, mouse)) { selectingFixtureFile = true; fileSelect = new FileSelect("Input", "Open fixture file"); }
-    if(selectingFixtureFile) { if(fileSelect.pathChanged()) { XMLtoFixtures(loadXML(fileSelect.getPath())); fixturesExternalFile = fileSelect.getPath(); selectingFixtureFile = false; loadedFixturesFromExternalFile = true; } }
+    if(selectingFixtureFile) { if(fileSelect.pathChanged()) {
+        XMLtoFixtures(loadXML(fileSelect.getPath()));
+        fixturesExternalFile = fileSelect.getPath();
+        selectingFixtureFile = false;
+        loadedFixturesFromExternalFile = true;
+      }
+    }
     
     
     g.translate(0, 30);
@@ -136,7 +142,14 @@ class FileSelectWindow {
     g.textAlign(LEFT);
     g.text("Open fixture file", 30, 12);
     if(fixtureSaveFile.isPressed(g, mouse)) { selectingFixtureSaveFile = true; fileSelect = new FileSelect("Output", "Save fixture file"); }
-    if(selectingFixtureSaveFile) { if(fileSelect.pathChanged()) { saveXML(getFixturesXML(), fileSelect.getPath()); fixturesExternalFile = fileSelect.getPath(); loadedFixturesFromExternalFile = true; selectingFixtureFile = false; } }
+    if(selectingFixtureSaveFile) { if(fileSelect.pathChanged()) {
+        saveXML(getFixturesXML(),
+        fileSelect.getPath());
+        fixturesExternalFile = fileSelect.getPath();
+        loadedFixturesFromExternalFile = true;
+        selectingFixtureFile = false;
+        }
+    }
     
   }
 }
