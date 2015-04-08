@@ -22,8 +22,7 @@ void setDimAndMemoryValuesAtEveryDraw() {
   
   
   boolean DMXChangedOverall = false;
-  for(int ai = 0; ai < fixtures.size(); ai++) {
-    fixture fix = fixtures.get(ai);
+  for(fixture fix : fixtures.iterate()) {
     if(fix.DMXChanged) {
       DMXChangedOverall = true;
       int[] dmxFromFixture = fix.getDMX();
@@ -36,8 +35,7 @@ void setDimAndMemoryValuesAtEveryDraw() {
     }
   }
   if(true) {
-    for(int ai = 0; ai < fixtures.size(); ai++) {
-      fixture fix = fixtures.get(ai);
+    for(fixture fix : fixtures.iterate()) {
       int[] toFixture = new int[fix.getDMXLength()];
       int[] fromFixture = fix.getDMX();
       for (int i = 0; i < toFixture.length; i++) {
@@ -55,12 +53,12 @@ void setDimAndMemoryValuesAtEveryDraw() {
   
   arrayCopy(DMX, DMXforCrossFixtureOld);
 
-  { // Memory checks --->   
+  { // Memory checks --->
       
       
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       tryDmxCheck();
-      dmxToDim(); //Set input to dimInput variable 
+      dmxToDim(); //Set input to dimInput variable
       
       //---------------------------------------------------------blackOut and blackOut-------------------------------------------------------
         //TODO: fullOn and blackOut here if needed

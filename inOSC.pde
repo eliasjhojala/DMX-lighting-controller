@@ -3,7 +3,7 @@
  int sensity;
  
 int multixy1_value;
-int multixy1_value_old; 
+int multixy1_value_old;
 int multixy1_value_offset;
 
 boolean fullOn; //Muuttuja, joka kertoo onko fullOn päällä
@@ -109,46 +109,46 @@ void oscEvent(OscMessage theOscMessage) {
      
            
            if(addr.equals("/fixtureSettings/a")) {
-             for(int i = 0; i < fixtures.size(); i++) {
-               if(fixtures.get(i).selected) {
-                 fixtures.get(i).rotationX += round(map(digitalValue, 0, 1, -sensity, sensity));
-                 fixtures.get(i).in.setUniversalDMX(1, 255);
+             for(fixture fix : fixtures.iterate()) {
+               if(fix.selected) {
+                 fix.rotationX += round(map(digitalValue, 0, 1, -sensity, sensity));
+                 fix.in.setUniversalDMX(1, 255);
                }
              }
            }
       
            if(addr.equals("/fixtureSettings/c")) {
-             for(int i = 0; i < fixtures.size(); i++) {
-               if(fixtures.get(i).selected) {
-                 fixtures.get(i).rotationZ += round(map(digitalValue, 0, 1, -sensity, sensity));
-                 fixtures.get(i).in.setUniversalDMX(1, 255);
+             for(fixture fix : fixtures.iterate()) {
+               if(fix.selected) {
+                 fix.rotationZ += round(map(digitalValue, 0, 1, -sensity, sensity));
+                 fix.in.setUniversalDMX(1, 255);
                }
              }
            }
            
            if(addr.equals("/fixtureSettings/d")) {
-             for(int i = 0; i < fixtures.size(); i++) {
-               if(fixtures.get(i).selected) {
-                 fixtures.get(i).x_location += round(map(digitalValue, 0, 1, -sensity, sensity));
-                 fixtures.get(i).in.setUniversalDMX(1, 255);
+             for(fixture fix : fixtures.iterate()) {
+               if(fix.selected) {
+                 fix.x_location += round(map(digitalValue, 0, 1, -sensity, sensity));
+                 fix.in.setUniversalDMX(1, 255);
                }
              }
            }
            
            if(addr.equals("/fixtureSettings/e")) {
-             for(int i = 0; i < fixtures.size(); i++) {
-               if(fixtures.get(i).selected) {
-                 fixtures.get(i).y_location += round(map(digitalValue, 0, 1, -sensity, sensity));
-                 fixtures.get(i).in.setUniversalDMX(1, 255);
+             for(fixture fix : fixtures.iterate()) {
+               if(fix.selected) {
+                 fix.y_location += round(map(digitalValue, 0, 1, -sensity, sensity));
+                 fix.in.setUniversalDMX(1, 255);
                }
              }
            }
            
            if(addr.equals("/fixtureSettings/f")) {
-             for(int i = 0; i < fixtures.size(); i++) {
-               if(fixtures.get(i).selected) {
-                 fixtures.get(i).z_location += round(map(digitalValue, 0, 1, -sensity, sensity));
-                 fixtures.get(i).in.setUniversalDMX(1, 255);
+             for(fixture fix : fixtures.iterate()) {
+               if(fix.selected) {
+                 fix.z_location += round(map(digitalValue, 0, 1, -sensity, sensity));
+                 fix.in.setUniversalDMX(1, 255);
                }
              }
            }
@@ -192,9 +192,9 @@ void oscEvent(OscMessage theOscMessage) {
      }
      
      if(addr.equals("/trussSettings/parentFixtures") && digitalValue == 1) {
-        for(int i = 0; i < fixtures.size(); i++) {
-         if(fixtures.get(i).selected) {
-           fixtures.get(i).parentAnsa = selectedTruss;
+        for(fixture fix : fixtures.iterate()) {
+         if(fix.selected) {
+           fix.parentAnsa = selectedTruss;
          }
        }
      }
@@ -208,31 +208,31 @@ void oscEvent(OscMessage theOscMessage) {
        oscHandler.sendMessage("/fixtureSettings/channel", activeChannel);
      }
      if(addr.equals("/fixtureSettings/chSet") && digitalValue == 1) {
-       for(int i = 0; i < fixtures.size(); i++) {
-         if(fixtures.get(i).selected) {
-           fixtures.get(i).channelStart = activeChannel;
+       for(fixture fix : fixtures.iterate()) {
+         if(fix.selected) {
+           fix.channelStart = activeChannel;
          }
        }
      }
      
      if(addr.equals("/fixtureSettings/r")) {
-       for(int i = 0; i < fixtures.size(); i++) {
-         if(fixtures.get(i).selected) {
-           fixtures.get(i).red = digitalValue;
+       for(fixture fix : fixtures.iterate()) {
+         if(fix.selected) {
+           fix.red = digitalValue;
          }
        }
      }
      if(addr.equals("/fixtureSettings/g")) {
-       for(int i = 0; i < fixtures.size(); i++) {
-         if(fixtures.get(i).selected) {
-           fixtures.get(i).green = digitalValue;
+       for(fixture fix : fixtures.iterate()) {
+         if(fix.selected) {
+           fix.green = digitalValue;
          }
        }
      }
      if(addr.equals("/fixtureSettings/b")) {
-       for(int i = 0; i < fixtures.size(); i++) {
-         if(fixtures.get(i).selected) {
-           fixtures.get(i).blue = digitalValue;
+       for(fixture fix : fixtures.iterate()) {
+         if(fix.selected) {
+           fix.blue = digitalValue;
          }
        }
      }
@@ -241,4 +241,3 @@ void oscEvent(OscMessage theOscMessage) {
 }
 int selectedTruss = 0;
 int activeChannel = 0;
-

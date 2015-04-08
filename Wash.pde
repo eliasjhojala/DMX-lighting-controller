@@ -20,7 +20,7 @@ class Color {
 
 
 void colorWashSetup() {
-  createColorNames(); 
+  createColorNames();
 }
 
 colorWash[] washs = new colorWash[40];
@@ -98,14 +98,14 @@ class ColorWashMenu {
               
               
               //ONLY SELECTED BUTTON
-                mouse.declareUpdateElementRelative("cWB:onlySelected", "colorSelectBox",  round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.declareUpdateElementRelative("cWB:onlySelected", "colorSelectBox",  round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y) ,g);
                 mouse.setElementExpire("cWB:onlyDelected", 2);
                 g.pushStyle();
                 if(mouse.isCaptured("cWB:onlySelected") && mouse.firstCaptureFrame) { g.stroke(0); wash.onlySelected = !wash.onlySelected; }
                 g.rect(round(onlySelectedButton.x), round(onlySelectedButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
                 g.fill(0); //Black text
                 g.textSize(15); //A bit bigger text than default
-                g.textAlign(LEFT); 
+                g.textAlign(LEFT);
                 if(wash.onlySelected) { g.text("Selected", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
                 else { g.text("All", round(onlySelectedButton.x+textOffset.x), round(onlySelectedButton.y+textOffset.y)); }
                 g.popStyle();
@@ -113,7 +113,7 @@ class ColorWashMenu {
              
              
               //ODDEVEN BUTTON
-                mouse.declareUpdateElementRelative("cWB:oddEven", "colorSelectBox",  round(oddEvenButton.x), round(oddEvenButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.declareUpdateElementRelative("cWB:oddEven", "colorSelectBox",  round(oddEvenButton.x), round(oddEvenButton.y), round(buttonSize.x), round(buttonSize.y) ,g);
                 mouse.setElementExpire("cWB:oddEven", 2);
                 g.pushStyle();
                 if(mouse.isCaptured("cWB:oddEven") && mouse.firstCaptureFrame) { g.stroke(0); wash.oddEvenNext(); }
@@ -130,21 +130,21 @@ class ColorWashMenu {
              
               
               //CLEAR BUTTON
-                mouse.declareUpdateElementRelative("cWB:clearAll", "colorSelectBox",  round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.declareUpdateElementRelative("cWB:clearAll", "colorSelectBox",  round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y) ,g);
                 mouse.setElementExpire("cWB:clearAll", 2);
-                g.pushStyle();  
+                g.pushStyle();
                 if(mouse.isCaptured("cWB:clearAll") && mouse.firstCaptureFrame) { g.stroke(0);  clearAllTheWashes(); }
                 g.rect(round(clearButton.x), round(clearButton.y), round(buttonSize.x), round(buttonSize.y), buttonCorners);
                 g.fill(0); //Black text
                 g.textSize(15); //A bit bigger text than default
-                g.textAlign(LEFT); 
+                g.textAlign(LEFT);
                 g.text("Clear all", round(clearButton.x+textOffset.x), round(clearButton.y+textOffset.y));
                 g.popStyle();
               //END OF CLEAR BUTTON
                
                
               //COLORPICKER BUTTON
-                mouse.declareUpdateElementRelative("cWB:HSBPicker", "colorSelectBox",  round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y) ,g); 
+                mouse.declareUpdateElementRelative("cWB:HSBPicker", "colorSelectBox",  round(HSBPickerButton.x), round(HSBPickerButton.y), round(buttonSize.x), round(buttonSize.y) ,g);
                 mouse.setElementExpire("cWB:HSBPicker", 2);
                 g.pushStyle();
                 if(mouse.isCaptured("cWB:HSBPicker") && mouse.firstCaptureFrame) { g.stroke(0); colorPick.open = !colorPick.open; }
@@ -153,7 +153,7 @@ class ColorWashMenu {
                   g.fill(0);
                   g.textSize(15);
             
-                  g.textAlign(LEFT); 
+                  g.textAlign(LEFT);
                   if(colorPick.open) { g.text("Close", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
                   else { g.text("ColorPicker", round(HSBPickerButton.x+textOffset.x), round(HSBPickerButton.y+textOffset.y)); }
                 g.popStyle();
@@ -175,7 +175,7 @@ class ColorWashMenu {
              }
              else { //if color picker should be closed then close it
                colorPick.colorSelectorOpen = false; //Tell to picker that it should be closed
-             } 
+             }
               
               g.pushMatrix();
               g.translate(30, 0);
@@ -184,7 +184,7 @@ class ColorWashMenu {
                   int a = 0;
                   for(int i = 0; i < activeColorNames.length; i++) { //Go through all the activeColorNames
                     for(int j = 0; j < 5; j++) { //Five rows
-                      if(i*5+j < activeColorNames.length) { 
+                      if(i*5+j < activeColorNames.length) {
                         if(colorNames[activeColorNames[i*5+j]] != null) {
                           a++;
                           mouse.declareUpdateElementRelative("cWB:color"+str(i*5+j), "colorSelectBox",  50*i, 30+50+a*40, 40, 30 ,g); //Declare mouse element for color rect
@@ -195,22 +195,22 @@ class ColorWashMenu {
                           if(lastClickedColor == i*5+j) {
                             g.strokeWeight(3);
                           }
-                          if(mouse.isCaptured("cWB:color"+str(i*5+j)) && mouse.firstCaptureFrame) { 
+                          if(mouse.isCaptured("cWB:color"+str(i*5+j)) && mouse.firstCaptureFrame) {
                             g.strokeWeight(3); //Bolded stroke
-                            boolean found = false;         
-                                wash.clear();   
+                            boolean found = false;
+                                wash.clear();
                                 wash.setColor(colorNames[activeColorNames[i*5+j]].name); //Set new color to wash
                                 wash.dim = 255; //Set also dim value to wash
                                 wash.go(); //Activate wash
                                 lastClickedColor = i*5+j;
-                          } 
+                          }
                           g.rect(50*i, 30+50+a*40, 40, 30, 5); //Draw color rect
                         }
                       }
                     }
                     a = 0;
                   }
-             } 
+             }
              
              g.popMatrix();
                 
@@ -226,7 +226,7 @@ void clearAllTheWashes() {
   for(int i = 0; i < washs.length; i++) {
     if(washs[i] != null) { washs[i].clear(); }
   }
-  if(wash != null) { wash.clear(); } 
+  if(wash != null) { wash.clear(); }
 }
 
 class colorWash {
@@ -328,8 +328,8 @@ class colorWash {
   void even() { odd = false; even = true; }
   void oddAndEven() { odd = true; even = true; }
   void setAccuracy(int a) { accuracy = a; }
-  void oddEvenNext() { 
-    oddEvenMode = getNext(oddEvenMode, 1, 3); 
+  void oddEvenNext() {
+    oddEvenMode = getNext(oddEvenMode, 1, 3);
     if(oddEvenMode == 1) { odd(); }
     if(oddEvenMode == 2) { even(); }
     if(oddEvenMode == 3) { oddAndEven(); }
@@ -350,43 +350,49 @@ class colorWash {
   }
   
   void setColorToLeds(int val) { //Set right colors to leds
-    for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
-      if(fixtures.get(i) != null) { //Check that fixture exist
+    for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) { //Go through all the fixtures
+      fixture fix = entry.getValue();
+      int i = entry.getKey();
+      
+      if(fix != null) { //Check that fixture exist
         //If onlySelected or onlyList is true then we have to check is fixture selected or in list
-        if((!onlySelected && !onlyList) || fixtures.get(i).selected || isInList(i, selectedFixtures)) {
+        if((!onlySelected && !onlyList) || fix.selected || isInList(i, selectedFixtures)) {
           if(thisFixtureUseRgb(i)) { //Check that does this fixture use rgb
-            fixtures.get(i).in.setUniversalDMX(DMX_RED, rMap(red, 0, 255, 0, val)); //Set red value
-            fixtures.get(i).in.setUniversalDMX(DMX_GREEN, rMap(green, 0, 255, 0, val)); //Set green value
-            fixtures.get(i).in.setUniversalDMX(DMX_BLUE, rMap(blue, 0, 255, 0, val)); //Set blue value
+            fix.in.setUniversalDMX(DMX_RED, rMap(red, 0, 255, 0, val)); //Set red value
+            fix.in.setUniversalDMX(DMX_GREEN, rMap(green, 0, 255, 0, val)); //Set green value
+            fix.in.setUniversalDMX(DMX_BLUE, rMap(blue, 0, 255, 0, val)); //Set blue value
             if(thisFixtureUseWhite(i)) { //Check that does this fixture use also white
-              fixtures.get(i).in.setUniversalDMX(DMX_WHITE, rMap(white, 0, 255, 0, val)); //set white value
+              fix.in.setUniversalDMX(DMX_WHITE, rMap(white, 0, 255, 0, val)); //set white value
             } //End of white check
             if(thisFixtureUseDim(i)) { //Check that does this fixture use also dimmer
-              fixtures.get(i).in.setUniversalDMX(DMX_DIMMER, rMap(dim, 0, 255, 0, val)); //Set dimmer value
+              fix.in.setUniversalDMX(DMX_DIMMER, rMap(dim, 0, 255, 0, val)); //Set dimmer value
             } //End of dimmer check
-            fixtures.get(i).DMXChanged = true; //Tell to fixture class that DMX has changed
+            fix.DMXChanged = true; //Tell to fixture class that DMX has changed
           } //End of rgb check
-        } //End of checking will we use this fixture 
+        } //End of checking will we use this fixture
       } //End of null-check
     } //End of for loop
   }  //End of void setColorToLeds
 
   
   void setColorToHalogens(int val) { //Put halogens on if they are right-colored
-    for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
-      if(fixtures.get(i) != null) { //Check that fixture exist
+    for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) { //Go through all the fixtures
+      fixture fix = entry.getValue();
+      int i = entry.getKey();
+      
+      if(fix != null) { //Check that fixture exist
         //First we have check is the fixture halogen when we can only change it's dimmer
-        if(fixtures.get(i).isHalogen()) {
+        if(fix.isHalogen()) {
           //If onlySelected or onlyList is true then we have to check is fixture selected or in list
-          if(useThisFixture(i)) { 
-            color c = fixtures.get(i).getColor();
+          if(useThisFixture(i)) {
+            color c = fix.getColor();
             float r = red(c);
             float g = green(c);
             float b = blue(c);
             if(isAbout(r, red, accuracy) && isAbout(g, green, accuracy) && isAbout(b, blue, accuracy)) { //Check that halogen's colour (foil) is about same colour than selected wash colour
-              fixtures.get(i).setDimmer(val); //Put halogen on if it's right-coloured
+              fix.setDimmer(val); //Put halogen on if it's right-coloured
             } //End of checking is the colour of this fixture right
-          } //End of checking will we use this fixture 
+          } //End of checking will we use this fixture
         } //End of halogen-check
       } //End of null-check
     } //End of for loop
@@ -425,9 +431,9 @@ class colorWash {
     rgbw[3] = white;
     arrayCopy(rgbw, rgbwd);
     rgbwd[4] = dim;
-  } 
+  }
   
-} 
+}
 
 //Colorname class is only to call colors with their names
 colorName[] colorNames = new colorName[30];
@@ -564,7 +570,7 @@ class ColorConverter {
               }
               else if(to == 3) { //rgbw
                 color c = color(original[0], original[1], original[2]);
-                toReturn = new int[4]; 
+                toReturn = new int[4];
                 toReturn[0] = original[0];
                 toReturn[1] = original[1];
                 toReturn[2] = original[2];
@@ -635,8 +641,8 @@ class ColorConverter {
                 int white = original[3];
                 toReturn = new int[3];
                 toReturn[0] = round(red(c) + white/1.5);
-                toReturn[1] = round(green(c) + white/1.5); 
-                toReturn[2] = round(blue(c) + white/1.5); 
+                toReturn[1] = round(green(c) + white/1.5);
+                toReturn[2] = round(blue(c) + white/1.5);
                 
                 toReturn[0] = round(map(toReturn[0], 0, max(toReturn), 0, max(original)));
                 toReturn[1] = round(map(toReturn[1], 0, max(toReturn), 0, max(original)));
@@ -674,7 +680,7 @@ class ColorConverter {
               toReturn = new int[3];
               arrayCopy(convertColor(original, 3, 1), toReturn);
               color co = color(toReturn[0], toReturn[1], toReturn[2]);
-              toReturn[0] = rMap(round(red(co)), 0, 255, 0, dim); 
+              toReturn[0] = rMap(round(red(co)), 0, 255, 0, dim);
               toReturn[1] = rMap(round(green(co)), 0, 255, 0, dim);
               toReturn[2] = rMap(round(blue(co)), 0, 255, 0, dim);
               
@@ -790,7 +796,6 @@ class CMYK_Colour {
     
     cyan = ( cyan - black ) / ( 255 - black );
     magenta = ( magenta - black ) / ( 255 - black );
-    yellow = ( yellow - black ) / ( 255 - black ); 
+    yellow = ( yellow - black ) / ( 255 - black );
   }
-}   
-
+}

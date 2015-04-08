@@ -156,14 +156,20 @@ public class ThreeDeeWindow extends PApplet {
   
   void drawLights() {
     //Draw lights
-    for (int i = 0; i < fixtures.size(); i++) {
-      if(fixtures.get(i).fixtureTypeId < fixtureProfiles.length) {
+    for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+      fixture fix = entry.getValue();
+      int i = entry.getKey();
+      
+      if(fix.fixtureTypeId < fixtureProfiles.length) {
         drawSingleLight(i);
       }
     }
     
-    for (int i = 0; i < fixtures.size(); i++) {
-      if(fixtures.get(i).fixtureTypeId < fixtureProfiles.length) {
+    for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+      fixture fix = entry.getValue();
+      int i = entry.getKey();
+      
+      if(fix.fixtureTypeId < fixtureProfiles.length) {
         drawSingleCone(i);
       }
     }

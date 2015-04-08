@@ -119,10 +119,9 @@ XML getFixturesXML() {
 	String data = "<fixtures></fixtures>";
 	XML xml = parseXML(data);
 
-  for(int i = 0; i < fixtures.array.size(); i++) {
-    int id = idLookupTable.indexOf(i);
-    XML block = xml.addChild(fixtures.array.get(i).getXML());
-    block.setInt("id", id);
+  for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+    XML block = xml.addChild(entry.getValue().getXML());
+    block.setInt("id", entry.getKey());
   }
   return xml;
 }
@@ -139,13 +138,12 @@ void XMLtoFixtures(XML xml) {
       try {
         
         XML[] allTheFixtures = xml.getChildren();
-        println(allTheFixtures);
         for(int i = 0; i < allTheFixtures.length; i++) {
           if(!trim(allTheFixtures[i].toString()).equals("")) {
             XML block = allTheFixtures[i];
             int id = block.getInt("id");
             fixture newFix = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-            fixtures.add(newFix);
+            fixtures.set(id, newFix);
             newFix.loadFixtureData(block);
           }
         }

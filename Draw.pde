@@ -90,9 +90,9 @@ void check3D() {
 }
 void checkSolo() {
   if(soloIsOn) {
-    for(int i = 0; i < fixtures.size(); i++) {
-      if(fixtures.get(i) != null) {
-        fixtures.get(i).soloInThisFixture = false;
+    for(fixture fix : fixtures.iterate()) {
+      if(fix != null) {
+        fix.soloInThisFixture = false;
       }
     }
   }

@@ -357,8 +357,11 @@ class memory { //Begin of memory class------------------------------------------
   void saveMasterGroup() {
     type = 9;
     fixturesToSave = new boolean[fixtures.size()];
-    for(int i = 0; i < fixtures.size(); i++) {
-      fixturesToSave[i] = fixtures.get(i).selected;
+    for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+      fixture fix = entry.getValue();
+      int i = entry.getKey();
+      
+      fixturesToSave[i] = fix.selected;
     }
   }
   
@@ -395,8 +398,8 @@ class memory { //Begin of memory class------------------------------------------
   void setGrandMaster(int value) {
     grandMaster = value;
     if(grandMaster != oldGrandMaster) {
-      for(int i = 0; i < fixtures.size(); i++) {
-        fixtures.get(i).DMXChanged = true;
+      for(fixture fix : fixtures.iterate()) {
+        fix.DMXChanged = true;
       }
       oldGrandMaster = grandMaster;
     }
@@ -840,24 +843,27 @@ class Preset { //Begin of Preset class
           valueOld = value;
           for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
             if(whatToSave[jk-1]) {
-              for(int i = 0; i < fixtures.size(); i++) { //Go through all the fixtures
+              for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) { //Go through all the fixtures
+                fixture fix = entry.getValue();
+                int i = entry.getKey();
+                
                 if(i < repOfFixtures.length) {
                   if(fixturesToSave[i]) {
-                    if(jk < fixtures.get(i).preset.DMXlength) {
+                    if(jk < fix.preset.DMXlength) {
                       int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
-                      fixtures.get(i).preset.setUniDMXfromPreset(jk, val);
+                      fix.preset.setUniDMXfromPreset(jk, val);
                       if(val > 0) {
                         if(parent.type == 1) {
-                          fixtures.get(i).preset.preFade = round(float(fixtureOwnFade)/20);
-                          fixtures.get(i).preset.postFade = fixtureOwnFade;
+                          fix.preset.preFade = round(float(fixtureOwnFade)/20);
+                          fix.preset.postFade = fixtureOwnFade;
                         }
                         else {
-                          fixtures.get(i).preset.preFade = 0;
-                          fixtures.get(i).preset.postFade = 0;
+                          fix.preset.preFade = 0;
+                          fix.preset.postFade = 0;
                         }
                       }
                       if(parent.soloInThisMemory && val > 0) {
-                        fixtures.get(i).soloInThisFixture = true;
+                        fix.soloInThisFixture = true;
                         soloIsOn = true;
                       }
                     }
@@ -876,20 +882,26 @@ class Preset { //Begin of Preset class
   
   void savePreset() {
     repOfFixtures = new FixtureDMX[fixtures.size()];
-    for(int i = 0; i < fixtures.size(); i++) {
+    for(int i = 0; i < repOfFixtures.length; i++) {
         repOfFixtures[i] = new FixtureDMX();
     }
     
     fixturesToSave = new boolean[fixtures.size()];
-    for(int i = 0; i < fixtures.size(); i++) {
-      fixturesToSave[i] = fixtures.get(i).selected;
+    for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+      fixture fix = entry.getValue();
+      int i = entry.getKey();
+      
+      fixturesToSave[i] = fix.selected;
     }
       
-    for(int i = 0; i < fixtures.size(); i++) {
+    for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+      fixture fix = entry.getValue();
+      int i = entry.getKey();
+      
       if(fixturesToSave[i]) {
-        for(int jk = 1; jk < fixtures.get(i).in.DMXlength; jk++) {
+        for(int jk = 1; jk < fix.in.DMXlength; jk++) {
           if(whatToSave[jk-1])
-            repOfFixtures[i].setUniversalDMX(jk, fixtures.get(i).in.getUniversalDMX(jk));
+            repOfFixtures[i].setUniversalDMX(jk, fix.in.getUniversalDMX(jk));
         }
       }
     }
@@ -1587,15 +1599,18 @@ class chase { //Begin of chase class--------------------------------------------
      int[] fixturesInChase; //create variable where selected fixtures will be stored
      int a = 0; //used mainly to count amount of some details
      
-     for(int i = 0; i < fixtures.size(); i++) { //This for loop is made only to count how many fixtures are selected
-       if(fixtures.get(i).selected) { a++; }
+     for(fixture fix : fixtures.iterate()) { //This for loop is made only to count how many fixtures are selected
+       if(fix.selected) { a++; }
      }
      fixturesInChase = new int[a]; //Now we know how many fixtures are selected so we can create right lengthed array for storing them
 
      int[] x = new int[a]; //let's make also right lengthed array to store fixtures' x-location
      a = 0; //reset a variable because we're gonna use it again
-     for(int i = 0; i < fixtures.size(); i++) { //This loop places right fixture id:s to fixturesInChase array
-       if(fixtures.get(i).selected) {
+     for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) { //This loop places right fixture id:s to fixturesInChase array
+       fixture fix = entry.getValue();
+       int i = entry.getKey();
+       
+       if(fix.selected) {
          fixturesInChase[a] = i;
          a++;
        }

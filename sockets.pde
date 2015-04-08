@@ -179,8 +179,10 @@ void XMLtoSockets(XML xml) {
 
 IntList getListOfFixturesInTruss(int truss) {
   IntList fixturesInTruss = new IntList();
-  for(int i = 0; i < fixtures.size(); i++) {
-    fixture fix = fixtures.get(i);
+  for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+    fixture fix = entry.getValue();
+    int i = entry.getKey();
+    
     if(fixtureIsDrawnById(i)) { //check if fixture exist in visualisation
       if(fix.parentAnsa == truss || isInIntList(truss, fix.allowedTrussesForWiring)) { //Check if fixture is in current truss
         fixturesInTruss.append(i);

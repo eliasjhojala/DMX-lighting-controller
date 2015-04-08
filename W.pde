@@ -221,7 +221,8 @@ class PowerWindow {
     float voltage = 230;
     
     IntList fixturesShown = new IntList();
-    for(int i = 0; i < fixtures.size(); i++) {
+    for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+      int i = entry.getKey();
       if(fixtureIsDrawnById(i)) {
         fixturesShown.append(i);
       }

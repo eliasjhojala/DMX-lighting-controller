@@ -7,12 +7,12 @@ void SaveChannelsAsPdf() {
   int curCh = -1;
   int[] textSize = new int[DMX_CHAN_LENGTH+1];
   for(int ch = 0; ch < DMX_CHAN_LENGTH; ch++) {
-    for(int fix = 0; fix < fixtures.size(); fix++) {
-      if(fixtures.get(fix).channelStart == ch) if(!getFixtureLongNameByType(fixtures.get(fix).fixtureTypeId).equals("")) {
+    for(fixture fix : fixtures.iterate()) {
+      if(fix.channelStart == ch) if(!getFixtureLongNameByType(fix.fixtureTypeId).equals("")) {
         if(curCh != ch) {
           usedChannels++;
         }
-        textSize[ch] += textWidth(getFixtureLongNameByType(fixtures.get(fix).fixtureTypeId));
+        textSize[ch] += textWidth(getFixtureLongNameByType(fix.fixtureTypeId));
         curCh = ch;
       }
     }
@@ -28,9 +28,9 @@ void SaveChannelsAsPdf() {
   count = 0;
   for(int ch = 0; ch < DMX_CHAN_LENGTH; ch++) {
     ArrayList<fixture> fixturesInThisChannel = new ArrayList<fixture>();
-    for(int fix = 0; fix < fixtures.size(); fix++) {
-      if(fixtures.get(fix).channelStart == ch) if(!getFixtureLongNameByType(fixtures.get(fix).fixtureTypeId).equals("")) {
-        fixturesInThisChannel.add(fixtures.get(fix));
+    for(fixture fix : fixtures.iterate()) {
+      if(fix.channelStart == ch) if(!getFixtureLongNameByType(fix.fixtureTypeId).equals("")) {
+        fixturesInThisChannel.add(fix);
       }
     }
     String text = "";
@@ -135,11 +135,12 @@ void SaveChannelsAsPdf() {
   
   float[] x = new float[fixtures.size()];
   float[] y = new float[fixtures.size()];
-  for(int i = 0; i < fixtures.size(); i++) {
-    fixture fix = fixtures.get(i);
+  for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+    fixture fix = entry.getValue();
+    int i = entry.getKey();
     if(fix.size.isDrawn) {
       x[i] = fix.x_location+trusses[fix.parentAnsa].location.x;
-      y[i] = fixtures.get(i).y_location+trusses[fix.parentAnsa].location.y;
+      y[i] = fix.y_location+trusses[fix.parentAnsa].location.y;
     }
   }
   pdf = createGraphics(int(-(min(x))+max(x)+100), int(-(min(y))+max(y)+150), PDF, "FILES/map.pdf");
@@ -150,13 +151,14 @@ void SaveChannelsAsPdf() {
   for(int i = 0; i < elements.size(); i++) {
     elements.get(i).draw(pdf);
   }
-  for(int i = 0; i < fixtures.size(); i++) {
-    fixture fix = fixtures.get(i);
+  for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+    fixture fix = entry.getValue();
+    int i = entry.getKey();
     if(fix.size.isDrawn) {
       pdf.pushMatrix();
       pdf.translate(x[i], y[i]);
       pdf.rotate(radians(fix.rotationZ));
-      fixtures.get(i).draw2D(i, pdf);
+      fix.draw2D(i, pdf);
       pdf.popMatrix();
     }
   }

@@ -150,98 +150,84 @@ class FixtureControllerWindow {
 boolean invokeFixturesDrawFinished = true;
 void invokeFixturesDraw() {
   invokeFixturesDrawFinished = false;
-  for (int ai = 0; ai < fixtures.size(); ai++) if(memoriesFinished) fixtures.get(ai).draw();
-    else { while(!memoriesFinished){} ai--; }
+  for (fixture fix : fixtures.iterate()) if(memoriesFinished) fix.draw();
+    else { while(!memoriesFinished); }
   invokeFixturesDrawFinished = true;
 }
 
-
-ArrayList<Integer> idLookupTable;
+import java.util.TreeMap;
+import java.util.Map;
+import java.util.Collection;
+import java.util.Set;
+import java.util.Map.Entry;
 
 class FixtureArray {
   
   
  
   FixtureArray() {
-    array = new ArrayList<fixture>();
-    if(idLookupTable == null) idLookupTable = new ArrayList<Integer>();
+    array = new TreeMap<Integer, fixture>();
     //dummyFixture = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     
   }
   
-  ArrayList<fixture> array;
+  TreeMap<Integer, fixture> array;
   
   fixture dummyFixture;
   
+  
+  Collection<fixture> iterate() {
+    return array.values();
+  }
+  
+  Set<Entry<Integer, fixture>> iterateIDs() {
+    return array.entrySet();
+  }
+  
   void add(fixture newFix) {
     int newId = array.size();
-    array.add(newFix);
-    
-    if(idLookupTable.indexOf(newId) == -1) {
-      //Add to first empty place, if none found, add to new place
-      int newIndex = idLookupTable.indexOf(-1);
-      if(newIndex != -1) {
-        idLookupTable.set(newIndex, newId);
-      } else idLookupTable.add(newId);
-    }
+    array.put(newId, newFix);
   }
   
   void set(int id, fixture newFix) {
-    int newId = array.size();
-    array.add(newFix);
-    if(idLookupTable.indexOf(newId) == -1) {
-      idLookupTable.add(id, newId);
-    }
+    array.put(id, newFix);
   }
   
   
   void remove(int id) {
-    int idi = getArrayId(id);
-    array.remove(idi);
-    for(int i = 0; i < idLookupTable.size(); i++) {
-      if(idLookupTable.get(i) == idi) {
-        idLookupTable.set(i, -1);
-      }
-    }
-    for(int i = 0; i < idLookupTable.size(); i++) {
-      if(getArrayId(i) > idi) {
-        idLookupTable.set(i, getArrayId(i)-1);
-      }
-    }
-    
+    array.remove(id);
     if(currentBottomMenuControlBoxOwner == id) bottomMenuControlBoxOpen = false;
   }
   
   
-  int getArrayId(int fid) {
-    if(fid < idLookupTable.size() && fid >= 0)
-      return idLookupTable.get(fid);
-    else return -1;
-  }
-  
   fixture get(int fid) {
-    int result = getArrayId(fid);
-    if(result != -1 && result < array.size()) return array.get(result);
-      else {
-        if(dummyFixture == null) dummyFixture = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        dummyFixture.size.isDrawn = false;
-        return dummyFixture;
-      }
+    if(array.containsKey(fid)) {
+      return array.get(fid);
+    } else {
+      if(dummyFixture == null) dummyFixture = new fixture(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+      dummyFixture.size.isDrawn = false;
+      return dummyFixture;
+    }
     
   }
   
   
   int size() {
-    return idLookupTable.size();
+    return most() +1;
   }
   
-  void clearThis() {
-    for(fixture fix : array) fix = null;
+  int mapSize() {
+    return array.size();
   }
+  
+  //Todo: replace a lot of fixtures.size()s to fixture.most()
+  int most() {
+    return array.lastEntry().getKey();
+  }
+  
   
   void clear() {
     array.clear();
-    idLookupTable.clear();
   }
   
 }
@@ -932,8 +918,11 @@ void removeFixtureFromCM() {
 }
 
 void removeAllSelectedFixtures() {
-  for(int i = 0; i < fixtures.size(); i++) {
-    if(fixtures.get(i).selected) fixtures.remove(i);
+  for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+    fixture fix = entry.getValue();
+    int i = entry.getKey();
+    
+    if(fix.selected) fixtures.remove(i);
   }
 }
 

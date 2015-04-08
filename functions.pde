@@ -320,10 +320,10 @@ boolean inBoundsCircle(int cPosX, int cPosY, int cRadius, int pointerX, int poin
 void setValuesToSelected() {
   if (bottomMenuAllFixtures && bottomMenuControlBoxOpen) {
     int a = 0;
-    for(int i = 0; i < fixtures.size(); i++) {
-      if(fixtures.get(i).selected) {
-        for(int j = 0; j < fixtures.get(i).in.DMXlength; j++) {
-          fixtures.get(i).bottomMenu.setUniversalDMX(j, fixtureForSelected[a].bottomMenu.getUniversalDMX(j));
+    for(fixture fix : fixtures.iterate()) {
+      if(fix.selected) {
+        for(int j = 0; j < fix.in.DMXlength; j++) {
+          fix.bottomMenu.setUniversalDMX(j, fixtureForSelected[a].bottomMenu.getUniversalDMX(j));
         }
       }
     }
