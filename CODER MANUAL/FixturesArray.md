@@ -3,10 +3,10 @@
 The FixturesArray -class is an originally ArrayList, but now TreeMap wrapper for the Fixture class. It provides a nice interface (no, not Java Interface :smile:) for the TreeView -class tailored to the needs of this software.
 
 ##Functions
-####Collection_<fixture_> iterate()
+####Collection< fixture > iterate()
 Returns an iterable collection of all the fixtures contained in this instance.
 
-####Set_<Map.Entry<Integer, fixture_>> iterateIDs()
+####Set< Map.Entry< Integer, fixture > > iterateIDs()
 Returns an iterable Set of Map.Entries, which provide both the id of the fixture, and the fixture itself.
 You can retrieve the ID, or the fixture with Entry.getKey() and Entry.getValue() respectively.
 **Notice: There is a bug in Processing (atleast 2.x), where using the diamond symbol (_<Classes here..._>) doesn't work with indirectly referenced classes, ie Map.Entry, so I have imported java.util.Map.Entry as well.**
