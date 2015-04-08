@@ -21,7 +21,7 @@ Adds or replaces a fixture with the specified ID. _Will replace existing!_
 Removes a fixture with the specified ID.
 
 ####fixture get(int id)
-Gets a fixture at this position. If none found, will return dummyFixture, which is a plain fixture with it's isDrawn set to false.
+Gets a fixture at this position. If none found, will return dummyFixture, which is a plain fixture with its isDrawn set to false.
 
 ####int size()
 Returns the size of the map according to its highest ID.
@@ -36,7 +36,7 @@ Clears the map. **Removes _ALL_ fixtures!**
 ##How to iterate (specific to [this](https://github.com/eliasjhojala/DMX-lighting-controller) project)
 Since FixturesArray implements Iterable, the simplest way of iterating through it is:
 ```processing
-for(fixture fix : (FixtureArray)) {
+for(fixture fix : FixtureArray) {
   //code here...
 }
 ```
@@ -46,7 +46,7 @@ You can also use `FixtureArray.iterate()`, but this is deprecated, and is techni
 
 However, the methods above don't provide access to the ID of the fixture. In order to accomplish that, you can use:
 ```processing
-for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
+for(Entry<Integer, fixture> entry : FixtureArray.iterateIDs()) {
   int i = entry.getKey();
   fixture fix = entry.getValue();
   
