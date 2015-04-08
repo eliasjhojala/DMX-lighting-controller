@@ -160,10 +160,13 @@ import java.util.Map;
 import java.util.Collection;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Iterator;
 
-class FixtureArray {
+class FixtureArray implements Iterable<fixture> {
   
-  
+  Iterator<fixture> iterator() {
+    return array.values().iterator();
+  }
  
   FixtureArray() {
     array = new TreeMap<Integer, fixture>();
@@ -222,7 +225,9 @@ class FixtureArray {
   
   //Todo: replace a lot of fixtures.size()s to fixture.most()
   int most() {
-    return array.lastEntry().getKey();
+    if(!array.isEmpty())
+      return array.lastKey();
+    else return -1;
   }
   
   

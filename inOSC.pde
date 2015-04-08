@@ -145,7 +145,7 @@ void oscEvent(OscMessage theOscMessage) {
            }
            
            if(addr.equals("/fixtureSettings/f")) {
-             for(fixture fix : fixtures.iterate()) {
+             for(fixture fix : fixtures) {
                if(fix.selected) {
                  fix.z_location += round(map(digitalValue, 0, 1, -sensity, sensity));
                  fix.in.setUniversalDMX(1, 255);
