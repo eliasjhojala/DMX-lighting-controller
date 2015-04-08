@@ -178,7 +178,7 @@ class FixtureArray implements Iterable<fixture> {
   
   fixture dummyFixture;
   
-  
+  //Deprecated. FixtureArray now implements Iterable itself.
   Collection<fixture> iterate() {
     return array.values();
   }
