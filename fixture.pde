@@ -188,7 +188,7 @@ class FixtureArray implements Iterable<fixture> {
   }
   
   void add(fixture newFix) {
-    int newId = array.size();
+    int newId = size();
     array.put(newId, newFix);
   }
   
@@ -923,11 +923,18 @@ void removeFixtureFromCM() {
 }
 
 void removeAllSelectedFixtures() {
+  //Gather all selected fixtures to an Integer ArrayList
+  ArrayList<Integer> idsToRemove = new ArrayList<Integer>();
   for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
     fixture fix = entry.getValue();
     int i = entry.getKey();
     
-    if(fix.selected) fixtures.remove(i);
+    if(fix.selected) idsToRemove.add(i);
+  }
+  
+  //Remove all fixtures identified above
+  for(Integer i : idsToRemove) {
+    fixtures.remove(i);
   }
 }
 
