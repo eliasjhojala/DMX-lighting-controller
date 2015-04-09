@@ -1357,7 +1357,7 @@
             <int id="4" val="17"/>
             <int id="5" val="19"/>
           </content>
-          <stepData brightness="47" brightness1="3" step="4"/>
+          <stepData brightness="175" brightness1="11" step="2"/>
           <mainData fade="16" ownFade="118" value="255"/>
           <modeData fadeMode="1" inputMode="3" outputMode="1"/>
         </Chase>
@@ -1420,7 +1420,7 @@
             <int id="4" val="78"/>
             <int id="5" val="79"/>
           </content>
-          <stepData brightness="47" brightness1="3" step="2"/>
+          <stepData brightness="191" brightness1="12"/>
           <mainData fade="16" ownFade="118" value="255"/>
           <modeData beatModeId="4" fadeMode="1" inputMode="3" outputMode="1"/>
         </Chase>
@@ -1517,7 +1517,7 @@
           </stepsForChase2>
         </Chase>
       </Memory>
-      <Memory enabled="1" id="15" name="Blinder master" soloInThisMemory="0" specialType="0" type="9" value="145" valueOld="0">
+      <Memory enabled="0" id="15" name="Blinder master" soloInThisMemory="0" specialType="0" type="9" value="0" valueOld="0">
         <fixturesToSave>
           <int id="9" val="1"/>
           <int id="10" val="1"/>
@@ -1545,7 +1545,7 @@
           <memory val="17"/>
         </myMemories>
       </Memory>
-      <Memory enabled="1" id="17" name="Led master" soloInThisMemory="0" specialType="0" type="9" value="110" valueOld="0">
+      <Memory enabled="0" id="17" name="Led master" soloInThisMemory="0" specialType="0" type="9" value="0" valueOld="0">
         <fixturesToSave>
           <int id="74" val="1"/>
           <int id="75" val="1"/>
@@ -1583,10 +1583,10 @@
           </repOfFixtures>
         </Preset>
       </Memory>
-      <Memory enabled="1" id="33" name="blinder - led" soloInThisMemory="0" specialType="0" type="8" value="255" valueOld="0">
+      <Memory enabled="1" id="33" name="blinder - led" soloInThisMemory="0" specialType="0" type="8" value="0" valueOld="0">
         <Chase>
           <stepData brightness="145" brightness1="4"/>
-          <mainData fade="7" ownFade="102" value="255"/>
+          <mainData fade="7" ownFade="102"/>
           <modeData fadeMode="1"/>
           <stepsForChase2 size="2">
             <step val="15"/>
@@ -1878,10 +1878,10 @@
         <faderMemory>
           <z id="0">
             <row id="0">
-              <int id="1" val="7"/>
+              <int id="1" val="15"/>
             </row>
             <row id="1">
-              <int id="1" val="13"/>
+              <int id="1" val="17"/>
             </row>
             <row id="2"/>
             <row id="3"/>
@@ -2027,7 +2027,8 @@
         </faderMemory>
         <buttonMemory>
           <row id="0">
-            <int id="0" val="7"/>
+            <int id="0" val="15"/>
+            <int id="1" val="17"/>
           </row>
           <row id="1"/>
           <row id="2"/>

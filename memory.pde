@@ -335,7 +335,7 @@ class memory { //Begin of memory class------------------------------------------
     if(frameCount != lastFrame) {
       for(int i = 0; i < fixturesToSave.length; i++) {
         if(fixturesToSave[i]) {
-          fixtures.get(i).masters.append(value);
+          fixtures.get(i).masters.append(value*int(enabled));
         }
       }
       lastFrame = frameCount;
