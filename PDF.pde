@@ -5,7 +5,7 @@ void SaveChannelsAsPdf() {
   for(int i = 0; i < sockets.size(); i++) {
     sockets.get(i).isInActiveUse = false;
     for(fixture fix : fixtures.iterate()) {
-      if(fix.socket == sockets.get(i)) {
+      if(fix.socket.name.equals(sockets.get(i).name)) {
         sockets.get(i).isInActiveUse = true;
         break;
       }

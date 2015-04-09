@@ -28,7 +28,7 @@ void saveShowFileXML() {
   }
   
   if(!loadedTrussesFromExternalFile) {
-    block = xml.addChild("Fixtures");
+    block = xml.addChild("Trusses");
     block = block.addChild(getTrussesAsXML());
   }
   else if(trussesXML != null) {

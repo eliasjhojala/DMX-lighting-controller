@@ -177,6 +177,7 @@ void XMLtoSockets(XML xml) {
 		sockets.add(socketO);
 	}
   }
+    fixtureController.updateSockets();
 }
 
 IntList getListOfFixturesInTruss(int truss) {
