@@ -1420,7 +1420,7 @@
             <int id="4" val="78"/>
             <int id="5" val="79"/>
           </content>
-          <stepData brightness="79" brightness1="5" step="2"/>
+          <stepData brightness="175" brightness1="11"/>
           <mainData fade="16" ownFade="118"/>
           <modeData beatModeId="4" fadeMode="1" inputMode="3" outputMode="1"/>
         </Chase>
@@ -1430,7 +1430,13 @@
           <stepData step="1"/>
           <mainData/>
           <modeData inputMode="4"/>
-          <stepsForChase2 size="2">
+          <stepsForChase2 size="8">
+            <step val="10"/>
+            <step val="11"/>
+            <step val="10"/>
+            <step val="11"/>
+            <step val="10"/>
+            <step val="11"/>
             <step val="10"/>
             <step val="11"/>
           </stepsForChase2>
@@ -1441,7 +1447,13 @@
           <stepData/>
           <mainData/>
           <modeData inputMode="4"/>
-          <stepsForChase2 size="2">
+          <stepsForChase2 size="8">
+            <step val="3"/>
+            <step val="6"/>
+            <step val="3"/>
+            <step val="6"/>
+            <step val="3"/>
+            <step val="6"/>
             <step val="3"/>
             <step val="6"/>
           </stepsForChase2>
@@ -1493,13 +1505,19 @@
           <stepData brightness="255" brightness1="7" step="1"/>
           <mainData fade="7" ownFade="109"/>
           <modeData fadeMode="1" inputMode="3" outputMode="1"/>
-          <stepsForChase2 size="2">
+          <stepsForChase2 size="8">
+            <step val="10"/>
+            <step val="11"/>
+            <step val="10"/>
+            <step val="11"/>
+            <step val="10"/>
+            <step val="11"/>
             <step val="10"/>
             <step val="11"/>
           </stepsForChase2>
         </Chase>
       </Memory>
-      <Memory enabled="1" id="15" name="Blinder master" soloInThisMemory="0" specialType="0" type="9" value="255" valueOld="0">
+      <Memory enabled="1" id="15" name="Blinder master" soloInThisMemory="0" specialType="0" type="9" value="0" valueOld="0">
         <fixturesToSave>
           <int id="9" val="1"/>
           <int id="10" val="1"/>
@@ -1515,13 +1533,19 @@
           <int id="81" val="1"/>
         </fixturesToSave>
       </Memory>
-      <Memory enabled="1" id="16" name="" soloInThisMemory="0" specialType="0" type="10" value="255" valueOld="255">
-        <myMemories size="2">
+      <Memory enabled="1" id="16" name="" soloInThisMemory="0" specialType="0" type="10" value="0" valueOld="0">
+        <myMemories size="8">
+          <memory val="15"/>
+          <memory val="17"/>
+          <memory val="15"/>
+          <memory val="17"/>
+          <memory val="15"/>
+          <memory val="17"/>
           <memory val="15"/>
           <memory val="17"/>
         </myMemories>
       </Memory>
-      <Memory enabled="1" id="17" name="Led master" soloInThisMemory="0" specialType="0" type="9" value="255" valueOld="0">
+      <Memory enabled="1" id="17" name="Led master" soloInThisMemory="0" specialType="0" type="9" value="0" valueOld="0">
         <fixturesToSave>
           <int id="74" val="1"/>
           <int id="75" val="1"/>
@@ -1535,6 +1559,30 @@
       <Memory enabled="1" id="26" name="Full on" soloInThisMemory="0" specialType="1" type="7" value="0" valueOld="0"/>
       <Memory enabled="1" id="27" name="Black out" soloInThisMemory="0" specialType="2" type="7" value="0" valueOld="0"/>
       <Memory enabled="1" id="28" name="Fog now" soloInThisMemory="0" specialType="4" type="7" value="0" valueOld="0"/>
+      <Memory enabled="1" id="30" name="Etuvalo" soloInThisMemory="0" specialType="0" type="1" value="165" valueOld="0">
+        <Preset>
+          <mainData value="165" valueOld="165"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="0" val="1"/>
+            <int id="5" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="0">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="5">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+      </Memory>
     </Memories>
   </Memories>
   <Dimmers>
@@ -1548,7 +1596,7 @@
   <Elements>
     <elements>
       <element id="0">
-        <size x="901.0" y="699.0" z="31.0"/>
+        <size x="4.0" y="2.0" z="31.0"/>
         <location x="50.0" y="-404.0" z="0.0"/>
         <color b="0.0" g="21.0" r="50.0"/>
       </element>
@@ -1991,7 +2039,7 @@
       <Use3D>false</Use3D>
     </ThreeDee>
     <TwoDee>
-      <transform pageRotation="0" x_siirto="113.634155" y_siirto="703.3468" zoom="83.52073"/>
+      <transform pageRotation="0" x_siirto="694.3643" y_siirto="873.6062" zoom="119.7951"/>
     </TwoDee>
     <VisualisationOptions>
       <data showLeftButtons="1" showOldBottomMeu="0"/>

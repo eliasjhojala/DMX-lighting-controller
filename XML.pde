@@ -21,8 +21,7 @@ void saveShowFileXML() {
     block = block.addChild(getFixturesXML());
   }
   else if(fixturesXML != null) {
-    block = xml.addChild("Fixtures");
-    block = block.addChild(fixturesXML.getChild("Fixtures"));
+    block = xml.addChild(fixturesXML);
   }
   if(loadedFixturesFromExternalFile) {
     saveXML(getFixturesXML(), fixturesExternalFile);
@@ -33,8 +32,7 @@ void saveShowFileXML() {
     block = block.addChild(getTrussesAsXML());
   }
   else if(trussesXML != null) {
-    block = xml.addChild("Trusses");
-    block = block.addChild(trussesXML.getChild("Trusses"));
+    block = xml.addChild(trussesXML);
   }
   if(loadedTrussesFromExternalFile) {
     saveXML(getTrussesAsXML(), trussesExternalFile);
@@ -58,8 +56,7 @@ void saveShowFileXML() {
     block = block.addChild(getSocketsAsXML());
   }
   else if(socketsXML != null) {
-    block = xml.addChild("Sockets");
-    block = block.addChild(socketsXML.getChild("Sockets"));
+    block = xml.addChild(socketsXML);
   }
   if(loadedSocketsFromExternalFile) {
     saveXML(getSocketsAsXML(), socketsExternalFile);
