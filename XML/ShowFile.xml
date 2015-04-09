@@ -6,8 +6,8 @@
         <StartChannel>1</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="200" y="-5" z="0">
-          <OnScreen x="876" y="1201"/>
-          <Rotation x="128" z="15"/>
+          <OnScreen x="968" y="1423"/>
+          <Rotation x="128" z="14"/>
         </Location>
         <parameter>35</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
@@ -17,39 +17,25 @@
         <socket channel="1" exist="1" isInUse="0" name="H10" number="0" truss="2" x_location="234"/>
       </fixture>
       <fixture id="1">
-        <StartChannel>3</StartChannel>
+        <StartChannel>2</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
-        <Location x="287" y="5" z="0">
-          <OnScreen x="978" y="1190"/>
-          <Rotation x="128" z="0"/>
+        <Location x="314" y="5" z="0">
+          <OnScreen x="1102" y="1414"/>
+          <Rotation x="128" z="8"/>
         </Location>
         <parameter>76</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
-        <socket channel="3" exist="1" isInUse="0" name="H11" number="0" truss="2" x_location="263"/>
+        <socket channel="2" exist="1" isInUse="0" name="H11" number="0" truss="2" x_location="263"/>
       </fixture>
-      <fixture id="2">
+      <fixture id="4">
         <StartChannel>4</StartChannel>
-        <fixtureTypeId>4</fixtureTypeId>
-        <Location x="364" y="-6" z="0">
-          <OnScreen x="1055" y="1189"/>
-          <Rotation x="128" z="0"/>
-        </Location>
-        <parameter>45</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="255" g="255" r="255"/>
-        <parentAnsa>2</parentAnsa>
-        <socket channel="4" exist="1" isInUse="0" name="H13" number="0" truss="2" x_location="445"/>
-      </fixture>
-      <fixture id="3">
-        <StartChannel>4</StartChannel>
-        <fixtureTypeId>4</fixtureTypeId>
-        <Location x="544" y="-3" z="0">
-          <OnScreen x="1223" y="1192"/>
-          <Rotation x="128" z="0"/>
+        <fixtureTypeId>3</fixtureTypeId>
+        <Location x="599" y="9" z="0">
+          <OnScreen x="1394" y="1414"/>
+          <Rotation x="128" z="353"/>
         </Location>
         <parameter>45</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
@@ -58,145 +44,61 @@
         <parentAnsa>2</parentAnsa>
         <socket channel="4" exist="1" isInUse="0" name="H15" number="0" truss="2" x_location="605"/>
       </fixture>
-      <fixture id="4">
-        <StartChannel>3</StartChannel>
-        <fixtureTypeId>3</fixtureTypeId>
-        <Location x="628" y="9" z="0">
-          <OnScreen x="1295" y="1194"/>
-          <Rotation x="128" z="0"/>
-        </Location>
-        <parameter>45</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="255" g="255" r="255"/>
-        <parentAnsa>2</parentAnsa>
-        <socket channel="3" exist="1" isInUse="0" name="H16" number="0" truss="2" x_location="630"/>
-      </fixture>
       <fixture id="5">
-        <StartChannel>2</StartChannel>
+        <StartChannel>5</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="720" y="-1" z="0">
-          <OnScreen x="1375" y="1200"/>
-          <Rotation x="128" z="-15"/>
+          <OnScreen x="1506" y="1423"/>
+          <Rotation x="128" z="347"/>
         </Location>
         <parameter>16</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
-        <socket channel="2" exist="1" isInUse="0" name="H18" number="0" truss="2" x_location="766"/>
+        <socket channel="5" exist="1" isInUse="0" name="H18" number="0" truss="2" x_location="766"/>
       </fixture>
       <fixture id="6">
-        <StartChannel>18</StartChannel>
+        <StartChannel>3</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
-        <Location x="465" y="3" z="0">
-          <OnScreen x="1143" y="1188"/>
-          <Rotation x="185" z="361"/>
+        <Location x="465" y="8" z="0">
+          <OnScreen x="1257" y="1415"/>
+          <Rotation x="127" z="360"/>
         </Location>
         <parameter>-80</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
-        <socket channel="18" exist="1" isInUse="0" name="H14" number="0" truss="2" x_location="469"/>
+        <socket channel="3" exist="1" isInUse="0" name="H14" number="0" truss="2" x_location="469"/>
       </fixture>
       <fixture id="7">
-        <StartChannel>17</StartChannel>
-        <fixtureTypeId>2</fixtureTypeId>
-        <Location x="554" y="11" z="0">
-          <OnScreen x="1215" y="796"/>
+        <StartChannel>9</StartChannel>
+        <fixtureTypeId>3</fixtureTypeId>
+        <Location x="705" y="10" z="0">
+          <OnScreen x="1497" y="651"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
         <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="0" g="0" r="255"/>
+        <Color b="255" g="255" r="255"/>
         <parentAnsa>1</parentAnsa>
-        <socket channel="17" exist="1" isInUse="0" name="H17" number="0" truss="1" x_location="526"/>
+        <socket channel="9" exist="1" isInUse="0" name="H20" number="0" truss="1" x_location="646"/>
       </fixture>
       <fixture id="8">
-        <StartChannel>16</StartChannel>
-        <fixtureTypeId>2</fixtureTypeId>
-        <Location x="399" y="11" z="0">
-          <OnScreen x="1071" y="796"/>
+        <StartChannel>6</StartChannel>
+        <fixtureTypeId>3</fixtureTypeId>
+        <Location x="185" y="9" z="0">
+          <OnScreen x="973" y="650"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
         <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="0" g="0" r="255"/>
+        <Color b="255" g="255" r="255"/>
         <parentAnsa>1</parentAnsa>
-        <socket channel="16" exist="1" isInUse="0" name="H12" number="0" truss="1" x_location="397"/>
-      </fixture>
-      <fixture id="9">
-        <StartChannel>6</StartChannel>
-        <fixtureTypeId>3</fixtureTypeId>
-        <Location x="391" y="5" z="0">
-          <OnScreen x="1068" y="591"/>
-          <Rotation x="252" z="0"/>
-        </Location>
-        <parameter>-80</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>7</parentAnsa>
-        <socket channel="6" exist="1" isInUse="0" name="H2" number="0" truss="3" x_location="-16"/>
-      </fixture>
-      <fixture id="10">
-        <StartChannel>8</StartChannel>
-        <fixtureTypeId>3</fixtureTypeId>
-        <Location x="549" y="5" z="0">
-          <OnScreen x="1215" y="591"/>
-          <Rotation x="252" z="0"/>
-        </Location>
-        <parameter>-80</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>7</parentAnsa>
-        <socket channel="8" exist="1" isInUse="0" name="H4" number="0" truss="3" x_location="421"/>
-      </fixture>
-      <fixture id="11">
-        <StartChannel>7</StartChannel>
-        <fixtureTypeId>5</fixtureTypeId>
-        <Location x="448" y="17" z="0">
-          <OnScreen x="1127" y="583"/>
-          <Rotation x="253" z="0"/>
-        </Location>
-        <parameter>45</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>7</parentAnsa>
-        <socket channel="7" exist="1" isInUse="0" name="H3" number="0" truss="3" x_location="137"/>
-      </fixture>
-      <fixture id="12">
-        <StartChannel>7</StartChannel>
-        <fixtureTypeId>5</fixtureTypeId>
-        <Location x="490" y="17" z="0">
-          <OnScreen x="1166" y="583"/>
-          <Rotation x="253" z="0"/>
-        </Location>
-        <parameter>45</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>7</parentAnsa>
-        <socket channel="7" exist="1" isInUse="0" name="H3" number="0" truss="3" x_location="137"/>
-      </fixture>
-      <fixture id="13">
-        <StartChannel>5</StartChannel>
-        <fixtureTypeId>1</fixtureTypeId>
-        <Location x="83" y="6" z="0">
-          <OnScreen x="787" y="983"/>
-          <Rotation x="252" z="-11"/>
-        </Location>
-        <parameter>45</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>6</parentAnsa>
-        <socket channel="5" exist="1" isInUse="0" name="H1" number="0" truss="3" x_location="-39"/>
+        <socket channel="6" exist="1" isInUse="0" name="H7" number="0" truss="1" x_location="168"/>
       </fixture>
       <fixture id="14">
         <StartChannel>0</StartChannel>
@@ -211,90 +113,6 @@
         <Color b="0" g="0" r="0"/>
         <parentAnsa>0</parentAnsa>
         <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
-      </fixture>
-      <fixture id="15">
-        <StartChannel>20</StartChannel>
-        <fixtureTypeId>1</fixtureTypeId>
-        <Location x="293" y="1" z="0">
-          <OnScreen x="978" y="707"/>
-          <Rotation x="254" z="0"/>
-        </Location>
-        <parameter>45</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>0</parentAnsa>
-        <socket channel="20" exist="1" isInUse="0" name="D2" number="0" truss="8" x_location="462"/>
-      </fixture>
-      <fixture id="16">
-        <StartChannel>22</StartChannel>
-        <fixtureTypeId>1</fixtureTypeId>
-        <Location x="506" y="2" z="0">
-          <OnScreen x="1176" y="708"/>
-          <Rotation x="254" z="0"/>
-        </Location>
-        <parameter>45</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>0</parentAnsa>
-        <socket channel="22" exist="1" isInUse="0" name="D4" number="0" truss="8" x_location="507"/>
-      </fixture>
-      <fixture id="17">
-        <StartChannel>23</StartChannel>
-        <fixtureTypeId>1</fixtureTypeId>
-        <Location x="608" y="0" z="0">
-          <OnScreen x="1271" y="706"/>
-          <Rotation x="254" z="0"/>
-        </Location>
-        <parameter>45</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>0</parentAnsa>
-        <socket channel="23" exist="1" isInUse="0" name="D5" number="0" truss="8" x_location="531"/>
-      </fixture>
-      <fixture id="18">
-        <StartChannel>9</StartChannel>
-        <fixtureTypeId>1</fixtureTypeId>
-        <Location x="874" y="5" z="0">
-          <OnScreen x="1514" y="987"/>
-          <Rotation x="252" z="11"/>
-        </Location>
-        <parameter>45</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>6</parentAnsa>
-        <socket channel="9" exist="1" isInUse="0" name="H5" number="0" truss="3" x_location="687"/>
-      </fixture>
-      <fixture id="19">
-        <StartChannel>24</StartChannel>
-        <fixtureTypeId>5</fixtureTypeId>
-        <Location x="877" y="16" z="0">
-          <OnScreen x="1530" y="693"/>
-          <Rotation x="254" z="0"/>
-        </Location>
-        <parameter>45</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>0</parentAnsa>
-        <socket channel="24" exist="1" isInUse="0" name="D6" number="0" truss="8" x_location="554"/>
-      </fixture>
-      <fixture id="20">
-        <StartChannel>19</StartChannel>
-        <fixtureTypeId>5</fixtureTypeId>
-        <Location x="73" y="16" z="0">
-          <OnScreen x="782" y="693"/>
-          <Rotation x="254" z="0"/>
-        </Location>
-        <parameter>45</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>0</parentAnsa>
-        <socket channel="19" exist="1" isInUse="0" name="D1" number="0" truss="8" x_location="438"/>
       </fixture>
       <fixture id="21">
         <StartChannel>0</StartChannel>
@@ -982,20 +800,6 @@
         <parentAnsa>0</parentAnsa>
         <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
       </fixture>
-      <fixture id="70">
-        <StartChannel>0</StartChannel>
-        <fixtureTypeId>0</fixtureTypeId>
-        <Location x="0" y="0" z="0">
-          <OnScreen x="0" y="0"/>
-          <Rotation x="0" z="0"/>
-        </Location>
-        <parameter>0</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="0" g="0" r="0"/>
-        <parentAnsa>0</parentAnsa>
-        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
-      </fixture>
       <fixture id="71">
         <StartChannel>0</StartChannel>
         <fixtureTypeId>0</fixtureTypeId>
@@ -1042,13 +846,13 @@
         <StartChannel>100</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="73" y="4" z="0">
-          <OnScreen x="778" y="487"/>
-          <Rotation x="-48" z="0"/>
+          <OnScreen x="861" y="307"/>
+          <Rotation x="4" z="0"/>
         </Location>
         <parameter>0</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
         <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="255" g="0" r="191"/>
+        <Color b="255" g="255" r="191"/>
         <parentAnsa>3</parentAnsa>
         <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
       </fixture>
@@ -1056,13 +860,13 @@
         <StartChannel>108</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="248" y="2" z="0">
-          <OnScreen x="941" y="485"/>
-          <Rotation x="-48" z="0"/>
+          <OnScreen x="1037" y="305"/>
+          <Rotation x="4" z="0"/>
         </Location>
         <parameter>0</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
         <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="12" g="0" r="255"/>
+        <Color b="12" g="255" r="255"/>
         <parentAnsa>3</parentAnsa>
         <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
       </fixture>
@@ -1070,8 +874,8 @@
         <StartChannel>116</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="381" y="4" z="0">
-          <OnScreen x="1064" y="487"/>
-          <Rotation x="-48" z="0"/>
+          <OnScreen x="1171" y="307"/>
+          <Rotation x="4" z="0"/>
         </Location>
         <parameter>0</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
@@ -1084,8 +888,8 @@
         <StartChannel>124</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="582" y="1" z="0">
-          <OnScreen x="1251" y="484"/>
-          <Rotation x="-48" z="0"/>
+          <OnScreen x="1374" y="304"/>
+          <Rotation x="4" z="0"/>
         </Location>
         <parameter>0</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
@@ -1098,13 +902,13 @@
         <StartChannel>132</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="728" y="0" z="0">
-          <OnScreen x="1387" y="483"/>
-          <Rotation x="-48" z="0"/>
+          <OnScreen x="1521" y="303"/>
+          <Rotation x="4" z="0"/>
         </Location>
         <parameter>0</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
         <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="255" g="113" r="0"/>
+        <Color b="255" g="255" r="0"/>
         <parentAnsa>3</parentAnsa>
         <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
       </fixture>
@@ -1112,13 +916,13 @@
         <StartChannel>140</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="887" y="2" z="0">
-          <OnScreen x="1535" y="485"/>
-          <Rotation x="-48" z="0"/>
+          <OnScreen x="1681" y="305"/>
+          <Rotation x="4" z="0"/>
         </Location>
         <parameter>0</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
         <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="255" g="0" r="191"/>
+        <Color b="255" g="255" r="191"/>
         <parentAnsa>3</parentAnsa>
         <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
       </fixture>
@@ -1136,88 +940,46 @@
         <parentAnsa>0</parentAnsa>
         <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
       </fixture>
-      <fixture id="81">
-        <StartChannel>21</StartChannel>
-        <fixtureTypeId>1</fixtureTypeId>
-        <Location x="402" y="1" z="0">
-          <OnScreen x="1079" y="707"/>
-          <Rotation x="-106" z="0"/>
-        </Location>
-        <parameter>0</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="146" g="255" r="255"/>
-        <parentAnsa>0</parentAnsa>
-        <socket channel="21" exist="1" isInUse="0" name="D3" number="0" truss="8" x_location="485"/>
-      </fixture>
-      <fixture id="82">
-        <StartChannel>30</StartChannel>
-        <fixtureTypeId>9</fixtureTypeId>
-        <Location x="475" y="-16" z="0">
-          <OnScreen x="1124" y="431"/>
-          <Rotation x="87" z="900"/>
-        </Location>
-        <parameter>0</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="1" g="255" r="255"/>
-        <parentAnsa>3</parentAnsa>
-        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
-      </fixture>
-      <fixture id="83">
-        <StartChannel>31</StartChannel>
-        <fixtureTypeId>8</fixtureTypeId>
-        <Location x="150" y="19" z="0">
-          <OnScreen x="813" y="482"/>
-          <Rotation x="-268" z="135"/>
-        </Location>
-        <parameter>0</parameter>
-        <preFadeSpeed>1000</preFadeSpeed>
-        <postFadeSpeed>5000</postFadeSpeed>
-        <Color b="0" g="255" r="255"/>
-        <parentAnsa>3</parentAnsa>
-        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
-      </fixture>
       <fixture id="84">
-        <StartChannel>35</StartChannel>
-        <fixtureTypeId>7</fixtureTypeId>
-        <Location x="495" y="123" z="0">
-          <OnScreen x="1175" y="796"/>
-          <Rotation x="-114" z="360"/>
+        <StartChannel>8</StartChannel>
+        <fixtureTypeId>4</fixtureTypeId>
+        <Location x="567" y="1" z="0">
+          <OnScreen x="1364" y="652"/>
+          <Rotation x="-176" z="360"/>
         </Location>
         <parameter>0</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
-        <parentAnsa>0</parentAnsa>
-        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+        <parentAnsa>1</parentAnsa>
+        <socket channel="8" exist="1" isInUse="0" name="H17" number="0" truss="1" x_location="526"/>
       </fixture>
       <fixture id="85">
-        <StartChannel>37</StartChannel>
-        <fixtureTypeId>9</fixtureTypeId>
-        <Location x="435" y="114" z="0">
-          <OnScreen x="1119" y="816"/>
-          <Rotation x="0" z="0"/>
+        <StartChannel>7</StartChannel>
+        <fixtureTypeId>4</fixtureTypeId>
+        <Location x="324" y="1" z="0">
+          <OnScreen x="1119" y="652"/>
+          <Rotation x="184" z="0"/>
         </Location>
         <parameter>0</parameter>
         <preFadeSpeed>1000</preFadeSpeed>
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
-        <parentAnsa>0</parentAnsa>
-        <socket channel="0" exist="0" isInUse="0" name="" number="0" truss="0" x_location="0"/>
+        <parentAnsa>1</parentAnsa>
+        <socket channel="7" exist="1" isInUse="0" name="H9" number="0" truss="1" x_location="282"/>
       </fixture>
     </fixtures>
   </Fixtures>
   <Trusses>
     <Trusses id="9">
       <Truss length="1000" type="1">
-        <location x="0.0" y="-116.0" z="400.0"/>
+        <location x="0.0" y="-120.0" z="1510.0"/>
       </Truss>
       <Truss length="1000" type="1">
-        <location x="0.0" y="-10.0" z="660.0"/>
+        <location x="0.0" y="-10.0" z="1530.0"/>
       </Truss>
       <Truss length="1000" type="1">
-        <location x="2.0" y="408.99997" z="1390.0"/>
+        <location x="2.0" y="750.0" z="1390.0"/>
       </Truss>
       <Truss length="1000" type="0">
         <location x="5.0" y="-346.0" z="-910.0"/>
@@ -1347,24 +1109,9 @@
       </memoryControllerLookupTable>
       <Memory enabled="1" id="1" name="" soloInThisMemory="0" specialType="0" type="4" value="255" valueOld="0"/>
       <Memory enabled="1" id="2" name="" soloInThisMemory="0" specialType="0" type="5" value="0" valueOld="0"/>
-      <Memory enabled="1" id="3" name="Blind 6step" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
-        <Chase>
-          <content>
-            <int id="0" val="20"/>
-            <int id="1" val="15"/>
-            <int id="2" val="81"/>
-            <int id="3" val="16"/>
-            <int id="4" val="17"/>
-            <int id="5" val="19"/>
-          </content>
-          <stepData brightness="47" brightness1="3" step="4"/>
-          <mainData fade="16" ownFade="118" value="255"/>
-          <modeData fadeMode="1" inputMode="3" outputMode="1"/>
-        </Chase>
-      </Memory>
-      <Memory enabled="1" id="4" name="Led dimmer" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+      <Memory enabled="1" id="4" name="Led dimmers" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
         <Preset>
-          <mainData value="0" valueOld="0"/>
+          <mainData value="255" valueOld="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -1410,167 +1157,31 @@
           </repOfFixtures>
         </Preset>
       </Memory>
-      <Memory enabled="1" id="6" name="Led 6step" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
-        <Chase>
-          <content>
-            <int id="0" val="74"/>
-            <int id="1" val="75"/>
-            <int id="2" val="76"/>
-            <int id="3" val="77"/>
-            <int id="4" val="78"/>
-            <int id="5" val="79"/>
-          </content>
-          <stepData brightness="47" brightness1="3" step="2"/>
-          <mainData fade="16" ownFade="118" value="255"/>
-          <modeData beatModeId="4" fadeMode="1" inputMode="3" outputMode="1"/>
-        </Chase>
-      </Memory>
-      <Memory enabled="1" id="7" name="blind 4step - led 4 step" soloInThisMemory="0" specialType="0" type="8" value="0" valueOld="0">
-        <Chase>
-          <stepData step="1"/>
-          <mainData/>
-          <modeData inputMode="4"/>
-          <stepsForChase2 size="8">
-            <step val="10"/>
-            <step val="11"/>
-            <step val="10"/>
-            <step val="11"/>
-            <step val="10"/>
-            <step val="11"/>
-            <step val="10"/>
-            <step val="11"/>
-          </stepsForChase2>
-        </Chase>
-      </Memory>
-      <Memory enabled="1" id="8" name="blind 6step - led 6step" soloInThisMemory="0" specialType="0" type="8" value="0" valueOld="0">
-        <Chase>
-          <stepData/>
-          <mainData/>
-          <modeData inputMode="4"/>
-          <stepsForChase2 size="8">
-            <step val="3"/>
-            <step val="6"/>
-            <step val="3"/>
-            <step val="6"/>
-            <step val="3"/>
-            <step val="6"/>
-            <step val="3"/>
-            <step val="6"/>
-          </stepsForChase2>
-        </Chase>
-      </Memory>
-      <Memory enabled="1" id="10" name="Led 4step" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
-        <Chase>
-          <content>
-            <int id="0" val="75"/>
-            <int id="1" val="76"/>
-            <int id="2" val="77"/>
-            <int id="3" val="78"/>
-          </content>
-          <stepData brightness="207" brightness1="13"/>
-          <mainData fade="16" ownFade="129"/>
-          <modeData fadeMode="1"/>
-        </Chase>
-      </Memory>
-      <Memory enabled="1" id="11" name="Blind 4step" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
-        <Chase>
-          <content>
-            <int id="0" val="15"/>
-            <int id="1" val="81"/>
-            <int id="2" val="16"/>
-            <int id="3" val="17"/>
-          </content>
-          <stepData brightness="207" brightness1="13" step="2"/>
-          <mainData fade="16" ownFade="129"/>
-          <modeData fadeMode="1"/>
-        </Chase>
-      </Memory>
-      <Memory enabled="1" id="12" name="Rainbow" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
-        <Chase>
-          <content>
-            <int id="0" val="74"/>
-            <int id="1" val="75"/>
-            <int id="2" val="76"/>
-            <int id="3" val="77"/>
-            <int id="4" val="78"/>
-            <int id="5" val="79"/>
-          </content>
-          <stepData/>
-          <mainData fade="255" ownFade="255" value="255"/>
-          <modeData fadeMode="1" inputMode="3" outputMode="6"/>
-        </Chase>
-      </Memory>
-      <Memory enabled="1" id="13" name="blind 4step - led 4step" soloInThisMemory="0" specialType="0" type="8" value="0" valueOld="0">
-        <Chase>
-          <stepData brightness="182" brightness1="5" step="4"/>
-          <mainData fade="7" ownFade="109"/>
-          <modeData fadeMode="1" inputMode="3" outputMode="1"/>
-          <stepsForChase2 size="8">
-            <step val="10"/>
-            <step val="11"/>
-            <step val="10"/>
-            <step val="11"/>
-            <step val="10"/>
-            <step val="11"/>
-            <step val="10"/>
-            <step val="11"/>
-          </stepsForChase2>
-        </Chase>
-      </Memory>
-      <Memory enabled="1" id="15" name="Blinder master" soloInThisMemory="0" specialType="0" type="9" value="145" valueOld="0">
-        <fixturesToSave>
-          <int id="9" val="1"/>
-          <int id="10" val="1"/>
-          <int id="11" val="1"/>
-          <int id="12" val="1"/>
-          <int id="13" val="1"/>
-          <int id="15" val="1"/>
-          <int id="16" val="1"/>
-          <int id="17" val="1"/>
-          <int id="18" val="1"/>
-          <int id="19" val="1"/>
-          <int id="20" val="1"/>
-          <int id="81" val="1"/>
-        </fixturesToSave>
-      </Memory>
-      <Memory enabled="1" id="16" name="" soloInThisMemory="0" specialType="0" type="10" value="0" valueOld="0">
-        <myMemories size="8">
-          <memory val="15"/>
-          <memory val="17"/>
-          <memory val="15"/>
-          <memory val="17"/>
-          <memory val="15"/>
-          <memory val="17"/>
-          <memory val="15"/>
-          <memory val="17"/>
-        </myMemories>
-      </Memory>
-      <Memory enabled="1" id="17" name="Led master" soloInThisMemory="0" specialType="0" type="9" value="110" valueOld="0">
-        <fixturesToSave>
-          <int id="74" val="1"/>
-          <int id="75" val="1"/>
-          <int id="76" val="1"/>
-          <int id="77" val="1"/>
-          <int id="78" val="1"/>
-          <int id="79" val="1"/>
-        </fixturesToSave>
-      </Memory>
-      <Memory enabled="1" id="20" name="Strobe now" soloInThisMemory="0" specialType="3" type="7" value="0" valueOld="0"/>
-      <Memory enabled="1" id="26" name="Full on" soloInThisMemory="0" specialType="1" type="7" value="0" valueOld="0"/>
-      <Memory enabled="1" id="27" name="Black out" soloInThisMemory="0" specialType="2" type="7" value="0" valueOld="0"/>
-      <Memory enabled="1" id="28" name="Fog now" soloInThisMemory="0" specialType="4" type="7" value="0" valueOld="0"/>
-      <Memory enabled="1" id="30" name="Etuvalo" soloInThisMemory="0" specialType="0" type="1" value="0" valueOld="0">
+      <Memory enabled="1" id="7" name="Etuvalo" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
         <Preset>
-          <mainData value="0" valueOld="0"/>
+          <mainData value="255" valueOld="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
           <fixturesToSave>
             <int id="0" val="1"/>
+            <int id="1" val="1"/>
+            <int id="4" val="1"/>
             <int id="5" val="1"/>
+            <int id="6" val="1"/>
           </fixturesToSave>
           <repOfFixtures>
             <fixtureDMX id="0">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="1">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="4">
               <DMX>
                 <int id="1" val="255"/>
               </DMX>
@@ -1580,19 +1191,59 @@
                 <int id="1" val="255"/>
               </DMX>
             </fixtureDMX>
+            <fixtureDMX id="6">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
           </repOfFixtures>
         </Preset>
       </Memory>
-      <Memory enabled="1" id="33" name="blinder - led" soloInThisMemory="0" specialType="0" type="8" value="255" valueOld="0">
-        <Chase>
-          <stepData brightness="145" brightness1="4"/>
-          <mainData fade="7" ownFade="102" value="255"/>
-          <modeData fadeMode="1"/>
-          <stepsForChase2 size="2">
-            <step val="15"/>
-            <step val="17"/>
-          </stepsForChase2>
-        </Chase>
+      <Memory enabled="1" id="8" name="Lavavalo" soloInThisMemory="0" specialType="0" type="1" value="255" valueOld="0">
+        <Preset>
+          <mainData value="255" valueOld="255"/>
+          <whatToSave>
+            <int id="0" val="1"/>
+          </whatToSave>
+          <fixturesToSave>
+            <int id="7" val="1"/>
+            <int id="8" val="1"/>
+            <int id="84" val="1"/>
+            <int id="85" val="1"/>
+          </fixturesToSave>
+          <repOfFixtures>
+            <fixtureDMX id="7">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="8">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="84">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+            <fixtureDMX id="85">
+              <DMX>
+                <int id="1" val="255"/>
+              </DMX>
+            </fixtureDMX>
+          </repOfFixtures>
+        </Preset>
+      </Memory>
+      <Memory enabled="1" id="17" name="Led master" soloInThisMemory="0" specialType="0" type="9" value="255" valueOld="0">
+        <fixturesToSave>
+          <int id="74" val="1"/>
+          <int id="75" val="1"/>
+          <int id="76" val="1"/>
+          <int id="77" val="1"/>
+          <int id="78" val="1"/>
+          <int id="79" val="1"/>
+        </fixturesToSave>
       </Memory>
     </Memories>
   </Memories>
@@ -1601,7 +1252,6 @@
       <Dimmer numberOfChannels="6" phases="3" powerSocketId="1" startChannel="1"/>
       <Dimmer numberOfChannels="6" phases="3" powerSocketId="2" startChannel="7"/>
       <Dimmer numberOfChannels="6" phases="3" powerSocketId="3" startChannel="13"/>
-      <Dimmer numberOfChannels="6" phases="3" powerSocketId="1" startChannel="19"/>
     </dimmers>
   </Dimmers>
   <Elements>
@@ -1610,6 +1260,11 @@
         <size x="907.0" y="695.0" z="31.0"/>
         <location x="50.0" y="-404.0" z="0.0"/>
         <color b="0.0" g="21.0" r="50.0"/>
+      </element>
+      <element id="1">
+        <size x="30.0" y="30.0" z="0.0"/>
+        <location x="-734.0" y="640.0" z="0.0"/>
+        <color b="100.0" g="100.0" r="100.0"/>
       </element>
     </elements>
   </Elements>
@@ -1620,21 +1275,21 @@
       <socket channel="7" exist="1" id="2" isInUse="0" name="H3" number="0" truss="3" x_location="137"/>
       <socket channel="8" exist="1" id="3" isInUse="0" name="H4" number="0" truss="3" x_location="421"/>
       <socket channel="9" exist="1" id="4" isInUse="0" name="H5" number="0" truss="3" x_location="687"/>
-      <socket channel="0" exist="1" id="5" isInUse="0" name="H7" number="0" truss="1" x_location="168"/>
-      <socket channel="0" exist="1" id="6" isInUse="0" name="H9" number="0" truss="1" x_location="282"/>
+      <socket channel="6" exist="1" id="5" isInUse="0" name="H7" number="0" truss="1" x_location="168"/>
+      <socket channel="7" exist="1" id="6" isInUse="0" name="H9" number="0" truss="1" x_location="282"/>
       <socket channel="16" exist="1" id="7" isInUse="0" name="H12" number="0" truss="1" x_location="397"/>
-      <socket channel="17" exist="1" id="8" isInUse="0" name="H17" number="0" truss="1" x_location="526"/>
-      <socket channel="0" exist="1" id="9" isInUse="0" name="H20" number="0" truss="1" x_location="646"/>
+      <socket channel="8" exist="1" id="8" isInUse="0" name="H17" number="0" truss="1" x_location="526"/>
+      <socket channel="9" exist="1" id="9" isInUse="0" name="H20" number="0" truss="1" x_location="646"/>
       <socket channel="0" exist="1" id="10" isInUse="0" name="H22" number="0" truss="1" x_location="767"/>
       <socket channel="0" exist="1" id="11" isInUse="0" name="H6" number="0" truss="2" x_location="29"/>
       <socket channel="0" exist="1" id="12" isInUse="0" name="H8" number="0" truss="2" x_location="56"/>
       <socket channel="1" exist="1" id="13" isInUse="0" name="H10" number="0" truss="2" x_location="234"/>
-      <socket channel="3" exist="1" id="14" isInUse="0" name="H11" number="0" truss="2" x_location="263"/>
+      <socket channel="2" exist="1" id="14" isInUse="0" name="H11" number="0" truss="2" x_location="263"/>
       <socket channel="4" exist="1" id="15" isInUse="0" name="H13" number="0" truss="2" x_location="445"/>
-      <socket channel="18" exist="1" id="16" isInUse="0" name="H14" number="0" truss="2" x_location="469"/>
+      <socket channel="3" exist="1" id="16" isInUse="0" name="H14" number="0" truss="2" x_location="469"/>
       <socket channel="4" exist="1" id="17" isInUse="0" name="H15" number="0" truss="2" x_location="605"/>
       <socket channel="3" exist="1" id="18" isInUse="0" name="H16" number="0" truss="2" x_location="630"/>
-      <socket channel="2" exist="1" id="19" isInUse="0" name="H18" number="0" truss="2" x_location="766"/>
+      <socket channel="5" exist="1" id="19" isInUse="0" name="H18" number="0" truss="2" x_location="766"/>
       <socket channel="0" exist="1" id="20" isInUse="0" name="H19" number="0" truss="2" x_location="795"/>
       <socket channel="0" exist="1" id="21" isInUse="0" name="H21" number="0" truss="2" x_location="924"/>
       <socket channel="0" exist="1" id="22" isInUse="0" name="H23" number="0" truss="2" x_location="954"/>
@@ -1649,6 +1304,7 @@
   <OSCHandler>
     <OSChandler>
       <OSCMachine ipAddress="192.168.0.13" portIncoming="9000" portOutgoing="8000"/>
+      <OSCMachine ipAddress="192.168.0.17" portIncoming="9000" portOutgoing="8000"/>
     </OSChandler>
   </OSCHandler>
   <Midi>
@@ -2044,16 +1700,16 @@
   </Midi>
   <Visualisation>
     <ThreeDee>
-      <cam x="830.0" y="3949.0" z="1300.0"/>
+      <cam x="830.0" y="9379.0" z="1300.0"/>
       <center x="1165.0" y="-4550.0" z="0.0"/>
-      <rotation x="0.0" y="0.0" z="-611.0"/>
-      <Use3D>true</Use3D>
+      <rotation x="0.0" y="0.0" z="-478.0"/>
+      <Use3D>false</Use3D>
     </ThreeDee>
     <TwoDee>
-      <transform pageRotation="0" x_siirto="632.7478" y_siirto="773.49084" zoom="93.02868"/>
+      <transform pageRotation="0" x_siirto="756.66284" y_siirto="612.1271" zoom="100.72336"/>
     </TwoDee>
     <VisualisationOptions>
-      <data showLeftButtons="1" showOldBottomMeu="0"/>
+      <data showLeftButtons="1" showOldBottomMeu="1"/>
     </VisualisationOptions>
   </Visualisation>
 </ShowFile>
