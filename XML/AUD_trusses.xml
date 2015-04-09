@@ -4,13 +4,13 @@
     <location x="0.0" y="-349.475" z="400.0"/>
   </Truss>
   <Truss length="1000" type="1">
-    <location x="0.0" y="-99.798065" z="660.0"/>
+    <location x="0.0" y="-164.29431" z="660.0"/>
   </Truss>
   <Truss length="1000" type="1">
-    <location x="2.0" y="408.99997" z="1390.0"/>
+    <location x="2.0" y="34.92176" z="1390.0"/>
   </Truss>
   <Truss length="1000" type="0">
-    <location x="5.0" y="-603.4212" z="-910.0"/>
+    <location x="5.0" y="-549.6742" z="-910.0"/>
   </Truss>
   <Truss length="1000" type="0">
     <location x="0.0" y="75.16128" z="-1940.0"/>
@@ -19,10 +19,10 @@
     <location x="0.0" y="128.70966" z="80.0"/>
   </Truss>
   <Truss length="1000" type="0">
-    <location x="0.0" y="178.96771" z="0.0"/>
+    <location x="0.0" y="32.776283" z="0.0"/>
   </Truss>
   <Truss length="1000" type="0">
-    <location x="-5.0" y="-485.23724" z="-450.0"/>
+    <location x="-5.0" y="-447.61444" z="-450.0"/>
   </Truss>
   <Truss length="1000" type="0">
     <location x="-33.93136" y="-889.5247" z="0.0"/>

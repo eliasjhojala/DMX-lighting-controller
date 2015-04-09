@@ -1357,7 +1357,7 @@
             <int id="4" val="17"/>
             <int id="5" val="19"/>
           </content>
-          <stepData brightness="127" brightness1="8" step="3"/>
+          <stepData brightness="63" brightness1="4"/>
           <mainData fade="16" ownFade="118" value="255"/>
           <modeData fadeMode="1" inputMode="3" outputMode="1"/>
         </Chase>
@@ -1420,7 +1420,7 @@
             <int id="4" val="78"/>
             <int id="5" val="79"/>
           </content>
-          <stepData brightness="127" brightness1="8" step="1"/>
+          <stepData brightness="79" brightness1="5" step="4"/>
           <mainData fade="16" ownFade="118" value="255"/>
           <modeData beatModeId="4" fadeMode="1" inputMode="3" outputMode="1"/>
         </Chase>
@@ -2043,10 +2043,10 @@
   </Midi>
   <Visualisation>
     <ThreeDee>
-      <cam x="830.0" y="4009.0" z="1300.0"/>
+      <cam x="830.0" y="3949.0" z="1300.0"/>
       <center x="1165.0" y="-4550.0" z="0.0"/>
-      <rotation x="0.0" y="0.0" z="-605.0"/>
-      <Use3D>false</Use3D>
+      <rotation x="0.0" y="0.0" z="-611.0"/>
+      <Use3D>true</Use3D>
     </ThreeDee>
     <TwoDee>
       <transform pageRotation="0" x_siirto="632.7478" y_siirto="773.49084" zoom="93.02868"/>
