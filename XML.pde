@@ -5,6 +5,9 @@ String showFilePath = "XML/ShowFile.xml";
 boolean loadedFixturesFromExternalFile = false;
 String fixturesExternalFile = "";
 
+String trussesExternalFile = "";
+boolean loadedTrussesFromExternalFile = true;
+
 void saveShowFileXML() {
   String data = "<ShowFile></ShowFile>";
   XML xml = parseXML(data);
@@ -22,11 +25,23 @@ void saveShowFileXML() {
     saveXML(getFixturesXML(), fixturesExternalFile);
   }
   
+  if(!loadedTrussesFromExternalFile) {
+    block = xml.addChild("Fixtures");
+    block = block.addChild(getFixturesXML());
+  }
+  else if(trussesXML != null) {
+    block = xml.addChild("Trusses");
+    block = block.addChild(trussesXML.getChild("Trusses"));
+  }
+  if(loadedTrussesFromExternalFile) {
+    saveXML(getTrussesAsXML(), trussesExternalFile);
+  }
+  
   block = xml.addChild("Memories");
   block = block.addChild(getMemoriesAsXML());
   
-  block = xml.addChild("Trusses");
-  block = block.addChild(getTrussesAsXML());
+//  block = xml.addChild("Trusses");
+//  block = block.addChild(getTrussesAsXML());
   
   block = xml.addChild("Dimmers");
   block = block.addChild(dimmersAsXML());
@@ -59,6 +74,7 @@ void saveShowFileXML() {
 }
 
 XML fixturesXML;
+XML trussesXML;
 
 void loadShowFileFromXML() {
   XML xml = loadXML(showFilePath);
@@ -68,7 +84,9 @@ void loadShowFileFromXML() {
   fixturesXML = xml.getChild("Fixtures");
   XMLtoFixtures(fixturesXML.getChild("fixtures"));
   XMLtoMemories(xml.getChild("Memories").getChild("Memories"));
-  XMLtoTrusses(xml.getChild("Trusses").getChild("Trusses"));
+  
+  trussesXML = xml.getChild("Trusses");
+  XMLtoTrusses(trussesXML.getChild("Trusses"));
   XMLtoDimmers(xml.getChild("Dimmers").getChild("dimmers"));
   XMLtoElements(xml.getChild("Elements").getChild("elements"));
   XMLtoSockets(xml.getChild("Sockets").getChild("Sockets"));

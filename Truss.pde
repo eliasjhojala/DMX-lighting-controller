@@ -1,3 +1,5 @@
+
+
 TrussControllerWindow trussController = new TrussControllerWindow();
 
 class TrussControllerWindow {

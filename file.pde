@@ -112,6 +112,9 @@ class FileSelectWindow {
   boolean selectingFixtureFile = false;
   boolean selectingFixtureSaveFile = false;
   
+  boolean selectingTrussLoadFile = false;
+  boolean selectingTrussSaveFile = false;
+  
   FileSelect fileSelect = new FileSelect();
   
   FileSelectWindow() {
@@ -149,6 +152,36 @@ class FileSelectWindow {
         loadedFixturesFromExternalFile = true;
         selectingFixtureFile = false;
         }
+    }
+    
+    
+    
+    
+    g.translate(0, 60);
+    
+
+    PushButton trussLoadFile = new PushButton("trussLoadFile");
+    g.text("Open truss file", 30, 12);
+    if(trussLoadFile.isPressed(g, mouse)) { selectingTrussLoadFile = true; fileSelect = new FileSelect("Input", "Open truss file"); }
+    if(selectingTrussLoadFile) { if(fileSelect.pathChanged()) {
+        XMLtoTrusses(loadXML(fileSelect.getPath()));
+        trussesExternalFile = fileSelect.getPath();
+        selectingTrussLoadFile = false;
+        loadedTrussesFromExternalFile = true;
+      }
+    }
+    
+    
+    g.translate(0, 30);
+    PushButton trussSaveFile = new PushButton("trussSaveFile");
+    g.text("Save truss file", 30, 12);
+    if(trussSaveFile.isPressed(g, mouse)) { selectingTrussSaveFile = true; fileSelect = new FileSelect("Output", "Save truss file"); }
+    if(selectingTrussSaveFile) { if(fileSelect.pathChanged()) {
+        saveXML(getTrussesAsXML(), fileSelect.getPath());
+        trussesExternalFile = fileSelect.getPath();
+        selectingTrussSaveFile = false;
+        loadedTrussesFromExternalFile = true;
+      }
     }
     
   }
