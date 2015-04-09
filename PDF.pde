@@ -2,6 +2,16 @@ import processing.pdf.*;
 
 void SaveChannelsAsPdf() {
   
+  for(int i = 0; i < sockets.size(); i++) {
+    sockets.get(i).isInActiveUse = false;
+    for(fixture fix : fixtures.iterate()) {
+      if(fix.socket == sockets.get(i)) {
+        sockets.get(i).isInActiveUse = true;
+        break;
+      }
+    }
+  }
+  
   int count = 0;
   int usedChannels = 0;
   int curCh = -1;
@@ -59,9 +69,11 @@ void SaveChannelsAsPdf() {
     }
     
     for(int i = 0; i < sockets.size(); i++) {
-      Socket s = sockets.get(i);
-      Channel c = socketChannels.get(s.channel);
-      c.socketsInThisChannel.append(i);
+      if(sockets.get(i).isInActiveUse) {
+        Socket s = sockets.get(i);
+        Channel c = socketChannels.get(s.channel);
+        c.socketsInThisChannel.append(i);
+      }
     }
     
     h = 0;

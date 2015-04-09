@@ -61,6 +61,8 @@ class Socket {
   boolean exist = false;
   String name = "";
   
+  boolean isInActiveUse = false;
+  
   Socket(int number, int parentTruss, int x) {
     truss = parentTruss;
     id = number;
@@ -239,6 +241,7 @@ int[] findNearestSocket(int truss) {
         /*if(fix.isHalogen()) { */ sockets.get(nearestFoundSocket[i]).channel = fix.channelStart; /*}
         else { sockets.get(nearestFoundSocket[i]).channel = -2; }*/
         fix.socket = sockets.get(nearestFoundSocket[i]); println(fix.socket.name);
+        sockets.get(nearestFoundSocket[i]).channel = fix.channelStart;
       }
  }
   
