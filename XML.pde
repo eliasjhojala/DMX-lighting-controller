@@ -6,7 +6,10 @@ boolean loadedFixturesFromExternalFile = false;
 String fixturesExternalFile = "";
 
 String trussesExternalFile = "";
-boolean loadedTrussesFromExternalFile = true;
+boolean loadedTrussesFromExternalFile = false;
+
+String socketsExternalFile = "";
+boolean loadedSocketsFromExternalFile = false;
 
 void saveShowFileXML() {
   String data = "<ShowFile></ShowFile>";
@@ -27,7 +30,7 @@ void saveShowFileXML() {
   
   if(!loadedTrussesFromExternalFile) {
     block = xml.addChild("Fixtures");
-    block = block.addChild(getFixturesXML());
+    block = block.addChild(getTrussesAsXML());
   }
   else if(trussesXML != null) {
     block = xml.addChild("Trusses");
@@ -49,8 +52,22 @@ void saveShowFileXML() {
   block = xml.addChild("Elements");
   block = block.addChild(elementsAsXML());
   
-  block = xml.addChild("Sockets");
-  block = block.addChild(getSocketsAsXML());
+  
+  if(!loadedSocketsFromExternalFile) {
+    block = xml.addChild("Sockets");
+    block = block.addChild(getSocketsAsXML());
+  }
+  else if(socketsXML != null) {
+    block = xml.addChild("Sockets");
+    block = block.addChild(socketsXML.getChild("Sockets"));
+  }
+  if(loadedSocketsFromExternalFile) {
+    saveXML(getSocketsAsXML(), socketsExternalFile);
+  }
+  
+  
+//  block = xml.addChild("Sockets");
+//  block = block.addChild(getSocketsAsXML());
   
   block = xml.addChild("OSCHandler");
   block = block.addChild(oscHandler.getXML());
@@ -75,6 +92,7 @@ void saveShowFileXML() {
 
 XML fixturesXML;
 XML trussesXML;
+XML socketsXML;
 
 void loadShowFileFromXML() {
   XML xml = loadXML(showFilePath);
@@ -87,9 +105,13 @@ void loadShowFileFromXML() {
   
   trussesXML = xml.getChild("Trusses");
   XMLtoTrusses(trussesXML.getChild("Trusses"));
+  
   XMLtoDimmers(xml.getChild("Dimmers").getChild("dimmers"));
   XMLtoElements(xml.getChild("Elements").getChild("elements"));
-  XMLtoSockets(xml.getChild("Sockets").getChild("Sockets"));
+  
+  socketsXML = xml.getChild("Sockets");
+  XMLtoSockets(socketsXML.getChild("Sockets"));
+  
   oscHandler.XMLtoObject(xml.getChild("OSCHandler").getChild("OSChandler"));
   
   block = xml.getChild("Midi");

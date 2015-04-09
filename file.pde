@@ -115,6 +115,9 @@ class FileSelectWindow {
   boolean selectingTrussLoadFile = false;
   boolean selectingTrussSaveFile = false;
   
+  boolean selectingSocketLoadFile = false;
+  boolean selectingSocketSaveFile = false;
+  
   FileSelect fileSelect = new FileSelect();
   
   FileSelectWindow() {
@@ -184,5 +187,36 @@ class FileSelectWindow {
       }
     }
     
+    
+    g.translate(0, 60);
+    
+
+    PushButton socketLoadFile = new PushButton("socketLoadFile");
+    g.text("Open socket file", 30, 12);
+    if(socketLoadFile.isPressed(g, mouse)) { selectingSocketLoadFile = true; fileSelect = new FileSelect("Input", "Open socket file"); }
+    if(selectingSocketLoadFile) { if(fileSelect.pathChanged()) {
+        XMLtoSockets(loadXML(fileSelect.getPath()));
+        socketsExternalFile = fileSelect.getPath();
+        selectingSocketLoadFile = false;
+        loadedSocketsFromExternalFile = true;
+      }
+    }
+    
+    
+    g.translate(0, 30);
+    PushButton socketSaveFile = new PushButton("socketSaveFile");
+    g.text("Save socket file", 30, 12);
+    if(socketSaveFile.isPressed(g, mouse)) { selectingSocketSaveFile = true; fileSelect = new FileSelect("Output", "Save socket file"); }
+    if(selectingSocketSaveFile) { if(fileSelect.pathChanged()) {
+        saveXML(getSocketsAsXML(), fileSelect.getPath());
+        socketsExternalFile = fileSelect.getPath();
+        selectingSocketSaveFile = false;
+        loadedSocketsFromExternalFile = true;
+      }
+    }
+    
   }
+  
+  
+  
 }
