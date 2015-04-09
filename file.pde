@@ -149,11 +149,10 @@ class FileSelectWindow {
     g.text("Open fixture file", 30, 12);
     if(fixtureSaveFile.isPressed(g, mouse)) { selectingFixtureSaveFile = true; fileSelect = new FileSelect("Output", "Save fixture file"); }
     if(selectingFixtureSaveFile) { if(fileSelect.pathChanged()) {
-        saveXML(getFixturesXML(),
-        fileSelect.getPath());
+        saveXML(getFixturesXML(), fileSelect.getPath());
         fixturesExternalFile = fileSelect.getPath();
         loadedFixturesFromExternalFile = true;
-        selectingFixtureFile = false;
+        selectingFixtureSaveFile = false;
         }
     }
     

@@ -57,6 +57,10 @@ class FixtureControllerWindow {
   boolean addingNewAllowedTrussForWiring;
   
   void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+    if(!socketsDDM.open) {
+      updateSockets();
+      updateTrusses();
+    }
     window.draw(g, mouse);
     g.translate(60, 80);
     if(fix != null) {
