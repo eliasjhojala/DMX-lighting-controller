@@ -462,7 +462,7 @@ void createColorNames() {
   colorNames[23] = new colorName("coldWhite", 0, 50, 100, 255);
   colorNames[24] = new colorName("hotWhite", 100, 0, 0, 255);
   
-  colorNames[25] = new colorName("halogen", round(map((100, 0, 100, 0, 255)), round(map(37.3, 0, 100, 0, 255)), 0, 14); //Normal halogen without any colour foil
+  colorNames[25] = new colorName("halogen", round(map(100, 0, 100, 0, 255)), round(map(37.3, 0, 100, 0, 255)), 0, 14); //Normal halogen without any colour foil
 }
 
 int[] getColorFromName(String colour) {
