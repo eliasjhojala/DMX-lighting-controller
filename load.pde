@@ -2,8 +2,8 @@
 boolean dataLoaded = false;
 boolean programReadyToRun = false;
 
-boolean loadFast = !showMode;
-boolean loadSafe = showMode;
+boolean loadFast = false;
+boolean loadSafe = true;
 
 void loadAllData() {
   programReadyToRun = false;

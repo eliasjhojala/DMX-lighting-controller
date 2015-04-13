@@ -6,7 +6,7 @@
         <StartChannel>1</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="200" y="-5" z="0">
-          <OnScreen x="397" y="668"/>
+          <OnScreen x="411" y="669"/>
           <Rotation x="128" z="15"/>
         </Location>
         <parameter>35</parameter>
@@ -20,7 +20,7 @@
         <StartChannel>3</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="287" y="5" z="0">
-          <OnScreen x="476" y="659"/>
+          <OnScreen x="474" y="663"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>76</parameter>
@@ -34,7 +34,7 @@
         <StartChannel>4</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="364" y="-6" z="0">
-          <OnScreen x="535" y="659"/>
+          <OnScreen x="521" y="662"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -48,7 +48,7 @@
         <StartChannel>4</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="544" y="-3" z="0">
-          <OnScreen x="665" y="661"/>
+          <OnScreen x="625" y="664"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -62,7 +62,7 @@
         <StartChannel>3</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="628" y="9" z="0">
-          <OnScreen x="721" y="662"/>
+          <OnScreen x="669" y="665"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -76,7 +76,7 @@
         <StartChannel>2</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="720" y="-1" z="0">
-          <OnScreen x="783" y="667"/>
+          <OnScreen x="718" y="669"/>
           <Rotation x="128" z="-15"/>
         </Location>
         <parameter>16</parameter>
@@ -90,7 +90,7 @@
         <StartChannel>18</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="465" y="3" z="0">
-          <OnScreen x="603" y="658"/>
+          <OnScreen x="576" y="662"/>
           <Rotation x="185" z="361"/>
         </Location>
         <parameter>-80</parameter>
@@ -104,7 +104,7 @@
         <StartChannel>17</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="554" y="11" z="0">
-          <OnScreen x="659" y="355"/>
+          <OnScreen x="620" y="420"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -118,7 +118,7 @@
         <StartChannel>16</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="399" y="11" z="0">
-          <OnScreen x="548" y="355"/>
+          <OnScreen x="531" y="420"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -132,7 +132,7 @@
         <StartChannel>6</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="391" y="5" z="0">
-          <OnScreen x="545" y="196"/>
+          <OnScreen x="529" y="293"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -146,7 +146,7 @@
         <StartChannel>8</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="549" y="5" z="0">
-          <OnScreen x="659" y="196"/>
+          <OnScreen x="620" y="293"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -160,7 +160,7 @@
         <StartChannel>7</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="448" y="17" z="0">
-          <OnScreen x="591" y="190"/>
+          <OnScreen x="565" y="289"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -174,7 +174,7 @@
         <StartChannel>7</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="490" y="17" z="0">
-          <OnScreen x="621" y="190"/>
+          <OnScreen x="590" y="289"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -188,7 +188,7 @@
         <StartChannel>5</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="83" y="6" z="0">
-          <OnScreen x="328" y="499"/>
+          <OnScreen x="356" y="535"/>
           <Rotation x="252" z="-11"/>
         </Location>
         <parameter>45</parameter>
@@ -216,7 +216,7 @@
         <StartChannel>20</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="293" y="1" z="0">
-          <OnScreen x="476" y="286"/>
+          <OnScreen x="474" y="365"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -230,7 +230,7 @@
         <StartChannel>22</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="506" y="2" z="0">
-          <OnScreen x="629" y="286"/>
+          <OnScreen x="596" y="366"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -244,7 +244,7 @@
         <StartChannel>23</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="608" y="0" z="0">
-          <OnScreen x="702" y="285"/>
+          <OnScreen x="654" y="365"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -258,7 +258,7 @@
         <StartChannel>9</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="874" y="5" z="0">
-          <OnScreen x="890" y="503"/>
+          <OnScreen x="804" y="538"/>
           <Rotation x="252" z="11"/>
         </Location>
         <parameter>45</parameter>
@@ -272,7 +272,7 @@
         <StartChannel>24</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="877" y="16" z="0">
-          <OnScreen x="903" y="275"/>
+          <OnScreen x="814" y="356"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -286,7 +286,7 @@
         <StartChannel>19</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="73" y="16" z="0">
-          <OnScreen x="324" y="275"/>
+          <OnScreen x="353" y="356"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -1042,7 +1042,7 @@
         <StartChannel>100</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="73" y="4" z="0">
-          <OnScreen x="321" y="115"/>
+          <OnScreen x="350" y="229"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1056,7 +1056,7 @@
         <StartChannel>108</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="248" y="2" z="0">
-          <OnScreen x="447" y="114"/>
+          <OnScreen x="451" y="228"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1070,7 +1070,7 @@
         <StartChannel>116</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="381" y="4" z="0">
-          <OnScreen x="543" y="115"/>
+          <OnScreen x="527" y="229"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1084,7 +1084,7 @@
         <StartChannel>124</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="582" y="1" z="0">
-          <OnScreen x="687" y="113"/>
+          <OnScreen x="642" y="227"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1098,7 +1098,7 @@
         <StartChannel>132</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="728" y="0" z="0">
-          <OnScreen x="792" y="112"/>
+          <OnScreen x="726" y="227"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1112,7 +1112,7 @@
         <StartChannel>140</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="887" y="2" z="0">
-          <OnScreen x="907" y="114"/>
+          <OnScreen x="817" y="228"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1140,7 +1140,7 @@
         <StartChannel>21</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="402" y="1" z="0">
-          <OnScreen x="554" y="286"/>
+          <OnScreen x="536" y="365"/>
           <Rotation x="-106" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1154,7 +1154,7 @@
         <StartChannel>30</StartChannel>
         <fixtureTypeId>9</fixtureTypeId>
         <Location x="475" y="-16" z="0">
-          <OnScreen x="589" y="72"/>
+          <OnScreen x="564" y="195"/>
           <Rotation x="87" z="900"/>
         </Location>
         <parameter>0</parameter>
@@ -1168,7 +1168,7 @@
         <StartChannel>31</StartChannel>
         <fixtureTypeId>8</fixtureTypeId>
         <Location x="150" y="19" z="0">
-          <OnScreen x="348" y="112"/>
+          <OnScreen x="372" y="227"/>
           <Rotation x="-268" z="135"/>
         </Location>
         <parameter>0</parameter>
@@ -1182,7 +1182,7 @@
         <StartChannel>35</StartChannel>
         <fixtureTypeId>7</fixtureTypeId>
         <Location x="495" y="123" z="0">
-          <OnScreen x="628" y="355"/>
+          <OnScreen x="595" y="420"/>
           <Rotation x="-114" z="360"/>
         </Location>
         <parameter>0</parameter>
@@ -1196,7 +1196,7 @@
         <StartChannel>37</StartChannel>
         <fixtureTypeId>9</fixtureTypeId>
         <Location x="435" y="114" z="0">
-          <OnScreen x="585" y="370"/>
+          <OnScreen x="561" y="432"/>
           <Rotation x="0" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1410,7 +1410,7 @@
           </repOfFixtures>
         </Preset>
       </Memory>
-      <Memory enabled="1" id="6" name="Led 6step" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
+      <Memory enabled="1" id="6" name="Led 6step" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
         <Chase>
           <content>
             <int id="0" val="74"/>
@@ -1420,15 +1420,15 @@
             <int id="4" val="78"/>
             <int id="5" val="79"/>
           </content>
-          <stepData step="2"/>
-          <mainData ownFade="5" value="255"/>
+          <stepData step="4"/>
+          <mainData ownFade="5"/>
           <modeData beatModeId="4" fadeMode="1" inputMode="4"/>
         </Chase>
       </Memory>
-      <Memory enabled="1" id="7" name="blind 4step - led 4 step" soloInThisMemory="0" specialType="0" type="8" value="0" valueOld="0">
+      <Memory enabled="1" id="7" name="blind 4step - led 4 step" soloInThisMemory="0" specialType="0" type="8" value="255" valueOld="0">
         <Chase>
-          <stepData step="1"/>
-          <mainData/>
+          <stepData brightness="255" brightness1="2" step="5"/>
+          <mainData fade="2" value="255"/>
           <modeData inputMode="4"/>
           <stepsForChase2 size="8">
             <step val="10"/>
@@ -1459,7 +1459,7 @@
           </stepsForChase2>
         </Chase>
       </Memory>
-      <Memory enabled="1" id="10" name="Led 4step" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
+      <Memory enabled="1" id="10" name="Led 4stept" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
         <Chase>
           <content>
             <int id="0" val="75"/>
@@ -1467,12 +1467,12 @@
             <int id="2" val="77"/>
             <int id="3" val="78"/>
           </content>
-          <stepData step="2"/>
-          <mainData fade="255" ownFade="255"/>
+          <stepData brightness="175" brightness1="11" step="1"/>
+          <mainData fade="16" ownFade="127"/>
           <modeData fadeMode="1"/>
         </Chase>
       </Memory>
-      <Memory enabled="1" id="11" name="Blind 4step" soloInThisMemory="0" specialType="0" type="3" value="0" valueOld="0">
+      <Memory enabled="1" id="11" name="Blind 4step" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
         <Chase>
           <content>
             <int id="0" val="15"/>
@@ -1480,12 +1480,12 @@
             <int id="2" val="16"/>
             <int id="3" val="17"/>
           </content>
-          <stepData brightness="207" brightness1="13" step="2"/>
-          <mainData fade="16" ownFade="129"/>
+          <stepData brightness="223" brightness1="14" step="3"/>
+          <mainData fade="16" ownFade="129" value="255"/>
           <modeData fadeMode="1"/>
         </Chase>
       </Memory>
-      <Memory enabled="1" id="12" name="Rainbow" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
+      <Memory enabled="1" id="12" name="Rainbowm" soloInThisMemory="0" specialType="0" type="3" value="255" valueOld="0">
         <Chase>
           <content>
             <int id="0" val="74"/>
@@ -1517,7 +1517,7 @@
           </stepsForChase2>
         </Chase>
       </Memory>
-      <Memory enabled="0" id="15" name="Blinder master" soloInThisMemory="0" specialType="0" type="9" value="255" valueOld="0">
+      <Memory enabled="1" id="15" name="Blinder master" soloInThisMemory="0" specialType="0" type="9" value="255" valueOld="0">
         <fixturesToSave>
           <int id="9" val="1"/>
           <int id="10" val="1"/>
@@ -2095,10 +2095,10 @@
       <Use3D>false</Use3D>
     </ThreeDee>
     <TwoDee>
-      <transform pageRotation="0" x_siirto="72.60391" y_siirto="317.9276" zoom="72.003174"/>
+      <transform pageRotation="0" x_siirto="-3.9666896" y_siirto="425.82257" zoom="57.363308"/>
     </TwoDee>
     <VisualisationOptions>
-      <data showLeftButtons="0" showOldBottomMeu="1"/>
+      <data showLeftButtons="1" showOldBottomMeu="0"/>
     </VisualisationOptions>
   </Visualisation>
 </ShowFile>

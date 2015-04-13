@@ -582,6 +582,28 @@ class MemoryCreationBox {
               g.text("Solo", -14, 17);
           g.popMatrix();
         }
+        
+        g.pushMatrix();
+              g.translate(260, 80);
+              mouse.declareUpdateElementRelative("MemoryCreationBox:enabled", "MemoryCreationBox", 0, 0, 120, 25, g);
+              mouse.setElementExpire("MemoryCreationBox:enabled", 2);
+              boolean enabledBoxIsHover = mouse.elmIsHover("MemoryCreationBox:enabled");
+              g.fill(enabledBoxIsHover ? 210 : 200);
+              g.noStroke();
+              g.rect(0, 0, 25, 25, 4);
+              
+              if(mouse.isCaptured("MemoryCreationBox:enabled") && mouse.firstCaptureFrame) {
+                memories[selectedMemorySlot].enabled = !memories[selectedMemorySlot].enabled;
+              }
+              if(memories[selectedMemorySlot].enabled) {
+                g.fill(0, 186, 240);
+                g.rect(4, 4, 17, 17, 4);
+              }
+              g.fill(10);
+              g.text("Enabled", -22, 17);
+          g.popMatrix();
+          
+          
      switch(selectedMemoryMode) {
         case 0: //Preset
         {
