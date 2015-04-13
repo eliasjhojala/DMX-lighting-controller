@@ -685,6 +685,7 @@ class Preset { //Begin of Preset class
     boolean[] whatToSave = new boolean[saveOptionButtonVariables.length+10];
     boolean[] fixturesToSave = new boolean[fixtures.size()];
     FixtureDMX[] repOfFixtures = new FixtureDMX[fixtures.size()];
+    boolean firstTimeLoaded = false;
   //End of defining variables
   
   XML getXML() {
@@ -836,6 +837,8 @@ class Preset { //Begin of Preset class
     }
   }
   
+  int[] lastVal = new int[universalDMXlength];
+  
   void loadPreset() {
     if(!loadinMemoriesFromXML) {
       if(!soloIsOn || parent.soloInThisMemory) {
@@ -852,6 +855,10 @@ class Preset { //Begin of Preset class
                     if(jk < fix.preset.DMXlength) {
                       int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
                       fix.preset.setUniDMXfromPreset(jk, val);
+                      if(lastVal[jk] != val || (firstTimeLoaded && value > 0)) {
+                        fix.preset.uniDMXchChanged[jk] = true;
+                        lastVal[jk] = val;
+                      }
                       if(val > 0) {
                         if(parent.type == 1) {
                           fix.preset.preFade = round(float(fixtureOwnFade)/20);
@@ -877,6 +884,12 @@ class Preset { //Begin of Preset class
           }
         }
       }
+      }
+      if(value > 0) {
+        firstTimeLoaded = false;
+      }
+      else {
+        firstTimeLoaded = true;
       }
   }
   
@@ -1662,7 +1675,7 @@ class chase { //Begin of chase class--------------------------------------------
   boolean chaseWithStepsInsideIsCleared = false;
   void startCreatingChaseWidthStepsInside() { chaseWithStepsInsideCreating = true; parent.type = 6; chaseWithStepsInsideIsCleared = false; }
   void createNextStep(boolean[] newWhatToSave) {
-    Preset x = new Preset(this);
+    Preset x = new Preset(parent);
     steps.add(x);
     x.savePreset(newWhatToSave);
   }

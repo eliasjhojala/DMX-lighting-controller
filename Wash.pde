@@ -205,6 +205,11 @@ class ColorWashMenu {
                                 lastClickedColor = i*5+j;
                           }
                           g.rect(50*i, 30+50+a*40, 40, 30, 5); //Draw color rect
+                          g.pushStyle(); g.pushMatrix();
+                            g.fill(0);
+                            g.textSize(10);
+                            g.text(colorNames[activeColorNames[i*5+j]].name, 3+50*i, 10+30+50+a*40);
+                          g.popStyle(); g.popMatrix();
                         }
                       }
                     }
@@ -447,18 +452,18 @@ void createColorNames() {
   colorNames[6] = new colorName("pink", 255, 0, 100);
   colorNames[7] = new colorName("orange", 255, 100, 0);
   
-  colorNames[10] = new colorName("lightRed", 255, 0, 0, 255);
-  colorNames[11] = new colorName("lightGreen", 0, 255, 0, 255);
-  colorNames[12] = new colorName("lightBlue", 0, 0, 255, 255);
-  colorNames[13] = new colorName("lightYellow", 255, 255, 0, 255);
-  colorNames[14] = new colorName("lightCyan", 0, 255, 255, 255);
-  colorNames[15] = new colorName("lightLila", 255, 0, 255, 255);
-  colorNames[16] = new colorName("lightPink", 255, 0, 100, 255);
-  colorNames[17] = new colorName("lightOrange", 255, 100, 0, 255);
+  colorNames[10] = new colorName("lRed", 255, 0, 0, 255);
+  colorNames[11] = new colorName("lGreen", 0, 255, 0, 255);
+  colorNames[12] = new colorName("lBlue", 0, 0, 255, 255);
+  colorNames[13] = new colorName("lYellow", 255, 255, 0, 255);
+  colorNames[14] = new colorName("lCyan", 0, 255, 255, 255);
+  colorNames[15] = new colorName("lLila", 255, 0, 255, 255);
+  colorNames[16] = new colorName("lPink", 255, 0, 100, 255);
+  colorNames[17] = new colorName("lOrange", 255, 100, 0, 255);
   
   colorNames[20] = new colorName("amber", 100, 50, 0, 255); //Amber color for rgbw led
   colorNames[21] = new colorName("white", 255, 255, 255, 255); //The brightes possible white for rgbw leds
-  colorNames[22] = new colorName("clearWhite", 0, 0, 0, 255); //The clearest possible white for rgbw leds
+  colorNames[22] = new colorName("clrWhite", 0, 0, 0, 255); //The clearest possible white for rgbw leds
   colorNames[23] = new colorName("coldWhite", 0, 50, 100, 255);
   colorNames[24] = new colorName("hotWhite", 100, 0, 0, 255);
   

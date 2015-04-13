@@ -39,6 +39,7 @@ class FixtureDMX { //Class containig all the dmx values
   int[] DMXold = new int[DMXlength];
   int preFade, postFade;
   boolean DMXChanged;
+  boolean[] uniDMXchChanged = new boolean[DMXlength];
   
   
 /*  int dimmer; //dimmer value
@@ -61,7 +62,7 @@ class FixtureDMX { //Class containig all the dmx values
         newV = iMap(newV, 0, 255, 0, memoryMasterValue);
    
         
-        if (newV != DMXold[i]) {
+        if (newV != DMXold[i] || uniDMXchChanged[i]) {
           if(preFade > 0 || postFade > 0) {
             parent.setUniversalDMXwithFade(i, newV, preFade, postFade);
           }
@@ -70,6 +71,7 @@ class FixtureDMX { //Class containig all the dmx values
           }
           parent.DMXChanged = true;      
           DMXold[i] = newV; 
+          uniDMXchChanged[i] = false;
         }     
         
         setUniversalDMX(i, 0);
