@@ -108,14 +108,15 @@ void ylavalikko() {
       if(drawLeftSideButton(round, "Wash")) colorWashMenu.open = !colorWashMenu.open;
       translate(0, 120);
       if(drawLeftSideButton(round, "Help")) help.open = !help.open;
+       translate(0, 120);
+      if(drawLeftSideButton(round, "Files")) fileSelectWindow.open = !fileSelectWindow.open;
       translate(0, 120);
       if(drawLeftSideButton(round, "Control")) lowerMenu.open = !lowerMenu.open;
       translate(0, 120);
       if(drawLeftSideButton(round, "Power")) powerWindow.open = !powerWindow.open;
       translate(0, 120);
       if(drawLeftSideButton(round, "Dimmers")) dimmerWindow.open = !dimmerWindow.open;
-      translate(0, 120);
-      if(drawLeftSideButton(round, "Files")) fileSelectWindow.open = !fileSelectWindow.open;
+     
       
     popMatrix();
   } //End of buttons placed to left side
