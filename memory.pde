@@ -928,7 +928,7 @@ class Preset { //Begin of Preset class
 
 //chase mode variables--------------------------------------------------------------------------------------------------------
 
-  String[] outputModeDescs = { "inherit", "steps", "eq", "shaky", "sine", "sSine", "rainbow", "onoff" };
+  String[] outputModeDescs = { "inherit", "steps", "eq", "shaky", "sine", "sSine", "rainbow", "onoff", "random" };
 
   int[] inputModeLimit = { 1, 4 };
   int[] outputModeLimit = { 1, outputModeDescs.length-1 };
@@ -1239,6 +1239,7 @@ class chase { //Begin of chase class--------------------------------------------
             case 5: singleSine(); break;
             case 6: rainbow(); break;
             case 7: beatToLight(); break;
+            case 8: randomBlink(); break;
           }
         }
         
@@ -1445,6 +1446,27 @@ class chase { //Begin of chase class--------------------------------------------
       beatToLightValue = constrain(beatToLightValue-getInvertedValue(fade, 0, 255), 0, 255);
   }
   
+  int randomBlinkVal = 0;
+  int randomBlinkStep = 0;
+  long randomBlinkStart = 0;
+  boolean randomBlinkStarted = false;
+  
+  void randomBlink() {
+    if(trigger()) {
+      if(!randomBlinkStarted) {
+        randomBlinkStart = millis();
+        randomBlinkStarted = true;
+        randomBlinkVal = 255;
+        randomBlinkStep = getPresets()[randomWithoutSames(getPresets().length-1)];
+      }
+    }
+    if(millis() - randomBlinkStart > fade*10) {
+      randomBlinkVal = 0;
+      randomBlinkStarted = false;
+    }
+    loadPreset(randomBlinkStep, randomBlinkVal);
+  }
+  
   int lastDirection;
   final int REVERSE = 0;
   final int NEXT = 1;
@@ -1481,8 +1503,8 @@ class chase { //Begin of chase class--------------------------------------------
     if(lastDirection == REVERSE) { rS = getNext(step, 0, presets.length-1); }
     else { rS = getReverse(step, 0, presets.length-1); }
     if(presets.length > 0) {
-      loadPreset(presets[constrain(step, 0, onlyPositive(presets.length-1))], brightness);
-      loadPreset(presets[constrain(rS, 0, onlyPositive(presets.length-1))], getInvertedValue(brightness, 0, 255));
+      loadPreset(getPresets()[step], brightness);
+      loadPreset(getPresets()[rS], getInvertedValue(brightness, 0, 255));
     }
   }
   
@@ -1517,7 +1539,7 @@ class chase { //Begin of chase class--------------------------------------------
       for(int j = 0; j < randomIterations; j++) randomVal += int(random(-20, 20));
       randomVal /= randomIterations;
       
-      loadPreset(presets[i], defaultConstrain(getPresetValue(i) + randomVal));
+      loadPreset(getPresets()[i], defaultConstrain(getPresetValue(i) + randomVal));
       
     }
     
@@ -1576,7 +1598,7 @@ class chase { //Begin of chase class--------------------------------------------
     for(int i = 0; i <= sineMax; i++) {
       if(i < presets.length) { //No nullpointers anymore
         if(i < presets.length && i < sineValue.length) {
-          loadPreset(presets[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
+          loadPreset(getPresets()[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
         }
       }
     }

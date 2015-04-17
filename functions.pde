@@ -843,3 +843,15 @@ boolean isInIntList(int val, IntList list) {
   }
   return false;
 }
+
+
+int lastRandomWithoutSames = -1;
+
+int randomWithoutSames(int range) {
+  int rand = round(random(range));
+  while(rand == lastRandomWithoutSames) {
+    rand = round(random(range));
+  }
+  lastRandomWithoutSames = rand;
+  return rand;
+}
