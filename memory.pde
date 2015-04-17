@@ -130,6 +130,11 @@ class memory { //Begin of memory class------------------------------------------
   //TODO: memory containing memories
   
   
+  boolean isChase() {
+	return type == 2 || type == 3 || type == 6;
+  }
+  
+  
   //chase variables
   int value, valueOld; //memorys value
   int lastFrame;
@@ -840,6 +845,10 @@ class Preset { //Begin of Preset class
   int[] lastVal = new int[universalDMXlength];
   
   void loadPreset() {
+	loadPreset(0, 0);
+  }
+  
+  void loadPreset(int pre, int post) {
     if(!loadinMemoriesFromXML) {
       if(!soloIsOn || parent.soloInThisMemory) {
         if(XMLloadSucces) if(parent.type == 1 || parent.type == 6) {
@@ -859,16 +868,10 @@ class Preset { //Begin of Preset class
                         fix.preset.uniDMXchChanged[jk] = true;
                         lastVal[jk] = val;
                       }
-                      if(val > 0) {
-                        if(parent.type == 1) {
-                          fix.preset.preFade = round(float(fixtureOwnFade)/20);
-                          fix.preset.postFade = fixtureOwnFade;
-                        }
-                        else {
-                          fix.preset.preFade = 0;
-                          fix.preset.postFade = 0;
-                        }
-                      }
+                      //if(val > 0) {
+                        fix.preset.preFade = pre;
+						fix.preset.postFade = post;
+                      //}
                       if(parent.soloInThisMemory && val > 0) {
                         fix.soloInThisFixture = true;
                         soloIsOn = true;
@@ -1481,8 +1484,8 @@ class chase { //Begin of chase class--------------------------------------------
     if(lastDirection == REVERSE) { rS = getNext(step, 0, presets.length-1); }
     else { rS = getReverse(step, 0, presets.length-1); }
     if(presets.length > 0) {
-      loadPreset(presets[constrain(step, 0, onlyPositive(presets.length-1))], brightness);
-      loadPreset(presets[constrain(rS, 0, onlyPositive(presets.length-1))], getInvertedValue(brightness, 0, 255));
+      loadPreset(presets[constrain(step, 0, onlyPositive(presets.length-1))], 255);
+      loadPreset(presets[constrain(rS, 0, onlyPositive(presets.length-1))], 0);
     }
   }
   
