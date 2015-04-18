@@ -95,7 +95,7 @@
   	 
   	 
        { //Create launchpad buttons settings tables
-         launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 2);
+         launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 3);
          launchPadMemories = new TextBoxTableWindow("launchPadMemories", 8, 8);
        } //End of creating launchpad buttons settings tables
        
@@ -851,31 +851,36 @@ public class Launchpad {
     if(val) padsToggle[x][y] = !padsToggle[x][y];
     
     boolean value;
-    if(buttonMode[x][y] == 1) { //Togglemode
-      value = padsToggle[x][y];
+    
+    if(buttonMode[x][y] != 3) {
+        if(buttonMode[x][y] == 1) { //Togglemode
+          value = padsToggle[x][y];
+        }
+        else {
+          value = pads[x][y];
+        }
+        bus.sendNoteOn(0, pitch, byte(value) * 127);
+       // if(output == 1) { setMemoryEnabledByOrderInVisualisation(x+8*y+1+offset, value); }
+       // else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
+        
+        
+        if(output == 1) {
+    		if(buttonMode[x][y] != 2) {
+    			memories[toggleMemory[x][y]].enabled = value;
+    			memories[toggleMemory[x][y]].doOnce = false;
+    		}
+    		else if(value == true) {
+    			memories[toggleMemory[x][y]].enabled = true;
+    			memories[toggleMemory[x][y]].doOnce = true;
+    			memories[toggleMemory[x][y]].triggerButton = pitch;
+    		}
+    	}
+        else if(output == 2) { fixtures.get(constrain(toggleMemory[x][y], 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
+        
     }
-    else {
-      value = pads[x][y];
+    else if(buttonMode[x][y] == 3 && pads[x][y]) {
+      tapTempo.register();
     }
-    bus.sendNoteOn(0, pitch, byte(value) * 127);
-   // if(output == 1) { setMemoryEnabledByOrderInVisualisation(x+8*y+1+offset, value); }
-   // else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
-    
-    
-    if(output == 1) {
-		if(buttonMode[x][y] != 2) {
-			memories[toggleMemory[x][y]].enabled = value;
-			memories[toggleMemory[x][y]].doOnce = false;
-		}
-		else if(value == true) {
-			memories[toggleMemory[x][y]].enabled = true;
-			memories[toggleMemory[x][y]].doOnce = true;
-			memories[toggleMemory[x][y]].triggerButton = pitch;
-		}
-	}
-    else if(output == 2) { fixtures.get(constrain(toggleMemory[x][y], 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
-    
-    
   }
   
   void noteOff(int channel, int pitch, int velocity) {
