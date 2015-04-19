@@ -90,11 +90,12 @@ void drawMainWindow() {
           if(trusses != null) if(trusses[fix.parentAnsa] != null) { //Block nullpointer for trusses
             trussOffset = new PVector(trusses[fix.parentAnsa].location.x, trusses[fix.parentAnsa].location.y); //Get truss offset from right truss
           } //End of blocking nullpointer for trusses
-          PVector finalLocation = new PVector(originalLocation.x + trussOffset.x, originalLocation.y + trussOffset.y); //Location where fixture is finally drawn
+          PVector finalLocation = originalLocation.get(); //Location where fixture is finally drawn
+          finalLocation.add(trussOffset);
+          
           
           //Center fixture
-          finalLocation.x += fix.size.w/2;
-          finalLocation.y += fix.size.h/2;
+          finalLocation.add(fix.size.w/2, fix.size.h/2, 0);
           //End of centering
           
           translate(finalLocation.x, finalLocation.y);
@@ -120,7 +121,10 @@ void drawMainWindow() {
             //Fixture moving
             if(moveLamp && (lampToMove >= 0 && lampToMove < fixtures.size())) { //Check are we moving any lamp and is lampToMove valid
               if(moveLamp && (lampToMove == i || (fixtures.get(lampToMove).selected && fix.selected))) {
-                PVector mouseOffset = new PVector((mouseRotated.x - oldMouseForMovingFixtures.x) * 100 / zoom, (mouseRotated.y - oldMouseForMovingFixtures.y) * 100 / zoom);
+                PVector mouseOffset = new PVector(
+                  (mouseRotated.x - oldMouseForMovingFixtures.x) * (100/zoom),
+                  (mouseRotated.y - oldMouseForMovingFixtures.y) * (100/zoom)
+                );
                 fix.x_location += int(mouseOffset.x); //Add mouse offset
                 fix.y_location += int(mouseOffset.y); //Add mouse offset
               }
