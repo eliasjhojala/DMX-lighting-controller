@@ -485,9 +485,6 @@ class MemoryCreationBox {
         case 9: {
           g.text("Memories", 2, 25);
         } break;
-        case 100: {
-          g.text("Copy", 2, 25);
-        } break;
       }
     }
     g.popMatrix();
@@ -559,9 +556,6 @@ class MemoryCreationBox {
   
   boolean addingNewMemoryToMemoryWithMemoriesInside = false;
   IntController newMemoryToMemoryWithMemoriesInsideId = new IntController("newMemoryToMemoryWithMemoriesInsideId"+this.toString());
-  
-  boolean copyingMemory = false;
-  IntController whereToCopy = new IntController("whereToCopy"+this.toString());
   
   void drawTypeSpecificOptions(PGraphics g, Mouse mouse) {
     g.pushMatrix();
@@ -1272,38 +1266,6 @@ class MemoryCreationBox {
           g.popMatrix(); g.popStyle();
         }
         break; //End of memory with memories inside (case 9)
-        case 100:
-        {
-          if(!copyingMemory) {
-            g.pushMatrix(); g.pushStyle();
-            PushButton startCopyingMemory = new PushButton("startCopyingMemory"+this.toString());
-            g.translate(30, 150);
-            g.fill(0);
-            g.textAlign(LEFT);
-            g.text("Start copying memory", 0, 0);
-            g.translate(0, 20);
-            if(startCopyingMemory.isPressed(g, mouse)) {
-              copyingMemory = true;
-            }
-            g.popMatrix(); g.popStyle();
-          }
-          if(copyingMemory) {
-            g.pushMatrix(); g.pushStyle();
-              g.translate(30, 120);
-              g.fill(0);
-              g.text("What memory do you want to copy here?", 0, 0, 100, 200);
-              g.translate(0, 50);
-              whereToCopy.draw(g, mouse);
-              g.translate(0, 50);
-              PushButton copyNow = new PushButton("copyNow"+this.toString());
-              if(copyNow.isPressed(g, mouse)) {
-                copyMemory(whereToCopy.getValue(), selectedMemorySlot);
-                copyingMemory = false;
-              }
-            g.popMatrix(); g.popStyle();
-          }
-        }
-        break;
       }
     }
     g.popMatrix();
@@ -1341,10 +1303,10 @@ class MemoryCreationBox {
     return isHoverSimple(width - (320 + MemoryMenuWidth), locY, 300, 300) && open;
   }
   
-  int[] memoryModesToShow = { 0, 1, 2, 5, 6, 7, 8, 9, 100 };
+  int[] memoryModesToShow = { 0, 1, 2, 5, 6, 7, 8, 9 };
   int sMm = 0;
   void addToSelectedMemoryMode() {
-    if(sMm < 8) { sMm++; }
+    if(sMm < 7) { sMm++; }
     else { sMm = 0; }
     selectedMemoryMode = memoryModesToShow[sMm];
   }
