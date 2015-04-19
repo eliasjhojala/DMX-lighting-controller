@@ -58,7 +58,8 @@ class SettingsWindow {
     tabs[id] = new SettingsTab("Chase", this);
     tabs[id].setControllers(
       new SettingController[] {
-        new SettingController(4, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", true, tabs[id])
+        new SettingController(400, "Blinky mode", "In blinky mode, EQ chases are handled differently. Go ahead and try it!", true, tabs[id]),
+        new SettingController(401, "Overwrite color from preset", "Whether to overwrite color values of a fixture from a preset.", true, tabs[id])
       }
     );
     id++;
@@ -86,19 +87,20 @@ class SettingsWindow {
   //It's stupid we do it like this, but primitives.
   void setExternalBoValue(boolean b, int var) {
     switch(var) {
-      case 0: use3D = b;                       break;
-      case 1: showOutputAsNumbers = b;         break;
-      case 2: showMode = b || showModeLocked;  break;
-      case 3: printMode = b;                   break;
-      case 4: s2l.blinky = b;                  break;
-      case 5: showModeLocked = b;              break;
-      case 10: showSockets = b;                break;
-      case 15: rotateFixturesToSamePoint = b;  break;
-      case 201: loadFast = b; loadSafe = !b;   break;
-      case 202: loadSafe = b; loadFast = !b;   break;
-      case 23: showOldBottomMeu = b;           break;
-      case 24: showLeftButtons = b;            break;
-      case 26: speedDownVisualisation = b;     break;
+      case 0: use3D = b;                        break;
+      case 1: showOutputAsNumbers = b;          break;
+      case 2: showMode = b || showModeLocked;   break;
+      case 3: printMode = b;                    break;
+      case 400: s2l.blinky = b;                 break;
+      case 401: presetOverwriteCol = b;         break;
+      case 5: showModeLocked = b;               break;
+      case 10: showSockets = b;                 break;
+      case 15: rotateFixturesToSamePoint = b;   break;
+      case 201: loadFast = b; loadSafe = !b;    break;
+      case 202: loadSafe = b; loadFast = !b;    break;
+      case 23: showOldBottomMeu = b;            break;
+      case 24: showLeftButtons = b;             break;
+      case 26: speedDownVisualisation = b;      break;
     }
   }
   
@@ -108,7 +110,8 @@ class SettingsWindow {
       case 1:  return showOutputAsNumbers;
       case 2:  return showMode;
       case 3:  return printMode;
-      case 4:  return s2l.blinky;
+      case 400: return s2l.blinky;
+      case 401: return presetOverwriteCol;
       case 5:  return showModeLocked;
       case 10: return showSockets;
       case 15: return rotateFixturesToSamePoint;

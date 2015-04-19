@@ -27,6 +27,8 @@ final int DMX_SPECIAL2 = 26;
 final int DMX_SPECIAL3 = 27;
 final int DMX_SPECIAL4 = 28;
 
+boolean presetOverwriteCol = false;
+
 
 
 class FixtureDMX { //Class containig all the dmx values
@@ -69,10 +71,10 @@ class FixtureDMX { //Class containig all the dmx values
           else {
             parent.in.setUniversalDMX(i, newV);
           }
-          parent.DMXChanged = true;      
-          DMXold[i] = newV; 
+          parent.DMXChanged = true;
+          DMXold[i] = newV;
           uniDMXchChanged[i] = false;
-        }     
+        }
         
         setUniversalDMX(i, 0);
     }
@@ -90,7 +92,7 @@ class FixtureDMX { //Class containig all the dmx values
   FixtureDMX() {
   }
   
-    void saveToXML(String name, ManageXML XMLObject) {
+  void saveToXML(String name, ManageXML XMLObject) {
     if(max(DMX) > 0) {
       XMLObject.addBlockAndIncrease("FixtureDMX");
         XMLObject.addBlockAndIncrease("name", name);
@@ -125,8 +127,8 @@ class FixtureDMX { //Class containig all the dmx values
 
   
  
-  //Universal DMX: dimmer, red, green, blue, white, amber, pan, tilt, panFine, tiltFine, 
-  //colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, frequency, responseSpeed, 
+  //Universal DMX: dimmer, red, green, blue, white, amber, pan, tilt, panFine, tiltFine,
+  //colorWheel, goboWheel, goboRotation, prism, focus, shutter, strobe, frequency, responseSpeed,
   //autoPrograms, specialFunctions, haze, fan, fog, special1, special2, special3, special4
   
   int[] getUniversalDMX() {
@@ -155,7 +157,14 @@ class FixtureDMX { //Class containig all the dmx values
   int oldFrameCount = -1;
   
   void setUniDMXfromPreset(int i, int val) {
-    if(val > DMX[i] || frameCount > oldFrameCount) { DMX[i] = val; oldFrameCount = frameCount; }
+    if(
+      (val > DMX[i] ||
+        (uniDMXisColor(i) && presetOverwriteCol)
+      ) || frameCount > oldFrameCount
+    ) {
+      DMX[i] = val;
+      oldFrameCount = frameCount;
+    }
   }
   
   

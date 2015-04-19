@@ -3,7 +3,7 @@
 
 //Gets dimensions of fixture #id
 //0 = width, 1 = height, 2 = (0 or 1) render fixture?
-int[] getFixtureSizeByType(int type) { 
+int[] getFixtureSizeByType(int type) {
   //Default to this
   int[] toReturn = {30, 40, 1};
   int n = constrain(type, 0, fixtureProfiles.length-1);
@@ -84,6 +84,10 @@ String getFixtureName(int id) {
 
 int universalDMXlength = 28+1;
 
+boolean uniDMXisColor(int type) {
+  return type >= 2 && type <= 6;
+}
+
 int[] receiveDMXtoUniversal(int fT, int[] dmxChannels) {
   int[] toReturn = new int[universalDMXlength];
   for(int i = 0; i < toReturn.length; i++) { toReturn[i] = -2; }
@@ -108,7 +112,7 @@ int[] getDMXfromUniversal(int fT, int[] universal) {
          dmxChannels[j] = universal[fixtureProfiles[fT].channelTypes[j]];
        }
      }
-   return dmxChannels; 
+   return dmxChannels;
 }
  
 
