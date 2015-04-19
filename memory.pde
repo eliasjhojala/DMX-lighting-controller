@@ -854,7 +854,7 @@ class Preset { //Begin of Preset class
   boolean bigValueChanged;
   
   void loadPreset() {
-    bigValueChanged = false;3
+    bigValueChanged = false;
     if(value*int(parent.enabled) != valueOld) { bigValueChanged = true;  valueOld = value*int(parent.enabled); }
     if(parent.enabled) {
       if(!loadinMemoriesFromXML) {
