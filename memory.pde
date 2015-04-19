@@ -11,6 +11,17 @@ void removeMemory(int id) {
   memories[id] = new memory();
 }
 
+void copyMemory(int from, int to) {
+  if(from > 0 && from < memories.length && to > 0 && to < memories.length) {
+    try {
+      memories[to].XMLtoObject(memories[from].getXML());
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
 void setMemoryValueByOrderInVisualisation(int id, int val) {
   if(memoryControllerLookupTable != null) {
     if(id >= 0 && id < memoryControllerLookupTable.length) {
@@ -302,7 +313,7 @@ class memory { //Begin of memory class------------------------------------------
   }
   
   void preset() {
-    if(type == 1 && enabled) {
+    if(type == 1) {
       myPreset.setValue(value);
       loadPreset();
     }
@@ -343,14 +354,15 @@ class memory { //Begin of memory class------------------------------------------
   }
   
   void memories() {
-    if(value != valueOld) {
+    int v = value*int(enabled);
+    if(v != valueOld) {
       for(int i = 0; i < myMemories.size(); i++) {
         int mem = myMemories.get(i);
         if(mem >= 0 && mem < memories.length) {
-          memories[mem].setValue(value);
+          memories[mem].setValue(v);
         }
       }
-      valueOld = value;
+      valueOld = v;
     }
   }
   
@@ -839,57 +851,63 @@ class Preset { //Begin of Preset class
   
   int[] lastVal = new int[universalDMXlength];
   
+  boolean bigValueChanged;
+  
   void loadPreset() {
-    if(!loadinMemoriesFromXML) {
-      if(!soloIsOn || parent.soloInThisMemory) {
-        if(XMLloadSucces) if(parent.type == 1 || parent.type == 6) {
-          valueOld = value;
-          for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
-            if(whatToSave[jk-1]) {
-              for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) { //Go through all the fixtures
-                fixture fix = entry.getValue();
-                int i = entry.getKey();
-                
-                if(i < repOfFixtures.length) {
-                  if(fixturesToSave[i]) {
-                    if(jk < fix.preset.DMXlength) {
-                      int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
-                      fix.preset.setUniDMXfromPreset(jk, val);
-                      if(lastVal[jk] != val || (firstTimeLoaded && value > 0)) {
-                        fix.preset.uniDMXchChanged[jk] = true;
-                        lastVal[jk] = val;
-                      }
-                      if(val > 0) {
-                        if(parent.type == 1) {
-                          fix.preset.preFade = round(float(fixtureOwnFade)/20);
-                          fix.preset.postFade = fixtureOwnFade;
+    bigValueChanged = false;3
+    if(value*int(parent.enabled) != valueOld) { bigValueChanged = true;  valueOld = value*int(parent.enabled); }
+    if(parent.enabled) {
+      if(!loadinMemoriesFromXML) {
+        if(!soloIsOn || parent.soloInThisMemory) {
+          if(XMLloadSucces) if(parent.type == 1 || parent.type == 6) {
+            
+            for(int jk = 1; jk < fixtures.get(0).preset.DMXlength; jk++) {
+              if(whatToSave[jk-1]) {
+                for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) { //Go through all the fixtures
+                  fixture fix = entry.getValue();
+                  int i = entry.getKey();
+                  
+                  if(i < repOfFixtures.length) {
+                    if(fixturesToSave[i]) {
+                      if(jk < fix.preset.DMXlength) {
+                        int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
+                        fix.preset.setUniDMXfromPreset(jk, val);
+                        if(lastVal[jk] != val || (firstTimeLoaded && value > 0) || (val == 0 && bigValueChanged)) {
+                          fix.preset.uniDMXchChanged[jk] = true;
+                          lastVal[jk] = val;
                         }
-                        else {
-                          fix.preset.preFade = 0;
-                          fix.preset.postFade = 0;
+                        if(val > 0) {
+                          if(parent.type == 1) {
+                            fix.preset.preFade = round(float(fixtureOwnFade)/20);
+                            fix.preset.postFade = fixtureOwnFade;
+                          }
+                          else {
+                            fix.preset.preFade = 0;
+                            fix.preset.postFade = 0;
+                          }
                         }
-                      }
-                      if(parent.soloInThisMemory && val > 0) {
-                        fix.soloInThisFixture = true;
-                        soloIsOn = true;
+                        if(parent.soloInThisMemory && val > 0) {
+                          fix.soloInThisFixture = true;
+                          soloIsOn = true;
+                        }
                       }
                     }
                   }
-                }
-                else {
-                  break;
-                }
-              } //End of going through all the fixtures
+                  else {
+                    break;
+                  }
+                } //End of going through all the fixtures
+              }
             }
           }
         }
-      }
-      }
-      if(value > 0) {
-        firstTimeLoaded = false;
-      }
-      else {
-        firstTimeLoaded = true;
+        }
+        if(value > 0) {
+          firstTimeLoaded = false;
+        }
+        else {
+          firstTimeLoaded = true;
+        }
       }
   }
   

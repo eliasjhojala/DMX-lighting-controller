@@ -152,8 +152,10 @@ class FixtureDMX { //Class containig all the dmx values
     }
   }
   
+  int oldFrameCount = -1;
+  
   void setUniDMXfromPreset(int i, int val) {
-    if(val > DMX[i]) DMX[i] = val;
+    if(val > DMX[i] || frameCount > oldFrameCount) { DMX[i] = val; oldFrameCount = frameCount; }
   }
   
   
