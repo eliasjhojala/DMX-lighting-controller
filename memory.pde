@@ -359,7 +359,8 @@ class memory { //Begin of memory class------------------------------------------
       for(int i = 0; i < myMemories.size(); i++) {
         int mem = myMemories.get(i);
         if(mem >= 0 && mem < memories.length) {
-          memories[mem].setValue(v);
+          memories[mem].setValue(value);
+          memories[mem].enabled = enabled;
         }
       }
       valueOld = v;
@@ -1178,7 +1179,10 @@ class chase { //Begin of chase class--------------------------------------------
             case 3: fade = chaseFade; break;
             default: fade = chaseFade;
           }
-          fade = constrain(round(map((pow(round(fade/25.5), 4)+1), (pow(round(0/25.5), 4)+1), (pow(round(255/25.5), 4)+1), 0, 255)), 0, 255);
+          int[] fadePower = { 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 26 };
+          if(fade < 26) {
+            fade = fadePower[fade];
+          }
         }
   //End of fadeMode functions
   
@@ -1597,7 +1601,7 @@ class chase { //Begin of chase class--------------------------------------------
     int[] finalValue; //output value
     finalValue = new int[getPresets().length]; //create right lengthed array to place all the output values
     for(int i = 0; i < getPresets().length; i++) { //go through all the presets in chase
-        sinStep+=map(chaseFade, 0, 255, 0.1, 0.001); //count sinestep according to chaseFade
+        sinStep+=map(fade, 0, 255, 0.1, 0.001); //count sinestep according to chaseFade
         finalValue[i] = int(map(sin(sinStep-i), -1, 1, 0, 255)); //count output value according to sinestep and preset number
         loadPreset(getPresets()[i], finalValue[i]); //output the output value
     } //end of for(int i = 0; i < valueChange.length; i++)
