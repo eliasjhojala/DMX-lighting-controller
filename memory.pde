@@ -871,22 +871,32 @@ class Preset { //Begin of Preset class
                   if(i < repOfFixtures.length) {
                     if(fixturesToSave[i]) {
                       if(jk < fix.preset.DMXlength) {
+					  
+						/* This should make good fade but it doesn't
+							fix.preset.preFade = 500;
+							fix.preset.postFade = 1000;
+						*/
+						
                         int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
                         fix.preset.setUniDMXfromPreset(jk, val);
                         if(lastVal[jk] != val || (firstTimeLoaded && value > 0) || (val == 0 && bigValueChanged)) {
                           fix.preset.uniDMXchChanged[jk] = true;
                           lastVal[jk] = val;
                         }
-                        if(val > 0) {
-                          if(parent.type == 1) {
-                            fix.preset.preFade = round(float(fixtureOwnFade)/20);
-                            fix.preset.postFade = fixtureOwnFade;
-                          }
-                          else {
-                            fix.preset.preFade = 0;
-                            fix.preset.postFade = 0;
-                          }
-                        }
+						
+						{ //Old but working fade system
+							if(val > 0) {
+							  if(parent.type == 1) {
+								fix.preset.preFade = round(float(fixtureOwnFade)/20);
+								fix.preset.postFade = fixtureOwnFade;
+							  }
+							  else {
+								fix.preset.preFade = 0;
+								fix.preset.postFade = 0;
+							  }
+							}
+						} //End of old but working fade system
+						
                         if(parent.soloInThisMemory && val > 0) {
                           fix.soloInThisFixture = true;
                           soloIsOn = true;
@@ -1388,7 +1398,7 @@ class chase { //Begin of chase class--------------------------------------------
     if(parent.type == 6) { //Chase with steps inside
       loadOwnPreset(num, val);
     }
-    if(parent.type == 8) {
+    if(parent.type == 8) { //Chase with memories inside
       memories[num].setValue(val);
     }
   }
