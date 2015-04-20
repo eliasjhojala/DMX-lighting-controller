@@ -31,10 +31,10 @@ class Fade {
     if(!complete) {
       int timer = round(millis()-startMillis);
       if(actualValue < targetValue && actualValue < 255) {
-        actualValue = constrain(iMap(timer, 0, preFade, originalValue, targetValue), originalValue, targetValue);
+        actualValue = constrain(ceil(map(timer, 0, preFade, originalValue, targetValue)), min(originalValue, targetValue), max(originalValue, targetValue));
       } 
       else if(actualValue > targetValue && actualValue > 0) {
-        actualValue = constrain(iMap(timer, 0, postFade, originalValue, targetValue), targetValue, originalValue);
+        actualValue = constrain(floor(map(timer, 0, postFade, originalValue, targetValue)), min(originalValue, targetValue), max(originalValue, targetValue));
       } 
       else {
         complete = true;

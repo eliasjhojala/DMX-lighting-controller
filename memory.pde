@@ -154,6 +154,7 @@ class memory { //Begin of memory class------------------------------------------
   String name = "";
   boolean mouseHovered = false;
   int memoryControllerWidth = 0;
+  boolean showWhatToSaveOptions = true;
   
   boolean doOnce() {
 	return doOnce;
@@ -181,11 +182,10 @@ class memory { //Begin of memory class------------------------------------------
     String data = "<Memory></Memory>";
     XML xml = parseXML(data);
     xml.setString("name", name);
-    xml.setInt("enabled", int(enabled));
-    xml.setInt("value", value);
-    xml.setInt("valueOld", valueOld);
-    xml.setInt("type", type);
-    xml.setInt("specialType", specialType);
+    if(enabled) xml.setInt("enabled", int(enabled));
+    if(value > 0) xml.setInt("value", value);
+    if(type > 0) xml.setInt("type", type);
+    if(specialType > 0) xml.setInt("specialType", specialType);
     xml.setInt("soloInThisMemory", int(soloInThisMemory));
     if(type == 1) {
       xml.addChild(myPreset.getXML());
@@ -212,7 +212,6 @@ class memory { //Begin of memory class------------------------------------------
       name = xml.getString("name");
       enabled = boolean(xml.getInt("enabled"));
       value = xml.getInt("value");
-      valueOld = xml.getInt("valueOld");
       type = xml.getInt("type");
       specialType = xml.getInt("specialType");
       soloInThisMemory = boolean(xml.getInt("soloInThisMemory"));
@@ -699,14 +698,18 @@ class Preset { //Begin of Preset class
     boolean[] fixturesToSave = new boolean[fixtures.size()];
     FixtureDMX[] repOfFixtures = new FixtureDMX[fixtures.size()];
     boolean firstTimeLoaded = false;
+    int preFade = 1;
+    int postFade = 1;
   //End of defining variables
   
   XML getXML() {
     String data = "<Preset></Preset>";
     XML xml = parseXML(data);
     xml = xml.addChild("mainData");
-    xml.setInt("value", value);
-    xml.setInt("valueOld", valueOld);
+    if(value > 0) xml.setInt("value", value);
+    if(preFade > 1) xml.setInt("preFade", preFade);
+    if(postFade > 1) xml.setInt("postFade", postFade);
+    
     xml = xml.getParent();
     try {
     xml.addChild(arrayToXML("whatToSave", whatToSave));
@@ -756,7 +759,15 @@ class Preset { //Begin of Preset class
         if(xml != null) {
           value = xml.getInt("value");
           valueOld = xml.getInt("valueOld");
+          
+          preFade = xml.getInt("preFade");
+          postFade = xml.getInt("postFade");
+          preFade = constrain(preFade, 1, 255);
+          postFade = constrain(postFade, 1, 255);
+          
           xml = xml.getParent();
+          
+          
         }
         if(xml != null) {
           whatToSave = new boolean[saveOptionButtonVariables.length+10];
@@ -801,7 +812,15 @@ class Preset { //Begin of Preset class
         if(xml != null) {
           value = xml.getInt("value");
           valueOld = xml.getInt("valueOld");
+          
+          preFade = xml.getInt("preFade");
+          postFade = xml.getInt("postFade");
+          preFade = constrain(preFade, 1, 255);
+          postFade = constrain(postFade, 1, 255);
+          
           xml = xml.getParent();
+          
+          
         }
         if(xml != null) {
           arrayCopy(XMLtoBooleanArray("whatToSave", xml), whatToSave);
@@ -830,8 +849,15 @@ class Preset { //Begin of Preset class
     savePreset();
   }
   
+  int targetVal;
+  float floatValue;
+  
+  int readyValue;
+  
   void setValue(int val) {
+    targetVal = val*int(parent.enabled);
     value = val;
+    
     draw();
   }
   int getValue() {
@@ -842,7 +868,26 @@ class Preset { //Begin of Preset class
     setValue(v);
   }
   
+  boolean offsetChanging = false;
+  
   void draw() {
+    { //Fade
+      targetVal = targetVal*int(parent.enabled);
+      float offsetToFloatValue = (targetVal-floatValue);
+      if(offsetToFloatValue > 0) { offsetToFloatValue = offsetToFloatValue/ceil((float(preFade)/5)); }
+      else { offsetToFloatValue = offsetToFloatValue/ceil((float(postFade)/5)); }
+      
+      if(abs(offsetToFloatValue) > 0.1) {
+        offsetChanging = true;
+        floatValue += offsetToFloatValue;
+        readyValue = constrain(round(floatValue), min(0, targetVal), max(255, targetVal));
+      }
+      else {
+        offsetChanging = false;
+        readyValue = targetVal;
+      }
+    } //End of fade
+    
     if(XMLloadSucces) {
       if(parent.type == 1 || parent.type == 6) {
         loadPreset();
@@ -856,8 +901,8 @@ class Preset { //Begin of Preset class
   
   void loadPreset() {
     bigValueChanged = false;
-    if(value*int(parent.enabled) != valueOld) { bigValueChanged = true;  valueOld = value*int(parent.enabled); }
-    if(parent.enabled) {
+    if(readyValue != valueOld) { bigValueChanged = true; valueOld = readyValue; }
+    if(parent.enabled || bigValueChanged || offsetChanging) {
       if(!loadinMemoriesFromXML) {
         if(!soloIsOn || parent.soloInThisMemory) {
           if(XMLloadSucces) if(parent.type == 1 || parent.type == 6) {
@@ -877,9 +922,9 @@ class Preset { //Begin of Preset class
 							fix.preset.postFade = 1000;
 						*/
 						
-                        int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, value);
+                        int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, readyValue);
                         fix.preset.setUniDMXfromPreset(jk, val);
-                        if(lastVal[jk] != val || (firstTimeLoaded && value > 0) || (val == 0 && bigValueChanged)) {
+                        if(lastVal[jk] != val || (firstTimeLoaded && readyValue > 0) || (val == 0 && bigValueChanged)) {
                           fix.preset.uniDMXchChanged[jk] = true;
                           lastVal[jk] = val;
                         }
@@ -899,7 +944,7 @@ class Preset { //Begin of Preset class
 						
                         if(parent.soloInThisMemory && val > 0) {
                           fix.soloInThisFixture = true;
-                          soloIsOn = true;
+                          if(targetVal > 0) soloIsOn = true;
                         }
                       }
                     }
@@ -913,7 +958,7 @@ class Preset { //Begin of Preset class
           }
         }
         }
-        if(value > 0) {
+        if(readyValue > 0) {
           firstTimeLoaded = false;
         }
         else {
@@ -1375,6 +1420,10 @@ class chase { //Begin of chase class--------------------------------------------
   and the memory we're trying to control is a preset. */
   boolean firstTimeLoading = true;
   int[] oldValue;
+  
+  IntList presetTargetValue = new IntList();
+  IntList presetTargetValueChanged = new IntList();
+  
   void loadPreset(int num, int val) {
     val = defaultConstrain(rMap(val, 0, 255, 0, value));
     if(firstTimeLoading) {
@@ -1442,6 +1491,9 @@ class chase { //Begin of chase class--------------------------------------------
      }
      else if(parent.type == 3) {
        toReturn = fixtures.get(getPresets()[n]).in.getUniDMX(DMX_DIMMER);
+     }
+     else if(parent.type == 6) {
+       toReturn = steps.get(n).getValue();
      }
      else if(parent.type == 8) {
        toReturn = memories[getPresets()[n]].getValue();
