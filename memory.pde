@@ -447,6 +447,8 @@ class memory { //Begin of memory class------------------------------------------
     myMemories.append(id);
   }
   
+  void trig() { myChase.trig(); }
+  
   
 } //end of memory class-----------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -921,13 +923,15 @@ class Preset { //Begin of Preset class
 							fix.preset.preFade = 500;
 							fix.preset.postFade = 1000;
 						*/
-						
+						          
                         int val = rMap(repOfFixtures[i].getUniversalDMX(jk), 0, 255, 0, readyValue);
+                      if(readyValue > 0) {
                         fix.preset.setUniDMXfromPreset(jk, val);
                         if(lastVal[jk] != val || (firstTimeLoaded && readyValue > 0) || (val == 0 && bigValueChanged)) {
                           fix.preset.uniDMXchChanged[jk] = true;
                           lastVal[jk] = val;
                         }
+                      }
 						
 						{ //Old but working fade system
 							if(val > 0) {
@@ -1343,6 +1347,13 @@ class chase { //Begin of chase class--------------------------------------------
         boolean beatWasTrue;
         boolean reverseStepPressedWasDown;
         boolean tempoTapTriggerWasTrue;
+        boolean ownTriggerWasTrue;
+        
+        boolean ownTrigger;
+        
+        void trig() {
+          ownTrigger = true;
+        }
         
           boolean trigger() {
             boolean toReturn = false;
@@ -1350,7 +1361,10 @@ class chase { //Begin of chase class--------------------------------------------
             if(inputMode > 0) { iM = inputMode; } else { iM = inputModeMaster; }
             switch(iM) {
               case 1: toReturn = !beatWasTrue && s2l.beat(constrain(getBeatModeId(), beatModeLimit[0], beatModeLimit[1])); if(toReturn) { beatWasTrue = true; } else { beatWasTrue = false; } break;
-              case 2: toReturn = ((!nextStepPressedWasDown && nextStepPressed) || (keyPressed && key == ' ')); if(nextStepPressed) { nextStepPressedWasDown = true; } else { nextStepPressedWasDown = false; } break;
+              case 2: toReturn = ((!nextStepPressedWasDown && nextStepPressed) || (keyPressed && key == ' ')) || (ownTrigger && !ownTriggerWasTrue); 
+                                  if(nextStepPressed) { nextStepPressedWasDown = true; } else { nextStepPressedWasDown = false; } 
+                                  if(ownTrigger) { ownTriggerWasTrue = true; ownTrigger = false; } else { ownTriggerWasTrue = false; }
+              break;
               case 3: toReturn = true; break;
               case 4: toReturn = (tapTempo.trigger() && !tempoTapTriggerWasTrue); if(tapTempo.trigger()) { tempoTapTriggerWasTrue = true; } else { tempoTapTriggerWasTrue = false; } break;
             }

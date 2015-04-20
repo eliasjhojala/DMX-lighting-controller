@@ -376,7 +376,7 @@ class PowerWindow {
       for(int i = 0; i < dimmers.size(); i++) {
         g.pushMatrix();
           g.translate(0, i*20);
-          g.text("Dimmer "+str(i)+" : " + str(dimmers.get(i).watts) + "kW", 0, 0);
+          g.text("Dimmer "+str(i)+" : " + str(ceil(dimmers.get(i).watts)/1000) + "kW", 0, 0);
         g.popMatrix();
       }
     g.popMatrix(); g.popStyle();

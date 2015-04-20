@@ -95,7 +95,7 @@
   	 
   	 
        { //Create launchpad buttons settings tables
-         launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 3);
+         launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 4);
          launchPadMemories = new TextBoxTableWindow("launchPadMemories", 8, 8);
        } //End of creating launchpad buttons settings tables
        
@@ -865,15 +865,18 @@ public class Launchpad {
         
         
         if(output == 1) {
-    		if(buttonMode[x][y] != 2) {
+    		if(buttonMode[x][y] != 2 && buttonMode[x][y] != 4) {
     			memories[toggleMemory[x][y]].enabled = value;
     			memories[toggleMemory[x][y]].doOnce = false;
     		}
-    		else if(value == true) {
+    		else if(value == true && buttonMode[x][y] == 2) {
     			memories[toggleMemory[x][y]].enabled = true;
     			memories[toggleMemory[x][y]].doOnce = true;
     			memories[toggleMemory[x][y]].triggerButton = pitch;
     		}
+                else if(value && buttonMode[x][y] == 4) {
+                        memories[toggleMemory[x][y]].trig();
+                }
     	}
         else if(output == 2) { fixtures.get(constrain(toggleMemory[x][y], 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
         

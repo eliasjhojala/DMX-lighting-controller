@@ -84,7 +84,7 @@ int pageRotation = 0; //How much is page rotated (0-360)
 
 int memoryMenu = 0; //Memorymenu offset
 
-int numberOfMemories = 100; //How much are there memories used in software
+int numberOfMemories = 300; //How much are there memories used in software
 
 
 
