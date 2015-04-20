@@ -1486,7 +1486,7 @@ class chase { //Begin of chase class--------------------------------------------
       randomBlinkVal = 0;
       randomBlinkStarted = false;
     }
-    loadPreset(randomBlinkStep, randomBlinkVal);
+    if(randomBlinkVal > 0) { loadPreset(randomBlinkStep, randomBlinkVal); }
   }
   
   int lastDirection;
