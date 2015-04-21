@@ -359,7 +359,14 @@ class PowerWindow {
         int h2 = round(map(totalPower, 0, maxTotalPower, 0, h1));
         g.fill(100, 230);
         g.rect(0, 0, h1, 30);
-        g.fill(255, 255, 200);
+        
+        int h3 = rMap(h2, 0, 200, 0, 255);
+        color c = color(h3, 255-h3, 0);
+        colorMode(HSB);
+        c = color(hue(c), 255, 255);
+        colorMode(RGB);
+        g.fill(c);
+          
         g.rect(0, 0, h2, 30);
       g.popMatrix(); g.popStyle();
       totalPower = round(totalPower/100);
@@ -376,7 +383,7 @@ class PowerWindow {
       for(int i = 0; i < dimmers.size(); i++) {
         g.pushMatrix();
           g.translate(0, i*20);
-          g.text("Dimmer "+str(i)+" : " + str(ceil(dimmers.get(i).watts)/1000) + "kW", 0, 0);
+          g.text("Dimmer "+str(i)+": " + str(ceil(dimmers.get(i).watts)/1000) + "kW", 0, 0);
         g.popMatrix();
       }
     g.popMatrix(); g.popStyle();
@@ -392,7 +399,7 @@ class PowerWindow {
           g.noStroke();
           g.fill(100, 230);
           g.rect(50, 0, 255/3, 10);
-          color c = color(x, 255-x, 0);
+          c = color(x, 255-x, 0);
           colorMode(HSB);
           c = color(hue(c), 255, 255);
           colorMode(RGB);
