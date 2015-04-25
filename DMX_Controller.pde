@@ -32,6 +32,10 @@ boolean blackOut = false;
 
 int numberOfAllFixtures = 81;
 
+void exit() {
+  if(launchpad != null) try { launchpad.clearLeds(); } catch (Exception e) { e.printStackTrace(); }
+}
+
 //Asetetaan arvot fixturen ID:n muttamiseen tarkoitetuille muuttujille
 void setFixtureChannelsAtSoftwareBegin() {
   for(int i = 0; i < numberOfAllFixtures; i++) {

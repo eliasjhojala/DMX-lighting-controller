@@ -2122,7 +2122,7 @@ class TapTempo {
   int lastStepMillis;
   //This function gets triged every draw, so it can be used for other purposes as well.
   
- 
+ boolean play = true;
   
   void calculate() {
   
@@ -2134,6 +2134,15 @@ class TapTempo {
         steptriged = true;
         trig(true);
         lastStepMillis = millis();
+       
+        if(play) for(int i = 0; i < 8; i++) {
+          launchpad.setRightButton(i, byte(15));
+        }
+      }
+      else {
+        for(int i = 0; i < 8; i++) {
+          launchpad.setRightButton(i, byte(0));
+        }
       }
     }
     
@@ -2147,16 +2156,22 @@ class TapTempo {
     
   }
   
+  int getSize() { return length; }
+  int getActualStep() { return tempotapTapCount; }
+  
   long oldFrameCount;
   
   
   boolean triggered = false;
   void trig(boolean trig) {
-    triggered = trig;
+     triggered = trig;
   }
   
   boolean trigger() {
-    return triggered;
+    if(play) {
+      return triggered;
+    }
+    return false;
   }
 
 }

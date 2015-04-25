@@ -818,15 +818,15 @@ public class Launchpad {
   }
   
   void setup() {
-    if(pads == null) pads = new boolean[8][8];
-    if(padsToggle == null) padsToggle = new boolean[8][8];
+    if(pads == null) pads = new boolean[9][8];
+    if(padsToggle == null) padsToggle = new boolean[9][8];
     if(upperPads == null) upperPads = new boolean[8];
     if(upperPadsToggle == null) upperPadsToggle = new boolean[8];
     
-    if(toggleMemory == null) toggleMemory = new int[8][8];
+    if(toggleMemory == null) toggleMemory = new int[9][8];
     
-    if(buttonMode == null) buttonMode = new int[8][8];
-    if(toggleMemory == null) toggleMemory = new int[8][8];
+    if(buttonMode == null) buttonMode = new int[9][8];
+    if(toggleMemory == null) toggleMemory = new int[9][8];
   }
   
   void setButtonModeToAll(int mode) {
@@ -850,44 +850,90 @@ public class Launchpad {
     pads[x][y] = val;
     if(val) padsToggle[x][y] = !padsToggle[x][y];
     
-    boolean value;
-    
-    if(buttonMode[x][y] != 3) {
-        if(buttonMode[x][y] == 1) { //Togglemode
-          value = padsToggle[x][y];
+    boolean value = false;
+    if(x < 8) {
+      if(buttonMode[x][y] != 3 && !upperPads[0]) {
+          if(buttonMode[x][y] == 1) { //Togglemode
+            value = padsToggle[x][y];
+          }
+          else {
+            value = pads[x][y];
+          }
+          
+         // if(output == 1) { setMemoryEnabledByOrderInVisualisation(x+8*y+1+offset, value); }
+         // else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
+          
+          
+          if(output == 1) {
+      		if(buttonMode[x][y] != 2 && buttonMode[x][y] != 4) {
+      			memories[toggleMemory[x][y]].enabled = value;
+      			memories[toggleMemory[x][y]].doOnce = false;
+      		}
+      		else if(value == true && buttonMode[x][y] == 2) {
+      			memories[toggleMemory[x][y]].enabled = true;
+      			memories[toggleMemory[x][y]].doOnce = true;
+      			memories[toggleMemory[x][y]].triggerButton = pitch;
+      		}
+                  else if(value && buttonMode[x][y] == 4) {
+                          memories[toggleMemory[x][y]].trig();
+                  }
+      	}
+          else if(output == 2) { fixtures.get(constrain(toggleMemory[x][y], 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
+          
+      }
+      else if(buttonMode[x][y] == 3 && pads[x][y]) {
+        
+        value = true;
+      }
+      if(upperPads[0] && val) {
+        memories[toggleMemory[x][y]].trig();
+      }
+       if(!upperPads[0]) sendNoteOn(0, pitch, byte(value) * 127);
+      }
+     
+    else if(val) {
+      if(pitch == 7*16+8) {
+        tapTempo.register();
+        for(int i = 0; i < 8; i++) {
+          int v = 0; 
+          if(tapTempo.getSize()-tapTempo.getActualStep() > i && !tapTempo.enable) {
+            v = 1;
+          }
+          else {
+            v = 0;
+          }
+          bus.sendNoteOn(0, i*16+8, byte(v) * 50);
         }
-        else {
-          value = pads[x][y];
-        }
-        bus.sendNoteOn(0, pitch, byte(value) * 127);
-       // if(output == 1) { setMemoryEnabledByOrderInVisualisation(x+8*y+1+offset, value); }
-       // else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
-        
-        
-        if(output == 1) {
-    		if(buttonMode[x][y] != 2 && buttonMode[x][y] != 4) {
-    			memories[toggleMemory[x][y]].enabled = value;
-    			memories[toggleMemory[x][y]].doOnce = false;
-    		}
-    		else if(value == true && buttonMode[x][y] == 2) {
-    			memories[toggleMemory[x][y]].enabled = true;
-    			memories[toggleMemory[x][y]].doOnce = true;
-    			memories[toggleMemory[x][y]].triggerButton = pitch;
-    		}
-                else if(value && buttonMode[x][y] == 4) {
-                        memories[toggleMemory[x][y]].trig();
-                }
-    	}
-        else if(output == 2) { fixtures.get(constrain(toggleMemory[x][y], 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
-        
+      }
+      else if(pitch == 6*16+8) {
+        tapTempo.play = !tapTempo.play;
+      }
+      println(pitch);
     }
-    else if(buttonMode[x][y] == 3 && pads[x][y]) {
-      tapTempo.register();
-    }
+  }
+  
+  void setRightButton(int i, byte v) {
+    bus.sendNoteOn(0, i*16+8, v);
   }
   
   void noteOff(int channel, int pitch, int velocity) {
     noteOn(channel, pitch, 0);
+  }
+  
+  void clearLeds() {
+    for(int i = 0; i < 200; i++) {
+      bus.sendNoteOn(0, i, byte(0));
+      bus.sendControllerChange(0, i, byte(0));
+    }
+  }
+  
+  void sendNoteOn(int channel, int pitch, int value) {
+    int v = value;
+    if(value == 0) {
+      int x = constrain(pitch%16, 0, pads.length-1), y = constrain(pitch/16, 0, pads[0].length-1);
+      sendDefaultZeroToButton(x, y);
+    }
+    bus.sendNoteOn(channel, pitch, v);
   }
 
   
@@ -896,6 +942,7 @@ public class Launchpad {
     int x = constrain(number-104, 0, upperPads.length-1);
     upperPads[x] = val;
     if(val) upperPadsToggle[x] = !upperPadsToggle[x];
+    bus.sendControllerChange(0, number, byte(value) * 127);
   }
   
   
@@ -935,7 +982,7 @@ public class Launchpad {
 	
 	for(int x = 0; x < fromXML.length; x++) {
       for(int y = 0; y < fromXML[x].length; y++) {
-        buttonMode[x][y] = fromXML[x][y];
+        setButtonMode(fromXML[x][y], x, y);
       }
     }
     
@@ -946,6 +993,36 @@ public class Launchpad {
   
   void setButtonMode(int val, int x, int y) {
     buttonMode[x][y] = val;
+    try {
+    int v = 0;
+    if(toggleMemory[x][y] != 0) {
+      v = 62;
+    }
+    bus.sendNoteOn(0, y*16+x, byte(v));
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  
+  int[][] buttonModeSentOld = new int[9][8];
+  
+  void draw() {
+    for(int x = 0; x < 9; x++) for(int y = 0; y < 8; y++) {
+      if(buttonModeSentOld[x][y] != (buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1))) {
+        buttonModeSentOld[x][y] = (buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1));
+        sendDefaultZeroToButton(x, y);
+      }
+    }
+  }
+  
+  void sendDefaultZeroToButton(int x, int y) {
+        int v = 0;
+        if((buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1))>0) switch((buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1))) {
+          case 0: v = 13; break;
+          default: v = 29; break;
+        }
+        if(bus != null) bus.sendNoteOn(0, y*16+x, byte(v));
   }
   
   void setToggleToMemoryValue(int val, int x, int y) {

@@ -27,6 +27,7 @@ boolean speedDownVisualisation = false;
 int keyCapFrame = 0;
 
 void draw() {
+  if(launchpad != null) launchpad.draw();
   if(speedDownVisualisation) {
     drawCounter++;
     if(drawCounter > round(frameRate/visualisationSpeed)) { drawNow = true; drawCounter = 0; } else { drawNow = false; }
