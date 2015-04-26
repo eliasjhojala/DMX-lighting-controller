@@ -973,28 +973,32 @@ public class Launchpad {
   
   void XMLtoObject(XML xml) {
     
-    int[][] fromXML = new int[8][8];
-    arrayCopy(XMLtoIntArray2D("toggleMemory", xml), fromXML);
-    
-
-    for(int x = 0; x < fromXML.length; x++) {
-      for(int y = 0; y < fromXML[x].length; y++) {
-        toggleMemory[x][y] = fromXML[x][y];
+    try {
+      int[][] fromXML = new int[9][8];
+      arrayCopy(XMLtoIntArray2D("toggleMemory", xml), fromXML);
+      
+  
+      for(int x = 0; x < fromXML.length; x++) {
+        for(int y = 0; y < fromXML[x].length; y++) {
+          toggleMemory[x][y] = fromXML[x][y];
+        }
       }
-    }
-	
-	fromXML = new int[8][8];
-    arrayCopy(XMLtoIntArray2D("buttonMode", xml), fromXML);
-	
-	for(int x = 0; x < fromXML.length; x++) {
-      for(int y = 0; y < fromXML[x].length; y++) {
-        setButtonMode(fromXML[x][y], x, y);
+  	
+  	fromXML = new int[9][8];
+      arrayCopy(XMLtoIntArray2D("buttonMode", xml), fromXML);
+  	
+  	for(int x = 0; x < fromXML.length; x++) {
+        for(int y = 0; y < fromXML[x].length; y++) {
+          setButtonMode(fromXML[x][y], x, y);
+        }
       }
+      
+      midiWindow.launchPadMemories.setValue(launchpad.toggleMemory);
+      midiWindow.launchpadToggleOrPush.setValue(launchpad.buttonMode); //Set values to buttonModes
     }
-    
-    midiWindow.launchPadMemories.setValue(launchpad.toggleMemory);
-    midiWindow.launchpadToggleOrPush.setValue(launchpad.buttonMode); //Set values to buttonModes
-
+    catch (Exception e) {
+      e.printStackTrace();
+    }
   }
   
   void setButtonMode(int val, int x, int y) {

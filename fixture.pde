@@ -771,27 +771,36 @@ class fixture {
   }
   
   color getFixtureColorFor2D() {
-    if(fixtureTypeId < fixtureProfiles.length) {
-      FixtureProfile profile = fixtureProfiles[fixtureTypeId];
-      if(profile != null) {
-        if(profile.hasDimmer) {
-          return this.getColor_wDim();
-        }
-        else if(profile.isFog) {
-          int val = in.getUniversalDMX(DMX_FOG);
-          color c = color(val, val, val);
-          return c;
-        }
-        else if(profile.isHazer) {
-          int val = in.getUniversalDMX(DMX_HAZE);
-          color c = color(val, val, val);
-          return c;
-        }
-        else {
-          color c = color(0, 0, 0);
-          return c;
+    boolean strobeAtTheTime = false;
+    if(out.getUniversalDMX(DMX_STROBE) > 0) {
+      strobeAtTheTime = true;
+      onWhileStrobe = !onWhileStrobe;
+    }
+    
+    if(onWhileStrobe || !(out.getUniversalDMX(DMX_STROBE) > 0)) {
+      if(fixtureTypeId < fixtureProfiles.length) {
+        FixtureProfile profile = fixtureProfiles[fixtureTypeId];
+        if(profile != null) {
+          if(profile.hasDimmer) {
+            return this.getColor_wDim();
+          }
+          else if(profile.isFog) {
+            int val = in.getUniversalDMX(DMX_FOG);
+            color c = color(val, val, val);
+            return c;
+          }
+          else if(profile.isHazer) {
+            int val = in.getUniversalDMX(DMX_HAZE);
+            color c = color(val, val, val);
+            return c;
+          }
+          else {
+            color c = color(0, 0, 0);
+            return c;
+          }
         }
       }
+      return 0;
     }
     color c = color(0, 0, 0);
     return c;
@@ -819,8 +828,13 @@ class fixture {
     DMXChanged = true;
   }
   
+  int lastOn = 0;
+  boolean onWhileStrobe;
+  
+
   //Index is used only to display the id of the fixture
   void draw2D(int index) {
+    
     pushStyle();
     fill(getFixtureColorFor2D());
     boolean showFixture = true;

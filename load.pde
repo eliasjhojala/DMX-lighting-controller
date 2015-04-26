@@ -12,11 +12,6 @@ void loadAllData() {
     programReadyToRun = true;
   }
   catch(Exception e) {
-    if(inputIsSelected) {
-      fileDialogInput();
-      programReadyToRun = false;
-      loadAllData();
-    }
     e.printStackTrace();
   }
 }
