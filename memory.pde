@@ -1574,14 +1574,21 @@ class chase { //Begin of chase class--------------------------------------------
     //There is some problems with this function
     boolean next = trigger() && !stepHasChanged;
     boolean reverse = back() && !stepHasChanged;
+    
+    boolean atEnd = false;
+    boolean atBegin = false;
     if(next) {
       if(step == getPresets().length-1 && doOnce()) { parent.enabled = false; if(launchpad != null) { launchpad.sendNoteOff(parent.triggerButton); } }
+      atBegin = getNext(step, 0, getPresets().length-1) != step+1;
+      
       step = getNext(step, 0, getPresets().length-1);
       lastDirection = NEXT;
     }
     if(reverse) {
       if(step == 0 && doOnce()) { parent.enabled = false; }
+      atBegin = getReverse(step, 0, getPresets().length-1) != step-1;
       step = getReverse(step, 0, getPresets().length-1);
+      
       lastDirection = REVERSE;
     }
     if(next || reverse) {
@@ -1598,11 +1605,14 @@ class chase { //Begin of chase class--------------------------------------------
     }
     int[] presets = getPresets();
     int rS = 0;
-    if(lastDirection == REVERSE) { rS = getNext(step, 0, presets.length-1); }
+    
+    if(lastDirection == REVERSE) { rS = getNext(step, 0, presets.length-1); atEnd = rS != step+1; }
     else { rS = getReverse(step, 0, presets.length-1); }
     if(presets.length > 0) {
-      loadPreset(getPresets()[step], brightness);
-      loadPreset(getPresets()[rS], getInvertedValue(brightness, 0, 255));
+      if(parent.enabled) {
+        loadPreset(getPresets()[step], brightness);
+        loadPreset(getPresets()[rS], getInvertedValue(brightness, 0, 255));
+      }
     }
   }
   

@@ -840,7 +840,7 @@ public class Launchpad {
   
   void sendNoteOff(int pitch) {
 	int value = 0;
-	try { bus.sendNoteOn(0, pitch, byte(value) * 127); }
+	try { sendNoteOn(0, pitch, byte(value) * 127); }
         catch (Exception e) {}
   }
   
@@ -888,7 +888,7 @@ public class Launchpad {
       if(upperPads[0] && val) {
         memories[toggleMemory[x][y]].trig();
       }
-       if(!upperPads[0]) sendNoteOn(0, pitch, byte(value) * 127);
+       if(!upperPads[0] && (buttonMode[x][y] != 2 || value)) sendNoteOn(0, pitch, byte(value) * 127);
       }
      
     else if(val) {
@@ -927,13 +927,19 @@ public class Launchpad {
     }
   }
   
+  int[][] actualValueToSend = new int[9][8];
+  
   void sendNoteOn(int channel, int pitch, int value) {
     int v = value;
+    int x = constrain(pitch%16, 0, pads.length-1), y = constrain(pitch/16, 0, pads[0].length-1);
     if(value == 0) {
-      int x = constrain(pitch%16, 0, pads.length-1), y = constrain(pitch/16, 0, pads[0].length-1);
       sendDefaultZeroToButton(x, y);
     }
-    bus.sendNoteOn(channel, pitch, v);
+    else {
+      sendDefaultFullToButton(x, y);
+    }
+    actualValueToSend[x][y] = v;
+    
   }
 
   
@@ -993,36 +999,62 @@ public class Launchpad {
   
   void setButtonMode(int val, int x, int y) {
     buttonMode[x][y] = val;
-    try {
-    int v = 0;
-    if(toggleMemory[x][y] != 0) {
-      v = 62;
-    }
-    bus.sendNoteOn(0, y*16+x, byte(v));
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-    }
+    try { sendDefaultZeroToButton(x, y); } catch (Exception e) { e.printStackTrace(); }
   }
   
   int[][] buttonModeSentOld = new int[9][8];
+  int[][] lastSent = new int[9][8];
   
   void draw() {
     for(int x = 0; x < 9; x++) for(int y = 0; y < 8; y++) {
-      if(buttonModeSentOld[x][y] != (buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1))) {
+      if(buttonModeSentOld[x][y] != (buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1)) || frameCount > lastSent[x][y]+100) {
+        lastSent[x][y] = frameCount;
         buttonModeSentOld[x][y] = (buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1));
-        sendDefaultZeroToButton(x, y);
+        if(actualValueToSend[x][y] == 0) sendDefaultZeroToButton(x, y);
+        else sendDefaultFullToButton(x, y);
       }
     }
   }
   
+  /*
+  
+   0Ch 12 Off     Off
+   0Dh 13 Red     Low
+   0Fh 15 Red     Full
+   1Dh 29 Amber   Low
+   3Fh 63 Amber   Full
+   3Eh 62 Yellow  Full
+   1Ch 28 Green   Low
+   3Ch 60 Green   Full 
+  
+  */
+  
+  int[][] colors = {
+    { 13, 15 },
+    { 29, 63 },
+    { 28, 60 }
+  };
+  
   void sendDefaultZeroToButton(int x, int y) {
-        int v = 0;
-        if((buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1))>0) switch((buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1))) {
-          case 0: v = 13; break;
-          default: v = 29; break;
-        }
-        if(bus != null) bus.sendNoteOn(0, y*16+x, byte(v));
+    int v = 12;
+    if(toggleMemory[x][y] > 0) {
+      switch(buttonMode[x][y]) {
+        case 0: v = colors[0][0]; break;
+        default: v = colors[1][0]; break;
+      }
+    }
+    if(bus != null) bus.sendNoteOn(0, y*16+x, byte(v));
+  }
+  
+  void sendDefaultFullToButton(int x, int y) {
+    int v = 12;
+    if(toggleMemory[x][y] > 0) {
+      switch(buttonMode[x][y]) {
+        case 0: v = colors[0][1]; break;
+        default: v = colors[1][1]; break;
+      }
+    }
+    if(bus != null) bus.sendNoteOn(0, y*16+x, byte(v));
   }
   
   void setToggleToMemoryValue(int val, int x, int y) {
