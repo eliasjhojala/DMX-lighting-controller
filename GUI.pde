@@ -166,6 +166,12 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(midiWindow.LC2412faderMemories, "LC2412faderMemories", 1000));
     subWindows.add(new SubWindowContainer(midiWindow.LC2412buttonMemories, "LC2412buttonMemories", 1000));
     
+    subWindows.add(new SubWindowContainer(midiWindow.LC2412chaseFaderMemories, "LC2412chaseFaderMemories", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow.LC2412masterFaderMemories, "LC2412masterFaderMemories", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow.LC2412chaseFaderModes, "LC2412chaseFaderModes", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow.LC2412masterFaderModes, "LC2412masterFaderModes", 1000));
+
+    
     if(useNewLowerMenu) { lowerMenu.open = false; }
     
   }

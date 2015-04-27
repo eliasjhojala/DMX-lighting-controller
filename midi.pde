@@ -39,8 +39,16 @@
    /**/                                                                              //|
    /**/   TextBoxTableWindow LC2412faderMemories;                                    //|
    /**/   TextBoxTableWindow LC2412buttonMemories;                                   //|
+   /**/                                                                              //|   
+   /**/   TextBoxTableWindow LC2412chaseFaderMemories;                               //| 
+   /**/   TextBoxTableWindow LC2412masterFaderMemories;                              //| 
+   /**/                                                                              //|   
+   /**/   NumberBoxTableWindow LC2412chaseFaderModes;                                //| 
+   /**/   NumberBoxTableWindow LC2412masterFaderModes;                               //| 
    /**/                                                                              //|
    //----------End of creating all the controllers we use in this window----------------
+   
+
    
    MidiHandlerWindow() {
      { //Init window
@@ -107,8 +115,16 @@
          LC2412faderModes = new NumberBoxTableWindow("LC2412faderModes", 12, 2, 0, 1);
          LC2412buttonModes = new NumberBoxTableWindow("LC2412buttonModes", 12, 1, 0, 2);
          
-         LC2412faderMemories = new TextBoxTableWindow("launchPadMemories", 12, 2);
-         LC2412buttonMemories = new TextBoxTableWindow("launchPadMemories", 12, 1);
+         
+         LC2412faderMemories = new TextBoxTableWindow("LC2412faderMemories", 12, 2);
+         LC2412buttonMemories = new TextBoxTableWindow("LC2412buttonMemories", 12, 1);
+         
+         LC2412chaseFaderMemories = new TextBoxTableWindow("LC2412chaseFaderMemories", 3, 1);
+         LC2412masterFaderMemories = new TextBoxTableWindow("LC2412masterFaderMemories", 3, 1);
+         
+         LC2412chaseFaderModes = new NumberBoxTableWindow("LC2412chaseFaderModes", 3, 1, 0, 1);
+         LC2412masterFaderModes = new NumberBoxTableWindow("LC2412masterFaderModes", 3, 1, 0, 1);
+         
        } //End of creating LC2412 settings tables for faders and buttons
        
        { //Create save and load buttons
@@ -136,6 +152,12 @@
        
        LC2412faderMemories.open = false;
        LC2412buttonMemories.open = false;
+       
+       LC2412chaseFaderMemories.open = false;
+       LC2412masterFaderMemories.open = false;
+       
+       LC2412chaseFaderModes.open = false;
+       LC2412masterFaderModes.open = false;
      }
      if(!open || selectedMachine != 3) {
        keyrig49keyModes.open = false;
@@ -296,6 +318,10 @@
                }
              } //End of buttonModes
              
+             
+
+             
+             
              { //FaderMemories
                LC2412faderMemories.locX = locX+500+LC2412faderModes.w;
                LC2412faderMemories.locY = locY;
@@ -325,6 +351,42 @@
                  }
                }
              } //End of buttonMemories
+             
+             
+             
+            { //ChaseMemories
+               LC2412chaseFaderMemories.locX = LC2412buttonMemories.locX+LC2412buttonMemories.w;
+               LC2412chaseFaderMemories.locY = locY;
+               LC2412chaseFaderMemories.open = true;
+               
+               if(LC2412chaseFaderMemories.valueHasChanged()) {
+                 if(LC2412 != null) {
+                   TextBoxTableWindow LPM = LC2412chaseFaderMemories;
+                   int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                   try { LC2412.setChaseFaderMemoryValue(val, x); }
+                   catch (Exception e) { e.printStackTrace(); }
+                 }
+               } 
+             } //End of chaseMemories
+             
+             { //MasterMemories
+               LC2412masterFaderMemories.locX = LC2412chaseFaderMemories.locX+LC2412chaseFaderMemories.w;
+               LC2412masterFaderMemories.locY = locY;
+               LC2412masterFaderMemories.open = true;
+               
+               if(LC2412masterFaderMemories.valueHasChanged()) {
+                 if(LC2412 != null) {
+                   TextBoxTableWindow LPM = LC2412masterFaderMemories;
+                   int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                   try { LC2412.setMasterFaderMemoryValue(val, x); }
+                   catch (Exception e) { e.printStackTrace(); }
+                 }
+               } 
+             } //End of MasterMemories
+             
+             
+             
+             
              
              { //Bank
                g.pushMatrix(); g.pushStyle(); g.fill(0); g.textAlign(RIGHT);
@@ -1107,6 +1169,11 @@ public class behringerLC2412 {
   int[][][] faderMemory;
   int[][] buttonMemory;
   
+  int[] chaseFaderMemory;
+  int[] chaseFaderMode;
+  int[] masterFaderMemory;
+  int[] masterFaderMode;
+  
   int inputIndex;
   int outputIndex;
   
@@ -1146,6 +1213,12 @@ public class behringerLC2412 {
     if(buttonMode == null) buttonMode = new int[10][12];
     if(faderMemory == null) faderMemory = new int[10][12][2];
     if(buttonMemory == null) buttonMemory = new int[10][12];
+    
+    if(chaseFaderMemory == null) chaseFaderMemory = new int[3];
+    if(chaseFaderMode == null) chaseFaderMode = new int[3];
+    if(masterFaderMemory == null) masterFaderMemory = new int[3];
+    if(masterFaderMode == null) masterFaderMode = new int[3];
+
   }
   
   
@@ -1241,6 +1314,14 @@ public class behringerLC2412 {
   
   void setButtonMemoryValue(int val, int b, int x, int y) {
     if(b >= 0 && bank < buttonMemory.length) if(x >= 0 && x < buttonMemory[b].length) buttonMemory[b][x] = val;
+  }
+  
+  void setChaseFaderMemoryValue(int val, int x) {
+    if(x >= 0 && x < chaseFaderMemory.length) chaseFaderMode[x] = val;
+  }
+  
+  void setMasterFaderMemoryValue(int val, int x) {
+    if(x >= 0 && x < masterFaderMemory.length) masterFaderMemory[x] = val;
   }
   
   void noteOn(int channel, int pitch, int velocity) {
