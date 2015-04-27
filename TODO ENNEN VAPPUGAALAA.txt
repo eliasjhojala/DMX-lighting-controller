@@ -1,4 +1,4 @@
-- lavan päällinen linssi parenttaus oikeaan trussiin
+ï»¿- lavan pÃ¤Ã¤llinen linssi parenttaus oikeaan trussiin
 
 - PDF.pde kuntoon
   - dimmerSockets.pdf kuntoon
@@ -10,8 +10,8 @@
   - tarkista sulakkeet
   - pdf-tiedostot
 
-- valopöydän chase ja master slidereille vastaavat säädöt kuin muille (midi.pde)
-- valopöydän master sliderit kuntoon
+- valopÃ¶ydÃ¤n chase ja master slidereille vastaavat sÃ¤Ã¤dÃ¶t kuin muille (midi.pde)
+- valopÃ¶ydÃ¤n master sliderit kuntoon
   - led master
   - blinder master
   - master
