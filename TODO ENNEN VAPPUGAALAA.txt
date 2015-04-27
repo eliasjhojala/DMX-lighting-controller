@@ -9,3 +9,9 @@
 - kaikki taka-ansan valot omiin kanaviin
   - tarkista sulakkeet
   - pdf-tiedostot
+
+- valopöydän chase ja master slidereille vastaavat säädöt kuin muille (midi.pde)
+- valopöydän master sliderit kuntoon
+  - led master
+  - blinder master
+  - master
