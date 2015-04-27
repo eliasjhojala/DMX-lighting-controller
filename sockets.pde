@@ -241,7 +241,7 @@ int[] findNearestSocket(int truss) {
         sockets.get(nearestFoundSocket[i]).isInUse = true;
         /*if(fix.isHalogen()) { */ sockets.get(nearestFoundSocket[i]).channel = fix.channelStart; /*}
         else { sockets.get(nearestFoundSocket[i]).channel = -2; }*/
-        fix.socket = sockets.get(nearestFoundSocket[i]); println(fix.socket.name);
+        fix.socket.XMLtoObject(sockets.get(nearestFoundSocket[i]).getXML()); println(fix.socket.name);
         sockets.get(nearestFoundSocket[i]).channel = fix.channelStart;
       }
  }

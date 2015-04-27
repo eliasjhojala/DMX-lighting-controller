@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NearestSockets>
   <truss id="1">
-    <socket channel="17" fixture="7" id="0">H17</socket>
-    <socket channel="16" fixture="8" id="1">H12</socket>
+    <socket channel="1" fixture="0" id="0">H12</socket>
+    <socket channel="17" fixture="7" id="1">H17</socket>
+    <socket channel="16" fixture="8" id="2">H9</socket>
   </truss>
   <truss id="2">
-    <socket channel="1" fixture="0" id="0">H13</socket>
     <socket channel="3" fixture="1" id="1">H11</socket>
-    <socket channel="4" fixture="2" id="2">H14</socket>
-    <socket channel="12" fixture="3" id="3">H15</socket>
-    <socket channel="13" fixture="4" id="4">H16</socket>
-    <socket channel="2" fixture="5" id="5">H18</socket>
-    <socket channel="18" fixture="6" id="6">H10</socket>
-    <socket channel="14" fixture="86" id="7">H8</socket>
-    <socket channel="15" fixture="87" id="8">H19</socket>
+    <socket channel="3" fixture="1" id="0">H11</socket>
+    <socket channel="4" fixture="2" id="1">H13</socket>
+    <socket channel="12" fixture="3" id="2">H15</socket>
+    <socket channel="13" fixture="4" id="3">H16</socket>
+    <socket channel="2" fixture="5" id="4">H18</socket>
+    <socket channel="18" fixture="6" id="5">H14</socket>
+    <socket channel="14" fixture="86" id="6">H10</socket>
+    <socket channel="15" fixture="87" id="7">H19</socket>
   </truss>
 </NearestSockets>
