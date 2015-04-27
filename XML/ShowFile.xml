@@ -6,7 +6,7 @@
         <StartChannel>1</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="366" y="-421" z="0">
-          <OnScreen x="1062" y="425"/>
+          <OnScreen x="548" y="193"/>
           <Rotation x="180" z="-1"/>
         </Location>
         <parameter>35</parameter>
@@ -14,13 +14,13 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
-        <socket channel="4" exist="1" isInUse="1" name="H13" number="0" truss="2" x_location="445"/>
+        <socket channel="1" exist="1" isInUse="1" name="H13" number="0" truss="2" x_location="445"/>
       </fixture>
       <fixture id="1">
         <StartChannel>3</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="287" y="5" z="0">
-          <OnScreen x="1000" y="808"/>
+          <OnScreen x="508" y="440"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>76</parameter>
@@ -34,7 +34,7 @@
         <StartChannel>4</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="364" y="-6" z="0">
-          <OnScreen x="1079" y="807"/>
+          <OnScreen x="558" y="439"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -42,13 +42,13 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
-        <socket channel="4" exist="1" isInUse="1" name="H13" number="0" truss="2" x_location="445"/>
+        <socket channel="4" exist="1" isInUse="1" name="H14" number="0" truss="2" x_location="469"/>
       </fixture>
       <fixture id="3">
-        <StartChannel>4</StartChannel>
+        <StartChannel>12</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="544" y="-3" z="0">
-          <OnScreen x="1249" y="810"/>
+          <OnScreen x="668" y="441"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -56,13 +56,13 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
-        <socket channel="4" exist="1" isInUse="1" name="H15" number="0" truss="2" x_location="605"/>
+        <socket channel="12" exist="1" isInUse="1" name="H15" number="0" truss="2" x_location="605"/>
       </fixture>
       <fixture id="4">
-        <StartChannel>3</StartChannel>
+        <StartChannel>13</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="628" y="9" z="0">
-          <OnScreen x="1322" y="812"/>
+          <OnScreen x="715" y="442"/>
           <Rotation x="128" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -70,13 +70,13 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
-        <socket channel="3" exist="1" isInUse="1" name="H16" number="0" truss="2" x_location="630"/>
+        <socket channel="13" exist="1" isInUse="1" name="H16" number="0" truss="2" x_location="630"/>
       </fixture>
       <fixture id="5">
         <StartChannel>2</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="720" y="-1" z="0">
-          <OnScreen x="1403" y="818"/>
+          <OnScreen x="767" y="446"/>
           <Rotation x="128" z="-15"/>
         </Location>
         <parameter>16</parameter>
@@ -90,7 +90,7 @@
         <StartChannel>18</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="465" y="3" z="0">
-          <OnScreen x="1168" y="807"/>
+          <OnScreen x="616" y="439"/>
           <Rotation x="185" z="361"/>
         </Location>
         <parameter>-80</parameter>
@@ -98,13 +98,13 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
-        <socket channel="18" exist="1" isInUse="1" name="H14" number="0" truss="2" x_location="469"/>
+        <socket channel="18" exist="1" isInUse="1" name="H10" number="0" truss="2" x_location="234"/>
       </fixture>
       <fixture id="7">
         <StartChannel>17</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="554" y="11" z="0">
-          <OnScreen x="1241" y="409"/>
+          <OnScreen x="663" y="183"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -112,13 +112,13 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="255"/>
         <parentAnsa>1</parentAnsa>
-        <socket channel="17" exist="1" isInUse="0" name="H17" number="0" truss="1" x_location="526"/>
+        <socket channel="17" exist="1" isInUse="1" name="H17" number="0" truss="1" x_location="526"/>
       </fixture>
       <fixture id="8">
         <StartChannel>16</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="399" y="11" z="0">
-          <OnScreen x="1095" y="409"/>
+          <OnScreen x="569" y="183"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -126,13 +126,13 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="0" g="0" r="255"/>
         <parentAnsa>1</parentAnsa>
-        <socket channel="16" exist="1" isInUse="0" name="H12" number="0" truss="1" x_location="397"/>
+        <socket channel="16" exist="1" isInUse="1" name="H12" number="0" truss="1" x_location="397"/>
       </fixture>
       <fixture id="9">
         <StartChannel>6</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="391" y="5" z="0">
-          <OnScreen x="1092" y="201"/>
+          <OnScreen x="567" y="49"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -146,7 +146,7 @@
         <StartChannel>8</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="549" y="5" z="0">
-          <OnScreen x="1241" y="201"/>
+          <OnScreen x="663" y="49"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -160,7 +160,7 @@
         <StartChannel>7</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="448" y="17" z="0">
-          <OnScreen x="1151" y="193"/>
+          <OnScreen x="605" y="44"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -174,7 +174,7 @@
         <StartChannel>7</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="490" y="17" z="0">
-          <OnScreen x="1191" y="193"/>
+          <OnScreen x="630" y="44"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -188,7 +188,7 @@
         <StartChannel>5</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="83" y="6" z="0">
-          <OnScreen x="806" y="598"/>
+          <OnScreen x="383" y="305"/>
           <Rotation x="252" z="-11"/>
         </Location>
         <parameter>45</parameter>
@@ -216,7 +216,7 @@
         <StartChannel>20</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="293" y="1" z="0">
-          <OnScreen x="1000" y="318"/>
+          <OnScreen x="508" y="125"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -230,7 +230,7 @@
         <StartChannel>22</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="506" y="2" z="0">
-          <OnScreen x="1201" y="319"/>
+          <OnScreen x="637" y="125"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -244,7 +244,7 @@
         <StartChannel>23</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="608" y="0" z="0">
-          <OnScreen x="1298" y="318"/>
+          <OnScreen x="699" y="124"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -258,7 +258,7 @@
         <StartChannel>9</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="874" y="5" z="0">
-          <OnScreen x="1544" y="603"/>
+          <OnScreen x="858" y="308"/>
           <Rotation x="252" z="11"/>
         </Location>
         <parameter>45</parameter>
@@ -272,7 +272,7 @@
         <StartChannel>24</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="877" y="16" z="0">
-          <OnScreen x="1561" y="304"/>
+          <OnScreen x="869" y="116"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -286,7 +286,7 @@
         <StartChannel>19</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="73" y="16" z="0">
-          <OnScreen x="802" y="304"/>
+          <OnScreen x="380" y="116"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -1042,7 +1042,7 @@
         <StartChannel>100</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="73" y="4" z="0">
-          <OnScreen x="797" y="95"/>
+          <OnScreen x="377" y="-18"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1056,7 +1056,7 @@
         <StartChannel>108</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="248" y="2" z="0">
-          <OnScreen x="963" y="93"/>
+          <OnScreen x="484" y="-19"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1070,7 +1070,7 @@
         <StartChannel>116</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="381" y="4" z="0">
-          <OnScreen x="1088" y="95"/>
+          <OnScreen x="564" y="-18"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1084,7 +1084,7 @@
         <StartChannel>124</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="582" y="1" z="0">
-          <OnScreen x="1278" y="92"/>
+          <OnScreen x="686" y="-20"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1098,7 +1098,7 @@
         <StartChannel>132</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="728" y="0" z="0">
-          <OnScreen x="1416" y="91"/>
+          <OnScreen x="775" y="-21"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1112,7 +1112,7 @@
         <StartChannel>140</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="887" y="2" z="0">
-          <OnScreen x="1566" y="93"/>
+          <OnScreen x="872" y="-19"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1140,7 +1140,7 @@
         <StartChannel>21</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="402" y="1" z="0">
-          <OnScreen x="1103" y="318"/>
+          <OnScreen x="574" y="125"/>
           <Rotation x="-106" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1154,7 +1154,7 @@
         <StartChannel>30</StartChannel>
         <fixtureTypeId>9</fixtureTypeId>
         <Location x="475" y="-16" z="0">
-          <OnScreen x="1149" y="38"/>
+          <OnScreen x="603" y="-55"/>
           <Rotation x="87" z="900"/>
         </Location>
         <parameter>0</parameter>
@@ -1168,7 +1168,7 @@
         <StartChannel>31</StartChannel>
         <fixtureTypeId>8</fixtureTypeId>
         <Location x="150" y="19" z="0">
-          <OnScreen x="833" y="91"/>
+          <OnScreen x="400" y="-21"/>
           <Rotation x="-268" z="135"/>
         </Location>
         <parameter>0</parameter>
@@ -1182,7 +1182,7 @@
         <StartChannel>35</StartChannel>
         <fixtureTypeId>7</fixtureTypeId>
         <Location x="493" y="123" z="0">
-          <OnScreen x="1199" y="409"/>
+          <OnScreen x="635" y="183"/>
           <Rotation x="-114" z="360"/>
         </Location>
         <parameter>0</parameter>
@@ -1196,7 +1196,7 @@
         <StartChannel>37</StartChannel>
         <fixtureTypeId>9</fixtureTypeId>
         <Location x="440" y="107" z="0">
-          <OnScreen x="1149" y="422"/>
+          <OnScreen x="603" y="192"/>
           <Rotation x="0" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1210,7 +1210,7 @@
         <StartChannel>14</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="204" y="15" z="0">
-          <OnScreen x="928" y="799"/>
+          <OnScreen x="461" y="434"/>
           <Rotation x="0" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1218,13 +1218,13 @@
         <postFadeSpeed>5000</postFadeSpeed>
         <Color b="255" g="255" r="255"/>
         <parentAnsa>2</parentAnsa>
-        <socket channel="14" exist="1" isInUse="1" name="H10" number="0" truss="2" x_location="234"/>
+        <socket channel="14" exist="1" isInUse="1" name="H8" number="0" truss="2" x_location="56"/>
       </fixture>
       <fixture id="87">
         <StartChannel>15</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="775" y="14" z="0">
-          <OnScreen x="1467" y="798"/>
+          <OnScreen x="808" y="433"/>
           <Rotation x="0" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -36958,18 +36958,18 @@
       <socket channel="9" exist="1" id="4" isInUse="0" name="H5" number="0" truss="3" x_location="687"/>
       <socket channel="0" exist="1" id="5" isInUse="0" name="H7" number="0" truss="1" x_location="168"/>
       <socket channel="0" exist="1" id="6" isInUse="0" name="H9" number="0" truss="1" x_location="282"/>
-      <socket channel="16" exist="1" id="7" isInUse="0" name="H12" number="0" truss="1" x_location="397"/>
-      <socket channel="17" exist="1" id="8" isInUse="0" name="H17" number="0" truss="1" x_location="526"/>
+      <socket channel="16" exist="1" id="7" isInUse="1" name="H12" number="0" truss="1" x_location="397"/>
+      <socket channel="17" exist="1" id="8" isInUse="1" name="H17" number="0" truss="1" x_location="526"/>
       <socket channel="0" exist="1" id="9" isInUse="0" name="H20" number="0" truss="1" x_location="646"/>
       <socket channel="0" exist="1" id="10" isInUse="0" name="H22" number="0" truss="1" x_location="767"/>
       <socket channel="0" exist="1" id="11" isInUse="0" name="H6" number="0" truss="2" x_location="29"/>
       <socket channel="14" exist="1" id="12" isInUse="1" name="H8" number="0" truss="2" x_location="56"/>
-      <socket channel="14" exist="1" id="13" isInUse="1" name="H10" number="0" truss="2" x_location="234"/>
+      <socket channel="18" exist="1" id="13" isInUse="1" name="H10" number="0" truss="2" x_location="234"/>
       <socket channel="3" exist="1" id="14" isInUse="1" name="H11" number="0" truss="2" x_location="263"/>
-      <socket channel="4" exist="1" id="15" isInUse="1" name="H13" number="0" truss="2" x_location="445"/>
-      <socket channel="18" exist="1" id="16" isInUse="1" name="H14" number="0" truss="2" x_location="469"/>
-      <socket channel="4" exist="1" id="17" isInUse="1" name="H15" number="0" truss="2" x_location="605"/>
-      <socket channel="3" exist="1" id="18" isInUse="1" name="H16" number="0" truss="2" x_location="630"/>
+      <socket channel="1" exist="1" id="15" isInUse="1" name="H13" number="0" truss="2" x_location="445"/>
+      <socket channel="4" exist="1" id="16" isInUse="1" name="H14" number="0" truss="2" x_location="469"/>
+      <socket channel="12" exist="1" id="17" isInUse="1" name="H15" number="0" truss="2" x_location="605"/>
+      <socket channel="13" exist="1" id="18" isInUse="1" name="H16" number="0" truss="2" x_location="630"/>
       <socket channel="2" exist="1" id="19" isInUse="1" name="H18" number="0" truss="2" x_location="766"/>
       <socket channel="15" exist="1" id="20" isInUse="1" name="H19" number="0" truss="2" x_location="795"/>
       <socket channel="0" exist="1" id="21" isInUse="0" name="H21" number="0" truss="2" x_location="924"/>
@@ -37388,7 +37388,7 @@
       <Use3D>false</Use3D>
     </ThreeDee>
     <TwoDee>
-      <transform pageRotation="0" x_siirto="661.2994" y_siirto="361.6015" zoom="94.38297"/>
+      <transform pageRotation="0" x_siirto="72.390015" y_siirto="30.804855" zoom="60.742302"/>
     </TwoDee>
     <VisualisationOptions>
       <data showLeftButtons="1" showOldBottomMeu="1"/>

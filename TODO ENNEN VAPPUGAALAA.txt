@@ -1,0 +1,11 @@
+- lavan p‰‰llinen linssi parenttaus oikeaan trussiin
+
+- PDF.pde kuntoon
+  - dimmerSockets.pdf kuntoon
+  - map.pdf kuntoon
+  - channels.pdf kuntoon
+
+- tarkista pdf-tiedostot manuaalisesti
+- kaikki taka-ansan valot omiin kanaviin
+  - tarkista sulakkeet
+  - pdf-tiedostot
