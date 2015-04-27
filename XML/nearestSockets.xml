@@ -6,7 +6,6 @@
     <socket channel="16" fixture="8" id="2">H9</socket>
   </truss>
   <truss id="2">
-    <socket channel="3" fixture="1" id="1">H11</socket>
     <socket channel="3" fixture="1" id="0">H11</socket>
     <socket channel="4" fixture="2" id="1">H13</socket>
     <socket channel="12" fixture="3" id="2">H15</socket>
