@@ -127,7 +127,7 @@ void drawSockets(PVector mouseRotated) {
           PVector point2 = new PVector(20, 30);
           rect(point1.x, point1.y, point2.x, point2.y);
           fill(255);
-          text(socket.name, point1.x + 2, point1.y + 20);
+          text(socket.name + " : " + socket.channel, point1.x + 2, point1.y - 40, 20, 60);
           doSocketMoving(i, mouseRotated, point1, point2);
 
         
@@ -608,7 +608,7 @@ void keyPressed() {
     if(key == 's') {
       if(!showMode && !showModeLocked) {
         try {
-          thread("saveAllData");
+          saveAllData();
         }
         catch (Exception e) {
           notifier.notify("Error saving data", true);

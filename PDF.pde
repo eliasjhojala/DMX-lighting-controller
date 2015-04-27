@@ -7,7 +7,6 @@ void SaveChannelsAsPdf() {
     for(fixture fix : fixtures.iterate()) {
       if(fix.socket.name.equals(sockets.get(i).name)) {
         sockets.get(i).isInActiveUse = true;
-        break;
       }
     }
   }
@@ -67,6 +66,7 @@ void SaveChannelsAsPdf() {
     for(int i = 0; i < DMX_CHAN_LENGTH; i++) {
       socketChannels.add(new Channel());
     }
+   
     
     for(int i = 0; i < sockets.size(); i++) {
       if(sockets.get(i).isInActiveUse) {

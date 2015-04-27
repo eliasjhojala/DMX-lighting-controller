@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<NearestSockets/>
+<NearestSockets>
+  <truss id="1">
+    <socket channel="17" fixture="7" id="0">H17</socket>
+    <socket channel="16" fixture="8" id="1">H12</socket>
+  </truss>
+</NearestSockets>
