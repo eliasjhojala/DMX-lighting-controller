@@ -355,7 +355,7 @@
              
              
             { //ChaseMemories
-               LC2412chaseFaderMemories.locX = LC2412buttonMemories.locX+LC2412buttonMemories.w;
+               LC2412chaseFaderMemories.locX = LC2412masterFaderMemories.locX+LC2412masterFaderMemories.w;
                LC2412chaseFaderMemories.locY = locY;
                LC2412chaseFaderMemories.open = true;
                
@@ -370,7 +370,7 @@
              } //End of chaseMemories
              
              { //MasterMemories
-               LC2412masterFaderMemories.locX = LC2412chaseFaderMemories.locX+LC2412chaseFaderMemories.w;
+               LC2412masterFaderMemories.locX = LC2412buttonMemories.locX+LC2412buttonMemories.w;
                LC2412masterFaderMemories.locY = locY;
                LC2412masterFaderMemories.open = true;
                
@@ -383,6 +383,38 @@
                  }
                } 
              } //End of MasterMemories
+             
+             
+             { //ChaseModes
+               LC2412chaseFaderModes.locX = LC2412chaseFaderMemories.locX;
+               LC2412chaseFaderModes.locY = LC2412chaseFaderMemories.locY+LC2412chaseFaderMemories.h;
+               LC2412chaseFaderModes.open = true;
+               
+               if(LC2412chaseFaderModes.valueHasChanged()) {
+                 if(LC2412 != null) {
+                   NumberBoxTableWindow LPM = LC2412chaseFaderModes;
+                   int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                   try { LC2412.setChaseFaderModeValue(val, x); }
+                   catch (Exception e) { e.printStackTrace(); }
+                 }
+               } 
+             } //End of ChaseModes
+             
+             
+             { //MasterModes
+               LC2412masterFaderModes.locX = LC2412masterFaderMemories.locX;
+               LC2412masterFaderModes.locY = LC2412masterFaderMemories.locY+LC2412masterFaderMemories.h;
+               LC2412masterFaderModes.open = true;
+               
+               if(LC2412masterFaderModes.valueHasChanged()) {
+                 if(LC2412 != null) {
+                   NumberBoxTableWindow LPM = LC2412chaseFaderModes;
+                   int x = LPM.changedValue()[0]; int y = LPM.changedValue()[1]; int val = LPM.getValue(x, y);
+                   try { LC2412.setMasterFaderModeValue(val, x); }
+                   catch (Exception e) { e.printStackTrace(); }
+                 }
+               } 
+             } //End of MasterModes
              
              
              
@@ -620,8 +652,8 @@
      this.max = max;
      locX = 0;
      locY = 0;
-     w = x*30+100;
-     h = y*30+100;
+     w = x*21+100;
+     h = y*21+100;
      window = new Window("name", new PVector(w, h), this);
      
      for(int x_ = 0; x_ < boxes.length; x_++) {
@@ -641,7 +673,7 @@
      for(int x = 0; x < boxes.length; x++) {
        for(int y = 0; y < boxes[x].length; y++) {
          g.pushMatrix();
-           g.translate(x*25, y*25);
+           g.translate(x*21, y*21);
            boxes[x][y].draw(g, mouse, name+"box["+str(x)+"]["+str(y)+"]");
            if(boxes[x][y].valueHasChanged()) {
              changedX = x;
@@ -1324,6 +1356,14 @@ public class behringerLC2412 {
     if(x >= 0 && x < masterFaderMemory.length) masterFaderMemory[x] = val;
   }
   
+  void setChaseFaderModeValue(int val, int x) {
+    if(x >= 0 && x < chaseFaderMode.length) chaseFaderMode[x] = val;
+  }
+  
+  void setMasterFaderModeValue(int val, int x) {
+    if(x >= 0 && x < masterFaderMode.length) masterFaderMode[x] = val;
+  }
+  
   void noteOn(int channel, int pitch, int velocity) {
     if(pitch != 10) { //One slider is crashed
       midiMessageIn(pitch, velocity);
@@ -1353,12 +1393,12 @@ public class behringerLC2412 {
     }
     else {
       switch(num) {
-        case 24: chaserValues[0] = midiToDMX(val); break; //Speed
-        case 25: chaserValues[1] = midiToDMX(val); break; //X-fade
-        case 26: chaserValues[2] = midiToDMX(val); break; //Chase
-        case 27: masterValues[0] = midiToDMX(val); break; //Main
-        case 28: masterValues[1] = midiToDMX(val); break; //Main A
-        case 29: masterValues[2] = midiToDMX(val); break; //Main B
+        case 24: chaserValues[0] = midiToDMX(val); chaseFaderValueChange(chaserValues[0], 2); break; //Speed
+        case 25: chaserValues[1] = midiToDMX(val); chaseFaderValueChange(chaserValues[1], 1); break; //X-fade
+        case 26: chaserValues[2] = midiToDMX(val); chaseFaderValueChange(chaserValues[2], 0); break; //Chase
+        case 27: masterValues[0] = midiToDMX(val); masterFaderValueChange(masterValues[0], 2); break; //Main
+        case 28: masterValues[1] = midiToDMX(val); masterFaderValueChange(masterValues[1], 0); break; //Main A
+        case 29: masterValues[2] = midiToDMX(val); masterFaderValueChange(masterValues[2], 1); break; //Main B
         case 30: stepKey = midiToBoolean(val); tapTempo.register(); break;
         case 43: bank = val; break;
         case 44: chaserNumber = val; break;
@@ -1372,6 +1412,29 @@ public class behringerLC2412 {
         case 52: presetFlashKey = midiToBoolean(val); if(presetFlashKey) { presetFlashToggle = !presetFlashToggle; } break;
         case 53: memoryFlashKey = midiToBoolean(val); if(memoryFlashKey) { memoryFlashToggle = !memoryFlashToggle; } break;
       }
+    }
+  }
+  
+  
+  void chaseFaderValueChange(int val, int x) {
+    int mode = chaseFaderMode[x];
+    int mem = chaseFaderMemory[x];
+    if(mode == 0) {
+      if(mem >= 0 && mem < memories.length) memories[mem].setValue(val);
+    }
+    else if(mode == 1) {
+      if(mem >= 0 && mem < memories.length) memories[mem].setFade(val);
+    }
+  }
+  
+  void masterFaderValueChange(int val, int x) {
+    int mode = masterFaderMode[x];
+    int mem = masterFaderMemory[x];
+    if(mode == 0) {
+      if(mem >= 0 && mem < memories.length) memories[mem].setValue(val);
+    }
+    else if(mode == 1) {
+      if(mem >= 0 && mem < memories.length) memories[mem].setFade(val);
     }
   }
   
