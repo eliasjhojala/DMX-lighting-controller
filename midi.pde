@@ -147,6 +147,8 @@
      if(!open || selectedMachine != 1) {
        launchpadToggleOrPush.open = false;
        launchPadMemories.open = false;
+       
+       launchPadColors.open = false;
      }
      if(!open || selectedMachine != 2) {
        LC2412faderModes.open = false;
@@ -1170,9 +1172,9 @@ public class Launchpad {
       
           fromXML = new int[8][8];
           arrayCopy(XMLtoIntArray2D("padsColor", xml), fromXML);
-        
-        for(int x = 0; x < padsColor.length; x++) {
-            if(x < padsColor.length) for(int y = 0; y < padsColor[x].length; y++) {
+        padsColor = new int[8][8];
+        for(int x = 0; x < fromXML.length; x++) {
+            if(x < padsColor.length) for(int y = 0; y < fromXML[x].length; y++) {
               if(y < padsColor[x].length) padsColor[x][y] = fromXML[x][y];
             }
           }
