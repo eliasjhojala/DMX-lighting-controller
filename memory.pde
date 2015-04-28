@@ -315,6 +315,37 @@ class memory { //Begin of memory class------------------------------------------
     return toReturn;
   }
   
+  String getMemoryType() {
+    String toReturn = "";
+    switch(type) {
+      case 0: toReturn = ""; break;
+      case 1: toReturn = "Preset"; break;
+      case 2: toReturn = "Chase"; break;
+      case 3: toReturn = "quickChase"; break;
+      case 4: toReturn = "Master"; break;
+      case 5: toReturn = "Fade"; break;
+      case 6: toReturn = "Chase1"; break;
+      case 7: toReturn = getSpecialTypeName(); break;
+      case 8: toReturn = "Chase2"; break;
+      case 9: toReturn = "MasterGroup"; break;
+      case 10: toReturn = "Memories"; break;
+      default: toReturn = "Unknown"; break;
+    }
+    return toReturn;
+  }
+  
+  String getSpecialTypeName() {
+    String toReturn = "";
+    switch(specialType) {
+      case 0: toReturn = ""; break;
+      case 1: toReturn = "fullOn"; break;
+      case 2: toReturn = "blackOut"; break;
+      case 3: toReturn = "strobeNow"; break;
+      case 4: toReturn = "fogNow"; break;
+    }
+    return toReturn;
+  }
+  
   void draw() {
     if(!savingMemory) {
       switch(type) {

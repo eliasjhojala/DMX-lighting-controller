@@ -614,11 +614,13 @@
      window.draw(g, mouse);
      g.translate(60, 60);
      g.pushMatrix(); g.pushStyle();
-     g.translate(100, 100);
+     g.translate(50, 50);
      g.fill(launchpad.getRGBcolor(x, y));
-     g.rect(0, 0, 300, 300, 30);
+     g.rect(0, 0, 200, 200, 20);
      g.fill(0);
-     g.text(launchpad.getText(x, y), 50, 50, 200, 200);
+     g.text(launchpad.getText(x, y), 25, 25, 150, 150);
+     g.text("memoryType: "+launchpad.getMemoryType(x, y), 25, 250);
+     g.text("buttonMode: "+launchpad.getButtonMode(x, y), 25, 280);
      g.popMatrix(); g.popStyle();
    }
  }
@@ -1094,6 +1096,8 @@ public class Launchpad {
          if(!upperPads[0] && (buttonMode[x][y] != 2 || value)) sendNoteOn(0, pitch, byte(value) * 127);
       } //End of if(!upperPads[1])
       else { //if(upperPads[1])
+        blinkButton[launchpadInfoWindow.x][launchpadInfoWindow.y] = false;
+        updateButton(launchpadInfoWindow.x, launchpadInfoWindow.y);
         launchpadInfoWindow.setActiveButton(x, y);
         highlightButton(x, y);
         
@@ -1273,6 +1277,10 @@ public class Launchpad {
   boolean[][] buttonBlinkState = new boolean[9][8];
   
   void draw() {
+    if(!launchpadInfoWindow.open && blinkButton[launchpadInfoWindow.x][launchpadInfoWindow.y]) {
+      blinkButton[launchpadInfoWindow.x][launchpadInfoWindow.y] = false;
+      updateButton(launchpadInfoWindow.x, launchpadInfoWindow.y);
+    }
     for(int x = 0; x < 8; x++) {
       for(int y = 0; y < 8; y++) {
         if(buttonMode[x][y] == 1) if(memories[toggleMemory[x][y]].enabled != padsToggle[x][y]) {
@@ -1355,6 +1363,24 @@ public class Launchpad {
       return memories[toggleMemory[x][y]].name;
     }
     return "";
+  }
+  
+  String getMemoryType(int x, int y) {
+        if(toggleMemory[x][y] > 0) {
+      return memories[toggleMemory[x][y]].getMemoryType();
+    }
+    return "";
+  }
+  
+  String getButtonMode(int x, int y) {
+    String toReturn = "";
+    switch(buttonMode[x][y]) {
+      case 0: toReturn = "pushButton"; break;
+      case 1: toReturn = "toggle"; break;
+      case 2: toReturn = "doOnce trigger"; break;
+      case 4: toReturn = "trigger"; break;
+    }
+    return toReturn;
   }
   
   int getColorNumberToButton(int x, int y) {
