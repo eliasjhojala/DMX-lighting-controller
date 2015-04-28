@@ -1703,12 +1703,10 @@ class chase { //Begin of chase class--------------------------------------------
       } //End of checking does this sine exist
     }
     int[] presets = getPresets();
-    for(int i = 0; i <= sineMax; i++) {
-      if(i < presets.length) { //No nullpointers anymore
-        if(i < presets.length && i < sineValue.length) {
+    for(int i = 0; i < presets.length; i++) {
+        if(i < sineValue.length) {
           loadPreset(getPresets()[i], sineValue[i]); //Finally put the values from sine class to loadPreset function
         }
-      }
     }
     
     boolean trigger = trigger(); //use trigger function as trigger

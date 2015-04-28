@@ -6,7 +6,7 @@
         <StartChannel>1</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="420" y="-4" z="0">
-          <OnScreen x="1158" y="612"/>
+          <OnScreen x="1107" y="574"/>
           <Rotation x="180" z="-1"/>
         </Location>
         <parameter>35</parameter>
@@ -20,7 +20,7 @@
         <StartChannel>3</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="287" y="5" z="0">
-          <OnScreen x="1052" y="987"/>
+          <OnScreen x="1006" y="932"/>
           <Rotation x="128" z="12"/>
         </Location>
         <parameter>76</parameter>
@@ -34,7 +34,7 @@
         <StartChannel>4</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="364" y="-6" z="0">
-          <OnScreen x="1128" y="985"/>
+          <OnScreen x="1079" y="930"/>
           <Rotation x="128" z="7"/>
         </Location>
         <parameter>45</parameter>
@@ -48,7 +48,7 @@
         <StartChannel>12</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="544" y="-3" z="0">
-          <OnScreen x="1297" y="984"/>
+          <OnScreen x="1240" y="929"/>
           <Rotation x="128" z="354"/>
         </Location>
         <parameter>45</parameter>
@@ -62,7 +62,7 @@
         <StartChannel>13</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="628" y="9" z="0">
-          <OnScreen x="1369" y="985"/>
+          <OnScreen x="1308" y="930"/>
           <Rotation x="128" z="349"/>
         </Location>
         <parameter>45</parameter>
@@ -76,7 +76,7 @@
         <StartChannel>2</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="720" y="-1" z="0">
-          <OnScreen x="1451" y="986"/>
+          <OnScreen x="1387" y="931"/>
           <Rotation x="128" z="324"/>
         </Location>
         <parameter>16</parameter>
@@ -90,7 +90,7 @@
         <StartChannel>18</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="465" y="3" z="0">
-          <OnScreen x="1217" y="983"/>
+          <OnScreen x="1164" y="928"/>
           <Rotation x="185" z="361"/>
         </Location>
         <parameter>-80</parameter>
@@ -104,7 +104,7 @@
         <StartChannel>17</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="554" y="11" z="0">
-          <OnScreen x="1283" y="599"/>
+          <OnScreen x="1226" y="562"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -118,7 +118,7 @@
         <StartChannel>16</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="443" y="13" z="0">
-          <OnScreen x="1182" y="600"/>
+          <OnScreen x="1130" y="563"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -132,7 +132,7 @@
         <StartChannel>6</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="391" y="5" z="0">
-          <OnScreen x="1140" y="395"/>
+          <OnScreen x="1090" y="368"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -146,7 +146,7 @@
         <StartChannel>8</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="549" y="5" z="0">
-          <OnScreen x="1284" y="395"/>
+          <OnScreen x="1227" y="368"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -160,7 +160,7 @@
         <StartChannel>7</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="441" y="17" z="0">
-          <OnScreen x="1191" y="388"/>
+          <OnScreen x="1139" y="361"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -174,7 +174,7 @@
         <StartChannel>7</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="483" y="17" z="0">
-          <OnScreen x="1229" y="388"/>
+          <OnScreen x="1175" y="361"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -188,7 +188,7 @@
         <StartChannel>5</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="83" y="6" z="0">
-          <OnScreen x="865" y="779"/>
+          <OnScreen x="828" y="733"/>
           <Rotation x="252" z="-11"/>
         </Location>
         <parameter>45</parameter>
@@ -216,7 +216,7 @@
         <StartChannel>20</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="293" y="1" z="0">
-          <OnScreen x="1052" y="509"/>
+          <OnScreen x="1006" y="476"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -230,7 +230,7 @@
         <StartChannel>22</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="506" y="2" z="0">
-          <OnScreen x="1246" y="510"/>
+          <OnScreen x="1191" y="477"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -244,7 +244,7 @@
         <StartChannel>23</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="608" y="0" z="0">
-          <OnScreen x="1339" y="508"/>
+          <OnScreen x="1279" y="475"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -258,7 +258,7 @@
         <StartChannel>9</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="874" y="5" z="0">
-          <OnScreen x="1576" y="783"/>
+          <OnScreen x="1506" y="737"/>
           <Rotation x="252" z="11"/>
         </Location>
         <parameter>45</parameter>
@@ -272,7 +272,7 @@
         <StartChannel>24</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="877" y="16" z="0">
-          <OnScreen x="1592" y="495"/>
+          <OnScreen x="1521" y="463"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -286,7 +286,7 @@
         <StartChannel>19</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="73" y="16" z="0">
-          <OnScreen x="861" y="495"/>
+          <OnScreen x="824" y="463"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -1042,7 +1042,7 @@
         <StartChannel>100</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="73" y="4" z="0">
-          <OnScreen x="857" y="294"/>
+          <OnScreen x="820" y="271"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1056,7 +1056,7 @@
         <StartChannel>108</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="248" y="2" z="0">
-          <OnScreen x="1016" y="292"/>
+          <OnScreen x="972" y="269"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1070,7 +1070,7 @@
         <StartChannel>116</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="381" y="4" z="0">
-          <OnScreen x="1137" y="294"/>
+          <OnScreen x="1087" y="271"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1084,7 +1084,7 @@
         <StartChannel>124</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="582" y="1" z="0">
-          <OnScreen x="1319" y="291"/>
+          <OnScreen x="1261" y="268"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1098,7 +1098,7 @@
         <StartChannel>132</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="728" y="0" z="0">
-          <OnScreen x="1452" y="290"/>
+          <OnScreen x="1388" y="267"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1112,7 +1112,7 @@
         <StartChannel>140</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="887" y="2" z="0">
-          <OnScreen x="1597" y="292"/>
+          <OnScreen x="1526" y="269"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1140,7 +1140,7 @@
         <StartChannel>21</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="402" y="1" z="0">
-          <OnScreen x="1151" y="509"/>
+          <OnScreen x="1101" y="476"/>
           <Rotation x="-106" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1154,7 +1154,7 @@
         <StartChannel>30</StartChannel>
         <fixtureTypeId>9</fixtureTypeId>
         <Location x="475" y="-16" z="0">
-          <OnScreen x="1195" y="239"/>
+          <OnScreen x="1142" y="219"/>
           <Rotation x="87" z="900"/>
         </Location>
         <parameter>0</parameter>
@@ -1168,7 +1168,7 @@
         <StartChannel>31</StartChannel>
         <fixtureTypeId>8</fixtureTypeId>
         <Location x="150" y="19" z="0">
-          <OnScreen x="891" y="290"/>
+          <OnScreen x="852" y="267"/>
           <Rotation x="-268" z="135"/>
         </Location>
         <parameter>0</parameter>
@@ -1182,7 +1182,7 @@
         <StartChannel>35</StartChannel>
         <fixtureTypeId>7</fixtureTypeId>
         <Location x="510" y="123" z="0">
-          <OnScreen x="1259" y="596"/>
+          <OnScreen x="1203" y="559"/>
           <Rotation x="-114" z="360"/>
         </Location>
         <parameter>0</parameter>
@@ -1196,7 +1196,7 @@
         <StartChannel>37</StartChannel>
         <fixtureTypeId>9</fixtureTypeId>
         <Location x="468" y="107" z="0">
-          <OnScreen x="1220" y="609"/>
+          <OnScreen x="1167" y="572"/>
           <Rotation x="0" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1210,7 +1210,7 @@
         <StartChannel>14</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="204" y="15" z="0">
-          <OnScreen x="986" y="975"/>
+          <OnScreen x="943" y="921"/>
           <Rotation x="0" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1224,7 +1224,7 @@
         <StartChannel>15</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="775" y="14" z="0">
-          <OnScreen x="1505" y="974"/>
+          <OnScreen x="1438" y="920"/>
           <Rotation x="0" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -91210,7 +91210,7 @@
             <int id="5" val="79"/>
           </content>
           <stepData/>
-          <mainData value="255"/>
+          <mainData fade="255" value="255"/>
           <modeData inputMode="2" outputMode="8"/>
         </Chase>
       </Memory>
@@ -91247,7 +91247,7 @@
       <Memory enabled="1" id="73" name="PAR64 sine &lt;&lt;" soloInThisMemory="0" type="6" value="255">
         <Chase>
           <stepData step="5"/>
-          <mainData value="255"/>
+          <mainData fade="255" value="255"/>
           <modeData inputMode="2" outputMode="5"/>
           <steps size="6">
             <Preset>
@@ -91594,7 +91594,7 @@
       </Memory>
       <Memory id="76" name="PAR64 left" soloInThisMemory="0" type="1" value="255">
         <Preset>
-          <mainData postFade="46" preFade="9" value="255"/>
+          <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -91612,7 +91612,7 @@
       </Memory>
       <Memory id="77" name="PAR64 right" soloInThisMemory="0" type="1" value="255">
         <Preset>
-          <mainData postFade="46" preFade="9" value="255"/>
+          <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -91630,7 +91630,7 @@
       </Memory>
       <Memory id="78" name="FLOOD left" soloInThisMemory="0" type="1" value="255">
         <Preset>
-          <mainData postFade="46" preFade="9" value="255"/>
+          <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -91646,9 +91646,9 @@
           </repOfFixtures>
         </Preset>
       </Memory>
-      <Memory id="79" name="FLOOD right" soloInThisMemory="0" type="1" value="255">
+      <Memory id="79" name="FLOOD rights" soloInThisMemory="0" type="1" value="255">
         <Preset>
-          <mainData postFade="46" preFade="9" value="255"/>
+          <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -91664,9 +91664,9 @@
           </repOfFixtures>
         </Preset>
       </Memory>
-      <Memory id="80" name="PAR64 1" soloInThisMemory="0" type="1" value="255">
+      <Memory enabled="1" id="80" name="PAR64 1" soloInThisMemory="0" type="1" value="255">
         <Preset>
-          <mainData postFade="46" preFade="9" value="255"/>
+          <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -91682,9 +91682,9 @@
           </repOfFixtures>
         </Preset>
       </Memory>
-      <Memory id="81" name="PAR64 2" soloInThisMemory="0" type="1" value="255">
+      <Memory enabled="1" id="81" name="PAR64 2" soloInThisMemory="0" type="1" value="255">
         <Preset>
-          <mainData postFade="46" preFade="9" value="255"/>
+          <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -91702,7 +91702,7 @@
       </Memory>
       <Memory id="82" name="PAR64 3" soloInThisMemory="0" type="1" value="255">
         <Preset>
-          <mainData postFade="46" preFade="9" value="255"/>
+          <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -91720,7 +91720,7 @@
       </Memory>
       <Memory id="83" name="PAR64 4" soloInThisMemory="0" type="1" value="255">
         <Preset>
-          <mainData postFade="46" preFade="9" value="255"/>
+          <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -91738,7 +91738,7 @@
       </Memory>
       <Memory id="84" name="KFR L" soloInThisMemory="0" type="1" value="255">
         <Preset>
-          <mainData postFade="46" preFade="9" value="255"/>
+          <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -91756,7 +91756,7 @@
       </Memory>
       <Memory id="85" name="KFR R" soloInThisMemory="0" type="1" value="255">
         <Preset>
-          <mainData postFade="46" preFade="9" value="255"/>
+          <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -91774,7 +91774,7 @@
       </Memory>
       <Memory id="86" name="FLOOD center" soloInThisMemory="0" type="1" value="255">
         <Preset>
-          <mainData postFade="46" preFade="9" value="255"/>
+          <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
             <int id="0" val="1"/>
           </whatToSave>
@@ -92308,7 +92308,9 @@
           <int id="2" val="1"/>
         </masterFaderMemory>
         <masterFaderMode/>
-        <chaseFaderMemory/>
+        <chaseFaderMemory>
+          <int id="1" val="2"/>
+        </chaseFaderMemory>
         <chaseFaderMode/>
         <midiData inputName="TouchOSC Bridge" outputName="TouchOSC Bridge"/>
       </LC2412>
@@ -92322,7 +92324,7 @@
       <Use3D>false</Use3D>
     </ThreeDee>
     <TwoDee>
-      <transform pageRotation="0" x_siirto="706.9414" y_siirto="555.9495" zoom="90.88197"/>
+      <transform pageRotation="0" x_siirto="641.95935" y_siirto="508.1138" zoom="86.68834"/>
     </TwoDee>
     <VisualisationOptions>
       <data showLeftButtons="1" showOldBottomMeu="1"/>

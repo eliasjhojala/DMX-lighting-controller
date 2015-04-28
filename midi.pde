@@ -1563,7 +1563,7 @@ public class behringerLC2412 {
   }
   
   void setChaseFaderMemoryValue(int val, int x) {
-    if(x >= 0 && x < chaseFaderMemory.length) chaseFaderMode[x] = val;
+    if(x >= 0 && x < chaseFaderMemory.length) chaseFaderMemory[x] = val;
   }
   
   void setMasterFaderMemoryValue(int val, int x) {
