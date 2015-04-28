@@ -547,6 +547,11 @@
      LC2412buttonModes.setValue(LC2412.buttonMode[LC2412bank]);
      LC2412faderMemories.setValue(LC2412.faderMemory[LC2412bank]);
      LC2412buttonMemories.setValue(LC2412.buttonMemory[LC2412bank]);
+     LC2412chaseFaderMemories.setValue(LC2412.chaseFaderMemory);
+     LC2412chaseFaderModes.setValue(LC2412.chaseFaderMode);
+     LC2412masterFaderMemories.setValue(LC2412.masterFaderMemory);
+     LC2412masterFaderModes.setValue(LC2412.masterFaderMode);
+     
    }
 
  } //End of MidiHandlerWindow class
@@ -887,6 +892,8 @@ public class Launchpad {
   int inputIndex;
   int outputIndex;
   
+  String inputName, outputName;
+  
   int offset;
   
   Launchpad() {
@@ -898,17 +905,47 @@ public class Launchpad {
   }
   
   void setup(int inputIndex, int outputIndex) {
+    
+    this.inputName = MidiBus.availableInputs()[inputIndex];
+    this.outputName = MidiBus.availableOutputs()[outputIndex];
+    
     if(bus != null) { bus.clearAll(); }
     this.inputIndex = inputIndex;
     this.outputIndex = outputIndex;
     if(bus != null) { bus.addInput(inputIndex); bus.addOutput(outputIndex); }
     else { bus = new MidiBus(this, inputIndex, outputIndex); }
     
+    clearLeds();
     
     setup();
     output = 1;
 
     
+  }
+  
+    
+  void setup(String input, String output) {
+    int inputI = -1;
+    int outputI = -1;
+    boolean inputFound = false;
+    boolean outputFound = false;
+     for(int i = 0; i < MidiBus.availableInputs().length; i++) {
+       if(MidiBus.availableInputs()[i].equals(input)) {
+         inputI = i;
+         inputFound = true;
+       }
+     }
+     
+     for(int i = 0; i < MidiBus.availableOutputs().length; i++) {
+       if(MidiBus.availableOutputs()[i].equals(output)) {
+         outputI = i;
+         outputFound = true;
+       }
+     }
+     
+     if(inputFound && outputFound) {
+       setup(inputI, outputI);
+     }
   }
   
   void setup() {
@@ -1015,9 +1052,11 @@ public class Launchpad {
   }
   
   void clearLeds() {
-    for(int i = 0; i < 200; i++) {
-      bus.sendNoteOn(0, i, byte(0));
-      bus.sendControllerChange(0, i, byte(0));
+    for(int x = 0; x < 8; x++) {
+      for(int y = 0; y < 8; y++) {
+        bus.sendNoteOn(0, y*16+x, byte(0));
+        bus.sendControllerChange(0, y*16+x, byte(0));
+      }
     }
   }
   
@@ -1061,7 +1100,12 @@ public class Launchpad {
     String data = "<launchpad></launchpad>";
     XML xml = parseXML(data);
     xml.addChild(array2DToXML("toggleMemory", toggleMemory));
-	xml.addChild(array2DToXML("buttonMode", buttonMode));
+    xml.addChild(array2DToXML("buttonMode", buttonMode));
+    
+    XML midiData = xml.addChild("midiData");
+    midiData.setString("inputName", inputName);
+    midiData.setString("outputName", outputName);
+    
     return xml;
   }
   
@@ -1086,6 +1130,16 @@ public class Launchpad {
           setButtonMode(fromXML[x][y], x, y);
         }
       }
+      
+    {
+      try {
+        XML midiData = xml.getChild("midiData");
+        setup(midiData.getString("inputName"), midiData.getString("outputName"));
+      }
+      catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
       
       midiWindow.launchPadMemories.setValue(launchpad.toggleMemory);
       midiWindow.launchpadToggleOrPush.setValue(launchpad.buttonMode); //Set values to buttonModes
@@ -1365,7 +1419,8 @@ public class behringerLC2412 {
         } //End of x loop
       } //End of z loop
     } //end of faderMemory
-    
+
+
     { //masterFaderMemory
       int[] fromXML = XMLtoIntArray("masterFaderMemory", xml);
       for(int x = 0; x < fromXML.length; x++) {
@@ -1373,8 +1428,36 @@ public class behringerLC2412 {
       }
     } //end of masterFaderMemory
     
-    XML midiData = xml.getChild("midiData");
-    setup(midiData.getString("inputName"), midiData.getString("outputName"));
+    { //masterFaderMode
+      int[] fromXML = XMLtoIntArray("masterFaderMode", xml);
+      for(int x = 0; x < fromXML.length; x++) {
+        if(x < masterFaderMode.length) masterFaderMode[x] = fromXML[x];
+      }
+    } //end of masterFaderMode
+    
+    { //chaseFaderMemory
+      int[] fromXML = XMLtoIntArray("chaseFaderMemory", xml);
+      for(int x = 0; x < fromXML.length; x++) {
+        if(x < chaseFaderMemory.length) chaseFaderMemory[x] = fromXML[x];
+      }
+    } //end of chaseFaderMemory
+    
+    { //chaseFaderMode
+      int[] fromXML = XMLtoIntArray("chaseFaderMode", xml);
+      for(int x = 0; x < fromXML.length; x++) {
+        if(x < chaseFaderMode.length) chaseFaderMode[x] = fromXML[x];
+      }
+    } //end of chaseFaderMode
+    
+    {
+      try {
+        XML midiData = xml.getChild("midiData");
+        setup(midiData.getString("inputName"), midiData.getString("outputName"));
+      }
+      catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
     
     midiWindow.setLC2412valuesToControllers();
 
