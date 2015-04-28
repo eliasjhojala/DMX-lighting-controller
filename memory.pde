@@ -1088,7 +1088,7 @@ class chase { //Begin of chase class--------------------------------------------
   boolean stepHasChanged;
   int fade, ownFade;
   
-  int sineMax = 300;
+  int sineMax = 10;
   int sineMin = 1;
   
   sine[] sines = new sine[sineMax+1];
@@ -1107,11 +1107,7 @@ class chase { //Begin of chase class--------------------------------------------
     if(parent.type == 3) {
       xml.addChild(arrayToXML("content", content));
     }
-    XML block = xml.addChild("stepData");
-      setIntXML("step", step, block);
-      setIntXML("brightness", brightness, block);
-      setIntXML("brightness1", brightness1, block);
-    block = xml.addChild("mainData");
+    XML block = xml.addChild("mainData");
       setIntXML("fade", fade, block);
       setIntXML("ownFade", ownFade, block);
       setIntXML("value", value, block);
@@ -1146,14 +1142,7 @@ class chase { //Begin of chase class--------------------------------------------
       if(xml != null) {
         presets = XMLtoIntArray("presets", xml);
         content = XMLtoIntArray("content", xml);
-        sineValue = XMLtoIntArray("sineValue", xml);
-        XML block = xml.getChild("stepData");
-        if(block != null) {
-          step = getIntXML("step", block);
-          brightness = getIntXML("brightness", block);
-          brightness1 = getIntXML("brightness1", block);
-        }
-        block = xml.getChild("mainData");
+        XML block = xml.getChild("mainData");
         if(block != null) {
           fade = getIntXML("fade", block);
           ownFade = getIntXML("ownFade", block);
