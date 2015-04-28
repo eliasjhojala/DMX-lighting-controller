@@ -1273,6 +1273,16 @@ public class Launchpad {
   boolean[][] buttonBlinkState = new boolean[9][8];
   
   void draw() {
+    for(int x = 0; x < 8; x++) {
+      for(int y = 0; y < 8; y++) {
+        if(buttonMode[x][y] == 1) if(memories[toggleMemory[x][y]].enabled != padsToggle[x][y]) {
+          padsToggle[x][y] = memories[toggleMemory[x][y]].enabled;
+          actualValueToSend[x][y] = int(memories[toggleMemory[x][y]].enabled);
+          updateButton(x, y);
+        }
+      }
+    }
+    
     for(int x = 0; x < 9; x++) for(int y = 0; y < 8; y++) {
       if(buttonModeSentOld[x][y] != (buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1)) || (frameCount > lastSent[x][y]+100 || (frameCount > lastSent[x][y]+3 && blinkButton[x][y]))) {
         

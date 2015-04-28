@@ -60,6 +60,15 @@ void createMemoryObjects() {
 XML getMemoriesAsXML() {
   String data = "<Memories></Memories>";
   XML xml = parseXML(data);
+  
+  XML memoryData = xml.addChild("memoryData");
+  memoryData.setInt("presetOverwriteCol", int(presetOverwriteCol));
+  memoryData.setInt("s2l.blinky", int(s2l.blinky));
+  
+  memoryData.setInt("inputModeMaster", inputModeMaster);
+  memoryData.setInt("outputModeMaster", outputModeMaster);
+  memoryData.setInt("beatModeMaster", beatModeMaster);
+  
   xml.addChild(arrayToXML("memoryControllerLookupTable", memoryControllerLookupTable));
   for(int i = 0; i < memories.length; i++) {
     if(memories[i].type != 0) {
@@ -74,6 +83,20 @@ XML getMemoriesAsXML() {
 
 void XMLtoMemories(XML xml) {
   XML[] block = xml.getChildren();
+  
+   try {
+    XML memoryData = xml.getChild("memoryData");
+    presetOverwriteCol = boolean(memoryData.getInt("presetOverwriteCol"));
+    s2l.blinky = boolean(memoryData.getInt("s2l.blinky"));
+    
+    inputModeMaster = memoryData.getInt("inputModeMaster");
+    outputModeMaster = memoryData.getInt("outputModeMaster");
+    beatModeMaster = memoryData.getInt("beatModeMaster");
+  }
+  catch (Exception e) {
+    e.printStackTrace();
+  }
+  
   if(XMLtoIntArray("memoryControllerLookupTable", xml) != null) {
     memoryControllerLookupTable = XMLtoIntArray("memoryControllerLookupTable", xml);
   }
@@ -1218,7 +1241,7 @@ class chase { //Begin of chase class--------------------------------------------
         output();
         firstTimeAtZero = false;
       }
-      if(value > 0) {
+      if(readyValue > 0) {
         firstTimeAtZero = true;
       }
     }
