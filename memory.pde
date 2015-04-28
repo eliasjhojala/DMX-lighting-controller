@@ -1140,8 +1140,8 @@ class chase { //Begin of chase class--------------------------------------------
     if(xml != null) {
       xml = xml.getChild("Chase");
       if(xml != null) {
-        presets = XMLtoIntArray("presets", xml);
-        content = XMLtoIntArray("content", xml);
+        if(parent.type == 2) presets = XMLtoIntArray("presets", xml);
+        if(parent.type == 3) content = XMLtoIntArray("content", xml);
         XML block = xml.getChild("mainData");
         if(block != null) {
           fade = getIntXML("fade", block);
@@ -1155,22 +1155,26 @@ class chase { //Begin of chase class--------------------------------------------
           beatModeId = getIntXML("beatModeId", block);
           fadeMode = getIntXML("fadeMode", block);
         }
-        block = xml.getChild("steps");
-        if(block != null) {
-          XML[] blocks = block.getChildren();
-          for(int i = 0; i < blocks.length; i++) {
-            if(blocks[i] != null) if(!trim(blocks[i].toString()).equals("")) {
-              Preset x = new Preset(this);
-              steps.add(x);
-              x.XMLtoObject(blocks[i], true);
+        if(parent.type == 6) {
+          block = xml.getChild("steps");
+          if(block != null) {
+            XML[] blocks = block.getChildren();
+            for(int i = 0; i < blocks.length; i++) {
+              if(blocks[i] != null) if(!trim(blocks[i].toString()).equals("")) {
+                Preset x = new Preset(this);
+                steps.add(x);
+                x.XMLtoObject(blocks[i], true);
+              }
             }
           }
         }
-        block = xml.getChild("stepsForChase2");
-        if(block != null) {
-          XML[] blocks = block.getChildren("step");
-          for(int i = 0; i < blocks.length; i++) {
-            stepsForChase2.append(blocks[i].getInt("val"));
+        if(parent.type == 8) {
+          block = xml.getChild("stepsForChase2");
+          if(block != null) {
+            XML[] blocks = block.getChildren("step");
+            for(int i = 0; i < blocks.length; i++) {
+              stepsForChase2.append(blocks[i].getInt("val"));
+            }
           }
         }
       }
