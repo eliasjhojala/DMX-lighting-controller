@@ -91210,7 +91210,7 @@
             <int id="5" val="79"/>
           </content>
           <stepData/>
-          <mainData fade="255" value="255"/>
+          <mainData value="255"/>
           <modeData inputMode="2" outputMode="8"/>
         </Chase>
       </Memory>
@@ -91247,7 +91247,7 @@
       <Memory enabled="1" id="73" name="PAR64 sine &lt;&lt;" soloInThisMemory="0" type="6" value="255">
         <Chase>
           <stepData step="5"/>
-          <mainData fade="255" value="255"/>
+          <mainData value="255"/>
           <modeData inputMode="2" outputMode="5"/>
           <steps size="6">
             <Preset>
@@ -91664,7 +91664,7 @@
           </repOfFixtures>
         </Preset>
       </Memory>
-      <Memory enabled="1" id="80" name="PAR64 1" soloInThisMemory="0" type="1" value="255">
+      <Memory id="80" name="PAR64 1" soloInThisMemory="0" type="1" value="255">
         <Preset>
           <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
@@ -91682,7 +91682,7 @@
           </repOfFixtures>
         </Preset>
       </Memory>
-      <Memory enabled="1" id="81" name="PAR64 2" soloInThisMemory="0" type="1" value="255">
+      <Memory id="81" name="PAR64 2" soloInThisMemory="0" type="1" value="255">
         <Preset>
           <mainData postFade="23" preFade="5" value="255"/>
           <whatToSave>
