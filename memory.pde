@@ -876,8 +876,8 @@ class Preset { //Begin of Preset class
     { //Fade
       targetVal = targetVal*int(parent.enabled);
       float offsetToFloatValue = (targetVal-floatValue);
-      if(offsetToFloatValue > 0) { offsetToFloatValue = offsetToFloatValue/ceil((float(preFade)/5)); }
-      else { offsetToFloatValue = offsetToFloatValue/ceil((float(postFade)/5)); }
+      if(offsetToFloatValue > 0) { offsetToFloatValue = offsetToFloatValue/ceil((float(constrain(preFade*(chaseFade/50+1), 0, 255))/5)); }
+      else { offsetToFloatValue = offsetToFloatValue/ceil((float(constrain(postFade*(chaseFade/50+1), 0, 500))/5)); }
       
       if(abs(offsetToFloatValue) > 0.1) {
         offsetChanging = true;

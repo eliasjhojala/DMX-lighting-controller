@@ -1196,6 +1196,7 @@ public class Launchpad {
       
       midiWindow.launchPadMemories.setValue(launchpad.toggleMemory);
       midiWindow.launchpadToggleOrPush.setValue(launchpad.buttonMode); //Set values to buttonModes
+      midiWindow.launchPadColors.setValue(launchpad.padsColor);
     }
     catch (Exception e) {
       e.printStackTrace();
