@@ -588,6 +588,41 @@
 
  } //End of MidiHandlerWindow class
  
+ LaunchpadInfoWindow launchpadInfoWindow = new LaunchpadInfoWindow();
+ 
+ class LaunchpadInfoWindow {
+   
+   Window window;
+   int locX, locY, w, h;
+   boolean open;
+   
+   LaunchpadInfoWindow() {
+     w = 500;
+     h = 500;
+     window = new Window("launchpadInfoWindow", new PVector(w, h), this);
+   }
+   
+   int x = 0;
+   int y = 0;
+   
+   void setActiveButton(int x, int y) {
+     this.x = x;
+     this.y = y;
+   }
+   
+   void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+     window.draw(g, mouse);
+     g.translate(60, 60);
+     g.pushMatrix(); g.pushStyle();
+     g.translate(100, 100);
+     g.fill(launchpad.getRGBcolor(x, y));
+     g.rect(0, 0, 300, 300, 30);
+     g.fill(0);
+     g.text(launchpad.getText(x, y), 50, 50, 200, 200);
+     g.popMatrix(); g.popStyle();
+   }
+ }
+ 
  
  class CheckBoxTableWindow {
    Window window;
@@ -605,7 +640,7 @@
      locY = 0;
      w = x*30+100;
      h = x*30+100;
-     window = new Window("name", new PVector(w, h), this);
+     window = new Window(name, new PVector(w, h), this);
      
      for(int x_ = 0; x_ < boxes.length; x_++) {
        for(int y_ = 0; y_ < boxes.length; y_++) {
@@ -1019,44 +1054,52 @@ public class Launchpad {
     
     boolean value = false;
     if(x < 8) {
-      if(buttonMode[x][y] != 3 && !upperPads[0]) {
-          if(buttonMode[x][y] == 1) { //Togglemode
-            value = padsToggle[x][y];
-          }
-          else {
-            value = pads[x][y];
-          }
+      if(!upperPads[1]) {
+        if(buttonMode[x][y] != 3 && !upperPads[0]) {
+            if(buttonMode[x][y] == 1) { //Togglemode
+              value = padsToggle[x][y];
+            }
+            else {
+              value = pads[x][y];
+            }
+            
+           // if(output == 1) { setMemoryEnabledByOrderInVisualisation(x+8*y+1+offset, value); }
+           // else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
+            
+            
+            if(output == 1) {
+        		if(buttonMode[x][y] != 2 && buttonMode[x][y] != 4) {
+        			memories[toggleMemory[x][y]].enabled = value;
+        			memories[toggleMemory[x][y]].doOnce = false;
+        		}
+        		else if(value == true && buttonMode[x][y] == 2) {
+        			memories[toggleMemory[x][y]].enabled = true;
+        			memories[toggleMemory[x][y]].doOnce = true;
+        			memories[toggleMemory[x][y]].triggerButton = pitch;
+        		}
+                    else if(value && buttonMode[x][y] == 4) {
+                            memories[toggleMemory[x][y]].trig();
+                    }
+        	}
+            else if(output == 2) { fixtures.get(constrain(toggleMemory[x][y], 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
+            
+        }
+        else if(buttonMode[x][y] == 3 && pads[x][y]) {
           
-         // if(output == 1) { setMemoryEnabledByOrderInVisualisation(x+8*y+1+offset, value); }
-         // else if(output == 2) { fixtures.get(constrain(x+8*y+offset, 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
-          
-          
-          if(output == 1) {
-      		if(buttonMode[x][y] != 2 && buttonMode[x][y] != 4) {
-      			memories[toggleMemory[x][y]].enabled = value;
-      			memories[toggleMemory[x][y]].doOnce = false;
-      		}
-      		else if(value == true && buttonMode[x][y] == 2) {
-      			memories[toggleMemory[x][y]].enabled = true;
-      			memories[toggleMemory[x][y]].doOnce = true;
-      			memories[toggleMemory[x][y]].triggerButton = pitch;
-      		}
-                  else if(value && buttonMode[x][y] == 4) {
-                          memories[toggleMemory[x][y]].trig();
-                  }
-      	}
-          else if(output == 2) { fixtures.get(constrain(toggleMemory[x][y], 0, fixtures.size()-1)).in.setUniversalDMX(DMX_DIMMER, value ? 255 : 0); }
-          
-      }
-      else if(buttonMode[x][y] == 3 && pads[x][y]) {
+          value = true;
+        }
+        if(upperPads[0] && val) {
+          memories[toggleMemory[x][y]].trig();
+        }
+         if(!upperPads[0] && (buttonMode[x][y] != 2 || value)) sendNoteOn(0, pitch, byte(value) * 127);
+      } //End of if(!upperPads[1])
+      else { //if(upperPads[1])
+        launchpadInfoWindow.setActiveButton(x, y);
+        highlightButton(x, y);
         
-        value = true;
-      }
-      if(upperPads[0] && val) {
-        memories[toggleMemory[x][y]].trig();
-      }
-       if(!upperPads[0] && (buttonMode[x][y] != 2 || value)) sendNoteOn(0, pitch, byte(value) * 127);
-      }
+        launchpadInfoWindow.open = true;
+      } //End of if(upperPads[1])
+    }
      
     else if(val) {
       if(pitch == 7*16+8) {
@@ -1118,6 +1161,11 @@ public class Launchpad {
     upperPads[x] = val;
     if(val) upperPadsToggle[x] = !upperPadsToggle[x];
     bus.sendControllerChange(0, number, byte(value) * 127);
+    if(x == 1) if(val) {
+      blinkButton[launchpadInfoWindow.x][launchpadInfoWindow.y] = false;
+      updateButton(launchpadInfoWindow.x, launchpadInfoWindow.y);
+      launchpadInfoWindow.open = false;
+    }
   }
   
   
@@ -1221,14 +1269,30 @@ public class Launchpad {
   int[][] buttonModeSentOld = new int[9][8];
   int[][] lastSent = new int[9][8];
   
+  boolean[][] blinkButton = new boolean[9][8];
+  boolean[][] buttonBlinkState = new boolean[9][8];
+  
   void draw() {
     for(int x = 0; x < 9; x++) for(int y = 0; y < 8; y++) {
-      if(buttonModeSentOld[x][y] != (buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1)) || frameCount > lastSent[x][y]+100) {
+      if(buttonModeSentOld[x][y] != (buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1)) || (frameCount > lastSent[x][y]+100 || (frameCount > lastSent[x][y]+3 && blinkButton[x][y]))) {
+        
+        updateButton(x, y);
+        
         lastSent[x][y] = frameCount;
-        buttonModeSentOld[x][y] = (buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1));
-        if(actualValueToSend[x][y] == 0) sendDefaultZeroToButton(x, y);
-        else sendDefaultFullToButton(x, y);
       }
+    }
+  }
+  
+  void updateButton(int x, int y) {
+    if(blinkButton[x][y]) {
+      buttonBlinkState[x][y] = !buttonBlinkState[x][y];
+      if(buttonBlinkState[x][y]) sendDefaultZeroToButton(x, y);
+      else sendDefaultFullToButton(x, y);
+    }
+    else {
+      buttonModeSentOld[x][y] = (buttonMode[x][y])*(int(toggleMemory[x][y] == 0)*(-1));
+      if(actualValueToSend[x][y] == 0) sendDefaultZeroToButton(x, y);
+      else sendDefaultFullToButton(x, y);
     }
   }
   
@@ -1242,6 +1306,17 @@ public class Launchpad {
    3Eh 62 Yellow  Full
    1Ch 28 Green   Low
    3Ch 60 Green   Full 
+  
+  */
+  
+  /*
+  
+    Values for flashing LEDs are:
+    Hex Decimal Colour Brightness
+   0Bh 11 Red Full
+   3Bh 59 Amber Full
+   3Ah 58 Yellow Full
+   38h 56 Green Full 
   
   */
   
@@ -1259,20 +1334,8 @@ public class Launchpad {
   
   color getRGBcolor(int x, int y) {
     color c = color(100, 100, 100);
-    if(toggleMemory[x][y] > 0) {
-      if(padsColor[x][y] == 0) {
-        switch(buttonMode[x][y]) {
-          case 0: c = colorsAsRGB[0]; break;
-          default: c = colorsAsRGB[1]; break;
-        }
-      }
-      else {
-        switch(padsColor[x][y]) {
-          case 1: c = colorsAsRGB[0]; break;
-          case 2: c = colorsAsRGB[1]; break;
-          case 3: c = colorsAsRGB[2]; break;
-        }
-      }
+    if(getColorNumberToButton(x, y) != -1) {
+      c = colorsAsRGB[getColorNumberToButton(x, y)];
     }
     return c;
   }
@@ -1284,44 +1347,44 @@ public class Launchpad {
     return "";
   }
   
-  void sendDefaultZeroToButton(int x, int y) {
-    int v = 12;
+  int getColorNumberToButton(int x, int y) {
+    int toReturn = -1;
     if(toggleMemory[x][y] > 0) {
       if(padsColor[x][y] == 0) {
         switch(buttonMode[x][y]) {
-          case 0: v = colors[0][0]; break;
-          default: v = colors[1][0]; break;
+          case 0: toReturn = 0; break;
+          default: toReturn = 1; break;
         }
       }
       else {
         switch(padsColor[x][y]) {
-          case 1: v = colors[0][0]; break;
-          case 2: v = colors[1][0]; break;
-          case 3: v = colors[2][0]; break;
+          case 1: toReturn = 0; break;
+          case 2: toReturn = 1; break;
+          case 3: toReturn = 2; break;
         }
       }
+    }
+    return toReturn;
+  }
+  
+  void sendDefaultZeroToButton(int x, int y) {
+    int v = 12;
+    if(getColorNumberToButton(x, y) != -1) {
+      v = colors[getColorNumberToButton(x, y)][0];
     }
     if(bus != null) bus.sendNoteOn(0, y*16+x, byte(v));
   }
   
   void sendDefaultFullToButton(int x, int y) {
     int v = 12;
-    if(toggleMemory[x][y] > 0) {
-      if(padsColor[x][y] == 0) {
-        switch(buttonMode[x][y]) {
-          case 0: v = colors[0][1]; break;
-          default: v = colors[1][1]; break;
-        }
-      }
-      else {
-        switch(padsColor[x][y]) {
-          case 1: v = colors[0][1]; break;
-          case 2: v = colors[1][1]; break;
-          case 3: v = colors[2][1]; break;
-        }
-      }
+    if(getColorNumberToButton(x, y) != -1) {
+      v = colors[getColorNumberToButton(x, y)][1];
     }
     if(bus != null) bus.sendNoteOn(0, y*16+x, byte(v));
+  }
+  
+  void highlightButton(int x, int y) {
+    blinkButton[x][y] = true;
   }
   
   void setToggleToMemoryValue(int val, int x, int y) {

@@ -172,6 +172,9 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(midiWindow.LC2412masterFaderMemories, "LC2412masterFaderMemories", 1000));
     subWindows.add(new SubWindowContainer(midiWindow.LC2412chaseFaderModes, "LC2412chaseFaderModes", 1000));
     subWindows.add(new SubWindowContainer(midiWindow.LC2412masterFaderModes, "LC2412masterFaderModes", 1000));
+    
+    subWindows.add(new SubWindowContainer(launchpadInfoWindow, "launchpadInfoWindow", 1000));
+    
 
     
     if(useNewLowerMenu) { lowerMenu.open = false; }
