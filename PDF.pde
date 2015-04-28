@@ -177,4 +177,32 @@ void SaveChannelsAsPdf() {
   pdf.dispose();
   pdf.endDraw();
   
+  if(launchpad != null) {
+    
+    
+    pdf = createGraphics(1000, 1000, PDF, "FILES/launchpad.pdf");
+    
+    pdf.beginDraw();
+    pdf.background(0, 0, 0);
+    pdf.fill(255);
+    
+    pdf.translate(100, 100);
+    
+    for(int x_ = 0; x_ < 8; x_++) {
+      for(int y_ = 0; y_ < 8; y_++) {
+        pdf.pushMatrix(); pdf.pushStyle();
+        pdf.fill(launchpad.getRGBcolor(x_, y_));
+        pdf.translate(x_*100, y_*100);
+        pdf.rect(0, 0, 90, 90, 20);
+        pdf.fill(0);
+        pdf.text(launchpad.getText(x_, y_), 10, 10, 70, 90);
+        pdf.popMatrix(); pdf.popStyle();
+      }
+    }
+    
+    pdf.dispose();
+    pdf.endDraw();
+  
+  }
+  
 }

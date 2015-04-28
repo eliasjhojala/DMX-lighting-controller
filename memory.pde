@@ -1707,14 +1707,14 @@ class chase { //Begin of chase class--------------------------------------------
       boolean found = false; //At first let's reset found boolean
       for(int i = 0; i < sines.length; i++) { //Go trhoughr all the sines
         if(sines[i] != null) { //Check if sine exist
-          if(sines[i].ready) { sines[i].go(); found = true; break; } //If sine is ready we can use it again for new wave
+          if(sines[i].ready) { sines[i].go(); found = true; } //If sine is ready we can use it again for new wave
         }
       }
       if(!found) { //If we didn't found any sine to use
       int numero = 0; //Reset numbero variable (numero = number)
         for(int i = 0; i < sines.length; i++) { //Go trhough all the sines
           if(sines[i] == null) { //check if sine isn't created
-            numero = i; break; //Select the first sine which isn't created
+            numero = i; //Select the first sine which isn't created
           }
         }
       sines[numero] = new sine(numero, this); sines[numero].go(); } //Create sine and start it

@@ -1251,6 +1251,39 @@ public class Launchpad {
     { 28, 60 }
   };
   
+  color[] colorsAsRGB = {
+    color(255, 0, 0),
+    color(255, 255, 0),
+    color(0, 255, 0)
+  };
+  
+  color getRGBcolor(int x, int y) {
+    color c = color(100, 100, 100);
+    if(toggleMemory[x][y] > 0) {
+      if(padsColor[x][y] == 0) {
+        switch(buttonMode[x][y]) {
+          case 0: c = colorsAsRGB[0]; break;
+          default: c = colorsAsRGB[1]; break;
+        }
+      }
+      else {
+        switch(padsColor[x][y]) {
+          case 1: c = colorsAsRGB[0]; break;
+          case 2: c = colorsAsRGB[1]; break;
+          case 3: c = colorsAsRGB[2]; break;
+        }
+      }
+    }
+    return c;
+  }
+  
+  String getText(int x, int y) {
+    if(toggleMemory[x][y] > 0) {
+      return memories[toggleMemory[x][y]].name;
+    }
+    return "";
+  }
+  
   void sendDefaultZeroToButton(int x, int y) {
     int v = 12;
     if(toggleMemory[x][y] > 0) {
