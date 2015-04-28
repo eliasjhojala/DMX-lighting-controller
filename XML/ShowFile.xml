@@ -92459,7 +92459,7 @@
           <int id="1" val="2"/>
         </chaseFaderMemory>
         <chaseFaderMode/>
-        <midiData inputName="TouchOSC Bridge" outputName="TouchOSC Bridge"/>
+        <midiData inputName="ProdipeMIDIlilo " outputName="ProdipeMIDIlilo "/>
       </LC2412>
     </LC2412>
   </Midi>
