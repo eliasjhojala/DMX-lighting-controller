@@ -161,6 +161,8 @@ class SubWindowHandler {
     
     subWindows.add(new SubWindowContainer(midiWindow.launchpadToggleOrPush, "launchpadToggleOrPush", 1000));
     subWindows.add(new SubWindowContainer(midiWindow.launchPadMemories, "launchPadMemories", 1000));
+    subWindows.add(new SubWindowContainer(midiWindow.launchPadColors, "launchPadColors", 1000));
+    
     subWindows.add(new SubWindowContainer(midiWindow.LC2412faderModes, "LC2412faderModes", 1000));
     subWindows.add(new SubWindowContainer(midiWindow.LC2412buttonModes, "LC2412buttonModes", 1000));
     subWindows.add(new SubWindowContainer(midiWindow.LC2412faderMemories, "LC2412faderMemories", 1000));

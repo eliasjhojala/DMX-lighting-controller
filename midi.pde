@@ -31,6 +31,7 @@
    /**/   RadioButtonMenu buttonModeForLaunchpad;                                    //|
    /**/   NumberBoxTableWindow launchpadToggleOrPush;                                //|
    /**/   TextBoxTableWindow launchPadMemories;                                      //|
+   /**/   NumberBoxTableWindow launchPadColors;                                      //|
    /**/   PushButton save, load, bankUp, bankDown;                                   //|
    /**/                                                                              //|
    /**/   NumberBoxTableWindow keyrig49keyModes;                                     //|
@@ -105,6 +106,7 @@
        { //Create launchpad buttons settings tables
          launchpadToggleOrPush = new NumberBoxTableWindow("launchpadToggleOrPush", 8, 8, 0, 4);
          launchPadMemories = new TextBoxTableWindow("launchPadMemories", 8, 8);
+         launchPadColors = new NumberBoxTableWindow("launchPadColors", 8, 8, 0, 3);
        } //End of creating launchpad buttons settings tables
        
        { //Create keyrig49 keys settings tables
@@ -285,6 +287,34 @@
              }
             
            g.popMatrix();
+           
+           g.pushMatrix();
+             g.translate(500, 0);
+             launchPadColors.draw(g, mouse, isTranslated);
+             launchPadColors.locX = launchPadMemories.locX+launchPadMemories.w;
+             launchPadColors.locY = launchPadMemories.locY;
+             launchPadColors.open = true;
+             if(launchPadColors.valueHasChanged()) {
+               try {
+                 if(launchpad != null) {
+                   NumberBoxTableWindow LPTOP = launchPadColors;
+                   int x = LPTOP.changedValue()[0];
+                   int y = LPTOP.changedValue()[1];
+                   int val = LPTOP.getValue(x, y);
+                   launchpad.setColorMode(val, x, y);
+                 }
+               }
+               catch (Exception e) {
+                 e.printStackTrace();
+               }
+             }
+            
+           g.popMatrix();
+           
+           
+           
+           
+           
          } //End of launchpad settings
          
          else if(selectedMachine == 2) { //LC2412 fader and button settigns
@@ -887,6 +917,8 @@ public class Launchpad {
   
   int[][] toggleMemory;
   
+  int[][] padsColor;
+  
   MidiBus bus;
   
   int inputIndex;
@@ -958,6 +990,8 @@ public class Launchpad {
     
     if(buttonMode == null) buttonMode = new int[9][8];
     if(toggleMemory == null) toggleMemory = new int[9][8];
+    
+    if(padsColor == null) padsColor = new int[8][8];
   }
   
   void setButtonModeToAll(int mode) {
@@ -1101,6 +1135,7 @@ public class Launchpad {
     XML xml = parseXML(data);
     xml.addChild(array2DToXML("toggleMemory", toggleMemory));
     xml.addChild(array2DToXML("buttonMode", buttonMode));
+    xml.addChild(array2DToXML("padsColor", padsColor));
     
     XML midiData = xml.addChild("midiData");
     midiData.setString("inputName", inputName);
@@ -1131,6 +1166,22 @@ public class Launchpad {
         }
       }
       
+      try {
+      
+          fromXML = new int[8][8];
+          arrayCopy(XMLtoIntArray2D("padsColor", xml), fromXML);
+        
+        for(int x = 0; x < padsColor.length; x++) {
+            if(x < padsColor.length) for(int y = 0; y < padsColor[x].length; y++) {
+              if(y < padsColor[x].length) padsColor[x][y] = fromXML[x][y];
+            }
+          }
+          
+      }
+      catch(Exception e) {
+        e.printStackTrace();
+      }
+      
     {
       try {
         XML midiData = xml.getChild("midiData");
@@ -1152,6 +1203,16 @@ public class Launchpad {
   void setButtonMode(int val, int x, int y) {
     buttonMode[x][y] = val;
     try { sendDefaultZeroToButton(x, y); } catch (Exception e) { e.printStackTrace(); }
+  }
+  
+  void setColorMode(int val, int x, int y) {
+    if(x >= 0 && x < padsColor.length) if(y >= 0 && y < padsColor[x].length) padsColor[x][y] = val;
+    if(actualValueToSend[x][y] == 0) {
+      sendDefaultZeroToButton(x, y);
+    }
+    else {
+      sendDefaultFullToButton(x, y);
+    }
   }
   
   int[][] buttonModeSentOld = new int[9][8];
@@ -1190,9 +1251,18 @@ public class Launchpad {
   void sendDefaultZeroToButton(int x, int y) {
     int v = 12;
     if(toggleMemory[x][y] > 0) {
-      switch(buttonMode[x][y]) {
-        case 0: v = colors[0][0]; break;
-        default: v = colors[1][0]; break;
+      if(padsColor[x][y] == 0) {
+        switch(buttonMode[x][y]) {
+          case 0: v = colors[0][0]; break;
+          default: v = colors[1][0]; break;
+        }
+      }
+      else {
+        switch(padsColor[x][y]) {
+          case 1: v = colors[0][0]; break;
+          case 2: v = colors[1][0]; break;
+          case 3: v = colors[2][0]; break;
+        }
       }
     }
     if(bus != null) bus.sendNoteOn(0, y*16+x, byte(v));
@@ -1201,9 +1271,18 @@ public class Launchpad {
   void sendDefaultFullToButton(int x, int y) {
     int v = 12;
     if(toggleMemory[x][y] > 0) {
-      switch(buttonMode[x][y]) {
-        case 0: v = colors[0][1]; break;
-        default: v = colors[1][1]; break;
+      if(padsColor[x][y] == 0) {
+        switch(buttonMode[x][y]) {
+          case 0: v = colors[0][1]; break;
+          default: v = colors[1][1]; break;
+        }
+      }
+      else {
+        switch(padsColor[x][y]) {
+          case 1: v = colors[0][1]; break;
+          case 2: v = colors[1][1]; break;
+          case 3: v = colors[2][1]; break;
+        }
       }
     }
     if(bus != null) bus.sendNoteOn(0, y*16+x, byte(v));
