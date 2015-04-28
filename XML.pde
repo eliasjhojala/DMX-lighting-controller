@@ -69,6 +69,9 @@ void saveShowFileXML() {
   block = xml.addChild("OSCHandler");
   block = block.addChild(oscHandler.getXML());
   
+  block = xml.addChild("Enttec");
+  block = block.addChild(enttecOutput.getXML());
+  
   XML midi = xml.addChild("Midi");
   
   block = midi.addChild("Launchpad");
@@ -110,6 +113,9 @@ void loadShowFileFromXML() {
   XMLtoSockets(socketsXML.getChild("Sockets"));
   
   oscHandler.XMLtoObject(xml.getChild("OSCHandler").getChild("OSChandler"));
+  
+  try { enttecOutput.XMLtoObject(xml.getChild("Enttec").getChild("Enttec"), this); }
+  catch (Exception e) { e.printStackTrace(); }
   
   block = xml.getChild("Midi");
   if(launchpad != null) launchpad.XMLtoObject(block.getChild("Launchpad").getChild("launchpad"));

@@ -46,6 +46,7 @@ import processing.serial.*;
 
 DmxP512 dmxOutput;
 
+
 class EnttecOutput {
   String port;
   int[] lastDMX;
@@ -55,14 +56,24 @@ class EnttecOutput {
   int DMXPRO_BAUDRATE=115000;
   int universeSize=512;
   
+  
+  
   boolean inUse;
   
   EnttecOutput() {
   }
   
+  PApplet parent;
+  
   EnttecOutput(PApplet parent, String port) {
+    setup(parent, port);
+  }
+  
+  void setup(PApplet parent, String port) {
     try {
+      this.parent = parent;
       this.port = port;
+      enttecOutputSettingsWindow.comPort.setText(port);
       lastDMX = new int[DMXforOutput.length];
       dmxOutput = new DmxP512(parent, universeSize, false);
       dmxOutput.setupDmxPro(port, DMXPRO_BAUDRATE);
@@ -109,6 +120,21 @@ class EnttecOutput {
     }
     return false;
   }
+  
+  
+  XML getXML() {
+    String data = "<Enttec></Enttec>";
+    XML xml = parseXML(data);
+    XML block = xml.addChild("port");
+    block.setContent(port);
+    return xml;
+  }
+  
+  void XMLtoObject(XML xml, PApplet parent) {
+    setup(parent, xml.getChild("port").getContent());
+  }
+  
+  
 }
 
 
