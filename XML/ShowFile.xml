@@ -72662,6 +72662,14 @@
           <row id="8"/>
           <row id="9"/>
         </buttonMemory>
+        <masterFaderMemory>
+          <int id="0" val="15"/>
+          <int id="1" val="17"/>
+          <int id="2" val="1"/>
+        </masterFaderMemory>
+        <masterFaderMode/>
+        <chaseFaderMemory/>
+        <chaseFaderMode/>
       </LC2412>
     </LC2412>
   </Midi>

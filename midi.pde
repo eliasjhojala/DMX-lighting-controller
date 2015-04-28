@@ -1209,6 +1209,9 @@ public class behringerLC2412 {
   int inputIndex;
   int outputIndex;
   
+  String inputName;
+  String outputName;
+  
   int offset;
   
   behringerLC2412() {
@@ -1223,6 +1226,8 @@ public class behringerLC2412 {
   MidiBus bus;
   void setup(int inputIndex, int outputIndex) {
     //Midi start commands
+    this.inputName = MidiBus.availableInputs()[inputIndex];
+    this.outputName = MidiBus.availableOutputs()[outputIndex];
     if(bus != null) { bus.clearAll(); }
     this.inputIndex = inputIndex;
     this.outputIndex = outputIndex;
@@ -1230,6 +1235,30 @@ public class behringerLC2412 {
     else { bus = new MidiBus(this, inputIndex, outputIndex); }
     
     setup();
+  }
+  
+  void setup(String input, String output) {
+    int inputI = -1;
+    int outputI = -1;
+    boolean inputFound = false;
+    boolean outputFound = false;
+     for(int i = 0; i < MidiBus.availableInputs().length; i++) {
+       if(MidiBus.availableInputs()[i].equals(input)) {
+         inputI = i;
+         inputFound = true;
+       }
+     }
+     
+     for(int i = 0; i < MidiBus.availableOutputs().length; i++) {
+       if(MidiBus.availableOutputs()[i].equals(output)) {
+         outputI = i;
+         outputFound = true;
+       }
+     }
+     
+     if(inputFound && outputFound) {
+       setup(inputI, outputI);
+     }
   }
   
   
@@ -1269,6 +1298,16 @@ public class behringerLC2412 {
     
     xml.addChild(array3DToXML("faderMemory", faderMemory));
     xml.addChild(array2DToXML("buttonMemory", buttonMemory));
+    
+    xml.addChild(arrayToXML("masterFaderMemory", masterFaderMemory));
+    xml.addChild(arrayToXML("masterFaderMode", masterFaderMode));
+    
+    xml.addChild(arrayToXML("chaseFaderMemory", chaseFaderMemory));
+    xml.addChild(arrayToXML("chaseFaderMode", chaseFaderMode));
+    
+    XML midiData = xml.addChild("midiData");
+    midiData.setString("inputName", inputName);
+    midiData.setString("outputName", outputName);
     return xml;
   }
   
@@ -1326,6 +1365,16 @@ public class behringerLC2412 {
         } //End of x loop
       } //End of z loop
     } //end of faderMemory
+    
+    { //masterFaderMemory
+      int[] fromXML = XMLtoIntArray("masterFaderMemory", xml);
+      for(int x = 0; x < fromXML.length; x++) {
+        if(x < masterFaderMemory.length) masterFaderMemory[x] = fromXML[x];
+      }
+    } //end of masterFaderMemory
+    
+    XML midiData = xml.getChild("midiData");
+    setup(midiData.getString("inputName"), midiData.getString("outputName"));
     
     midiWindow.setLC2412valuesToControllers();
 
