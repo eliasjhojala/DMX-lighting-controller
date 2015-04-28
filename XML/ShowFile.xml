@@ -6,7 +6,7 @@
         <StartChannel>1</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
         <Location x="420" y="-4" z="0">
-          <OnScreen x="1026" y="603"/>
+          <OnScreen x="978" y="727"/>
           <Rotation x="180" z="-1"/>
         </Location>
         <parameter>35</parameter>
@@ -20,7 +20,7 @@
         <StartChannel>3</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="287" y="5" z="0">
-          <OnScreen x="896" y="1062"/>
+          <OnScreen x="839" y="1217"/>
           <Rotation x="128" z="12"/>
         </Location>
         <parameter>76</parameter>
@@ -34,7 +34,7 @@
         <StartChannel>4</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="364" y="-6" z="0">
-          <OnScreen x="990" y="1060"/>
+          <OnScreen x="939" y="1215"/>
           <Rotation x="128" z="7"/>
         </Location>
         <parameter>45</parameter>
@@ -48,7 +48,7 @@
         <StartChannel>12</StartChannel>
         <fixtureTypeId>4</fixtureTypeId>
         <Location x="544" y="-3" z="0">
-          <OnScreen x="1197" y="1059"/>
+          <OnScreen x="1160" y="1213"/>
           <Rotation x="128" z="354"/>
         </Location>
         <parameter>45</parameter>
@@ -62,7 +62,7 @@
         <StartChannel>13</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="628" y="9" z="0">
-          <OnScreen x="1285" y="1059"/>
+          <OnScreen x="1254" y="1214"/>
           <Rotation x="128" z="349"/>
         </Location>
         <parameter>45</parameter>
@@ -75,8 +75,8 @@
       <fixture id="5">
         <StartChannel>2</StartChannel>
         <fixtureTypeId>6</fixtureTypeId>
-        <Location x="720" y="-2" z="0">
-          <OnScreen x="1385" y="1060"/>
+        <Location x="724" y="-2" z="0">
+          <OnScreen x="1366" y="1215"/>
           <Rotation x="128" z="324"/>
         </Location>
         <parameter>16</parameter>
@@ -90,7 +90,7 @@
         <StartChannel>18</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="465" y="3" z="0">
-          <OnScreen x="1099" y="1057"/>
+          <OnScreen x="1056" y="1212"/>
           <Rotation x="185" z="361"/>
         </Location>
         <parameter>-80</parameter>
@@ -104,7 +104,7 @@
         <StartChannel>17</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="554" y="11" z="0">
-          <OnScreen x="1179" y="586"/>
+          <OnScreen x="1141" y="709"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -118,7 +118,7 @@
         <StartChannel>16</StartChannel>
         <fixtureTypeId>2</fixtureTypeId>
         <Location x="443" y="13" z="0">
-          <OnScreen x="1056" y="588"/>
+          <OnScreen x="1009" y="712"/>
           <Rotation x="180" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -132,7 +132,7 @@
         <StartChannel>6</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="391" y="5" z="0">
-          <OnScreen x="1005" y="337"/>
+          <OnScreen x="955" y="443"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -146,7 +146,7 @@
         <StartChannel>8</StartChannel>
         <fixtureTypeId>3</fixtureTypeId>
         <Location x="549" y="5" z="0">
-          <OnScreen x="1181" y="337"/>
+          <OnScreen x="1143" y="443"/>
           <Rotation x="252" z="0"/>
         </Location>
         <parameter>-80</parameter>
@@ -160,7 +160,7 @@
         <StartChannel>7</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="441" y="17" z="0">
-          <OnScreen x="1067" y="328"/>
+          <OnScreen x="1022" y="434"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -174,7 +174,7 @@
         <StartChannel>7</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="483" y="17" z="0">
-          <OnScreen x="1114" y="328"/>
+          <OnScreen x="1072" y="434"/>
           <Rotation x="253" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -188,7 +188,7 @@
         <StartChannel>5</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="83" y="6" z="0">
-          <OnScreen x="668" y="807"/>
+          <OnScreen x="595" y="945"/>
           <Rotation x="252" z="-11"/>
         </Location>
         <parameter>45</parameter>
@@ -216,7 +216,7 @@
         <StartChannel>20</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="293" y="1" z="0">
-          <OnScreen x="897" y="477"/>
+          <OnScreen x="840" y="592"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -230,7 +230,7 @@
         <StartChannel>22</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="506" y="2" z="0">
-          <OnScreen x="1134" y="478"/>
+          <OnScreen x="1093" y="593"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -244,7 +244,7 @@
         <StartChannel>23</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="608" y="0" z="0">
-          <OnScreen x="1247" y="475"/>
+          <OnScreen x="1214" y="591"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -258,7 +258,7 @@
         <StartChannel>9</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="874" y="5" z="0">
-          <OnScreen x="1538" y="812"/>
+          <OnScreen x="1525" y="950"/>
           <Rotation x="252" z="11"/>
         </Location>
         <parameter>45</parameter>
@@ -272,7 +272,7 @@
         <StartChannel>24</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="877" y="16" z="0">
-          <OnScreen x="1558" y="460"/>
+          <OnScreen x="1546" y="574"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -286,7 +286,7 @@
         <StartChannel>19</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="73" y="16" z="0">
-          <OnScreen x="663" y="460"/>
+          <OnScreen x="590" y="574"/>
           <Rotation x="254" z="0"/>
         </Location>
         <parameter>45</parameter>
@@ -1042,7 +1042,7 @@
         <StartChannel>100</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="73" y="4" z="0">
-          <OnScreen x="657" y="213"/>
+          <OnScreen x="584" y="310"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1056,7 +1056,7 @@
         <StartChannel>108</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="248" y="2" z="0">
-          <OnScreen x="852" y="210"/>
+          <OnScreen x="792" y="308"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1070,7 +1070,7 @@
         <StartChannel>116</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="381" y="4" z="0">
-          <OnScreen x="1000" y="213"/>
+          <OnScreen x="950" y="310"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1084,7 +1084,7 @@
         <StartChannel>124</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="582" y="1" z="0">
-          <OnScreen x="1224" y="209"/>
+          <OnScreen x="1189" y="307"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1098,7 +1098,7 @@
         <StartChannel>132</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="728" y="0" z="0">
-          <OnScreen x="1387" y="208"/>
+          <OnScreen x="1363" y="305"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1112,7 +1112,7 @@
         <StartChannel>140</StartChannel>
         <fixtureTypeId>16</fixtureTypeId>
         <Location x="887" y="2" z="0">
-          <OnScreen x="1564" y="210"/>
+          <OnScreen x="1552" y="308"/>
           <Rotation x="-48" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1140,7 +1140,7 @@
         <StartChannel>21</StartChannel>
         <fixtureTypeId>1</fixtureTypeId>
         <Location x="402" y="1" z="0">
-          <OnScreen x="1018" y="477"/>
+          <OnScreen x="969" y="592"/>
           <Rotation x="-106" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1153,8 +1153,8 @@
       <fixture id="82">
         <StartChannel>30</StartChannel>
         <fixtureTypeId>9</fixtureTypeId>
-        <Location x="475" y="-16" z="0">
-          <OnScreen x="1071" y="146"/>
+        <Location x="478" y="1" z="0">
+          <OnScreen x="1030" y="259"/>
           <Rotation x="87" z="900"/>
         </Location>
         <parameter>0</parameter>
@@ -1167,8 +1167,8 @@
       <fixture id="83">
         <StartChannel>31</StartChannel>
         <fixtureTypeId>8</fixtureTypeId>
-        <Location x="150" y="19" z="0">
-          <OnScreen x="699" y="208"/>
+        <Location x="159" y="8" z="0">
+          <OnScreen x="639" y="292"/>
           <Rotation x="-268" z="135"/>
         </Location>
         <parameter>0</parameter>
@@ -1182,7 +1182,7 @@
         <StartChannel>35</StartChannel>
         <fixtureTypeId>7</fixtureTypeId>
         <Location x="510" y="123" z="0">
-          <OnScreen x="1149" y="583"/>
+          <OnScreen x="1110" y="706"/>
           <Rotation x="-114" z="360"/>
         </Location>
         <parameter>0</parameter>
@@ -1196,7 +1196,7 @@
         <StartChannel>37</StartChannel>
         <fixtureTypeId>9</fixtureTypeId>
         <Location x="468" y="107" z="0">
-          <OnScreen x="1103" y="599"/>
+          <OnScreen x="1060" y="723"/>
           <Rotation x="0" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1210,7 +1210,7 @@
         <StartChannel>14</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="204" y="15" z="0">
-          <OnScreen x="815" y="1048"/>
+          <OnScreen x="753" y="1202"/>
           <Rotation x="0" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -1224,7 +1224,7 @@
         <StartChannel>15</StartChannel>
         <fixtureTypeId>5</fixtureTypeId>
         <Location x="775" y="14" z="0">
-          <OnScreen x="1451" y="1047"/>
+          <OnScreen x="1432" y="1201"/>
           <Rotation x="0" z="0"/>
         </Location>
         <parameter>0</parameter>
@@ -26109,7 +26109,7 @@
           <memory val="4"/>
         </myMemories>
       </Memory>
-      <Memory enabled="1" id="15" name="Blinder master" soloInThisMemory="0" type="9" value="102">
+      <Memory enabled="1" id="15" name="Blinder master" soloInThisMemory="0" type="9" value="255">
         <fixturesToSave>
           <int id="9" val="1"/>
           <int id="10" val="1"/>
@@ -26139,7 +26139,7 @@
           <modeData fadeMode="1" inputMode="3" outputMode="6"/>
         </Chase>
       </Memory>
-      <Memory enabled="1" id="17" name="Led master" soloInThisMemory="0" type="9" value="100">
+      <Memory enabled="1" id="17" name="Led master" soloInThisMemory="0" type="9" value="255">
         <fixturesToSave>
           <int id="74" val="1"/>
           <int id="75" val="1"/>
@@ -78726,7 +78726,7 @@
           <modeData fadeMode="1" inputMode="3" outputMode="8"/>
           <steps size="96">
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78746,7 +78746,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78766,7 +78766,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78786,7 +78786,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78806,7 +78806,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78826,7 +78826,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78846,7 +78846,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78866,7 +78866,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78886,7 +78886,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78906,7 +78906,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78926,7 +78926,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78946,7 +78946,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78966,7 +78966,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -78986,7 +78986,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79006,7 +79006,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79026,7 +79026,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79046,7 +79046,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79066,7 +79066,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79086,7 +79086,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79106,7 +79106,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79126,7 +79126,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79146,7 +79146,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79166,7 +79166,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79186,7 +79186,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79206,7 +79206,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79226,7 +79226,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79246,7 +79246,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79266,7 +79266,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79286,7 +79286,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79306,7 +79306,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79326,7 +79326,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79346,7 +79346,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79366,7 +79366,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79386,7 +79386,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79406,7 +79406,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79426,7 +79426,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79446,7 +79446,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79466,7 +79466,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79486,7 +79486,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79506,7 +79506,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79526,7 +79526,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79546,7 +79546,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79566,7 +79566,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79586,7 +79586,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79606,7 +79606,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79626,7 +79626,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79646,7 +79646,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79666,7 +79666,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79686,7 +79686,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79706,7 +79706,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79726,7 +79726,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79746,7 +79746,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79766,7 +79766,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79786,7 +79786,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79806,7 +79806,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79826,7 +79826,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79846,7 +79846,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79866,7 +79866,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79886,7 +79886,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79906,7 +79906,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79926,7 +79926,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79946,7 +79946,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79966,7 +79966,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -79986,7 +79986,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80006,7 +80006,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80026,7 +80026,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80046,7 +80046,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80066,7 +80066,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80086,7 +80086,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80106,7 +80106,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80126,7 +80126,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80146,7 +80146,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80166,7 +80166,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80186,7 +80186,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80206,7 +80206,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80226,7 +80226,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80246,7 +80246,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80266,7 +80266,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80286,7 +80286,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80306,7 +80306,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80326,7 +80326,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80346,7 +80346,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80366,7 +80366,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80386,7 +80386,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80406,7 +80406,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80426,7 +80426,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80446,7 +80446,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80466,7 +80466,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80486,7 +80486,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80506,7 +80506,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80526,7 +80526,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80546,7 +80546,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80566,7 +80566,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80586,7 +80586,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80606,7 +80606,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -80626,7 +80626,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -82596,7 +82596,7 @@
       </Memory>
       <Memory id="55" name="Blinder chase slow" soloInThisMemory="0" type="6" value="155">
         <Chase>
-          <mainData fade="33" ownFade="151" value="155"/>
+          <mainData fade="151" ownFade="151" value="155"/>
           <modeData fadeMode="1" inputMode="3" outputMode="1"/>
           <steps size="64">
             <Preset>
@@ -84396,7 +84396,7 @@
       </Memory>
       <Memory id="56" name="Flood chase slow" soloInThisMemory="0" type="6" value="155">
         <Chase>
-          <mainData fade="61" ownFade="174" value="155"/>
+          <mainData fade="174" ownFade="174" value="155"/>
           <modeData fadeMode="1" inputMode="3" outputMode="1"/>
           <steps size="32">
             <Preset>
@@ -85364,7 +85364,7 @@
       </Memory>
       <Memory id="58" name="reuna blinderit" soloInThisMemory="0" type="6" value="168">
         <Chase>
-          <mainData fade="7" ownFade="100" value="255"/>
+          <mainData fade="100" ownFade="100" value="168"/>
           <modeData fadeMode="1" inputMode="4"/>
           <steps size="32">
             <Preset>
@@ -88284,7 +88284,7 @@
           <modeData fadeMode="1" inputMode="4" outputMode="4"/>
           <steps size="42">
             <Preset>
-              <mainData value="254"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88304,7 +88304,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="188"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88324,7 +88324,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="69"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88344,7 +88344,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="1"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88364,7 +88364,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="41"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88384,7 +88384,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="156"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88404,7 +88404,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="246"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88424,7 +88424,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="233"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88444,7 +88444,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="128"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88464,7 +88464,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="23"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88484,7 +88484,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="7"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88504,7 +88504,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="96"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88524,7 +88524,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="254"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88544,7 +88544,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="188"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88564,7 +88564,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="69"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88584,7 +88584,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="1"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88604,7 +88604,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="41"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88624,7 +88624,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="156"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88644,7 +88644,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="246"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88664,7 +88664,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="233"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88684,7 +88684,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="128"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88704,7 +88704,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="23"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88724,7 +88724,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="7"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88744,7 +88744,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="96"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88764,7 +88764,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="254"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88784,7 +88784,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="188"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88804,7 +88804,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="69"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88824,7 +88824,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="1"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88844,7 +88844,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="41"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88864,7 +88864,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="156"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88884,7 +88884,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="246"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88904,7 +88904,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="233"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88924,7 +88924,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="128"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88944,7 +88944,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="23"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88964,7 +88964,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="7"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -88984,7 +88984,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="96"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -89004,7 +89004,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="254"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -89024,7 +89024,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="188"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -89044,7 +89044,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="69"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -89064,7 +89064,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="1"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -89084,7 +89084,7 @@
               </repOfFixtures>
             </Preset>
             <Preset>
-              <mainData value="41"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -89118,7 +89118,7 @@
           <modeData fadeMode="1" inputMode="2" outputMode="1"/>
           <steps size="40">
             <Preset>
-              <mainData value="255"/>
+              <mainData/>
               <whatToSave>
                 <int id="1" val="1"/>
                 <int id="2" val="1"/>
@@ -91796,7 +91796,7 @@
     <elements>
       <element id="0">
         <size x="907.0" y="695.0" z="31.0"/>
-        <location x="42.0" y="-405.0" z="0.0"/>
+        <location x="45.0" y="-395.0" z="0.0"/>
         <color b="0.0" g="21.0" r="50.0"/>
       </element>
     </elements>
@@ -92320,7 +92320,7 @@
       <Use3D>false</Use3D>
     </ThreeDee>
     <TwoDee>
-      <transform pageRotation="0" x_siirto="613.24915" y_siirto="566.8496" zoom="111.38121"/>
+      <transform pageRotation="0" x_siirto="587.2046" y_siirto="677.74677" zoom="118.93038"/>
     </TwoDee>
     <VisualisationOptions>
       <data showLeftButtons="1" showOldBottomMeu="0"/>

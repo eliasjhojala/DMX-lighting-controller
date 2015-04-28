@@ -884,6 +884,7 @@ class fixture {
   
   //Index is used only to display the id of the fixture
   void draw2D(int index, PGraphics g) {
+    g.pushMatrix();
     g.pushStyle();
     color c = getRawColor();
     if(brightness(c) == 0) {
@@ -911,7 +912,6 @@ class fixture {
       g.rectMode(CENTER);
       g.strokeWeight(2);
       g.stroke(0, 230);
-      g.translate(size.w/2, 0);
       g.rect(x1, y1, lampWidth, lampHeight, 3);
       g.rotate(radians(-rotationZ));
       g.translate(-size.w/2, -size.h/2);
@@ -921,13 +921,14 @@ class fixture {
       g.textSize(10);
       g.text(getFixtureNameByType(fixtureTypeId), lampWidth/2-(textWidth(text)/2), y1 + lampHeight + 13);
       text = str(this.channelStart);
-      g.textSize(15);
-      textSize(15);
+      g.textSize(13);
+      textSize(13);
       g.text(text, lampWidth/2-textWidth(text)/2, y1+lampHeight/2+5);
       text = this.socket.name;
       g.text(text, lampWidth/2-textWidth(text)/2, y1-12);
     }
     g.popStyle();
+    g.popMatrix();
   }
   
 }//Endof: fixture class

@@ -320,15 +320,7 @@ class memory { //Begin of memory class------------------------------------------
   
   boolean firstTimeAtZero;
   void chase() {
-    if(enabled) {
-      if(value > 0 || firstTimeAtZero) {
-         myChase.draw();
-         firstTimeAtZero = false;
-      }
-      if(value > 0) {
-        firstTimeAtZero = true;
-      }
-    }
+    myChase.draw();
   }
   void grandMaster() {
     //function to adjust grandMaster
@@ -1188,13 +1180,47 @@ class chase { //Begin of chase class--------------------------------------------
   chase(memory parent) {
     this.parent = parent;
   }
+  
+  
+  int targetVal;
+  int readyValue;
+  float floatValue;
+  boolean offsetChanging;
+  
+  void countFade() {
+    { //Fade
+      targetVal = value*int(parent.enabled);
+      float offsetToFloatValue = (targetVal-floatValue);
+      if(offsetToFloatValue > 0) { offsetToFloatValue = offsetToFloatValue/ceil((float(fade)/5)); }
+      else { offsetToFloatValue = offsetToFloatValue/ceil((float(fade)/5)); }
+      
+      if(abs(offsetToFloatValue) > 0.1) {
+        offsetChanging = true;
+        floatValue += offsetToFloatValue;
+        readyValue = constrain(round(floatValue), min(0, targetVal), max(255, targetVal));
+      }
+      else {
+        offsetChanging = false;
+        readyValue = targetVal;
+      }
+    } //End of fade
+  }
+  
+  boolean firstTimeAtZero;
 
   
   void draw() {
     if(XMLloadSucces) {
-      setValue();
-      setFade();
-      output();
+      countFade();
+      if(readyValue > 0 || firstTimeAtZero) {
+        setValue();
+        setFade();
+        output();
+        firstTimeAtZero = false;
+      }
+      if(value > 0) {
+        firstTimeAtZero = true;
+      }
     }
   }
   
@@ -1432,7 +1458,7 @@ class chase { //Begin of chase class--------------------------------------------
   IntList presetTargetValueChanged = new IntList();
   
   void loadPreset(int num, int val) {
-    val = defaultConstrain(rMap(val, 0, 255, 0, value));
+    val = defaultConstrain(rMap(val, 0, 255, 0, readyValue));
     if(firstTimeLoading) {
       oldValue = new int[getPresets().length];
       firstTimeLoading = false;

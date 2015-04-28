@@ -163,15 +163,30 @@ void SaveChannelsAsPdf() {
   for(int i = 0; i < elements.size(); i++) {
     elements.get(i).draw(pdf);
   }
+  
+  pdf.pushMatrix(); pdf.pushStyle();
+  for(int i = 0; i < trusses.length; i++) {
+     if(trusses[i] != null) if(trusses[i].type == 1) {
+       pdf.pushMatrix();
+        pdf.translate(trusses[i].location.x, trusses[i].location.y+25);
+        pdf.fill(0);
+        pdf.stroke(0);
+        pdf.rect(0, 0, trusses[i].lng, 5);
+       pdf.popMatrix();
+     }
+  }
+  pdf.popMatrix(); pdf.popStyle();
+  
   for(Entry<Integer, fixture> entry : fixtures.iterateIDs()) {
     fixture fix = entry.getValue();
     int i = entry.getKey();
     if(fix.size.isDrawn) {
-      pdf.pushMatrix();
+      pdf.pushMatrix(); pdf.pushStyle();
       pdf.translate(x[i], y[i]);
+      pdf.translate(fix.size.w/2, fix.size.h/2);
       pdf.rotate(radians(fix.rotationZ));
       fix.draw2D(i, pdf);
-      pdf.popMatrix();
+      pdf.popMatrix(); pdf.popStyle();
     }
   }
   pdf.dispose();
