@@ -1265,16 +1265,14 @@ class chase { //Begin of chase class--------------------------------------------
   
   void draw() {
     if(XMLloadSucces) {
-      countFade();
+      setValue(); //Set value from parent
+      setFade(); //Get fade from slider or master fade
+      countFade(); //Pre- and postFade
+      
       if(readyValue > 0 || firstTimeAtZero) {
-        setValue();
-        setFade();
         output();
-        firstTimeAtZero = false;
       }
-      if(readyValue > 0) {
-        firstTimeAtZero = true;
-      }
+      firstTimeAtZero = readyValue > 0;
     }
   }
   
