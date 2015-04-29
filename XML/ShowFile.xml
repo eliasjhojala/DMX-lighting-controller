@@ -92399,7 +92399,7 @@
           </row>
           <row id="7"/>
         </padsColor>
-        <midiData inputName="" outputName=""/>
+        <midiData inputName="Launchpad" outputName="Launchpad"/>
       </launchpad>
     </Launchpad>
     <LC2412>
@@ -92751,7 +92751,7 @@
           <int id="2" val="2"/>
         </chaseFaderMemory>
         <chaseFaderMode/>
-        <midiData inputName="" outputName=""/>
+        <midiData inputName="ProdipeMIDIlilo " outputName="ProdipeMIDIlilo "/>
       </LC2412>
     </LC2412>
   </Midi>
