@@ -115,7 +115,7 @@
        
        { //Create LC2412 settings tables for faders and buttons
          LC2412faderModes = new NumberBoxTableWindow("LC2412faderModes", 12, 2, 0, 1);
-         LC2412buttonModes = new NumberBoxTableWindow("LC2412buttonModes", 12, 1, 0, 2);
+         LC2412buttonModes = new NumberBoxTableWindow("LC2412buttonModes", 12, 1, 0, 3);
          
          
          LC2412faderMemories = new TextBoxTableWindow("LC2412faderMemories", 12, 2);
@@ -1807,23 +1807,28 @@ public class behringerLC2412 {
       int mode = buttonMode[bank][num];
       int mem = buttonMemory[bank][num];
       
-      
-      boolean value;
-      if(buttonMode[bank][num] == 1) { //Togglemode
-        value = buttonsToggle[num];
-      }
-      else {
-        value = buttons[num];
+      if(buttonMode[bank][num] == 3 && val) {
+         memories[buttonMemory[bank][num]].trig();
       }
       
-      if(buttonMode[bank][num] != 2) {
-  			memories[buttonMemory[bank][num]].enabled = value;
-        memories[buttonMemory[bank][num]].doOnce = false;
-  		}
-  		else if(value == true) {
-        memories[buttonMemory[bank][num]].enabled = true;
-        memories[buttonMemory[bank][num]].doOnce = true;
-  		}
+      if(buttonMode[bank][num] != 3) {
+        boolean value;
+        if(buttonMode[bank][num] == 1) { //Togglemode
+          value = buttonsToggle[num];
+        }
+        else {
+          value = buttons[num];
+        }
+        
+        if(buttonMode[bank][num] != 2) {
+      	  memories[buttonMemory[bank][num]].enabled = value;
+            memories[buttonMemory[bank][num]].doOnce = false;
+        }
+        else if(value == true) {
+            memories[buttonMemory[bank][num]].enabled = true;
+            memories[buttonMemory[bank][num]].doOnce = true;
+        }
+      }
       
     } //End of if output to memories
   }
