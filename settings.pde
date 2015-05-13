@@ -68,7 +68,8 @@ class SettingsWindow {
       new SettingController[] {
         new SettingController(101, "OSC", "Open OSC settings window by clicking the button", false, tabs[id]),
         new SettingController(102, "Midi", "Open MIDI settings window by clicking the button", false, tabs[id]),
-        new SettingController(103, "Enttec", "Open Enttec output settings window by clicking the button", false, tabs[id])
+        new SettingController(103, "Enttec", "Open Enttec output settings window by clicking the button", false, tabs[id]),
+        new SettingController(104, "Arduino", "Open Arduino output settings window by clicking the button", false, tabs[id])
       }
     );
     id++;
@@ -153,6 +154,7 @@ class SettingsWindow {
       case 101: oscSettings.locX = locX; oscSettings.locY = locY; oscSettings.open = !oscSettings.open; settingsWindow.open = false; break;
       case 102: midiWindow.locX = locX; midiWindow.locY = locY; midiWindow.open = !midiWindow.open; settingsWindow.open = false; break;
       case 103: enttecOutputSettingsWindow.locX = locX; enttecOutputSettingsWindow.locY = locY; enttecOutputSettingsWindow.open = !enttecOutputSettingsWindow.open; settingsWindow.open = false; break;
+      case 104: arduinoOutputSettingsWindow.locX = locX; arduinoOutputSettingsWindow.locY = locY; arduinoOutputSettingsWindow.open = !arduinoOutputSettingsWindow.open; settingsWindow.open = false; break;
     }
   }
   

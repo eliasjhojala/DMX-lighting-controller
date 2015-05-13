@@ -141,6 +141,7 @@ class SubWindowHandler {
     subWindows.add(new SubWindowContainer(oscSettings, "OSCSettingsWindow", 1000));
     subWindows.add(new SubWindowContainer(midiWindow, "MidiHandlerWindow", 1000));
     subWindows.add(new SubWindowContainer(enttecOutputSettingsWindow, "enttecOutputSettingsWindow", 1000));
+    subWindows.add(new SubWindowContainer(arduinoOutputSettingsWindow, "arduinoOutputSettingsWindow", 1000));
     subWindows.add(new SubWindowContainer(elementController, "elementController", 1000));
     subWindows.add(new SubWindowContainer(fixtureController, "fixtureController", 1000));
     subWindows.add(new SubWindowContainer(trussController, "trussController", 1000));

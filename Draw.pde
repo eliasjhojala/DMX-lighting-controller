@@ -48,6 +48,7 @@ void draw() {
     setDimAndMemoryValuesAtEveryDraw(); //Set dim and memory values
     drawMainWindow(); //Draw main view (mainly fixtures)
     if(enttecOutput != null) { enttecOutput.draw(); }
+    if(arduinoOutput != null) { arduinoOutput.draw(); }
     if(drawNow) drawMenus();
     invokeFixturesDraw(); //Invoke every fixtures draw
     resetSolo();

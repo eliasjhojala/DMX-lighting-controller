@@ -1,6 +1,9 @@
 EnttecOutputSettingsWindow enttecOutputSettingsWindow = new EnttecOutputSettingsWindow(this);
 EnttecOutput enttecOutput = new EnttecOutput();
 
+ArduinoOutputSettingsWindow arduinoOutputSettingsWindow = new ArduinoOutputSettingsWindow(this);
+ArduinoOutput arduinoOutput = new ArduinoOutput();
+
 int[] dmxToOutputSended = new int[DMX_CHAN_LENGTH+1];
 
 class EnttecOutputSettingsWindow {
@@ -136,5 +139,131 @@ class EnttecOutput {
   
   
 }
+
+
+
+
+
+
+
+
+class ArduinoOutputSettingsWindow {
+  Window window;
+  boolean open;
+  int locX, locY, w, h;
+  PApplet parent;
+  
+  DropdownMenu comPort;
+  
+  ArduinoOutputSettingsWindow(PApplet parent) {
+    this.parent = parent;
+    locX = 0;
+    locY = 0;
+    w = 500;
+    h = 500;
+    window = new Window("arduinoOutputSettingsWindow", new PVector(w, h), this);
+    ArrayList<DropdownMenuBlock> comPorts = new ArrayList<DropdownMenuBlock>();
+    for(int i = 0; i < Serial.list().length; i++) {
+      comPorts.add(new DropdownMenuBlock(Serial.list()[i], i));
+    }
+    comPort = new DropdownMenu("comPorts", comPorts);
+    comPort.setBlockSize(new PVector(300, 20));
+  }
+  
+  void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+    window.draw(g, mouse);
+    
+    g.pushMatrix();
+      g.translate(30, 60);
+      comPort.draw(g, mouse);
+    g.popMatrix();
+    
+    if(comPort.valueHasChanged()) {
+      int index = comPort.getValue();
+      arduinoOutput = new ArduinoOutput(parent, Serial.list()[index]);
+    }
+  }
+}
+
+
+
+
+
+class ArduinoOutput {
+  String port;
+  int[] lastDMX;
+  int delayBetweenPackets = 1;
+  long lastPacketMillis;
+  
+  Serial arduinoPort;
+  
+  boolean inUse;
+  
+  ArduinoOutput() {
+  }
+  
+  PApplet parent;
+  
+  ArduinoOutput(PApplet parent, String port) {
+    setup(parent, port);
+  }
+  
+  void setup(PApplet parent, String port) {
+    this.port = port;
+    arduinoPort = new Serial(parent, port, 9600);
+  }
+  
+  
+  void draw() {
+    if(inUse) {
+      sendUniversum();
+    }
+  }
+  
+  void sendUniversum() {
+    if(lastDMX.length != DMXforOutput.length) {
+      lastDMX = new int[DMXforOutput.length];
+    }
+    for(int i = 0; i < DMXforOutput.length; i++) {
+      int newVal = DMXforOutput[i];
+      if(newVal != lastDMX[i] /*&& waitedEnough()*/) {
+        sendChannel(i, newVal);
+        lastDMX[i] = newVal;
+      }
+    }
+  }
+  
+  void sendChannel(int ch, int val) {
+    arduinoPort.write( str(ch) + "c" + str(val) + "w" );
+    if(ch >= 0 && ch < dmxToOutputSended.length) {
+      dmxToOutputSended[ch] = val;
+    }
+    println("Sent dmx ch: " + str(ch) + " val: " + str(val));
+  }
+  
+  boolean waitedEnough() {
+    if(millis() - lastPacketMillis > delayBetweenPackets) {
+      lastPacketMillis = millis();
+      return true;
+    }
+    return false;
+  }
+  
+  
+  XML getXML() {
+    String data = "<Arduino></Arduino>";
+    XML xml = parseXML(data);
+    XML block = xml.addChild("port");
+    block.setContent(port);
+    return xml;
+  }
+  
+  void XMLtoObject(XML xml, PApplet parent) {
+    setup(parent, xml.getChild("port").getContent());
+  }
+  
+  
+}
+
 
 
