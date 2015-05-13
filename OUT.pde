@@ -210,7 +210,9 @@ class ArduinoOutput {
   
   void setup(PApplet parent, String port) {
     this.port = port;
-    arduinoPort = new Serial(parent, port, 9600);
+    arduinoPort = new Serial(parent, port, 115200);
+    inUse = true;
+    lastDMX = new int[DMXforOutput.length];
   }
   
   

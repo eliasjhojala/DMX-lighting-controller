@@ -176,6 +176,9 @@ class SubWindowHandler {
     
     subWindows.add(new SubWindowContainer(launchpadInfoWindow, "launchpadInfoWindow", 1000));
     
+    subWindows.add(new SubWindowContainer(fixtureCreatorWindow, "fixtureCreatorWindow", 1000));
+    
+    
 
     
     if(useNewLowerMenu) { lowerMenu.open = false; }

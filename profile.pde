@@ -148,4 +148,9 @@ class FixtureProfile {
     isHalogen = isInArray(channelTypes, DMX_DIMMER) && channelTypes.length == 1;
     isLed = isInArray(channelTypes, DMX_RED, DMX_GREEN, DMX_BLUE);
   }
+  
+  int getNumberOfChannels() {
+    return channelTypes.length;
+  }
+  
 }

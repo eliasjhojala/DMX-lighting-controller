@@ -1,3 +1,44 @@
+FixtureCreatorWindow fixtureCreatorWindow = new FixtureCreatorWindow();
+
+void createMultipleFixtures() {
+  fixtureCreatorWindow.open = true;
+}
+
+class FixtureCreatorWindow {
+   Window window;
+  int locX, locY, w, h;
+  boolean open;
+  
+  IntController amount = new IntController("amount");
+  
+  FixtureCreatorWindow() {
+    w = 1000; h = 500;
+    window = new Window("fixtureCreatorWindow", new PVector(w, h), this);
+    amount.setLimits(0, 100);
+  }
+  
+  void draw(PGraphics g, Mouse mouse, boolean isTranslated) {
+    window.draw(g, mouse);
+    g.translate(60, 60);
+    fixtureTypes.draw(g, mouse);
+    g.translate(300, 0);
+    amount.draw(g, mouse);
+    g.translate(130, 0);
+    PushButton create = new PushButton("create"+this.toString());
+    if(create.isPressed(g, mouse)) { 
+      for(int i = 0; i < amount.getValue(); i++) {
+        fixture fix = new fixture(0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+        fix.fixtureTypeId = fixtureTypes.getValue();
+        fix.x_location = i*50;
+        fix.channelStart = i*fixtureProfiles[fixtureTypes.getValue()].getNumberOfChannels()+1;
+        fixtures.add(fix);
+      }
+    }
+  }
+  
+}
+
+
 FixtureControllerWindow fixtureController = new FixtureControllerWindow();
 class FixtureControllerWindow {
   Window window;
