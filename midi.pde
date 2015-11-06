@@ -1127,7 +1127,7 @@ public class Launchpad {
   }
   
   void setRightButton(int i, byte v) {
-    bus.sendNoteOn(0, i*16+8, v);
+    if(bus != null) bus.sendNoteOn(0, i*16+8, v);
   }
   
   void noteOff(int channel, int pitch, int velocity) {
