@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<OSChandler>
-  <OSCMachine ipAddress="192.168.0.13" portIncoming="9000" portOutgoing="8000"/>
-</OSChandler>
