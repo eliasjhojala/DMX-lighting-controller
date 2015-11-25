@@ -2,3 +2,5 @@ core.csv
 .csv
 *.csv
 *~
+
+dmx_controller/build
