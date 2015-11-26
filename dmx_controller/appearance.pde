@@ -18,10 +18,11 @@ class Appearance {
   int lastWidth, lastHeight;
   void draw() {
     if(lastWidth != width || lastHeight != height) {
-      background.updateDimens(width, height);
-      drawBackground();
-      lastWidth = width; lastHeight = height;
+     background.updateDimens(width, height, false);
+     drawBackground();
+     lastWidth = width; lastHeight = height;
     }
+    background(backgroundColor);
     screen.draw();
   }
   

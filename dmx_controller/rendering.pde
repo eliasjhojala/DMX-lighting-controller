@@ -83,14 +83,16 @@ class ImageBuffer {
     parent.reportChangedAreas(areas);
   }
   
-  void updateDimens(int w, int h) {
+  void updateDimens(int w, int h, boolean preserve) {
     size = new PVector(w, h);
     PGraphics oldBuffer = buffer;
     buffer = createGraphics(int(size.x), int(size.y));
     // Preserve old buffer
-    buffer.beginDraw();
-    buffer.image(oldBuffer, 0, 0);
-    buffer.endDraw();
+    if(preserve) {
+      buffer.beginDraw();
+      buffer.image(oldBuffer, 0, 0);
+      buffer.endDraw();
+    }
     oldBuffer.dispose();
   }
 }
