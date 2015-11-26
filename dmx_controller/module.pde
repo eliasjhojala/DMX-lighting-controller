@@ -5,8 +5,8 @@ interface Module {
 }
 
 class ModulePicker implements Module {
-  Boolean getValue() {
-    return false;
+  Void getValue() {
+    return null;
   }
 }
 

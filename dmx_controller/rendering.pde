@@ -21,8 +21,10 @@ class ScreenHandler {
           int areaH = int(drawnArea.size.y);
           int bufferX = areaX - int(imageBuffer.location.x);
           int bufferY = areaY - int(imageBuffer.location.y);
-          image(imageBuffer.buffer, areaX, areaY, areaW, areaH, bufferX, bufferY, areaW, areaH);
-          // image(imageBuffer.buffer, bufferX, bufferY);
+          //image(imageBuffer.buffer, areaX, areaY, areaW, areaH, bufferX, bufferY, areaW, areaH);
+          //println("" + areaX + "/" + areaY + "/" + areaW + "/" + areaH + "/" + bufferX + "/" + bufferY + "/" + areaW + "/" + areaH);
+          image(imageBuffer.buffer.get(bufferX, bufferY, areaH, areaW), areaX, areaY);
+          println("" + areaW + "/" + areaH);
         }
       }
     }
@@ -34,26 +36,30 @@ class ScreenHandler {
   }
   
   ImageBuffer registerNewBuffer(int x, int y, int w, int h, int o) {
-    if(o == 0) o = imageBuffers.size();
-    ImageBuffer newBuffer = new ImageBuffer(this, x, y, w, h, o);
-    imageBuffers.add(newBuffer);
+    ImageBuffer newBuffer = new ImageBuffer(this, x, y, w, h);
+    if(o >= 0) {
+      imageBuffers.add(min(o, imageBuffers.size()), newBuffer);
+    } else {
+      imageBuffers.add(newBuffer);
+    }
     return newBuffer;
+  }
+  
+  // Force everything to be redrawn (theme swap for example)
+  void redrawEverything() {
+    // TODO
   }
 }
 
 class ImageBuffer {
   PVector location, size;
-  PGraphics buffer;
+  private PGraphics buffer;
   ScreenHandler parent;
   
-  // This value will be linked to a pane manager
-  int orderIndex;
-  
-  ImageBuffer(ScreenHandler parent, int x, int y, int w, int h, int orderIndex) {
+  ImageBuffer(ScreenHandler parent, int x, int y, int w, int h) {
     this.parent = parent;
     location = new PVector(x, y);
     size = new PVector(w, h);
-    this.orderIndex = orderIndex;
     buffer = createGraphics(w, h);
   }
   
