@@ -22,18 +22,10 @@ boolean inBounds(float pointerX, float pointerY, float x, float y, float w, floa
 
 // Returns true if rect1{x, y, w, h} intersects with rect2{x, y, w, h} (starting point, size)
 boolean rectIntersect(float rect1x, float rect1y, float rect1w, float rect1h, float rect2x, float rect2y, float rect2w, float rect2h) {
-  // boolean intersects = false;
-  // // Top-left corner of rect 1
-  // println("" + rect1x + rect1y + rect1w + rect1h + rect2x + rect2y + rect2w + rect2h);
-  // intersects = intersects || inBounds(rect1x, rect1y, rect2x, rect2y, rect2w, rect2h);
-  // // Top-right corner of rect 1
-  // intersects = intersects || inBounds(rect1x+rect1w, rect1y, rect2x, rect2y, rect2w, rect2h);
-  // // Bottom-left corner of rect 1
-  // intersects = intersects || inBounds(rect1x, rect1y+rect1h, rect2x, rect2y, rect2w, rect2h);
-  // // Bottom-right corner of rect 1
-  // intersects = intersects || inBounds(rect1x+rect1w, rect1y+rect1h, rect2x, rect2y, rect2w, rect2h);
-  // return intersects;
-  // TODO
+  float rect1xB = rect1x + rect1w, rect1yB = rect1y + rect1h;
+  float rect2xB = rect2x + rect2w, rect2yB = rect2y + rect2h;
+  return rect1x <= rect2xB && rect1xB >= rect2x
+      && rect1y <= rect2yB && rect1yB >= rect2y;
 }
 
 // Same as above, but with PVectors

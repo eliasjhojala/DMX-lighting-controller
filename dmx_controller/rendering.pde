@@ -1,4 +1,5 @@
 import java.util.Collection;
+
 ScreenHandler screen = new ScreenHandler();
 
 class ScreenHandler {
@@ -8,6 +9,7 @@ class ScreenHandler {
     imageBuffers = new ArrayList<ImageBuffer>();
     changedAreas = new ArrayList<DrawnArea>();
   }
+  
   
   void draw() {
     for(DrawnArea drawnArea : changedAreas) {
@@ -20,18 +22,20 @@ class ScreenHandler {
           int bufferX = areaX - int(imageBuffer.location.x);
           int bufferY = areaY - int(imageBuffer.location.y);
           image(imageBuffer.buffer, areaX, areaY, areaW, areaH, bufferX, bufferY, areaW, areaH);
+          // image(imageBuffer.buffer, bufferX, bufferY);
         }
       }
     }
     changedAreas.clear();
   }
   
-  void reportChangedAreas(Collection areas) {
+  void reportChangedAreas(Collection<DrawnArea> areas) {
     changedAreas.addAll(areas);
   }
   
-  ImageBuffer registerNewBuffer(int x, int y, int w, int h) {
-    ImageBuffer newBuffer = new ImageBuffer(this, x, y, w, h, imageBuffers.size());
+  ImageBuffer registerNewBuffer(int x, int y, int w, int h, int o) {
+    if(o == 0) o = imageBuffers.size();
+    ImageBuffer newBuffer = new ImageBuffer(this, x, y, w, h, o);
     imageBuffers.add(newBuffer);
     return newBuffer;
   }
@@ -58,9 +62,15 @@ class ImageBuffer {
     return buffer;
   }
   
-  void endDraw(Collection areas) {
+  void endDraw(Collection<DrawnArea> areas) {
     buffer.endDraw();
     parent.reportChangedAreas(areas);
+  }
+  
+  void endDraw(DrawnArea area) {
+    ArrayList<DrawnArea> areas = new ArrayList<DrawnArea>();
+    areas.add(area);
+    endDraw(areas);
   }
   
   void updateLocation(int x, int y) {
@@ -88,13 +98,20 @@ class ImageBuffer {
 class DrawnArea {
   PVector start, end, size;
   DrawnArea(ImageBuffer sourceBuffer, float x, float y, float w, float h) {
-    x += sourceBuffer.size.x;
-    y += sourceBuffer.size.y;
+    x += sourceBuffer.location.x;
+    y += sourceBuffer.location.y;
     start = new PVector(x, y);
-    end = new PVector(x+w, y+h);
     size = new PVector(w, h);
+    end = PVector.add(start, size);
     
     sourceBuffer = null;
+  }
+  
+  // Redraw whole buffer
+  DrawnArea(ImageBuffer sourceBuffer) {
+    start = new PVector().set(sourceBuffer.location);
+    size = new PVector().set(sourceBuffer.size);
+    end = PVector.add(start, size);
   }
   
   boolean intersectsWith(ImageBuffer imageBuffer) {

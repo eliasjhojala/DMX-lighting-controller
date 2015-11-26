@@ -1,30 +1,21 @@
 //Remember to test drawing speed
 
 void setup() {
-  size(displayWidth, displayHeight);
+  size(1000, 1000);
   surface.setResizable(true);
-  test = screen.registerNewBuffer(10, 10, 80, 80);
-  testArea.add(new DrawnArea(test, 20, 20, 50, 50));
+  
+  appearance = new Appearance(screen);
+  appearance.setup();
 }
 
 
 
 void draw() {
-  PGraphics g = test.beginDraw();
-  g.rect(20, 20, 50, 50);
-  test.endDraw(testArea);
-  screen.draw();
-
-
-  drawSpeedCounter();
-
+  appearance.draw(); // Always do this after all other drawing
+  // drawSpeedCounter();
 }
 
-ImageBuffer test;
-ArrayList<DrawnArea> testArea = new ArrayList<DrawnArea>();
-
-
-
+// --> frameRate
 //Draw speed counter----------------------------------------------------------
 int drawSpeedCounterCounter;
 long drawSpeedCounterLastMillis;
