@@ -10,15 +10,16 @@ void setup() {
   appearance = new Appearance(screen);
   appearance.setup();
   
-  testB = screen.registerNewBuffer(0, 0, 500, 500, 2);
+  testB = screen.registerNewBuffer("testSlider", 0, 0, 500, 500, 2);
 }
 
 
 
 void draw() {
+  background(0);
   PGraphics testG = testB.beginDraw();
   testSlider.draw(testB, testG);
-  testB.endDraw(new DrawnArea(testB, 20, 20, 202, 22));
+  testB.endDraw();
   
   appearance.draw(); // Always do this after all other drawing
   // drawSpeedCounter();

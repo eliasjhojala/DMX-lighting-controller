@@ -1,7 +1,7 @@
 
 Appearance appearance;
 class Appearance {
-  private int backgroundColor = color(0, 0, 0);
+  private int backgroundColor = color(100);
   
   ScreenHandler screen;
   Appearance(ScreenHandler screen) {
@@ -10,7 +10,7 @@ class Appearance {
   
   ImageBuffer background;
   void setup() {
-    background = screen.registerNewBuffer(0, 0, width, height, 1);
+    background = screen.registerNewBuffer("background", 0, 0, width, height, 1);
     drawBackground();
     lastWidth = width; lastHeight = height;
   }

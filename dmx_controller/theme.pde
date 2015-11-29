@@ -7,13 +7,14 @@ interface Theme {
   void fill(PGraphics g);
   void active(PGraphics g);
   void frame(PGraphics g);
+  void line(PGraphics g);
 }
 
 class DefaultTheme implements Theme {
   DefaultTheme() {}
   
   void shadow(PGraphics g) {
-    g.fill(0, 20);
+    g.fill(1, 20);
     g.noStroke();
   }
   
@@ -29,7 +30,13 @@ class DefaultTheme implements Theme {
   
   void frame(PGraphics g) {
     g.noFill();
-    g.stroke(0, 20);
+    g.stroke(0, 42);
     g.strokeWeight(4);
+  }
+  
+  void line(PGraphics g) {
+    g.noFill();
+    g.stroke(27, 252, 103);
+    g.strokeWeight(1);
   }
 }
