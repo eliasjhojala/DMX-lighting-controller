@@ -2,11 +2,17 @@
 
 interface Module {
   Object getValue();
+  void draw(ImageBuffer buffer, PGraphics g);
 }
 
 class ModulePicker implements Module {
+  PVector location;
   Void getValue() {
     return null;
+  }
+  
+  void draw(ImageBuffer buffer, PGraphics g) {
+    
   }
 }
 

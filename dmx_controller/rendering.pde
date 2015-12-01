@@ -85,12 +85,20 @@ class ImageBuffer {
   }
   
   void endDraw() {
-    endDraw(areas);
+    if(!wholeBufferDrawn) {
+      endDraw(areas);
+    } else endDraw(new DrawnArea(this));
     areas.clear();
+    wholeBufferDrawn = false;
   }
   
   void addArea(float x, float y, float w, float h) {
     areas.add(new DrawnArea(this, x, y, w, h));
+  }
+  
+  boolean wholeBufferDrawn = false;
+  void addWholeBuffer() {
+    wholeBufferDrawn = true;
   }
   
   void updateLocation(int x, int y) {

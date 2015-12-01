@@ -8,6 +8,7 @@ interface Theme {
   void active(PGraphics g);
   void frame(PGraphics g);
   void line(PGraphics g);
+  void panel(PGraphics g);
 }
 
 class DefaultTheme implements Theme {
@@ -38,5 +39,11 @@ class DefaultTheme implements Theme {
     g.noFill();
     g.stroke(27, 252, 103);
     g.strokeWeight(1);
+  }
+  
+  void panel(PGraphics g) {
+    g.fill(180, 200);
+    g.stroke(75);
+    g.strokeWeight(3);
   }
 }
